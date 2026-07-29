@@ -5,101 +5,61 @@
             "id": "Q01",
             "category": "interest",
             "text": "What is the monthly interest earned on the savings account?",
-            "required_operation": "calculator",
-            "source_accounts": ["savings"],
-            "expected_value": "15.20",
-            "derivable": true,
-            "steps": 1
+            "source_accounts": ["savings"]
         },
         {
             "id": "Q02",
             "category": "balance",
             "text": "What is the available credit remaining on the credit card?",
-            "required_operation": "calculator",
-            "source_accounts": ["credit_card"],
-            "expected_value": "2600.00",
-            "derivable": true,
-            "steps": 1
+            "source_accounts": ["credit_card"]
         },
         {
             "id": "Q03",
             "category": "interest",
             "text": "What is the monthly interest charge on the credit card?",
-            "required_operation": "calculator",
-            "source_accounts": ["credit_card"],
-            "expected_value": "36.00",
-            "derivable": true,
-            "steps": 1
+            "source_accounts": ["credit_card"]
         },
         {
             "id": "Q04",
             "category": "amortisation",
             "text": "What is the principal portion of the first mortgage payment?",
-            "required_operation": "calculator",
-            "source_accounts": ["mortgage"],
-            "expected_value": "430.75",
-            "derivable": true,
-            "steps": 2
+            "source_accounts": ["mortgage"]
         },
         {
             "id": "Q05",
             "category": "balance",
             "text": "What is the credit card balance after one month if only the minimum payment is made?",
-            "required_operation": "calculator",
-            "source_accounts": ["credit_card"],
-            "expected_value": "2411.00",
-            "derivable": true,
-            "steps": 2
+            "source_accounts": ["credit_card"]
         },
         {
             "id": "Q06",
             "category": "fees",
             "text": "What is the total annual cost of maintaining the checking account?",
-            "required_operation": "calculator",
-            "source_accounts": ["checking"],
-            "expected_value": "144.00",
-            "derivable": true,
-            "steps": 1
+            "source_accounts": ["checking"]
         },
         {
             "id": "Q07",
             "category": "growth",
             "text": "What is the quarterly net growth of the investment account after fees?",
-            "required_operation": "calculator",
-            "source_accounts": ["investment"],
-            "expected_value": "777.41",
-            "derivable": true,
-            "steps": 3
+            "source_accounts": ["investment"]
         },
         {
             "id": "Q08",
             "category": "amortisation",
             "text": "What is the remaining mortgage balance after the first monthly payment?",
-            "required_operation": "calculator",
-            "source_accounts": ["mortgage"],
-            "expected_value": "287069.25",
-            "derivable": true,
-            "steps": 3
+            "source_accounts": ["mortgage"]
         },
         {
             "id": "Q09",
             "category": "net_income",
             "text": "What is the net monthly income from the savings account after deducting checking account fees?",
-            "required_operation": "calculator",
-            "source_accounts": ["savings", "checking"],
-            "expected_value": "3.20",
-            "derivable": true,
-            "steps": 2
+            "source_accounts": ["savings", "checking"]
         },
         {
             "id": "Q10",
             "category": "growth",
             "text": "What is the annual net growth of the investment account after all fees?",
-            "required_operation": "calculator",
-            "source_accounts": ["investment"],
-            "expected_value": "3109.65",
-            "derivable": true,
-            "steps": 3
+            "source_accounts": ["investment"]
         }
     ]
 }

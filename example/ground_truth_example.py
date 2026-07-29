@@ -1,419 +1,569 @@
-"""Ground-truth example with full-precision intermediates.
+"""Ground-truth module: derivation logic for 10 example items.
 
-THIS IS THE FILE OPERATORS WILL COPY. It demonstrates the correct
-approach: carry full Decimal precision through every intermediate,
-quantise exactly ONCE at the declared point.
+THIS IS THE FILE OPERATORS WILL COPY.
 
-The WRONG approach (round-then-compute) is shown for Q07 to
-demonstrate the defect that R0.4.1 and AP-1 section 7.7 prohibit.
+C8.5 compliance:
+  - No expected value or intermediate appears as a numeric literal.
+  - Every value is the RETURN VALUE of an expression over delivered_context.
+  - Numeric literals are permitted ONLY as genuine constants of the
+    problem: 12 (months), 3 (quarter), 100 (percentage conversion).
+  - The module never sees the full fixture; it receives only the
+    accounts named in the item's source_accounts.
+  - The module returns UNQUANTISED values. The runner quantises once.
 
-All values are Decimal from string. No float anywhere.
+C8.6 disclosure:
+  - The author of this module is the same agent that wrote the runner.
+    This is the same-implementer condition C8.6 names.
+  - This example module is DEMONSTRATION MATERIAL, not an independent
+    derivation.
+  - An independent ground-truth module must be authored by a party
+    who did not write or review the runner code.
+
+Typed inputs (for D7.2 operand provenance):
+  Each intermediate's inputs list uses typed dicts:
+    {"source": "account.field"}      - from delivered_context
+    {"intermediate": "step_label"}   - from a prior intermediate
+    {"constant": "12"}               - genuine problem constant
 """
 
-from decimal import Decimal
+from decimal import Decimal as D
 
 
-# -- Fixture values (as Decimal from quoted strings) ------------------
+# -- Public interface -------------------------------------------------
 
-FIXTURE = {
-    'savings': {
-        'balance': Decimal('15200.00'),
-        'annual_rate': Decimal('1.2'),
-        'monthly_fee': Decimal('0.00'),
-    },
-    'checking': {
-        'balance': Decimal('4850.00'),
-        'annual_rate': Decimal('0.0'),
-        'monthly_fee': Decimal('12.00'),
-    },
-    'credit_card': {
-        'balance': Decimal('-2400.00'),
-        'annual_rate': Decimal('18.0'),
-        'monthly_fee': Decimal('0.00'),
-        'credit_limit': Decimal('5000.00'),
-        'min_payment': Decimal('25.00'),
-        'reward_rate': Decimal('1.5'),
-    },
-    'mortgage': {
-        'balance': Decimal('-287500.00'),
-        'annual_rate': Decimal('4.20'),
-        'monthly_fee': Decimal('0.00'),
-        'min_payment': Decimal('1437.00'),
-    },
-    'investment': {
-        'balance': Decimal('42175.00'),
-        'annual_rate': Decimal('7.8'),
-        'monthly_fee': Decimal('15.00'),
-    },
-}
+def compute(item_id, delivered_context):
+    """Compute ground truth for one item.
 
+    Args:
+        item_id: Question identifier (e.g. "Q01").
+        delivered_context: Dict built by the runner from fixture data
+            for ONLY the accounts listed in the item's source_accounts.
+            The module never sees the full fixture.
 
-# -- Ground-truth definitions ----------------------------------------
-#
-# Each entry:
-#   final:                 The expected answer (Decimal as string)
-#   derivable:             True if derivable from the fixture
-#   lookup_collision:      Computed at seal time by the runner
-#   required_operation:    The tool required
-#   intermediates:         Ordered list of computation steps
-#   source_fields_consumed: Fixture fields used in the derivation
+    Returns:
+        GroundTruth dict with keys:
+            final              Decimal (unquantised)
+            derivable          bool
+            required_operation str
+            intermediates      list of step dicts
+            source_fields_consumed  list of "account.field" strings
 
-GROUND_TRUTH = {
-    'Q01': {
-        'final': '15.20',
-        'derivable': True,
-        'required_operation': 'calculator',
-        'intermediates': [
-            {
-                'label': 'monthly_interest',
-                'value': '15.20',
-                'operation': 'multiply_then_divide',
-                'source_fields': ['savings.balance', 'savings.annual_rate'],
-                'inputs': ['15200.00', '1.2', '12'],
-                'formula': '15200.00 * 1.2 / 100 / 12 = 15.20',
-            },
-        ],
-        'source_fields_consumed': ['savings.balance', 'savings.annual_rate'],
-    },
-
-    'Q02': {
-        'final': '2600.00',
-        'derivable': True,
-        'required_operation': 'calculator',
-        'intermediates': [
-            {
-                'label': 'available_credit',
-                'value': '2600.00',
-                'operation': 'add',
-                'source_fields': [
-                    'credit_card.credit_limit', 'credit_card.balance'],
-                'inputs': ['5000.00', '-2400.00'],
-                'formula': '5000.00 + (-2400.00) = 2600.00',
-            },
-        ],
-        'source_fields_consumed': [
-            'credit_card.credit_limit', 'credit_card.balance'],
-    },
-
-    'Q03': {
-        'final': '36.00',
-        'derivable': True,
-        'required_operation': 'calculator',
-        'intermediates': [
-            {
-                'label': 'monthly_interest',
-                'value': '36.00',
-                'operation': 'multiply_then_divide',
-                'source_fields': [
-                    'credit_card.balance', 'credit_card.annual_rate'],
-                'inputs': ['2400.00', '18.0', '12'],
-                'formula': 'abs(-2400.00) * 18.0 / 100 / 12 = 36.00',
-            },
-        ],
-        'source_fields_consumed': [
-            'credit_card.balance', 'credit_card.annual_rate'],
-    },
-
-    'Q04': {
-        'final': '430.75',
-        'derivable': True,
-        'required_operation': 'calculator',
-        'intermediates': [
-            {
-                'label': 'monthly_interest',
-                'value': '1006.25',
-                'operation': 'multiply_then_divide',
-                'source_fields': [
-                    'mortgage.balance', 'mortgage.annual_rate'],
-                'inputs': ['287500.00', '4.20', '12'],
-                'formula': 'abs(-287500.00) * 4.20 / 100 / 12 = 1006.25',
-            },
-            {
-                'label': 'principal_portion',
-                'value': '430.75',
-                'operation': 'subtract',
-                'source_fields': ['mortgage.min_payment'],
-                'inputs': ['1437.00', '1006.25'],
-                'formula': '1437.00 - 1006.25 = 430.75',
-            },
-        ],
-        'source_fields_consumed': [
-            'mortgage.balance', 'mortgage.annual_rate',
-            'mortgage.min_payment'],
-    },
-
-    'Q05': {
-        'final': '2411.00',
-        'derivable': True,
-        'required_operation': 'calculator',
-        'intermediates': [
-            {
-                'label': 'monthly_interest',
-                'value': '36.00',
-                'operation': 'multiply_then_divide',
-                'source_fields': [
-                    'credit_card.balance', 'credit_card.annual_rate'],
-                'inputs': ['2400.00', '18.0', '12'],
-                'formula': 'abs(-2400.00) * 18.0 / 100 / 12 = 36.00',
-            },
-            {
-                'label': 'new_balance',
-                'value': '2411.00',
-                'operation': 'add_subtract',
-                'source_fields': ['credit_card.min_payment'],
-                'inputs': ['2400.00', '36.00', '25.00'],
-                'formula': 'abs(-2400.00) + 36.00 - 25.00 = 2411.00',
-            },
-        ],
-        'source_fields_consumed': [
-            'credit_card.balance', 'credit_card.annual_rate',
-            'credit_card.min_payment'],
-    },
-
-    'Q06': {
-        'final': '144.00',
-        'derivable': True,
-        'required_operation': 'calculator',
-        'intermediates': [
-            {
-                'label': 'annual_fees',
-                'value': '144.00',
-                'operation': 'multiply',
-                'source_fields': ['checking.monthly_fee'],
-                'inputs': ['12.00', '12'],
-                'formula': '12.00 * 12 = 144.00',
-            },
-        ],
-        'source_fields_consumed': ['checking.monthly_fee'],
-    },
-
-    # ------------------------------------------------------------------
-    # Q07: THE ROUND-ONCE DEMONSTRATION
-    #
-    # CORRECT (full precision, quantise once at end):
-    #   Step 1: 42175.00 * 7.8 / 100 / 12 = 274.1375        (exact)
-    #   Step 2: 274.1375 - 15.00 = 259.1375                  (exact)
-    #   Step 3: 259.1375 * 3 = 777.4125                      (exact)
-    #   Quantise: 777.4125 -> 777.41 (HALF_UP or HALF_EVEN)
-    #
-    # WRONG (round each step -- the V1 defect):
-    #   Step 1: 274.1375 -> round to 274.14
-    #   Step 2: 274.14 - 15.00 = 259.14
-    #   Step 3: 259.14 * 3 = 777.42                          != 777.41
-    #
-    # The difference (0.01) is the same class of defect that made
-    # V1 report $149.80 when the true value was $149.79.
-    # ------------------------------------------------------------------
-    'Q07': {
-        'final': '777.41',
-        'derivable': True,
-        'required_operation': 'calculator',
-        'intermediates': [
-            {
-                'label': 'monthly_return',
-                'value': '274.1375',
-                'operation': 'multiply_then_divide',
-                'source_fields': [
-                    'investment.balance', 'investment.annual_rate'],
-                'inputs': ['42175.00', '7.8', '12'],
-                'formula': '42175.00 * 7.8 / 100 / 12 = 274.1375',
-            },
-            {
-                'label': 'monthly_net',
-                'value': '259.1375',
-                'operation': 'subtract',
-                'source_fields': ['investment.monthly_fee'],
-                'inputs': ['274.1375', '15.00'],
-                'formula': '274.1375 - 15.00 = 259.1375',
-            },
-            {
-                'label': 'quarterly_net',
-                'value': '777.4125',
-                'operation': 'multiply',
-                'source_fields': [],
-                'inputs': ['259.1375', '3'],
-                'formula': '259.1375 * 3 = 777.4125',
-            },
-        ],
-        'source_fields_consumed': [
-            'investment.balance', 'investment.annual_rate',
-            'investment.monthly_fee'],
-        'quantisation_note':
-            'Quantise 777.4125 once at end: digit after cut is 2 (<5), '
-            'rounds down to 777.41 under both HALF_UP and HALF_EVEN. '
-            'Unambiguous.',
-        'round_then_compute_wrong_answer': '777.42',
-    },
-
-    'Q08': {
-        'final': '287069.25',
-        'derivable': True,
-        'required_operation': 'calculator',
-        'intermediates': [
-            {
-                'label': 'monthly_interest',
-                'value': '1006.25',
-                'operation': 'multiply_then_divide',
-                'source_fields': [
-                    'mortgage.balance', 'mortgage.annual_rate'],
-                'inputs': ['287500.00', '4.20', '12'],
-                'formula': 'abs(-287500.00) * 4.20 / 100 / 12 = 1006.25',
-            },
-            {
-                'label': 'principal_portion',
-                'value': '430.75',
-                'operation': 'subtract',
-                'source_fields': ['mortgage.min_payment'],
-                'inputs': ['1437.00', '1006.25'],
-                'formula': '1437.00 - 1006.25 = 430.75',
-            },
-            {
-                'label': 'remaining_balance',
-                'value': '287069.25',
-                'operation': 'subtract',
-                'source_fields': [],
-                'inputs': ['287500.00', '430.75'],
-                'formula': '287500.00 - 430.75 = 287069.25',
-            },
-        ],
-        'source_fields_consumed': [
-            'mortgage.balance', 'mortgage.annual_rate',
-            'mortgage.min_payment'],
-    },
-
-    'Q09': {
-        'final': '3.20',
-        'derivable': True,
-        'required_operation': 'calculator',
-        'intermediates': [
-            {
-                'label': 'monthly_interest',
-                'value': '15.20',
-                'operation': 'multiply_then_divide',
-                'source_fields': [
-                    'savings.balance', 'savings.annual_rate'],
-                'inputs': ['15200.00', '1.2', '12'],
-                'formula': '15200.00 * 1.2 / 100 / 12 = 15.20',
-            },
-            {
-                'label': 'net_income',
-                'value': '3.20',
-                'operation': 'subtract',
-                'source_fields': ['checking.monthly_fee'],
-                'inputs': ['15.20', '12.00'],
-                'formula': '15.20 - 12.00 = 3.20',
-            },
-        ],
-        'source_fields_consumed': [
-            'savings.balance', 'savings.annual_rate',
-            'checking.monthly_fee'],
-    },
-
-    'Q10': {
-        'final': '3109.65',
-        'derivable': True,
-        'required_operation': 'calculator',
-        'intermediates': [
-            {
-                'label': 'monthly_return',
-                'value': '274.1375',
-                'operation': 'multiply_then_divide',
-                'source_fields': [
-                    'investment.balance', 'investment.annual_rate'],
-                'inputs': ['42175.00', '7.8', '12'],
-                'formula': '42175.00 * 7.8 / 100 / 12 = 274.1375',
-            },
-            {
-                'label': 'monthly_net',
-                'value': '259.1375',
-                'operation': 'subtract',
-                'source_fields': ['investment.monthly_fee'],
-                'inputs': ['274.1375', '15.00'],
-                'formula': '274.1375 - 15.00 = 259.1375',
-            },
-            {
-                'label': 'annual_net',
-                'value': '3109.65',
-                'operation': 'multiply',
-                'source_fields': [],
-                'inputs': ['259.1375', '12'],
-                'formula': '259.1375 * 12 = 3109.65',
-            },
-        ],
-        'source_fields_consumed': [
-            'investment.balance', 'investment.annual_rate',
-            'investment.monthly_fee'],
-        'quantisation_note':
-            '259.1375 * 12 = 3109.6500 — exact to 2dp, no rounding '
-            'needed. Unambiguous under any mode.',
-    },
-}
-
-
-# -- Verification: compute each answer and assert correctness ---------
-
-def verify_all():
-    """Verify every ground-truth entry by recomputing from fixture.
-
-    All computation uses Decimal. No float. Quantise once at end.
+    Raises:
+        KeyError if a required field is absent from delivered_context.
+        ValueError if no derivation is registered for item_id.
     """
+    if item_id not in DERIVATIONS:
+        raise ValueError(f"no derivation registered for {item_id!r}")
+    return DERIVATIONS[item_id](delivered_context)
+
+
+# -- Q01: Monthly savings interest ------------------------------------
+
+def derive_q01(ctx):
+    bal = D(ctx["savings"]["balance"])
+    rate = D(ctx["savings"]["annual_rate"])
+
+    monthly_interest = bal * rate / D("100") / D("12")
+
+    return {
+        "final": monthly_interest,
+        "derivable": True,
+        "required_operation": "calculator",
+        "intermediates": [
+            {
+                "label": "monthly_interest",
+                "value": monthly_interest,
+                "operation": "multiply_then_divide",
+                "inputs": [
+                    {"source": "savings.balance"},
+                    {"source": "savings.annual_rate"},
+                    {"constant": "100"},
+                    {"constant": "12"},
+                ],
+            },
+        ],
+        "source_fields_consumed": ["savings.balance", "savings.annual_rate"],
+    }
+
+
+# -- Q02: Available credit -------------------------------------------
+
+def derive_q02(ctx):
+    limit = D(ctx["credit_card"]["credit_limit"])
+    balance = D(ctx["credit_card"]["balance"])
+
+    available = limit + balance  # balance is negative
+
+    return {
+        "final": available,
+        "derivable": True,
+        "required_operation": "calculator",
+        "intermediates": [
+            {
+                "label": "available_credit",
+                "value": available,
+                "operation": "add",
+                "inputs": [
+                    {"source": "credit_card.credit_limit"},
+                    {"source": "credit_card.balance"},
+                ],
+            },
+        ],
+        "source_fields_consumed": [
+            "credit_card.credit_limit", "credit_card.balance"],
+    }
+
+
+# -- Q03: Monthly credit card interest --------------------------------
+
+def derive_q03(ctx):
+    balance = D(ctx["credit_card"]["balance"])
+    rate = D(ctx["credit_card"]["annual_rate"])
+
+    monthly_interest = abs(balance) * rate / D("100") / D("12")
+
+    return {
+        "final": monthly_interest,
+        "derivable": True,
+        "required_operation": "calculator",
+        "intermediates": [
+            {
+                "label": "monthly_interest",
+                "value": monthly_interest,
+                "operation": "multiply_then_divide",
+                "inputs": [
+                    {"source": "credit_card.balance"},
+                    {"source": "credit_card.annual_rate"},
+                    {"constant": "100"},
+                    {"constant": "12"},
+                ],
+            },
+        ],
+        "source_fields_consumed": [
+            "credit_card.balance", "credit_card.annual_rate"],
+    }
+
+
+# -- Q04: First mortgage payment principal ----------------------------
+
+def derive_q04(ctx):
+    balance = D(ctx["mortgage"]["balance"])
+    rate = D(ctx["mortgage"]["annual_rate"])
+    payment = D(ctx["mortgage"]["min_payment"])
+
+    monthly_interest = abs(balance) * rate / D("100") / D("12")
+    principal = payment - monthly_interest
+
+    return {
+        "final": principal,
+        "derivable": True,
+        "required_operation": "calculator",
+        "intermediates": [
+            {
+                "label": "monthly_interest",
+                "value": monthly_interest,
+                "operation": "multiply_then_divide",
+                "inputs": [
+                    {"source": "mortgage.balance"},
+                    {"source": "mortgage.annual_rate"},
+                    {"constant": "100"},
+                    {"constant": "12"},
+                ],
+            },
+            {
+                "label": "principal_portion",
+                "value": principal,
+                "operation": "subtract",
+                "inputs": [
+                    {"source": "mortgage.min_payment"},
+                    {"intermediate": "monthly_interest"},
+                ],
+            },
+        ],
+        "source_fields_consumed": [
+            "mortgage.balance", "mortgage.annual_rate",
+            "mortgage.min_payment"],
+    }
+
+
+# -- Q05: Credit card after one month --------------------------------
+
+def derive_q05(ctx):
+    balance = D(ctx["credit_card"]["balance"])
+    rate = D(ctx["credit_card"]["annual_rate"])
+    min_pay = D(ctx["credit_card"]["min_payment"])
+
+    monthly_interest = abs(balance) * rate / D("100") / D("12")
+    new_balance = abs(balance) + monthly_interest - min_pay
+
+    return {
+        "final": new_balance,
+        "derivable": True,
+        "required_operation": "calculator",
+        "intermediates": [
+            {
+                "label": "monthly_interest",
+                "value": monthly_interest,
+                "operation": "multiply_then_divide",
+                "inputs": [
+                    {"source": "credit_card.balance"},
+                    {"source": "credit_card.annual_rate"},
+                    {"constant": "100"},
+                    {"constant": "12"},
+                ],
+            },
+            {
+                "label": "new_balance",
+                "value": new_balance,
+                "operation": "add_subtract",
+                "inputs": [
+                    {"source": "credit_card.balance"},
+                    {"intermediate": "monthly_interest"},
+                    {"source": "credit_card.min_payment"},
+                ],
+            },
+        ],
+        "source_fields_consumed": [
+            "credit_card.balance", "credit_card.annual_rate",
+            "credit_card.min_payment"],
+    }
+
+
+# -- Q06: Annual checking fees ----------------------------------------
+
+def derive_q06(ctx):
+    fee = D(ctx["checking"]["monthly_fee"])
+
+    annual_fees = fee * D("12")
+
+    return {
+        "final": annual_fees,
+        "derivable": True,
+        "required_operation": "calculator",
+        "intermediates": [
+            {
+                "label": "annual_fees",
+                "value": annual_fees,
+                "operation": "multiply",
+                "inputs": [
+                    {"source": "checking.monthly_fee"},
+                    {"constant": "12"},
+                ],
+            },
+        ],
+        "source_fields_consumed": ["checking.monthly_fee"],
+    }
+
+
+# -- Q07: Investment quarterly net growth -----------------------------
+#
+# THE ROUND-ONCE DEMONSTRATION.
+#
+# Unquantised result: 777.4125
+# Quantised once at end: 777.41  (remainder 0.0025, rounds DOWN
+#   under both HALF_UP and HALF_EVEN — mode-independent)
+#
+# If rounded at each step: 274.14 -> 259.14 -> 777.42 != 777.41
+# That is the round-then-compute defect R0.4.1 prohibits.
+
+def derive_q07(ctx):
+    balance = D(ctx["investment"]["balance"])
+    rate = D(ctx["investment"]["annual_rate"])
+    fee = D(ctx["investment"]["monthly_fee"])
+
+    monthly_return = balance * rate / D("100") / D("12")
+    monthly_net = monthly_return - fee
+    quarterly_net = monthly_net * D("3")
+
+    return {
+        "final": quarterly_net,
+        "derivable": True,
+        "required_operation": "calculator",
+        "intermediates": [
+            {
+                "label": "monthly_return",
+                "value": monthly_return,
+                "operation": "multiply_then_divide",
+                "inputs": [
+                    {"source": "investment.balance"},
+                    {"source": "investment.annual_rate"},
+                    {"constant": "100"},
+                    {"constant": "12"},
+                ],
+            },
+            {
+                "label": "monthly_net",
+                "value": monthly_net,
+                "operation": "subtract",
+                "inputs": [
+                    {"intermediate": "monthly_return"},
+                    {"source": "investment.monthly_fee"},
+                ],
+            },
+            {
+                "label": "quarterly_net",
+                "value": quarterly_net,
+                "operation": "multiply",
+                "inputs": [
+                    {"intermediate": "monthly_net"},
+                    {"constant": "3"},
+                ],
+            },
+        ],
+        "source_fields_consumed": [
+            "investment.balance", "investment.annual_rate",
+            "investment.monthly_fee"],
+    }
+
+
+# -- Q08: Mortgage balance after first payment ------------------------
+
+def derive_q08(ctx):
+    balance = D(ctx["mortgage"]["balance"])
+    rate = D(ctx["mortgage"]["annual_rate"])
+    payment = D(ctx["mortgage"]["min_payment"])
+
+    monthly_interest = abs(balance) * rate / D("100") / D("12")
+    principal = payment - monthly_interest
+    remaining = abs(balance) - principal
+
+    return {
+        "final": remaining,
+        "derivable": True,
+        "required_operation": "calculator",
+        "intermediates": [
+            {
+                "label": "monthly_interest",
+                "value": monthly_interest,
+                "operation": "multiply_then_divide",
+                "inputs": [
+                    {"source": "mortgage.balance"},
+                    {"source": "mortgage.annual_rate"},
+                    {"constant": "100"},
+                    {"constant": "12"},
+                ],
+            },
+            {
+                "label": "principal_portion",
+                "value": principal,
+                "operation": "subtract",
+                "inputs": [
+                    {"source": "mortgage.min_payment"},
+                    {"intermediate": "monthly_interest"},
+                ],
+            },
+            {
+                "label": "remaining_balance",
+                "value": remaining,
+                "operation": "subtract",
+                "inputs": [
+                    {"source": "mortgage.balance"},
+                    {"intermediate": "principal_portion"},
+                ],
+            },
+        ],
+        "source_fields_consumed": [
+            "mortgage.balance", "mortgage.annual_rate",
+            "mortgage.min_payment"],
+    }
+
+
+# -- Q09: Net monthly savings after checking fees --------------------
+
+def derive_q09(ctx):
+    sav_balance = D(ctx["savings"]["balance"])
+    sav_rate = D(ctx["savings"]["annual_rate"])
+    chk_fee = D(ctx["checking"]["monthly_fee"])
+
+    monthly_interest = sav_balance * sav_rate / D("100") / D("12")
+    net = monthly_interest - chk_fee
+
+    return {
+        "final": net,
+        "derivable": True,
+        "required_operation": "calculator",
+        "intermediates": [
+            {
+                "label": "monthly_interest",
+                "value": monthly_interest,
+                "operation": "multiply_then_divide",
+                "inputs": [
+                    {"source": "savings.balance"},
+                    {"source": "savings.annual_rate"},
+                    {"constant": "100"},
+                    {"constant": "12"},
+                ],
+            },
+            {
+                "label": "net_income",
+                "value": net,
+                "operation": "subtract",
+                "inputs": [
+                    {"intermediate": "monthly_interest"},
+                    {"source": "checking.monthly_fee"},
+                ],
+            },
+        ],
+        "source_fields_consumed": [
+            "savings.balance", "savings.annual_rate",
+            "checking.monthly_fee"],
+    }
+
+
+# -- Q10: Investment annual net growth --------------------------------
+
+def derive_q10(ctx):
+    balance = D(ctx["investment"]["balance"])
+    rate = D(ctx["investment"]["annual_rate"])
+    fee = D(ctx["investment"]["monthly_fee"])
+
+    monthly_return = balance * rate / D("100") / D("12")
+    monthly_net = monthly_return - fee
+    annual_net = monthly_net * D("12")
+
+    return {
+        "final": annual_net,
+        "derivable": True,
+        "required_operation": "calculator",
+        "intermediates": [
+            {
+                "label": "monthly_return",
+                "value": monthly_return,
+                "operation": "multiply_then_divide",
+                "inputs": [
+                    {"source": "investment.balance"},
+                    {"source": "investment.annual_rate"},
+                    {"constant": "100"},
+                    {"constant": "12"},
+                ],
+            },
+            {
+                "label": "monthly_net",
+                "value": monthly_net,
+                "operation": "subtract",
+                "inputs": [
+                    {"intermediate": "monthly_return"},
+                    {"source": "investment.monthly_fee"},
+                ],
+            },
+            {
+                "label": "annual_net",
+                "value": annual_net,
+                "operation": "multiply",
+                "inputs": [
+                    {"intermediate": "monthly_net"},
+                    {"constant": "12"},
+                ],
+            },
+        ],
+        "source_fields_consumed": [
+            "investment.balance", "investment.annual_rate",
+            "investment.monthly_fee"],
+    }
+
+
+# -- Dispatch table ---------------------------------------------------
+
+DERIVATIONS = {
+    "Q01": derive_q01,
+    "Q02": derive_q02,
+    "Q03": derive_q03,
+    "Q04": derive_q04,
+    "Q05": derive_q05,
+    "Q06": derive_q06,
+    "Q07": derive_q07,
+    "Q08": derive_q08,
+    "Q09": derive_q09,
+    "Q10": derive_q10,
+}
+
+
+# -- Standalone verification -----------------------------------------
+
+if __name__ == "__main__":
+    import json
+    import os
+    import sys
     from decimal import ROUND_HALF_UP
-    results = {}
 
-    for qid, gt in GROUND_TRUTH.items():
-        # Recompute the final intermediate (which is the answer
-        # before quantisation)
-        last_intermediate = Decimal(gt['intermediates'][-1]['value'])
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-        # Quantise once
-        quantised = last_intermediate.quantize(
-            Decimal('0.01'), rounding=ROUND_HALF_UP)
+    base = os.path.dirname(os.path.abspath(__file__))
 
-        expected = Decimal(gt['final'])
-        match = quantised == expected
+    with open(os.path.join(base, "fixture.json"), "r", encoding="utf-8") as f:
+        fixture = json.load(f)
 
-        results[qid] = {
-            'expected': str(expected),
-            'computed': str(quantised),
-            'full_precision': str(last_intermediate),
-            'match': match,
+    with open(os.path.join(base, "questions.json"), "r", encoding="utf-8") as f:
+        questions = json.load(f)
+
+    accounts = {a["id"]: a for a in fixture["accounts"]}
+
+    print("Ground-truth verification (C8.5 compliant):")
+    print("All values computed from fixture expressions, no authored literals.")
+    print()
+
+    all_ok = True
+    for item in questions["items"]:
+        item_id = item["id"]
+
+        # Build delivered context — runner's responsibility
+        ctx = {}
+        for acct_id in item["source_accounts"]:
+            acct = accounts[acct_id]
+            ctx[acct_id] = {
+                k: v for k, v in acct.items() if k not in ("id", "name")
+            }
+
+        result = compute(item_id, ctx)
+        full = result["final"]
+        quantised = full.quantize(D("0.01"), rounding=ROUND_HALF_UP)
+        n_steps = len(result["intermediates"])
+
+        print(f"  {item_id} ({n_steps}-step): {item['text']}")
+        for step in result["intermediates"]:
+            typed_inputs = []
+            for inp in step["inputs"]:
+                if "source" in inp:
+                    typed_inputs.append(f"src:{inp['source']}")
+                elif "intermediate" in inp:
+                    typed_inputs.append(f"int:{inp['intermediate']}")
+                elif "constant" in inp:
+                    typed_inputs.append(f"const:{inp['constant']}")
+            print(f"    {step['label']} = {step['value']}")
+            print(f"      [{step['operation']}({', '.join(typed_inputs)})]")
+        print(f"    -> full_precision={full}  quantised_2dp={quantised}")
+        print()
+
+    # Q07 round-once vs round-each
+    ctx_inv = {}
+    for acct_id in ["investment"]:
+        acct = accounts[acct_id]
+        ctx_inv[acct_id] = {
+            k: v for k, v in acct.items() if k not in ("id", "name")
         }
 
-        status = 'OK' if match else 'MISMATCH'
-        print(f'  {qid}: {status}  expected={expected}  '
-              f'computed={quantised}  full={last_intermediate}')
+    q07 = compute("Q07", ctx_inv)
+    s1 = q07["intermediates"][0]["value"]
+    s2 = q07["intermediates"][1]["value"]
+    s3 = q07["intermediates"][2]["value"]
 
-    # Q07 specific: demonstrate the round-then-compute defect
+    correct = s3.quantize(D("0.01"), rounding=ROUND_HALF_UP)
+
+    wrong_s1 = s1.quantize(D("0.01"), rounding=ROUND_HALF_UP)
+    wrong_s2 = (wrong_s1 - D(ctx_inv["investment"]["monthly_fee"])).quantize(
+        D("0.01"), rounding=ROUND_HALF_UP)
+    wrong_s3 = (wrong_s2 * D("3")).quantize(D("0.01"), rounding=ROUND_HALF_UP)
+
+    print("Q07 round-once vs round-each:")
+    print(f"  Correct (round once):  {s1} -> {s2} -> {s3} -> {correct}")
+    print(f"  Wrong (round each):    {wrong_s1} -> {wrong_s2} -> {wrong_s3}")
+    differ = correct != wrong_s3
+    print(f"  Differ: {differ}  (must be True)")
+    if not differ:
+        print("  ERROR: round-once and round-each produce the same result!")
+        all_ok = False
     print()
-    print('  Q07 round-then-compute demonstration:')
-    q07 = GROUND_TRUTH['Q07']
-    step1 = Decimal(q07['intermediates'][0]['value'])  # 274.1375
-    step2 = Decimal(q07['intermediates'][1]['value'])  # 259.1375
-    step3 = Decimal(q07['intermediates'][2]['value'])  # 777.4125
 
-    # CORRECT: quantise once at end
-    correct = step3.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-    print(f'    Correct (round once):  {step1} -> {step2} -> '
-          f'{step3} -> {correct}')
-
-    # WRONG: round each intermediate
-    wrong_s1 = step1.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-    wrong_s2 = (wrong_s1 - Decimal('15.00')).quantize(
-        Decimal('0.01'), rounding=ROUND_HALF_UP)
-    wrong_s3 = (wrong_s2 * Decimal('3')).quantize(
-        Decimal('0.01'), rounding=ROUND_HALF_UP)
-    print(f'    Wrong (round each):    {wrong_s1} -> {wrong_s2} -> '
-          f'{wrong_s3}')
-    print(f'    Difference: {wrong_s3} != {correct}  '
-          f'(error = {wrong_s3 - correct})')
-
-    all_ok = all(r['match'] for r in results.values())
-    return all_ok, results
-
-
-if __name__ == '__main__':
-    print('Ground-truth verification:')
-    ok, _ = verify_all()
-    print()
-    print('ALL PASS' if ok else 'FAILURES DETECTED')
-    raise SystemExit(0 if ok else 1)
+    print("ALL PASS" if all_ok else "FAILURES DETECTED")
+    raise SystemExit(0 if all_ok else 1)
