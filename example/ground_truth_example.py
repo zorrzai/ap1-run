@@ -1,4 +1,4 @@
-"""Ground-truth module: derivation logic for 10 example items.
+﻿"""Ground-truth module: derivation logic for 10 example items.
 
 THIS IS THE FILE OPERATORS WILL COPY.
 
@@ -230,6 +230,12 @@ def derive_q05(ctx):
 
 
 # -- Q06: Annual checking fees ----------------------------------------
+#
+# D7.2 NOTE: This item is AMBIGUOUS for operand-origination testing.
+# The expression is monthly_fee * 12, but checking.monthly_fee = "12.00",
+# so the operand "12" resolves both as a source field and as a permitted
+# constant (months in a year). This item cannot detect origination at
+# that position. Do not use Q06 as a positive or negative case for D7.2.
 
 def derive_q06(ctx):
     fee = D(ctx["checking"]["monthly_fee"])
