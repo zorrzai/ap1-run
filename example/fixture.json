@@ -1,0 +1,46 @@
+{
+    "fixture_version": "1.0.0",
+    "domain": "personal_finance",
+    "description": "Five personal-finance accounts with original values. Nothing copied or adapted from any evaluation profile.",
+    "accounts": [
+        {
+            "id": "savings",
+            "name": "Savings Account",
+            "balance": "15200.00",
+            "annual_rate": "1.2",
+            "monthly_fee": "0.00"
+        },
+        {
+            "id": "checking",
+            "name": "Checking Account",
+            "balance": "4850.00",
+            "annual_rate": "0.0",
+            "monthly_fee": "12.00"
+        },
+        {
+            "id": "credit_card",
+            "name": "Credit Card",
+            "balance": "-2400.00",
+            "annual_rate": "18.0",
+            "monthly_fee": "0.00",
+            "credit_limit": "5000.00",
+            "min_payment": "25.00",
+            "reward_rate": "1.5"
+        },
+        {
+            "id": "mortgage",
+            "name": "Mortgage",
+            "balance": "-287500.00",
+            "annual_rate": "4.20",
+            "monthly_fee": "0.00",
+            "min_payment": "1437.00"
+        },
+        {
+            "id": "investment",
+            "name": "Investment Account",
+            "balance": "42175.00",
+            "annual_rate": "7.8",
+            "monthly_fee": "15.00"
+        }
+    ]
+}
