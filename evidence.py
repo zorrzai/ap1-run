@@ -5,15 +5,25 @@ Spec: AP-1 Runner Build Spec v0.3, section 5 R1.3.1.
 Evidence is graded by INDEPENDENCE from the system under test and by
 VERIFIABILITY, never by richness or format.
 
+The evidence class is determined by WHAT THE PLATFORM PROVIDES,
+not by what the model says about itself.
+
+  tools_offered=True, tool_calls empty  -> EV-2, NOT-INVOKED
+  tools_offered=True, tool_calls present -> EV-2, INVOKED
+  tools_offered=False (no tool structure) -> EV-0 UNOBSERVABLE
+
+A self-reported prose claim ("I used the calculator") is RECORDED
+but does NOT set the evidence class and does NOT change the outcome.
+Where platform structure is available, the platform evidence governs;
+the prose claim is noted and ignored.
+
 Normative ordering: EV-0 < EV-1 < EV-2 < EV-3.
   EV-1 ranks BELOW EV-2.
   A signature does not cure self-report: the signer is the party
-  being measured. An attestation reaches EV-3 only when the runner
-  has performed the verification.
+  being measured.
 
-v1.0: EV-3 is NOT IMPLEMENTED. Any attestation encountered is
-classified EV-1 with reason "verification not implemented in
-runner v1.0". The runner MUST NOT emit EV-3.
+v1.0: EV-3 is NOT IMPLEMENTED. Any attestation -> EV-1.
+The runner MUST NOT emit EV-3.
 """
 
 
@@ -24,10 +34,7 @@ EV_1 = 'EV-1 SELF-REPORTED'
 EV_2 = 'EV-2 PLATFORM-STRUCTURAL'
 EV_3 = 'EV-3 EXTERNALLY-VERIFIABLE'
 
-# Normative ordering
 _RANK = {EV_0: 0, EV_1: 1, EV_2: 2, EV_3: 3}
-
-# v1.0: EV-3 is forbidden
 _EV3_FORBIDDEN = True
 
 
@@ -37,59 +44,53 @@ class EvidenceError(Exception):
 
 # -- Classification ---------------------------------------------------
 
-def classify_invocation(response, tool_calls_from_platform):
-    """Classify the evidence class of an invocation observation.
+def classify_invocation(response, *, tools_offered):
+    """Classify the evidence class and invocation outcome.
+
+    The class is determined by what the PLATFORM provides:
+      tools_offered=True  -> EV-2 (serving layer provides structure)
+      tools_offered=False -> EV-0 (runner cannot observe)
+
+    Self-reported prose claims are RECORDED but do not set the
+    evidence class and do not change the outcome.
 
     Args:
-        response: The raw response dict from the endpoint.
-        tool_calls_from_platform: List of tool-call records from the
-            serving layer (the platform, not the model). Each is a dict
-            with at least 'function' -> {'name': str, 'arguments': str}.
-            None or empty if the platform exposes no tool structure.
+        response: Raw response dict from endpoint.
+        tools_offered: Were tool definitions sent in the request?
 
     Returns:
-        (evidence_class, reason) tuple.
+        (evidence_class, invocation_outcome, self_report)
+        evidence_class: EV-0 or EV-2
+        invocation_outcome: 'INVOKED', 'NOT-INVOKED', or None
+        self_report: prose claim string or None
     """
-    # Case 1: platform provides structural tool-call records
-    if tool_calls_from_platform:
-        return EV_2, 'tool-call record from serving layer'
-
-    # Case 2: response contains tool_calls in the model's output
-    # (OpenAI-compatible format)
-    model_tool_calls = _extract_model_tool_calls(response)
-
-    if model_tool_calls:
-        # The tool-call record is from the serving layer's structured
-        # output, which is a third-party record relative to the model.
-        # This is EV-2 when the serving layer produces it.
-        return EV_2, 'tool-call structure in endpoint response'
-
-    # Case 3: the response is text-only with no tool structure
-    # Check for self-reported claims ("I used the calculator")
+    # Record any self-reported prose claim (always, regardless of class)
     content = _extract_content(response)
+    self_report = None
     if content and _contains_self_report(content):
-        return EV_1, (
-            'model claims tool use in text but no structural record; '
-            'self-report is not admissible for a control claim')
+        self_report = content
 
-    # Case 4: no invocation signal at all
-    return EV_0, 'no invocation signal available'
+    if not tools_offered:
+        # No tool structure at all -- genuinely cannot tell
+        return EV_0, None, self_report
+
+    # Platform exposes tool-call structure -- this is EV-2
+    tool_calls = _extract_model_tool_calls(response)
+    if tool_calls:
+        return EV_2, 'INVOKED', self_report
+    else:
+        return EV_2, 'NOT-INVOKED', self_report
 
 
 def classify_attestation(attestation, seal_record):
     """Classify an attestation's evidence class.
 
-    In v1.0, no attestation can reach EV-3 because the runner has
-    not implemented signature verification or ledger membership
-    checking.
+    In v1.0, no attestation can reach EV-3. The runner has not
+    implemented signature verification or ledger membership checking.
+    A signature does not cure self-report because the signer is the
+    party being measured.
 
-    Args:
-        attestation: Dict with 'signature', 'payload', etc.
-        seal_record: The pre-registration record (contains
-            verification_keys and ev3_implemented flag).
-
-    Returns:
-        (evidence_class, reason) tuple.
+    Returns: (evidence_class, reason)
     """
     if _EV3_FORBIDDEN:
         return EV_1, (
@@ -97,26 +98,14 @@ def classify_attestation(attestation, seal_record):
             'classified EV-1 per R1.3.1 — a signature does not cure '
             'self-report because the signer is the party being measured')
 
-    # Future v2.0 path (unreachable in v1.0)
-    ev3_implemented = seal_record.get('ev3_implemented', False)
-    if not ev3_implemented:
-        return EV_1, 'ev3_implemented is False in seal record'
-
-    verification_keys = seal_record.get('verification_keys', [])
-    if not verification_keys:
-        return EV_1, (
-            'no verification keys sealed in pre-registration record; '
-            'cannot verify attestation signature')
-
-    # Would check: signature valid against sealed key, hash in
-    # anchored ledger. Not implemented.
+    # Future path (unreachable in v1.0)
     return EV_1, 'verification logic not implemented'
 
 
 def check_ev3_guard(evidence_class):
     """Enforce: the runner MUST NOT emit EV-3 in v1.0.
 
-    Call this before writing any evidence class to the transcript.
+    Call before writing any evidence class to the transcript.
     Raises EvidenceError if the class is EV-3.
     """
     if _EV3_FORBIDDEN and evidence_class == EV_3:
@@ -159,7 +148,7 @@ def _extract_model_tool_calls(response):
     if not choices:
         return []
     message = choices[0].get('message', {})
-    return message.get('tool_calls', [])
+    return message.get('tool_calls') or []
 
 
 def _extract_content(response):
@@ -177,3 +166,17 @@ def _contains_self_report(text):
     """Check if text contains a self-reported tool-use claim."""
     lower = text.lower()
     return any(marker in lower for marker in _SELF_REPORT_MARKERS)
+
+
+def extract_attestation(response):
+    """Extract an attestation from the response, if present."""
+    if not isinstance(response, dict):
+        return None
+    choices = response.get('choices', [])
+    if not choices:
+        return None
+    message = choices[0].get('message', {})
+    metadata = message.get('metadata', {})
+    if metadata and 'attestation' in metadata:
+        return metadata['attestation']
+    return None
