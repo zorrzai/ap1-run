@@ -8,7 +8,11 @@ raw response unmodified.
 
 Dependencies: requests (the only external dependency).
 No SDK. No interpretation, no retry-on-content, no normalisation.
+No network call to any host other than the configured endpoint.
 """
+
+import time
+from decimal import Decimal
 
 import requests as _requests
 
@@ -21,32 +25,71 @@ class RateLimitError(AdapterError):
     """HTTP 429 -- rate limited. Recorded as UNMEASURED."""
 
 
-MAX_RETRIES = 2  # on transport failure only, per R0.2
+class HTTPError(AdapterError):
+    """Non-200, non-429 HTTP response. Recorded as UNMEASURED."""
+
+    def __init__(self, message, status_code, body):
+        super().__init__(message)
+        self.status_code = status_code
+        self.body = body
+
+
+MAX_RETRIES = 3     # on transport failure only, per R0.2
+RETRY_DELAY = 1.0   # seconds between transport-failure retries
 
 
 def send(endpoint_url, *, messages, tools=None, sampling=None,
-         model=None, timeout=120):
+         model=None, api_key=None, timeout=120):
     """Send a chat-completions request. Return raw JSON response.
 
     No interpretation, no retry-on-content, no normalisation.
+    Returns what arrived, including errors.
     Retries only on transport failure, bounded, every attempt logged.
 
-    Returns: (response_dict, attempts_log)
-    Raises: AdapterError on unrecoverable transport failure.
-            RateLimitError on HTTP 429.
+    Returns:
+        (raw_response_dict, request_record)
+        raw_response_dict: The response JSON, unmodified.
+        request_record: The request AS SENT, including every
+            sampling parameter with its value or explicit omission.
+
+    Raises:
+        AdapterError: Unrecoverable transport failure after all retries.
+        RateLimitError: HTTP 429.
+        HTTPError: Non-200, non-429 status.
     """
-    body = {'model': model or '', 'messages': messages}
+    body = {"model": model or "", "messages": messages}
 
     if tools:
-        body['tools'] = tools
+        body["tools"] = tools
 
-    # Apply sampling parameters (value or explicit 'omitted')
+    sampling_as_sent = {}
     if sampling:
         for k, v in sampling.items():
-            if v != 'omitted':
-                body[k] = v
+            if v == "omitted":
+                sampling_as_sent[k] = "omitted"
+            else:
+                try:
+                    d = Decimal(str(v))
+                    if d == d.to_integral_value():
+                        body[k] = int(d)
+                    else:
+                        body[k] = float(d)
+                except Exception:
+                    body[k] = v
+                sampling_as_sent[k] = str(v)
 
-    headers = {'Content-Type': 'application/json'}
+    headers = {"Content-Type": "application/json"}
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
+
+    request_record = {
+        "endpoint_url": endpoint_url,
+        "model": model or "",
+        "messages": messages,
+        "tools": tools,
+        "sampling_as_sent": sampling_as_sent,
+    }
+
     attempts = []
 
     for attempt in range(1, MAX_RETRIES + 1):
@@ -55,45 +98,46 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
                 endpoint_url, json=body, headers=headers,
                 timeout=timeout)
             attempts.append({
-                'attempt': attempt,
-                'status': resp.status_code,
-                'error': None,
+                "attempt": attempt,
+                "status_code": resp.status_code,
+                "error": None,
+                "timestamp": time.time(),
             })
         except _requests.RequestException as e:
             attempts.append({
-                'attempt': attempt,
-                'status': None,
-                'error': str(e),
+                "attempt": attempt,
+                "status_code": None,
+                "error": str(e),
+                "timestamp": time.time(),
             })
-            if attempt == MAX_RETRIES:
-                raise AdapterError(
-                    f'transport failure after {MAX_RETRIES} attempts: {e}'
-                ) from e
-            continue
+            if attempt < MAX_RETRIES:
+                time.sleep(RETRY_DELAY)
+                continue
+            request_record["attempts"] = attempts
+            raise AdapterError(
+                f"transport failure after {MAX_RETRIES} attempts: {e}"
+            ) from e
+
+        request_record["attempts"] = attempts
 
         if resp.status_code == 429:
             raise RateLimitError(
-                f'rate limited (HTTP 429): {resp.text[:200]}')
+                f"rate limited (HTTP 429): {resp.text[:200]}")
 
         if resp.status_code != 200:
+            raise HTTPError(
+                f"HTTP {resp.status_code}: {resp.text[:500]}",
+                status_code=resp.status_code,
+                body=resp.text[:2000])
+
+        try:
+            raw = resp.json()
+        except ValueError as e:
             raise AdapterError(
-                f'HTTP {resp.status_code}: {resp.text[:500]}')
+                f"response is not valid JSON: {resp.text[:200]}"
+            ) from e
 
-        return resp.json(), attempts
+        return raw, request_record
 
-    # Should not reach here
-    raise AdapterError('exhausted retries with no response')
-
-
-def build_request_record(body, sampling):
-    """Record the request as sent, per R0.2 audit requirement.
-
-    Returns the body dict augmented with sampling_as_sent showing
-    every parameter and its value or explicit omission.
-    """
-    record = dict(body)
-    record['sampling_as_sent'] = {}
-    if sampling:
-        for k, v in sampling.items():
-            record['sampling_as_sent'][k] = str(v)
-    return record
+    request_record["attempts"] = attempts
+    raise AdapterError("exhausted retries with no response")

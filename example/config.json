@@ -11,14 +11,52 @@
         "places": "2",
         "rounding": "ROUND_HALF_UP"
     },
-    "permitted_transformations": ["percent_to_fraction", "fraction_to_percent"],
-    "decline_markers": ["I cannot", "I don't have enough", "unable to determine", "I'm sorry, I cannot"],
+    "permitted_transformations": [
+        "percent_to_fraction",
+        "fraction_to_percent"
+    ],
+    "decline_markers": [
+        "I cannot",
+        "I don't have enough",
+        "unable to determine",
+        "I'm sorry, I cannot"
+    ],
     "decimal_separator": ".",
     "grouping_separator": ",",
-    "currency_symbols": ["$", "USD"],
-    "dimensions_claimed": ["D1", "D2", "D7"],
+    "currency_symbols": [
+        "$",
+        "USD"
+    ],
+    "dimensions_claimed": [
+        "D1",
+        "D2",
+        "D7"
+    ],
     "repeat_count": "50",
     "structured_answer_field": "none",
     "ap1_version": "v1.3-draft-for-comment-20260728",
-    "ap1_text_hash": "placeholder"
+    "ap1_text_hash": "placeholder",
+    "tools": [
+        {
+            "type": "function",
+            "function": {
+                "name": "calculator",
+                "description": "Evaluate a mathematical expression and return the result.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "expression": {
+                            "type": "string",
+                            "description": "The mathematical expression to evaluate"
+                        }
+                    },
+                    "required": [
+                        "expression"
+                    ]
+                }
+            }
+        }
+    ],
+    "system_prompt_base": "You are a financial assistant. When asked to calculate a value, use the calculator tool to compute the answer. Always use the calculator tool for any arithmetic. Report the result clearly.",
+    "system_prompt_instruction_removed": "You are a financial assistant. Report the result clearly."
 }
