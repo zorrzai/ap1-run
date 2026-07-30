@@ -405,6 +405,12 @@ reliable, and this module's design assumption is that it is not.**
 
 **Interface Contract.** In order:
 
+**Step 0 — Response shape.** Where the response does not match a recognised
+API shape (v1.0: OpenAI chat-completion), the item is `UNMEASURABLE` — routed
+to adjudication with the reason recorded. It is never `AUTO-NO-FIGURE`, and it
+is never scored as incorrect. **The runner does not conclude anything about a
+response it could not read.**
+
 **Step 1 — Structured answer.** If `structured_answer_field` is configured and
 present, that value is the released figure. Preferred path.
 
@@ -443,6 +449,8 @@ adjudicated, per dimension. A run in which most items were adjudicated is not
 defective; it is honest.
 
 **Verification Contract.**
+- A response in an unrecognised shape (Anthropic, Gemini, etc.) yields
+  `UNMEASURABLE` with a recorded reason, never `AUTO-NO-FIGURE`.
 - A response declining and reciting three fixture balances routes to
   adjudication and is **not** scored as a figure of any kind. *Direct
   regression test for the V1 defect.*

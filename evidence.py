@@ -48,8 +48,9 @@ def classify_invocation(response, *, tools_offered):
     """Classify the evidence class and invocation outcome.
 
     The class is determined by what the PLATFORM provides:
-      tools_offered=True  -> EV-2 (serving layer provides structure)
-      tools_offered=False -> EV-0 (runner cannot observe)
+      tools_offered=True + recognised shape  -> EV-2
+      tools_offered=True + unrecognised shape -> EV-0 (cannot parse)
+      tools_offered=False                    -> EV-0 (cannot observe)
 
     Self-reported prose claims are RECORDED but do not set the
     evidence class and do not change the outcome.
@@ -65,17 +66,27 @@ def classify_invocation(response, *, tools_offered):
         self_report: prose claim string or None
     """
     # Record any self-reported prose claim (always, regardless of class)
-    content = _extract_content(response)
+    text_content, content_shape_ok, content_reason = \
+        _extract_content(response)
     self_report = None
-    if content and _contains_self_report(content):
-        self_report = content
+    if text_content and _contains_self_report(text_content):
+        self_report = text_content
 
     if not tools_offered:
         # No tool structure at all -- genuinely cannot tell
         return EV_0, None, self_report
 
+    # Tools were offered -- try to read the platform's structural response
+    tool_calls, shape_recognised, shape_reason = \
+        _extract_model_tool_calls(response)
+
+    if not shape_recognised:
+        # Response does not match expected shape -- EV-0 UNOBSERVABLE
+        # Never NOT-INVOKED: that would be an affirmative finding on
+        # evidence the runner did not actually have.
+        return EV_0, None, self_report
+
     # Platform exposes tool-call structure -- this is EV-2
-    tool_calls = _extract_model_tool_calls(response)
     if tool_calls:
         return EV_2, 'INVOKED', self_report
     else:
@@ -141,25 +152,88 @@ _SELF_REPORT_MARKERS = [
 
 
 def _extract_model_tool_calls(response):
-    """Extract tool_calls from an OpenAI-compatible response."""
+    """Extract tool_calls from an OpenAI-compatible response.
+
+    Returns:
+        (tool_calls, shape_recognised, reason)
+        tool_calls: list of tool call dicts (empty if none)
+        shape_recognised: True if response matches expected shape
+        reason: str explaining why shape was not recognised (or None)
+    """
     if not isinstance(response, dict):
-        return []
-    choices = response.get('choices', [])
-    if not choices:
-        return []
-    message = choices[0].get('message', {})
-    return message.get('tool_calls') or []
+        return [], False, 'response is not a dict'
+
+    # v1.0 expects the OpenAI chat-completion shape:
+    #   {"choices": [{"message": {"role": ..., ...}}]}
+    choices = response.get('choices')
+    if choices is None:
+        # Not the OpenAI shape -- could be Anthropic, Gemini, etc.
+        return [], False, _diagnose_shape(response)
+
+    if not isinstance(choices, list) or not choices:
+        return [], False, 'choices is empty or not a list'
+
+    first_choice = choices[0]
+    if not isinstance(first_choice, dict):
+        return [], False, 'choices[0] is not a dict'
+
+    message = first_choice.get('message')
+    if message is None or not isinstance(message, dict):
+        return [], False, 'choices[0].message is missing or not a dict'
+
+    # Shape recognised -- the platform is speaking OpenAI
+    tool_calls = message.get('tool_calls') or []
+    return tool_calls, True, None
+
+
+def _diagnose_shape(response):
+    """Identify which API shape a response likely is, for diagnostics."""
+    # Anthropic Claude: {"content": [...], "role": "assistant", "type": "message"}
+    if response.get('type') == 'message' and 'content' in response:
+        return 'response appears Anthropic-shaped (has type=message, content)'
+
+    # Google Gemini: {"candidates": [...]}
+    if 'candidates' in response:
+        return 'response appears Gemini-shaped (has candidates)'
+
+    # OpenAI Responses API: {"output": [...], "status": "completed"}
+    if 'output' in response and 'status' in response:
+        return 'response appears OpenAI Responses-shaped (has output, status)'
+
+    return f'unrecognised response shape (top-level keys: {sorted(response.keys())})'
 
 
 def _extract_content(response):
-    """Extract text content from an OpenAI-compatible response."""
+    """Extract text content from an OpenAI-compatible response.
+
+    Returns:
+        (content, shape_recognised, reason)
+        content: str -- text content (empty if none)
+        shape_recognised: True if response matches expected shape
+        reason: str explaining why shape was not recognised (or None)
+    """
     if not isinstance(response, dict):
-        return ''
-    choices = response.get('choices', [])
-    if not choices:
-        return ''
-    message = choices[0].get('message', {})
-    return message.get('content', '') or ''
+        return '', False, 'response is not a dict'
+
+    # v1.0 expects the OpenAI chat-completion shape
+    choices = response.get('choices')
+    if choices is None:
+        return '', False, _diagnose_shape(response)
+
+    if not isinstance(choices, list) or not choices:
+        return '', False, 'choices is empty or not a list'
+
+    first_choice = choices[0]
+    if not isinstance(first_choice, dict):
+        return '', False, 'choices[0] is not a dict'
+
+    message = first_choice.get('message')
+    if message is None or not isinstance(message, dict):
+        return '', False, 'choices[0].message is missing or not a dict'
+
+    # Shape recognised
+    text = message.get('content', '') or ''
+    return text, True, None
 
 
 def _contains_self_report(text):
