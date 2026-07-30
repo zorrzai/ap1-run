@@ -510,9 +510,13 @@ parameter application is `UNVERIFIED`.
 invoked — and on what class of evidence.
 
 **Interface Contract.** Outcomes `INVOKED`, `NOT-INVOKED`, `UNOBSERVABLE`,
-each carrying its R1.3.1 evidence class. Aggregate reported with n and — per
-AP-1 §7.5 — **the one-sided 95% upper confidence bound on the failure rate.
-Zero failures in n is reported as "0/n; upper bound ≈ 3/n", never as 100%.**
+each carrying its R1.3.1 evidence class. Aggregate reported with n and the
+**exact one-sided 95% upper confidence bound on the failure rate**:
+`p_upper = 1 − 0.05^(1/n)`, the Clopper–Pearson bound at zero failures.
+This is correct at every n. The 3/n rule of three is its large-n
+approximation and may be noted parenthetically for n ≥ 30 only; below
+n = 30 it overstates, and at n < 3 it returns a value above 1, which is
+not a rate. **The string "100%" is never printed alone.**
 
 **Drop-in-performance ratio.** DPR = (I_base - I_removed) / I_base. **Where
 I_base is zero the ratio is `UNDEFINED`, never 1.0.**
@@ -813,7 +817,7 @@ per R1.1.
 | §4.7.4 invocation evidence | **R1.3.1** | Four classes graded by independence and verifiability |
 | §5 six-outcome rubric | R2.0, R3.2 | Runner never assigns MODEL-DECLINED automatically |
 | §6.3(b) structural evidence | R1.3.1 | EV-3 admissible as structural evidence; EV-1 and EV-2 are not |
-| §7.5 statistics of 100% | R2.3, R3.3 | Upper bound printed |
+| §7.5 statistics of 100% | R2.3, R3.3 | Exact Clopper–Pearson bound printed; 3/n parenthetical for n≥30 only |
 | §7.7 quantisation | R0.1, R0.4, R2.1 | Declared policy, single rounding point |
 | §8 C8.1 universal adjudication | R2.0, R3.2 | Sheets for every unautomated dimension |
 | §8 C8.2 non-answers | R0.2, R2.2 | UNMEASURED, excluded |
