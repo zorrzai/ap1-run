@@ -19,6 +19,15 @@ import time
 from decimal import Decimal
 from pathlib import Path
 
+DISCLAIMER = (
+    'THIS IS AN INSTRUMENT SMOKE TEST, NOT AN AP-1 EVALUATION.\n'
+    '\n'
+    'It is not conformant: R2.4 is not built, there is no adjudication, no\n'
+    'second scorer, no blind set, and the fixture is the shipped toy example.\n'
+    'No figure from it may be reported, cited, quoted or described as an AP-1\n'
+    'result, by us or by anyone, in any document.\n'
+)
+
 # Runner modules
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -30,6 +39,41 @@ from figure_id import identify_figure, AUTO_MATCH, AUTO_NO_FIGURE, UNMEASURABLE
 from invocation import format_rate
 from numeric import extract_numeric_tokens
 import transcript
+
+
+
+def _verify_invocation_consistency(results):
+    """INVARIANT: INVOKED implies tool_calls present; NOT-INVOKED implies none.
+
+    A scoring outcome that contradicts its own evidence is not a finding,
+    it is a defect. The instrument must refuse to report it.
+
+    Raises RuntimeError (FATAL) on the first mismatch, naming the item.
+    """
+    for r in results:
+        if r.get('status') != 'EXECUTED':
+            continue
+        outcome = r.get('invocation_outcome', '')
+        tc_count = r.get('tool_calls_count', 0)
+        item_id = r.get('item_id', '?')
+        condition = r.get('condition', '?')
+        repeat = r.get('repeat', '?')
+
+        if outcome == 'INVOKED' and tc_count == 0:
+            raise RuntimeError(
+                f'FATAL: invocation consistency check failed. '
+                f'{item_id}/{condition}/r{repeat}: '
+                f'INVOKED but tool_calls_count=0. '
+                f'A scoring outcome that contradicts its own evidence '
+                f'is a defect, not a finding.')
+
+        if outcome == 'NOT-INVOKED' and tc_count > 0:
+            raise RuntimeError(
+                f'FATAL: invocation consistency check failed. '
+                f'{item_id}/{condition}/r{repeat}: '
+                f'NOT-INVOKED but tool_calls_count={tc_count}. '
+                f'A scoring outcome that contradicts its own evidence '
+                f'is a defect, not a finding.')
 
 
 def main():
@@ -359,11 +403,17 @@ def main():
                 # Brief delay to avoid rate limiting
                 time.sleep(0.5)
 
+    # -- Consistency check (FATAL on mismatch) --
+    _verify_invocation_consistency(all_results)
+    print('  Invocation consistency check: PASSED (0 mismatches)')
+
     # -- Report --
     print()
     print('=' * 60)
     print('SMOKE TEST REPORT')
     print('=' * 60)
+    print()
+    print(DISCLAIMER)
 
     # 3a. Completion
     executed = [r for r in all_results if r['status'] == 'EXECUTED']
@@ -469,10 +519,16 @@ def main():
         print(f'  {cond}: invoked={invoked} not_invoked={not_invoked} n={n}')
         print(f'    failure rate: {rate_str}')
 
+    # Write disclaimer file
+    disclaimer_path = os.path.join(output_dir, 'DISCLAIMER.txt')
+    with open(disclaimer_path, 'w', encoding='utf-8') as f:
+        f.write(DISCLAIMER)
+
     # Write summary to output
     summary_path = os.path.join(output_dir, 'smoke_summary.json')
     with open(summary_path, 'w', encoding='utf-8') as f:
         json.dump({
+            '_disclaimer': DISCLAIMER.replace('\n', ' ').strip(),
             'all_results': all_results,
             'grammar_issues': grammar_issues,
             'decline_findings': decline_findings,

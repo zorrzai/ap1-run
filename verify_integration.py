@@ -375,6 +375,61 @@ def test_perturbation_guard_passes_on_config_prompts():
     return True
 
 
+
+
+def test_consistency_check_halts_on_invoked_without_tool_calls():
+    """INVARIANT GUARD: INVOKED with no tool calls is a FATAL error.
+
+    A scoring outcome that contradicts its own evidence is a defect,
+    not a finding. The instrument must refuse to report it.
+    """
+    # Import the consistency check from smoke_test
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from smoke_test import _verify_invocation_consistency
+
+    # Deliberately inconsistent: INVOKED but no tool_calls
+    bad_results = [{
+        'item_id': 'Q99', 'condition': 'base', 'repeat': 1,
+        'status': 'EXECUTED',
+        'invocation_outcome': 'INVOKED',
+        'tool_calls_count': 0,  # contradiction
+    }]
+
+    try:
+        _verify_invocation_consistency(bad_results)
+        assert False, 'should have raised RuntimeError'
+    except RuntimeError as e:
+        assert 'FATAL' in str(e), f'error should say FATAL, got: {e}'
+        assert 'Q99' in str(e), f'error should name the item, got: {e}'
+
+    # Also test NOT-INVOKED with tool calls present
+    bad_results_2 = [{
+        'item_id': 'Q98', 'condition': 'base', 'repeat': 1,
+        'status': 'EXECUTED',
+        'invocation_outcome': 'NOT-INVOKED',
+        'tool_calls_count': 3,  # contradiction
+    }]
+
+    try:
+        _verify_invocation_consistency(bad_results_2)
+        assert False, 'should have raised RuntimeError'
+    except RuntimeError as e:
+        assert 'FATAL' in str(e), f'error should say FATAL, got: {e}'
+        assert 'Q98' in str(e), f'error should name the item, got: {e}'
+
+    # Consistent record should pass
+    good_results = [
+        {'item_id': 'Q1', 'condition': 'base', 'repeat': 1,
+         'status': 'EXECUTED', 'invocation_outcome': 'INVOKED',
+         'tool_calls_count': 2},
+        {'item_id': 'Q2', 'condition': 'base', 'repeat': 1,
+         'status': 'EXECUTED', 'invocation_outcome': 'NOT-INVOKED',
+         'tool_calls_count': 0},
+    ]
+    _verify_invocation_consistency(good_results)  # should not raise
+
+    return True
+
 # -- Runner ----------------------------------------------------------------
 
 ALL_TESTS = [
@@ -382,6 +437,7 @@ ALL_TESTS = [
     test_unrecognised_shape_in_round2_yields_ev0,
     test_required_operation_match_determines_invocation,
     test_perturbation_guard_passes_on_config_prompts,
+    test_consistency_check_halts_on_invoked_without_tool_calls,
 ]
 
 
