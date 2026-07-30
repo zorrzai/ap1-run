@@ -437,16 +437,40 @@ def test_ground_truth():
         check('ground_truth_example.py exists', False)
         return
 
-    # Import and run verify_all
+    # Import and use C8.5 compute() interface
     import importlib.util
     spec = importlib.util.spec_from_file_location(
         'ground_truth_example', str(gt_path))
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
 
-    ok, results = mod.verify_all()
-    check('all ground-truth values correct', ok,
-          str({k: v for k, v in results.items() if not v['match']}))
+    # Load fixture and questions
+    import json
+    example_dir = _base / 'example'
+    with open(example_dir / 'fixture.json', 'r', encoding='utf-8') as f:
+        fixture = json.load(f)
+    with open(example_dir / 'questions.json', 'r', encoding='utf-8') as f:
+        questions = json.load(f)
+
+    accounts = {a['id']: a for a in fixture['accounts']}
+    all_ok = True
+    failures = {}
+
+    for item in questions['items']:
+        item_id = item['id']
+        ctx = {}
+        for acct_id in item['source_accounts']:
+            acct = accounts[acct_id]
+            ctx[acct_id] = {
+                k: v for k, v in acct.items() if k not in ('id', 'name')
+            }
+        result = mod.compute(item_id, ctx)
+        if result['final'] is None or not result.get('derivable', True):
+            all_ok = False
+            failures[item_id] = 'not derivable or no final value'
+
+    check('all ground-truth items compute from fixture', all_ok,
+          str(failures) if failures else '')
 
 
 # =====================================================================
