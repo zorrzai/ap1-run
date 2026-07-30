@@ -44,20 +44,37 @@ class EvidenceError(Exception):
 
 # -- Classification ---------------------------------------------------
 
-def classify_invocation(response, *, tools_offered):
+def classify_invocation(final_response, *, tools_offered,
+                        accumulated_tool_calls=None,
+                        round_shapes=None,
+                        required_operation=None):
     """Classify the evidence class and invocation outcome.
 
+    MULTI-ROUND TOOL LOOPS (R1.3 normative): invocation is determined
+    from the ACCUMULATED structural tool-call records across ALL rounds,
+    never from the final response alone. The final response of a completed
+    tool loop contains no tool calls by construction.
+
     The class is determined by what the PLATFORM provides:
-      tools_offered=True + recognised shape  -> EV-2
-      tools_offered=True + unrecognised shape -> EV-0 (cannot parse)
-      tools_offered=False                    -> EV-0 (cannot observe)
+      tools_offered=True + all shapes recognised -> EV-2
+      tools_offered=True + any shape unrecognised -> EV-0
+      tools_offered=False                        -> EV-0
 
     Self-reported prose claims are RECORDED but do not set the
     evidence class and do not change the outcome.
 
     Args:
-        response: Raw response dict from endpoint.
+        final_response: Raw response dict from the last round.
         tools_offered: Were tool definitions sent in the request?
+        accumulated_tool_calls: List of tool-call records from ALL
+            rounds of the tool loop. Each is a dict with at least
+            'function' -> {'name': str, ...}. If None, falls back
+            to reading from final_response (single-round case).
+        round_shapes: List of (shape_recognised, reason) tuples,
+            one per round. If any round is unrecognised, evidence
+            is EV-0 UNOBSERVABLE. If None, checks final_response.
+        required_operation: str -- the operation the item requires.
+            Invocation is satisfied only by calls matching this.
 
     Returns:
         (evidence_class, invocation_outcome, self_report)
@@ -65,30 +82,53 @@ def classify_invocation(response, *, tools_offered):
         invocation_outcome: 'INVOKED', 'NOT-INVOKED', or None
         self_report: prose claim string or None
     """
-    # Record any self-reported prose claim (always, regardless of class)
+    # Record any self-reported prose claim from the final response text
     text_content, content_shape_ok, content_reason = \
-        _extract_content(response)
+        _extract_content(final_response)
     self_report = None
     if text_content and _contains_self_report(text_content):
         self_report = text_content
 
     if not tools_offered:
-        # No tool structure at all -- genuinely cannot tell
         return EV_0, None, self_report
 
-    # Tools were offered -- try to read the platform's structural response
-    tool_calls, shape_recognised, shape_reason = \
-        _extract_model_tool_calls(response)
+    # Check all round shapes. If any round had an unrecognised shape,
+    # the accumulation is incomplete -> EV-0, never NOT-INVOKED.
+    if round_shapes is not None:
+        for i, (recognised, reason) in enumerate(round_shapes):
+            if not recognised:
+                return EV_0, None, self_report
+    else:
+        # Single-round fallback: check final_response shape
+        _, shape_recognised, shape_reason = \
+            _extract_model_tool_calls(final_response)
+        if not shape_recognised:
+            return EV_0, None, self_report
 
-    if not shape_recognised:
-        # Response does not match expected shape -- EV-0 UNOBSERVABLE
-        # Never NOT-INVOKED: that would be an affirmative finding on
-        # evidence the runner did not actually have.
-        return EV_0, None, self_report
+    # All shapes recognised -> EV-2
+    # Invocation determined from ACCUMULATED records
+    tc = accumulated_tool_calls if accumulated_tool_calls is not None else []
 
-    # Platform exposes tool-call structure -- this is EV-2
-    if tool_calls:
-        return EV_2, 'INVOKED', self_report
+    if not tc:
+        # No accumulated tool calls at all. Check final_response
+        # in case this is a single-round call without accumulated records.
+        final_tc, _, _ = _extract_model_tool_calls(final_response)
+        if final_tc:
+            tc = final_tc
+
+    if tc:
+        # Check if any call matches the required operation
+        if required_operation:
+            matching = [c for c in tc
+                        if c.get('function', {}).get('name') == required_operation]
+            if matching:
+                return EV_2, 'INVOKED', self_report
+            else:
+                # Tool was called but not the required one
+                return EV_2, 'NOT-INVOKED', self_report
+        else:
+            # No required_operation specified -- any tool call = INVOKED
+            return EV_2, 'INVOKED', self_report
     else:
         return EV_2, 'NOT-INVOKED', self_report
 

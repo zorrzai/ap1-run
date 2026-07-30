@@ -94,15 +94,18 @@ def execute_item(item, *, condition, config, fixture,
         }
 
     # Drive tool loop
-    tool_calls_record, final_response = _drive_tool_loop(
+    tool_calls_record, final_response, round_shapes = _drive_tool_loop(
         response=response, messages=messages, config=config,
         tools=tools, adapter_send=adapter_send,
         sampling=sampling,
     )
 
-    # Classify evidence by PLATFORM capability
+    # Classify evidence from ACCUMULATED records (R1.3 normative)
     ev_class, outcome, self_report = classify_invocation(
-        final_response, tools_offered=tools_offered)
+        final_response, tools_offered=tools_offered,
+        accumulated_tool_calls=tool_calls_record,
+        round_shapes=round_shapes,
+        required_operation=gt.get('required_operation'))
     check_ev3_guard(ev_class)
 
     # Check for attestation
@@ -143,9 +146,17 @@ def execute_item(item, *, condition, config, fixture,
 
 def _drive_tool_loop(*, response, messages, config, tools,
                      adapter_send, sampling, max_turns=10):
-    """Drive the tool-call cycle. Returns (tool_calls, final_response)."""
+    """Drive the tool-call cycle.
+
+    Returns (tool_calls, final_response, round_shapes).
+    round_shapes: list of (shape_recognised, reason) per round.
+    """
     all_tool_calls = []
+    round_shapes = []
     current = response
+
+    # Check shape of the initial response (round 0)
+    _check_initial_shape(current, round_shapes)
 
     for turn in range(1, max_turns + 1):
         model_calls = _extract_tool_calls(current)
@@ -179,10 +190,12 @@ def _drive_tool_loop(*, response, messages, config, tools,
                 tools=tools, sampling=sampling,
                 model=config.get('model'),
             )
+            # Check shape of this round's response
+            _check_round_shape(current, round_shapes, turn)
         except Exception:
             break
 
-    return all_tool_calls, current
+    return all_tool_calls, current, round_shapes
 
 
 def _execute_tool(name, arguments_json):
@@ -198,6 +211,21 @@ def _execute_tool(name, arguments_json):
     except Exception as e:
         return json.dumps({'error': str(e)})
     return json.dumps({'error': f'unknown tool: {name}'})
+
+
+
+def _check_initial_shape(response, round_shapes):
+    """Check shape of the initial response and record it."""
+    from evidence import _extract_model_tool_calls
+    _, recognised, reason = _extract_model_tool_calls(response)
+    round_shapes.append((recognised, reason))
+
+
+def _check_round_shape(response, round_shapes, turn):
+    """Check shape of a follow-up round response and record it."""
+    from evidence import _extract_model_tool_calls
+    _, recognised, reason = _extract_model_tool_calls(response)
+    round_shapes.append((recognised, reason))
 
 
 # -- Helpers ---------------------------------------------------------

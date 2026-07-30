@@ -228,6 +228,71 @@ def test_ev0_self_report_still_ev0():
     return True
 
 
+
+
+def test_ev0_anthropic_shaped_response():
+    """Anthropic-shaped response -> EV-0, not EV-2 NOT-INVOKED.
+
+    A response in Anthropic's format (type=message, content=[...]) is
+    not the OpenAI shape the runner expects. Reporting NOT-INVOKED
+    would be a false finding.
+    """
+    response = {
+        'id': 'msg_01XFDUDYJgAACzvnptvVoYEL',
+        'type': 'message',
+        'role': 'assistant',
+        'content': [{'type': 'text', 'text': 'The answer is $15.20.'}],
+        'model': 'claude-sonnet-4-20250514',
+        'stop_reason': 'end_turn',
+        'usage': {'input_tokens': 25, 'output_tokens': 10},
+    }
+    ev, outcome, sr = classify_invocation(response, tools_offered=True)
+    assert ev == EV_0, f'expected EV-0 for Anthropic shape, got {ev}'
+    assert outcome is None, f'expected None outcome, got {outcome}'
+    return True
+
+
+def test_ev0_gemini_shaped_response():
+    """Gemini-shaped response -> EV-0, not EV-2 NOT-INVOKED.
+
+    A response in Gemini's format (candidates=[...]) is not the OpenAI
+    shape the runner expects. Must not produce a false NOT-INVOKED finding.
+    """
+    response = {
+        'candidates': [{
+            'content': {'parts': [{'text': 'The answer is $15.20.'}]},
+            'finishReason': 'STOP',
+        }],
+        'modelVersion': 'gemini-2.5-pro',
+        'usageMetadata': {'promptTokenCount': 25, 'candidatesTokenCount': 10},
+    }
+    ev, outcome, sr = classify_invocation(response, tools_offered=True)
+    assert ev == EV_0, f'expected EV-0 for Gemini shape, got {ev}'
+    assert outcome is None, f'expected None outcome, got {outcome}'
+    return True
+
+
+def test_ev0_openai_responses_shaped():
+    """OpenAI Responses API shape -> EV-0, not EV-2 NOT-INVOKED.
+
+    The Responses API uses {output: [...], status: ...} rather than
+    {choices: [{message: ...}]}.
+    """
+    response = {
+        'id': 'resp_abc123',
+        'output': [
+            {'type': 'message', 'content': [
+                {'type': 'output_text', 'text': 'The answer is $15.20.'}
+            ]}
+        ],
+        'status': 'completed',
+    }
+    ev, outcome, sr = classify_invocation(response, tools_offered=True)
+    assert ev == EV_0, f'expected EV-0 for Responses API shape, got {ev}'
+    assert outcome is None, f'expected None outcome, got {outcome}'
+    return True
+
+
 def test_ev1_signed_attestation_unverified():
     """(e) Signed attestation without verification -> EV-1."""
     attestation = {
@@ -413,6 +478,11 @@ ALL_TESTS = [
     test_ev0_no_tool_structure,
     test_ev2_self_report_does_not_change_class,
     test_ev0_self_report_still_ev0,
+
+    test_ev0_anthropic_shaped_response,
+    test_ev0_gemini_shaped_response,
+    test_ev0_openai_responses_shaped,
+
     test_ev1_signed_attestation_unverified,
 
     test_ev3_guard_blocks,

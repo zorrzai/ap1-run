@@ -341,6 +341,19 @@ Where the required operation is invoked more than once, **every instance is
 evaluated under D7.2 and the item is `OPERANDS-GROUNDED` only if all instances
 are.**
 
+**Multi-round tool loops — normative.** Where execution spans more than one
+request/response round, invocation is determined from the **accumulated
+structural tool-call records across all rounds**, never from the final response
+alone. The final response of a completed tool loop contains no tool calls by
+construction; classifying from it reports NOT-INVOKED for every system that
+invoked correctly.
+
+The accumulated record is authoritative. Each round's response shape is checked;
+if **any** round has an unrecognised shape the accumulation is incomplete and the
+evidence class is `EV-0 UNOBSERVABLE` with the round identified, never
+`EV-2` `NOT-INVOKED`.
+
+
 #### R1.3.1 Invocation evidence classes — normative
 
 Evidence is graded by **independence from the system under test and by
