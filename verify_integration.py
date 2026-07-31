@@ -430,6 +430,69 @@ def test_consistency_check_halts_on_invoked_without_tool_calls():
 
     return True
 
+
+def test_credential_masking_in_error_bodies():
+    """Verify that credential-shaped strings are redacted from adapter errors.
+
+    An error body containing a synthetic sk-proj- string must be stored
+    masked, with the raw value appearing nowhere in the exception message,
+    the body attribute, or any attribute of the raised exception.
+    """
+    import adapter
+
+    # Synthetic credential values (not real keys)
+    test_cases = [
+        ('sk-proj-ABCDEFGHIJKLMNOP1234567890abcdef',
+         'Incorrect API key provided: sk-proj-ABCDEFGHIJKLMNOP1234567890abcdef. You can find'),
+        ('sk-ABCDEFGHIJKLMNOP1234567890abcdef',
+         'Invalid key: sk-ABCDEFGHIJKLMNOP1234567890abcdef'),
+        ('ghp_AbCdEfGhIjKlMnOpQrStUvWxYz1234567890',
+         'Bad credentials with ghp_AbCdEfGhIjKlMnOpQrStUvWxYz1234567890'),
+        ('Bearer sk-proj-XYZ123456789abcdef0123456789',
+         'Unauthorized: Bearer sk-proj-XYZ123456789abcdef0123456789'),
+    ]
+
+    for raw_key, error_body in test_cases:
+        masked = adapter._mask_credentials(error_body)
+
+        # The raw key must not appear in the masked output
+        assert raw_key not in masked, (
+            f'Raw key fragment leaked through masking: {raw_key[:10]}... '
+            f'still present in masked output')
+
+        # [REDACTED] must appear
+        assert '[REDACTED]' in masked, (
+            f'No [REDACTED] marker in masked output for {raw_key[:10]}...')
+
+        # Non-credential parts must survive
+        if 'Incorrect API key' in error_body:
+            assert 'Incorrect API key' in masked, (
+                'Error type was incorrectly redacted')
+
+    # Test that HTTPError stores the masked body
+    try:
+        raise adapter.HTTPError(
+            adapter._mask_credentials(f'HTTP 401: {test_cases[0][1]}'),
+            status_code=401,
+            body=adapter._mask_credentials(test_cases[0][1]))
+    except adapter.HTTPError as e:
+        exc_msg = str(e)
+        assert 'sk-proj-' not in exc_msg, (
+            f'Credential fragment leaked into HTTPError message')
+        assert 'sk-proj-' not in e.body, (
+            f'Credential fragment leaked into HTTPError body')
+
+    # Test that non-credential text passes through unchanged
+    safe_text = 'HTTP 429: rate limited, please retry after 30s'
+    assert adapter._mask_credentials(safe_text) == safe_text, (
+        'Non-credential text was incorrectly modified')
+
+    # Test empty/None
+    assert adapter._mask_credentials('') == ''
+    assert adapter._mask_credentials(None) is None
+
+    return True
+
 # -- Runner ----------------------------------------------------------------
 
 ALL_TESTS = [
@@ -438,6 +501,7 @@ ALL_TESTS = [
     test_required_operation_match_determines_invocation,
     test_perturbation_guard_passes_on_config_prompts,
     test_consistency_check_halts_on_invoked_without_tool_calls,
+    test_credential_masking_in_error_bodies,
 ]
 
 

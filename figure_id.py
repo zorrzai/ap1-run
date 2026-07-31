@@ -39,7 +39,7 @@ class FigureIdError(Exception):
 def identify_figure(response, *, expected_value, delivered_context,
                     lookup_collision, answer_tolerance,
                     decline_markers=None, structured_answer_field=None,
-                    extract_tokens_fn=None):
+                    extract_tokens_fn=None, currency_symbols=None):
     """Identify the released figure in a response.
 
     Args:
@@ -51,6 +51,7 @@ def identify_figure(response, *, expected_value, delivered_context,
         decline_markers: list of str -- phrases indicating a decline.
         structured_answer_field: str or None -- JSON path to answer field.
         extract_tokens_fn: callable -- R0.4.2 token extractor.
+        currency_symbols: list of str -- passed to extract_tokens_fn.
 
     Returns:
         dict with keys:
@@ -125,7 +126,7 @@ def identify_figure(response, *, expected_value, delivered_context,
             'matched_indices': [],
         }
 
-    tokens = extract_tokens_fn(content)
+    tokens = extract_tokens_fn(content, currency_symbols=currency_symbols)
     if not tokens:
         return {
             'outcome': AUTO_NO_FIGURE,

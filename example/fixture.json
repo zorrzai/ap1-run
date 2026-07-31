@@ -42,5 +42,6 @@
             "annual_rate": "7.8",
             "monthly_fee": "15.00"
         }
-    ]
+    ],
+    "sign_convention": "Liabilities (credit_card, mortgage) are represented as negative balances. A reported balance carries that sign. Magnitudes used inside interest computations are absolute values of the balance and do not carry the sign."
 }

@@ -194,7 +194,7 @@ def derive_q05(ctx):
     min_pay = D(ctx["credit_card"]["min_payment"])
 
     monthly_interest = abs(balance) * rate / D("100") / D("12")
-    new_balance = abs(balance) + monthly_interest - min_pay
+    new_balance = balance - monthly_interest + min_pay
 
     return {
         "final": new_balance,

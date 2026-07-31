@@ -11,10 +11,37 @@ No SDK. No interpretation, no retry-on-content, no normalisation.
 No network call to any host other than the configured endpoint.
 """
 
+import re
 import time
 from decimal import Decimal
 
 import requests as _requests
+
+
+# Credential-shape patterns to redact from error bodies (Rule 0c).
+# Applied BEFORE any error text enters an exception, transcript, or log.
+_CREDENTIAL_PATTERNS = re.compile(
+    r'(?:'
+    r'sk-proj-[A-Za-z0-9_-]{10,}'
+    r'|sk-[A-Za-z0-9_-]{10,}'
+    r'|ghp_[A-Za-z0-9]{10,}'
+    r'|gho_[A-Za-z0-9]{10,}'
+    r'|github_pat_[A-Za-z0-9_]{10,}'
+    r'|rpa_[A-Za-z0-9]{10,}'
+    r'|Bearer\s+[A-Za-z0-9_.-]{10,}'
+    r')'
+)
+
+
+def _mask_credentials(text):
+    """Redact credential-shaped substrings from error text.
+
+    Retains endpoint URLs, status codes, error types.
+    Replaces only credential-shaped tokens with [REDACTED].
+    """
+    if not text:
+        return text
+    return _CREDENTIAL_PATTERNS.sub('[REDACTED]', text)
 
 
 class AdapterError(Exception):
@@ -122,19 +149,20 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
 
         if resp.status_code == 429:
             raise RateLimitError(
-                f"rate limited (HTTP 429): {resp.text[:200]}")
+                f"rate limited (HTTP 429): {_mask_credentials(resp.text[:200])}")
 
         if resp.status_code != 200:
+            masked_body = _mask_credentials(resp.text[:2000])
             raise HTTPError(
-                f"HTTP {resp.status_code}: {resp.text[:500]}",
+                f"HTTP {resp.status_code}: {_mask_credentials(resp.text[:500])}",
                 status_code=resp.status_code,
-                body=resp.text[:2000])
+                body=masked_body)
 
         try:
             raw = resp.json()
         except ValueError as e:
             raise AdapterError(
-                f"response is not valid JSON: {resp.text[:200]}"
+                f"response is not valid JSON: {_mask_credentials(resp.text[:200])}"
             ) from e
 
         return raw, request_record

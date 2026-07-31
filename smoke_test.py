@@ -12,6 +12,8 @@ Usage:
     python smoke_test.py
 """
 
+import ctypes
+import ctypes.wintypes
 import json
 import os
 import sys
@@ -40,6 +42,61 @@ from invocation import format_rate
 from numeric import extract_numeric_tokens
 import transcript
 
+
+
+
+# Credential target for the API key
+_CRED_TARGET = 'ap1-smoke:openai'
+
+
+def _read_credential(target):
+    """Read a credential from Windows Credential Manager via ctypes.
+
+    Returns the credential blob as a string. Never prints, logs, or
+    writes the value. Raises SystemExit if the credential is absent.
+
+    Rule 0c: the key is never printed, echoed, logged, or written to
+    any file, and never appears in a command line or environment variable.
+    """
+    CRED_TYPE_GENERIC = 1
+
+    class CREDENTIAL(ctypes.Structure):
+        _fields_ = [
+            ("Flags", ctypes.wintypes.DWORD),
+            ("Type", ctypes.wintypes.DWORD),
+            ("TargetName", ctypes.c_wchar_p),
+            ("Comment", ctypes.c_wchar_p),
+            ("LastWritten", ctypes.wintypes.FILETIME),
+            ("CredentialBlobSize", ctypes.wintypes.DWORD),
+            ("CredentialBlob", ctypes.c_void_p),
+            ("Persist", ctypes.wintypes.DWORD),
+            ("AttributeCount", ctypes.wintypes.DWORD),
+            ("Attributes", ctypes.c_void_p),
+            ("TargetAlias", ctypes.c_wchar_p),
+            ("UserName", ctypes.c_wchar_p),
+        ]
+
+    pcred = ctypes.POINTER(CREDENTIAL)()
+    ok = ctypes.windll.advapi32.CredReadW(
+        target, CRED_TYPE_GENERIC, 0, ctypes.byref(pcred))
+
+    if not ok:
+        print(f'ERROR: credential not found in Windows Credential Manager.')
+        print(f'  Target: {target}')
+        print(f'  Store the API key via:')
+        print(f'    Windows Search -> Credential Manager -> Windows Credentials')
+        print(f'    -> Add a generic credential')
+        print(f'    Internet or network address: {target}')
+        print(f'    User name: ap1-smoke')
+        print(f'    Password: <the API key>')
+        sys.exit(1)
+
+    blob = ctypes.string_at(
+        pcred.contents.CredentialBlob, pcred.contents.CredentialBlobSize)
+    # Decode UTF-16LE (Windows credential store encoding)
+    value = blob.decode('utf-16-le').rstrip('\x00')
+    ctypes.windll.advapi32.CredFree(pcred)
+    return value
 
 
 def _verify_invocation_consistency(results):
@@ -80,19 +137,20 @@ def main():
     if hasattr(sys.stdout, 'reconfigure'):
         sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-    # -- Read credentials from environment (Rule 0c) --
-    api_key = os.environ.get('AP1_SMOKE_API_KEY')
-    if not api_key:
-        print('ERROR: AP1_SMOKE_API_KEY not set')
-        return 1
+    # -- Read API key from Windows Credential Manager (Rule 0c) --
+    # The key is NEVER printed, echoed, logged, written to any file,
+    # placed in a command line, or set as an environment variable.
+    api_key = _read_credential(_CRED_TARGET)
+    key_length = len(api_key)
 
+    # Endpoint and model are not secrets -- read from env or defaults
     endpoint = os.environ.get('AP1_SMOKE_ENDPOINT',
                               'https://api.openai.com/v1/chat/completions')
     model = os.environ.get('AP1_SMOKE_MODEL', 'gpt-4o-mini')
 
     print(f'Endpoint: {endpoint}')
     print(f'Model: {model}')
-    print(f'API key: {"set (" + str(len(api_key)) + " chars)" if api_key else "NOT SET"}')
+    print(f'API key: present ({key_length} chars)')
     print()
 
     # -- Load example configuration --
@@ -335,6 +393,7 @@ def main():
                     lookup_collision=collision,
                     answer_tolerance=answer_tolerance,
                     decline_markers=decline_markers,
+                    currency_symbols=currency_symbols,
                 )
 
                 # -- Numeric grammar check --

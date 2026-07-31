@@ -77,6 +77,14 @@ def parse_decimal(text, *, decimal_sep='.', grouping_sep=',',
         is_neg = s[0] in '-\u2212'
         s = s[1:].strip()
 
+    # Step 3b: leading currency after sign (handles -$2411.00)
+    if not cur:
+        for sym in sorted(currency_symbols, key=len, reverse=True):
+            if s.startswith(sym):
+                cur = sym
+                s = s[len(sym):].strip()
+                break
+
     # Step 4: trailing percent
     if s.endswith('%'):
         is_pct = True
@@ -139,7 +147,7 @@ def _build_extraction_re(decimal_sep, grouping_sep, currency_symbols):
 
     # Integer with optional grouping
     if g:
-        num_int = r'\d{1,3}(?:' + g + r'\d{3})*'
+        num_int = r'\d{1,3}(?:' + g + r'\d{3})+'
         num_any = '(?:' + num_int + r'|\d+)'
     else:
         num_any = r'\d+'

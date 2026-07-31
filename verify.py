@@ -538,6 +538,64 @@ def _test_config_error(config_dict, test_name, expected_substr):
 # Main
 # =====================================================================
 
+
+def test_run1_literal_strings():
+    """Regression tests using LITERAL STRINGS from the first live run.
+
+    These strings are the exact model output that exposed the currency
+    stripping and regex splitting defects. They must remain as-is.
+    """
+    # --- parse_decimal tests ---
+    cases = [
+        # (input, currency_symbols, expected_value, expected_currency)
+        ('$2600.00',     ['$', 'USD'], Decimal('2600.00'),  '$'),
+        ('$3109.65',     ['$', 'USD'], Decimal('3109.65'),  '$'),
+        ('$286,063.00',  ['$', 'USD'], Decimal('286063.00'), '$'),
+        ('-$2411.00',    ['$', 'USD'], Decimal('-2411.00'), '$'),
+        ('$-2411.00',    ['$', 'USD'], Decimal('-2411.00'), '$'),
+        ('($2,411.00)',  ['$', 'USD'], Decimal('-2411.00'), '$'),
+        ('$25',          ['$', 'USD'], Decimal('25'),       '$'),
+        ('$1437.00',     ['$', 'USD'], Decimal('1437.00'),  '$'),
+    ]
+
+    for text, syms, expected_val, expected_cur in cases:
+        try:
+            val, pct, cur = parse_decimal(text, currency_symbols=syms)
+            check(f'parse_decimal({text!r})',
+                  val == expected_val,
+                  f'expected {expected_val}, got {val}')
+            check(f'parse_decimal({text!r}) currency',
+                  cur == expected_cur,
+                  f'expected {expected_cur!r}, got {cur!r}')
+        except Exception as e:
+            check(f'parse_decimal({text!r})', False, f'raised {e}')
+
+    # --- extract_numeric_tokens from prose (actual model outputs) ---
+    prose_cases = [
+        ('The available credit remaining on the credit card is $2600.00.',
+         ['$', 'USD'],
+         [Decimal('2600.00')]),
+        ('The annual net growth of the investment account after all fees is $3109.65.',
+         ['$', 'USD'],
+         [Decimal('3109.65')]),
+        ('The remaining mortgage balance after the first monthly payment of $1437.00 will be $286,063.00.',
+         ['$', 'USD'],
+         [Decimal('1437.00'), Decimal('286063.00')]),
+        ('The credit card balance after one month will be -$2411.00.',
+         ['$', 'USD'],
+         [Decimal('-2411.00')]),
+    ]
+
+    for prose, syms, expected_vals in prose_cases:
+        tokens = extract_numeric_tokens(prose, currency_symbols=syms)
+        values = [t.value for t in tokens]
+        for ev in expected_vals:
+            found = any(abs(v - ev) < Decimal('0.001') for v in values)
+            check(f'extract {ev} from "{prose[:50]}..."',
+                  found,
+                  f'expected {ev} in {values}')
+
+
 def main():
     test_r04_parse()
     test_r04_extract()
@@ -550,6 +608,7 @@ def main():
     test_r11_ap1_hash()
     test_ground_truth()
     test_ev3_guard()
+    test_run1_literal_strings()
 
     print(f'\n{"=" * 50}')
     print(f'Phase A Gate Results: {_passed} passed, {_failed} failed')
