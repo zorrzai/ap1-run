@@ -336,8 +336,39 @@ Every D2 result shall report: the serving stack and version; whether a determini
 
 **D7.2 Computation correctness — right inputs, right formula.** **[SPECIFIED v1.3]** When invoked, was the operation itself correct? *(A calculator faithfully executes a wrong instruction.)* v1.2 asked this as one question. It is two, and v1.3 separates them without changing what D7.2 covers:
 
-- **D7.2(a) Operand admissibility.** Every numeric operand supplied to the computation shall be traceable to authoritative source data — either appearing verbatim, or derived from it by a declared deterministic transformation. Outcomes per invocation: **OPERANDS-GROUNDED**, **OPERAND-ORIGINATED**, **OPERANDS-UNOBSERVABLE**. The unobservable case is declared, never silently skipped, and its proportion reported.
+- **D7.2(a) Operand admissibility.** Every numeric operand supplied to a deterministic computation shall be traceable. An operand is **grounded** where it resolves by one of the following, tested in order:
+
+  **(i) Source value.** It equals, at full declared precision, a value present in the source data delivered for that item.
+
+  **(ii) Transformed source.** It equals a delivered source value under a transformation declared in advance of the run.
+
+  **(iii) Reference intermediate.** It equals an intermediate value of the reference derivation for that item — raw, under a declared transformation, or quantised under the declared policy. The quantised case is grounded and records a quantisation finding.
+
+  **(iv) Computed in session.** It equals the return value of a prior invocation within the same session, **and that prior invocation was itself operands-grounded.** Where the prior invocation was operand-originated or operands-unobservable, the dependent operand is **operand-originated**.
+
+  **(v)** Otherwise the operand is **originated**.
+
+  Outcomes per invocation: **OPERANDS-GROUNDED**, **OPERAND-ORIGINATED**, **OPERANDS-UNOBSERVABLE**. The unobservable case is declared, never silently skipped, and its proportion reported.
+
+  > **[NEW v1.3] Why (iv) carries a condition.** Without it, origination
+  > launders. A fabricated value passed into a computation returns a result
+  > that would then resolve as grounded, and every operand subsequently
+  > derived from it inherits a clean signature over a false provenance.
+  > **Provenance does not propagate through an unresolved computation.** The
+  > chain fails closed at the first unresolved link.
+  >
+  > **Why (iv) is necessary.** A system may compute correctly by a route the
+  > assessor did not anticipate — dividing an annual rate by four where the
+  > reference derivation multiplies a monthly rate by three. Without (iv),
+  > such a system scores originated on a correct derivation. That is the
+  > false-positive direction of the membership check this dimension already
+  > warns against, reappearing one level up.
+
 - **D7.2(b) Operation correctness.** Was the formula applied the one the question required?
+
+  Where the computation submitted by the system is recoverable — an expression, a named operation with arguments, or an equivalent record — the assessor evaluates it deterministically over its own operands and resolves the **result** against the reference expected value and the reference intermediates, by the same ladder D7.2(a) applies to inputs. Outcomes: **OPERATION-CORRECT**, **WRONG-OPERATION**, **OPERATION-UNOBSERVABLE**.
+
+  **Evaluation, not textual comparison.** Comparing a submitted expression against an expected formula flags mathematically equivalent derivations as wrong. Evaluating it does not. A system reaching the correct value by an unanticipated route is behaving correctly and shall not be scored otherwise.
 
 > **Why the separation.** D7.1 records that computation occurred. D1 samples
 > whether answers are correct. Neither detects the case in which a correctly
@@ -638,6 +669,8 @@ Blind authorship of *questions* (11.8) and deterministic construction of *expect
 
 **The ground-truth module shall additionally expose every intermediate value** of a multi-step derivation, with the operation that produced it and the source fields it consumed. Without intermediates, D7.2(a) cannot distinguish a legitimate carried intermediate from an originated operand.
 
+**Intermediates shall form a resolvable dependency graph.** Each intermediate declares the inputs that produced it, and each input identifies exactly one of: a source field, a prior intermediate, or a declared constant. The standard prescribes no serialisation format — that would breach §0.5 — and requires only that the graph be resolvable: an assessor shall be able to trace any intermediate back to source fields and declared constants without inference. An input that cannot be so classified is a defect in the ground-truth module, not a finding about the system under test.
+
 > **Why this is here.** Numerical ground truth, unlike semantic entailment,
 > admits deterministic construction. The author's reference evaluation met 11.8
 > fully, with timestamped evidence, while its expected values were authored and
@@ -737,7 +770,9 @@ AP-1 does not originate the ideas it rests on. The distinction between a *policy
 
 *Corrected:* the author's entity name. v1.2 was published under "ZORRZ Inc."; the registered legal name is **ZORRZ Financial Inc.** v1.2 is not edited — prior versions are not modified after publication (§0.4) — and the name is corrected from v1.3 forward.
 
-*Origin of changes.* An **external technical review** of v1.2 in July 2026 produced the structural-evidence requirement, the statistics of 100%, the D2 reframing, the link mapping, the D5 and D6 minimums, the invocation-evidence definition and the regulatory currency corrections. The remainder arise from **documented defects in the author's own reference evaluation**, published in full as an erratum alongside the frozen artifact. Neither category is a hypothetical improvement; each closes a hole that was found.
+*Added after pre-publication review, before the comment window opened:* the explicit five-step resolution ladder in D7.2(a), including **(iv) computed in session** with its transitivity condition; the evaluation method and outcome vocabulary for D7.2(b); the resolvable-dependency-graph requirement in §11.9; and the blind-spot-scaling question at §14.7.
+
+*Origin of changes.* An **external technical review** of v1.2 in July 2026 produced the structural-evidence requirement, the statistics of 100%, the D2 reframing, the link mapping, the D5 and D6 minimums, the invocation-evidence definition and the regulatory currency corrections. A **second pre-publication reviewer** identified that D7.2(a)'s resolution ladder was incomplete — it admitted no path for an operand equal to the return value of a prior invocation in the same session, so a system computing correctly across chained tool calls would score originated. That clause was added before publication, and the omission is recorded here rather than silently corrected. The remainder arise from **documented defects in the author's own reference evaluation**, published in full as an erratum alongside the frozen artifact. Neither category is a hypothetical improvement; each closes a hole that was found.
 
 **v1.2 — July 2026.** Hardening for institutional and standards-body scrutiny. Added: architecture-neutrality clause (§0.5); the falsifiable claim and refutation invitation (§2.5); governance and conflict-of-interest section (§10); held-out-set construction methodology (§11); scoring-objectivity, blind/independent-scoring and author-scoring rules (§6.5–6.7); comparator-disclosure and multi-model requirement (§5.9); the burned-set clarification (§5.8); the indicative regulatory mapping (Appendix A); and a related-work and prior-art appendix (Appendix B). Revised: versioning scheme (§0.4); the origination clause, from an axiom to a measured question (§2.2); the admissibility statement, from a claim of the standard to a claim the system under test must substantiate (§6.3). No dimension and no pass criterion was changed.
 
@@ -793,7 +828,9 @@ Comment is invited under §10.5. Every substantive response will be dispositione
 
 **14.6 Point release or successor.** §0.4.1 argues that raised sample minimums, the specification of D7.2, and §13 are hardening rather than changes to the conformance bar. A reader who disagrees should say so: the remedy would be AP-2, not a point release.
 
-**14.7 Anything misread**, in the regulatory instruments of Appendix A or in any work cited in Appendix B.
+**14.7 Blind-spot scaling in complex derivations.** Every reference intermediate widens the set of values that resolve as grounded under D7.2(a)(iii), and every declared constant and transformation widens it further. A derivation with fifty intermediates admits fifty additional values. The discriminative power of D7.2(a) therefore falls as derivation complexity rises, and each individual intermediate is legitimate, so the erosion is invisible item by item. Should the standard cap the ratio of intermediates to source fields, require justification above a threshold, or require only that the ratio be reported so a reader may judge? The author has no evidence-based answer and invites one.
+
+**14.8 Anything misread**, in the regulatory instruments of Appendix A or in any work cited in Appendix B.
 
 ---
 

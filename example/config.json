@@ -42,7 +42,7 @@
     "repeat_count": "50",
     "structured_answer_field": "none",
     "ap1_version": "v1.3-draft-for-comment-20260730",
-    "ap1_text_hash": "da40bea13d058f18c824ee1844c55a3eb261b0ea81fcd8c0f546ec78a48a955c",
+    "ap1_text_hash": "48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56",
     "tools": [
         {
             "type": "function",

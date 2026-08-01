@@ -77,7 +77,7 @@ derivation is not.
 
 - **No language model anywhere.** Not in question generation, expected-value
   construction, scoring, figure identification, or reporting.
-- **No automation of D3–D6.** AP-1 §8 C8.1 requires transcript-level human
+- **No automation of D3–D6.** AP-1 §13.1 requires transcript-level human
   adjudication on every dimension.
 - **No inference of an answer where the evidence is ambiguous.** The runner
   never guesses.
@@ -106,8 +106,8 @@ Two passes, four layers, one immutable artifact between them.
               scores.json + adjudication sheets + report
 ```
 
-**Why the passes are separate.** Independent re-scoring is required by AP-1 §8
-C8.8 (two scorers) and C8.10 (a defective scorer presumes every dimension it
+**Why the passes are separate.** Independent re-scoring is required by AP-1
+§13.8 (two scorers) and §13.10 (a defective scorer presumes every dimension it
 touched is affected). A single-pass design makes re-scoring impossible without
 re-running, and re-running a burned set is prohibited. The separation is a
 conformance requirement, not an engineering preference.
@@ -171,7 +171,7 @@ recorded, with every sampling parameter and its value or explicit omission.
 
 **Failure Modes & Handling.** Transport failure, HTTP error and rate limiting
 are recorded as themselves and classified `UNMEASURED`. **Never recorded as
-answers or as distinct values** (AP-1 §8 C8.2). Retries permitted only on
+answers or as distinct values** (AP-1 §13.2). Retries permitted only on
 transport failure, bounded, every attempt logged.
 
 **Verification Contract.**
@@ -301,7 +301,7 @@ loop; write to R0.3. **Perform no scoring.**
 **Interface Contract.** Conditions in v1.0: `base` and `instruction_removed`
 (D7.1b).
 
-**Perturbation discipline — normative, AP-1 §4.7.1.** The
+**Perturbation discipline — normative, AP-1 D7.8.** The
 `instruction_removed` condition alters the system prompt **and nothing else**.
 Tool declarations, tool availability, fixture content, sampling parameters and
 message structure are held constant and diffed against the base condition
@@ -642,7 +642,7 @@ value in the item's delivered context. Chained-derivation fixtures should
 rarely produce collisions; where one occurs it is reported at seal so the
 fixture author can revise the item.
 
-**Normative — AP-1 §8 C8.5.** Expected values are **constructed** by this code
+**Normative — AP-1 §13.5.** Expected values are **constructed** by this code
 from the fixture. **The runner refuses a module that returns literals it did
 not compute.**
 
@@ -812,41 +812,65 @@ from an observability tool.
 
 ## 10. Conformance mapping — normative
 
-Mapped to **AP-1 v1.3 draft-for-comment, 28 July 2026**, whose hash is sealed
+Mapped to **AP-1 v1.3 draft-for-comment, 30 July 2026**, whose hash is sealed
 per R1.1.
 
-| AP-1 v1.3 clause | Module | How satisfied |
+| AP-1 v1.3 clause | Module | Status |
 |---|---|---|
-| §2.2 determinism under declared environment | R0.4 | Decimal-only; canonical hashing; environment in report |
-| §4.2.1 mechanism classes | R2.2 | Four classes, per surface, operator-declared marked |
-| §4.2.2 execution conditions | R0.1, R2.2 | Config verbatim; parameter-echo diff |
-| §4.5 D5 minimum 20 | R0.1 | Refused at load below minimum |
-| §4.6 D6 minimum 10 | R0.1 | Refused at load below minimum |
-| §4.7.1 perturbation discipline | R1.2 | Multi-variable condition refused |
-| §4.7.1 DPR undefined at zero base | R2.3 | `UNDEFINED` |
-| §4.7.1 item selection | R1.2, R3.1 | `derivable`; VOID excluded |
-| §4.7.2 operand provenance | **R2.4, R3.1** | Exact resolution against source and intermediates |
-| §4.7.3 transcription | R2.5 | Tool return vs identified figure |
-| §4.7.4 invocation evidence | **R1.3.1** | Four classes graded by independence and verifiability |
-| §5 six-outcome rubric | R2.0, R3.2 | Runner never assigns MODEL-DECLINED automatically |
-| §6.3(b) structural evidence | R1.3.1 | EV-3 admissible as structural evidence; EV-1 and EV-2 are not |
-| §7.5 statistics of 100% | R2.3, R3.3 | Exact Clopper–Pearson bound printed; 3/n parenthetical for n≥30 only |
-| §7.7 quantisation | R0.1, R0.4, R2.1 | Declared policy, single rounding point |
-| §8 C8.1 universal adjudication | R2.0, R3.2 | Sheets for every unautomated dimension |
-| §8 C8.2 non-answers | R0.2, R2.2 | UNMEASURED, excluded |
-| §8 C8.3 sampling per arm | R0.1, R3.3 | Reported including omissions |
-| §8 C8.4 fixture-reproducible | R1.1, R3.1 | Sealed; computed from fixture alone |
-| §8 C8.5 deterministic keys | R3.1 | Constant-returning module refused |
-| §8 C8.6 independent keys | R4.2 | Process gate; runner records the declaration |
-| §8 C8.7 data parity | R3.1 | `derivable` per arm; VOID declared |
-| §8 C8.8 two scorers | R3.2, R3.3 | Duplicate sheets; raw agreement and kappa |
-| §8 C8.9 single variable | R1.2 | Enforced by refusal |
-| §8 C8.10 scorer containment | §2 | Two-pass design |
-| §8 C8.11 instrument provenance | R1.1, R3.3 | Harness version and AP-1 text hash |
-| §8 C8.12 correction by addition | R0.3 | Append-only transcript |
+| §0.4 version cited | config.py ap1_version | IMPLEMENTED |
+| §0.4.2 DOI convention | publication step | NOT ENFORCEABLE |
+| §1.5.1 declared execution environment | numeric.py, config.py, seal.py | IMPLEMENTED |
+| §1.5.2 excluded by construction | see §6.3(b) | NOT ENFORCEABLE |
+| §1.5.3 model under test | definitional | IMPLEMENTED |
+| §2.5 defeat condition per link | invocation.py, provenance.py, transcription.py | IMPLEMENTED |
+| §3.2.1 link-to-measurement mapping | all four links covered | IMPLEMENTED |
+| D1 accuracy, n>=10 per category | config.py MINIMUM_N, accuracy.py | IMPLEMENTED |
+| D2.1 mechanism classes per surface | reproducibility.py | IMPLEMENTED |
+| D2.2 execution conditions, parameter echo | reproducibility.py, config.py | IMPLEMENTED |
+| D2.3 necessary not sufficient | definitional | IMPLEMENTED |
+| D3 provenance | human adjudication | NOT BUILT by design (§13.1) |
+| D4 refusal integrity | human adjudication | NOT BUILT by design (§13.1) |
+| D5 minimum 20, per-class n | config.py, refused at load | IMPLEMENTED |
+| D6 minimum 10 across taxonomy | config.py, refused at load | IMPLEMENTED |
+| D7.1 invocation rate with n | invocation.py | IMPLEMENTED |
+| D7.1b instruction removal | engine.py conditions | IMPLEMENTED |
+| D7.2(a) operand admissibility (i)-(iii) | provenance.py | IMPLEMENTED |
+| D7.2(a)(iv) computed in session | not built | NOT BUILT |
+| D7.2(b) operation correctness | operation_correctness.py | IMPLEMENTED, not wired |
+| D7.3 transcription | transcription.py | IMPLEMENTED |
+| D7.5 exact Clopper-Pearson bound | invocation.py | IMPLEMENTED |
+| D7.6 instruction disclosure | config.py, perturbation_guard.py | IMPLEMENTED |
+| D7.7 evidence classes EV-0..EV-3 | evidence.py | IMPLEMENTED |
+| D7.8 perturbation discipline | perturbation_guard.py, invocation.py, context.py | IMPLEMENTED |
+| D7.9 multi-round accumulation | engine.py, evidence.py | IMPLEMENTED |
+| §5.10 VOID per item-arm | context.py, engine.py | IMPLEMENTED |
+| §5.11 sampling per arm | reproducibility.py; single config only | PARTIAL |
+| §6.3(a) by-construction evidence | running the dimensions | NOT ENFORCEABLE |
+| §6.3(b) structural evidence | evidence.py EV-3 gated False | PARTIAL |
+| §6.6.1 agreement statistic | sheets generated, agreement external | NOT BUILT by design |
+| §6.8 six-outcome vocabulary | figure_id.py | IMPLEMENTED |
+| §6.8 composition | provenance.py | IMPLEMENTED |
+| §6.8 UNMEASURED / VOID | engine.py | IMPLEMENTED |
+| §6.9 single quantisation point | numeric.py | IMPLEMENTED |
+| §9.1 runner scope limits | design property, declares UNOBSERVABLE | IMPLEMENTED |
+| §10.2 published scoring code | process | NOT ENFORCEABLE |
+| §11.8 blind authorship | process | PARTIAL |
+| §11.9 constructed keys, resolvable graph | ground_truth_example.py, seal.py | IMPLEMENTED |
+| §13.1 universal adjudication | two-pass architecture | IMPLEMENTED |
+| §13.2 non-answers not answers | engine.py, figure_id.py | IMPLEMENTED |
+| §13.3 sampling per arm | config.py, reproducibility.py | IMPLEMENTED |
+| §13.4 fixture-reproducible | seal.py | IMPLEMENTED |
+| §13.5 deterministic keys | ground_truth_example.py, seal.py | IMPLEMENTED |
+| §13.6 independent key implementer | declaration recorded, unverifiable | NOT ENFORCEABLE |
+| §13.7 data-availability parity | context.py | IMPLEMENTED |
+| §13.8 two scorers | sheets generated, agreement external | PARTIAL |
+| §13.9 single-variable perturbation | perturbation_guard.py | IMPLEMENTED |
+| §13.10 scorer-defect containment | two-pass architecture | IMPLEMENTED |
+| §13.11 instrument provenance | seal.py; AI disclosure is process | NOT ENFORCEABLE |
+| §13.12 correction by addition | transcript.py append-only | IMPLEMENTED |
 
-**Two clauses the runner cannot enforce** — C8.6 independent key
-implementation and C8.11 authorship disclosure — are **process obligations**.
+**Two clauses the runner cannot enforce** — §13.6 independent key
+implementation and §13.11 authorship disclosure — are **process obligations**.
 The runner records what the operator declares and cannot verify the
 declaration. Stated in the README rather than concealed by the mapping.
 
@@ -948,7 +972,7 @@ not an answer, and this is one additional question on a call already scheduled.
 portfolio, in which case MIT or BSD-3 without a patent grant is the fallback.
 
 **Research questions are not held in this document.** Those on which the field
-has no settled answer are put to reviewers in AP-1 v1.3 §13. The standard asks;
+has no settled answer are put to reviewers in AP-1 v1.3 §14. The standard asks;
 the implementation chooses.
 
 ---
