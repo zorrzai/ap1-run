@@ -85,6 +85,41 @@ Model computed:      abs(-287500.00) - 1006.25 - 430.75 = 286063.00
                      (subtracted interest twice)
 ```
 
+
+### Q02 -- Cleanest D7.1b Perturbation Signal
+
+Q02 (available credit = limit + balance) on gpt-5.5 produces the cleanest
+D7.1b signal: 3/3 base repeats answer correctly, 0/3 instruction-removed
+repeats answer correctly. The computation is simple enough that the model
+*can* do it (and does, under instruction), and simple enough that the
+model *won't* do it (and doesn't, without instruction).
+
+This is the ideal perturbation item: not too hard (the model fails even
+with instruction), not too easy (the model succeeds without instruction),
+and the effect size is maximum (100% drop).
+
+### Q08 -- Cross-Model OBSERVED-ONLY Variation
+
+Q08 (mortgage balance after first payment) demonstrates the `OBSERVED-ONLY`
+evidence class across four models:
+
+| Model | Correct (287,069.25) | Wrong | Evidence Class |
+|-------|---------------------|-------|----------------|
+| gpt-4.1-mini | 0/6 | 6/6 | OBSERVED-ONLY |
+| gpt-5.5 (Run 2b) | 1/6 | 5/6 | OBSERVED-ONLY |
+| gpt-5.6-sol (Run 3b) | **6/6** | 0/6 | OBSERVED-ONLY |
+| gpt-5.5 (Run 4) | 4/6 | 2/6 | OBSERVED-ONLY |
+
+gpt-4.1-mini consistently makes the same error: subtracting interest twice
+(286,063.00 instead of 287,069.25). The difference, 1,006.25, is exactly
+the monthly interest. gpt-5.6-sol is the only model that achieves 6/6.
+
+All four results are `OBSERVED-ONLY` because none of these models supports
+pinning temperature=0 (gpt-5.5 rejects it outright; gpt-5.6-sol requires
+reasoning_effort=none which overrides temperature). Without deterministic
+sampling, repeat-execution reproducibility cannot be measured, and the
+evidence class cannot exceed OBSERVED-ONLY.
+
 ## Sampling Parameter Name
 
 The config `sampling` section declares the exact parameter name sent to the

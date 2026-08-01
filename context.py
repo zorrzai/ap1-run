@@ -78,3 +78,44 @@ def format_fixture_context(fixture, item):
                     lines.append(f'  {label}: {v}')
 
     return '\n'.join(lines)
+
+
+class TrackingContext(dict):
+    """Dict wrapper that records field accesses.
+
+    Used at seal time to verify that a ground-truth module reads
+    ONLY the fields declared in source_fields_consumed.
+
+    Usage:
+        tc = TrackingContext(delivered_context)
+        ground_truth_module.compute(item_id, tc)
+        accessed = tc.accessed_fields()
+        # compare with source_fields_consumed
+
+    The __getitem__ on the outer dict returns TrackingAccount
+    wrappers. Each TrackingAccount records which fields are read.
+    """
+
+    def __init__(self, base_dict):
+        super().__init__()
+        self._accesses = set()
+        for acct_id, acct_data in base_dict.items():
+            self[acct_id] = TrackingAccount(acct_id, acct_data,
+                                            self._accesses)
+
+    def accessed_fields(self):
+        """Return set of 'account.field' strings that were read."""
+        return set(self._accesses)
+
+
+class TrackingAccount(dict):
+    """Account dict that records field accesses."""
+
+    def __init__(self, acct_id, base_dict, access_set):
+        super().__init__(base_dict)
+        self._acct_id = acct_id
+        self._access_set = access_set
+
+    def __getitem__(self, key):
+        self._access_set.add(f'{self._acct_id}.{key}')
+        return super().__getitem__(key)

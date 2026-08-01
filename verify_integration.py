@@ -495,6 +495,43 @@ def test_credential_masking_in_error_bodies():
 
 # -- Runner ----------------------------------------------------------------
 
+
+
+def test_caret_exponentiation_bitxor_to_pow():
+    """BitXor->pow: gpt-5.6-sol uses ^ for exponentiation.
+
+    Test with the literal expression string from gpt-5.6-sol's
+    compound interest calculation.
+
+    PF-3: gpt-5.6-sol uses ^ (caret) for exponentiation.
+    Python AST parses ^ as BitXor, not Pow.
+    calculator_tool.py maps BitXor -> pow (commit 99e7921).
+    """
+    sys.path.insert(0, os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), 'example'))
+    import calculator_tool
+
+    from decimal import Decimal
+
+    # gpt-5.6-sol expression: compound interest
+    # 287500*(1+0.042/12)^1 which is 287500*(1+0.042/12)**1
+    # but also test pure ^ exponentiation
+    result = calculator_tool.execute_calculator('2^10')
+    assert result == '1024', f'2^10 should be 1024, got {result}'
+
+    # More complex: from gpt-5.6-sol
+    result2 = calculator_tool.execute_calculator('287500*(1+0.042/12)')
+    expected = 287500 * (1 + 0.042/12)
+    assert abs(float(result2) - expected) < 0.01, \
+        f'compound interest mismatch: {result2} vs {expected}'
+
+    # ^ with fractional exponent
+    result3 = calculator_tool.execute_calculator('100^0.5')
+    assert abs(float(result3) - 10.0) < 0.001, \
+        f'100^0.5 should be ~10.0, got {result3}'
+
+    return True
+
 ALL_TESTS = [
     test_multiround_loop_reports_invoked_not_final_response,
     test_unrecognised_shape_in_round2_yields_ev0,
@@ -502,6 +539,7 @@ ALL_TESTS = [
     test_perturbation_guard_passes_on_config_prompts,
     test_consistency_check_halts_on_invoked_without_tool_calls,
     test_credential_masking_in_error_bodies,
+    test_caret_exponentiation_bitxor_to_pow,
 ]
 
 

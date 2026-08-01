@@ -210,6 +210,7 @@ def derive_q05(ctx):
                     {"source": "credit_card.annual_rate"},
                     {"constant": "100"},
                     {"constant": "12"},
+                    {"constant": "1"},
                 ],
             },
             {
@@ -313,6 +314,7 @@ def derive_q07(ctx):
                 "inputs": [
                     {"intermediate": "monthly_net"},
                     {"constant": "3"},
+                    {"constant": "4"},
                 ],
             },
         ],
@@ -347,6 +349,7 @@ def derive_q08(ctx):
                     {"source": "mortgage.annual_rate"},
                     {"constant": "100"},
                     {"constant": "12"},
+                    {"constant": "1"},
                 ],
             },
             {
