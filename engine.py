@@ -1,4 +1,4 @@
-"""R1.2 -- Execution Engine.
+﻿"""R1.2 -- Execution Engine.
 
 Spec: AP-1 Runner Build Spec v0.3, section 4 R1.2.
 
@@ -192,7 +192,12 @@ def _drive_tool_loop(*, response, messages, config, tools,
             )
             # Check shape of this round's response
             _check_round_shape(current, round_shapes, turn)
-        except Exception:
+        except Exception as exc:
+            # D7.9 normative: any round that fails to complete is
+            # recorded as unrecognised. The evidence class is EV-0,
+            # never a definitive invocation finding.
+            round_shapes.append(
+                (False, f'adapter_send failed on turn {turn}: {exc}'))
             break
 
     return all_tool_calls, current, round_shapes
