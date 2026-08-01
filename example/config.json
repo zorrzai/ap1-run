@@ -41,8 +41,8 @@
     ],
     "repeat_count": "50",
     "structured_answer_field": "none",
-    "ap1_version": "v1.3-draft-for-comment-20260728",
-    "ap1_text_hash": "5a8252bc8bb197bb25b7c231cadd4566a5dea354089436e01ff768b7f215eee5",
+    "ap1_version": "v1.3-draft-for-comment-20260730",
+    "ap1_text_hash": "da40bea13d058f18c824ee1844c55a3eb261b0ea81fcd8c0f546ec78a48a955c",
     "tools": [
         {
             "type": "function",
