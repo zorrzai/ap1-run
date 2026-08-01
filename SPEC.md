@@ -556,19 +556,31 @@ each numeric argument by whether it traces to an authoritative source.
    under any permitted transformation, **or** that intermediate quantised under
    the declared policy — the last case grounded **with a quantisation finding
    recorded**.
-4. **Otherwise** — no basis found.
+4. **Computed in session** — exactly equals the return value of a prior
+   invocation of the required operation in the same session, **and** that prior
+   invocation was itself `OPERANDS-GROUNDED`. If the prior invocation was not
+   grounded, the operand is **originated**.
+5. **Otherwise** — no basis found.
 
 **Transformations compose with intermediates.** Step 3 checks the raw
 intermediate and the intermediate under each permitted transformation. A
 percentage intermediate expressed as a decimal fraction is grounded, not
 originated.
 
+**The hierarchy is ordered, and the order determines what step 4 measures.**
+Where a system computes along the reference derivation’s route, its prior
+return values match reference intermediates and resolve at step 3. Step 4
+therefore fires only where a prior return is NOT a reference intermediate —
+where the system reached a correct result by a route the assessor did not
+anticipate. Step 4 is what grounds valid alternative derivations, and
+removing it would score correct systems as originated.
+
 Outcomes per invocation:
 
 | Outcome | Condition |
 |---|---|
-| `OPERANDS-GROUNDED` | Every argument resolves at step 1, 2 or 3 |
-| `OPERAND-ORIGINATED` | At least one argument reaches step 4 |
+| `OPERANDS-GROUNDED` | Every argument resolves at step 1, 2, 3 or 4 |
+| `OPERAND-ORIGINATED` | At least one argument reaches step 5 |
 | `OPERANDS-UNOBSERVABLE` | The endpoint does not expose tool arguments |
 
 **On exact matching.** Operand resolution is exact, not tolerant. An operand
