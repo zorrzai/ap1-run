@@ -92,7 +92,16 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
     sampling_as_sent = {}
     if sampling:
         for k, v in sampling.items():
-            if v == "omitted":
+            # Structured omission: {"value": "omitted", "reason": "...", "detail": "..."}
+            if isinstance(v, dict) and v.get('value') == 'omitted':
+                sampling_as_sent[k] = {
+                    'value': 'omitted',
+                    'reason': v.get('reason', ''),
+                    'detail': v.get('detail', ''),
+                }
+            # Legacy plain string omission (should be caught by config
+            # validation, but defensive)
+            elif v == "omitted":
                 sampling_as_sent[k] = "omitted"
             else:
                 try:

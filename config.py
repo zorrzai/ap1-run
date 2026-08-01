@@ -63,15 +63,18 @@ def load_config(path):
         if field not in raw:
             raise ConfigError(f'missing required field: {field!r}')
 
-    # 2. Refuse bare numeric literals anywhere in the tree
+    # 2. Validate sampling omission reasons (before bare-numeric check)
+    _validate_sampling(raw.get('sampling', {}))
+
+    # 3. Refuse bare numeric literals anywhere in the tree
     _refuse_bare_numerics(raw)
 
-    # 3. Parse numeric string fields to Decimal
+    # 4. Parse numeric string fields to Decimal
     config = dict(raw)
     for field in DECIMAL_FIELDS:
         config[field] = _parse_decimal_field(raw, field)
 
-    # 4. Parse quantisation sub-object
+    # 5. Parse quantisation sub-object
     q = raw.get('quantisation', {})
     if not isinstance(q, dict):
         raise ConfigError('quantisation must be an object')
@@ -80,7 +83,7 @@ def load_config(path):
         'rounding': q.get('rounding', 'ROUND_HALF_UP'),
     }
 
-    # 5. Parse repeat_count
+    # 6. Parse repeat_count
     rc = raw['repeat_count']
     if not isinstance(rc, str):
         raise ConfigError(
@@ -90,11 +93,51 @@ def load_config(path):
     except ValueError:
         raise ConfigError(f'repeat_count: cannot parse as integer: {rc!r}')
 
-    # 6. Validate structured_answer_field
+    # 7. Validate structured_answer_field
     saf = raw['structured_answer_field']
     config['structured_answer_field'] = None if saf == 'none' else saf
 
     return config
+
+
+
+PERMITTED_OMISSION_REASONS = {
+    'operator-declared',
+    'platform-rejected',
+    'platform-unsupported',
+}
+
+
+def _validate_sampling(sampling_dict):
+    """Validate sampling parameters per R0.1.
+
+    A sampling parameter may be:
+    - A quoted numeric string (e.g. "0", "4096") — sent to the endpoint.
+    - A structured omission dict: {"value": "omitted", "reason": "...", "detail": "..."}.
+    - A plain string "omitted" WITHOUT a reason is REFUSED.
+
+    Permitted reason values:
+        operator-declared      — the operator chose not to set it
+        platform-rejected      — the endpoint refused the value; detail required
+        platform-unsupported   — the endpoint does not accept the parameter; detail required
+    """
+    if not isinstance(sampling_dict, dict):
+        return
+    for k, v in sampling_dict.items():
+        if isinstance(v, str) and v == 'omitted':
+            raise ConfigError(
+                f'sampling.{k}: omitted without a reason. '
+                f'Use {{"value": "omitted", "reason": "...", "detail": "..."}}. '
+                f'Permitted reasons: {", ".join(sorted(PERMITTED_OMISSION_REASONS))}')
+        if isinstance(v, dict) and v.get('value') == 'omitted':
+            reason = v.get('reason')
+            if reason not in PERMITTED_OMISSION_REASONS:
+                raise ConfigError(
+                    f'sampling.{k}: invalid or missing reason {reason!r}. '
+                    f'Permitted reasons: {", ".join(sorted(PERMITTED_OMISSION_REASONS))}')
+            if reason in ('platform-rejected', 'platform-unsupported') and not v.get('detail'):
+                raise ConfigError(
+                    f'sampling.{k}: detail is required when reason is {reason!r}')
 
 
 def _refuse_bare_numerics(obj, path=''):
@@ -111,6 +154,9 @@ def _refuse_bare_numerics(obj, path=''):
             f'numeric values must be quoted strings, '
             f'e.g. "{obj}" not {obj}')
     if isinstance(obj, dict):
+        # Skip structured omission objects (validated by _validate_sampling)
+        if obj.get('value') == 'omitted' and 'reason' in obj:
+            return
         for k, v in obj.items():
             _refuse_bare_numerics(v, f'{path}.{k}' if path else k)
     elif isinstance(obj, (list, tuple)):

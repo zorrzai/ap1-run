@@ -501,7 +501,7 @@ def _valid_config_with(**overrides):
     """Return a valid config dict with specific overrides."""
     base = {
         'endpoint_url': 'http://test', 'model': 'test',
-        'sampling': {'temperature': '0', 'top_p': 'omitted',
+        'sampling': {'temperature': '0', 'top_p': {'value': 'omitted', 'reason': 'operator-declared'},
                      'max_completion_tokens': '4096'},
         'answer_tolerance': '0.01',
         'quantisation': {'places': '2', 'rounding': 'ROUND_HALF_UP'},
@@ -609,6 +609,7 @@ def main():
     test_ground_truth()
     test_ev3_guard()
     test_run1_literal_strings()
+    test_a_omitted_without_reason_refused()
 
     print(f'\n{"=" * 50}')
     print(f'Phase A Gate Results: {_passed} passed, {_failed} failed')
@@ -616,6 +617,48 @@ def main():
 
     return 0 if _failed == 0 else 1
 
+
+
+
+def test_a_omitted_without_reason_refused():
+    """Config refuses a sampling parameter omitted without a reason."""
+    import tempfile
+    cfg = {
+        'endpoint_url': 'http://test',
+        'model': 'test',
+        'sampling': {'temperature': 'omitted'},
+        'answer_tolerance': '0.01',
+        'quantisation': {'places': '2', 'rounding': 'ROUND_HALF_UP'},
+        'permitted_transformations': [],
+        'decline_markers': [],
+        'decimal_separator': '.',
+        'grouping_separator': ',',
+        'currency_symbols': ['$'],
+        'dimensions_claimed': [],
+        'repeat_count': '3',
+        'structured_answer_field': 'none',
+        'ap1_version': 'v0.3',
+        'ap1_text_hash': 'test',
+    }
+    with tempfile.NamedTemporaryFile(
+            mode='w', suffix='.json', delete=False, encoding='utf-8') as f:
+        json.dump(cfg, f)
+        tmp = f.name
+    try:
+        raised = False
+        try:
+            load_config(tmp)
+        except ConfigError as e:
+            raised = True
+            msg = str(e)
+            assert 'temperature' in msg, (
+                f'Error must name the parameter: {msg}')
+            assert 'reason' in msg.lower() or 'omitted' in msg.lower(), (
+                f'Error must explain the issue: {msg}')
+        assert raised, 'Config with plain omitted should have raised ConfigError'
+    finally:
+        os.unlink(tmp)
+    return True
 
 if __name__ == '__main__':
     sys.exit(main())
