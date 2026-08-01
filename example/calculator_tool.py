@@ -27,6 +27,7 @@ _ALLOWED_BINOPS = {
     ast.FloorDiv: operator.floordiv,
     ast.Mod: operator.mod,
     ast.Pow: operator.pow,
+    ast.BitXor: operator.pow,  # ^ is math notation for exponentiation
 }
 
 _ALLOWED_UNARYOPS = {

@@ -219,10 +219,14 @@ def main():
 
     def execute_tool(name, arguments_json):
         if name == 'calculator':
-            args = json.loads(arguments_json)
-            expr = args.get('expression', arguments_json)
-            result = calculator_tool.execute_calculator(expr)
-            return json.dumps({'result': result})
+            try:
+                args = json.loads(arguments_json)
+                expr = args.get('expression', arguments_json)
+                result = calculator_tool.execute_calculator(expr)
+                return json.dumps({'result': result})
+            except (calculator_tool.CalculatorError, json.JSONDecodeError,
+                    ValueError, ZeroDivisionError) as e:
+                return json.dumps({'error': f'calculator error: {e}'})
         return json.dumps({'error': f'unknown tool: {name}'})
 
     # -- Collector for all findings --
