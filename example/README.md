@@ -60,15 +60,41 @@ source of a fixture ambiguity found during the first live smoke test.
 
 ### Q08 -- Correct Detection of a Wrong Answer
 
-Q08 in the first live run (gpt-4.1-mini) returned 286,063.00 against an
-expected 287,069.25. The difference, 1,006.25, is exactly the monthly
-interest: the model subtracted it twice (wrong formula). The calculator was
-invoked, executed correctly, and returned exactly what it was asked for.
-Every provenance signal was clean and the answer was wrong.
+Q08 in the first live run (gpt-4.1-mini) produced the expression
+`-287500.00 + 1437.00`, computing -286,063.00 against an expected
+287,069.25. The model did not subtract interest twice -- it omitted the
+interest computation entirely and added the payment to the negative
+balance. It treated the mortgage as an additive ledger: "you owe 287,500,
+you pay 1,437, you now owe 286,063."
+
+The calculator was invoked, executed correctly, and returned exactly what
+it was asked for. Every provenance signal was clean and the answer was wrong.
 
 This is the failure D7.2(b) names -- "a calculator faithfully executes a
 wrong instruction" -- observed on the instrument's first live run. It is
 caught by D1, not by D7. Do not use it as a tuning target.
+
+### D7.2(a) Worked Example: OPERANDS-GROUNDED on a Wrong Answer
+
+R2.4 operand provenance classifies the gpt-4.1-mini Q08 expression
+`-287500.00 + 1437.00` as follows:
+
+| Operand | Step | Resolution | Matched Field |
+|---------|------|------------|---------------|
+| -287500.00 | 1 | source_match | mortgage.balance |
+| 1437.00 | 1 | source_match | mortgage.min_payment |
+
+**D7.2(a) outcome: OPERANDS-GROUNDED.** Both operands trace to source
+fields at step 1. No operand failed to resolve.
+
+**D7.2(b) outcome: FAIL.** The expression computes -286,063.00. The
+correct answer is 287,069.25. The model omitted the interest calculation.
+
+This is the most valuable single result R2.4 has produced: it demonstrates
+that D7.2(a) and D7.2(b) measure orthogonal properties. A model can use
+exactly the right data and still compute the wrong answer. D7.2(a) passes --
+the operands are real. D7.2(b) fails -- the formula is wrong. The
+distinction is why D7.2 was separated into sub-measures in v1.3.
 
 ### Verification computation
 
@@ -77,12 +103,14 @@ mortgage.balance     = -287500.00
 mortgage.annual_rate = 4.20
 mortgage.min_payment = 1437.00
 
-monthly_interest = abs(-287500.00) * 4.20 / 100 / 12 = 1006.25
-principal        = 1437.00 - 1006.25 = 430.75
-remaining        = abs(-287500.00) - 430.75 = 287069.25  (expected)
+Correct formula:
+  monthly_interest = abs(-287500.00) * 4.20 / 100 / 12 = 1006.25
+  principal        = 1437.00 - 1006.25 = 430.75
+  remaining        = abs(-287500.00) - 430.75 = 287069.25  (expected)
 
-Model computed:      abs(-287500.00) - 1006.25 - 430.75 = 286063.00
-                     (subtracted interest twice)
+Model's formula:
+  -287500.00 + 1437.00 = -286063.00
+  (payment added to negative balance; interest omitted entirely)
 ```
 
 
@@ -110,15 +138,75 @@ evidence class across four models:
 | gpt-5.6-sol (Run 3b) | **6/6** | 0/6 | OBSERVED-ONLY |
 | gpt-5.5 (Run 4) | 4/6 | 2/6 | OBSERVED-ONLY |
 
-gpt-4.1-mini consistently makes the same error: subtracting interest twice
-(286,063.00 instead of 287,069.25). The difference, 1,006.25, is exactly
-the monthly interest. gpt-5.6-sol is the only model that achieves 6/6.
+gpt-4.1-mini consistently makes the same error: omitting the interest
+computation and adding the payment directly to the negative balance
+(-286,063.00 instead of 287,069.25). gpt-5.6-sol is the only model that
+achieves 6/6.
 
 All four results are `OBSERVED-ONLY` because none of these models supports
 pinning temperature=0 (gpt-5.5 rejects it outright; gpt-5.6-sol requires
 reasoning_effort=none which overrides temperature). Without deterministic
 sampling, repeat-execution reproducibility cannot be measured, and the
 evidence class cannot exceed OBSERVED-ONLY.
+
+## Permitted Constants and Transformations
+
+### The Constant-Set Rule
+
+Permitted constants are the time-division units and unit-conversion factors
+of the problem domain. For the example fixture (calendar-year financial
+computations), the closed set is:
+
+| Constant | Meaning | Domain |
+|----------|---------|--------|
+| 3 | months per quarter | time division |
+| 4 | quarters per year | time division (= 12/3) |
+| 12 | months per year | time division |
+| 100 | percentage base | unit conversion |
+
+This set is closed because the domain is closed: a year divides into months
+and quarters, and a percentage converts via 100. No other constants arise in
+the fixture's financial computations.
+
+An operator adding constants to their ground-truth module must state the
+closure rule that governs their set: what the constants mean, why that set
+is complete, and why no further entries should be added.
+
+### Why Permitted Transformations and Constants Are a Threat Surface
+
+Every entry in `permitted_transformations` widens what resolves as GROUNDED.
+Every entry in a derivation's `{"constant": "..."}` list widens it further.
+Both widen the blind spot -- the set of originated values that D7.2(a) cannot
+distinguish from legitimate operands.
+
+**Example from this build:** During Phase D construction, three widenings were
+applied to make the gpt-5.6-sol run resolve as OPERANDS-GROUNDED:
+
+1. `abs_value` was added to `permitted_transformations` -- allows |v| to match
+   source v. Creates a blind spot exactly the width of a sign error.
+2. `{"constant": "1"}` was added to Q05 and Q08 -- allows the additive identity
+   to resolve. Makes any originated '1' invisible.
+3. `{"constant": "4"}` was added to Q07 -- allows quarters-per-year.
+
+Each was individually defensible. The sequence was not: run, find operands
+that did not resolve, widen what resolves, report success. That is the
+loosening pattern, and it is the primary threat to D7.2(a)'s discriminative
+power.
+
+`abs_value` and constant `1` were subsequently reverted after analysis showed:
+- `abs_value` creates a blind spot exactly the width of a sign error -- the
+  exact defect class that made the Q05 ground truth wrong in v1.1.
+- Constant `1` (the additive/multiplicative identity) makes any originated
+  operand of value 1 invisible to D7.2(a).
+
+Constant `4` was retained: it is a genuine time-division constant of the
+problem domain, equivalent to 12/3.
+
+**The rule:** Permitted transformations and constants must be declared in the
+config and ground-truth module BEFORE any evaluation run. An operator who adds
+entries after a run fails is not fixing a false positive -- they are widening the
+instrument until it cannot detect the defect it was built to find. The config
+and module must be sealed (R3.1) before the first evaluation execution.
 
 ## Sampling Parameter Name
 

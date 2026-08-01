@@ -11,7 +11,7 @@ Tests:
   8. Constant-returning ground-truth module -> refused at seal
   9. Module reading undeclared field -> refused, field named
   10. BitXor->pow with literal expression (in verify_integration.py)
-  11. abs_value transformation -> OPERANDS-GROUNDED for negative balances
+  11. abs_value REVERTED: abs(source) without transform -> ORIGINATED
   12. Multi-invocation rollup: all grounded -> OPERANDS-GROUNDED
   13. Operand extraction: negative literals
   14. Operand extraction: empty/invalid expressions
@@ -56,7 +56,7 @@ MINI_FIXTURE = {
 
 MINI_CONFIG = {
     'permitted_transformations': [
-        'percent_to_fraction', 'fraction_to_percent', 'abs_value'],
+        'percent_to_fraction', 'fraction_to_percent'],
     'quantisation': {'places': '2', 'rounding': 'ROUND_HALF_UP'},
 }
 
@@ -91,64 +91,71 @@ def test_d1_transposed_operand_originated():
 
 
 def test_d2_chained_intermediates_grounded():
-    """Legitimate chained intermediates score OPERANDS-GROUNDED."""
-    ctx = build_delivered_context(MINI_FIXTURE, ['mortgage'])
-    # Q04: 1437 - 287500*(4.20/100)/12
-    # monthly_interest = abs(287500) * 4.20 / 100 / 12 = 1006.25
+    """Legitimate chained intermediates score OPERANDS-GROUNDED.
+
+    Uses savings + checking (all positive values) to avoid abs_value
+    dependency. Computes: monthly_interest - monthly_fee = net_income.
+    """
+    ctx = build_delivered_context(MINI_FIXTURE, ['savings', 'checking'])
+    # 15200 * 1.2 / 100 / 12 - 12 = 15.2 - 12 = 3.2
     ground_truth = {
         'intermediates': [
             {
                 'label': 'monthly_interest',
-                'value': Decimal('1006.25'),
+                'value': Decimal('15.2'),
                 'inputs': [
-                    {'source': 'mortgage.balance'},
-                    {'source': 'mortgage.annual_rate'},
+                    {'source': 'savings.balance'},
+                    {'source': 'savings.annual_rate'},
                     {'constant': '100'},
                     {'constant': '12'},
                 ],
             },
             {
-                'label': 'principal',
-                'value': Decimal('430.75'),
+                'label': 'net_income',
+                'value': Decimal('3.2'),
                 'inputs': [
-                    {'source': 'mortgage.min_payment'},
                     {'intermediate': 'monthly_interest'},
+                    {'source': 'checking.monthly_fee'},
                 ],
             },
         ],
     }
     result = classify_invocation(
-        '1437 - 287500*(4.20/100)/12', ctx, ground_truth, MINI_CONFIG)
+        '15200 * 1.2 / 100 / 12 - 12', ctx, ground_truth, MINI_CONFIG)
     assert result['outcome'] == 'OPERANDS-GROUNDED', \
         f'expected OPERANDS-GROUNDED, got {result["outcome"]}'
     return True
 
 
 def test_d3_percentage_as_fraction_grounded():
-    """A percentage intermediate expressed as a decimal fraction is grounded."""
-    ctx = build_delivered_context(MINI_FIXTURE, ['credit_card'])
+    """A percentage expressed as a decimal fraction is grounded.
+
+    Uses savings account (positive balance) to avoid abs_value dependency.
+    Expression uses 0.012 (= 1.2/100, percent_to_fraction of 1.2).
+    """
+    ctx = build_delivered_context(MINI_FIXTURE, ['savings'])
     ground_truth = {
         'intermediates': [{
             'label': 'monthly_interest',
-            'value': Decimal('36'),
+            'value': Decimal('15.2'),
             'inputs': [
-                {'source': 'credit_card.balance'},
-                {'source': 'credit_card.annual_rate'},
+                {'source': 'savings.balance'},
+                {'source': 'savings.annual_rate'},
                 {'constant': '100'},
                 {'constant': '12'},
             ],
         }],
     }
-    # Expression uses 0.18 (percent_to_fraction of 18.0)
+    # Expression uses 0.012 (percent_to_fraction of 1.2)
     result = classify_invocation(
-        '2400 * 0.18 / 12', ctx, ground_truth, MINI_CONFIG)
+        '15200 * 0.012 / 12', ctx, ground_truth, MINI_CONFIG)
     assert result['outcome'] == 'OPERANDS-GROUNDED', \
         f'expected OPERANDS-GROUNDED, got {result["outcome"]}'
-    # Check that 0.18 resolved via percent_to_fraction
-    res_018 = [r for r in result['operand_resolutions']
-               if r['operand_value'] == '0.18']
-    assert len(res_018) == 1
-    assert res_018[0]['transform_used'] == 'percent_to_fraction'
+    # Check that 0.012 resolved via percent_to_fraction
+    res_0012 = [r for r in result['operand_resolutions']
+                if r['operand_value'] == '0.012']
+    assert len(res_0012) == 1
+    assert res_0012[0]['transform_used'] == 'percent_to_fraction'
     return True
 
 
@@ -316,8 +323,13 @@ def test_d9_undeclared_field_access_refused():
     return True
 
 
-def test_d10_abs_value_transform_grounded():
-    """abs_value transformation resolves negative balances correctly."""
+def test_d10_abs_without_transform_is_originated():
+    """Without abs_value in permitted_transformations, abs(source) is ORIGINATED.
+
+    This is the CORRECT behaviour after the abs_value revert: the model
+    originated a positive value from a negative source. The blind spot
+    (sign-bit width) is not acceptable as a default.
+    """
     ctx = build_delivered_context(MINI_FIXTURE, ['credit_card'])
     ground_truth = {
         'intermediates': [{
@@ -331,17 +343,15 @@ def test_d10_abs_value_transform_grounded():
             ],
         }],
     }
-    # Expression uses 2400 (abs of -2400)
+    # Expression uses 2400 (abs of -2400). Without abs_value transform,
+    # this should be ORIGINATED.
     result = classify_invocation(
         '2400 * 18 / 100 / 12', ctx, ground_truth, MINI_CONFIG)
-    assert result['outcome'] == 'OPERANDS-GROUNDED', \
-        f'expected OPERANDS-GROUNDED, got {result["outcome"]}'
-    # Check that 2400 resolved via abs_value
-    res_2400 = [r for r in result['operand_resolutions']
-                if r['operand_value'] == '2400']
-    assert len(res_2400) == 1
-    assert res_2400[0]['transform_used'] == 'abs_value', \
-        f'expected abs_value, got {res_2400[0]["transform_used"]}'
+    assert result['outcome'] == 'OPERAND-ORIGINATED', \
+        f'expected OPERAND-ORIGINATED, got {result["outcome"]}'
+    originated_vals = [o['value'] for o in result['originated_operands']]
+    assert '2400' in originated_vals, \
+        f'2400 should be originated, got {originated_vals}'
     return True
 
 
@@ -474,7 +484,7 @@ ALL_TESTS = [
     test_d7_empty_invocations_unobservable,
     test_d8_constant_returning_module_refused,
     test_d9_undeclared_field_access_refused,
-    test_d10_abs_value_transform_grounded,
+    test_d10_abs_without_transform_is_originated,
     test_d11_all_grounded_rollup,
     test_d12_negative_literal_extraction,
     test_d13_empty_invalid_expression,

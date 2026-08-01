@@ -6,7 +6,7 @@ C8.5 compliance:
   - No expected value or intermediate appears as a numeric literal.
   - Every value is the RETURN VALUE of an expression over delivered_context.
   - Numeric literals are permitted ONLY as genuine constants of the
-    problem: 12 (months), 3 (quarter), 100 (percentage conversion).
+    problem: 12 (months), 3 (quarter), 4 (quarters/year), 100 (percentage conversion).
   - The module never sees the full fixture; it receives only the
     accounts named in the item's source_accounts.
   - The module returns UNQUANTISED values. The runner quantises once.
@@ -210,7 +210,6 @@ def derive_q05(ctx):
                     {"source": "credit_card.annual_rate"},
                     {"constant": "100"},
                     {"constant": "12"},
-                    {"constant": "1"},
                 ],
             },
             {
@@ -349,7 +348,6 @@ def derive_q08(ctx):
                     {"source": "mortgage.annual_rate"},
                     {"constant": "100"},
                     {"constant": "12"},
-                    {"constant": "1"},
                 ],
             },
             {
