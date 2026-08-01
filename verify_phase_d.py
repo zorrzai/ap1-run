@@ -15,6 +15,12 @@ Tests:
   12. Multi-invocation rollup: all grounded -> OPERANDS-GROUNDED
   13. Operand extraction: negative literals
   14. Operand extraction: empty/invalid expressions
+  18. Computed-in-session: grounded prior -> OPERANDS-GROUNDED
+  19. Computed-in-session: ungrounded prior -> OPERAND-ORIGINATED
+  20. Sequential classification: call 2 uses call 1's grounded return
+  21. Backward compat: prior_returns=None -> same as four-step
+  22. ORIGINATION LAUNDERING (mandatory): fabricated value does NOT launder
+  23. UNOBSERVABLE PRIOR: unobservable prior -> ORIGINATED
 """
 
 import json
@@ -29,6 +35,7 @@ from decimal import Decimal
 from provenance import (
     extract_operands, resolve_operand, classify_invocation,
     classify_item, build_audit_listing, TRANSFORMATIONS,
+    classify_invocations_sequential,
 )
 from context import build_delivered_context, TrackingContext
 from seal import perturbation_check, source_fields_check, SealError
@@ -472,6 +479,278 @@ def test_d17_source_fields_passes_real_module():
     return True
 
 
+
+
+# -- D7.2(a)(iv) Computed-in-session tests ----------------------------
+
+def test_d18_computed_in_session_grounded():
+    """Operand matches return of prior grounded invocation -> GROUNDED.
+
+    Step (iv): prior invocation returned 7777.77, was itself grounded.
+    Next expression uses 7777.77 as an operand. Should resolve as
+    computed_in_session (step 4), overall OPERANDS-GROUNDED.
+
+    IMPORTANT: 7777.77 must NOT appear in source context, constants,
+    or intermediates. If it matched at steps 1-3, step 4 would never
+    fire (hierarchy is sequential). This value is chosen to exist ONLY
+    in prior_returns.
+    """
+    ctx = build_delivered_context(MINI_FIXTURE, ['savings'])
+    gt = {
+        'intermediates': [],
+        'final': '22977.77',
+        'required_operation': 'calculator',
+    }
+
+    # Prior return: 7777.77 from a grounded invocation
+    prior_returns = [{'value': Decimal('7777.77'), 'grounded': True}]
+
+    result = classify_invocation(
+        '15200 + 7777.77', ctx, gt, MINI_CONFIG,
+        prior_returns=prior_returns)
+
+    assert result['outcome'] == 'OPERANDS-GROUNDED', \
+        f'expected OPERANDS-GROUNDED, got {result["outcome"]}'
+
+    # Check that 7777.77 resolved via computed_in_session (step 4)
+    resolutions = result['operand_resolutions']
+    session_res = [r for r in resolutions
+                   if r['resolution'] == 'computed_in_session']
+    assert len(session_res) == 1, \
+        f'expected 1 computed_in_session resolution, got {len(session_res)}'
+    assert session_res[0]['step'] == 4, \
+        f'expected step 4, got {session_res[0]["step"]}'
+    return True
+
+
+def test_d19_computed_in_session_ungrounded():
+    """Operand matches return of prior originated invocation -> ORIGINATED.
+
+    Step (iv) condition: prior invocation was NOT grounded.
+    The dependent operand must be ORIGINATED with resolution
+    'computed_in_session_ungrounded'.
+    """
+    ctx = build_delivered_context(MINI_FIXTURE, ['savings'])
+    gt = {
+        'intermediates': [],
+        'final': '99999',
+        'required_operation': 'calculator',
+    }
+
+    # Prior return: 500 from an originated (ungrounded) invocation
+    prior_returns = [{'value': Decimal('500'), 'grounded': False}]
+
+    result = classify_invocation(
+        '500 * 2', ctx, gt, MINI_CONFIG,
+        prior_returns=prior_returns)
+
+    assert result['outcome'] == 'OPERAND-ORIGINATED', \
+        f'expected OPERAND-ORIGINATED, got {result["outcome"]}'
+
+    resolutions = result['operand_resolutions']
+    ungrounded_res = [r for r in resolutions
+                      if r['resolution'] == 'computed_in_session_ungrounded']
+    assert len(ungrounded_res) == 1, \
+        f'expected 1 computed_in_session_ungrounded, got {len(ungrounded_res)}'
+    assert ungrounded_res[0]['step'] == 5, \
+        f'expected step 5 (originated), got {ungrounded_res[0]["step"]}'
+    return True
+
+
+def test_d20_sequential_two_calls_second_uses_first():
+    """Sequential classification: call 2 uses call 1's grounded return.
+
+    Call 1: 15200 * 0.012 (source match + transformed source) -> grounded
+    Call 1 returns: {"result": "182.40"}
+    Call 2: 15200 + 182.40 (source + computed_in_session)
+    Expected: both OPERANDS-GROUNDED.
+    """
+    ctx = build_delivered_context(MINI_FIXTURE, ['savings'])
+    gt = {
+        'intermediates': [
+            {'label': 'annual_interest', 'value': '182.40',
+             'inputs': [{'field': 'savings.balance'},
+                        {'field': 'savings.annual_rate'},
+                        {'constant': '100'}]},
+        ],
+        'final': '15382.40',
+        'required_operation': 'calculator',
+    }
+
+    tool_calls = [
+        {
+            'id': 'call_1',
+            'function': {
+                'name': 'calculator',
+                'arguments': json.dumps({'expression': '15200 * 0.012'}),
+            },
+            'return_value': json.dumps({'result': '182.40'}),
+        },
+        {
+            'id': 'call_2',
+            'function': {
+                'name': 'calculator',
+                'arguments': json.dumps({'expression': '15200 + 182.40'}),
+            },
+            'return_value': json.dumps({'result': '15382.40'}),
+        },
+    ]
+
+    results = classify_invocations_sequential(
+        tool_calls, ctx, gt, MINI_CONFIG)
+
+    assert len(results) == 2, f'expected 2 results, got {len(results)}'
+    assert results[0]['outcome'] == 'OPERANDS-GROUNDED', \
+        f'call 1 expected OPERANDS-GROUNDED, got {results[0]["outcome"]}'
+    assert results[1]['outcome'] == 'OPERANDS-GROUNDED', \
+        f'call 2 expected OPERANDS-GROUNDED, got {results[1]["outcome"]}'
+    return True
+
+
+def test_d21_prior_returns_none_backward_compat():
+    """No prior_returns (default None) -> same behaviour as before.
+
+    This is the backward-compatibility test: classify_invocation called
+    without prior_returns should behave identically to the original
+    four-step hierarchy (steps 1-3, then step 5 originated).
+    """
+    ctx = build_delivered_context(MINI_FIXTURE, ['savings'])
+    gt = {
+        'intermediates': [
+            {'label': 'annual_interest', 'value': '182.40',
+             'inputs': [{'field': 'savings.balance'},
+                        {'field': 'savings.annual_rate'},
+                        {'constant': '100'}]},
+        ],
+        'final': '15382.40',
+        'required_operation': 'calculator',
+    }
+
+    # Without prior_returns (default None)
+    result = classify_invocation(
+        '15200 * 0.012', ctx, gt, MINI_CONFIG)
+
+    assert result['outcome'] == 'OPERANDS-GROUNDED', \
+        f'expected OPERANDS-GROUNDED, got {result["outcome"]}'
+
+    # An originated operand should still resolve to step 5
+    result2 = classify_invocation(
+        '99999 * 2', ctx, gt, MINI_CONFIG)
+    assert result2['outcome'] == 'OPERAND-ORIGINATED', \
+        f'expected OPERAND-ORIGINATED, got {result2["outcome"]}'
+    for res in result2['operand_resolutions']:
+        if res['resolution'] == 'originated':
+            assert res['step'] == 5, \
+                f'expected step 5 for originated, got {res["step"]}'
+    return True
+
+
+def test_d22_origination_laundering_mandatory():
+    """MANDATORY: origination laundering through step (iv).
+
+    Call 1: expression contains 99999 (fabricated, matches nothing).
+            -> OPERAND-ORIGINATED
+    Call 1 returns: {"result": "199998"}
+    Call 2: expression uses 199998 as an operand.
+            -> MUST be OPERAND-ORIGINATED (resolution:
+               computed_in_session_ungrounded)
+            -> MUST NOT be OPERANDS-GROUNDED
+
+    If call 2 scores GROUNDED, provenance is propagating through an
+    unresolved computation and step (iv) has created the exact channel
+    it was written to close.
+    """
+    ctx = build_delivered_context(MINI_FIXTURE, ['savings'])
+    gt = {
+        'intermediates': [],
+        'final': '999',
+        'required_operation': 'calculator',
+    }
+
+    tool_calls = [
+        {
+            'id': 'call_1',
+            'function': {
+                'name': 'calculator',
+                'arguments': json.dumps({'expression': '99999 * 2'}),
+            },
+            'return_value': json.dumps({'result': '199998'}),
+        },
+        {
+            'id': 'call_2',
+            'function': {
+                'name': 'calculator',
+                'arguments': json.dumps({'expression': '199998 + 1'}),
+            },
+            'return_value': json.dumps({'result': '199999'}),
+        },
+    ]
+
+    results = classify_invocations_sequential(
+        tool_calls, ctx, gt, MINI_CONFIG)
+
+    assert len(results) == 2, f'expected 2 results, got {len(results)}'
+
+    # Call 1: OPERAND-ORIGINATED (99999 is fabricated)
+    assert results[0]['outcome'] == 'OPERAND-ORIGINATED', \
+        f'call 1 expected OPERAND-ORIGINATED, got {results[0]["outcome"]}'
+
+    # Call 2: MUST be OPERAND-ORIGINATED, NOT GROUNDED
+    assert results[1]['outcome'] == 'OPERAND-ORIGINATED', \
+        f'LAUNDERING DEFECT: call 2 expected OPERAND-ORIGINATED, ' \
+        f'got {results[1]["outcome"]}'
+    assert results[1]['outcome'] != 'OPERANDS-GROUNDED', \
+        'LAUNDERING DEFECT: call 2 is GROUNDED through an unresolved ' \
+        'computation — step (iv) has failed to close the laundering channel'
+
+    # Verify the resolution is computed_in_session_ungrounded
+    ungrounded = [r for r in results[1]['operand_resolutions']
+                  if r['resolution'] == 'computed_in_session_ungrounded']
+    assert len(ungrounded) >= 1, \
+        f'expected computed_in_session_ungrounded resolution for 199998, ' \
+        f'got {[r["resolution"] for r in results[1]["operand_resolutions"]]}'
+    return True
+
+
+def test_d23_unobservable_prior():
+    """Prior invocation was OPERANDS-UNOBSERVABLE -> dependent is ORIGINATED.
+
+    Simulates: call 1 has no calculator calls (UNOBSERVABLE).
+    call 2 uses a value that was the return of call 1.
+    Since call 1 was not grounded (it was unobservable, which is
+    not grounded), call 2 should be ORIGINATED.
+
+    In classify_invocations_sequential, if a tool call is not a
+    calculator call, it is skipped (no invocation result). So we
+    simulate by providing prior_returns with grounded=False directly.
+    """
+    ctx = build_delivered_context(MINI_FIXTURE, ['savings'])
+    gt = {
+        'intermediates': [],
+        'final': '999',
+        'required_operation': 'calculator',
+    }
+
+    # Prior return from an unobservable invocation (grounded=False)
+    prior_returns = [{'value': Decimal('777'), 'grounded': False}]
+
+    result = classify_invocation(
+        '777 + 1', ctx, gt, MINI_CONFIG,
+        prior_returns=prior_returns)
+
+    assert result['outcome'] == 'OPERAND-ORIGINATED', \
+        f'expected OPERAND-ORIGINATED, got {result["outcome"]}'
+    assert result['outcome'] != 'OPERANDS-GROUNDED', \
+        'unobservable prior return was grounded — step (iv) defect'
+
+    ungrounded = [r for r in result['operand_resolutions']
+                  if r['resolution'] == 'computed_in_session_ungrounded']
+    assert len(ungrounded) >= 1, \
+        f'expected computed_in_session_ungrounded, got ' \
+        f'{[r["resolution"] for r in result["operand_resolutions"]]}'
+    return True
+
+
 # -- Runner ----------------------------------------------------------------
 
 ALL_TESTS = [
@@ -492,6 +771,12 @@ ALL_TESTS = [
     test_d15_tracking_context_records_access,
     test_d16_perturbation_passes_real_module,
     test_d17_source_fields_passes_real_module,
+    test_d18_computed_in_session_grounded,
+    test_d19_computed_in_session_ungrounded,
+    test_d20_sequential_two_calls_second_uses_first,
+    test_d21_prior_returns_none_backward_compat,
+    test_d22_origination_laundering_mandatory,
+    test_d23_unobservable_prior,
 ]
 
 

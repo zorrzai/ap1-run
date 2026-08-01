@@ -681,11 +681,13 @@ access to the runner, fixture files, or transcript.
 and all hashes, **including the AP-1 text version**; the resolved configuration
 verbatim; per-dimension results with n; **every D7 figure with its evidence
 class**; every zero-failure result with its one-sided 95% upper bound; the
-D7.2 originated-operand listing; the proportion auto-scored versus adjudicated
-per dimension; D2 mechanism classes per surface with evidence basis and
-operator-declared marking; every `UNMEASURED`, `UNOBSERVABLE`, `UNMEASURABLE`
-and `VOID` cell with its reason; quantisation findings; and a declaration of
-which dimensions were **not** measured.
+D7.2 originated-operand listing; **D7.2(b) operation-correctness results with
+per-outcome counts: `OPERATION-CORRECT` / `WRONG-OPERATION` /
+`OPERATION-UNOBSERVABLE`, each with n**; the proportion auto-scored versus
+adjudicated per dimension; D2 mechanism classes per surface with evidence basis
+and operator-declared marking; every `UNMEASURED`, `UNOBSERVABLE`,
+`UNMEASURABLE` and `VOID` cell with its reason; quantisation findings; and a
+declaration of which dimensions were **not** measured.
 
 **Inter-rater agreement — specified.** Where two scorers are supplied, the
 report gives **raw percentage agreement** and **Cohen's kappa**, both, with the

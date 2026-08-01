@@ -20,6 +20,7 @@ from evidence import (
     classify_invocation, classify_attestation,
     extract_attestation, check_ev3_guard, EV_0,
 )
+from operation_correctness import classify_operation
 
 
 class EngineError(Exception):
@@ -115,6 +116,21 @@ def execute_item(item, *, condition, config, fixture,
         _, att_reason = classify_attestation(
             attestation, {'ev3_implemented': False})
 
+    # D7.2(b): evaluate operation correctness for each tool call
+    op_correctness_results = []
+    for tc in tool_calls_record:
+        expr = _extract_calc_expression(tc)
+        if expr is not None:
+            try:
+                oc = classify_operation(expr, gt, config)
+                op_correctness_results.append(oc)
+            except Exception as e:
+                op_correctness_results.append({
+                    'outcome': 'OPERATION-UNOBSERVABLE',
+                    'reason': f'evaluation failed: '
+                              f'{type(e).__name__}: {e}',
+                })
+
     # Write transcript
     transcript.append(
         transcript_path,
@@ -130,6 +146,7 @@ def execute_item(item, *, condition, config, fixture,
         attestation_reason=att_reason,
         ground_truth_final=str(gt['final']),
         required_operation=gt['required_operation'],
+        operation_correctness=op_correctness_results,
     )
 
     return {
@@ -183,6 +200,14 @@ def _drive_tool_loop(*, response, messages, config, tools,
                 'tool_call_id': tc.get('id', ''),
                 'content': str(result),
             })
+            # D7.2(a)(iv): attach return value by tool_call_id
+            tc_id = tc.get('id', '')
+            matched = [r for r in all_tool_calls if r['id'] == tc_id]
+            if not matched:
+                raise EngineError(
+                    f'tool_call_id {tc_id!r} not found in all_tool_calls; '
+                    f'cannot attach return_value')
+            matched[0]['return_value'] = result
 
         try:
             current, _ = adapter_send(
@@ -231,6 +256,23 @@ def _check_round_shape(response, round_shapes, turn):
     from evidence import _extract_model_tool_calls
     _, recognised, reason = _extract_model_tool_calls(response)
     round_shapes.append((recognised, reason))
+
+
+# -- Expression extraction -------------------------------------------
+
+def _extract_calc_expression(tool_call_record):
+    """Extract calculator expression from a tool-call record.
+
+    Returns the expression string, or None if not a calculator call.
+    """
+    func = tool_call_record.get('function', {})
+    if func.get('name') != 'calculator':
+        return None
+    try:
+        args = json.loads(func.get('arguments', '{}'))
+        return args.get('expression')
+    except (json.JSONDecodeError, TypeError):
+        return None
 
 
 # -- Helpers ---------------------------------------------------------

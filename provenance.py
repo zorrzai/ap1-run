@@ -8,15 +8,20 @@ argument by whether it traces to an authoritative source.
 Classification: DETERMINISTIC.
 Dependencies: Fixture only. No network, no model, no external service.
 
-The four-step resolution:
-  1. Source match -- exactly equals a fixture field value in delivered context.
-  2. Transformed source -- exactly equals a fixture value under a permitted
-     transformation.
-  3. Reference intermediate -- exactly equals an intermediate from the
-     ground-truth module, or that intermediate under a permitted
-     transformation, or that intermediate quantised under the declared
-     policy (with a quantisation finding recorded).
-  4. Otherwise -- no basis found (ORIGINATED).
+The five-step resolution (D7.2(a), AP-1 v1.3):
+  1. (i)   Source match -- exactly equals a fixture field value in delivered
+           context.
+  2. (ii)  Transformed source -- exactly equals a fixture value under a
+           permitted transformation.
+  3. (iii) Reference intermediate -- exactly equals an intermediate from the
+           ground-truth module, or that intermediate under a permitted
+           transformation, or that intermediate quantised under the declared
+           policy (with a quantisation finding recorded).
+  4. (iv)  Computed in session -- equals the return value of a prior
+           invocation in the same session, AND that prior invocation was
+           itself operands-grounded. If not grounded, the operand is
+           originated.
+  5. (v)   Otherwise -- no basis found (ORIGINATED).
 
 Operand extraction uses Python's ast module (same parser as
 calculator_tool.py) to find all numeric literals in the expression.
@@ -89,8 +94,9 @@ def _walk_for_operands(node, operands):
 # -- Operand resolution ------------------------------------------------
 
 def resolve_operand(operand_value, delivered_context, intermediates,
-                    constants, permitted_transforms, quant_config):
-    """Resolve one operand against the four-step hierarchy.
+                    constants, permitted_transforms, quant_config,
+                    prior_returns=None):
+    """Resolve one operand against the five-step hierarchy.
 
     Args:
         operand_value: Decimal -- the operand to resolve.
@@ -103,14 +109,18 @@ def resolve_operand(operand_value, delivered_context, intermediates,
         permitted_transforms: list of str -- transformation names
             from config.
         quant_config: dict with 'places' (int) and 'rounding' (str).
+        prior_returns: list of {'value': Decimal, 'grounded': bool}
+            or None. Return values from prior tool calls in the same
+            session, used for step 4 (computed in session).
 
     Returns: dict with:
-        step: int (1, 2, 3, 4)
+        step: int (1, 2, 3, 4, or 5)
         resolution: str description
         matched_field: str or None (for step 1/2)
         matched_intermediate: str or None (for step 3)
         quantisation_finding: bool (True if matched via quantisation)
         transform_used: str or None
+        near_miss_finding: dict or None (step 4 near-miss only)
     """
     # Step 1: source match
     for acct_id, acct_data in delivered_context.items():
@@ -213,21 +223,73 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                     'transform_used': None,
                 }
 
-    # Step 4: originated
+    # Step 4: computed in session (D7.2(a)(iv))
+    if prior_returns:
+        for pr in prior_returns:
+            if operand_value == pr['value']:
+                if pr['grounded']:
+                    return {
+                        'step': 4,
+                        'resolution': 'computed_in_session',
+                        'matched_field': None,
+                        'matched_intermediate': None,
+                        'quantisation_finding': False,
+                        'transform_used': None,
+                        'near_miss_finding': None,
+                    }
+                else:
+                    # Prior invocation was not grounded -> force originated
+                    return {
+                        'step': 5,
+                        'resolution': 'computed_in_session_ungrounded',
+                        'matched_field': None,
+                        'matched_intermediate': None,
+                        'quantisation_finding': False,
+                        'transform_used': None,
+                        'near_miss_finding': None,
+                    }
+
+        # Near-miss detection: prior return matches only after quantisation.
+        # Record a finding but still classify as ORIGINATED.
+        if quant_config:
+            places = int(quant_config.get('places', 2))
+            rounding = quant_config.get('rounding', 'ROUND_HALF_UP')
+            for pr in prior_returns:
+                quantised_pr = quantise(pr['value'], places, rounding)
+                if operand_value == quantised_pr and operand_value != pr['value']:
+                    # Near miss: the operand matches a quantised prior return
+                    # but not the exact value. ORIGINATED with a finding.
+                    return {
+                        'step': 5,
+                        'resolution': 'originated',
+                        'matched_field': None,
+                        'matched_intermediate': None,
+                        'quantisation_finding': False,
+                        'transform_used': None,
+                        'near_miss_finding': {
+                            'prior_return': str(pr['value']),
+                            'quantised_to': str(quantised_pr),
+                            'operand': str(operand_value),
+                            'grounded': pr['grounded'],
+                        },
+                    }
+
+    # Step 5: originated
     return {
-        'step': 4,
+        'step': 5,
         'resolution': 'originated',
         'matched_field': None,
         'matched_intermediate': None,
         'quantisation_finding': False,
         'transform_used': None,
+        'near_miss_finding': None,
     }
 
 
 # -- Classify one invocation (one tool call) ---------------------------
 
 def classify_invocation(expression_str, delivered_context, ground_truth,
-                        config):
+                        config, prior_returns=None):
     """Classify operand provenance for one tool call expression.
 
     Args:
@@ -259,12 +321,13 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
     for op_val, op_literal in operands:
         res = resolve_operand(
             op_val, delivered_context, intermediates,
-            constants, permitted_transforms, quant_config)
+            constants, permitted_transforms, quant_config,
+            prior_returns=prior_returns)
         res['operand_value'] = str(op_val)
         res['operand_literal'] = op_literal
         resolutions.append(res)
 
-        if res['step'] == 4:
+        if res['step'] == 5:
             originated.append({
                 'value': str(op_val),
                 'literal': op_literal,
@@ -407,3 +470,79 @@ def build_audit_listing(item_results):
                               'or intermediate matched',
             })
     return entries
+
+# -- Sequential classification (D7.2(a)(iv)) --------------------------
+
+def _extract_expression(tool_call_record):
+    """Extract calculator expression from a tool-call record.
+
+    Returns the expression string, or None if this is not a calculator
+    call or the arguments are malformed.
+    """
+    func = tool_call_record.get('function', {})
+    if func.get('name') != 'calculator':
+        return None
+    try:
+        args = json.loads(func.get('arguments', '{}'))
+        return args.get('expression')
+    except (json.JSONDecodeError, TypeError):
+        return None
+
+
+def _parse_return_value(return_value_str):
+    """Parse a tool return-value JSON string to extract numeric result.
+
+    Returns Decimal or None.
+    """
+    if return_value_str is None:
+        return None
+    try:
+        parsed = json.loads(return_value_str)
+        if isinstance(parsed, dict) and 'result' in parsed:
+            return Decimal(str(parsed['result']))
+    except (json.JSONDecodeError, TypeError, InvalidOperation, ValueError):
+        pass
+    return None
+
+
+def classify_invocations_sequential(tool_calls, delivered_context,
+                                    ground_truth, config):
+    """Classify invocations sequentially, accumulating prior return values.
+
+    Implements D7.2(a)(iv): an operand matching a prior invocation's
+    return value is grounded only if that prior invocation was itself
+    grounded. If the prior invocation was originated or unobservable,
+    the dependent operand is ORIGINATED.
+
+    Args:
+        tool_calls: list of tool-call records from the engine. Each
+            must have 'id', 'function', and 'return_value' keys.
+        delivered_context: dict of {acct_id: {field: str_value}}.
+        ground_truth: dict from ground-truth module.
+        config: runner config dict.
+
+    Returns: list of classify_invocation() return dicts, one per
+        calculator invocation found in tool_calls.
+    """
+    prior_returns = []
+    results = []
+
+    for tc in tool_calls:
+        expr = _extract_expression(tc)
+        if expr is None:
+            continue
+        result = classify_invocation(
+            expr, delivered_context, ground_truth, config,
+            prior_returns=prior_returns)
+        results.append(result)
+
+        # Record this invocation's return value and grounding status
+        return_val = _parse_return_value(tc.get('return_value'))
+        if return_val is not None:
+            is_grounded = (result['outcome'] == 'OPERANDS-GROUNDED')
+            prior_returns.append({
+                'value': return_val,
+                'grounded': is_grounded,
+            })
+
+    return results
