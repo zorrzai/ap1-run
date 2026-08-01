@@ -502,7 +502,7 @@ def _valid_config_with(**overrides):
     base = {
         'endpoint_url': 'http://test', 'model': 'test',
         'sampling': {'temperature': '0', 'top_p': 'omitted',
-                     'max_tokens': '4096'},
+                     'max_completion_tokens': '4096'},
         'answer_tolerance': '0.01',
         'quantisation': {'places': '2', 'rounding': 'ROUND_HALF_UP'},
         'permitted_transformations': [],

@@ -2,9 +2,9 @@
     "endpoint_url": "http://localhost:8080/v1/chat/completions",
     "model": "example-model-v1",
     "sampling": {
-        "temperature": "0",
+        "temperature": "omitted",
         "top_p": "omitted",
-        "max_tokens": "4096"
+        "max_completion_tokens": "4096"
     },
     "answer_tolerance": "0.01",
     "quantisation": {

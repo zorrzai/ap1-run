@@ -84,3 +84,17 @@ remaining        = abs(-287500.00) - 430.75 = 287069.25  (expected)
 Model computed:      abs(-287500.00) - 1006.25 - 430.75 = 286063.00
                      (subtracted interest twice)
 ```
+
+## Sampling Parameter Name
+
+The config `sampling` section declares the exact parameter name sent to the
+endpoint. The adapter sends this verbatim with no translation (R0.2, section 5.11).
+
+- **`max_completion_tokens`**: Required for gpt-5+ model families. This is
+  the name used in the shipped example config.
+- **`max_tokens`**: Legacy name, works with gpt-4.1 and earlier families.
+
+If an endpoint returns HTTP 400 naming an unsupported parameter, this is
+recorded as a PLATFORM FINDING per D2.2 -- a fact about the endpoint -- not
+as a runner error. The operator must update their config to use the parameter
+name their target endpoint supports.
