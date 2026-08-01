@@ -384,7 +384,10 @@ def test_r11_ap1_hash():
     example_dir = _base / 'example'
     config = load_config(str(example_dir / 'config.json'))
 
-    # Create a fake AP-1 text file
+    # --- Sub-test 1: placeholder hash with a fake file ---
+    config_placeholder = dict(config)
+    config_placeholder['ap1_text_hash'] = 'placeholder'
+
     tmp = tempfile.NamedTemporaryFile(
         mode='w', suffix='.md', delete=False,
         dir=str(_base))
@@ -394,9 +397,9 @@ def test_r11_ap1_hash():
 
         real_hash = file_hash(tmp.name)
 
-        # Config says 'placeholder' -- seal should accept
+        # Config says 'placeholder' -- seal should accept any file
         record = seal(
-            config=config,
+            config=config_placeholder,
             fixture_path=example_dir / 'fixture.json',
             questions_path=example_dir / 'questions.json',
             ground_truth_path=example_dir / 'ground_truth_example.py',
@@ -407,7 +410,7 @@ def test_r11_ap1_hash():
               record['ap1_text_hash'] == real_hash,
               f'expected {real_hash}, got {record["ap1_text_hash"]}')
 
-        # Config with wrong hash -- seal should refuse
+        # --- Sub-test 2: wrong hash -- seal should refuse ---
         config_wrong = dict(config)
         config_wrong['ap1_text_hash'] = 'wrong_hash_value'
         try:
@@ -423,6 +426,23 @@ def test_r11_ap1_hash():
             check('wrong ap1 hash refused', 'mismatch' in str(e).lower())
     finally:
         os.unlink(tmp.name)
+
+    # --- Sub-test 3: real hash with real reference file (if present) ---
+    ref_file = _base / 'reference' / 'AP-1_v1.3_DRAFT_FOR_COMMENT.md'
+    if ref_file.exists():
+        declared = config.get('ap1_text_hash', '')
+        computed = file_hash(str(ref_file))
+        record = seal(
+            config=config,
+            fixture_path=example_dir / 'fixture.json',
+            questions_path=example_dir / 'questions.json',
+            ground_truth_path=example_dir / 'ground_truth_example.py',
+            ap1_text_path=str(ref_file),
+        )
+        rec_hash = record['ap1_text_hash']
+        check('real ap1 hash matches reference file',
+              rec_hash == declared == computed,
+              'declared=' + declared[:12] + '.. computed=' + computed[:12] + '.. record=' + rec_hash[:12] + '..')
 
 
 # =====================================================================
