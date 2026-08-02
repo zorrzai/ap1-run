@@ -39,6 +39,7 @@ SUITES = [
     ('verify_phase_d.py',     'verify_phase_d.py',     23, 23),
     ('verify_d72b.py',        'verify_d72b.py',        10, 10),
     ('verify_phase_e.py',     'verify_phase_e.py',     29, 29),
+    ('verify_r41.py',          'verify_r41.py (R4.1)',  30, 30),
 ]
 
 

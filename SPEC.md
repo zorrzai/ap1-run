@@ -985,6 +985,29 @@ not an answer, and this is one additional question on a call already scheduled.
 *Would change if:* counsel identifies an interaction with the provisional
 portfolio, in which case MIT or BSD-3 without a patent grant is the fallback.
 
+**12.9 Module size constraint: 300 lines.**  Each instrument module (the .py
+files in ap1-runner/ that implement R0–R3) is kept under 300 lines.  Test suites
+(`verify_*.py`, `run_all_tests.py`), demonstration tooling (`smoke_test.py`), and
+the example ground-truth module (`example/ground_truth_example.py`) are **not**
+instrument modules and are **excluded** from this constraint.
+
+**Exception — report.py (444 lines).**  `report.py` is a cohesive renderer with
+thirteen sections.  Fragmenting it would make the rendering flow harder to follow
+without improving auditability.  This exception is documented, not implicit.
+
+**12.10 File classification.**
+
+| File | Classification | Subject to 300-line constraint |
+|---|---|---|
+| `provenance.py` | Instrument module | Yes |
+| `report.py` | Instrument module (excepted) | No (see 12.9) |
+| `smoke_test.py` | Demonstration tooling | No |
+| `verify_*.py` | Verification test suites | No |
+| `run_all_tests.py` | Test runner | No |
+| `example/ground_truth_example.py` | Example / demonstration | No |
+| `mock_dry_run.py` (output/) | Development artifact (untracked) | No |
+| `test_adapter_mock.py` (output/) | Development artifact (untracked) | No |
+
 **Research questions are not held in this document.** Those on which the field
 has no settled answer are put to reviewers in AP-1 v1.3 §14. The standard asks;
 the implementation chooses.
