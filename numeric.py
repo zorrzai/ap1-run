@@ -275,7 +275,6 @@ class _DecimalEncoder(json.JSONEncoder):
             return str(obj)
         return super().default(obj)
 
-
 def canonical_json(obj):
     """Canonical JSON: sorted keys, no whitespace, Decimals as strings.
 
@@ -287,12 +286,10 @@ def canonical_json(obj):
     return json.dumps(obj, cls=_DecimalEncoder, sort_keys=True,
                       separators=(',', ':'), ensure_ascii=False)
 
-
 def canonical_hash(obj):
     """SHA-256 hex digest of the canonical JSON of obj. R0.4.3."""
     text = canonical_json(obj)
     return hashlib.sha256(text.encode('utf-8')).hexdigest()
-
 
 def file_hash(path):
     """SHA-256 hex digest of a file's raw bytes."""
