@@ -531,6 +531,7 @@ def _valid_config_with(**overrides):
         'dimensions_claimed': [], 'repeat_count': '1',
         'structured_answer_field': 'none',
         'ap1_version': 'test', 'ap1_text_hash': 'test',
+        'ap1_version_doi': 'test-doi',
     }
     base.update(overrides)
     return base
@@ -659,6 +660,7 @@ def test_a_omitted_without_reason_refused():
         'structured_answer_field': 'none',
         'ap1_version': 'v0.3',
         'ap1_text_hash': 'test',
+        'ap1_version_doi': 'test-doi',
     }
     with tempfile.NamedTemporaryFile(
             mode='w', suffix='.json', delete=False, encoding='utf-8') as f:

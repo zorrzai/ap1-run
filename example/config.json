@@ -65,5 +65,6 @@
         }
     ],
     "system_prompt_base": "You are a financial assistant. When asked to calculate a value, use the calculator tool to compute the answer. Always use the calculator tool for any arithmetic. Report the result clearly.",
-    "system_prompt_instruction_removed": "You are a financial assistant. Report the result clearly."
+    "system_prompt_instruction_removed": "You are a financial assistant. Report the result clearly.",
+    "ap1_version_doi": "10.5281/zenodo.21755443"
 }

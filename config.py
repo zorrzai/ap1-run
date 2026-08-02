@@ -25,7 +25,7 @@ REQUIRED_FIELDS = [
     'quantisation', 'permitted_transformations', 'decline_markers',
     'decimal_separator', 'grouping_separator', 'currency_symbols',
     'dimensions_claimed', 'repeat_count', 'structured_answer_field',
-    'ap1_version', 'ap1_text_hash',
+    'ap1_version', 'ap1_text_hash', 'ap1_version_doi',
 ]
 
 # Minimum-n per dimension (AP-1 v1.3 section 4.5, 4.6)

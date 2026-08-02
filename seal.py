@@ -40,6 +40,7 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
         'ground_truth_hash': file_hash(str(ground_truth_path)),
         'config_hash': canonical_hash(config),
         'ap1_version': config.get('ap1_version', ''),
+        'ap1_version_doi': config.get('ap1_version_doi', ''),
     }
 
     # AP-1 text hash -- R1.1 normative
@@ -93,6 +94,13 @@ def verify_seal(record, *, config, fixture_path, questions_path,
         checks.append(
             ('ap1_text', record.get('ap1_text_hash'),
              file_hash(str(ap1_text_path))))
+
+    # Version DOI check
+    sealed_doi = record.get('ap1_version_doi', '')
+    config_doi = config.get('ap1_version_doi', '')
+    if sealed_doi and config_doi and sealed_doi != config_doi:
+        checks.append(
+            ('ap1_version_doi', sealed_doi, config_doi))
 
     mismatches = []
     for name, expected, actual in checks:
