@@ -32,7 +32,7 @@ from pathlib import Path
 # ---------------------------------------------------------------------------
 
 SUITES = [
-    ('verify.py',             'verify.py (Phase A)',   13, 76),
+    ('verify.py',             'verify.py (Phase A)',   13, 79),
     ('verify_phase_b.py',     'verify_phase_b.py',     25, 25),
     ('verify_phase_c.py',     'verify_phase_c.py',     28, 28),
     ('verify_integration.py', 'verify_integration.py',  7,  7),

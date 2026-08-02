@@ -673,11 +673,15 @@ def test_a_omitted_without_reason_refused():
         except ConfigError as e:
             raised = True
             msg = str(e)
-            assert 'temperature' in msg, (
-                f'Error must name the parameter: {msg}')
-            assert 'reason' in msg.lower() or 'omitted' in msg.lower(), (
-                f'Error must explain the issue: {msg}')
-        assert raised, 'Config with plain omitted should have raised ConfigError'
+            check('omitted-param-names-temperature',
+                  'temperature' in msg,
+                  f'Error must name the parameter: {msg}')
+            check('omitted-param-explains-issue',
+                  'reason' in msg.lower() or 'omitted' in msg.lower(),
+                  f'Error must explain the issue: {msg}')
+        check('omitted-param-raises-ConfigError',
+              raised,
+              'Config with plain omitted should have raised ConfigError')
     finally:
         os.unlink(tmp)
     return True

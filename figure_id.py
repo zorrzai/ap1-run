@@ -118,8 +118,11 @@ def identify_figure(response, *, expected_value, delivered_context,
 
     # -- Step 4: Extraction and disambiguation --
     if not content:
+        # Empty response supports no claim — route to adjudication.
+        # AUTO_NO_FIGURE is an answer-level claim reserved for responses
+        # that HAVE content but contain no numeric tokens (line 130).
         return {
-            'outcome': AUTO_NO_FIGURE,
+            'outcome': UNMEASURABLE,
             'released_figure': None,
             'reason': 'response has no text content',
             'extracted_tokens': None,
