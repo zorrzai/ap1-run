@@ -28,6 +28,13 @@ REQUIRED_FIELDS = [
     'ap1_version', 'ap1_text_hash', 'ap1_version_doi',
 ]
 
+# Optional top-level fields used by engine.py and perturbation_guard.py
+OPTIONAL_FIELDS = [
+    'tools', 'tool_choice', 'system_prompt',
+    'system_prompt_base', 'system_prompt_instruction_removed',
+    'fixture_hash', 'message_template',
+]
+
 # Minimum-n per dimension (AP-1 v1.3 section 4.5, 4.6)
 MINIMUM_N = {
     'D1': {'type': 'per_category', 'min': 10},
@@ -37,6 +44,14 @@ MINIMUM_N = {
 
 # Fields whose values are parsed from string to Decimal
 DECIMAL_FIELDS = ['answer_tolerance']
+
+# Known sampling parameter names — used to suggest the sampling sub-dict
+# when a config places one at top level.
+KNOWN_SAMPLING_PARAMS = {
+    'temperature', 'top_p', 'seed', 'max_tokens',
+    'max_completion_tokens', 'top_k', 'presence_penalty',
+    'frequency_penalty', 'stop',
+}
 
 
 def load_config(path):
@@ -62,6 +77,9 @@ def load_config(path):
     for field in REQUIRED_FIELDS:
         if field not in raw:
             raise ConfigError(f'missing required field: {field!r}')
+
+    # 1b. Refuse unknown top-level keys
+    _refuse_unknown_fields(raw)
 
     # 2. Validate sampling omission reasons (before bare-numeric check)
     _validate_sampling(raw.get('sampling', {}))
@@ -106,6 +124,31 @@ PERMITTED_OMISSION_REASONS = {
     'platform-rejected',
     'platform-unsupported',
 }
+
+
+def _refuse_unknown_fields(raw):
+    """Refuse any top-level key not in REQUIRED_FIELDS.
+
+    An unknown field is the same category of error as a missing field:
+    a configuration mistake, not a harmless extra. Where the key name
+    matches a known sampling parameter, the error suggests the sampling
+    sub-dict.
+    """
+    permitted = set(REQUIRED_FIELDS) | set(OPTIONAL_FIELDS)
+    for key in raw:
+        if key not in permitted:
+            if key in KNOWN_SAMPLING_PARAMS:
+                raise ConfigError(
+                    f'unrecognised top-level field: {key!r}. '
+                    f'Sampling parameters belong inside the '
+                    f'"sampling" sub-dict, e.g. '
+                    f'{{"sampling": {{"{key}": ...}}}}. '
+                    f'Permitted top-level fields: '
+                    f'{sorted(REQUIRED_FIELDS)}')
+            raise ConfigError(
+                f'unrecognised top-level field: {key!r}. '
+                f'Permitted top-level fields: '
+                f'{sorted(REQUIRED_FIELDS)}')
 
 
 def _validate_sampling(sampling_dict):

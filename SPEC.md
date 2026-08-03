@@ -1022,7 +1022,7 @@ not implicit.
 | `operation_correctness.py` | 284 | Instrument module |
 | `adjudication.py` | 258 | Instrument module |
 | `seal.py` | 257 | Instrument module |
-| `config.py` | 212 | Instrument module |
+| `config.py` | 255 | Instrument module |
 | `reproducibility.py` | 197 | Instrument module |
 | `figure_id.py` | 194 | Instrument module |
 | `adapter.py` | 180 | Instrument module |

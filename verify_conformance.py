@@ -649,6 +649,95 @@ def test_6_3b_structural_evidence_partial():
           'EV-3 must be gated (structural evidence not verifiable)')
 
 
+
+# =====================================================================
+# R0.1 — Strict schema: unknown top-level keys refused
+# =====================================================================
+
+def test_r0_1_strict_schema_sampling_param_at_top_level():
+    """R0.1 strict schema. A sampling parameter (temperature) placed at
+    top level instead of inside the sampling sub-dict must be REFUSED
+    at load, with a message naming the key and suggesting the sampling
+    sub-dict.
+
+    This prevents a config typo from silently producing a wrong D2
+    mechanism class (CONFIGURED reported as the operator's intent when
+    the actual parameter was never sent to the endpoint).
+    """
+    from config import load_config, ConfigError
+    cfg_data = {
+        'endpoint_url': 'http://test', 'model': 'test',
+        'sampling': {}, 'answer_tolerance': '0.01',
+        'quantisation': {'places': '2', 'rounding': 'ROUND_HALF_UP'},
+        'permitted_transformations': [], 'decline_markers': [],
+        'decimal_separator': '.', 'grouping_separator': ',',
+        'currency_symbols': ['$'], 'dimensions_claimed': [],
+        'repeat_count': '3', 'structured_answer_field': 'none',
+        'ap1_version': 'v1.3',
+        'ap1_text_hash': 'abc', 'ap1_version_doi': 'doi:test',
+        'temperature': '0',  # WRONG: should be in sampling
+    }
+    with tempfile.NamedTemporaryFile(
+            mode='w', suffix='.json', delete=False, encoding='utf-8') as f:
+        json.dump(cfg_data, f)
+        tmp = f.name
+    try:
+        raised = False
+        msg = ''
+        try:
+            load_config(tmp)
+        except ConfigError as e:
+            raised = True
+            msg = str(e)
+        check('R0.1-sampling-param-refused', raised,
+              'temperature at top level must be refused')
+        if raised:
+            check('R0.1-names-key', 'temperature' in msg,
+                  f'error must name the key: {msg}')
+            check('R0.1-suggests-sampling', 'sampling' in msg,
+                  f'error must suggest the sampling sub-dict: {msg}')
+    finally:
+        os.unlink(tmp)
+
+
+def test_r0_1_strict_schema_unknown_key():
+    """R0.1 strict schema. An entirely unknown top-level key must be
+    REFUSED at load, naming the unrecognised key.
+    """
+    from config import load_config, ConfigError
+    cfg_data = {
+        'endpoint_url': 'http://test', 'model': 'test',
+        'sampling': {}, 'answer_tolerance': '0.01',
+        'quantisation': {'places': '2', 'rounding': 'ROUND_HALF_UP'},
+        'permitted_transformations': [], 'decline_markers': [],
+        'decimal_separator': '.', 'grouping_separator': ',',
+        'currency_symbols': ['$'], 'dimensions_claimed': [],
+        'repeat_count': '3', 'structured_answer_field': 'none',
+        'ap1_version': 'v1.3',
+        'ap1_text_hash': 'abc', 'ap1_version_doi': 'doi:test',
+        'bogus_field': 'should not be here',
+    }
+    with tempfile.NamedTemporaryFile(
+            mode='w', suffix='.json', delete=False, encoding='utf-8') as f:
+        json.dump(cfg_data, f)
+        tmp = f.name
+    try:
+        raised = False
+        msg = ''
+        try:
+            load_config(tmp)
+        except ConfigError as e:
+            raised = True
+            msg = str(e)
+        check('R0.1-unknown-key-refused', raised,
+              'unknown top-level key must be refused')
+        if raised:
+            check('R0.1-names-unknown-key', 'bogus_field' in msg,
+                  f'error must name the key: {msg}')
+    finally:
+        os.unlink(tmp)
+
+
 # =====================================================================
 # STALE STATUS — conformance table findings
 # =====================================================================
@@ -743,6 +832,8 @@ ALL_TESTS = [
     test_5_11_sampling_per_arm_partial,
     test_6_3b_structural_evidence_partial,
     test_d7_2b_operation_correctness,
+    test_r0_1_strict_schema_sampling_param_at_top_level,
+    test_r0_1_strict_schema_unknown_key,
     test_conformance_table_consistency,
 ]
 
