@@ -890,26 +890,30 @@ def test_d2_2_platform_rejected_cap():
     """
     # Test that a config with platform-rejected omission reason
     # can be detected and yields a cap
+    # Config uses structured omissions inside the sampling block
     test_config = {
-        'sampling': {'temperature': '0'},
-        'sampling_omission_reasons': {
+        'sampling': {
+            'temperature': '0',
             'top_p': {
+                'value': 'omitted',
                 'reason': 'platform-rejected',
                 'detail': 'top_p parameter not supported'
             }
-        }
+        },
     }
 
-    omission_reasons = test_config.get('sampling_omission_reasons', {})
+    sampling_cfg = test_config.get('sampling', {})
     cap_found = False
     capped_param = None
     cap_detail = None
-    for param_name, reason_info in omission_reasons.items():
-        reason = reason_info.get('reason', '') if isinstance(reason_info, dict) else str(reason_info)
+    for param_name, param_val in sampling_cfg.items():
+        if not isinstance(param_val, dict):
+            continue
+        reason = param_val.get('reason', '')
         if 'platform-rejected' in reason.lower() or 'platform-unsupported' in reason.lower():
             cap_found = True
             capped_param = param_name
-            cap_detail = reason_info.get('detail', reason) if isinstance(reason_info, dict) else reason
+            cap_detail = param_val.get('detail', reason)
             break
 
     check('D2.2-cap-detected', cap_found,
@@ -921,18 +925,21 @@ def test_d2_2_platform_rejected_cap():
 
     # Test that a config WITHOUT platform-rejected does not trigger cap
     clean_config = {
-        'sampling': {'temperature': '0'},
-        'sampling_omission_reasons': {
+        'sampling': {
+            'temperature': '0',
             'top_p': {
+                'value': 'omitted',
                 'reason': 'operator-omitted',
                 'detail': 'not needed'
             }
-        }
+        },
     }
-    clean_reasons = clean_config.get('sampling_omission_reasons', {})
+    clean_sampling = clean_config.get('sampling', {})
     clean_cap = False
-    for param_name, reason_info in clean_reasons.items():
-        reason = reason_info.get('reason', '') if isinstance(reason_info, dict) else str(reason_info)
+    for param_name, param_val in clean_sampling.items():
+        if not isinstance(param_val, dict):
+            continue
+        reason = param_val.get('reason', '')
         if 'platform-rejected' in reason.lower() or 'platform-unsupported' in reason.lower():
             clean_cap = True
             break

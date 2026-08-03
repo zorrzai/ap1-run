@@ -849,24 +849,27 @@ def test_d2_platform_rejected_caps_mechanism():
     # With a platform-rejected parameter, the cap applies.
     # smoke_test.py applies the cap after classify_mechanism returns.
     # Here we test the cap logic directly:
+    # Config uses structured omissions inside the sampling block:
+    # {"temperature": {"value": "omitted", "reason": "platform-rejected", ...}}
     config_with_rejection = {
-        'sampling': {'temperature': '0'},
-        'sampling_omission_reasons': {
+        'sampling': {
+            'temperature': '0',
             'top_p': {
+                'value': 'omitted',
                 'reason': 'platform-rejected',
                 'detail': 'top_p is not supported by this endpoint'
             }
-        }
+        },
     }
-    omission_reasons = config_with_rejection.get('sampling_omission_reasons', {})
+    sampling_cfg = config_with_rejection.get('sampling', {})
     cap_reason = None
-    for param_name, reason_info in omission_reasons.items():
-        reason = reason_info if isinstance(reason_info, str) else \
-            reason_info.get('reason', '') if isinstance(reason_info, dict) else ''
+    for param_name, param_val in sampling_cfg.items():
+        if not isinstance(param_val, dict):
+            continue
+        reason = param_val.get('reason', '')
         if 'platform-rejected' in reason.lower() or \
                 'platform-unsupported' in reason.lower():
-            detail = reason_info.get('detail', reason) \
-                if isinstance(reason_info, dict) else reason
+            detail = param_val.get('detail', reason)
             cap_reason = (
                 f'D2.2 cap: {param_name} was {reason}. '
                 f'Detail: {detail}')

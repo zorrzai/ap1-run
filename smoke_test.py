@@ -694,6 +694,51 @@ def main():
     for outcome in ['OPERATION-CORRECT', 'WRONG-OPERATION', 'OPERATION-UNOBSERVABLE']:
         print(f'  {outcome}: {op_counts[outcome]}')
 
+    # -- D1 aggregation --
+    d1_summary = summarise_accuracy(all_accuracy_results)
+    d1_summary['n'] = len(all_accuracy_results)
+
+    # -- D2 classification per (item, condition) per surface --
+    d2_results = {}
+    sampling_cfg = config.get('sampling', {})
+    # D2.2 cap: if any sampling parameter was platform-rejected,
+    # mechanism class is capped at OBSERVED-ONLY.
+    # The config encodes omissions inside the sampling block:
+    # {"temperature": {"value": "omitted", "reason": "platform-rejected", ...}}
+    d2_cap_reason = None
+    for param_name, param_val in sampling_cfg.items():
+        if not isinstance(param_val, dict):
+            continue
+        reason = param_val.get('reason', '')
+        if 'platform-rejected' in reason.lower() or \
+                'platform-unsupported' in reason.lower():
+            detail = param_val.get('detail', reason)
+            d2_cap_reason = (
+                f'D2.2 cap: {param_name} was {reason}. '
+                f'Detail: {detail}')
+            break
+
+    for (item_id, cond), responses in d2_responses.items():
+        key = f'{item_id}/{cond}'
+        d2_results[key] = {}
+        for surface in ('figures', 'prose'):
+            mech = classify_mechanism(
+                responses,
+                surface=surface,
+                minimum_runs=repeat_count,
+                operator_declared=None,
+            )
+            # D2.2 cap: platform-rejected -> cap at OBSERVED-ONLY
+            if d2_cap_reason and mech['mechanism'] not in ('UNMEASURED',):
+                mech['mechanism'] = 'OBSERVED-ONLY'
+                mech['d2_cap'] = d2_cap_reason
+            d2_results[key][surface] = mech
+
+    summary = _build_summary(
+        all_results, evidence_findings,
+        d1_summary=d1_summary, d2_results=d2_results,
+        d2_cap_reason=d2_cap_reason)
+
     # 3j. D1 Accuracy
     print(f'\n3j. D1 ACCURACY:')
     if d1_summary:
@@ -734,50 +779,6 @@ def main():
     print('\n' + '=' * 60)
     print('GENERATING FORMAL REPORT (report.py)')
     print('=' * 60)
-
-    # -- D1 aggregation --
-    d1_summary = summarise_accuracy(all_accuracy_results)
-    d1_summary['n'] = len(all_accuracy_results)
-
-    # -- D2 classification per (item, condition) per surface --
-    d2_results = {}
-    sampling_cfg = config.get('sampling', {})
-    # D2.2 cap: if any sampling parameter was platform-rejected,
-    # mechanism class is capped at OBSERVED-ONLY.
-    d2_cap_reason = None
-    omission_reasons = config.get('sampling_omission_reasons', {})
-    for param_name, reason_info in omission_reasons.items():
-        reason = reason_info if isinstance(reason_info, str) else \
-            reason_info.get('reason', '') if isinstance(reason_info, dict) else ''
-        if 'platform-rejected' in reason.lower() or \
-                'platform-unsupported' in reason.lower():
-            detail = reason_info.get('detail', reason) \
-                if isinstance(reason_info, dict) else reason
-            d2_cap_reason = (
-                f'D2.2 cap: {param_name} was {reason}. '
-                f'Detail: {detail}')
-            break
-
-    for (item_id, cond), responses in d2_responses.items():
-        key = f'{item_id}/{cond}'
-        d2_results[key] = {}
-        for surface in ('figures', 'prose'):
-            mech = classify_mechanism(
-                responses,
-                surface=surface,
-                minimum_runs=repeat_count,
-                operator_declared=None,
-            )
-            # D2.2 cap: platform-rejected -> cap at OBSERVED-ONLY
-            if d2_cap_reason and mech['mechanism'] not in ('UNMEASURED',):
-                mech['mechanism'] = 'OBSERVED-ONLY'
-                mech['d2_cap'] = d2_cap_reason
-            d2_results[key][surface] = mech
-
-    summary = _build_summary(
-        all_results, evidence_findings,
-        d1_summary=d1_summary, d2_results=d2_results,
-        d2_cap_reason=d2_cap_reason)
 
     # Read full transcript for report
     tr_records = transcript.read_all(transcript_path)
