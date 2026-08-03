@@ -6,14 +6,19 @@ toy fixture. Must never be reported, cited or described as an AP-1
 result. Output goes to ap1-runner/output/ which is gitignored.
 
 Usage:
-    set AP1_SMOKE_API_KEY=<key>
-    set AP1_SMOKE_ENDPOINT=<url>  (default: https://api.openai.com/v1/chat/completions)
-    set AP1_SMOKE_MODEL=<model>   (default: gpt-4o-mini)
+    export AP1_SMOKE_API_KEY=<key>    (Linux/macOS)
+    set AP1_SMOKE_API_KEY=<key>       (Windows cmd)
+    $env:AP1_SMOKE_API_KEY = '<key>'  (Windows PowerShell)
+
+    Optional:
+    export AP1_SMOKE_ENDPOINT=<url>   (default: https://api.openai.com/v1/chat/completions)
+    export AP1_SMOKE_MODEL=<model>    (default: gpt-4o-mini)
     python smoke_test.py
+
+On Windows only, if AP1_SMOKE_API_KEY is not set, the runner will attempt
+to read from Windows Credential Manager (target: ap1-smoke:openai).
 """
 
-import ctypes
-import ctypes.wintypes
 import json
 import os
 import sys
@@ -49,15 +54,18 @@ import transcript
 _CRED_TARGET = 'ap1-smoke:openai'
 
 
-def _read_credential(target):
+def _read_credential_windows(target):
     """Read a credential from Windows Credential Manager via ctypes.
 
-    Returns the credential blob as a string. Never prints, logs, or
-    writes the value. Raises SystemExit if the credential is absent.
-
-    Rule 0c: the key is never printed, echoed, logged, or written to
-    any file, and never appears in a command line or environment variable.
+    Only called on Windows when AP1_SMOKE_API_KEY is not set.
+    Returns the credential blob as a string, or None if not found.
     """
+    try:
+        import ctypes
+        import ctypes.wintypes
+    except ImportError:
+        return None
+
     CRED_TYPE_GENERIC = 1
 
     class CREDENTIAL(ctypes.Structure):
@@ -81,15 +89,7 @@ def _read_credential(target):
         target, CRED_TYPE_GENERIC, 0, ctypes.byref(pcred))
 
     if not ok:
-        print(f'ERROR: credential not found in Windows Credential Manager.')
-        print(f'  Target: {target}')
-        print(f'  Store the API key via:')
-        print(f'    Windows Search -> Credential Manager -> Windows Credentials')
-        print(f'    -> Add a generic credential')
-        print(f'    Internet or network address: {target}')
-        print(f'    User name: ap1-smoke')
-        print(f'    Password: <the API key>')
-        sys.exit(1)
+        return None
 
     blob = ctypes.string_at(
         pcred.contents.CredentialBlob, pcred.contents.CredentialBlobSize)
@@ -97,6 +97,46 @@ def _read_credential(target):
     value = blob.decode('utf-16-le').rstrip('\x00')
     ctypes.windll.advapi32.CredFree(pcred)
     return value
+
+
+def _get_api_key():
+    """Resolve the API key. Never prints, logs, or writes the value.
+
+    Priority:
+      1. AP1_SMOKE_API_KEY environment variable (all platforms)
+      2. Windows Credential Manager (Windows only, target: ap1-smoke:openai)
+
+    Raises SystemExit with platform-appropriate setup instructions if
+    neither source provides a key.
+    """
+    key = os.environ.get('AP1_SMOKE_API_KEY')
+    if key:
+        return key
+
+    # Windows-only fallback: Credential Manager
+    if sys.platform == 'win32':
+        key = _read_credential_windows(_CRED_TARGET)
+        if key:
+            return key
+
+    # Neither source provided a key -- error with setup instructions
+    print('ERROR: API key not found.')
+    print()
+    print('Set the AP1_SMOKE_API_KEY environment variable:')
+    print()
+    if sys.platform == 'win32':
+        print('  cmd:         set AP1_SMOKE_API_KEY=<key>')
+        print('  PowerShell:  $env:AP1_SMOKE_API_KEY = \'<key>\'')
+        print()
+        print('Or store in Windows Credential Manager:')
+        print(f'  Target: {_CRED_TARGET}')
+        print('  User name: ap1-smoke')
+        print('  Password: <the API key>')
+    else:
+        print('  export AP1_SMOKE_API_KEY=<key>')
+    print()
+    print('The key is never printed, logged, or written to any file.')
+    sys.exit(1)
 
 
 def _verify_invocation_consistency(results):
@@ -137,10 +177,9 @@ def main():
     if hasattr(sys.stdout, 'reconfigure'):
         sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-    # -- Read API key from Windows Credential Manager (Rule 0c) --
-    # The key is NEVER printed, echoed, logged, written to any file,
-    # placed in a command line, or set as an environment variable.
-    api_key = _read_credential(_CRED_TARGET)
+    # -- Read API key (Rule 0c) --
+    # The key is NEVER printed, echoed, logged, or written to any file.
+    api_key = _get_api_key()
     key_length = len(api_key)
 
     # Endpoint and model are not secrets -- read from env or defaults

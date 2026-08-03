@@ -1,4 +1,4 @@
-﻿"""Cross-platform canonical hash verification.
+"""Cross-platform canonical hash verification.
 
 Run by CI on ubuntu-latest, macos-latest, windows-latest.
 Produces hash_digest.txt with a deterministic digest from known inputs.
