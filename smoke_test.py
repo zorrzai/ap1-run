@@ -52,6 +52,8 @@ from engine import execute_item
 from evidence import EV_0, EV_2
 from figure_id import identify_figure, AUTO_MATCH, AUTO_NO_FIGURE, UNMEASURABLE
 from invocation import format_rate
+from accuracy import score_accuracy, summarise_accuracy
+from reproducibility import classify_mechanism
 from numeric import extract_numeric_tokens
 from seal import seal as create_seal
 import transcript
@@ -182,7 +184,9 @@ def _verify_invocation_consistency(results):
                 f'is a defect, not a finding.')
 
 
-def _build_summary(all_results, evidence_findings):
+def _build_summary(all_results, evidence_findings, *,
+                   d1_summary=None, d2_results=None,
+                   d2_cap_reason=None):
     """Build the summary dict that report.generate_report() expects.
 
     Aggregates per-item results into the structure report.py reads.
@@ -236,7 +240,48 @@ def _build_summary(all_results, evidence_findings):
                 if r.get('status') == 'EXECUTED' and
                 (r.get('figure_outcome', '').startswith('ADJUDICATE') or
                  r.get('figure_outcome') == 'UNMEASURABLE'))
-    summary['d7_results'] = {'auto_scored_n': auto_n, 'adjudicated_n': adj_n}
+    total_executed = sum(1 for r in all_results
+                        if r.get('status') == 'EXECUTED')
+    summary['d7_results'] = {
+        'n': total_executed,  # every execution with observable evidence
+        'auto_scored_n': auto_n,
+        'adjudicated_n': adj_n,
+    }
+
+    # D1 results
+    if d1_summary:
+        summary['d1_results'] = d1_summary
+
+    # D2 results
+    if d2_results:
+        summary['d2_results'] = d2_results
+    if d2_cap_reason:
+        summary['d2_cap_reason'] = d2_cap_reason
+
+    # Operand provenance step counts (D7.2(a))
+    step_counts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
+    prov_outcomes = {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0}
+    originated_audit = []
+    for r in all_results:
+        if r.get('status') != 'EXECUTED':
+            continue
+        for prov in r.get('provenance_results', []):
+            outcome = prov.get('outcome', '')
+            if outcome in prov_outcomes:
+                prov_outcomes[outcome] += 1
+            for res in prov.get('operand_resolutions', []):
+                step = res.get('step')
+                if step in step_counts:
+                    step_counts[step] += 1
+            for orig in prov.get('originated_operands', []):
+                originated_audit.append({
+                    'item_id': r.get('item_id'),
+                    'condition': r.get('condition'),
+                    **orig,
+                })
+    summary['operand_step_counts'] = step_counts
+    summary['provenance_outcomes'] = prov_outcomes
+    summary['originated_operand_audit'] = originated_audit
 
     # Non-outcome cells
     non_outcome = []
@@ -353,6 +398,8 @@ def main():
 
     # -- Collector for all findings --
     all_results = []
+    all_accuracy_results = []  # D1: per-item accuracy scores
+    d2_responses = {}  # D2: (item_id, condition) -> [response, ...]
     grammar_issues = []
     decline_findings = []
     tool_call_structures = []
@@ -464,6 +511,21 @@ def main():
                     expected=str(expected),
                 )
 
+                # -- D1: Accuracy scoring --
+                acc_result = score_accuracy(
+                    fig_result,
+                    expected_value=expected,
+                    answer_tolerance=answer_tolerance,
+                    quantisation_digits=int(
+                        config.get('quantisation', {}).get('places', 2)),
+                )
+                all_accuracy_results.append(acc_result)
+
+                # -- D2: Collect response for reproducibility --
+                d2_key = (item_id, condition)
+                d2_responses.setdefault(d2_key, []).append(
+                    result.get('response'))
+
                 ev_class = result.get('evidence_class', '')
                 inv_outcome = result.get('invocation_outcome', '')
                 tool_calls = result.get('tool_calls', [])
@@ -538,6 +600,7 @@ def main():
                     'expected': str(expected),
                     'shape_ok': shape_ok,
                     'operation_correctness': op_correctness,
+                    'provenance_results': result.get('provenance_results', []),
                 })
 
                 # Brief delay to avoid rate limiting
@@ -631,12 +694,90 @@ def main():
     for outcome in ['OPERATION-CORRECT', 'WRONG-OPERATION', 'OPERATION-UNOBSERVABLE']:
         print(f'  {outcome}: {op_counts[outcome]}')
 
+    # 3j. D1 Accuracy
+    print(f'\n3j. D1 ACCURACY:')
+    if d1_summary:
+        print(f'  Auto-scored: {d1_summary.get("auto_scored_n", 0)}')
+        print(f'  Adjudicated: {d1_summary.get("adjudicated_n", 0)}')
+        print(f'  Correct: {d1_summary.get("correct", 0)}')
+        print(f'  Incorrect: {d1_summary.get("incorrect", 0)}')
+        print(f'  No figure: {d1_summary.get("no_figure", 0)}')
+        rate = d1_summary.get('accuracy_rate')
+        if rate is not None:
+            print(f'  Accuracy rate: {rate}')
+
+    # 3k. D2 Reproducibility
+    print(f'\n3k. D2 REPRODUCIBILITY:')
+    if d2_cap_reason:
+        print(f'  CAP: {d2_cap_reason}')
+    d2_mechs = {}
+    for key, surfaces in d2_results.items():
+        for surface, mech in surfaces.items():
+            m = mech['mechanism']
+            d2_mechs[m] = d2_mechs.get(m, 0) + 1
+    for m, c in sorted(d2_mechs.items()):
+        print(f'  {m}: {c}')
+
+    # 3l. Operand provenance step counts
+    print(f'\n3l. D7.2(a) OPERAND PROVENANCE:')
+    step_counts = summary.get('operand_step_counts', {})
+    step_names = {1: 'source match', 2: 'transformed source',
+                  3: 'reference intermediate', 4: 'computed in session',
+                  5: 'originated'}
+    for step in range(1, 6):
+        print(f'  step {step} ({step_names[step]}): {step_counts.get(step, 0)}')
+    prov_out = summary.get('provenance_outcomes', {})
+    print(f'  OPERANDS-GROUNDED: {prov_out.get("OPERANDS-GROUNDED", 0)}')
+    print(f'  OPERAND-ORIGINATED: {prov_out.get("OPERAND-ORIGINATED", 0)}')
+
     # -- Generate formal report (report.py) --
     print('\n' + '=' * 60)
     print('GENERATING FORMAL REPORT (report.py)')
     print('=' * 60)
 
-    summary = _build_summary(all_results, evidence_findings)
+    # -- D1 aggregation --
+    d1_summary = summarise_accuracy(all_accuracy_results)
+    d1_summary['n'] = len(all_accuracy_results)
+
+    # -- D2 classification per (item, condition) per surface --
+    d2_results = {}
+    sampling_cfg = config.get('sampling', {})
+    # D2.2 cap: if any sampling parameter was platform-rejected,
+    # mechanism class is capped at OBSERVED-ONLY.
+    d2_cap_reason = None
+    omission_reasons = config.get('sampling_omission_reasons', {})
+    for param_name, reason_info in omission_reasons.items():
+        reason = reason_info if isinstance(reason_info, str) else \
+            reason_info.get('reason', '') if isinstance(reason_info, dict) else ''
+        if 'platform-rejected' in reason.lower() or \
+                'platform-unsupported' in reason.lower():
+            detail = reason_info.get('detail', reason) \
+                if isinstance(reason_info, dict) else reason
+            d2_cap_reason = (
+                f'D2.2 cap: {param_name} was {reason}. '
+                f'Detail: {detail}')
+            break
+
+    for (item_id, cond), responses in d2_responses.items():
+        key = f'{item_id}/{cond}'
+        d2_results[key] = {}
+        for surface in ('figures', 'prose'):
+            mech = classify_mechanism(
+                responses,
+                surface=surface,
+                minimum_runs=repeat_count,
+                operator_declared=None,
+            )
+            # D2.2 cap: platform-rejected -> cap at OBSERVED-ONLY
+            if d2_cap_reason and mech['mechanism'] not in ('UNMEASURED',):
+                mech['mechanism'] = 'OBSERVED-ONLY'
+                mech['d2_cap'] = d2_cap_reason
+            d2_results[key][surface] = mech
+
+    summary = _build_summary(
+        all_results, evidence_findings,
+        d1_summary=d1_summary, d2_results=d2_results,
+        d2_cap_reason=d2_cap_reason)
 
     # Read full transcript for report
     tr_records = transcript.read_all(transcript_path)

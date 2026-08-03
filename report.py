@@ -96,6 +96,9 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
     # 7. D7.2(b) operation-correctness counts
     sections.append(_section_d72b_counts(summary))
 
+    # 7b. D7.2(a) operand provenance step counts
+    sections.append(_section_operand_provenance(summary))
+
     # 8. Auto-scored vs adjudicated proportions
     sections.append(_section_scoring_proportions(summary))
 
@@ -239,7 +242,7 @@ def _section_clopper_pearson(summary):
             alpha = 0.05
             p_upper = 1.0 - alpha ** (1.0 / n)
             lines.append(
-                f'| {metric} | 0 | {n} | 100% | '
+                f'| {metric} | 0 | {n} | {n}/{n} | '
                 f'{p_upper:.6f} ({p_upper*100:.4f}%) |')
         else:
             # k > 0: report point estimate only
@@ -346,6 +349,11 @@ def _section_d2_mechanisms(summary):
       - parameter-echo verification result, or UNVERIFIED
     """
     lines = ['## 9. D2 Reproducibility Mechanism Classes\n']
+    # D2.2 cap display
+    d2_cap = summary.get('d2_cap_reason')
+    if d2_cap:
+        lines.append(f'> **{d2_cap}**\n')
+
     lines.append('> D2 is auto-measured. STRUCTURAL and CONFIGURED are '
                  'operator-declared; OBSERVED-ONLY and UNMEASURED are '
                  'determined from evidence.\n')
@@ -495,6 +503,69 @@ def _section_declared_limitations():
     lines.append('For non-zero failure counts, the point estimate is '
                  'reported with n. The full Beta quantile would require '
                  'an external dependency or a specification extension.\n')
+
+    return '\n'.join(lines)
+
+
+
+def _section_operand_provenance(summary):
+    """Section 7b: D7.2(a) operand provenance step counts."""
+    lines = ['## 7b. D7.2(a) Operand Provenance Step Counts\n']
+    lines.append('> Each operand in each tool-call expression is resolved '
+                 'through the five-step hierarchy (AP-1 v1.3 D7.2(a)).\n')
+
+    step_counts = summary.get('operand_step_counts', {})
+    prov_outcomes = summary.get('provenance_outcomes', {})
+
+    if not step_counts and not prov_outcomes:
+        lines.append('*No operand provenance data available.*\n')
+        return '\n'.join(lines)
+
+    step_names = {
+        1: 'Source match',
+        2: 'Transformed source',
+        3: 'Reference intermediate',
+        4: 'Computed in session',
+        5: 'Originated',
+    }
+
+    total_operands = sum(step_counts.values())
+    lines.append(f'Total operands resolved: {total_operands}\n')
+
+    lines.append('| Step | Resolution | Count | % |')
+    lines.append('|---|---|---|---|')
+    for step in range(1, 6):
+        count = step_counts.get(step, 0)
+        pct = f'{100*count/total_operands:.1f}' if total_operands > 0 else '—'
+        lines.append(f'| {step} | {step_names[step]} | {count} | {pct}% |')
+
+    lines.append('')
+
+    # Invocation-level outcomes
+    total_inv = sum(prov_outcomes.values())
+    if total_inv > 0:
+        lines.append('### Per-Invocation Outcomes\n')
+        lines.append('| Outcome | Count |')
+        lines.append('|---|---|')
+        for outcome in ['OPERANDS-GROUNDED', 'OPERAND-ORIGINATED']:
+            count = prov_outcomes.get(outcome, 0)
+            lines.append(f'| {outcome} | {count} |')
+        lines.append('')
+
+    # Originated operand audit
+    audit = summary.get('originated_operand_audit', [])
+    if audit:
+        lines.append('### Originated Operand Audit\n')
+        lines.append('| Item | Condition | Value | Expression | Resolution |')
+        lines.append('|---|---|---|---|---|')
+        for entry in audit:
+            lines.append(
+                f'| {entry.get("item_id", "?")} '
+                f'| {entry.get("condition", "?")} '
+                f'| `{entry.get("value", "?")}` '
+                f'| `{entry.get("expression", "?")}` '
+                f'| {entry.get("resolution", "?")} |')
+        lines.append('')
 
     return '\n'.join(lines)
 

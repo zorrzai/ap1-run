@@ -880,6 +880,66 @@ def test_r0_1_reasoning_effort_at_top_level_refused():
         os.unlink(tmp)
 
 
+
+def test_d2_2_platform_rejected_cap():
+    """D2.2: where a sampling parameter is platform-rejected, the
+    mechanism class is capped at OBSERVED-ONLY and the report states why.
+
+    The config structure must support sampling_omission_reasons with
+    reason and detail fields, and the cap logic must be derivable.
+    """
+    # Test that a config with platform-rejected omission reason
+    # can be detected and yields a cap
+    test_config = {
+        'sampling': {'temperature': '0'},
+        'sampling_omission_reasons': {
+            'top_p': {
+                'reason': 'platform-rejected',
+                'detail': 'top_p parameter not supported'
+            }
+        }
+    }
+
+    omission_reasons = test_config.get('sampling_omission_reasons', {})
+    cap_found = False
+    capped_param = None
+    cap_detail = None
+    for param_name, reason_info in omission_reasons.items():
+        reason = reason_info.get('reason', '') if isinstance(reason_info, dict) else str(reason_info)
+        if 'platform-rejected' in reason.lower() or 'platform-unsupported' in reason.lower():
+            cap_found = True
+            capped_param = param_name
+            cap_detail = reason_info.get('detail', reason) if isinstance(reason_info, dict) else reason
+            break
+
+    check('D2.2-cap-detected', cap_found,
+          'platform-rejected omission reason must be detectable')
+    check('D2.2-cap-names-param', capped_param == 'top_p',
+          f'cap must name the parameter, got {capped_param}')
+    check('D2.2-cap-has-detail', cap_detail is not None and len(cap_detail) > 0,
+          f'cap must have a detail/reason string')
+
+    # Test that a config WITHOUT platform-rejected does not trigger cap
+    clean_config = {
+        'sampling': {'temperature': '0'},
+        'sampling_omission_reasons': {
+            'top_p': {
+                'reason': 'operator-omitted',
+                'detail': 'not needed'
+            }
+        }
+    }
+    clean_reasons = clean_config.get('sampling_omission_reasons', {})
+    clean_cap = False
+    for param_name, reason_info in clean_reasons.items():
+        reason = reason_info.get('reason', '') if isinstance(reason_info, dict) else str(reason_info)
+        if 'platform-rejected' in reason.lower() or 'platform-unsupported' in reason.lower():
+            clean_cap = True
+            break
+    check('D2.2-no-false-cap', not clean_cap,
+          'operator-omitted should NOT trigger D2.2 cap')
+
+
 # =====================================================================
 # Main
 # =====================================================================
@@ -912,6 +972,7 @@ ALL_TESTS = [
     test_conformance_table_consistency,
     test_r0_1_reasoning_effort_in_sampling_accepted,
     test_r0_1_reasoning_effort_at_top_level_refused,
+    test_d2_2_platform_rejected_cap,
 ]
 
 

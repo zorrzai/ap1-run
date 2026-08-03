@@ -1001,7 +1001,7 @@ Test suites (`verify_*.py`, `run_all_tests.py`), demonstration tooling
 (`example/ground_truth_example.py`) are **not** instrument modules and are
 **excluded** from this constraint.
 
-**Declared exception — `report.py` (558 lines).**  `report.py` is a cohesive
+**Declared exception — `report.py` (629 lines).**  `report.py` is a cohesive
 renderer with thirteen sections.  Fragmenting it would make the rendering flow
 harder to follow without improving auditability.  This exception is documented,
 not implicit.
@@ -1012,12 +1012,12 @@ not implicit.
 
 | File | Lines | Classification |
 |---|---|---|
-| `report.py` | 558 | Instrument module (excepted §12.9) |
+| `report.py` | 629 | Instrument module (excepted §12.9) |
 | `provenance.py` | 300 | Instrument module |
 | `provenance_classify.py` | 230 | Instrument module |
 | `provenance_audit.py` | 38 | Instrument module |
 | `numeric.py` | 300 | Instrument module |
-| `engine.py` | 300 | Instrument module |
+| `engine.py` | 299 | Instrument module |
 | `evidence.py` | 296 | Instrument module |
 | `operation_correctness.py` | 284 | Instrument module |
 | `adjudication.py` | 258 | Instrument module |
@@ -1033,7 +1033,7 @@ not implicit.
 | `perturbation_guard.py` | 116 | Instrument module |
 | `transcription.py` | 110 | Instrument module |
 | `transcript.py` | 74 | Instrument module |
-| `smoke_test.py` | 712 | Demonstration tooling |
+| `smoke_test.py` | 853 | Demonstration tooling |
 | `example/ground_truth_example.py` | 576 | Example / demonstration |
 | `example/calculator_tool.py` | 209 | Example / demonstration |
 | `verify_*.py` | varies | Verification test suites |

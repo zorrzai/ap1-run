@@ -21,6 +21,7 @@ from evidence import (
     extract_attestation, check_ev3_guard, EV_0,
 )
 from operation_correctness import classify_operation
+from provenance_classify import classify_invocations_sequential
 
 
 class EngineError(Exception):
@@ -116,6 +117,10 @@ def execute_item(item, *, condition, config, fixture,
         _, att_reason = classify_attestation(
             attestation, {'ev3_implemented': False})
 
+    # D7.2(a): sequential operand provenance (D22 transitivity guard)
+    provenance_results = classify_invocations_sequential(
+        tool_calls_record, ctx, gt, config)
+
     # D7.2(b): evaluate operation correctness for each tool call
     op_correctness_results = []
     for tc in tool_calls_record:
@@ -147,6 +152,7 @@ def execute_item(item, *, condition, config, fixture,
         ground_truth_final=str(gt['final']),
         required_operation=gt['required_operation'],
         operation_correctness=op_correctness_results,
+        provenance_results=provenance_results,
     )
 
     return {
@@ -156,6 +162,7 @@ def execute_item(item, *, condition, config, fixture,
         'self_report': self_report,
         'tool_calls': tool_calls_record,
         'response': final_response, 'ground_truth': gt,
+        'provenance_results': provenance_results,
     }
 
 
@@ -173,7 +180,7 @@ def _drive_tool_loop(*, response, messages, config, tools,
     current = response
 
     # Check shape of the initial response (round 0)
-    _check_initial_shape(current, round_shapes)
+    _record_shape(current, round_shapes)
 
     for turn in range(1, max_turns + 1):
         model_calls = _extract_tool_calls(current)
@@ -216,7 +223,7 @@ def _drive_tool_loop(*, response, messages, config, tools,
                 model=config.get('model'),
             )
             # Check shape of this round's response
-            _check_round_shape(current, round_shapes, turn)
+            _record_shape(current, round_shapes)
         except Exception as exc:
             # D7.9 normative: any round that fails to complete is
             # recorded as unrecognised. The evidence class is EV-0,
@@ -226,7 +233,6 @@ def _drive_tool_loop(*, response, messages, config, tools,
             break
 
     return all_tool_calls, current, round_shapes
-
 
 def _execute_tool(name, arguments_json):
     """Execute a tool call. Operators supply their own dispatch."""
@@ -244,15 +250,8 @@ def _execute_tool(name, arguments_json):
 
 
 
-def _check_initial_shape(response, round_shapes):
-    """Check shape of the initial response and record it."""
-    from evidence import _extract_model_tool_calls
-    _, recognised, reason = _extract_model_tool_calls(response)
-    round_shapes.append((recognised, reason))
-
-
-def _check_round_shape(response, round_shapes, turn):
-    """Check shape of a follow-up round response and record it."""
+def _record_shape(response, round_shapes):
+    """Record the response shape for evidence classification."""
     from evidence import _extract_model_tool_calls
     _, recognised, reason = _extract_model_tool_calls(response)
     round_shapes.append((recognised, reason))
