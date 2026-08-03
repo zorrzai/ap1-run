@@ -805,6 +805,81 @@ def test_conformance_table_consistency():
           'D7.2(b) says not wired but engine.py L125 calls '
           'classify_operation')
 
+
+def test_r0_1_reasoning_effort_in_sampling_accepted():
+    """R0.1 strict schema. reasoning_effort declared inside sampling
+    sub-dict must be ACCEPTED — it is a known sampling parameter.
+    """
+    from config import load_config, ConfigError
+    cfg_data = {
+        'endpoint_url': 'http://test', 'model': 'test',
+        'sampling': {'reasoning_effort': 'none'},
+        'answer_tolerance': '0.01',
+        'quantisation': {'places': '2', 'rounding': 'ROUND_HALF_UP'},
+        'permitted_transformations': [], 'decline_markers': [],
+        'decimal_separator': '.', 'grouping_separator': ',',
+        'currency_symbols': ['$'], 'dimensions_claimed': [],
+        'repeat_count': '3', 'structured_answer_field': 'none',
+        'ap1_version': 'v1.3',
+        'ap1_text_hash': 'abc', 'ap1_version_doi': 'doi:test',
+    }
+    with tempfile.NamedTemporaryFile(
+            mode='w', suffix='.json', delete=False, encoding='utf-8') as f:
+        json.dump(cfg_data, f)
+        tmp = f.name
+    try:
+        loaded = load_config(tmp)
+        check('R0.1-reasoning-effort-accepted',
+              loaded['sampling']['reasoning_effort'] == 'none',
+              'reasoning_effort in sampling must be accepted')
+    except ConfigError as e:
+        check('R0.1-reasoning-effort-accepted', False,
+              f'reasoning_effort in sampling should not raise: {e}')
+    finally:
+        os.unlink(tmp)
+
+
+def test_r0_1_reasoning_effort_at_top_level_refused():
+    """R0.1 strict schema. reasoning_effort at top level must be
+    REFUSED with a message suggesting the sampling sub-dict.
+    """
+    from config import load_config, ConfigError
+    cfg_data = {
+        'endpoint_url': 'http://test', 'model': 'test',
+        'sampling': {},
+        'answer_tolerance': '0.01',
+        'quantisation': {'places': '2', 'rounding': 'ROUND_HALF_UP'},
+        'permitted_transformations': [], 'decline_markers': [],
+        'decimal_separator': '.', 'grouping_separator': ',',
+        'currency_symbols': ['$'], 'dimensions_claimed': [],
+        'repeat_count': '3', 'structured_answer_field': 'none',
+        'ap1_version': 'v1.3',
+        'ap1_text_hash': 'abc', 'ap1_version_doi': 'doi:test',
+        'reasoning_effort': 'none',
+    }
+    with tempfile.NamedTemporaryFile(
+            mode='w', suffix='.json', delete=False, encoding='utf-8') as f:
+        json.dump(cfg_data, f)
+        tmp = f.name
+    try:
+        raised = False
+        msg = ''
+        try:
+            load_config(tmp)
+        except ConfigError as e:
+            raised = True
+            msg = str(e)
+        check('R0.1-reasoning-effort-top-refused', raised,
+              'reasoning_effort at top level must be refused')
+        if raised:
+            check('R0.1-re-names-key', 'reasoning_effort' in msg,
+                  f'error must name the key: {msg}')
+            check('R0.1-re-suggests-sampling', 'sampling' in msg.lower(),
+                  f'error must suggest the sampling sub-dict: {msg}')
+    finally:
+        os.unlink(tmp)
+
+
 # =====================================================================
 # Main
 # =====================================================================
@@ -835,6 +910,8 @@ ALL_TESTS = [
     test_r0_1_strict_schema_sampling_param_at_top_level,
     test_r0_1_strict_schema_unknown_key,
     test_conformance_table_consistency,
+    test_r0_1_reasoning_effort_in_sampling_accepted,
+    test_r0_1_reasoning_effort_at_top_level_refused,
 ]
 
 

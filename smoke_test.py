@@ -17,6 +17,13 @@ Usage:
 
 On Windows only, if AP1_SMOKE_API_KEY is not set, the runner will attempt
 to read from Windows Credential Manager (target: ap1-smoke:openai).
+
+NOTE ON REASONING MODELS:
+  Reasoning models (e.g. gpt-5.6-sol) on /v1/chat/completions require
+  reasoning_effort to be set when tools are supplied. Set
+  "reasoning_effort": "none" inside the "sampling" sub-dict in
+  config.json. The /v1/responses endpoint is the alternative the API
+  suggests, but this runner targets /v1/chat/completions only.
 """
 
 import json
@@ -41,13 +48,15 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import adapter
 from config import load_config
 from context import build_delivered_context, check_lookup_collision, format_fixture_context
-from evidence import classify_invocation, check_ev3_guard, EV_0, EV_2
+from engine import execute_item
+from evidence import EV_0, EV_2
 from figure_id import identify_figure, AUTO_MATCH, AUTO_NO_FIGURE, UNMEASURABLE
 from invocation import format_rate
 from numeric import extract_numeric_tokens
+from seal import seal as create_seal
 import transcript
-
-
+import report
+import adjudication
 
 
 # Credential target for the API key
@@ -126,7 +135,7 @@ def _get_api_key():
     print()
     if sys.platform == 'win32':
         print('  cmd:         set AP1_SMOKE_API_KEY=<key>')
-        print('  PowerShell:  $env:AP1_SMOKE_API_KEY = \'<key>\'')
+        print("  PowerShell:  $env:AP1_SMOKE_API_KEY = '<key>'")
         print()
         print('Or store in Windows Credential Manager:')
         print(f'  Target: {_CRED_TARGET}')
@@ -173,6 +182,77 @@ def _verify_invocation_consistency(results):
                 f'is a defect, not a finding.')
 
 
+def _build_summary(all_results, evidence_findings):
+    """Build the summary dict that report.generate_report() expects.
+
+    Aggregates per-item results into the structure report.py reads.
+    """
+    summary = {}
+
+    # Evidence class counts
+    ev_counts = {}
+    for ef in evidence_findings:
+        ec = ef.get('evidence_class', '')
+        ev_counts[ec] = ev_counts.get(ec, 0) + 1
+    summary['evidence_class_counts'] = ev_counts
+
+    # Item evidence detail
+    summary['item_evidence'] = evidence_findings
+
+    # Invocation figures per condition
+    inv_figures = {}
+    for r in all_results:
+        if r.get('status') != 'EXECUTED':
+            continue
+        cond = r.get('condition', '')
+        key = f'd7_invocation_{cond}'
+        if key not in inv_figures:
+            inv_figures[key] = {'failures': 0, 'n': 0, 'rate': None}
+        inv_figures[key]['n'] += 1
+        if r.get('invocation_outcome') == 'NOT-INVOKED':
+            inv_figures[key]['failures'] += 1
+    for key, data in inv_figures.items():
+        if data['n'] > 0:
+            data['rate'] = f"{data['n'] - data['failures']}/{data['n']}"
+    summary['invocation_figures'] = inv_figures
+
+    # Operation correctness counts
+    op_counts = {'OPERATION-CORRECT': 0, 'WRONG-OPERATION': 0,
+                 'OPERATION-UNOBSERVABLE': 0}
+    for r in all_results:
+        if r.get('status') != 'EXECUTED':
+            continue
+        for oc in r.get('operation_correctness', []):
+            outcome = oc.get('outcome', 'OPERATION-UNOBSERVABLE')
+            if outcome in op_counts:
+                op_counts[outcome] += 1
+    summary['operation_correctness_counts'] = op_counts
+
+    # Scoring proportions (D1 and D7)
+    auto_n = sum(1 for r in all_results
+                 if r.get('status') == 'EXECUTED' and
+                 r.get('figure_outcome', '').startswith('AUTO'))
+    adj_n = sum(1 for r in all_results
+                if r.get('status') == 'EXECUTED' and
+                (r.get('figure_outcome', '').startswith('ADJUDICATE') or
+                 r.get('figure_outcome') == 'UNMEASURABLE'))
+    summary['d7_results'] = {'auto_scored_n': auto_n, 'adjudicated_n': adj_n}
+
+    # Non-outcome cells
+    non_outcome = []
+    for r in all_results:
+        if r['status'] in ('UNMEASURED', 'VOID'):
+            non_outcome.append({
+                'item_id': r.get('item_id'),
+                'condition': r.get('condition'),
+                'status': r['status'],
+                'reason': r.get('cause', r.get('reason', '')),
+            })
+    summary['non_outcome_cells'] = non_outcome
+
+    return summary
+
+
 def main():
     if hasattr(sys.stdout, 'reconfigure'):
         sys.stdout.reconfigure(encoding='utf-8', errors='replace')
@@ -196,8 +276,7 @@ def main():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     example_dir = os.path.join(base_dir, 'example')
 
-    with open(os.path.join(example_dir, 'config.json'), 'r', encoding='utf-8') as f:
-        config = json.load(f)
+    config = load_config(os.path.join(example_dir, 'config.json'))
 
     config['endpoint_url'] = endpoint
     config['model'] = model
@@ -235,13 +314,32 @@ def main():
               'and system_prompt_instruction_removed')
         return 1
 
+    # -- SEAL: R1.1 pre-registration record --
+    # The real seal, not a sentinel. A live run without a valid seal
+    # is refused, exactly as R1.1 requires.
+    ap1_text_path = os.path.join(
+        base_dir, 'reference', 'AP-1_v1.3_DRAFT_FOR_COMMENT.md')
+    seal_record = create_seal(
+        config=config,
+        fixture_path=os.path.join(example_dir, 'fixture.json'),
+        questions_path=os.path.join(example_dir, 'questions.json'),
+        ground_truth_path=os.path.join(example_dir, 'ground_truth_example.py'),
+        ap1_text_path=ap1_text_path,
+    )
+    seal_hash = seal_record['seal_hash']
+    print(f'Seal hash: {seal_hash}')
+    print(f'AP-1 text hash: {seal_record["ap1_text_hash"]}')
+    print()
+
     # -- Run configuration --
-    repeat_count = 3  # D2: 3 repeats per condition
+    repeat_count = config.get('repeat_count', 3)
     conditions = ['base', 'instruction_removed']
     items = questions['items']
 
     sampling = config.get('sampling', {})
-    answer_tolerance = Decimal(config.get('answer_tolerance', '0.01'))
+    answer_tolerance = config.get('answer_tolerance', Decimal('0.01'))
+    if isinstance(answer_tolerance, str):
+        answer_tolerance = Decimal(answer_tolerance)
     decline_markers = config.get('decline_markers', [])
     currency_symbols = config.get('currency_symbols', [])
 
@@ -252,21 +350,6 @@ def main():
             endpoint_url, messages=messages, tools=tools,
             sampling=sampling, model=model, api_key=api_key,
             timeout=timeout)
-
-    # -- Calculator tool execution --
-    import calculator_tool
-
-    def execute_tool(name, arguments_json):
-        if name == 'calculator':
-            try:
-                args = json.loads(arguments_json)
-                expr = args.get('expression', arguments_json)
-                result = calculator_tool.execute_calculator(expr)
-                return json.dumps({'result': result})
-            except (calculator_tool.CalculatorError, json.JSONDecodeError,
-                    ValueError, ZeroDivisionError) as e:
-                return json.dumps({'error': f'calculator error: {e}'})
-        return json.dumps({'error': f'unknown tool: {name}'})
 
     # -- Collector for all findings --
     all_results = []
@@ -281,8 +364,7 @@ def main():
     print('=' * 60)
 
     for condition in conditions:
-        prompt = system_prompt_base if condition == 'base' else system_prompt_removed
-        tools_for_condition = tools  # tools always offered per perturbation discipline
+        system_prompt = system_prompt_base if condition == 'base' else system_prompt_removed
 
         for item in items:
             item_id = item['id']
@@ -304,33 +386,26 @@ def main():
             for rep in range(1, repeat_count + 1):
                 print(f'  {item_id}/{condition}/r{rep}: ', end='', flush=True)
 
-                # Build messages
-                context_text = format_fixture_context(fixture, item)
-                messages = [
-                    {'role': 'system', 'content': prompt},
-                    {'role': 'user', 'content': f'{context_text}\n\nQuestion: {item["text"]}'},
-                ]
-
+                # === CALL engine.execute_item — THE TESTED PATH ===
                 try:
-                    response, request_record = adapter_send(
-                        endpoint, messages=messages,
-                        tools=tools_for_condition,
-                        sampling=sampling, model=model)
+                    result = execute_item(
+                        item,
+                        condition=condition,
+                        config=config,
+                        fixture=fixture,
+                        ground_truth_compute=gt_module.compute,
+                        adapter_send=adapter_send,
+                        system_prompt=system_prompt,
+                        tools=tools,
+                        transcript_path=transcript_path,
+                        seal_hash=seal_hash,
+                    )
                 except adapter.RateLimitError as e:
-                    print(f'RATE-LIMITED')
+                    print('RATE-LIMITED')
                     unmeasured_cells.append({
                         'item_id': item_id, 'condition': condition,
                         'repeat': rep, 'cause': 'rate_limited',
                     })
-                    transcript.append(
-                        transcript_path, item_id=item_id,
-                        arm_id=condition, condition=condition,
-                        request_sent={'messages': messages},
-                        response_received=None, tool_calls=[],
-                        evidence_class=None,
-                        error_state='RATE_LIMITED',
-                        seal_hash='smoke-test',
-                    )
                     all_results.append({
                         'item_id': item_id, 'condition': condition,
                         'repeat': rep, 'status': 'UNMEASURED',
@@ -350,85 +425,18 @@ def main():
                     })
                     continue
 
-                # -- Drive tool loop --
-                all_tc = []
-                round_shapes = []
-                current = response
-                tool_loop_messages = list(messages)
+                status = result.get('status', 'UNKNOWN')
+                if status in ('VOID', 'UNMEASURED'):
+                    print(f'{status}')
+                    all_results.append({
+                        'item_id': item_id, 'condition': condition,
+                        'repeat': rep, 'status': status,
+                        'cause': result.get('error', result.get('reason', '')),
+                    })
+                    continue
 
-                # Check shape of initial response (round 0)
-                from evidence import _extract_model_tool_calls
-                _, r0_recognised, r0_reason = _extract_model_tool_calls(response)
-                round_shapes.append((r0_recognised, r0_reason))
-
-                for turn in range(1, 11):
-                    choices = current.get('choices', [])
-                    if not choices:
-                        break
-                    msg = choices[0].get('message', {})
-                    model_calls = msg.get('tool_calls') or []
-                    if not model_calls:
-                        break
-
-                    for tc in model_calls:
-                        tc_record = {
-                            'turn': turn,
-                            'id': tc.get('id', ''),
-                            'type': tc.get('type', 'function'),
-                            'function': tc.get('function', {}),
-                        }
-                        all_tc.append(tc_record)
-                        tool_call_structures.append({
-                            'item_id': item_id,
-                            'condition': condition,
-                            'repeat': rep,
-                            'tool_call': tc_record,
-                            'raw_arguments': tc.get('function', {}).get('arguments', ''),
-                        })
-
-                    tool_loop_messages.append(msg)
-                    for tc in model_calls:
-                        func = tc.get('function', {})
-                        result = execute_tool(
-                            func.get('name', ''),
-                            func.get('arguments', '{}'))
-                        tool_loop_messages.append({
-                            'role': 'tool',
-                            'tool_call_id': tc.get('id', ''),
-                            'content': result,
-                        })
-
-                    try:
-                        current, _ = adapter_send(
-                            endpoint, messages=tool_loop_messages,
-                            tools=tools_for_condition,
-                            sampling=sampling, model=model)
-                        # Check shape of this round's response
-                        _, rn_recognised, rn_reason = _extract_model_tool_calls(current)
-                        round_shapes.append((rn_recognised, rn_reason))
-                    except Exception:
-                        break
-
-                final_response = current
-
-                # -- Evidence classification (R1.3 normative: accumulated records) --
-                tools_offered = tools_for_condition is not None and len(tools_for_condition) > 0
-                required_op = gt.get('required_operation', 'calculator')
-                ev_class, inv_outcome, self_report = classify_invocation(
-                    final_response, tools_offered=tools_offered,
-                    accumulated_tool_calls=all_tc,
-                    round_shapes=round_shapes,
-                    required_operation=required_op)
-                check_ev3_guard(ev_class)
-
-                evidence_findings.append({
-                    'item_id': item_id, 'condition': condition,
-                    'repeat': rep, 'evidence_class': ev_class,
-                    'invocation_outcome': inv_outcome,
-                    'self_report': self_report,
-                })
-
-                # -- Figure identification --
+                # -- Figure identification (after execute_item) --
+                final_response = result.get('response')
                 fig_result = identify_figure(
                     final_response,
                     expected_value=expected,
@@ -438,6 +446,41 @@ def main():
                     decline_markers=decline_markers,
                     currency_symbols=currency_symbols,
                 )
+
+                # Append figure_outcome to the transcript record
+                transcript.append(
+                    transcript_path, item_id=item_id,
+                    arm_id=condition, condition=condition,
+                    request_sent=None,  # already in engine's record
+                    response_received=None,
+                    tool_calls=[],
+                    evidence_class=result.get('evidence_class'),
+                    error_state=None,
+                    seal_hash=seal_hash,
+                    record_type='figure_identification',
+                    figure_outcome=fig_result['outcome'],
+                    figure_reason=fig_result.get('reason', ''),
+                    released_figure=str(fig_result.get('released_figure', '')),
+                    expected=str(expected),
+                )
+
+                ev_class = result.get('evidence_class', '')
+                inv_outcome = result.get('invocation_outcome', '')
+                tool_calls = result.get('tool_calls', [])
+
+                evidence_findings.append({
+                    'item_id': item_id, 'condition': condition,
+                    'repeat': rep, 'evidence_class': ev_class,
+                    'invocation_outcome': inv_outcome,
+                })
+
+                # -- Record tool call structures --
+                for tc in tool_calls:
+                    raw_args = tc.get('function', {}).get('arguments', '')
+                    tool_call_structures.append({
+                        'item_id': item_id, 'condition': condition,
+                        'repeat': rep, 'raw_arguments': raw_args,
+                    })
 
                 # -- Numeric grammar check --
                 from evidence import _extract_content
@@ -452,7 +495,6 @@ def main():
                             'repeat': rep, 'error': str(e),
                             'content': content[:500],
                         })
-                        tokens = []
 
                 # -- Check for unrecognised decline patterns --
                 if content and fig_result['outcome'] not in (
@@ -463,7 +505,6 @@ def main():
                             "i'm not able", "not possible",
                             "unable to", "i apologize",
                         ]):
-                    # Potential decline not caught by configured markers
                     decline_findings.append({
                         'item_id': item_id, 'condition': condition,
                         'repeat': rep,
@@ -471,23 +512,19 @@ def main():
                         'configured_markers': decline_markers,
                     })
 
-                # Write transcript
-                transcript.append(
-                    transcript_path, item_id=item_id,
-                    arm_id=condition, condition=condition,
-                    request_sent=request_record,
-                    response_received=final_response,
-                    tool_calls=all_tc,
-                    evidence_class=ev_class,
-                    error_state=None,
-                    seal_hash='smoke-test',
-                    invocation_outcome=inv_outcome,
-                    figure_outcome=fig_result['outcome'],
-                    figure_reason=fig_result.get('reason', ''),
-                )
-
                 outcome = fig_result['outcome']
                 print(f'{outcome} | {ev_class} | {inv_outcome}')
+
+                # Collect operation_correctness from engine result
+                op_correctness = []
+                # Read from the transcript (engine wrote it)
+                tr_records = transcript.read_all(transcript_path)
+                for tr in reversed(tr_records):
+                    if (tr.get('item_id') == item_id and
+                            tr.get('condition') == condition and
+                            tr.get('record_type') != 'figure_identification'):
+                        op_correctness = tr.get('operation_correctness', [])
+                        break
 
                 all_results.append({
                     'item_id': item_id, 'condition': condition,
@@ -496,10 +533,11 @@ def main():
                     'invocation_outcome': inv_outcome,
                     'figure_outcome': outcome,
                     'figure_reason': fig_result.get('reason', ''),
-                    'tool_calls_count': len(all_tc),
+                    'tool_calls_count': len(tool_calls),
                     'released_figure': str(fig_result.get('released_figure', '')),
                     'expected': str(expected),
                     'shape_ok': shape_ok,
+                    'operation_correctness': op_correctness,
                 })
 
                 # Brief delay to avoid rate limiting
@@ -509,7 +547,7 @@ def main():
     _verify_invocation_consistency(all_results)
     print('  Invocation consistency check: PASSED (0 mismatches)')
 
-    # -- Report --
+    # -- Console Report --
     print()
     print('=' * 60)
     print('SMOKE TEST REPORT')
@@ -548,47 +586,12 @@ def main():
 
     # 3c. Grammar issues
     print(f'\n3c. NUMERIC GRAMMAR: {len(grammar_issues)} issues')
-    for gi in grammar_issues:
-        print(f'  {gi["item_id"]}/{gi["condition"]}/r{gi["repeat"]}: {gi["error"]}')
-        print(f'    content: {gi["content"][:200]}')
 
     # 3d. Decline findings
     print(f'\n3d. DECLINE MARKERS: {len(decline_findings)} unrecognised declines')
-    for df in decline_findings:
-        print(f'  {df["item_id"]}/{df["condition"]}/r{df["repeat"]}:')
-        print(f'    "{df["content_excerpt"][:200]}"')
 
     # 3e. Tool-call structures
     print(f'\n3e. TOOL-CALL ARGUMENT STRUCTURES: {len(tool_call_structures)} calls')
-    # Group by unique argument structure
-    seen_structures = {}
-    for tcs in tool_call_structures:
-        tc = tcs['tool_call']
-        func = tc.get('function', {})
-        raw_args = tcs.get('raw_arguments', '')
-        try:
-            parsed = json.loads(raw_args)
-            key_names = sorted(parsed.keys()) if isinstance(parsed, dict) else ['<non-dict>']
-            value_types = {k: type(v).__name__ for k, v in parsed.items()} if isinstance(parsed, dict) else {}
-        except Exception:
-            key_names = ['<parse-error>']
-            value_types = {}
-            parsed = raw_args
-
-        structure_key = str(key_names)
-        if structure_key not in seen_structures:
-            seen_structures[structure_key] = {
-                'count': 0, 'example_raw': raw_args,
-                'key_names': key_names, 'value_types': value_types,
-                'example_parsed': parsed,
-            }
-        seen_structures[structure_key]['count'] += 1
-
-    for sk, sv in seen_structures.items():
-        print(f'  Structure: keys={sv["key_names"]} types={sv["value_types"]}')
-        print(f'    count: {sv["count"]}')
-        print(f'    example raw: {sv["example_raw"][:200]}')
-        print(f'    example parsed: {json.dumps(sv["example_parsed"], default=str)[:200]}')
 
     # 3f. Evidence classes
     print(f'\n3f. EVIDENCE CLASSES:')
@@ -598,14 +601,9 @@ def main():
         ev_counts[ec] = ev_counts.get(ec, 0) + 1
     for ec, c in sorted(ev_counts.items()):
         print(f'  {ec}: {c}')
-    unrecognised = [ef for ef in evidence_findings if not ef.get('evidence_class')]
-    if unrecognised:
-        print(f'  UNRECOGNISED SHAPES: {len(unrecognised)}')
 
     # 3g. Unmeasured cells
     print(f'\n3g. UNMEASURED CELLS: {len(unmeasured_cells)}')
-    for uc in unmeasured_cells:
-        print(f'  {uc["item_id"]}/{uc["condition"]}/r{uc["repeat"]}: {uc["cause"]}')
 
     # 3h. Invocation under both conditions
     print(f'\n3h. D7.1 INVOCATION:')
@@ -621,6 +619,71 @@ def main():
         print(f'  {cond}: invoked={invoked} not_invoked={not_invoked} n={n}')
         print(f'    failure rate: {rate_str}')
 
+    # 3i. D7.2(b) operation correctness
+    print(f'\n3i. D7.2(b) OPERATION CORRECTNESS:')
+    op_counts = {'OPERATION-CORRECT': 0, 'WRONG-OPERATION': 0,
+                 'OPERATION-UNOBSERVABLE': 0}
+    for r in executed:
+        for oc in r.get('operation_correctness', []):
+            outcome = oc.get('outcome', 'OPERATION-UNOBSERVABLE')
+            if outcome in op_counts:
+                op_counts[outcome] += 1
+    for outcome in ['OPERATION-CORRECT', 'WRONG-OPERATION', 'OPERATION-UNOBSERVABLE']:
+        print(f'  {outcome}: {op_counts[outcome]}')
+
+    # -- Generate formal report (report.py) --
+    print('\n' + '=' * 60)
+    print('GENERATING FORMAL REPORT (report.py)')
+    print('=' * 60)
+
+    summary = _build_summary(all_results, evidence_findings)
+
+    # Read full transcript for report
+    tr_records = transcript.read_all(transcript_path)
+
+    # Merge figure_outcome into engine transcript records
+    # Engine records don't have figure_outcome; figure_identification records do
+    engine_records = [r for r in tr_records
+                      if r.get('record_type') != 'figure_identification']
+    figure_records = [r for r in tr_records
+                      if r.get('record_type') == 'figure_identification']
+
+    # Build lookup: (item_id, condition) -> list of figure_outcomes
+    fig_lookup = {}
+    for fr in figure_records:
+        key = (fr.get('item_id'), fr.get('condition'))
+        fig_lookup.setdefault(key, []).append(fr.get('figure_outcome', ''))
+
+    # Attach figure_outcome to engine records for adjudication routing
+    for er in engine_records:
+        key = (er.get('item_id'), er.get('condition'))
+        figs = fig_lookup.get(key, [])
+        if figs:
+            er['figure_outcome'] = figs.pop(0)
+
+    report_text = report.generate_report(
+        summary=summary,
+        config=config,
+        seal_record=seal_record,
+        transcript_records=engine_records,
+    )
+
+    report_path = os.path.join(output_dir, 'report.md')
+    with open(report_path, 'w', encoding='utf-8') as f:
+        f.write(report_text)
+    print(f'Formal report written to {report_path}')
+
+    # -- Generate adjudication sheets (adjudication.py) --
+    print('\nGENERATING ADJUDICATION SHEETS (adjudication.py)')
+
+    sheets_text = adjudication.generate_sheets(
+        engine_records, questions, fixture, config)
+
+    sheets_path = os.path.join(output_dir, 'adjudication_sheets.md')
+    with open(sheets_path, 'w', encoding='utf-8') as f:
+        f.write(sheets_text)
+    print(f'Adjudication sheets written to {sheets_path}')
+
     # Write disclaimer file
     disclaimer_path = os.path.join(output_dir, 'DISCLAIMER.txt')
     with open(disclaimer_path, 'w', encoding='utf-8') as f:
@@ -631,13 +694,11 @@ def main():
     with open(summary_path, 'w', encoding='utf-8') as f:
         json.dump({
             '_disclaimer': DISCLAIMER.replace('\n', ' ').strip(),
+            'seal_hash': seal_hash,
             'all_results': all_results,
             'grammar_issues': grammar_issues,
             'decline_findings': decline_findings,
-            'tool_call_structures': [
-                {k: v for k, v in tcs.items() if k != 'tool_call'}
-                for tcs in tool_call_structures
-            ],
+            'tool_call_structures': tool_call_structures,
             'evidence_findings': evidence_findings,
             'unmeasured_cells': unmeasured_cells,
         }, f, indent=2, default=str, ensure_ascii=False)

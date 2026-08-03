@@ -50,7 +50,7 @@ DECIMAL_FIELDS = ['answer_tolerance']
 KNOWN_SAMPLING_PARAMS = {
     'temperature', 'top_p', 'seed', 'max_tokens',
     'max_completion_tokens', 'top_k', 'presence_penalty',
-    'frequency_penalty', 'stop',
+    'frequency_penalty', 'stop', 'reasoning_effort',
 }
 
 
