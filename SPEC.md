@@ -1036,7 +1036,7 @@ not implicit.
 | `example/ground_truth_example.py` | 576 | Example / demonstration |
 | `example/calculator_tool.py` | 209 | Example / demonstration |
 | `verify_*.py` | varies | Verification test suites |
-| `run_all_tests.py` | 196 | Test runner |
+| `run_all_tests.py` | 199 | Test runner |
 
 **Research questions are not held in this document.** Those on which the field
 has no settled answer are put to reviewers in AP-1 v1.3 §14. The standard asks;
