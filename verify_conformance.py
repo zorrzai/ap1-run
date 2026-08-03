@@ -653,18 +653,49 @@ def test_6_3b_structural_evidence_partial():
 # STALE STATUS — conformance table findings
 # =====================================================================
 
-def test_conformance_table_staleness():
-    """Check for known stale entries in the conformance mapping.
 
-    FINDING: D7.2(a)(iv) is marked NOT BUILT in SPEC.md §10, but
-    classify_invocations_sequential exists and is tested. This is a
-    specification defect, not a runner defect.
+# =====================================================================
+# D7.2(b) — Operation correctness
+# =====================================================================
+
+def test_d7_2b_operation_correctness():
+    """AP-1 v1.3, L367-370: 'Where the computation submitted by the
+    system is recoverable — an expression, a named operation with
+    arguments, or an equivalent record — the assessor evaluates it
+    deterministically over its own operands and resolves the result
+    against the reference expected value and the reference intermediates.'
+
+    IMPLEMENTED: operation_correctness.py classify_operation, wired
+    into engine.py L125. Results written to transcript L149.
     """
-    import re
+    from operation_correctness import classify_operation
+    gt = {
+        'final': Decimal('200'),
+        'intermediates': [{'label': 'balance', 'value': Decimal('100')}],
+        'required_operation': 'multiply balance by 2',
+    }
+    config = {
+        'permitted_transformations': [],
+        'quantisation': {'places': '2', 'rounding': 'ROUND_HALF_UP'},
+    }
+    result = classify_operation('100 * 2', gt, config)
+    check('D7.2b-returns-dict', isinstance(result, dict),
+          f'expected dict, got {type(result).__name__}')
+    check('D7.2b-has-outcome', 'outcome' in result,
+          f'result must have outcome: {list(result.keys())}')
+
+
+def test_conformance_table_consistency():
+    """Verify that conformance table status matches the code.
+
+    Checks that implemented features are not marked NOT BUILT or
+    'not wired' in the conformance mapping.
+    """
+    import re as _re
     spec_path = _base / 'SPEC.md'
     spec = spec_path.read_text(encoding='utf-8')
 
-    # D7.2(a)(iv) is marked NOT BUILT but IS built
+    # D7.2(a)(iv): must be marked IMPLEMENTED
     has_sequential = True
     try:
         from provenance_classify import classify_invocations_sequential
@@ -672,18 +703,18 @@ def test_conformance_table_staleness():
         has_sequential = False
 
     if has_sequential:
-        match = re.search(r'D7\.2\(a\)\(iv\).*NOT BUILT', spec)
-        if match:
-            check('stale-d7.2a-iv', False,
-                  'D7.2(a)(iv) is marked NOT BUILT but '
-                  'classify_invocations_sequential exists in '
-                  'provenance_classify.py and is tested by verify_r41.py '
-                  'B25-B30. SPECIFICATION DEFECT: table row is stale.')
-        else:
-            check('stale-d7.2a-iv', True)
+        match = _re.search(r'D7\.2\(a\)\(iv\).*NOT BUILT', spec)
+        check('d7.2a-iv-not-stale', match is None,
+              'D7.2(a)(iv) is marked NOT BUILT but '
+              'classify_invocations_sequential exists')
     else:
-        check('stale-d7.2a-iv', True)
+        check('d7.2a-iv-not-stale', True)
 
+    # D7.2(b): must not say 'not wired'
+    match_b = _re.search(r'D7\.2\(b\).*not wired', spec)
+    check('d7.2b-not-stale', match_b is None,
+          'D7.2(b) says not wired but engine.py L125 calls '
+          'classify_operation')
 
 # =====================================================================
 # Main
@@ -711,7 +742,8 @@ ALL_TESTS = [
     test_not_enforceable_declared,
     test_5_11_sampling_per_arm_partial,
     test_6_3b_structural_evidence_partial,
-    test_conformance_table_staleness,
+    test_d7_2b_operation_correctness,
+    test_conformance_table_consistency,
 ]
 
 

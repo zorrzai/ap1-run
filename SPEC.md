@@ -773,13 +773,14 @@ client demo methodology §7 is not made in any real meeting.
 | **E** | R3.2, R3.3 | Report declares unmeasured dimensions, evidence classes, auto/adjudicated split; kappa with small-n caveat |
 | **F** | R4.1 complete, R4.2 executed | Outsider runs it unaided; README defects fixed and published |
 
-**Phase D is the phase that matters.** Phases A-C produce an instrument
-duplicating existing observability tooling. Phase D produces the one that does
-not.
+**Operand provenance (R2.4) is the measurement that distinguishes this
+instrument from tool-call tracing.** Invocation, transcription and
+determinism are all measurable with existing observability tooling; resolving
+each operand against source values and reference intermediates is not.
 
-**Phase B now carries a gate it did not have in v0.2.** The evidence-class
-assignment is the difference between an instrument that is independent and one
-that privileges its author's architecture.
+**The evidence-class machinery** ensures that the runner’s own claims about
+what evidence it has are structurally consistent — that is worth testing even
+before the scoring path exists.
 
 ### 8.1 Schedule, honestly
 
@@ -849,8 +850,8 @@ per R1.1.
 | D7.1 invocation rate with n | invocation.py | IMPLEMENTED |
 | D7.1b instruction removal | engine.py conditions | IMPLEMENTED |
 | D7.2(a) operand admissibility (i)-(iii) | provenance.py | IMPLEMENTED |
-| D7.2(a)(iv) computed in session | not built | NOT BUILT |
-| D7.2(b) operation correctness | operation_correctness.py | IMPLEMENTED, not wired |
+| D7.2(a)(iv) computed in session | provenance_classify.py | IMPLEMENTED |
+| D7.2(b) operation correctness | operation_correctness.py, engine.py | IMPLEMENTED |
 | D7.3 transcription | transcription.py | IMPLEMENTED |
 | D7.5 exact Clopper-Pearson bound | invocation.py | IMPLEMENTED |
 | D7.6 instruction disclosure | config.py, perturbation_guard.py | IMPLEMENTED |
