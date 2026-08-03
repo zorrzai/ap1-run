@@ -985,57 +985,58 @@ not an answer, and this is one additional question on a call already scheduled.
 *Would change if:* counsel identifies an interaction with the provisional
 portfolio, in which case MIT or BSD-3 without a patent grant is the fallback.
 
-**12.9 Module size constraint: 300 lines.**  Each instrument module (the `.py`
-files in `ap1-runner/` that implement R0–R3) is kept at or under 300 lines.
-Line counts are measured by `(Get-Content).Count` (total lines including blank
-lines), not `Measure-Object -Line` (which excludes blank lines and produces
-systematically lower numbers).
+**12.9 Module size constraint: ≤300 lines.**  Each instrument module (the
+`.py` files in `ap1-runner/` that implement R0–R3) is kept at or under 300
+lines.  The constraint is ≤300, not <300; a module at exactly 300 complies.
+This was stated explicitly when the counts were corrected on 2 August 2026.
+
+Line counts are measured by `(Get-Content).Count`, which counts every line
+including blank lines.  Earlier figures in this specification were measured by
+`Measure-Object -Line`, which excludes blank lines and produced systematically
+lower numbers.  Those figures were wrong and have been corrected.
 
 Test suites (`verify_*.py`, `run_all_tests.py`), demonstration tooling
 (`smoke_test.py`), and the example ground-truth module
 (`example/ground_truth_example.py`) are **not** instrument modules and are
 **excluded** from this constraint.
 
-**Instrument modules exceeding 300 lines** (measured 2 Aug 2026):
+**Declared exception — `report.py` (558 lines).**  `report.py` is a cohesive
+renderer with thirteen sections.  Fragmenting it would make the rendering flow
+harder to follow without improving auditability.  This exception is documented,
+not implicit.
 
-| Module | Lines | Disposition |
-|---|---|---|
-| `report.py` | 558 | **Stays.** Cohesive renderer with thirteen sections. Fragmenting it would make the rendering flow harder to follow without improving auditability. |
-| `provenance.py` | 548 | **Split planned.** To be split into `provenance.py` (resolution ladder), `provenance_sequential.py` (transitivity/classifications), and `provenance_audit.py` (originated-operand listing). Each must be ≤300 lines; all verify_r41.py and verify_phase_d.py tests must pass after the split. |
-| `numeric.py` | 303 | **3 lines over.** Marginal; to be trimmed to ≤300 in the next edit pass. |
-
-`engine.py` is exactly 300 lines — on the boundary, not exceeding.
+20 of 21 instrument modules comply.
 
 **12.10 File classification.**
 
-| File | Lines | Classification | Subject to 300-line constraint |
-|---|---|---|---|
-| `report.py` | 558 | Instrument module (excepted §12.9) | No |
-| `provenance.py` | 548 | Instrument module (split planned) | Yes |
-| `numeric.py` | 303 | Instrument module | Yes |
-| `engine.py` | 300 | Instrument module | Yes (at limit) |
-| `evidence.py` | 296 | Instrument module | Yes |
-| `operation_correctness.py` | 284 | Instrument module | Yes |
-| `adjudication.py` | 258 | Instrument module | Yes |
-| `seal.py` | 257 | Instrument module | Yes |
-| `config.py` | 212 | Instrument module | Yes |
-| `reproducibility.py` | 197 | Instrument module | Yes |
-| `figure_id.py` | 194 | Instrument module | Yes |
-| `adapter.py` | 180 | Instrument module | Yes |
-| `invocation.py` | 171 | Instrument module | Yes |
-| `accuracy.py` | 142 | Instrument module | Yes |
-| `perturbation.py` | 128 | Instrument module | Yes |
-| `context.py` | 121 | Instrument module | Yes |
-| `perturbation_guard.py` | 116 | Instrument module | Yes |
-| `transcription.py` | 110 | Instrument module | Yes |
-| `transcript.py` | 74 | Instrument module | Yes |
-| `smoke_test.py` | 612 | Demonstration tooling | No |
-| `example/ground_truth_example.py` | 576 | Example / demonstration | No |
-| `example/calculator_tool.py` | 209 | Example / demonstration | No |
-| `verify_*.py` | varies | Verification test suites | No |
-| `run_all_tests.py` | 196 | Test runner | No |
-| `output/mock_dry_run.py` | 275 | Development artifact (untracked) | No |
-| `output/test_adapter_mock.py` | 258 | Development artifact (untracked) | No |
+| File | Lines | Classification |
+|---|---|---|
+| `report.py` | 558 | Instrument module (excepted §12.9) |
+| `provenance.py` | 300 | Instrument module |
+| `provenance_classify.py` | 230 | Instrument module |
+| `provenance_audit.py` | 38 | Instrument module |
+| `numeric.py` | 300 | Instrument module |
+| `engine.py` | 300 | Instrument module |
+| `evidence.py` | 296 | Instrument module |
+| `operation_correctness.py` | 284 | Instrument module |
+| `adjudication.py` | 258 | Instrument module |
+| `seal.py` | 257 | Instrument module |
+| `config.py` | 212 | Instrument module |
+| `reproducibility.py` | 197 | Instrument module |
+| `figure_id.py` | 194 | Instrument module |
+| `adapter.py` | 180 | Instrument module |
+| `invocation.py` | 171 | Instrument module |
+| `accuracy.py` | 142 | Instrument module |
+| `perturbation.py` | 128 | Instrument module |
+| `context.py` | 121 | Instrument module |
+| `perturbation_guard.py` | 116 | Instrument module |
+| `transcription.py` | 110 | Instrument module |
+| `transcript.py` | 74 | Instrument module |
+| `smoke_test.py` | 612 | Demonstration tooling |
+| `example/ground_truth_example.py` | 576 | Example / demonstration |
+| `example/calculator_tool.py` | 209 | Example / demonstration |
+| `verify_*.py` | varies | Verification test suites |
+| `run_all_tests.py` | 196 | Test runner |
 
 **Research questions are not held in this document.** Those on which the field
 has no settled answer are put to reviewers in AP-1 v1.3 §14. The standard asks;

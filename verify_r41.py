@@ -29,10 +29,13 @@ from decimal import Decimal
 
 # -- Provenance imports ------------------------------------------------
 from provenance import (
-    extract_operands, resolve_operand, classify_invocation as classify_prov,
-    classify_item, build_audit_listing, TRANSFORMATIONS,
+    extract_operands, resolve_operand, TRANSFORMATIONS,
+)
+from provenance_classify import (
+    classify_invocation as classify_prov, classify_item,
     classify_invocations_sequential,
 )
+from provenance_audit import build_audit_listing
 from context import build_delivered_context
 
 # -- Figure identification imports ------------------------------------

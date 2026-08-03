@@ -169,9 +169,11 @@ def main():
     print()
 
     # Explanatory note
-    print('  Note: verify.py groups multiple checks per test function.')
-    print('  Running `pytest` directly reports 135 functions; this runner')
-    print('  reports both counts.')
+    print('  The "checks" column counts what each suite reports. verify.py')
+    print('  uses a check() counter and reports individual assertions; the')
+    print('  other suites report test-function outcomes. verify.py is the')
+    print('  only suite where checks and functions differ. Both columns are')
+    print('  shown so neither number is mistaken for the other.')
     print()
 
     # Detail for any failed suites
