@@ -1,0 +1,9 @@
+# The sealed standard text is byte-significant: its SHA-256 must match
+# the Zenodo deposit exactly. Git must never convert line endings in it.
+reference/** -text
+
+# Hygiene for everything else -- LF on all platforms.
+*.md   text eol=lf
+*.py   text eol=lf
+*.json text eol=lf
+*.yml  text eol=lf
