@@ -1012,7 +1012,7 @@ not implicit.
 
 | File | Lines | Classification |
 |---|---|---|
-| `report.py` | 629 | Instrument module (excepted §12.9) |
+| `report.py` | 642 | Instrument module (excepted §12.9) |
 | `provenance.py` | 300 | Instrument module |
 | `provenance_classify.py` | 230 | Instrument module |
 | `provenance_audit.py` | 38 | Instrument module |

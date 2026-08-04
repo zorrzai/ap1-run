@@ -318,6 +318,12 @@ def _section_scoring_proportions(summary):
         if total > 0:
             lines.append(f'- Auto-scored proportion: '
                          f'{auto}/{total} = {auto/total:.2%}')
+        rate = d1.get('accuracy_rate')
+        if rate is not None:
+            lines.append(f'- Accuracy rate: {rate} '
+                         f'(computed from {auto} auto-scored items only; '
+                         f'{adj} adjudicated items are not represented '
+                         f'in this rate)')
         lines.append('')
 
     d7 = summary.get('d7_results', {})
@@ -353,6 +359,10 @@ def _section_d2_mechanisms(summary):
     d2_cap = summary.get('d2_cap_reason')
     if d2_cap:
         lines.append(f'> **{d2_cap}**\n')
+        lines.append('> *The platform-rejection detail above is the verbatim '
+                     'error recorded during config setup. The rejection is '
+                     'model-independent: it applies to any model run under '
+                     'this config.*\n')
 
     lines.append('> D2 is auto-measured. STRUCTURAL and CONFIGURED are '
                  'operator-declared; OBSERVED-ONLY and UNMEASURED are '
@@ -594,8 +604,11 @@ def _format_dim_result(dim, data):
     """Format a dimension result for the table."""
     if dim == 'D1':
         rate = data.get('accuracy_rate')
+        auto = data.get('auto_scored_n', 0)
+        adj = data.get('adjudicated_n', 0)
         if rate is not None:
-            return f'Accuracy: {rate}'
+            return (f'Accuracy: {rate} '
+                    f'(auto-scored {auto}; {adj} adjudicated not in rate)')
         return 'No rate computed'
     elif dim == 'D2':
         return 'See §9 D2 Mechanism Classes'
