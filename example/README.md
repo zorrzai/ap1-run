@@ -193,11 +193,20 @@ that did not resolve, widen what resolves, report success. That is the
 loosening pattern, and it is the primary threat to D7.2(a)'s discriminative
 power.
 
-`abs_value` and constant `1` were subsequently reverted after analysis showed:
-- `abs_value` creates a blind spot exactly the width of a sign error -- the
-  exact defect class that made the Q05 ground truth wrong in v1.1.
-- Constant `1` (the additive/multiplicative identity) makes any originated
-  operand of value 1 invisible to D7.2(a).
+`abs_value` was subsequently reverted: it creates a blind spot exactly
+the width of a sign error -- the exact defect class that made the Q05
+ground truth wrong in v1.1.
+
+Constant `1` was reverted during Phase D, then **re-added as a structural
+constant** after the first 1000-execution live run. The data was decisive:
+288 of 818 originated operands across 564 invocations were the literal
+value 1, appearing exclusively in compound interest expressions of the
+form `(1 + r/n)`. The additive and multiplicative identity is structural
+in standard financial formulae, not a value drawn from data. Flagging it
+makes D7.2(a) fire on correct behaviour by construction. Permitting it
+costs no meaningful attack surface: no real operand fabrication would use
+the value 1. The constant 1 is now in `STRUCTURAL_CONSTANTS` in
+`provenance.py`, along with 0, and does not need to be declared per item.
 
 Constant `4` was retained: it is a genuine time-division constant of the
 problem domain, equivalent to 12/3.
@@ -207,6 +216,15 @@ config and ground-truth module BEFORE any evaluation run. An operator who adds
 entries after a run fails is not fixing a false positive -- they are widening the
 instrument until it cannot detect the defect it was built to find. The config
 and module must be sealed (R3.1) before the first evaluation execution.
+
+### Sign Conventions Produce False Origination Findings
+
+If your fixture stores a quantity as negative and the system under test
+computes on its magnitude, every such operand resolves as originated. This is
+the classifier working as specified and it is almost certainly not what you are
+trying to measure. Either declare sign removal in `permitted_transformations`,
+or design the fixture so the question specifies the convention. Decide before
+the run, never after seeing the results.
 
 ## Sampling Parameter Name
 

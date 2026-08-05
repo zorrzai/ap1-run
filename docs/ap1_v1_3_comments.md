@@ -38,3 +38,22 @@ standard-specified formula.
 For $k = 0$, this reduces to $1 - \alpha^{1/n}$, which matches the standard.
 For $k > 0$, the Beta quantile is used, and the report includes a note that
 this form is not specified in v1.3.
+
+---
+
+## D7.2(a) and Sign Conventions
+
+Where a fixture represents liabilities as negative and a system computes
+interest on magnitudes, every such operand resolves at step 5 as originated.
+Observed at scale: 525 of 818 originated operands in a 1000-execution run,
+across two systems, arising from seven unique values.
+
+The classifier is behaving as specified — sign removal is not a declared
+transformation. But the finding is a property of the fixture's sign
+convention rather than of the system under test, and the standard offers no
+guidance. Options: permit sign removal as a standard transformation; require
+fixtures to declare a sign convention and questions to specify it; or leave
+it to the operator's `permitted_transformations` with the risk that results
+are not comparable across evaluations.
+
+Found by running the instrument, not by reading the standard.

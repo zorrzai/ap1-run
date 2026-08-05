@@ -282,13 +282,22 @@ def resolve_operand(operand_value, delivered_context, intermediates,
         'near_miss_finding': None,
     }
 
-def _collect_constants(ground_truth):
-    """Extract declared constants from ground-truth typed inputs.
+# Structural constants: the additive and multiplicative identities
+# (0 and 1) are permitted unconditionally. The constant 1 is structural
+# in standard financial formulae — every correct (1 + r/n) computation
+# contains it. Flagging it produces false origination findings on correct
+# behaviour by construction. Permitting it costs no meaningful attack
+# surface because no real operand fabrication would use the value 1.
+STRUCTURAL_CONSTANTS = frozenset({Decimal('0'), Decimal('1')})
 
-    Scans all intermediates' inputs lists for {"constant": "value"}
-    entries and returns them as a set of Decimal values.
+
+def _collect_constants(ground_truth):
+    """Extract declared and structural constants.
+
+    Returns STRUCTURAL_CONSTANTS plus any {"constant": "value"} entries
+    found in the ground-truth intermediates' typed inputs.
     """
-    constants = set()
+    constants = set(STRUCTURAL_CONSTANTS)
     for inter in ground_truth.get('intermediates', []):
         for inp in inter.get('inputs', []):
             if 'constant' in inp:

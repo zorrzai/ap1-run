@@ -1001,19 +1001,26 @@ Test suites (`verify_*.py`, `run_all_tests.py`), demonstration tooling
 (`example/ground_truth_example.py`) are **not** instrument modules and are
 **excluded** from this constraint.
 
-**Declared exception — `report.py` (629 lines).**  `report.py` is a cohesive
+**Declared exception — `report.py` (642 lines).**  `report.py` is a cohesive
 renderer with thirteen sections.  Fragmenting it would make the rendering flow
 harder to follow without improving auditability.  This exception is documented,
 not implicit.
 
-20 of 21 instrument modules comply.
+**Declared exception — `provenance.py` (309 lines).**  The 9-line expansion
+adds `STRUCTURAL_CONSTANTS` (the additive and multiplicative identities 0 and
+1) to the provenance classifier.  These are structural in standard financial
+formulae and their addition was established by the first 1000-execution live
+run: 288 of 818 originated operands were the literal value 1.  The change is
+a module-level constant definition, not added logic.
+
+19 of 21 instrument modules comply.
 
 **12.10 File classification.**
 
 | File | Lines | Classification |
 |---|---|---|
 | `report.py` | 642 | Instrument module (excepted §12.9) |
-| `provenance.py` | 300 | Instrument module |
+| `provenance.py` | 309 | Instrument module (excepted §12.9) |
 | `provenance_classify.py` | 230 | Instrument module |
 | `provenance_audit.py` | 38 | Instrument module |
 | `numeric.py` | 300 | Instrument module |
