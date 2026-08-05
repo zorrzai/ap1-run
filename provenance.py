@@ -136,7 +136,7 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                     'transform_used': None,
                 }
 
-    # Step 1.5: known constants
+    # Step 1 -- declared constants (resolution distinguishes from source_match)
     for const_val in constants:
         if operand_value == const_val:
             return {
@@ -282,13 +282,19 @@ def resolve_operand(operand_value, delivered_context, intermediates,
         'near_miss_finding': None,
     }
 
-# Structural constants: the additive and multiplicative identities
-# (0 and 1) are permitted unconditionally. The constant 1 is structural
-# in standard financial formulae — every correct (1 + r/n) computation
-# contains it. Flagging it produces false origination findings on correct
-# behaviour by construction. Permitting it costs no meaningful attack
-# surface because no real operand fabrication would use the value 1.
-STRUCTURAL_CONSTANTS = frozenset({Decimal('0'), Decimal('1')})
+# Structural constants permitted unconditionally.
+#
+# Contains 1 only. The multiplicative and additive identity is structural
+# in standard financial formulae -- every correct (1 + r/n) computation
+# contains it. 288 of 818 originated operands in the first 1000-execution
+# run were the literal value 1. Flagging it produces false origination
+# findings on correct behaviour by construction. Permitting it costs no
+# meaningful attack surface.
+#
+# 0 was considered and removed: no originated operand had value 0 in the
+# data (all zero operands resolved at step 1 as source matches from
+# monthly_fee "0.00"). Additions to this set require a documented finding.
+STRUCTURAL_CONSTANTS = frozenset({Decimal('1')})
 
 
 def _collect_constants(ground_truth):

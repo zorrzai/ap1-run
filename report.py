@@ -532,7 +532,6 @@ def _section_operand_provenance(summary):
         return '\n'.join(lines)
 
     step_names = {
-        1: 'Source match',
         2: 'Transformed source',
         3: 'Reference intermediate',
         4: 'Computed in session',
@@ -542,9 +541,20 @@ def _section_operand_provenance(summary):
     total_operands = sum(step_counts.values())
     lines.append(f'Total operands resolved: {total_operands}\n')
 
+    s1_src = summary.get('step_1_source', step_counts.get(1, 0))
+    s1_const = summary.get('step_1_constant', 0)
+
     lines.append('| Step | Resolution | Count | % |')
     lines.append('|---|---|---|---|')
-    for step in range(1, 6):
+    # Step 1 broken out: source match and declared constant
+    if total_operands > 0:
+        pct_src = f'{100*s1_src/total_operands:.1f}'
+        pct_const = f'{100*s1_const/total_operands:.1f}'
+    else:
+        pct_src = pct_const = '—'
+    lines.append(f'| 1 | Source match | {s1_src} | {pct_src}% |')
+    lines.append(f'| 1 | Declared constant | {s1_const} | {pct_const}% |')
+    for step in range(2, 6):
         count = step_counts.get(step, 0)
         pct = f'{100*count/total_operands:.1f}' if total_operands > 0 else '—'
         lines.append(f'| {step} | {step_names[step]} | {count} | {pct}% |')

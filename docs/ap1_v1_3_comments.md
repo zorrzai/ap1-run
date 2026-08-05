@@ -57,3 +57,22 @@ it to the operator's `permitted_transformations` with the risk that results
 are not comparable across evaluations.
 
 Found by running the instrument, not by reading the standard.
+
+
+---
+
+## D7.2(a) and Declared Constants
+
+The five-step ladder has no place for a constant declared in the ground-truth
+module — 12 for months, 3 for a quarter, 100 for percentage conversion, 1 as
+the multiplicative identity in compound-interest form. Every such operand
+would otherwise resolve at step 5 as originated, and in a 1000-execution run
+288 of 818 originated operands were the constant 1 alone.
+
+The reference implementation resolves them at step 1 as authoritative by
+declaration. The standard should say whether that is correct, whether
+constants warrant their own step, and whether the permitted set should be
+bounded — an operator adding constants until a run passes is the failure
+mode.
+
+Found by running the instrument.

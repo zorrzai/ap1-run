@@ -241,6 +241,32 @@ def test_d7_2a_operand_admissibility():
     check('D7.2a-step5-originated', res['step'] == 5,
           f'expected step 5, got {res["step"]}')
 
+    # Step 1 declared constant: resolves at step 1 with resolution 'constant'
+    from provenance import STRUCTURAL_CONSTANTS
+    const_set = set(STRUCTURAL_CONSTANTS) | constants
+    res = resolve_operand(Decimal('1'), ctx, intermediates,
+                          const_set, transforms, quant)
+    check('D7.2a-step1-constant-step', res['step'] == 1,
+          f'declared constant should resolve at step 1, got {res["step"]}')
+    check('D7.2a-step1-constant-resolution',
+          res.get('resolution') == 'constant',
+          f'declared constant resolution should be "constant", '
+          f'got "{res.get("resolution")}"')
+
+    # Ladder completeness: every step value is in {1, 2, 3, 4, 5}
+    VALID_STEPS = {1, 2, 3, 4, 5}
+    for test_val, expected_step in [
+        (Decimal('15200'), 1),   # source match
+        (Decimal('1'), 1),       # constant
+        (Decimal('1000'), 3),    # intermediate
+        (Decimal('99999'), 5),   # originated
+    ]:
+        res = resolve_operand(test_val, ctx, intermediates,
+                              const_set, transforms, quant)
+        step = res.get('step')
+        check(f'D7.2a-ladder-valid-step-{step}', step in VALID_STEPS,
+              f'step {step} not in valid set {VALID_STEPS}')
+
 
 # =====================================================================
 # D7.2(a)(iv) — Computed in session

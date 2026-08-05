@@ -548,7 +548,8 @@ each numeric argument by whether it traces to an authoritative source.
 **Interface Contract.** For each numeric argument, in order:
 
 1. **Source match** — **exactly equals**, at full Decimal precision, a fixture
-   field value present in the item's delivered context.
+   field value present in the item’s delivered context, **or** is a declared
+   constant from the sealed ground-truth module or `STRUCTURAL_CONSTANTS`.
 2. **Transformed source** — exactly equals a fixture value under a
    transformation named in `permitted_transformations`.
 3. **Reference intermediate** — exactly equals an intermediate produced by the
@@ -589,6 +590,18 @@ transformation or an alteration. A tolerance would silently admit originated
 values falling near a source value — the precise failure being measured.
 Tolerance belongs to answer comparison, where it expresses acceptable
 imprecision in a result; it does not belong to identity matching.
+
+**Declared constants and structural constants (interpretation).**  Declared
+constants resolve at step 1 with resolution `constant`.  AP-1 v1.3 D7.2(a)
+does not address declared constants: its step (i) covers values present in
+the delivered source data, and a constant is not.  This implementation treats
+a constant declared in the sealed ground-truth module as authoritative by
+declaration and resolves it at step 1, distinguished by the resolution field.
+This is an interpretation, not a requirement of the standard, and it is filed
+for the comment window.  `STRUCTURAL_CONSTANTS` contains the value 1 only —
+the multiplicative and additive identity, structural in standard financial
+formulae.  The report renders step 1 as two lines (source match and declared
+constant) so the proportion resting on the constant list is visible.
 
 **Why step 3 exists, and why a membership check alone is invalid.** A
 legitimate intermediate appears nowhere in the source by construction. A
@@ -1001,12 +1014,12 @@ Test suites (`verify_*.py`, `run_all_tests.py`), demonstration tooling
 (`example/ground_truth_example.py`) are **not** instrument modules and are
 **excluded** from this constraint.
 
-**Declared exception — `report.py` (642 lines).**  `report.py` is a cohesive
+**Declared exception — `report.py` (652 lines).**  `report.py` is a cohesive
 renderer with thirteen sections.  Fragmenting it would make the rendering flow
 harder to follow without improving auditability.  This exception is documented,
 not implicit.
 
-**Declared exception — `provenance.py` (309 lines).**  The 9-line expansion
+**Declared exception — `provenance.py` (315 lines).**  The 9-line expansion
 adds `STRUCTURAL_CONSTANTS` (the additive and multiplicative identities 0 and
 1) to the provenance classifier.  These are structural in standard financial
 formulae and their addition was established by the first 1000-execution live
@@ -1019,8 +1032,8 @@ a module-level constant definition, not added logic.
 
 | File | Lines | Classification |
 |---|---|---|
-| `report.py` | 642 | Instrument module (excepted §12.9) |
-| `provenance.py` | 309 | Instrument module (excepted §12.9) |
+| `report.py` | 652 | Instrument module (excepted §12.9) |
+| `provenance.py` | 315 | Instrument module (excepted §12.9) |
 | `provenance_classify.py` | 230 | Instrument module |
 | `provenance_audit.py` | 38 | Instrument module |
 | `numeric.py` | 300 | Instrument module |
@@ -1040,7 +1053,7 @@ a module-level constant definition, not added logic.
 | `perturbation_guard.py` | 116 | Instrument module |
 | `transcription.py` | 110 | Instrument module |
 | `transcript.py` | 74 | Instrument module |
-| `smoke_test.py` | 854 | Demonstration tooling |
+| `smoke_test.py` | 867 | Demonstration tooling |
 | `example/ground_truth_example.py` | 576 | Example / demonstration |
 | `example/calculator_tool.py` | 209 | Example / demonstration |
 | `verify_*.py` | varies | Verification test suites |

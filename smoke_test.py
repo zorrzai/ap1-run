@@ -260,6 +260,8 @@ def _build_summary(all_results, evidence_findings, *,
 
     # Operand provenance step counts (D7.2(a))
     step_counts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
+    step_1_source = 0
+    step_1_constant = 0
     prov_outcomes = {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0}
     originated_audit = []
     for r in all_results:
@@ -273,6 +275,11 @@ def _build_summary(all_results, evidence_findings, *,
                 step = res.get('step')
                 if step in step_counts:
                     step_counts[step] += 1
+                if step == 1:
+                    if res.get('resolution') == 'constant':
+                        step_1_constant += 1
+                    else:
+                        step_1_source += 1
             for orig in prov.get('originated_operands', []):
                 originated_audit.append({
                     'item_id': r.get('item_id'),
@@ -280,6 +287,8 @@ def _build_summary(all_results, evidence_findings, *,
                     **orig,
                 })
     summary['operand_step_counts'] = step_counts
+    summary['step_1_source'] = step_1_source
+    summary['step_1_constant'] = step_1_constant
     summary['provenance_outcomes'] = prov_outcomes
     summary['originated_operand_audit'] = originated_audit
 
@@ -766,10 +775,14 @@ def main():
     # 3l. Operand provenance step counts
     print(f'\n3l. D7.2(a) OPERAND PROVENANCE:')
     step_counts = summary.get('operand_step_counts', {})
-    step_names = {1: 'source match', 2: 'transformed source',
+    s1_src = summary.get('step_1_source', 0)
+    s1_const = summary.get('step_1_constant', 0)
+    step_names = {2: 'transformed source',
                   3: 'reference intermediate', 4: 'computed in session',
                   5: 'originated'}
-    for step in range(1, 6):
+    print(f'  step 1 (source match):       {s1_src}')
+    print(f'  step 1 (declared constant):  {s1_const}')
+    for step in range(2, 6):
         print(f'  step {step} ({step_names[step]}): {step_counts.get(step, 0)}')
     prov_out = summary.get('provenance_outcomes', {})
     print(f'  OPERANDS-GROUNDED: {prov_out.get("OPERANDS-GROUNDED", 0)}')
