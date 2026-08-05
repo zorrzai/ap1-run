@@ -92,7 +92,7 @@ def derive_q02(ctx):
     limit = D(ctx["credit_card"]["credit_limit"])
     balance = D(ctx["credit_card"]["balance"])
 
-    available = limit + balance  # balance is negative
+    available = limit - balance  # balance is positive magnitude; subtract for available
 
     return {
         "final": available,
@@ -102,7 +102,7 @@ def derive_q02(ctx):
             {
                 "label": "available_credit",
                 "value": available,
-                "operation": "add",
+                "operation": "subtract",
                 "inputs": [
                     {"source": "credit_card.credit_limit"},
                     {"source": "credit_card.balance"},
@@ -120,7 +120,7 @@ def derive_q03(ctx):
     balance = D(ctx["credit_card"]["balance"])
     rate = D(ctx["credit_card"]["annual_rate"])
 
-    monthly_interest = abs(balance) * rate / D("100") / D("12")
+    monthly_interest = balance * rate / D("100") / D("12")
 
     return {
         "final": monthly_interest,
@@ -151,7 +151,7 @@ def derive_q04(ctx):
     rate = D(ctx["mortgage"]["annual_rate"])
     payment = D(ctx["mortgage"]["min_payment"])
 
-    monthly_interest = abs(balance) * rate / D("100") / D("12")
+    monthly_interest = balance * rate / D("100") / D("12")
     principal = payment - monthly_interest
 
     return {
@@ -193,8 +193,10 @@ def derive_q05(ctx):
     rate = D(ctx["credit_card"]["annual_rate"])
     min_pay = D(ctx["credit_card"]["min_payment"])
 
-    monthly_interest = abs(balance) * rate / D("100") / D("12")
-    new_balance = balance - monthly_interest + min_pay
+    monthly_interest = balance * rate / D("100") / D("12")
+    # Balance is positive magnitude of a liability.
+    # New magnitude = old + interest - payment. Reported as negative.
+    new_balance = -(balance + monthly_interest - min_pay)
 
     return {
         "final": new_balance,
@@ -215,7 +217,7 @@ def derive_q05(ctx):
             {
                 "label": "new_balance",
                 "value": new_balance,
-                "operation": "add_subtract",
+                "operation": "sign_from_direction",
                 "inputs": [
                     {"source": "credit_card.balance"},
                     {"intermediate": "monthly_interest"},
@@ -330,9 +332,9 @@ def derive_q08(ctx):
     rate = D(ctx["mortgage"]["annual_rate"])
     payment = D(ctx["mortgage"]["min_payment"])
 
-    monthly_interest = abs(balance) * rate / D("100") / D("12")
+    monthly_interest = balance * rate / D("100") / D("12")
     principal = payment - monthly_interest
-    remaining = abs(balance) - principal
+    remaining = balance - principal
 
     return {
         "final": remaining,

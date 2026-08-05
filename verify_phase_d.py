@@ -51,10 +51,10 @@ MINI_FIXTURE = {
         {'id': 'savings', 'name': 'Savings',
          'balance': '15200.00', 'annual_rate': '1.2'},
         {'id': 'credit_card', 'name': 'Credit Card',
-         'balance': '-2400.00', 'annual_rate': '18.0',
+         'balance': '2400.00', 'direction': 'liability', 'annual_rate': '18.0',
          'credit_limit': '5000.00', 'min_payment': '25.00'},
         {'id': 'mortgage', 'name': 'Mortgage',
-         'balance': '-287500.00', 'annual_rate': '4.20',
+         'balance': '287500.00', 'direction': 'liability', 'annual_rate': '4.20',
          'min_payment': '1437.00'},
         {'id': 'checking', 'name': 'Checking',
          'balance': '3200.00', 'monthly_fee': '12.00'},
@@ -337,7 +337,7 @@ def test_d10_abs_without_transform_is_originated():
     """Without abs_value in permitted_transformations, abs(source) is ORIGINATED.
 
     This is the CORRECT behaviour after the abs_value revert: the model
-    originated a positive value from a negative source. The blind spot
+    originated a sign-flipped value from a positive source. The blind spot
     (sign-bit width) is not acceptable as a default.
     """
     ctx = build_delivered_context(MINI_FIXTURE, ['credit_card'])
@@ -353,15 +353,16 @@ def test_d10_abs_without_transform_is_originated():
             ],
         }],
     }
-    # Expression uses 2400 (abs of -2400). Without abs_value transform,
-    # this should be ORIGINATED.
+    # With positive magnitudes, 2400 IS in source. Test with -2400 instead:
+    # sign-flipping a positive source value without a declared transformation
+    # is ORIGINATED.
     result = classify_invocation(
-        '2400 * 18 / 100 / 12', ctx, ground_truth, MINI_CONFIG)
+        '-2400 * 18 / 100 / 12', ctx, ground_truth, MINI_CONFIG)
     assert result['outcome'] == 'OPERAND-ORIGINATED', \
         f'expected OPERAND-ORIGINATED, got {result["outcome"]}'
     originated_vals = [o['value'] for o in result['originated_operands']]
-    assert '2400' in originated_vals, \
-        f'2400 should be originated, got {originated_vals}'
+    assert '-2400' in originated_vals, \
+        f'-2400 should be originated, got {originated_vals}'
     return True
 
 

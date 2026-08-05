@@ -37,8 +37,8 @@ def test_t2_wrong_expression_q01():
     return True
 
 def test_t3_intermediate_match_q04():
-    ctx = {'mortgage': {'balance': '-287500.00', 'annual_rate': '4.20',
-                        'min_payment': '1437.00'}}
+    ctx = {'mortgage': {'balance': '287500.00', 'direction': 'liability',
+                        'annual_rate': '4.20', 'min_payment': '1437.00'}}
     gt = compute('Q04', ctx)
     r = classify_operation('287500 * 4.2 / 100 / 12', gt, MINI_CONFIG)
     assert r['outcome'] == OPERATION_CORRECT
@@ -59,10 +59,11 @@ def test_t5_empty():
     return True
 
 def test_t6_correct_expression_q02():
-    ctx = {'credit_card': {'credit_limit': '5000.00', 'balance': '-2400.00',
-                           'annual_rate': '18.0', 'min_payment': '25.00'}}
+    ctx = {'credit_card': {'credit_limit': '5000.00', 'balance': '2400.00',
+                           'direction': 'liability', 'annual_rate': '18.0',
+                           'min_payment': '25.00'}}
     gt = compute('Q02', ctx)
-    r = classify_operation('5000 + (-2400)', gt, MINI_CONFIG)
+    r = classify_operation('5000 - 2400', gt, MINI_CONFIG)
     assert r['outcome'] == OPERATION_CORRECT
     return True
 
@@ -85,8 +86,8 @@ def test_t9_q08_gpt41mini_wrong_operation():
     # Expression: '-287500.00 + 1437.00'
     # Model computed balance + payment, omitting the interest step.
     # Evaluates to -286063.00; expected is 287069.25.
-    ctx = {'mortgage': {'balance': '-287500.00', 'annual_rate': '4.20',
-                        'min_payment': '1437.00'}}
+    ctx = {'mortgage': {'balance': '287500.00', 'direction': 'liability',
+                        'annual_rate': '4.20', 'min_payment': '1437.00'}}
     gt = compute('Q08', ctx)
     expr = '-287500.00 + 1437.00'
     r = classify_operation(expr, gt, MINI_CONFIG)

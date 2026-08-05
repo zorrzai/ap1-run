@@ -1054,7 +1054,7 @@ a module-level constant definition, not added logic.
 | `transcription.py` | 110 | Instrument module |
 | `transcript.py` | 74 | Instrument module |
 | `smoke_test.py` | 867 | Demonstration tooling |
-| `example/ground_truth_example.py` | 576 | Example / demonstration |
+| `example/ground_truth_example.py` | 578 | Example / demonstration |
 | `example/calculator_tool.py` | 209 | Example / demonstration |
 | `verify_*.py` | varies | Verification test suites |
 | `run_all_tests.py` | 200 | Test runner |

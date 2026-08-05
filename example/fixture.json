@@ -1,12 +1,14 @@
 {
-    "fixture_version": "1.0.0",
+    "fixture_version": "1.1.0",
     "domain": "personal_finance",
     "description": "Five personal-finance accounts with original values. Nothing copied or adapted from any evaluation profile.",
+    "amount_convention": "All balance fields are positive magnitudes. The direction field carries the sign: 'asset' (positive reported balance) or 'liability' (negative reported balance). Interest computations operate on the magnitude directly. A reported balance takes its sign from the direction field.",
     "accounts": [
         {
             "id": "savings",
             "name": "Savings Account",
             "balance": "15200.00",
+            "direction": "asset",
             "annual_rate": "1.2",
             "monthly_fee": "0.00"
         },
@@ -14,13 +16,15 @@
             "id": "checking",
             "name": "Checking Account",
             "balance": "4850.00",
+            "direction": "asset",
             "annual_rate": "0.0",
             "monthly_fee": "12.00"
         },
         {
             "id": "credit_card",
             "name": "Credit Card",
-            "balance": "-2400.00",
+            "balance": "2400.00",
+            "direction": "liability",
             "annual_rate": "18.0",
             "monthly_fee": "0.00",
             "credit_limit": "5000.00",
@@ -30,7 +34,8 @@
         {
             "id": "mortgage",
             "name": "Mortgage",
-            "balance": "-287500.00",
+            "balance": "287500.00",
+            "direction": "liability",
             "annual_rate": "4.20",
             "monthly_fee": "0.00",
             "min_payment": "1437.00"
@@ -39,9 +44,9 @@
             "id": "investment",
             "name": "Investment Account",
             "balance": "42175.00",
+            "direction": "asset",
             "annual_rate": "7.8",
             "monthly_fee": "15.00"
         }
-    ],
-    "sign_convention": "Liabilities (credit_card, mortgage) are represented as negative balances. A reported balance carries that sign. Magnitudes used inside interest computations are absolute values of the balance and do not carry the sign."
+    ]
 }
