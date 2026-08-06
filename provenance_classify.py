@@ -62,6 +62,7 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
                 'literal': op_literal,
                 'expression': expression_str,
                 'resolution': res['resolution'],
+                'sign_inversion_finding': res.get('sign_inversion_finding'),
             })
 
         if res.get('quantisation_finding'):

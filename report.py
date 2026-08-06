@@ -535,7 +535,6 @@ def _section_operand_provenance(summary):
         2: 'Transformed source',
         3: 'Reference intermediate',
         4: 'Computed in session',
-        5: 'Originated',
     }
 
     total_operands = sum(step_counts.values())
@@ -554,10 +553,20 @@ def _section_operand_provenance(summary):
         pct_src = pct_const = '—'
     lines.append(f'| 1 | Source match | {s1_src} | {pct_src}% |')
     lines.append(f'| 1 | Declared constant | {s1_const} | {pct_const}% |')
-    for step in range(2, 6):
+    for step in range(2, 5):
         count = step_counts.get(step, 0)
         pct = f'{100*count/total_operands:.1f}' if total_operands > 0 else '—'
         lines.append(f'| {step} | {step_names[step]} | {count} | {pct}% |')
+    # Step 5 split: sign-inverted vs untraceable
+    s5_si = summary.get('step_5_sign_inverted', 0)
+    s5_ut = summary.get('step_5_untraceable', 0)
+    if total_operands > 0:
+        pct_si = f'{100*s5_si/total_operands:.1f}'
+        pct_ut = f'{100*s5_ut/total_operands:.1f}'
+    else:
+        pct_si = pct_ut = '—'
+    lines.append(f'| 5 | Originated, sign-inverted from source | {s5_si} | {pct_si}% |')
+    lines.append(f'| 5 | Originated, no traceable basis | {s5_ut} | {pct_ut}% |')
 
     lines.append('')
 

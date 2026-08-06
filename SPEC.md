@@ -1014,12 +1014,12 @@ Test suites (`verify_*.py`, `run_all_tests.py`), demonstration tooling
 (`example/ground_truth_example.py`) are **not** instrument modules and are
 **excluded** from this constraint.
 
-**Declared exception — `report.py` (652 lines).**  `report.py` is a cohesive
+**Declared exception — `report.py` (661 lines).**  `report.py` is a cohesive
 renderer with thirteen sections.  Fragmenting it would make the rendering flow
 harder to follow without improving auditability.  This exception is documented,
 not implicit.
 
-**Declared exception — `provenance.py` (315 lines).**  The 9-line expansion
+**Declared exception — `provenance.py` (346 lines).**  The 9-line expansion
 adds `STRUCTURAL_CONSTANTS` (the additive and multiplicative identities 0 and
 1) to the provenance classifier.  These are structural in standard financial
 formulae and their addition was established by the first 1000-execution live
@@ -1032,9 +1032,9 @@ a module-level constant definition, not added logic.
 
 | File | Lines | Classification |
 |---|---|---|
-| `report.py` | 652 | Instrument module (excepted §12.9) |
-| `provenance.py` | 315 | Instrument module (excepted §12.9) |
-| `provenance_classify.py` | 230 | Instrument module |
+| `report.py` | 661 | Instrument module (excepted §12.9) |
+| `provenance.py` | 346 | Instrument module (excepted §12.9) |
+| `provenance_classify.py` | 231 | Instrument module |
 | `provenance_audit.py` | 38 | Instrument module |
 | `numeric.py` | 300 | Instrument module |
 | `engine.py` | 299 | Instrument module |
@@ -1053,7 +1053,7 @@ a module-level constant definition, not added logic.
 | `perturbation_guard.py` | 116 | Instrument module |
 | `transcription.py` | 110 | Instrument module |
 | `transcript.py` | 74 | Instrument module |
-| `smoke_test.py` | 867 | Demonstration tooling |
+| `smoke_test.py` | 879 | Demonstration tooling |
 | `example/ground_truth_example.py` | 578 | Example / demonstration |
 | `example/calculator_tool.py` | 209 | Example / demonstration |
 | `verify_*.py` | varies | Verification test suites |

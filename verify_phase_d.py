@@ -757,6 +757,74 @@ def test_d23_unobservable_prior():
 
 # -- Runner ----------------------------------------------------------------
 
+
+def test_d24_sign_inversion_finding_recorded():
+    """Operand = -source_value: ORIGINATED with SIGN-INVERSION finding.
+
+    The classification is unchanged (ORIGINATED), but the finding records
+    that the operand equals the arithmetic negation of a source value.
+    """
+    ctx = build_delivered_context(MINI_FIXTURE, ['checking'])
+    ground_truth = {
+        'intermediates': [{
+            'label': 'monthly_fee',
+            'value': Decimal('12'),
+            'inputs': [{'source': 'checking.monthly_fee'}],
+        }],
+    }
+    # -12 is the negation of checking.monthly_fee (12.00)
+    result = classify_invocation(
+        '-12', ctx, ground_truth, MINI_CONFIG)
+    assert result['outcome'] == 'OPERAND-ORIGINATED', \
+        f'expected OPERAND-ORIGINATED, got {result["outcome"]}'
+    # Check the operand resolution has a sign_inversion_finding
+    ops = result['operand_resolutions']
+    assert len(ops) == 1, f'expected 1 operand, got {len(ops)}'
+    sif = ops[0].get('sign_inversion_finding')
+    assert sif is not None, 'sign_inversion_finding should be present'
+    assert sif['type'] == 'SIGN-INVERSION', f'expected SIGN-INVERSION, got {sif["type"]}'
+    assert sif['matched_field'] == 'checking.monthly_fee', \
+        f'expected checking.monthly_fee, got {sif["matched_field"]}'
+    assert sif['source_value'] == '12.00', \
+        f'expected source 12.00, got {sif["source_value"]}'
+    # Check originated_operands also carries the finding
+    orig = result['originated_operands']
+    assert len(orig) == 1, f'expected 1 originated, got {len(orig)}'
+    assert orig[0].get('sign_inversion_finding') is not None, \
+        'originated_operands should carry sign_inversion_finding'
+    return True
+
+
+def test_d25_untraceable_no_sign_inversion():
+    """Operand not in source or its negation: ORIGINATED with no finding.
+
+    sign_inversion_finding is None -- the operand has no traceable basis.
+    """
+    ctx = build_delivered_context(MINI_FIXTURE, ['savings'])
+    ground_truth = {
+        'intermediates': [{
+            'label': 'monthly_interest',
+            'value': Decimal('15.2'),
+            'inputs': [
+                {'source': 'savings.balance'},
+                {'source': 'savings.annual_rate'},
+                {'constant': '100'},
+                {'constant': '12'},
+            ],
+        }],
+    }
+    # 99999 matches nothing in source or as a negation
+    result = classify_invocation(
+        '99999', ctx, ground_truth, MINI_CONFIG)
+    assert result['outcome'] == 'OPERAND-ORIGINATED', \
+        f'expected OPERAND-ORIGINATED, got {result["outcome"]}'
+    ops = result['operand_resolutions']
+    assert len(ops) == 1, f'expected 1 operand, got {len(ops)}'
+    sif = ops[0].get('sign_inversion_finding')
+    assert sif is None, f'sign_inversion_finding should be None for untraceable, got {sif}'
+    return True
+
+
 ALL_TESTS = [
     test_d1_transposed_operand_originated,
     test_d2_chained_intermediates_grounded,
@@ -781,6 +849,8 @@ ALL_TESTS = [
     test_d21_prior_returns_none_backward_compat,
     test_d22_origination_laundering_mandatory,
     test_d23_unobservable_prior,
+    test_d24_sign_inversion_finding_recorded,
+    test_d25_untraceable_no_sign_inversion,
 ]
 
 

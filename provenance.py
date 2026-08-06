@@ -134,6 +134,7 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                     'matched_intermediate': None,
                     'quantisation_finding': False,
                     'transform_used': None,
+                    'sign_inversion_finding': None,
                 }
 
     # Step 1 -- declared constants (resolution distinguishes from source_match)
@@ -146,6 +147,7 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                 'matched_intermediate': None,
                 'quantisation_finding': False,
                 'transform_used': None,
+                'sign_inversion_finding': None,
             }
 
     # Step 2: transformed source
@@ -168,6 +170,7 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                         'matched_intermediate': None,
                         'quantisation_finding': False,
                         'transform_used': tname,
+                        'sign_inversion_finding': None,
                     }
 
     # Step 3: reference intermediate
@@ -188,6 +191,7 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                 'matched_intermediate': inter['label'],
                 'quantisation_finding': False,
                 'transform_used': None,
+                'sign_inversion_finding': None,
             }
 
         # 3b: intermediate under permitted transformation
@@ -203,6 +207,7 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                     'matched_intermediate': inter['label'],
                     'quantisation_finding': False,
                     'transform_used': tname,
+                    'sign_inversion_finding': None,
                 }
 
         # 3c: quantised intermediate
@@ -218,6 +223,7 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                     'matched_intermediate': inter['label'],
                     'quantisation_finding': True,
                     'transform_used': None,
+                    'sign_inversion_finding': None,
                 }
 
     # Step 4: computed in session (D7.2(a)(iv))
@@ -233,6 +239,7 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                         'quantisation_finding': False,
                         'transform_used': None,
                         'near_miss_finding': None,
+                        'sign_inversion_finding': None,
                     }
                 else:
                     # Prior invocation was not grounded -> force originated
@@ -244,6 +251,7 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                         'quantisation_finding': False,
                         'transform_used': None,
                         'near_miss_finding': None,
+                        'sign_inversion_finding': None,
                     }
 
         # Near-miss detection: prior return matches only after quantisation.
@@ -269,9 +277,31 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                             'operand': str(operand_value),
                             'grounded': pr['grounded'],
                         },
+                        'sign_inversion_finding': None,
                     }
 
-    # Step 5: originated
+    # Step 5: originated -- with sign-inversion detection.
+    # Check whether the operand equals the arithmetic negation of any
+    # value in the delivered context. The outcome stays ORIGINATED;
+    # only the finding distinguishes sign-inversion from untraceable.
+    sign_inversion_finding = None
+    for acct_id, acct_data in delivered_context.items():
+        for field_name, field_value in acct_data.items():
+            try:
+                source_val = Decimal(str(field_value))
+            except (InvalidOperation, ValueError):
+                continue
+            if source_val != Decimal('0') and operand_value == -source_val:
+                sign_inversion_finding = {
+                    'type': 'SIGN-INVERSION',
+                    'matched_field': f'{acct_id}.{field_name}',
+                    'source_value': str(source_val),
+                    'operand_value': str(operand_value),
+                }
+                break
+        if sign_inversion_finding:
+            break
+
     return {
         'step': 5,
         'resolution': 'originated',
@@ -280,6 +310,7 @@ def resolve_operand(operand_value, delivered_context, intermediates,
         'quantisation_finding': False,
         'transform_used': None,
         'near_miss_finding': None,
+        'sign_inversion_finding': sign_inversion_finding,
     }
 
 # Structural constants permitted unconditionally.

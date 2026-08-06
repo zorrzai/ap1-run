@@ -41,23 +41,58 @@ this form is not specified in v1.3.
 
 ---
 
-## D7.2(a) and Sign Conventions
+## D7.2(a) and Sign Inversion
 
-Where a fixture represents liabilities as negative and a system computes
-interest on magnitudes, every such operand resolves at step 5 as originated.
-Observed at scale: 525 of 818 originated operands in a 1000-execution run,
-across two systems, arising from seven unique values.
+An operand equal to the arithmetic negation of a source value has a traceable
+basis but does not match any resolution step, and falls to step 5 alongside
+genuinely untraceable values. The standard classifies both identically.
 
-The classifier is behaving as specified — sign removal is not a declared
-transformation. But the finding is a property of the fixture's sign
-convention rather than of the system under test, and the standard offers no
-guidance. Options: permit sign removal as a standard transformation; require
-fixtures to declare a sign convention and questions to specify it; or leave
-it to the operator's `permitted_transformations` with the risk that results
-are not comparable across evaluations.
+Two mechanisms produce it. A fixture encoding direction inside a magnitude —
+removable by representing magnitude and direction separately, consistent with
+PDS4. And a system expressing subtraction as addition of a negative,
+`a + (-b)` rather than `a - b` — which no fixture design removes, because the
+source field is correctly positive.
 
-Found by running the instrument, not by reading the standard.
+Measured: in a 100-execution validation run against a restructured fixture
+(positive magnitudes, explicit direction field), 8 of 476 operands resolved
+at step 5, all 8 sign inversions of a positive source value, none
+untraceable. The reference implementation records SIGN-INVERSION as a finding
+alongside the outcome without altering the classification.
 
+A standard measuring numerical admissibility should say whether sign
+inversion warrants its own outcome. Adding one changes the ladder, which
+under §0.4 makes a successor protocol, so it is raised as a proposal for
+AP-2 rather than for v1.3.
+
+Found by running the instrument. The fixture-convention mechanism was
+identified first (524 of 530 step-5 operands in the original fixture);
+the expression-style mechanism survived the fixture restructure and
+constitutes the irreducible case.
+
+
+---
+
+## Fixture Revision Invalidates Prior Runs
+
+§5.8 states that a question set is burned once run, but says nothing about
+what a fixture revision does to prior results. Transcripts are not portable
+across fixture revisions: a system that received a signed balance and
+submitted a signed operand will score as originated when that transcript is
+scored against a fixture declaring the unsigned magnitude. The transcript
+reflects the context the system received, not the context the fixture now
+declares.
+
+Measured: the original fixture used negative balances for liabilities
+(`credit_card.balance = "-2400.00"`). The restructured fixture uses positive
+magnitudes (`balance = "2400.00"`, `direction = "liability"`). Attempting to
+re-score the original transcripts against the restructured fixture produced
+invalid figures because the resolver does not implement step 4 (computed in
+session) and the operand values reflected the old sign convention.
+
+An evaluation that revises its fixture must re-execute rather than re-score.
+The standard should state this.
+
+Found by attempting to re-score transcripts after a fixture restructure.
 
 ---
 
