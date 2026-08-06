@@ -557,15 +557,18 @@ def _section_operand_provenance(summary):
         count = step_counts.get(step, 0)
         pct = f'{100*count/total_operands:.1f}' if total_operands > 0 else '—'
         lines.append(f'| {step} | {step_names[step]} | {count} | {pct}% |')
-    # Step 5 split: sign-inverted vs untraceable
+    # Step 5 split: sign-inverted, ungrounded-chain, untraceable
     s5_si = summary.get('step_5_sign_inverted', 0)
+    s5_uc = summary.get('step_5_ungrounded_chain', 0)
     s5_ut = summary.get('step_5_untraceable', 0)
     if total_operands > 0:
         pct_si = f'{100*s5_si/total_operands:.1f}'
+        pct_uc = f'{100*s5_uc/total_operands:.1f}'
         pct_ut = f'{100*s5_ut/total_operands:.1f}'
     else:
-        pct_si = pct_ut = '—'
+        pct_si = pct_uc = pct_ut = '—'
     lines.append(f'| 5 | Originated, sign-inverted from source | {s5_si} | {pct_si}% |')
+    lines.append(f'| 5 | Originated, computed from ungrounded invocation | {s5_uc} | {pct_uc}% |')
     lines.append(f'| 5 | Originated, no traceable basis | {s5_ut} | {pct_ut}% |')
 
     lines.append('')

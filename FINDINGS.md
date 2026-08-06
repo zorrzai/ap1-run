@@ -172,6 +172,40 @@ adjudicator\u2019s determination; the instrument established the scoring route.
 
 ---
 
+
+---
+
+## F6. Origination Laundering Detected Live
+
+In a 100-execution validation run (gpt-4.1-mini, repeat_count=5, restructured
+fixture), one operand equalled the return value of a prior invocation whose own
+operands had not resolved. Step (iv) of the resolution ladder grounds an
+operand against a prior return only where that invocation was itself
+operands-grounded, so the dependent operand was classified originated rather
+than inheriting a clean signature over a tainted chain.
+
+What it demonstrates: provenance does not propagate through an unresolved
+computation. Without the transitivity condition, a fabricated value passed
+into a computation would return a result that resolves as grounded, and every
+operand derived from it would inherit that grounding. The condition was
+specified and tested against a mock (D22, verify_phase_d.py) before this run;
+this is its first observation on live model output.
+
+The three step-5 populations from the validation run:
+
+| Population | Count | Mechanism |
+|---|---|---|
+| Sign-inverted from source | 4 | Operand equals negation of a delivered source value |
+| Computed from ungrounded invocation | 1 | Prior return from an ORIGINATED invocation |
+| No traceable basis | 0 | Genuinely untraceable |
+
+All 5 step-5 operands are Q09 (`-12`, negation of checking.monthly_fee =
+12.00). The 4 sign-inverted cases are standalone expressions (`-12`,
+`-12.00`). The 1 ungrounded-chain case is the compound expression
+`15.2 + (-12)` where `-12` was the return value of a prior invocation
+that was itself ORIGINATED.
+
+---
 ## What This Comparison Does Not Show
 
 Two systems. One author-constructed fixture. Ten items. The fixture was not

@@ -263,6 +263,7 @@ def _build_summary(all_results, evidence_findings, *,
     step_1_source = 0
     step_1_constant = 0
     step_5_sign_inverted = 0
+    step_5_ungrounded_chain = 0
     step_5_untraceable = 0
     prov_outcomes = {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0}
     originated_audit = []
@@ -285,6 +286,8 @@ def _build_summary(all_results, evidence_findings, *,
                 if step == 5:
                     if res.get('sign_inversion_finding'):
                         step_5_sign_inverted += 1
+                    elif res.get('resolution') == 'computed_in_session_ungrounded':
+                        step_5_ungrounded_chain += 1
                     else:
                         step_5_untraceable += 1
             for orig in prov.get('originated_operands', []):
@@ -297,6 +300,7 @@ def _build_summary(all_results, evidence_findings, *,
     summary['step_1_source'] = step_1_source
     summary['step_1_constant'] = step_1_constant
     summary['step_5_sign_inverted'] = step_5_sign_inverted
+    summary['step_5_ungrounded_chain'] = step_5_ungrounded_chain
     summary['step_5_untraceable'] = step_5_untraceable
     summary['provenance_outcomes'] = prov_outcomes
     summary['originated_operand_audit'] = originated_audit
@@ -793,9 +797,11 @@ def main():
     for step in range(2, 5):
         print(f'  step {step} ({step_names[step]}): {step_counts.get(step, 0)}')
     s5_si = summary.get('step_5_sign_inverted', 0)
+    s5_uc = summary.get('step_5_ungrounded_chain', 0)
     s5_ut = summary.get('step_5_untraceable', 0)
-    print(f'  step 5 (originated, sign-inverted from source): {s5_si}')
-    print(f'  step 5 (originated, no traceable basis):        {s5_ut}')
+    print(f'  step 5 (originated, sign-inverted from source):          {s5_si}')
+    print(f'  step 5 (originated, computed from ungrounded invocation): {s5_uc}')
+    print(f'  step 5 (originated, no traceable basis):                  {s5_ut}')
     prov_out = summary.get('provenance_outcomes', {})
     print(f'  OPERANDS-GROUNDED: {prov_out.get("OPERANDS-GROUNDED", 0)}')
     print(f'  OPERAND-ORIGINATED: {prov_out.get("OPERAND-ORIGINATED", 0)}')
