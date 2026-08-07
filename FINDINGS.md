@@ -58,17 +58,25 @@ Context: `investment.balance = 42175.00`, `annual_rate = 7.8`,
 **What it demonstrates.** D7.2(a) detects a system performing part of the
 arithmetic outside the governed path. Correct answer, ungoverned process.
 
-**Both-run population.** Run B (gpt-5.6-sol, 1,000 executions): 14
-untraceable operands in 4,750, all Q07 — 9× exponent `2` (period count in
-compound formula, same class as declared `3`), 3× `1.0065` (monthly growth
-factor), 2× `45` (quarterly fee). Run A (gpt-4.1-mini, 1,000 executions):
-7 untraceable in 4,799, all Q05 — 3× `1.18` (annual growth factor),
-2× `1.015` (monthly growth factor), 1× `35.63` (quantised own tool return,
-HALF_UP), 1× `2436` (quantised own tool return, rounding float artefact).
+**Both-run population.**
 
-Both models originate only on items requiring multi-step derivations. The
-originated values are partial arithmetic the model performed itself, or
-quantisation of its own tool output.
+Run B (gpt-5.6-sol, 1,000 executions): 14 untraceable operands in 4,750
+under the constant set as declared at run time; 5 under the completed set,
+the difference being 9 occurrences of the period index `2` in a
+geometric-series route the reference derivation did not take. The 5
+remaining: 3× `1.0065` (monthly growth factor `1+0.078/12`), 2× `45`
+(quarterly fee `15×3`). All Q07.
+
+Run A (gpt-4.1-mini, 1,000 executions): 7 untraceable in 4,799 (unchanged
+by the constant-set completion — Run A had no `2` operands). All Q05:
+3× `1.18` (annual growth factor), 2× `1.015` (monthly growth factor),
+1× `35.63` (quantised own tool return, HALF_UP), 1× `2436` (quantised own
+tool return, rounding float artefact).
+
+Combined untraceable under the completed set: **12** (7 + 5). Both models
+originate only on items requiring multi-step derivations. The originated
+values are partial arithmetic the model performed itself, or quantisation
+of its own tool output.
 
 ---
 

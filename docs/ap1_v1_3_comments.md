@@ -173,3 +173,20 @@ origination findings for valid alternatives. The standard should say whether
 the constant declaration must anticipate routes the author did not take.
 
 Found by running the instrument.
+---
+
+## Transcript Portability — Scoring Changes vs Fixture Changes
+
+Transcripts are portable across SCORING changes and not across FIXTURE
+changes. A change to the declared constant set, the permitted transformations,
+or the ground-truth derivation alters how a stored response is scored, and
+re-analysis is valid — the models saw byte-identical input either way. A change
+to the fixture alters what the system was given, and the stored responses
+reflect the earlier input — re-execution is required.
+
+AP-1 v1.3 §5.8 addresses burned question sets and does not draw this
+distinction. It should, because the wrong lesson from a fixture-revision
+re-execution requirement is "never re-score" — which would prevent correcting
+scoring-layer defects without burning API budget.
+
+Found by running the instrument.

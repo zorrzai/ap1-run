@@ -325,6 +325,14 @@ def resolve_operand(operand_value, delivered_context, intermediates,
 # 0 was considered and removed: no originated operand had value 0 in the
 # data (all zero operands resolved at step 1 as source matches from
 # monthly_fee "0.00"). Additions to this set require a documented finding.
+#
+# RULE FOR DECLARED CONSTANTS (per-item typed inputs):
+# Declared constants are the constants of the PROBLEM DOMAIN, not of the
+# reference derivation. A quarterly calculation over monthly periods has
+# domain constants {1, 2, 3, 4, 12, 100} regardless of which route the
+# reference derivation takes. Declaring only the constants the author's
+# own route requires will produce origination findings for valid
+# alternative routes — a fixture-authoring defect, not model behaviour.
 STRUCTURAL_CONSTANTS = frozenset({Decimal('1')})
 
 
