@@ -54,6 +54,7 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
             prior_returns=prior_returns)
         res['operand_value'] = str(op_val)
         res['operand_literal'] = op_literal
+        res['expression'] = expression_str
         resolutions.append(res)
 
         if res['step'] == 5:

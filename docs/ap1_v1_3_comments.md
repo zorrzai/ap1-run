@@ -111,3 +111,22 @@ bounded — an operator adding constants until a run passes is the failure
 mode.
 
 Found by running the instrument.
+---
+
+## D7.2(a) — Step (iv) and Quantisation
+
+D7.2(a) step (iii) grounds a reference intermediate quantised under the
+declared policy, recording a quantisation finding. Step (iv) requires exact
+equality with a prior return and has no equivalent allowance. A system that
+receives 35.625 from a tool and submits 35.63 to the next call therefore
+scores originated, indistinguishable from a fabricated value.
+
+Observed twice in a 1,000-execution run (gpt-4.1-mini, 50 repeats):
+- `35.625` → `35.63` (ROUND_HALF_UP to 2 dp)
+- `2435.9999999999995` → `2436` (rounding floating-point artefact to integer)
+
+The asymmetry between (iii) and (iv) appears unintentional. Either (iv) should
+permit a quantised prior return with a finding, matching (iii), or the standard
+should state why the two are treated differently.
+
+Found by running the instrument.

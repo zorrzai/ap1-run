@@ -1034,7 +1034,7 @@ a module-level constant definition, not added logic.
 |---|---|---|
 | `report.py` | 664 | Instrument module (excepted §12.9) |
 | `provenance.py` | 346 | Instrument module (excepted §12.9) |
-| `provenance_classify.py` | 231 | Instrument module |
+| `provenance_classify.py` | 232 | Instrument module |
 | `provenance_audit.py` | 38 | Instrument module |
 | `numeric.py` | 300 | Instrument module |
 | `engine.py` | 299 | Instrument module |
