@@ -206,6 +206,31 @@ All 5 step-5 operands are Q09 (`-12`, negation of checking.monthly_fee =
 that was itself ORIGINATED.
 
 ---
+---
+## F7. D7.2(b) and D1 Measure Different Properties and Can Disagree Completely
+
+On two fixture items (Q07, Q10) the instrument recorded 100% correct released
+figures (D1 AUTO-MATCH) alongside 65–67% WRONG-OPERATION (D7.2(b)). The system
+reached correct answers through arithmetic the reference derivation did not
+anticipate.
+
+An accuracy measure alone reports success; the operation measure alone reports
+failure; neither is wrong and neither is sufficient.
+
+Across a 1,000-execution run (gpt-4.1-mini, 50 repeats, 10 items × 2
+conditions), the aggregate D7.2(b) was 42.4% WRONG-OPERATION (730/1720), split
+essentially identically across conditions (42.7% base vs 42.2%
+instruction_removed). The instruction changes invocation behaviour (D7.1) but
+does not change operation correctness.
+
+The WRONG-OPERATION split by item-level correctness:
+- Route divergence (item answer correct): measured but not yet applied
+- Item answer incorrect: measured but not yet applied
+- Item answer undetermined (adjudicated): measured but not yet applied
+
+The aggregate WRONG-OPERATION rate measures derivation-route divergence, not
+answer incorrectness.
+
 ## What This Comparison Does Not Show
 
 Two systems. One author-constructed fixture. Ten items. The fixture was not

@@ -298,6 +298,21 @@ def _section_d72b_counts(summary):
         count = op_counts.get(outcome, 0)
         lines.append(f'| {outcome} | {count} |')
 
+    # WRONG-OPERATION split by item-level correctness
+    wo_split = summary.get('wrong_operation_split', {})
+    wo_total = sum(wo_split.values())
+    if wo_total > 0:
+        lines.append('')
+        lines.append('### WRONG-OPERATION by Item Outcome\n')
+        lines.append('| Population | Count |')
+        lines.append('|---|---|')
+        rd = wo_split.get('route_divergence', 0)
+        iw = wo_split.get('item_wrong', 0)
+        ud = wo_split.get('undetermined', 0)
+        lines.append(f'| Route divergence (item answer correct) | {rd} |')
+        lines.append(f'| Item answer incorrect | {iw} |')
+        lines.append(f'| Item answer undetermined (adjudicated) | {ud} |')
+
     lines.append('')
     return '\n'.join(lines)
 

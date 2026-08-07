@@ -1032,7 +1032,7 @@ a module-level constant definition, not added logic.
 
 | File | Lines | Classification |
 |---|---|---|
-| `report.py` | 664 | Instrument module (excepted §12.9) |
+| `report.py` | 679 | Instrument module (excepted §12.9) |
 | `provenance.py` | 346 | Instrument module (excepted §12.9) |
 | `provenance_classify.py` | 232 | Instrument module |
 | `provenance_audit.py` | 38 | Instrument module |
@@ -1053,7 +1053,7 @@ a module-level constant definition, not added logic.
 | `perturbation_guard.py` | 116 | Instrument module |
 | `transcription.py` | 110 | Instrument module |
 | `transcript.py` | 74 | Instrument module |
-| `smoke_test.py` | 885 | Demonstration tooling |
+| `smoke_test.py` | 910 | Demonstration tooling |
 | `example/ground_truth_example.py` | 578 | Example / demonstration |
 | `example/calculator_tool.py` | 209 | Example / demonstration |
 | `verify_*.py` | varies | Verification test suites |

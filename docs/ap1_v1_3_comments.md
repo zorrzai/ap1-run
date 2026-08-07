@@ -130,3 +130,24 @@ permit a quantised prior return with a finding, matching (iii), or the standard
 should state why the two are treated differently.
 
 Found by running the instrument.
+---
+
+## D7.2(b) — Derivation-Route Divergence
+
+The sub-measure resolves a submitted expression's result against the expected
+value or a reference intermediate. For a multi-step derivation, a system
+taking a valid alternative route produces intermediates that match no reference
+intermediate, and every such call scores WRONG-OPERATION.
+
+Measured: on two fixture items, 100% of released figures were correct while
+65–67% of invocations scored WRONG-OPERATION. Across a 1,000-execution run
+the aggregate was 42.4%, essentially identical under both instruction
+conditions (42.7% base vs 42.2% instruction_removed).
+
+The classification is correct per the standard. But the aggregate does not
+distinguish a system applying wrong arithmetic from one reaching a correct
+result by an unanticipated path, and the second is not a defect. The standard
+should say whether route divergence warrants its own outcome, or whether
+D7.2(b) is meaningful only on the invocation producing the released figure.
+
+Found by running the instrument.

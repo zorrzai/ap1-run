@@ -109,6 +109,56 @@ def test_t10_q07_gpt56sol_equivalent_route():
     return True
 
 
+
+def test_t11_wrong_op_split_route_divergence():
+    """WRONG-OPERATION on an item with correct answer is route divergence."""
+    # Construct a mock result: WRONG-OPERATION + AUTO-MATCH
+    mock_results = [
+        {
+            'status': 'EXECUTED',
+            'figure_outcome': 'AUTO-MATCH',
+            'operation_correctness': [
+                {'outcome': 'WRONG-OPERATION',
+                 'detail': 'result 123 matches neither expected nor intermediate',
+                 'evaluated_result': '123', 'matched_against': None},
+            ],
+        },
+        {
+            'status': 'EXECUTED',
+            'figure_outcome': 'ADJUDICATE-AMBIGUOUS',
+            'operation_correctness': [
+                {'outcome': 'WRONG-OPERATION',
+                 'detail': 'result 456 matches neither expected nor intermediate',
+                 'evaluated_result': '456', 'matched_against': None},
+            ],
+        },
+        {
+            'status': 'EXECUTED',
+            'figure_outcome': 'AUTO-MATCH',
+            'operation_correctness': [
+                {'outcome': 'OPERATION-CORRECT',
+                 'detail': 'result matches expected',
+                 'evaluated_result': '789', 'matched_against': 'expected_value'},
+            ],
+        },
+    ]
+    # Compute the split
+    wo_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0}
+    for r in mock_results:
+        fig = r.get('figure_outcome', '')
+        for oc in r.get('operation_correctness', []):
+            if oc.get('outcome') == 'WRONG-OPERATION':
+                if fig == 'AUTO-MATCH':
+                    wo_split['route_divergence'] += 1
+                elif fig.startswith('ADJUDICATE'):
+                    wo_split['undetermined'] += 1
+                else:
+                    wo_split['item_wrong'] += 1
+    assert wo_split['route_divergence'] == 1, f'expected 1 route_divergence, got {wo_split}'
+    assert wo_split['undetermined'] == 1, f'expected 1 undetermined, got {wo_split}'
+    assert wo_split['item_wrong'] == 0, f'expected 0 item_wrong, got {wo_split}'
+    return True
+
 ALL_TESTS = [
     test_t1_correct_expression_q01,
     test_t2_wrong_expression_q01,
@@ -120,6 +170,7 @@ ALL_TESTS = [
     test_t8_decimal_precision,
     test_t9_q08_gpt41mini_wrong_operation,
     test_t10_q07_gpt56sol_equivalent_route,
+    test_t11_wrong_op_split_route_divergence,
 ]
 
 

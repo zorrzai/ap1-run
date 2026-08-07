@@ -223,14 +223,24 @@ def _build_summary(all_results, evidence_findings, *,
     # Operation correctness counts
     op_counts = {'OPERATION-CORRECT': 0, 'WRONG-OPERATION': 0,
                  'OPERATION-UNOBSERVABLE': 0}
+    wrong_op_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0}
     for r in all_results:
         if r.get('status') != 'EXECUTED':
             continue
+        fig = r.get('figure_outcome', '')
         for oc in r.get('operation_correctness', []):
             outcome = oc.get('outcome', 'OPERATION-UNOBSERVABLE')
             if outcome in op_counts:
                 op_counts[outcome] += 1
+            if outcome == 'WRONG-OPERATION':
+                if fig == 'AUTO-MATCH':
+                    wrong_op_split['route_divergence'] += 1
+                elif fig.startswith('ADJUDICATE'):
+                    wrong_op_split['undetermined'] += 1
+                else:
+                    wrong_op_split['item_wrong'] += 1
     summary['operation_correctness_counts'] = op_counts
+    summary['wrong_operation_split'] = wrong_op_split
 
     # Scoring proportions (D1 and D7)
     auto_n = sum(1 for r in all_results
@@ -708,13 +718,28 @@ def main():
     print(f'\n3i. D7.2(b) OPERATION CORRECTNESS:')
     op_counts = {'OPERATION-CORRECT': 0, 'WRONG-OPERATION': 0,
                  'OPERATION-UNOBSERVABLE': 0}
+    wo_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0}
     for r in executed:
+        fig = r.get('figure_outcome', '')
         for oc in r.get('operation_correctness', []):
             outcome = oc.get('outcome', 'OPERATION-UNOBSERVABLE')
             if outcome in op_counts:
                 op_counts[outcome] += 1
+            if outcome == 'WRONG-OPERATION':
+                if fig == 'AUTO-MATCH':
+                    wo_split['route_divergence'] += 1
+                elif fig.startswith('ADJUDICATE'):
+                    wo_split['undetermined'] += 1
+                else:
+                    wo_split['item_wrong'] += 1
     for outcome in ['OPERATION-CORRECT', 'WRONG-OPERATION', 'OPERATION-UNOBSERVABLE']:
         print(f'  {outcome}: {op_counts[outcome]}')
+    wo_total = sum(wo_split.values())
+    if wo_total > 0:
+        print(f'    of which:')
+        print(f'      route divergence (item answer correct):      {wo_split["route_divergence"]}')
+        print(f'      item answer incorrect:                       {wo_split["item_wrong"]}')
+        print(f'      item answer undetermined (adjudicated):      {wo_split["undetermined"]}')
 
     # -- D1 aggregation --
     d1_summary = summarise_accuracy(all_accuracy_results)
