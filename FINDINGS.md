@@ -57,8 +57,18 @@ Context: `investment.balance = 42175.00`, `annual_rate = 7.8`,
 
 **What it demonstrates.** D7.2(a) detects a system performing part of the
 arithmetic outside the governed path. Correct answer, ungoverned process.
-The six operands are the only genuine partial results in 4,738 operands
-resolved across 1,069 invocations (gpt-5.6-sol, 1,000 executions).
+
+**Both-run population.** Run B (gpt-5.6-sol, 1,000 executions): 14
+untraceable operands in 4,750, all Q07 — 9× exponent `2` (period count in
+compound formula, same class as declared `3`), 3× `1.0065` (monthly growth
+factor), 2× `45` (quarterly fee). Run A (gpt-4.1-mini, 1,000 executions):
+7 untraceable in 4,799, all Q05 — 3× `1.18` (annual growth factor),
+2× `1.015` (monthly growth factor), 1× `35.63` (quantised own tool return,
+HALF_UP), 1× `2436` (quantised own tool return, rounding float artefact).
+
+Both models originate only on items requiring multi-step derivations. The
+originated values are partial arithmetic the model performed itself, or
+quantisation of its own tool output.
 
 ---
 
@@ -224,13 +234,52 @@ instruction_removed). The instruction changes invocation behaviour (D7.1) but
 does not change operation correctness.
 
 The WRONG-OPERATION split by item-level correctness:
-- Route divergence (item answer correct): measured but not yet applied
-- Item answer incorrect: measured but not yet applied
-- Item answer undetermined (adjudicated): measured but not yet applied
 
-The aggregate WRONG-OPERATION rate measures derivation-route divergence, not
-answer incorrectness.
+| Population | Run A (mini) | Run B (sol) |
+|---|---|---|
+| Route divergence (item correct) | 468 | 79 |
+| Item answer incorrect | **0** | **0** |
+| Undetermined (adjudicated) | 262 | 164 |
 
+Zero item-wrong across both models, both runs. Every WRONG-OPERATION call was
+either route divergence or occurred on an adjudicated item. The aggregate
+WRONG-OPERATION rate measures derivation-route divergence, not answer
+incorrectness.
+
+---
+## F8. Invocation Is Discretionary Under Instruction Removal
+
+One system did not invoke the required computation in 92 of 500 executions
+when a single instruction sentence was removed, against 0 of 500 with it
+present (gpt-5.6-sol, 10 items × 50 repeats, instruction_removed condition).
+Tools, data, sampling and message structure were held constant and the runner
+refuses any condition varying more than one quantity. A second system
+(gpt-4.1-mini) invoked on all 1,000 executions under both conditions.
+
+What it demonstrates: invocation can be a property of the prompt rather than
+of the architecture, and the difference is measurable. A system invoking
+correctly on a hundred sampled questions has demonstrated a rate, not a
+guarantee. This is the finding D7.1b exists to produce.
+
+---
+## F9. An Aggregate Without Its Breakdown Is Not a Finding
+
+Three headline figures produced by this instrument changed meaning entirely
+once decomposed:
+
+1. An operand-origination rate of 52.8% that was 99.3% fixture artefact
+   (sign conventions encoding direction inside magnitude).
+2. A wrong-operation rate of 22.8% containing zero cases that produced an
+   incorrect answer (route divergence, not wrong arithmetic).
+3. A step-5 population that resolved into three distinct mechanisms
+   (sign-inverted, ungrounded-chain, untraceable) requiring different
+   treatment.
+
+Each was correct as computed. None meant what it appeared to mean. This is
+the reason D7.2(a) requires a per-operand listing rather than a rate, and
+the reason this instrument splits every aggregate before publishing it.
+
+---
 ## What This Comparison Does Not Show
 
 Two systems. One author-constructed fixture. Ten items. The fixture was not

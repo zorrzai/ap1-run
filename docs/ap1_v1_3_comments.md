@@ -151,3 +151,25 @@ should say whether route divergence warrants its own outcome, or whether
 D7.2(b) is meaningful only on the invocation producing the released figure.
 
 Found by running the instrument.
+---
+
+## D7.2(a) — Declared Constants Must Anticipate Alternative Routes
+
+A fixture author declares the constants their reference derivation uses. If a
+system takes a valid alternative derivation route, it may use constants absent
+from that set.
+
+Observed: Q07's reference derivation computes quarterly net growth as
+`monthly_net × 3`, declaring `3` as a constant. In 9 of 100 executions, a
+second system computed the geometric-series compound formula
+`(1+r)^2 + (1+r) + 1`, requiring `2` as an exponent (period count for two of
+three months). `2` was not declared because the reference derivation does not
+use it. All 9 executions scored ORIGINATED for a valid period constant in a
+valid alternative route.
+
+The constant set is a property of the reference derivation, not of the problem.
+An author declaring only the constants their own route requires will see
+origination findings for valid alternatives. The standard should say whether
+the constant declaration must anticipate routes the author did not take.
+
+Found by running the instrument.
