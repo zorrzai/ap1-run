@@ -983,21 +983,17 @@ unambiguous case. An instrument that guesses which figure was the answer
 produces exactly the defect that invalidated the V1 evaluation.
 
 **12.8 The runner is released under a permissive open-source licence.** The
-measurement kit is the adoption vehicle; the defensible assets are fixture
-manufacturing, the independent scorer network, the evidence-artifact format and
-Certanum. Two requirements the specification already makes — that client
-information security reads the code, and that an outsider's report is published
-with it — presuppose an open licence, so leaving it undecided would invite
-relitigation of the strategy.
+specific licence is under review and is not yet determined; LICENSE carries a
+placeholder while the repository is private and access is controlled by
+permission rather than by licence.
 
-**Apache-2.0 is the recommended licence**, for its explicit patent grant and
-its acceptability to enterprise legal review. **One question must go to patent
-counsel before filing:** Apache-2.0 includes a contributor patent grant, and
-ZORRZ holds live provisional applications. The runner embodies *measurement*
-rather than the engine's mechanisms, so exposure is likely nil — but likely is
-not an answer, and this is one additional question on a call already scheduled.
-*Would change if:* counsel identifies an interaction with the provisional
-portfolio, in which case MIT or BSD-3 without a patent grant is the fallback.
+The measurement kit is the adoption vehicle; the defensible assets are fixture
+manufacturing, the independent scorer network, the evidence-artifact format and
+the governed engine. Two requirements this specification already makes — that
+client information security reads the code, and that an outsider’s report is
+published with it — presuppose an open licence, and a licence prohibiting
+commercial use or modification would contradict AP-1 §10.2 and make R4.2
+unsatisfiable.
 
 **12.9 Module size constraint: ≤300 lines.**  Each instrument module (the
 `.py` files in `ap1-runner/` that implement R0–R3) is kept at or under 300

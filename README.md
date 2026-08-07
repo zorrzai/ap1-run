@@ -1,109 +1,380 @@
-# AP-1 Runner
+# ap1-run
 
-A standalone evaluation runner implementing the AP-1 Assessment Standard.
+**A reference instrument for The Admissibility Protocol (AP-1).**
 
-## Status
+It measures whether the numbers a deployed AI system produces can be traced back to where they came from.
 
-**Phase E complete** -- 198 assertions across 135 test functions in 7 suites.
-All dimensions through D7 implemented. Report generator and adjudication
-sheet generator operational.
+---
 
-## Running the Tests
+> ### Status: not independently run
+>
+> No party unconnected to the author has executed this instrument. Independent
+> runnability is a stated gate in the build specification (R4.2) and it has not
+> been met. **Do not describe this as independently validated.**
+>
+> If you run it and something breaks, that is the report we most want. Open an
+> issue.
+
+---
+
+## What it does
+
+It runs a question set against a deployed AI system and asks, for every numeric
+answer:
+
+| | Question | Automated |
+|---|---|---|
+| **D1** | Was the answer correct? | Yes, where unambiguous |
+| **D2** | Is it reproducible — and by what mechanism? | Yes |
+| **D7.1** | Did the required computation actually run? | Yes |
+| **D7.2(a)** | Did every operand entering it come from the source data? | **Yes** |
+| **D7.2(b)** | Was the formula the one the question required? | Yes |
+| **D7.3** | Is the released figure the one the computation returned? | Yes |
+| **D3–D6** | Provenance, refusal integrity, adversarial resistance, degraded data | No — human adjudication |
+
+**D7.2(a) is the distinguishing measurement.** Tool-call tracing is widely
+available. Resolving each operand against the source values and the legitimate
+intermediates of a reference derivation is not.
+
+D3, D4, D5 and D6 are all scored by human adjudication. The instrument enforces
+the minimum-item counts for D5 and D6 at load, and generates adjudication sheets
+for all four, but scores none of them.
+
+### The finding it exists to surface
+
+Not *this system is wrong*. This:
+
+> **The system gave the right answer and cannot show you why.**
+
+or, harder:
+
+> **It invoked the correct calculator, the arithmetic was exact, and one of the
+> inputs came from nowhere.**
+
+Both have been observed. See [`example/README.md`](example/README.md) for the
+second, taken from a live run against a frontier model.
+
+---
+
+## Requirements
+
+**Python 3.11 or later.**
+
+**One dependency:** `requests`. Everything else is standard library.
+
+**Operating system:** Linux, macOS or Windows. The instrument and all ten test
+suites are platform-independent — no OS-specific calls exist in any instrument
+module.
+
+**No GPU, no container, no database, no cloud account, no admin rights.** The
+instrument makes no network call except to the endpoint under test.
+
+### For the worked example only
+
+An **OpenAI-compatible chat-completions endpoint with tool calling**, and an API
+key.
 
 ```bash
-python run_all_tests.py
+export AP1_SMOKE_API_KEY=<key>        # Linux, macOS
+set AP1_SMOKE_API_KEY=<key>           # Windows
 ```
 
-This invokes every verification suite in its native form and reports
-per-suite results:
+On Windows the key may optionally be read from the Credential Manager instead;
+see [`SECURITY.md`](SECURITY.md). Never place a key in a file, a config, or a
+command line.
 
-```
-AP-1 runner -- full test suite
+Running the test suites requires none of this — they are offline.
 
-  suite                           functions   checks  result
-  ------------------------------------------------------------
-  verify.py (Phase A)                    13       76  PASS
-  verify_phase_b.py                      25       25  PASS
-  verify_phase_c.py                      28       28  PASS
-  verify_integration.py                   7        7  PASS
-  verify_phase_d.py                      23       23  PASS
-  verify_d72b.py                         10       10  PASS
-  verify_phase_e.py                      29       29  PASS
-  ------------------------------------------------------------
-  TOTAL                                 135      198  PASS
-```
+### What it will not run against
 
-`verify.py` groups multiple checks per test function, so "functions"
-(what `pytest` reports) and "checks" (what the native runner reports)
-differ for that suite. Both numbers are correct; this runner reports both.
+- A **retrieval system** with no computation to observe. D7 returns
+  unobservable, correctly.
+- An endpoint exposing a **response shape other than OpenAI-compatible chat
+  completions**. Declared unobservable with a diagnostic, never scored.
+- A **non-language-model estimator**. Out of reach entirely.
 
-Exit code is non-zero if any suite fails.
+---
 
-## Evidence Classes (v1.0)
-
-| Class | Implemented | Description |
-|-------|-------------|-------------|
-| EV-0 UNOBSERVABLE | Yes | No tool-call signal available |
-| EV-1 SELF-REPORTED | Yes | System reports about itself |
-| EV-2 PLATFORM-STRUCTURAL | Yes | Tool-call record from serving layer |
-| EV-3 EXTERNALLY-VERIFIABLE | **No** | Requires signature verification against a pre-sealed public key and ledger membership under an external trust anchor. **Neither is implemented in v1.0.** No run may claim EV-3. Any attestation encountered is classified EV-1 with reason "attestation verification not implemented in runner v1.0". |
-
-## Dependencies
-
-- Python 3.11+
-- `requests` (the only external dependency)
-- Standard library only otherwise
-
-## Quick Start
+## Quick start
 
 ```bash
-# Run all tests (one command)
-python run_all_tests.py
-
-# Verify ground-truth examples
-python example/ground_truth_example.py
-
-# Run individual suites
-python verify.py              # Phase A gate (76 checks)
-python verify_phase_b.py      # Phase B seal/perturbation (25)
-python verify_phase_c.py      # Phase C figure/accuracy (28)
-python verify_integration.py  # Integration (7)
-python verify_phase_d.py      # Phase D provenance (23)
-python verify_d72b.py         # D7.2b operation correctness (10)
-python verify_phase_e.py      # Phase E adjudication/report (29)
+git clone <this repo>
+cd ap1-run
+pip install requests
+python run_all_tests.py       # 10 suites, 201 functions, 367 checks — offline
 ```
+
+Then run the worked example against your own endpoint:
+
+```bash
+export AP1_SMOKE_API_KEY=<key>
+python smoke_test.py
+```
+
+`run_all_tests.py` reports two columns. `verify.py` counts individual
+assertions; the other suites count test functions. Running `pytest` directly
+reports the function count only — both numbers are shown so neither is mistaken
+for the other.
+
+---
+
+## What it deliberately does not do
+
+- **No language model anywhere** — not in question generation, expected-value
+  construction, scoring, figure identification, or reporting.
+- **No guessing.** Where automated identification is ambiguous, the item goes to
+  a human. A response that declines is never auto-scored as a figure.
+- **No automation of D3–D6.** Judging whether a refusal was correct means
+  judging meaning, and the only available automation is a language model.
+  Putting one there would return a model to the verification path, which is
+  what the instrument exists to remove. Human adjudication is the design, not a
+  gap awaiting better tooling.
+- **No network egress** beyond the endpoint under test.
+- **No telemetry, no analytics, no hosted service.** If the author ran it for
+  you, it would be the author's result again.
+
+### What it cannot measure
+
+It measures systems that **compute**. A system that retrieves an answer from a
+corpus rather than deriving it returns unobservable results on D7 — correctly,
+since there is no computation to observe.
+
+It reaches **one interface class**. Systems exposing other response shapes are
+declared `UNOBSERVABLE` with a diagnostic naming the shape, never scored.
+
+It cannot reach a **non-language-model estimator** at all. AP-1's dimensions are
+defined over any system in which a statistical component participates in
+numerical output; this instrument's reach is narrower than the standard's scope.
+
+---
+
+## How operand provenance works
+
+For every numeric operand passed to a computation, five steps, in order:
+
+1. **Source value** — equals a value in the item's delivered context, exactly, at
+   full precision.
+2. **Transformed source** — equals a source value under a transformation declared
+   before the run.
+3. **Reference intermediate** — equals an intermediate of the reference
+   derivation; raw, transformed, or quantised under the declared policy.
+4. **Computed in session** — equals the return value of a prior invocation,
+   **and that invocation was itself operands-grounded.**
+5. Otherwise — **originated**.
+
+**Step 4 carries a condition, and it matters.** Without it, origination
+launders: a fabricated value passed into a computation returns a result that
+would then resolve as grounded, and everything derived from it inherits a clean
+signature over false provenance. Provenance does not propagate through an
+unresolved computation.
+
+**Step 3 is why intermediates are required.** A legitimate intermediate in a
+multi-step derivation appears nowhere in the source. Checking against the source
+alone would flag every correct chained calculation — and would still pass an
+invented value that coincides with an unrelated field.
+
+**Matching is exact, not tolerant.** An operand that came from a source *is* the
+source value. A tolerance would silently admit originated values that fall near
+one, which is the precise failure being measured.
+
+---
+
+## Invocation evidence
+
+Graded by independence and verifiability, never by richness or format:
+
+| Class | Meaning | Admissible for a control claim |
+|---|---|---|
+| `EV-0` | No signal available | No |
+| `EV-1` | The system's own report about itself, unverified — **including a signed attestation whose signature was not checked** | No |
+| `EV-2` | A tool-call record from the serving layer, a third party to the model | Yes, as an observed rate |
+| `EV-3` | An attestation verified against a pre-sealed key and an anchored ledger | Yes |
+
+**A signature does not cure self-report: the signer is the party being
+measured.** `EV-1` ranks below `EV-2`.
+
+**`EV-3` is defined but not implemented in this version.** The runner cannot
+emit it, and a module-level guard raises if any code path attempts to construct
+one. An attestation encountered is classified `EV-1` with the reason recorded.
+
+---
+
+## Writing your own fixture
+
+The instrument is domain-agnostic. Nothing in it is financial; the worked
+example simply happens to be.
+
+You supply four things:
+
+**A fixture** — synthetic source data in your domain. No real customer data.
+
+**A question set** — questions answerable from the fixture alone. Use chained
+derivations: three or more operations over six or fewer fields. Trivial
+one-step questions cannot exercise operand provenance.
+
+**A ground-truth module** — derivation *logic*, not values. It reads the fixture
+and returns the expected value **and every intermediate**, each with the
+operation that produced it and typed inputs identifying a source field, a prior
+intermediate, or a declared constant.
+
+> The runner refuses a module that returns literals it did not compute. At seal
+> time it perturbs each declared source field and re-executes; if the output
+> does not move, the module is returning constants and the run is refused.
+
+**A config** — endpoint, model, sampling parameters (each with a value or an
+explicit declared omission and its reason), tolerance, quantisation policy,
+permitted transformations, decline markers, and the AP-1 text hash and version
+DOI the run claims conformance to.
+
+This is days of work and it needs someone who knows the domain. That is not
+friction to be removed — it is what makes the result mean anything.
+
+**Two traps the worked example documents.** Do not encode direction inside a
+magnitude. A fixture storing a liability as `-2400.00` uses the sign to carry
+meaning, and a system computing interest on the magnitude then passes `2400`,
+which appears nowhere in the delivered context and resolves as originated. Two
+thousand executions across two systems produced 524 such operands from this
+cause alone. Represent the quantity and its direction as separate fields —
+`{"balance": 2400.00, "direction": "liability"}` — which is also how PDS4
+represents quantities, with the value in the element and its semantics in an
+attribute beside it. And every permitted transformation and declared constant
+widens what resolves as grounded: declare them before the run, never add one
+after seeing a result.
+
+---
+
+## Reading the output
+
+A **profile**, not a grade. Each dimension separately, with n, with the class of
+evidence it rests on, and with every unmeasured, unobservable and void cell
+declared alongside its reason.
+
+**Zero failures is reported as an estimate, never as certainty.** A perfect
+result on a sample is still a sample, so the runner prints the exact one-sided
+95% upper bound on the failure rate — `1 − 0.05^(1/n)`, the Clopper–Pearson
+bound at zero failures. Forty-nine items with no failures reads *"0/49; upper
+bound 5.9%"*, not *"100%"*. The familiar 3/n rule is its large-n approximation
+and is shown only for n ≥ 30; below that it overstates, and at n < 3 it returns
+a value above 1, which is not a rate.
+
+**There is no pass mark.** AP-1 has no threshold, no certificate, no seal and no
+registry, and the runner cannot output one. A supervisor reads the profile and
+decides whether it is adequate for their use.
+
+---
+
+## Conformance
+
+> **AP-1 v1.3 is a draft for public comment and is not adopted.** v1.2 remains
+> the version in force. This instrument targets the v1.3 draft because it
+> incorporates requirements arising from documented defects in the v1.2
+> reference evaluation. Conformance will be re-verified against the adopted
+> text.
+
+The runner claims conformance to specific clauses of AP-1 v1.3. That claim is
+executable:
+
+```bash
+python verify_conformance.py
+```
+
+One test per clause. Each names the clause, quotes it verbatim from the sealed
+standard text with line numbers, and asserts the behaviour it requires. Clauses
+the runner **cannot** enforce — independent key implementation and authorship
+disclosure, both process obligations — have tests asserting the runner *declares*
+the limitation rather than staying silent.
+
+```bash
+python verify_spec.py
+```
+
+The build specification records line counts and a size constraint. This suite
+parses those claims and compares them against the files, so the specification
+cannot drift from the code without failing.
+
+**This instrument alone cannot produce a conformance claim.** AP-1 v1.3 §4
+states that a system may not claim compliance having omitted any dimension. D3
+through D6 require human adjudication by design, and §13 imposes process
+obligations — independent key implementation, two blind scorers — that no
+instrument can supply. What this produces is a profile; a conformance claim
+additionally requires those.
+
+**The standard text is sealed.** `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` is
+hashed into the pre-registration record, and a run declaring a mismatched hash
+is refused.
+
+AP-1 v1.3: [10.5281/zenodo.21755443](https://doi.org/10.5281/zenodo.21755443) ·
+concept DOI [10.5281/zenodo.21324954](https://doi.org/10.5281/zenodo.21324954) ·
+[standard repository](https://github.com/zorrzai/admissibility-protocol)
+
+---
 
 ## Layout
 
 ```
-ap1-runner/
-|-- SPEC.md              # Authoritative build specification (v0.3)
-|-- run_all_tests.py     # Unified test entry point
-|-- numeric.py           # R0.4  Decimal grammar, parsing, hashing
-|-- config.py            # R0.1  Config loader, validator
-|-- transcript.py        # R0.3  Append-only JSONL store
-|-- seal.py              # R1.1  Pre-registration and sealing
-|-- adapter.py           # R0.2  OpenAI chat-completions adapter
-|-- engine.py            # R1.2  Execution engine
-|-- evidence.py          # Evidence class classification
-|-- invocation.py        # Tool invocation classification
-|-- figure_id.py         # Released figure identification
-|-- accuracy.py          # D1 accuracy scoring
-|-- provenance.py        # D7.2a operand provenance
-|-- operation_correctness.py  # D7.2b operation correctness
-|-- transcription.py     # D7.3 transcription fidelity
-|-- reproducibility.py   # D2 reproducibility classification
-|-- adjudication.py      # R3.2 adjudication sheet generator
-|-- report.py            # R3.3 report generator
-|-- example/
-|   |-- config.json      # Example configuration
-|   |-- fixture.json     # 5 personal-finance accounts
-|   |-- questions.json   # 10 items (3 three-step chains)
-|   |-- ground_truth_example.py   # Worked derivations
-|   +-- calculator_tool.py        # Calculator sandbox
-+-- reference/           # AP-1 text (supplied separately)
+run_all_tests.py         one command, all suites
+smoke_test.py            drives a live endpoint
+
+config.py                configuration; refuses defaults that affect a result
+adapter.py               HTTP transport; records the request as sent
+transcript.py            append-only run log
+numeric.py               Decimal arithmetic, token grammar, canonical hashing
+seal.py                  pre-registration: hash and timestamp before any request
+
+engine.py                execution loop
+context.py               delivered-context construction
+perturbation_guard.py    refuses a condition that varies more than one quantity
+evidence.py              invocation evidence classification
+
+figure_id.py             which figure in the response is the answer
+accuracy.py              D1
+reproducibility.py       D2
+invocation.py            D7.1
+provenance.py            D7.2(a) — the five-step resolution ladder
+provenance_classify.py   invocation, item and sequential classification
+provenance_audit.py      originated-operand listing
+operation_correctness.py D7.2(b)
+transcription.py         D7.3
+
+adjudication.py          printable sheets for the human-scored dimensions
+report.py                the result artifact
+
+example/                 a worked fixture, questions, ground truth and config
+reference/               the sealed AP-1 text
 ```
+
+Instrument modules are kept at or under 300 lines so a reviewer can read the
+instrument in an afternoon. One declared exception, recorded in the build
+specification with its reasoning.
+
+Full architecture, verification contracts per module, threat model and
+conformance mapping: [`SPEC.md`](SPEC.md).
+
+---
+
+## Security
+
+The instrument makes no network call except to the endpoint under test. It reads
+credentials from the OS credential store and never writes them to disk, a
+command line, or a log. Error bodies are masked for credential-shaped
+substrings before being stored.
+
+The example calculator uses an AST evaluator with an explicit allow-list of node
+types. There is no `eval`, `exec` or `compile` anywhere in the runner.
+
+See [`SECURITY.md`](SECURITY.md) for the threat model and how to report a
+vulnerability.
+
+---
 
 ## Licence
 
-Apache-2.0. This licence is provisional pending patent counsel review.
+The licence for public release is under review. See [`LICENSE`](LICENSE).
+
+AP-1 itself is published CC-BY 4.0 with no registry, no certificate and no fee.
+Any party may run it against any system — including the author's — without
+permission or notification.
+
+---
+
+*Comments and defects: open an issue, or mrupp@zorrz.com*
