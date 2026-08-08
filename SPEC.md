@@ -1059,10 +1059,10 @@ a module-level constant definition, not added logic.
 | `example/ground_truth_example.py` | 579 | Example / demonstration |
 | `example/calculator_tool.py` | 209 | Example / demonstration |
 | `verify_*.py` | varies | Verification test suites |
-| `verify_findings.py` | 62 | Findings reconciliation guard |
+| `verify_findings.py` | 127 | Findings reconciliation guard |
 | `generate_findings.py` | 410 | FINDINGS.md generator from artifacts |
-| `test_findings_mutation.py` | 186 | Mutation tests for findings pipeline |
-| `run_all_tests.py` | 202 | Test runner |
+| `test_findings_mutation.py` | 196 | Mutation tests for findings pipeline |
+| `run_all_tests.py` | 216 | Test runner |
 
 **Research questions are not held in this document.** Those on which the field
 has no settled answer are put to reviewers in AP-1 v1.3 §14. The standard asks;

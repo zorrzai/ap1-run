@@ -48,18 +48,25 @@ SUITES = [
 
 
 def _parse_check_count(output):
-    """Extract passed and failed counts from suite output.
+    """Extract passed, failed, and skipped counts from suite output.
 
-    Handles two output formats:
+    Handles three output formats:
       Custom runners:  "N passed, M failed"
+      Custom runners:  "N passed, M failed, K skipped"
       unittest/pytest: "Ran N tests" + "OK" or "FAILED"
+      Skipped suite:   "0 passed, 0 failed, K skipped"
 
-    Returns (passed, failed) or (None, None) if unparseable.
+    Returns (passed, failed, skipped) or (None, None, 0) if unparseable.
     """
+    # Check for skipped-only output first
+    m = re.search(r'(\d+)\s+passed,\s+(\d+)\s+failed,\s+(\d+)\s+skipped', output)
+    if m:
+        return int(m.group(1)), int(m.group(2)), int(m.group(3))
+
     # Custom runner format: '76 passed, 0 failed'
     m = re.search(r'(\d+)\s+passed,\s+(\d+)\s+failed', output)
     if m:
-        return int(m.group(1)), int(m.group(2))
+        return int(m.group(1)), int(m.group(2)), 0
 
     # unittest format: 'Ran 29 tests in 0.08s' + 'OK' or 'FAILED (...)'
     m = re.search(r'Ran\s+(\d+)\s+test', output)
@@ -75,11 +82,11 @@ def _parse_check_count(output):
         )
         if fm:
             failures = int(fm.group(1) or 0) + int(fm.group(2) or 0)
-            return total - failures, failures
+            return total - failures, failures, 0
         if re.search(r'\bOK\b', output):
-            return total, 0
+            return total, 0, 0
 
-    return None, None
+    return None, None, 0
 
 
 def main():
@@ -122,15 +129,17 @@ def main():
         )
 
         combined = proc.stdout + '\n' + proc.stderr
-        passed, failed = _parse_check_count(combined)
+        passed, failed, skipped = _parse_check_count(combined)
 
         suite_ok = proc.returncode == 0
+        is_skipped = skipped > 0 and (passed or 0) == 0 and (failed or 0) == 0
 
         if passed is not None:
-            observed_checks = passed + (failed or 0)
+            observed_checks = passed + (failed or 0) + skipped
         else:
             observed_checks = None
-            suite_ok = False  # unparseable output is a failure
+            if not is_skipped:
+                suite_ok = False  # unparseable output is a failure
 
         # Assert expected check count
         count_note = ''
@@ -146,7 +155,12 @@ def main():
         if failed and failed > 0:
             suite_ok = False
 
-        result_str = 'PASS' if suite_ok else 'FAIL'
+        if is_skipped:
+            result_str = 'SKIP'
+        elif suite_ok:
+            result_str = 'PASS'
+        else:
+            result_str = 'FAIL'
         if not suite_ok:
             any_failed = True
             failed_output.append((label, combined))

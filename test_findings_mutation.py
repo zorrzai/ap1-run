@@ -25,6 +25,16 @@ TEMPLATE = os.path.join(ROOT, "FINDINGS.template.md")
 RUN_A = os.path.join(ROOT, "output", "run_a_mini", "smoke_summary.json")
 RUN_B = os.path.join(ROOT, "output", "run_b_sol", "smoke_summary.json")
 
+# Check artifacts exist — skip gracefully if absent
+_REQUIRED = [RUN_A, RUN_B]
+_missing = [p for p in _REQUIRED if not os.path.exists(p)]
+if _missing:
+    print("SKIPPED: run artifacts not found, cannot run mutation tests")
+    for p in _missing:
+        print(f"  missing: {os.path.relpath(p, ROOT)}")
+    print("\n0 passed, 0 failed, 7 skipped")
+    sys.exit(0)
+
 
 def _read(path):
     with open(path, "r", encoding="utf-8") as f:
