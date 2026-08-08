@@ -22,7 +22,7 @@ param(
     [switch]$DryRun
 )
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"
 
 # --- Locate the repository root ---
 $RepoRoot = git rev-parse --show-toplevel 2>&1
@@ -95,6 +95,10 @@ Write-Host "[OK] Split branch tip: $SplitTip"
 # Fetch ap1-run to get current main
 Write-Host "Fetching ap1-run..."
 git -C $ParentRoot fetch ap1-run 2>&1 | Out-Null
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "FATAL: could not fetch from ap1-run."
+    exit 1
+}
 
 git -C $ParentRoot merge-base --is-ancestor ap1-run/main ap1-run-split 2>&1
 if ($LASTEXITCODE -ne 0) {
