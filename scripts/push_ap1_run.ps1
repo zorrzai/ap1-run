@@ -37,13 +37,14 @@ $ParentRoot = $RepoRoot
 Write-Host "Repository root: $ParentRoot"
 
 # --- 1. Assert clean working tree ---
-$Status = git -C $ParentRoot status --porcelain
+# Check modified/staged only; untracked files in parent repo are expected
+$Status = git -C $ParentRoot status --porcelain -uno
 if ($Status) {
-    Write-Error "FATAL: working tree is not clean. Commit or stash first."
+    Write-Error "FATAL: working tree has uncommitted changes. Commit or stash first."
     Write-Host $Status
     exit 1
 }
-Write-Host "[OK] Working tree is clean."
+Write-Host "[OK] Working tree is clean (no uncommitted changes)."
 
 # --- 2. Assert current branch is master, origin is pilvi ---
 $Branch = git -C $ParentRoot rev-parse --abbrev-ref HEAD
