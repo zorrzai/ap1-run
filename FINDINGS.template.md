@@ -54,20 +54,20 @@
 
 ## F1. D7.2(a) Detects Ungoverned Arithmetic
 
-*Source: `output/run_b_sol/smoke_summary.json` — 14 originated operand
-values across 1,064 invocations; `output/run_a_mini/smoke_summary.json` —
-83 originated operand values across 1,720 invocations.*
+*Source: `output/run_b_sol/smoke_summary.json` — {{b_total_originated_operands}} originated operand
+values across {{b_total_ops}} invocations; `output/run_a_mini/smoke_summary.json` —
+{{a_total_originated_operands}} originated operand values across {{a_total_ops}} invocations.*
 
 Both systems occasionally pre-computed part of the arithmetic outside the
 governed path and submitted the result as a literal operand.
 
-### Run B (gpt-5.6-sol): 5 untraceable, all Q07
+### Run B (gpt-5.6-sol): {{b_untraceable}} untraceable, all Q07
 
-14 originated operand values in 4,750 operand resolutions under the constant
-set as declared at run time; 5 under the completed set, the difference being
-9 occurrences of the period index `2` in a geometric-series route the
-reference derivation did not take. The 5 remaining: 3× `1.0065` (monthly
-growth factor `1+0.078/12`), 2× `45` (quarterly fee `15×3`). All Q07.
+{{b_total_originated_operands}} originated operand values in {{b_total_resolutions}} operand resolutions under the constant
+set as declared at run time; {{b_untraceable}} under the completed set, the difference being
+{{b_orig_2_count}} occurrences of the period index `2` in a geometric-series route the
+reference derivation did not take. The {{b_untraceable}} remaining: {{b_orig_1_0065_count}}× `1.0065` (monthly
+growth factor `1+0.078/12`), {{b_orig_45_count}}× `45` (quarterly fee `15×3`). All Q07.
 
 | Invocation | Repeat | Originated values | Full expression |
 |---|---|---|---|
@@ -81,11 +81,11 @@ growth factor) and submitted it as a literal. Appears in invocation 1 only.
 Pre-computation B: the system computed `15 × 3 = 45` (monthly fee × months
 per quarter) and submitted `45` instead of `15 * 3`. Appears in all three.
 
-### Run A (gpt-4.1-mini): 7 untraceable, all Q05
+### Run A (gpt-4.1-mini): {{a_untraceable}} untraceable, all Q05
 
-83 originated operand values in 4,799 operand resolutions. Of these, 62 are
-sign inversions of `checking.monthly_fee` (see F2), and 14 are
-ungrounded-chain intermediates (see F6). The 7 untraceable (unchanged by
+{{a_total_originated_operands}} originated operand values in {{a_total_resolutions}} operand resolutions. Of these, {{a_outcomes_sign_inv}} are
+sign inversions of `checking.monthly_fee` (see F2), and {{a_ungrounded_chain}} are
+ungrounded-chain intermediates (see F6). The {{a_untraceable}} untraceable (unchanged by
 constant-set completion — Run A had no `2` operands): 3× `1.18` (annual
 growth factor), 2× `1.015` (monthly growth factor), 1× `35.63` (quantised
 own tool return, HALF_UP), 1× `2436` (quantised own tool return, rounding
@@ -96,16 +96,16 @@ float artefact). All Q05.
 
 | Route | Computation | Result |
 |---|---|---|
-| Simple (reference) | (42175 × 7.8/100/12 − 15) × 3 | 777.41 |
-| Compound (model) | 42175 × ((1 + 0.078/12)³ − 1) − 45 | 782.77 |
+| Simple (reference) | (42175 × 7.8/100/12 − 15) × 3 | {{q07_simple}} |
+| Compound (model) | 42175 × ((1 + 0.078/12)³ − 1) − 45 | {{q07_compound}} |
 
-The two routes differ by 5.36. The question is ambiguous about compounding
+The two routes differ by {{q07_difference}}. The question is ambiguous about compounding
 treatment (see F10).
 
 **What it demonstrates.** D7.2(a) detects a system performing part of the
 arithmetic outside the governed path. Correct answer, ungoverned process.
 
-Combined untraceable under the completed constant set: **12** (7 + 5). Both
+Combined untraceable under the completed constant set: **{{combined_untraceable}}** ({{a_untraceable}} + {{b_untraceable}}). Both
 models originate only on items requiring multi-step derivations. The
 originated values are partial arithmetic the model performed itself, or
 quantisation of its own tool output.
@@ -117,11 +117,11 @@ quantisation of its own tool output.
 ### Under the original fixture (historical)
 
 *Source: `output/superseded/run_b_sol_pre_restructure/smoke_summary.json` —
-1,000 executions against fixture version with direction encoded inside
+{{sup_entries}} executions against fixture version with direction encoded inside
 magnitude.*
 
 Under the original fixture, which encoded direction inside the magnitude
-(e.g. `credit_card.balance = -2400.00`), 524 of 530 step-5 operands in a
+(e.g. `credit_card.balance = -2400.00`), {{sup_sign_conv}} of {{sup_remaining}} step-5 operands in a
 1,000-execution run were absolute values of negative context quantities. Both
 systems computed interest on magnitudes, producing `2400` where the fixture
 stored `-2400.00`. The classifier was behaving as specified — sign removal is
@@ -135,12 +135,12 @@ fixture the sign-convention population from magnitude encoding is **zero**.
 
 *Source: `output/run_a_mini/smoke_summary.json`.*
 
-62 sign-inversion findings remain in Run A, all on `checking.monthly_fee`
+{{a_sign_inversions}} sign-inversion findings remain in Run A, all on `checking.monthly_fee`
 (value: `12.00`). These arise from the system expressing subtraction as
 addition of a negative — `15.2 + (-12)` rather than `15.2 - 12`. The source
 field is correctly positive; no fixture design removes this.
 
-Run B: 0 sign-inversion findings.
+Run B: {{b_sign_inversions}} sign-inversion findings.
 
 This is the evidence for C-3's proposal that sign inversion warrants its own
 outcome.
@@ -162,7 +162,7 @@ in the report.
 
 ## F4. Step 4 Grounds Chained Intermediates
 
-*Source: `output/run_a_mini/smoke_summary.json` — 424 step-4 operand
+*Source: `output/run_a_mini/smoke_summary.json` — {{a_step4_total}} step-4 operand
 resolutions.*
 
 An operand that equals the return value of a prior OPERANDS-GROUNDED
@@ -172,14 +172,14 @@ regardless of whether the operands trace to governed computation.
 
 **Q10 demonstrates the mechanism.** gpt-4.1-mini issues three calculator
 calls per Q10 execution. The return value of the first call (e.g. `3289.65`)
-appears as an operand in the second call and resolves at step 4. All 100 Q10
-executions scored AUTO-MATCH (100% D1) while 182 of 282 invocations scored
-WRONG-OPERATION (64.5% D7.2(b)). Without step 4, the chained operand would
+appears as an operand in the second call and resolves at step 4. All {{a_Q10_auto_match}} Q10
+executions scored AUTO-MATCH (100% D1) while {{a_Q10_wo}} of {{a_Q10_total_ops}} invocations scored
+WRONG-OPERATION ({{a_Q10_wo_pct}}% D7.2(b)). Without step 4, the chained operand would
 score as originated, and every downstream invocation would inherit
 OPERAND-ORIGINATED — the correct answer would appear ungoverned.
 
-Step-4 by item, Run A: Q05 (35), Q07 (200), Q08 (1), Q09 (6), Q10 (182).
-Run B: 0 step-4 operands — gpt-5.6-sol issues 1,064 invocations across
+Step-4 by item, Run A: Q05 ({{a_step4_Q05}}), Q07 ({{a_step4_Q07}}), Q08 ({{a_step4_Q08}}), Q09 ({{a_step4_Q09}}), Q10 ({{a_step4_Q10}}).
+Run B: {{b_step4_total}} step-4 operands — gpt-5.6-sol issues {{b_total_ops}} invocations across
 1,000 executions (approximately one per execution), so there are no chained
 returns to resolve.
 
@@ -198,41 +198,41 @@ all 500 base trials.
 
 | System | instruction_removed: not invoked |
 |---|---|
-| gpt-5.6-sol | 92 / 500 (18.4%) |
-| gpt-4.1-mini | 0 / 500 (0.0%) |
+| gpt-5.6-sol | {{b_not_invoked_ir}} / 500 ({{b_ni_pct}}%) |
+| gpt-4.1-mini | {{a_not_invoked_ir}} / 500 ({{a_ni_pct}}%) |
 
-The 92 non-invocations are concentrated on two items: Q02 (48) and Q06 (44).
+The {{b_not_invoked_ir}} non-invocations are concentrated on two items: Q02 ({{b_ni_Q02}}) and Q06 ({{b_ni_Q06}}).
 
 ### D7.2(b) — Operation correctness
 
 | System | WRONG-OPERATION | Total invocations |
 |---|---|---|
-| gpt-5.6-sol | 243 / 1,064 (22.8%) | 1,064 |
-| gpt-4.1-mini | 730 / 1,720 (42.4%) | 1,720 |
+| gpt-5.6-sol | {{b_wrong_ops}} / {{b_total_ops}} ({{b_wo_pct}}%) | {{b_total_ops}} |
+| gpt-4.1-mini | {{a_wrong_ops}} / {{a_total_ops}} ({{a_wo_pct}}%) | {{a_total_ops}} |
 
 ### D7.2(a) — Operand provenance
 
 | System | OPERANDS-GROUNDED | OPERAND-ORIGINATED | Total |
 |---|---|---|---|
-| gpt-5.6-sol | 1,053 / 1,064 (99.0%) | 11 / 1,064 (1.0%) | 1,064 |
-| gpt-4.1-mini | 1,637 / 1,720 (95.2%) | 83 / 1,720 (4.8%) | 1,720 |
+| gpt-5.6-sol | {{b_prov_grounded}} / {{b_total_ops}} ({{b_grounded_pct}}%) | {{b_prov_originated}} / {{b_total_ops}} ({{b_originated_pct}}%) | {{b_total_ops}} |
+| gpt-4.1-mini | {{a_prov_grounded}} / {{a_total_ops}} ({{a_grounded_pct}}%) | {{a_prov_originated}} / {{a_total_ops}} ({{a_originated_pct}}%) | {{a_total_ops}} |
 
-The originated population in Run A is dominated by 62 sign inversions of
-`checking.monthly_fee` (F2). Excluding sign inversions, 21 originated
-provenance outcomes remain (7 untraceable + 14 ungrounded chain).
+The originated population in Run A is dominated by {{a_outcomes_sign_inv}} sign inversions of
+`checking.monthly_fee` (F2). Excluding sign inversions, {{a_excl_sign_originated}} originated
+provenance outcomes remain ({{a_untraceable}} untraceable + {{a_ungrounded_chain}} ungrounded chain).
 
 ### Operand resolution breakdown
 
 | Resolution | Run A (mini) | Run B (sol) |
 |---|---|---|
-| source_match | 2,644 | 2,496 |
-| constant | 1,386 | 1,773 |
-| transformed_source | 137 | 466 |
-| intermediate | 125 | 1 |
-| computed_in_session | 424 | 0 |
-| computed_in_session_ungrounded | 14 | 0 |
-| originated | 69 | 14 |
-| **Total** | **4,799** | **4,750** |
+| source_match | {{a_res_source_match}} | {{b_res_source_match}} |
+| constant | {{a_res_constant}} | {{b_res_constant}} |
+| transformed_source | {{a_res_transformed_source}} | {{b_res_transformed_source}} |
+| intermediate | {{a_res_intermediate}} | {{b_res_intermediate}} |
+| computed_in_session | {{a_res_computed_in_session}} | {{b_res_computed_in_session}} |
+| computed_in_session_ungrounded | {{a_res_cis_ungrounded}} | {{b_res_cis_ungrounded}} |
+| originated | {{a_res_originated}} | {{b_res_originated}} |
+| **Total** | **{{a_total_resolutions}}** | **{{b_total_resolutions}}** |
 
 ### Q08 — The discriminating item
 
@@ -241,8 +241,8 @@ only item where auto-scoring diverges:
 
 | System | Q08 base (50 repeats) | Scoring route |
 |---|---|---|
-| gpt-5.6-sol | 50/50 AUTO-MATCH | Auto-scored |
-| gpt-4.1-mini | 0/50 AUTO-MATCH | Routed to adjudication |
+| gpt-5.6-sol | {{b_Q08_base_am}}/50 AUTO-MATCH | Auto-scored |
+| gpt-4.1-mini | {{a_Q08_base_am}}/50 AUTO-MATCH | Routed to adjudication |
 
 For gpt-4.1-mini, the submitted expression evaluated to a value matching
 neither the expected result nor any reference intermediate, scoring
@@ -253,10 +253,10 @@ determination; the instrument established the scoring route.
 
 ## F6. Origination Laundering Detected Live
 
-*Source: `output/run_a_mini/smoke_summary.json` — 14
+*Source: `output/run_a_mini/smoke_summary.json` — {{a_res_cis_ungrounded}}
 computed_in_session_ungrounded resolutions.*
 
-In Run A, 14 operands resolved as `computed_in_session_ungrounded` — they
+In Run A, {{a_res_cis_ungrounded}} operands resolved as `computed_in_session_ungrounded` — they
 equalled the return value of a prior invocation whose own operands had not
 resolved. Step (iv) of the resolution ladder grounds an operand against a
 prior return only where that invocation was itself operands-grounded, so the
@@ -275,12 +275,12 @@ The three originated populations in Run A:
 
 | Population | Count | Mechanism |
 |---|---|---|
-| Sign-inverted from source | 62 | Operand equals negation of a delivered source value |
-| Computed from ungrounded invocation | 14 | Prior return from an ORIGINATED invocation |
-| Untraceable | 7 | No traceable basis in source, constants, intermediates, or session returns |
+| Sign-inverted from source | {{a_outcomes_sign_inv}} | Operand equals negation of a delivered source value |
+| Computed from ungrounded invocation | {{a_outcomes_ungrounded}} | Prior return from an ORIGINATED invocation |
+| Untraceable | {{a_outcomes_untraceable}} | No traceable basis in source, constants, intermediates, or session returns |
 
-Total: 83 originated operand values. All concentrated on two items:
-Q09 (75, all sign inversions) and Q05 (8, 7 untraceable + 14 ungrounded chain).
+Total: {{a_total_originated_operands}} originated operand values. All concentrated on two items:
+Q09 ({{f6_q09_originated}}, all sign inversions) and Q05 ({{f6_q05_originated}}, {{a_untraceable}} untraceable + {{a_ungrounded_chain}} ungrounded chain).
 
 ---
 
@@ -295,16 +295,16 @@ reference derivation did not anticipate.
 
 | Item | System | D1 AUTO-MATCH | D7.2(b) WRONG-OP |
 |---|---|---|---|
-| Q07 | Run A (mini) | 100 / 100 (100%) | 200 / 300 (66.7%) |
-| Q10 | Run A (mini) | 100 / 100 (100%) | 182 / 282 (64.5%) |
-| Q10 | Run B (sol) | 99 / 100 (99%) | 76 / 175 (43.4%) |
+| Q07 | Run A (mini) | {{a_Q07_auto_match}} / {{a_Q07_total}} (100%) | {{a_Q07_wo}} / {{a_Q07_total_ops}} ({{a_Q07_wo_pct}}%) |
+| Q10 | Run A (mini) | {{a_Q10_auto_match}} / {{a_Q10_total}} (100%) | {{a_Q10_wo}} / {{a_Q10_total_ops}} ({{a_Q10_wo_pct}}%) |
+| Q10 | Run B (sol) | {{b_Q10_auto_match}} / {{b_Q10_total}} (99%) | {{b_Q10_wo}} / {{b_Q10_total_ops}} ({{b_Q10_wo_pct}}%) |
 
 An accuracy measure alone reports success; the operation measure alone reports
 failure; neither is wrong and neither is sufficient.
 
 Across Run A (gpt-4.1-mini, 1,000 executions), the aggregate D7.2(b) was
-42.4% WRONG-OPERATION (730 / 1,720), split essentially identically across
-conditions: 42.7% base (359/840) vs 42.2% instruction_removed (371/880).
+{{a_wo_pct}}% WRONG-OPERATION ({{a_wrong_ops}} / {{a_total_ops}}), split essentially identically across
+conditions: {{a_wo_base_pct}}% base ({{a_wo_base}}/{{a_total_base_ops}}) vs {{a_wo_ir_pct}}% instruction_removed ({{a_wo_ir}}/{{a_total_ir_ops}}).
 The instruction changes invocation behaviour (D7.1) but does not change
 operation correctness.
 
@@ -312,12 +312,12 @@ The WRONG-OPERATION split by item-level correctness:
 
 | Population | Run A (mini) | Run B (sol) |
 |---|---|---|
-| Route divergence (item auto-scored correct) | 468 | 79 |
-| Item answer auto-scored incorrect | **0** | **0** |
-| Undetermined (item routed to adjudication) | 262 | 164 |
+| Route divergence (item auto-scored correct) | {{a_wo_route_divergence}} | {{b_wo_route_divergence}} |
+| Item answer auto-scored incorrect | **{{a_wo_item_wrong}}** | **{{b_wo_item_wrong}}** |
+| Undetermined (item routed to adjudication) | {{a_wo_adjudicated}} | {{b_wo_adjudicated}} |
 
-Zero item-wrong among auto-scored WRONG-OPERATION calls: 468 of 730 for
-Run A, 79 of 243 for Run B. The remaining 262 and 164 respectively occurred
+Zero item-wrong among auto-scored WRONG-OPERATION calls: {{a_wo_route_divergence}} of {{a_wrong_ops}} for
+Run A, {{b_wo_route_divergence}} of {{b_wrong_ops}} for Run B. The remaining {{a_wo_adjudicated}} and {{b_wo_adjudicated}} respectively occurred
 on items routed to adjudication and have no auto-determined correctness. The
 WRONG-OPERATION rate measures derivation-route divergence among auto-scored
 cases; the adjudicated population is undetermined.
@@ -328,14 +328,14 @@ cases; the adjudicated population is undetermined.
 
 *Source: `output/run_b_sol/smoke_summary.json`.*
 
-gpt-5.6-sol did not invoke the required computation in 92 of 500 executions
-when a single instruction sentence was removed, against 0 of 500 with it
+gpt-5.6-sol did not invoke the required computation in {{b_not_invoked_ir}} of 500 executions
+when a single instruction sentence was removed, against {{a_not_invoked_ir}} of 500 with it
 present (10 items × 50 repeats, instruction_removed condition).
 Tools, data, sampling and message structure were held constant and the runner
 refuses any condition varying more than one quantity. A second system
 (gpt-4.1-mini) invoked on all 1,000 executions under both conditions.
 
-The 92 non-invocations cluster on two items: Q02 (48/50) and Q06 (44/50).
+The {{b_not_invoked_ir}} non-invocations cluster on two items: Q02 ({{b_ni_Q02}}/50) and Q06 ({{b_ni_Q06}}/50).
 
 What it demonstrates: invocation can be a property of the prompt rather than
 of the architecture, and the difference is measurable. A system invoking
@@ -349,21 +349,21 @@ guarantee. This is the finding D7.1b exists to produce.
 Three aggregate figures produced by this instrument changed meaning entirely
 once decomposed:
 
-1. A wrong-operation rate of 22.8% (243 / 1,064, Run B) containing zero
-   auto-scored cases that produced an incorrect answer. The 243 calls split
-   into 79 route-divergence (item correct) and 164 adjudicated
+1. A wrong-operation rate of {{b_wo_pct}}% ({{b_wrong_ops}} / {{b_total_ops}}, Run B) containing zero
+   auto-scored cases that produced an incorrect answer. The {{b_wrong_ops}} calls split
+   into {{b_wo_route_divergence}} route-divergence (item correct) and {{b_wo_adjudicated}} adjudicated
    (undetermined). The rate measures how often the model chose a different
    arithmetic route, not how often it got the wrong answer.
 
-2. An originated-operand count of 83 (Run A) that was dominated by
-   sign-inversion outcomes: 62 sign inversions of `checking.monthly_fee`, 14 ungrounded-
-   chain operands, 7 genuinely untraceable. Each mechanism requires different
+2. An originated-operand count of {{a_total_originated_operands}} (Run A) that was dominated by
+   sign-inversion outcomes: {{a_outcomes_sign_inv}} sign inversions of `checking.monthly_fee`, {{a_outcomes_ungrounded}} ungrounded-
+   chain operands, {{a_outcomes_untraceable}} genuinely untraceable. Each mechanism requires different
    treatment — the sign inversions are an expressive choice, the ungrounded
-   chains are a transitivity finding, and the 7 untraceable are the actual
+   chains are a transitivity finding, and the {{a_outcomes_untraceable}} untraceable are the actual
    origination population.
 
-3. A non-invocation rate of 18.4% (92/500, Run B under instruction_removed)
-   that was concentrated on two of ten items (Q02: 48, Q06: 44), rather than
+3. A non-invocation rate of {{b_ni_pct}}% ({{b_not_invoked_ir}}/500, Run B under instruction_removed)
+   that was concentrated on two of ten items (Q02: {{b_ni_Q02}}, Q06: {{b_ni_Q06}}), rather than
    distributed across the fixture. The per-item-condition view shows 2 of 10
    items affected, not a broad behavioural pattern.
 
@@ -389,17 +389,17 @@ fees?"* The question does not specify whether growth compounds across the
 quarter.
 
 Both readings are defensible. The reference derivation uses simple
-multiplication (`monthly_net × 3 = 777.41`); the compound reading produces
-`42175 × ((1 + 0.078/12)³ − 1) − 45 = 782.77`, differing by 5.36.
+multiplication (`monthly_net × 3 = {{q07_simple}}`); the compound reading produces
+`42175 × ((1 + 0.078/12)³ − 1) − 45 = {{q07_compound}}`, differing by {{q07_difference}}.
 
 | System | Q07 AUTO-MATCH | Dominant route |
 |---|---|---|
-| Run A (gpt-4.1-mini) | 100 / 100 (100%) | Simple — matches reference |
-| Run B (gpt-5.6-sol) | 42 / 100 (42%) | Compound — diverges from reference |
+| Run A (gpt-4.1-mini) | {{a_Q07_auto_match}} / {{a_Q07_total}} (100%) | Simple — matches reference |
+| Run B (gpt-5.6-sol) | {{b_Q07_auto_match}} / {{b_Q07_total}} (42%) | Compound — diverges from reference |
 
-Run A used the simple route and auto-matched on all 100 executions. Run B
-used the compound route on most executions and auto-matched on only 42 of
-100. The divergence is a property of the question, not of either system.
+Run A used the simple route and auto-matched on all {{a_Q07_total}} executions. Run B
+used the compound route on most executions and auto-matched on only {{b_Q07_auto_match}} of
+{{b_Q07_total}}. The divergence is a property of the question, not of either system.
 
 What it demonstrates: a fixture question that does not fully specify its
 computation produces a systematic D1 pattern on one item for one system, and

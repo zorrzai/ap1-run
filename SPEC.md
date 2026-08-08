@@ -930,13 +930,19 @@ specification**, to be added as a module contract (M4.2 or M0.4):
 Without (c), Certanum's token is `EV-1 SELF-REPORTED` and ranks below an
 ordinary provider record. With (c), it is `EV-3` and is admissible as
 structural evidence under AP-1 §6.3(b). **The verification material is what
-converts the architecture's strongest feature into evidence.**
+allows an independent party to establish that the attestation existed, was
+signed by the declared key, and has not been altered.** It does not establish
+that the attestation truthfully describes what executed — see C-15 in the
+publisher's comment. Without the verification material the token is EV-1 and
+ranks below an ordinary provider record; with it, the token's integrity is
+checkable and its semantic accuracy remains an open question the standard does
+not currently resolve.
 
 ### 11.2 Evidence available per system
 
 | Measurement | Generic endpoint | Certanum with assessment surface |
 |---|---|---|
-| D7.1 invocation | `EV-2` platform tool-call record | `EV-3` verified provenance token |
+| D7.1 invocation | `EV-2` platform tool-call record | `EV-3` provenance token, signature and ledger verified |
 | D7.2 operands | Arguments resolved against source and intermediates | Operand provenance references in the verified token |
 | D7.3 transcription | Compared via R2.0 identification | Result hash verified by M2.5 before release |
 | D2 mechanism | Observed; class operator-declared | STRUCTURAL for figures, CONFIGURED for prose |
@@ -1053,7 +1059,10 @@ a module-level constant definition, not added logic.
 | `example/ground_truth_example.py` | 579 | Example / demonstration |
 | `example/calculator_tool.py` | 209 | Example / demonstration |
 | `verify_*.py` | varies | Verification test suites |
-| `run_all_tests.py` | 200 | Test runner |
+| `verify_findings.py` | 62 | Findings reconciliation guard |
+| `generate_findings.py` | 410 | FINDINGS.md generator from artifacts |
+| `test_findings_mutation.py` | 186 | Mutation tests for findings pipeline |
+| `run_all_tests.py` | 202 | Test runner |
 
 **Research questions are not held in this document.** Those on which the field
 has no settled answer are put to reviewers in AP-1 v1.3 §14. The standard asks;

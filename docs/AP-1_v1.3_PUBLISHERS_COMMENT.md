@@ -1,4 +1,4 @@
-# AP-1 v1.3 — Publisher’s Comment
+# AP-1 v1.3 — Publisher's Comment
 
 **Filed by the publisher into the comment record for AP-1 v1.3**
 **ZORRZ Financial Inc. · 5 August 2026**
@@ -9,7 +9,7 @@
 
 AP-1 v1.3 is published as a draft for public comment. The comment window closes **30 September 2026**. Under §10.5.1, every substantive comment is dispositioned in public — accepted, rejected or deferred, with reasoning — before adoption.
 
-**This is a comment filed by the publisher.** It records defects and omissions identified in v1.3 after publication, by the author, through applying the standard rather than reading it. Each is stated here for disposition alongside comments received from others, and each is resolved in **v1.4** after the window closes.
+**This is a comment filed by the publisher.** It records defects and omissions identified in v1.3 after publication — by applying the standard, by reviewing related work, and by adversarial review. Each is stated here for disposition alongside comments received from others, and each is resolved in **v1.4** after the window closes.
 
 **v1.3 is not edited.** §0.4 states that prior versions remain permanently citable and are not silently altered. A published version whose text changes after deposit is not a version.
 
@@ -19,19 +19,19 @@ Comments C-1 through C-8 and C-10 arise from constructing and executing the refe
 
 ## C-1 · D7.5 specifies a bound it does not supply
 
-**Clause.** D7.5 requires that *“any invocation figure, including 100%, shall be reported with n and with the exact one-sided 95% upper confidence bound on the failure rate”*, then supplies `p_upper = 1 − α^(1/n)`.
+**Clause.** D7.5 requires that *"any invocation figure, including 100%, shall be reported with n and with the exact one-sided 95% upper confidence bound on the failure rate"*, then supplies `p_upper = 1 − α^(1/n)`.
 
 **Defect.** That formula is the Clopper–Pearson bound at **zero** failures. The requirement is stated over *any* figure. For non-zero failure counts the bound requires the Beta quantile, which the clause does not specify.
 
 **Effect.** An implementer must either compute a bound the standard does not define, or report none and be non-conformant on a literal reading.
 
-**Proposed resolution for v1.4.** Restrict the requirement to zero-failure results, where the reported figure would otherwise be read as certainty, and state that non-zero counts are reported as a rate with n. Alternatively, specify the general Clopper–Pearson form. The first is preferred: the clause exists to prevent “100%” being read as impossibility, and that is the zero-failure case.
+**Proposed resolution for v1.4.** Restrict the requirement to zero-failure results, where the reported figure would otherwise be read as certainty, and state that non-zero counts are reported as a rate with n. Alternatively, specify the general Clopper–Pearson form. The first is preferred: the clause exists to prevent "100%" being read as impossibility, and that is the zero-failure case.
 
 ---
 
 ## C-2 · The resolution ladder has no place for declared constants
 
-**Clause.** D7.2(a) step (i) covers *“a value present in the source data delivered for that item.”*
+**Clause.** D7.2(a) step (i) covers *"a value present in the source data delivered for that item."*
 
 **Defect.** A constant declared in the ground-truth module — 12 for months in a year, 3 for a quarter, 100 for percentage conversion, 1 as the multiplicative identity in compound-interest form — is not in the delivered source data and matches no step. Every such operand resolves as originated.
 
@@ -51,7 +51,7 @@ Comments C-1 through C-8 and C-10 arise from constructing and executing the refe
 
 **Evidence.** Two mechanisms produce it, and only one is removable by fixture design.
 
-A fixture encoding direction inside a magnitude — storing a liability as `-2400.00` — produces near-total false origination when a system computes interest on the magnitude. Observed: **524 of 530 step-5 operands** in a 1,000-execution run. Restructuring the fixture to represent magnitude and direction as separate fields removes it, consistent with how PDS4 represents quantities.
+A fixture encoding direction inside a magnitude — storing a liability as `−2400.00` — produces near-total false origination when a system computes interest on the magnitude. Observed: **524 of 530 step-5 operands** in a 1,000-execution run. Restructuring the fixture to represent magnitude and direction as separate fields removes it, consistent with how PDS4 represents quantities.
 
 But a system expressing subtraction as addition of a negative — `15.2 + (−12)` rather than `15.2 − 12` — produces the same classification from a source field that is correctly positive. **No fixture design removes this.** Observed after restructuring: 62 operands across 1,000 executions.
 
@@ -61,7 +61,7 @@ But a system expressing subtraction as addition of a negative — `15.2 + (−12
 
 ## C-4 · Step (iv) permits no quantisation where step (iii) does
 
-**Clause.** D7.2(a) step (iii) grounds a reference intermediate *“quantised under the declared policy”*, recording a quantisation finding. Step (iv) requires exact equality with a prior invocation’s return value.
+**Clause.** D7.2(a) step (iii) grounds a reference intermediate *"quantised under the declared policy"*, recording a quantisation finding. Step (iv) requires exact equality with a prior invocation's return value.
 
 **Defect.** A system that receives `35.625` from a computation and submits `35.63` to the next call — standard commercial rounding — scores originated, indistinguishable from a fabricated value.
 
@@ -87,13 +87,13 @@ But a system expressing subtraction as addition of a negative — `15.2 + (−12
 
 **Clause.** D7.2(b) operation correctness.
 
-**Defect.** The sub-measure resolves a submitted expression’s result against the expected value or a reference intermediate. For a multi-step derivation, a system taking a valid alternative route produces intermediates matching no reference intermediate, and every such call scores WRONG-OPERATION.
+**Defect.** The sub-measure resolves a submitted expression's result against the expected value or a reference intermediate. For a multi-step derivation, a system taking a valid alternative route produces intermediates matching no reference intermediate, and every such call scores WRONG-OPERATION.
 
 **Evidence.** On two fixture items, **100% of released figures were correct while 65–67% of invocations scored WRONG-OPERATION**. Across a 1,000-execution run the aggregate was 42.4%, essentially identical under both instruction conditions. Across two systems and 973 WRONG-OPERATION calls, **zero produced an incorrect released figure**.
 
 **Effect.** The aggregate does not distinguish a system applying wrong arithmetic from one reaching a correct result by an unanticipated path. The second is not a defect.
 
-**Proposed resolution for v1.4.** Either D7.2(b) gains an outcome for route divergence, or the standard states that it is meaningful only on the invocation producing the released figure. The reference implementation splits the reported outcome by whether the item’s released figure was correct.
+**Proposed resolution for v1.4.** Either D7.2(b) gains an outcome for route divergence, or the standard states that it is meaningful only on the invocation producing the released figure. The reference implementation splits the reported outcome by whether the item's released figure was correct.
 
 ---
 
@@ -103,7 +103,7 @@ But a system expressing subtraction as addition of a negative — `15.2 + (−12
 
 **Defect.** The standard is silent on what a fixture revision does to results already obtained. It is not the same as burning a set.
 
-**Evidence.** Attempting to re-score stored transcripts against a revised fixture raised one system’s apparent origination rate from 19.0% to 38.2%. The systems had been given the earlier values in context and their expressions reflected what they received. The re-scoring measured the fixture revision, not the system.
+**Evidence.** Attempting to re-score stored transcripts against a revised fixture raised one system's apparent origination rate from 19.0% to 38.2%. The systems had been given the earlier values in context and their expressions reflected what they received. The re-scoring measured the fixture revision, not the system.
 
 **The distinction, which the standard should draw.** Transcripts are portable across **scoring** changes and not across **fixture** changes. A change to the declared constant set, the permitted transformations, or the ground-truth derivation alters how a stored response is scored, and re-analysis is valid. A change to the fixture alters what the system was given, and re-execution is required.
 
@@ -130,8 +130,8 @@ But a system expressing subtraction as addition of a negative — `15.2 + (−12
 **Defect.** A body of work on parameter-level provenance in tool-using agents predates or closely follows v1.3 and is not cited.
 
 - **Agent-Sentry** (arXiv:2603.22868) records a provenance graph capturing where every tool argument value came from, and learns the structural and provenance patterns of legitimate execution.
-- **AuthGraph** (arXiv:2605.26497) states that it is *“the first agent security defense to structurally compare authorization specifications against execution provenance at the parameter-source level.”*
-- **Auditing Provenance Sensitivity in LLM Agent Action Selection** (arXiv:2607.20827) opens on a premise adjacent to AP-1’s: *“evidence can be relevant without being authorized to determine a decision, so a correct action need not be grounded only in permitted evidence.”*
+- **AuthGraph** (arXiv:2605.26497) states that it is *"the first agent security defense to structurally compare authorization specifications against execution provenance at the parameter-source level."*
+- **Auditing Provenance Sensitivity in LLM Agent Action Selection** (arXiv:2607.20827) opens on a premise adjacent to AP-1's: *"evidence can be relevant without being authorized to determine a decision, so a correct action need not be grounded only in permitted evidence."*
 - **From Agent Traces to Trust** (arXiv:2606.04990) surveys the area and formalises parameter-level as a distinct tracing granularity.
 - **FIDES** (arXiv:2505.23643), **CaMeL** (arXiv:2503.18813) and **NeuroTaint** (2026) apply information-flow control and taint tracking to constrain how untrusted data influences tool arguments.
 
@@ -147,7 +147,7 @@ A figure the model fabricated passes every information-flow check, because taint
 
 ## C-10 · D7.2(a) does not distinguish a wrong source field from no source
 
-**Clause.** D7.2(a) step (i) — *“a value present in the source data delivered for that item.”*
+**Clause.** D7.2(a) step (i) — *"a value present in the source data delivered for that item."*
 
 **Defect.** An operand that matches a delivered source field resolves as grounded even where the reference derivation required a different field. The clause asks whether the operand traces to source, and it does. It does not ask whether the correct source was selected.
 
@@ -161,13 +161,85 @@ A figure the model fabricated passes every information-flow check, because taint
 
 ---
 
+## C-11 · §1.2(a) prescribes an architecture inside a definition
+
+**Clause.** §1.2(a) — a figure is admissible only if *"derived by deterministic calculation from source data, not generated by a language model."*
+
+**Defect.** This places an architectural constraint inside the definition of the property being measured, and §0.5 states the opposite: *"AP-1 prescribes no implementation... favours no vendor, no architecture, and no model."*
+
+**The consequence is worse than the contradiction.** §2.5 invites any party to refute the standard's claim by demonstrating a generative system that clears every defeat condition. But a system clearing (a) through (e) would **still** produce inadmissible figures under §1.2(a), because the definition excludes generation by construction. The hypothesis cannot be tested against a definition that presupposes its answer.
+
+**Proposed resolution for v1.4.** Restate §1.2(a) in terms of the property rather than the mechanism: a figure is computed where it is the output of a deterministic operation over identified inputs, whatever produced that operation. The prohibition on language-model generation then follows as an empirical finding where it holds, rather than as a definitional axiom.
+
+---
+
+## C-12 · §2.5's defeat condition cannot be satisfied
+
+**Clause.** §2.5 (a) — invocation *"guaranteed rather than observed... by generative means alone, without any deterministic containment mechanism."*
+
+**Defect.** D7.5 states that no observed rate, including 100% at any n, establishes a guarantee, and that *"only the structural evidence of §6.3(b) converts an estimate into a control claim."* §6.3(b) requires a named architectural mechanism making origination unrepresentable — which is deterministic containment, the thing §2.5(a) excludes.
+
+**The refutation route is closed by the standard's own machinery.** Condition (e) compounds it: *"zero origination"* across finite samples, where D5's minimum of 20 items yields an upper bound near 14% on a sample zero.
+
+**Effect.** The invitation to refute is generous in tone and empty in logic. A standard that names its own defeat condition and then forecloses it has not named a defeat condition.
+
+**Proposed resolution for v1.4.** Restate (a) as an evidentiary threshold achievable in principle — for example, invocation established at `EV-2` or better across a stated n with the bound reported — or withdraw the falsifiability claim. The second is preferable to a claim that cannot be met.
+
+---
+
+## C-13 · AP-1 defines no pass criterion for any dimension
+
+**Clause.** §4 forbids omitting a dimension. §0.4 governs *"claims of compliance."* §0.4.1's point-release test turns on whether *"pass criteria"* changed.
+
+**Defect.** No clause states what passing any dimension means. D1 gives no accuracy threshold. D2 does not say whether OBSERVED-ONLY passes. D3 gives no required proportion of VERIFIABLE traces. D4 and D6 define item-level failure and not dimension-level failure — one capitulation in how many. D7.5 states explicitly that no rate suffices.
+
+**Effect.** Two implementers running identical evaluations would produce identical numbers and opposite conformance verdicts. And §0.4's versioning rule cannot be applied to criteria that do not exist.
+
+**Proposed resolution for v1.4.** Either state a pass criterion per dimension, or state explicitly that AP-1 defines no pass criterion and produces a profile for a supervisor to judge — which is what §6.2 and the reference implementation actually do. The second is the honest position and it should be said rather than left to inference.
+
+---
+
+## C-14 · "Origination" carries three incompatible definitions
+
+**Clause.** §2.1, §6.8, and §6.8's composition rule.
+
+**Defect.**
+
+- **§2.1:** a value *"not computed from source data"* — which captures verbatim retrieval of a source value.
+- **§6.8:** ORIGINATED means *"no basis in source data or in any computation"* — which excludes retrieval, and gives retrieval its own outcome, RETRIEVED.
+- **§6.8's composition rule:** a computed answer resting on one originated operand is scored ORIGINATED — an answer that does rest on a computation, contradicting the same section's definition of the label.
+
+**Effect.** The standard's central failure mode has three mutually inconsistent extensions. Every clause depending on the term inherits the ambiguity.
+
+**Proposed resolution for v1.4.** One definition, stated once, with the outcome vocabulary in §6.8 as the operative form. The composition rule needs its own name — a computed result over an originated operand is neither pure origination nor a clean computation, and calling it ORIGINATED overloads the term.
+
+---
+
+## C-15 · EV-3 does not cure self-report either
+
+**Clause.** D7.7's evidence hierarchy, and its rationale: *"a signature does not cure self-report: the signer is the party being measured."*
+
+**Defect.** EV-3 verification consists of a valid signature against a pre-sealed key plus ledger membership under an external anchor. Both establish that the attestation existed, was signed by the declared key, and has not been altered since. **Neither establishes that the attestation truthfully describes what executed.**
+
+The token's content is still generated by the system under test about itself. The standard's own argument for demoting EV-1 applies one level up: cryptographic integrity is not semantic truth.
+
+**Effect.** EV-3 is admissible as structural evidence under §6.3(b) and ranks above a third-party platform record. On this reading it is EV-1 with better packaging.
+
+**Proposed resolution for v1.4.** Either require that an EV-3 attestation be verifiable *computation* — deterministic replay, re-execution against the recorded operands, or a cryptographic proof of the computation itself — or demote it to a class that claims integrity and timing rather than truthful description. The current definition claims more than its verification establishes.
+
+---
+
 ## Note on origin
 
 Comments C-1 through C-8 and C-10 were identified by building the reference implementation and executing it against live systems. None was anticipated when v1.3 was drafted. Each was found because the standard was applied rather than read.
 
 C-9 was identified by a review of related work conducted after publication.
 
-That these are the first entries in v1.3’s comment record is intentional. A standard whose author does not find defects in it has not applied it.
+**C-11 through C-15 were identified by an adversarial review**, in which an independent language model was asked to examine the standard as a mission-assurance reviewer whose reputation would attach to approving it, and instructed to find what was wrong rather than to summarise. Four of the five concern definitions the author had read many times without noticing they were incompatible.
+
+That these are the first entries in v1.3's comment record is intentional. A standard whose author does not find defects in it has not applied it — and one whose author does not seek adversarial review has not tried.
+
+**C-11, C-12, C-13 and C-14 are load-bearing.** They concern the definition of admissibility, the falsifiability of the central claim, the absence of any pass criterion, and the meaning of the term the standard exists to measure. Every clause downstream inherits them. They are recorded here for disposition and resolved in v1.4; a reader should treat the affected clauses as under revision.
 
 ---
 

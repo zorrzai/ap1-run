@@ -101,7 +101,7 @@ Running the test suites requires none of this — they are offline.
 git clone <this repo>
 cd ap1-run
 pip install requests
-python run_all_tests.py       # 10 suites, 201 functions, 367 checks — offline
+python run_all_tests.py       # offline, reports its own totals
 ```
 
 Then run the worked example against your own endpoint:
@@ -188,10 +188,16 @@ Graded by independence and verifiability, never by richness or format:
 | `EV-0` | No signal available | No |
 | `EV-1` | The system's own report about itself, unverified — **including a signed attestation whose signature was not checked** | No |
 | `EV-2` | A tool-call record from the serving layer, a third party to the model | Yes, as an observed rate |
-| `EV-3` | An attestation verified against a pre-sealed key and an anchored ledger | Yes |
+| `EV-3` | An attestation verified against a pre-sealed key and an anchored ledger | Yes, per the standard — but see C-15 |
 
 **A signature does not cure self-report: the signer is the party being
 measured.** `EV-1` ranks below `EV-2`.
+
+The standard treats a verified attestation as admissible structural
+evidence. The publisher has filed C-15 against that definition: signature
+validity and ledger membership establish that an attestation existed
+unaltered, not that it truthfully describes what executed. The runner
+cannot emit EV-3 in any case.
 
 **`EV-3` is defined but not implemented in this version.** The runner cannot
 emit it, and a module-level guard raises if any code path attempts to construct
