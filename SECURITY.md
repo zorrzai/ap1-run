@@ -16,8 +16,7 @@ for.
 configuration.**
 
 There is no telemetry, no analytics, no usage reporting, no licence check, no
-update check, and no hosted component. Nothing is transmitted to ZORRZ
-Financial Inc. or to any third party at any time.
+update check, and no hosted component. Nothing is transmitted to ZORRZ or to any third party at any time.
 
 The scoring pass makes no network call at all. It reads the transcript
 produced by the execution pass and the sealed inputs, and writes a report.

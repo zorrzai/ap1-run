@@ -7,7 +7,7 @@ for external technical review.
 
 System: a reference execution and scoring instrument for The Admissibility
 Protocol. Model-, vendor- and domain-agnostic. Designed to be executed by a
-third party, against a system ZORRZ Financial Inc. has never seen, without
+third party, against a system ZORRZ has never seen, without
 ZORRZ involvement.
 
 Companion material: AP-1 v1.3 draft-for-comment (28 July 2026); Certanum —
@@ -951,7 +951,7 @@ not currently resolve.
 higher class for the same measurement, and it does so **only when it supplies
 the material that lets an independent party verify the claim**. The report
 states the class rather than scoring it higher. That distinction is what
-allows ZORRZ Financial Inc. to author both without AP-1 becoming an
+allows ZORRZ to author both without AP-1 becoming an
 advertisement.
 
 ---
