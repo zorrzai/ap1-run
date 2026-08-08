@@ -62,7 +62,7 @@ second, taken from a live run against a frontier model.
 
 **One dependency:** `requests`. Everything else is standard library.
 
-**Operating system:** Linux, macOS or Windows. The instrument and all ten test
+**Operating system:** Linux, macOS or Windows. The instrument and all twelve test
 suites are platform-independent — no OS-specific calls exist in any instrument
 module.
 
@@ -99,7 +99,7 @@ Running the test suites requires none of this — they are offline.
 
 ```bash
 git clone <this repo>
-cd ap1-run
+cd <clone directory>
 pip install requests
 python run_all_tests.py       # offline, reports its own totals
 ```
@@ -349,9 +349,10 @@ example/                 a worked fixture, questions, ground truth and config
 reference/               the sealed AP-1 text
 ```
 
-Instrument modules are kept at or under 300 lines so a reviewer can read the
-instrument in an afternoon. One declared exception, recorded in the build
-specification with its reasoning.
+Instrument modules are kept at or under 300 lines so a reviewer can read
+the instrument in an afternoon, with one declared exception recorded in
+the build specification. Test suites, the worked example and the smoke
+test sit outside that constraint by design and are longer.
 
 Full architecture, verification contracts per module, threat model and
 conformance mapping: [`SPEC.md`](SPEC.md).
