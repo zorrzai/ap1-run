@@ -3,8 +3,14 @@
 GATES THE WRAPPER. Same fixture through both paths, assert identical
 outcomes on every item and every dimension.
 
-SKIPS with a stated reason when ap1_inspect is not built, so
-run_all_tests.py passes in environments without the wrapper.
+Test structure:
+  test_shim_unit -- MockTC round-trip. Runs when wrapper is built.
+      Tests shim field access. Does NOT require inspect-ai.
+  test_inspect_wrapper_agrees_with_runner -- THE GATING TEST.
+      REQUIRES inspect-ai. Uses real inspect_ai.tool.ToolCall objects.
+      SKIPS with reason when inspect-ai is not importable.
+  test_seal_refusal_on_wrong_hash -- Seal enforcement.
+      Runs when wrapper is built.
 
 FAILS naming the item and dimension on any disagreement.
 """
@@ -32,6 +38,14 @@ import ground_truth_example as gt_module
 WRAPPER_EXISTS = os.path.exists(
     os.path.join(_RUNNER_DIR, 'ap1_inspect', 'shim.py'))
 
+try:
+    import inspect_ai
+    HAS_INSPECT = True
+    INSPECT_VERSION = getattr(inspect_ai, '__version__', 'unknown')
+except ImportError:
+    HAS_INSPECT = False
+    INSPECT_VERSION = None
+
 
 def _build_mock_scenario(item_id, fixture, questions, config):
     """Build a mock scenario for one item."""
@@ -57,7 +71,6 @@ def _build_mock_scenario(item_id, fixture, questions, config):
         },
     }]
 
-    # Build a final response dict as engine.py would produce
     final_text = f'The answer is {expected}.'
     final_response = {
         'choices': [{
@@ -182,10 +195,18 @@ class TestInspectWrapperAgreement(unittest.TestCase):
                     r_prov.get(key), o_prov.get(key),
                     f'DISAGREE on {item_id}/provenance/{key}')
 
+    # ------------------------------------------------------------------
+    # Test 1: Shim unit test — MockTC objects, no inspect-ai required
+    # ------------------------------------------------------------------
     @unittest.skipUnless(WRAPPER_EXISTS,
-        'ap1_inspect wrapper not built -- skipping shim test')
-    def test_shim_round_trip(self):
-        """Tool calls survive shim conversion identically."""
+        'ap1_inspect wrapper not built -- skipping shim unit test')
+    def test_shim_unit(self):
+        """Shim field-access round-trip using MockTC objects.
+
+        Does NOT require inspect-ai. Tests only that the shim's
+        inspect_tc_to_runner function correctly maps field names.
+        This is a unit test of the shim, not an agreement test.
+        """
         from ap1_inspect.shim import inspect_tc_to_runner
 
         tc = {'turn': 1, 'id': 'call_1', 'type': 'function',
@@ -206,14 +227,22 @@ class TestInspectWrapperAgreement(unittest.TestCase):
             json.loads(result['function']['arguments']),
             json.loads(tc['function']['arguments']))
 
+    # ------------------------------------------------------------------
+    # Test 2: Agreement test — REQUIRES inspect-ai
+    # ------------------------------------------------------------------
     @unittest.skipUnless(WRAPPER_EXISTS,
         'ap1_inspect wrapper not built -- skipping agreement test')
+    @unittest.skipUnless(HAS_INSPECT,
+        'inspect-ai is not installed -- agreement test requires '
+        'inspect-ai to construct real ToolCall objects')
     def test_inspect_wrapper_agrees_with_runner(self):
         """Same fixture, both paths, identical outcomes on every
         item and every dimension.
 
-        THE GATING TEST.
+        THE GATING TEST. Uses real inspect_ai.tool.ToolCall objects,
+        not MockTC. If inspect-ai is absent, this test SKIPS.
         """
+        from inspect_ai.tool import ToolCall
         from ap1_inspect.shim import inspect_tc_to_runner, build_final_response
 
         tested = 0
@@ -229,19 +258,17 @@ class TestInspectWrapperAgreement(unittest.TestCase):
                 scenario, scenario['tool_calls'],
                 scenario['final_response'])
 
-            # Path B: through shim round-trip
-            class MockTC:
-                pass
-
+            # Path B: through real Inspect ToolCall objects
             shimmed = []
             for tc in scenario['tool_calls']:
-                mtc = MockTC()
-                mtc.id = tc['id']
-                mtc.function = tc['function']['name']
-                mtc.arguments = json.loads(tc['function']['arguments'])
-                mtc.type = tc.get('type', 'function')
+                real_tc = ToolCall(
+                    id=tc['id'],
+                    function=tc['function']['name'],
+                    arguments=json.loads(tc['function']['arguments']),
+                    type=tc.get('type', 'function'),
+                )
                 shimmed.append(
-                    inspect_tc_to_runner(mtc, turn=tc['turn']))
+                    inspect_tc_to_runner(real_tc, turn=tc['turn']))
 
             # Build final response via shim
             shim_response = build_final_response(
@@ -249,12 +276,15 @@ class TestInspectWrapperAgreement(unittest.TestCase):
 
             shim_r = _classify(scenario, shimmed, shim_response)
 
-            self._compare(item_id, runner_r, shim_r, 'shim')
+            self._compare(item_id, runner_r, shim_r, 'inspect')
             tested += 1
 
         self.assertGreater(tested, 0,
             'No items tested -- fixture may be empty')
 
+    # ------------------------------------------------------------------
+    # Test 3: Seal enforcement
+    # ------------------------------------------------------------------
     @unittest.skipUnless(WRAPPER_EXISTS,
         'ap1_inspect wrapper not built -- skipping seal test')
     def test_seal_refusal_on_wrong_hash(self):

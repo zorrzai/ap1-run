@@ -59,9 +59,6 @@ These are stated plainly before anyone finds them:
   epoch scores. Run with `epochs=N` and use `--no-epochs-reducer` to preserve
   per-epoch scores for D2 classification.
 
-- **The instruction-removal result** — the strongest finding this instrument
-  has produced — requires both conditions and therefore both eval runs.
-
 ## Architecture
 
 ```
