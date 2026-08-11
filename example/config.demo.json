@@ -5,7 +5,7 @@
     "temperature": {
       "value": "omitted",
       "reason": "platform-rejected",
-      "detail": "gpt-5.5 returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported."
+      "detail": "OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported."
     },
     "top_p": {
       "value": "omitted",
