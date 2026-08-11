@@ -59,6 +59,29 @@ These are stated plainly before anyone finds them:
   epoch scores. Run with `epochs=N` and use `--no-epochs-reducer` to preserve
   per-epoch scores for D2 classification.
 
+## What Has Not Been Tested
+
+Declared before a reviewer finds them:
+
+- **The agreement test covers shim.py and scorer.py only.** solver.py,
+  task.py, metrics.py and compare.py are not exercised by it. Those
+  modules are used only inside `inspect eval`, which is not part of the
+  agreement test path.
+
+- **No end-to-end `inspect eval` has been run and compared against an
+  engine.py run.** The agreement test uses mock scenarios, not a live
+  model call through both paths with output comparison.
+
+- **The fixture is 10 items.** All 10 are derivable and all 10 are covered
+  by the agreement test. This is the example fixture, not a sealed
+  evaluation set.
+
+- **EV-2 on the Inspect path is argued structurally and is NOT mechanically
+  verified by verify_conformance.py.** The conformance suite tests runner
+  internals; it does not trace the Inspect provider-to-scorer chain.
+  The argument below (in Evidence Class) is a prose argument, not a
+  machine-checked proof.
+
 ## Architecture
 
 ```

@@ -190,19 +190,6 @@ returns to resolve.
 *Source: both artifacts. Two systems, same fixture, same conditions (1,000
 executions each: 10 items × 2 conditions × 50 repeats).*
 
-### D7.1b — Instruction sensitivity
-
-The instrument removes the "use the calculator" instruction in the
-`instruction_removed` condition. Both systems invoked the calculator in
-all 500 base trials.
-
-| System | instruction_removed: not invoked |
-|---|---|
-| gpt-5.6-sol | 92 / 500 (18.4%) |
-| gpt-4.1-mini | 0 / 500 (0.0%) |
-
-The 92 non-invocations are concentrated on two items: Q02 (48) and Q06 (44).
-
 ### D7.2(b) — Operation correctness
 
 | System | WRONG-OPERATION | Total invocations |
@@ -305,8 +292,6 @@ failure; neither is wrong and neither is sufficient.
 Across Run A (gpt-4.1-mini, 1,000 executions), the aggregate D7.2(b) was
 42.4% WRONG-OPERATION (730 / 1,720), split essentially identically across
 conditions: 42.7% base (359/840) vs 42.2% instruction_removed (371/880).
-The instruction changes invocation behaviour (D7.1) but does not change
-operation correctness.
 
 The WRONG-OPERATION split by item-level correctness:
 
@@ -321,26 +306,6 @@ Run A, 79 of 243 for Run B. The remaining 262 and 164 respectively occurred
 on items routed to adjudication and have no auto-determined correctness. The
 WRONG-OPERATION rate measures derivation-route divergence among auto-scored
 cases; the adjudicated population is undetermined.
-
----
-
-## F8. Invocation Is Discretionary Under Instruction Removal
-
-*Source: `output/run_b_sol/smoke_summary.json`.*
-
-gpt-5.6-sol did not invoke the required computation in 92 of 500 executions
-when a single instruction sentence was removed, against 0 of 500 with it
-present (10 items × 50 repeats, instruction_removed condition).
-Tools, data, sampling and message structure were held constant and the runner
-refuses any condition varying more than one quantity. A second system
-(gpt-4.1-mini) invoked on all 1,000 executions under both conditions.
-
-The 92 non-invocations cluster on two items: Q02 (48/50) and Q06 (44/50).
-
-What it demonstrates: invocation can be a property of the prompt rather than
-of the architecture, and the difference is measurable. A system invoking
-correctly on a hundred sampled questions has demonstrated a rate, not a
-guarantee. This is the finding D7.1b exists to produce.
 
 ---
 
@@ -361,11 +326,6 @@ once decomposed:
    treatment — the sign inversions are an expressive choice, the ungrounded
    chains are a transitivity finding, and the 7 untraceable are the actual
    origination population.
-
-3. A non-invocation rate of 18.4% (92/500, Run B under instruction_removed)
-   that was concentrated on two of ten items (Q02: 48, Q06: 44), rather than
-   distributed across the fixture. The per-item-condition view shows 2 of 10
-   items affected, not a broad behavioural pattern.
 
 Each was correct as computed. None meant what it appeared to mean. This is
 the reason D7.2(a) requires a per-operand listing rather than a rate, and

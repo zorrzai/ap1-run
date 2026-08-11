@@ -68,13 +68,6 @@ def compute_figures():
 
         # Invocation
         v[f"{pfx}_invoked_base"] = sum(1 for r in base if r["invocation_outcome"] == "INVOKED")
-        v[f"{pfx}_not_invoked_ir"] = sum(1 for r in ir if r["invocation_outcome"] == "NOT-INVOKED")
-        v[f"{pfx}_invoked_ir"] = sum(1 for r in ir if r["invocation_outcome"] == "INVOKED")
-
-        # NOT-INVOKED by item
-        ni_items = Counter(r["item_id"] for r in ir if r["invocation_outcome"] == "NOT-INVOKED")
-        for item, count in ni_items.items():
-            v[f"{pfx}_ni_{item}"] = count
 
         # Operation correctness
         total_ops = 0
@@ -108,7 +101,6 @@ def compute_figures():
             op_by_cond["instruction_removed"]["wo"],
             op_by_cond["instruction_removed"]["total"],
         )
-        v[f"{pfx}_ni_pct"] = pct(v[f"{pfx}_not_invoked_ir"], len(ir))
 
         # WRONG-OP split
         wo_correct = wo_wrong = wo_adj = 0
