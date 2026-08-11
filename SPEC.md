@@ -75,8 +75,13 @@ derivation is not.
 
 ### 1.2 Non-goals — stated so they are not added later
 
-- **No language model anywhere.** Not in question generation, expected-value
-  construction, scoring, figure identification, or reporting.
+- **No language model executes during evaluation.** Fixtures and expected
+  values are static, scoring is regex extraction and float comparison within
+  declared tolerance, figure identification is deterministic numeric matching,
+  and re-running against the same fixture yields identical ground truth.
+  The fixtures and expected values were authored by the same small team — and,
+  at the implementation level, the same AI coding agent — that built the
+  system under test.
 - **No automation of D3–D6.** AP-1 §13.1 requires transcript-level human
   adjudication on every dimension.
 - **No inference of an answer where the evidence is ambiguous.** The runner

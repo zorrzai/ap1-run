@@ -122,8 +122,13 @@ for the other.
 
 ## What it deliberately does not do
 
-- **No language model anywhere** — not in question generation, expected-value
-  construction, scoring, figure identification, or reporting.
+- **No language model executes during evaluation** — fixtures and expected
+  values are static, scoring is regex extraction and float comparison within
+  declared tolerance, figure identification is deterministic numeric matching,
+  and re-running against the same fixture yields identical ground truth.
+  The fixtures and expected values were authored by the same small team — and,
+  at the implementation level, the same AI coding agent — that built the
+  system under test.
 - **No guessing.** Where automated identification is ambiguous, the item goes to
   a human. A response that declines is never auto-scored as a figure.
 - **No automation of D3–D6.** Judging whether a refusal was correct means
