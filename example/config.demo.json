@@ -1,0 +1,71 @@
+{
+  "endpoint_url": "http://localhost:8080/v1/chat/completions",
+  "model": "example-model-v1",
+  "sampling": {
+    "temperature": {
+      "value": "omitted",
+      "reason": "platform-rejected",
+      "detail": "gpt-5.5 returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported."
+    },
+    "top_p": {
+      "value": "omitted",
+      "reason": "operator-declared"
+    },
+    "max_completion_tokens": "4096",
+    "reasoning_effort": "none"
+  },
+  "answer_tolerance": "0.01",
+  "quantisation": {
+    "places": "2",
+    "rounding": "ROUND_HALF_UP"
+  },
+  "permitted_transformations": [
+    "percent_to_fraction",
+    "fraction_to_percent"
+  ],
+  "decline_markers": [
+    "I cannot",
+    "I don't have enough",
+    "unable to determine",
+    "I'm sorry, I cannot"
+  ],
+  "decimal_separator": ".",
+  "grouping_separator": ",",
+  "currency_symbols": [
+    "$",
+    "USD"
+  ],
+  "dimensions_claimed": [
+    "D1",
+    "D2",
+    "D7"
+  ],
+  "repeat_count": "3",
+  "structured_answer_field": "none",
+  "ap1_version": "v1.3-draft-for-comment-20260730",
+  "ap1_text_hash": "48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56",
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "calculator",
+        "description": "Evaluate a mathematical expression and return the result.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "expression": {
+              "type": "string",
+              "description": "The mathematical expression to evaluate"
+            }
+          },
+          "required": [
+            "expression"
+          ]
+        }
+      }
+    }
+  ],
+  "system_prompt_base": "You are a financial assistant. When asked to calculate a value, use the calculator tool to compute the answer. Always use the calculator tool for any arithmetic. Report the result clearly.",
+  "system_prompt_instruction_removed": "You are a financial assistant. Report the result clearly.",
+  "ap1_version_doi": "10.5281/zenodo.21755443"
+}
