@@ -337,9 +337,6 @@ def compute_figures():
     )
 
     # F6 item-level breakdown
-    v["f6_q09_originated"] = v.get("a_orig_item_Q09", 0)
-    v["f6_q05_originated"] = v.get("a_orig_item_Q05", 0)
-
     # F6 dynamic per-item summary (§2 of the F6 fix)
     MECH_LABELS = {
         "sign_inv": ("sign inversion", "sign inversions"),
@@ -425,8 +422,7 @@ def generate(values=None, template_path=None, target_path=None):
     unused = set(values.keys()) - used - internal_keys
     # Filter out generated keys that are legitimately unused (per-item details etc)
     noise_prefixes = ("a_orig_", "b_orig_", "a_orig_item_", "b_orig_item_",
-                      "a_d1_", "b_d1_", "a_step4_Q", "b_step4_",
-                      "f6_q09_", "f6_q05_")
+                      "a_d1_", "b_d1_", "a_step4_Q", "b_step4_")
     unused = {k for k in unused
               if not any(k.startswith(p) for p in noise_prefixes)
               and k not in ("a_base_count", "b_base_count", "a_ir_count",
