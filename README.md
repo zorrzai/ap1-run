@@ -126,9 +126,8 @@ for the other.
   values are static, scoring is regex extraction and float comparison within
   declared tolerance, figure identification is deterministic numeric matching,
   and re-running against the same fixture yields identical ground truth.
-  The fixtures and expected values were authored by the same small team — and,
-  at the implementation level, the same AI coding agent — that built the
-  system under test.
+  The fixtures and expected values were authored by an AI coding agent, not
+  derived from an independent source.
 - **No guessing.** Where automated identification is ambiguous, the item goes to
   a human. A response that declines is never auto-scored as a figure.
 - **No automation of D3–D6.** Judging whether a refusal was correct means

@@ -47,6 +47,28 @@ def fmt(n):
     return f"{n:,}"
 
 
+def classify_originated_mechanism(provenance_result):
+    """Classify an OPERAND-ORIGINATED provenance outcome by mechanism.
+
+    Returns one of: 'sign_inv', 'ungrounded', 'untraceable'.
+    Precondition: provenance_result['outcome'] == 'OPERAND-ORIGINATED'.
+    """
+    has_cis = any(
+        res.get("resolution") == "computed_in_session_ungrounded"
+        for res in provenance_result.get("operand_resolutions", [])
+    )
+    has_sign = any(
+        res.get("sign_inversion_finding") not in (None, False)
+        for res in provenance_result.get("operand_resolutions", [])
+    )
+    if has_cis:
+        return "ungrounded"
+    elif has_sign:
+        return "sign_inv"
+    else:
+        return "untraceable"
+
+
 def compute_figures():
     """Compute every placeholder value from the run artifacts."""
     run_a = load_json(os.path.join(OUTPUT, "run_a_mini", "smoke_summary.json"))
@@ -68,6 +90,13 @@ def compute_figures():
 
         # Invocation
         v[f"{pfx}_invoked_base"] = sum(1 for r in base if r["invocation_outcome"] == "INVOKED")
+        v[f"{pfx}_not_invoked_ir"] = sum(1 for r in ir if r["invocation_outcome"] == "NOT-INVOKED")
+        v[f"{pfx}_invoked_ir"] = sum(1 for r in ir if r["invocation_outcome"] == "INVOKED")
+
+        # NOT-INVOKED by item
+        ni_items = Counter(r["item_id"] for r in ir if r["invocation_outcome"] == "NOT-INVOKED")
+        for item, count in ni_items.items():
+            v[f"{pfx}_ni_{item}"] = count
 
         # Operation correctness
         total_ops = 0
@@ -101,6 +130,7 @@ def compute_figures():
             op_by_cond["instruction_removed"]["wo"],
             op_by_cond["instruction_removed"]["total"],
         )
+        v[f"{pfx}_ni_pct"] = pct(v[f"{pfx}_not_invoked_ir"], len(ir))
 
         # WRONG-OP split
         wo_correct = wo_wrong = wo_adj = 0
@@ -177,39 +207,28 @@ def compute_figures():
         v[f"{pfx}_sign_inv_operand_vals"] = sign_inv_operand_vals
 
         # Outcome-level breakdown: classify each OPERAND-ORIGINATED outcome
-        outcomes_sign_inv = 0
-        outcomes_ungrounded = 0
-        outcomes_untraceable = 0
+        outcomes = Counter()
+        item_mechanism = defaultdict(Counter)  # {item_id: {mechanism: count}}
         for r in results:
+            item_id = r["item_id"]
             for p in r.get("provenance_results", []):
                 if p["outcome"] != "OPERAND-ORIGINATED":
                     continue
-                has_cis = any(
-                    res.get("resolution") == "computed_in_session_ungrounded"
-                    for res in p.get("operand_resolutions", [])
-                )
-                has_sign = any(
-                    res.get("sign_inversion_finding") not in (None, False)
-                    for res in p.get("operand_resolutions", [])
-                )
-                if has_cis:
-                    outcomes_ungrounded += 1
-                elif has_sign:
-                    outcomes_sign_inv += 1
-                else:
-                    outcomes_untraceable += 1
-        v[f"{pfx}_outcomes_sign_inv"] = outcomes_sign_inv
-        v[f"{pfx}_outcomes_ungrounded"] = outcomes_ungrounded
-        v[f"{pfx}_outcomes_untraceable"] = outcomes_untraceable
+                mech = classify_originated_mechanism(p)
+                outcomes[mech] += 1
+                item_mechanism[item_id][mech] += 1
 
-        # Originated by item
-        orig_items = defaultdict(int)
-        for r in results:
-            for p in r.get("provenance_results", []):
-                if p["outcome"] == "OPERAND-ORIGINATED":
-                    orig_items[r["item_id"]] += 1
-        for item, count in orig_items.items():
-            v[f"{pfx}_orig_item_{item}"] = count
+        v[f"{pfx}_outcomes_sign_inv"] = outcomes["sign_inv"]
+        v[f"{pfx}_outcomes_ungrounded"] = outcomes["ungrounded"]
+        v[f"{pfx}_outcomes_untraceable"] = outcomes["untraceable"]
+
+        # Originated by item (total and per-mechanism)
+        for item_id in sorted(item_mechanism):
+            mechs = item_mechanism[item_id]
+            total = sum(mechs.values())
+            v[f"{pfx}_orig_item_{item_id}"] = total
+            for mech_name, count in mechs.items():
+                v[f"{pfx}_orig_item_{item_id}_{mech_name}"] = count
 
         # D1
         d1 = Counter(r["figure_outcome"] for r in results)
@@ -321,6 +340,45 @@ def compute_figures():
     v["f6_q09_originated"] = v.get("a_orig_item_Q09", 0)
     v["f6_q05_originated"] = v.get("a_orig_item_Q05", 0)
 
+    # F6 dynamic per-item summary (§2 of the F6 fix)
+    MECH_LABELS = {
+        "sign_inv": ("sign inversion", "sign inversions"),
+        "ungrounded": ("ungrounded chain", "ungrounded chain"),
+        "untraceable": ("untraceable", "untraceable"),
+    }
+    # Build breakdown from per-item-per-mechanism variables
+    f6_items = {}
+    for key, val in v.items():
+        m = re.match(r"a_orig_item_(Q\d+)_(sign_inv|ungrounded|untraceable)$", key)
+        if m:
+            item_id, mech = m.group(1), m.group(2)
+            f6_items.setdefault(item_id, {})[mech] = val
+    # Sort by total descending, then by item_id ascending for ties
+    sorted_items = sorted(
+        f6_items.items(),
+        key=lambda kv: (-sum(kv[1].values()), kv[0]),
+    )
+    n_items = len(sorted_items)
+    if n_items == 0:
+        v["f6_per_item_summary"] = "No originated outcomes were observed."
+    else:
+        item_word = "item" if n_items == 1 else "items"
+        summary_lines = [
+            f"Total: {v['a_total_originated_operands']} originated operand "
+            f"values, concentrated on {n_items} {item_word}."
+        ]
+        for item_id, mechs in sorted_items:
+            total = sum(mechs.values())
+            parts = []
+            for mech_key in ("sign_inv", "ungrounded", "untraceable"):
+                count = mechs.get(mech_key, 0)
+                if count > 0:
+                    singular, plural = MECH_LABELS[mech_key]
+                    label = singular if count == 1 else plural
+                    parts.append(f"{count} {label}")
+            summary_lines.append(f"{item_id}: {total} ({' + '.join(parts)}).")
+        v["f6_per_item_summary"] = "\n".join(summary_lines)
+
     return v
 
 
@@ -367,7 +425,8 @@ def generate(values=None, template_path=None, target_path=None):
     unused = set(values.keys()) - used - internal_keys
     # Filter out generated keys that are legitimately unused (per-item details etc)
     noise_prefixes = ("a_orig_", "b_orig_", "a_orig_item_", "b_orig_item_",
-                      "a_d1_", "b_d1_", "a_step4_Q", "b_step4_")
+                      "a_d1_", "b_d1_", "a_step4_Q", "b_step4_",
+                      "f6_q09_", "f6_q05_")
     unused = {k for k in unused
               if not any(k.startswith(p) for p in noise_prefixes)
               and k not in ("a_base_count", "b_base_count", "a_ir_count",

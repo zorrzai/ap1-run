@@ -153,7 +153,19 @@ def test_artifact_mutation(name, artifact_path, mutate_fn):
         os.remove(backup)
 
 
-# 2a: Change Run A's wrong-op count
+# 2a: Change Run B's not-invoked count
+def mutate_invocation(data):
+    """Remove a NOT-INVOKED result from Run B to change the count."""
+    for r in data["all_results"]:
+        if r["invocation_outcome"] == "NOT-INVOKED":
+            r["invocation_outcome"] = "INVOKED"
+            break
+
+test_artifact_mutation("artifact-invocation-count", RUN_B, mutate_invocation)
+
+
+# 2b: Change Run A's wrong-op count
+
 def mutate_operation(data):
     """Change a WRONG-OPERATION to OPERATION-CORRECT to alter the count."""
     for r in data["all_results"]:

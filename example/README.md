@@ -114,13 +114,17 @@ Model's formula:
 ```
 
 
-### Q02 -- Two-Condition Perturbation
+### Q02 -- Cleanest D7.1b Perturbation Signal
 
-Q02 (available credit = limit + balance) is run under both the `base` and
-`instruction_removed` conditions. The runner holds tools, data, sampling
-and message structure constant between conditions, varying only the
-instruction sentence. The perturbation guard refuses any condition that
-changes more than one quantity.
+Q02 (available credit = limit + balance) on gpt-5.5 produces the cleanest
+D7.1b signal: 3/3 base repeats answer correctly, 0/3 instruction-removed
+repeats answer correctly. The computation is simple enough that the model
+*can* do it (and does, under instruction), and simple enough that the
+model *won't* do it (and doesn't, without instruction).
+
+This is the ideal perturbation item: not too hard (the model fails even
+with instruction), not too easy (the model succeeds without instruction),
+and the effect size is maximum (100% drop).
 
 ### Q08 -- Cross-Model OBSERVED-ONLY Variation
 

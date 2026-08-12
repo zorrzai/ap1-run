@@ -79,9 +79,8 @@ derivation is not.
   values are static, scoring is regex extraction and float comparison within
   declared tolerance, figure identification is deterministic numeric matching,
   and re-running against the same fixture yields identical ground truth.
-  The fixtures and expected values were authored by the same small team — and,
-  at the implementation level, the same AI coding agent — that built the
-  system under test.
+  The fixtures and expected values were authored by an AI coding agent, not
+  derived from an independent source.
 - **No automation of D3–D6.** AP-1 §13.1 requires transcript-level human
   adjudication on every dimension.
 - **No inference of an answer where the evidence is ambiguous.** The runner
@@ -1065,8 +1064,8 @@ a module-level constant definition, not added logic.
 | `example/calculator_tool.py` | 209 | Example / demonstration |
 | `verify_*.py` | varies | Verification test suites |
 | `verify_findings.py` | 127 | Findings reconciliation guard |
-| `generate_findings.py` | 402 | FINDINGS.md generator from artifacts |
-| `test_findings_mutation.py` | 185 | Mutation tests for findings pipeline |
+| `generate_findings.py` | 461 | FINDINGS.md generator from artifacts |
+| `test_findings_mutation.py` | 197 | Mutation tests for findings pipeline |
 | `run_all_tests.py` | 217 | Test runner |
 
 **Research questions are not held in this document.** Those on which the field

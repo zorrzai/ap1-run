@@ -49,6 +49,31 @@
 > 1,000 entries) unless a different source is named. Figures are verified
 > against these artifacts by `verify_findings.py`, which is part of the
 > test suite.
+> `verify_findings.py` guarantees that every figure in this document was
+> generated from the source artifacts by `generate_findings.py`. It does
+> not verify that the prose surrounding a figure describes it correctly.
+>
+> **Errata.** Corrections discovered after generation are recorded in
+> [FINDINGS_ERRATA.md](FINDINGS_ERRATA.md).
+
+
+### Counting units
+
+Three counting units appear in this document. They are not interchangeable.
+
+| Unit | Definition | Example (Run A) |
+|---|---|---|
+| **Execution** | One complete run of the instrument for one item under one condition. 10 items × 2 conditions × 50 repeats = 1,000 executions per run. | 1,000 executions |
+| **Invocation** | One calculator tool-call within an execution. An execution may contain multiple invocations depending on the model's tool-call sequence. | 1,720 invocations across 1,000 executions (1.72 per execution) |
+| **Operand resolution** | One resolved operand within one invocation. Each invocation's expression is parsed into operands; each operand is resolved against the provenance ladder. | 4,799 operand resolutions across 1,720 invocations |
+
+**Worked example (Run B).** 14 originated operand resolutions occur
+across 11 OPERAND-ORIGINATED invocations (9 distinct executions). One
+invocation may have multiple operands, each independently resolved; when
+two operands in the same invocation resolve as originated, the invocation
+counts once but the operand resolutions count twice. The D7.2(a) table
+counts invocations (11 / 1,064); the operand-resolution breakdown counts
+resolutions (14 of 4,750).
 
 ---
 
@@ -190,6 +215,19 @@ returns to resolve.
 *Source: both artifacts. Two systems, same fixture, same conditions (1,000
 executions each: 10 items × 2 conditions × 50 repeats).*
 
+### D7.1b — Instruction sensitivity
+
+The instrument removes the "use the calculator" instruction in the
+`instruction_removed` condition. Both systems invoked the calculator in
+all 500 base trials.
+
+| System | instruction_removed: not invoked |
+|---|---|
+| gpt-5.6-sol | {{b_not_invoked_ir}} / 500 ({{b_ni_pct}}%) |
+| gpt-4.1-mini | {{a_not_invoked_ir}} / 500 ({{a_ni_pct}}%) |
+
+The {{b_not_invoked_ir}} non-invocations are concentrated on two items: Q02 ({{b_ni_Q02}}) and Q06 ({{b_ni_Q06}}).
+
 ### D7.2(b) — Operation correctness
 
 | System | WRONG-OPERATION | Total invocations |
@@ -266,8 +304,7 @@ The three originated populations in Run A:
 | Computed from ungrounded invocation | {{a_outcomes_ungrounded}} | Prior return from an ORIGINATED invocation |
 | Untraceable | {{a_outcomes_untraceable}} | No traceable basis in source, constants, intermediates, or session returns |
 
-Total: {{a_total_originated_operands}} originated operand values. All concentrated on two items:
-Q09 ({{f6_q09_originated}}, all sign inversions) and Q05 ({{f6_q05_originated}}, {{a_untraceable}} untraceable + {{a_ungrounded_chain}} ungrounded chain).
+{{f6_per_item_summary}}
 
 ---
 
@@ -292,6 +329,8 @@ failure; neither is wrong and neither is sufficient.
 Across Run A (gpt-4.1-mini, 1,000 executions), the aggregate D7.2(b) was
 {{a_wo_pct}}% WRONG-OPERATION ({{a_wrong_ops}} / {{a_total_ops}}), split essentially identically across
 conditions: {{a_wo_base_pct}}% base ({{a_wo_base}}/{{a_total_base_ops}}) vs {{a_wo_ir_pct}}% instruction_removed ({{a_wo_ir}}/{{a_total_ir_ops}}).
+The instruction changes invocation behaviour (D7.1) but does not change
+operation correctness.
 
 The WRONG-OPERATION split by item-level correctness:
 
@@ -306,6 +345,26 @@ Run A, {{b_wo_route_divergence}} of {{b_wrong_ops}} for Run B. The remaining {{a
 on items routed to adjudication and have no auto-determined correctness. The
 WRONG-OPERATION rate measures derivation-route divergence among auto-scored
 cases; the adjudicated population is undetermined.
+
+---
+
+## F8. Invocation Is Discretionary Under Instruction Removal
+
+*Source: `output/run_b_sol/smoke_summary.json`.*
+
+gpt-5.6-sol did not invoke the required computation in {{b_not_invoked_ir}} of 500 executions
+when a single instruction sentence was removed, against {{a_not_invoked_ir}} of 500 with it
+present (10 items × 50 repeats, instruction_removed condition).
+Tools, data, sampling and message structure were held constant and the runner
+refuses any condition varying more than one quantity. A second system
+(gpt-4.1-mini) invoked on all 1,000 executions under both conditions.
+
+The {{b_not_invoked_ir}} non-invocations cluster on two items: Q02 ({{b_ni_Q02}}/50) and Q06 ({{b_ni_Q06}}/50).
+
+What it demonstrates: invocation can be a property of the prompt rather than
+of the architecture, and the difference is measurable. A system invoking
+correctly on a hundred sampled questions has demonstrated a rate, not a
+guarantee. This is the finding D7.1b exists to produce.
 
 ---
 
@@ -326,6 +385,11 @@ once decomposed:
    treatment — the sign inversions are an expressive choice, the ungrounded
    chains are a transitivity finding, and the {{a_outcomes_untraceable}} untraceable are the actual
    origination population.
+
+3. A non-invocation rate of {{b_ni_pct}}% ({{b_not_invoked_ir}}/500, Run B under instruction_removed)
+   that was concentrated on two of ten items (Q02: {{b_ni_Q02}}, Q06: {{b_ni_Q06}}), rather than
+   distributed across the fixture. The per-item-condition view shows 2 of 10
+   items affected, not a broad behavioural pattern.
 
 Each was correct as computed. None meant what it appeared to mean. This is
 the reason D7.2(a) requires a per-operand listing rather than a rate, and
