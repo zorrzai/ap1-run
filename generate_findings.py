@@ -334,19 +334,40 @@ def compute_figures():
             1 for r in base_r if r["invocation_outcome"] == "NOT-INVOKED")
 
     # D7.5 Clopper-Pearson bounds for zero-failure figures
-    # Append bound string to key zero-count variables
-    cp_targets = [
-        ("a_wo_item_wrong", "a_wrong_ops"),    # Zero item-wrong WO, Run A
-        ("b_wo_item_wrong", "b_wrong_ops"),    # Zero item-wrong WO, Run B
-    ]
-    for k_key, n_key in cp_targets:
-        k_val = v.get(k_key, 0)
-        n_val = v.get(n_key, 0)
+    # The zero item-wrong count holds over the AUTO-SCORED population only.
+    # Adjudicated cases are undetermined and cannot support the zero.
+    for pfx, results in [("a", run_a["all_results"]), ("b", run_b["all_results"])]:
+        auto_scored_wo = 0
+        auto_scored_wrong = 0
+        for r in results:
+            fig = r.get("figure_outcome", "")
+            is_auto = fig.startswith("AUTO-")
+            for op in r.get("operation_correctness", []):
+                if op["outcome"] == "WRONG-OPERATION" and is_auto:
+                    auto_scored_wo += 1
+                    if fig == "AUTO-MISMATCH":
+                        auto_scored_wrong += 1
+        v[f"{pfx}_wo_auto_scored"] = auto_scored_wo
+        v[f"{pfx}_wo_auto_wrong"] = auto_scored_wrong
+        if auto_scored_wrong == 0 and auto_scored_wo > 0:
+            bound = clopper_pearson_upper_k0(auto_scored_wo)
+            v[f"{pfx}_wo_item_wrong_cp"] = (
+                f"0/{auto_scored_wo:,} auto-scored "
+                f"(p_upper < {bound:.4f}, 95% Clopper–Pearson)")
+        else:
+            v[f"{pfx}_wo_item_wrong_cp"] = f"{auto_scored_wrong}/{auto_scored_wo:,}"
+
+    # D7.5 bound for zero base non-invocations (D7.1b invocation figure)
+    for pfx in ("a", "b"):
+        k_val = v.get(f"{pfx}_not_invoked_base", 0)
+        n_val = 500  # 10 items x 50 repeats, base condition
         if k_val == 0 and n_val > 0:
             bound = clopper_pearson_upper_k0(n_val)
-            v[f"{k_key}_cp"] = f"0/{n_val:,} (p_upper < {bound:.4f}, 95% Clopper–Pearson)"
+            v[f"{pfx}_base_noninvoke_cp"] = (
+                f"0/{n_val} "
+                f"(p_upper < {bound:.4f}, 95% Clopper–Pearson)")
         else:
-            v[f"{k_key}_cp"] = f"{k_val}/{n_val:,}"
+            v[f"{pfx}_base_noninvoke_cp"] = f"{k_val}/{n_val}"
 
 
     # F2 superseded

@@ -1065,7 +1065,7 @@ a module-level constant definition, not added logic.
 | `example/calculator_tool.py` | 209 | Example / demonstration |
 | `verify_*.py` | varies | Verification test suites |
 | `verify_findings.py` | 127 | Findings reconciliation guard |
-| `generate_findings.py` | 497 | FINDINGS.md generator from artifacts |
+| `generate_findings.py` | 518 | FINDINGS.md generator from artifacts |
 | `test_findings_mutation.py` | 197 | Mutation tests for findings pipeline |
 | `run_all_tests.py` | 216 | Test runner |
 

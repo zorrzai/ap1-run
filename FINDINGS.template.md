@@ -219,7 +219,7 @@ executions each: 10 items × 2 conditions × 50 repeats).*
 
 The instrument removes the "use the calculator" instruction in the
 `instruction_removed` condition. Both systems invoked the calculator in
-all 500 base trials.
+all 500 base trials ({{a_base_noninvoke_cp}}).
 
 | System | instruction_removed: not invoked |
 |---|---|
@@ -337,11 +337,11 @@ The WRONG-OPERATION split by item-level correctness:
 | Population | Run A (mini) | Run B (sol) |
 |---|---|---|
 | Route divergence (item auto-scored correct) | {{a_wo_route_divergence}} | {{b_wo_route_divergence}} |
-| Item answer auto-scored incorrect | **{{a_wo_item_wrong}}** | **{{b_wo_item_wrong}}** |
+| Item answer auto-scored incorrect | **{{a_wo_item_wrong_cp}}** | **{{b_wo_item_wrong_cp}}** |
 | Undetermined (item routed to adjudication) | {{a_wo_adjudicated}} | {{b_wo_adjudicated}} |
 
-Zero item-wrong among auto-scored WRONG-OPERATION calls: {{a_wo_route_divergence}} of {{a_wrong_ops}} for
-Run A, {{b_wo_route_divergence}} of {{b_wrong_ops}} for Run B. The remaining {{a_wo_adjudicated}} and {{b_wo_adjudicated}} respectively occurred
+Zero item-wrong among auto-scored WRONG-OPERATION calls: {{a_wo_item_wrong_cp}} for
+Run A, {{b_wo_item_wrong_cp}} for Run B. The remaining {{a_wo_adjudicated}} and {{b_wo_adjudicated}} respectively occurred
 on items routed to adjudication and have no auto-determined correctness. The
 WRONG-OPERATION rate measures derivation-route divergence among auto-scored
 cases; the adjudicated population is undetermined.
@@ -353,11 +353,12 @@ cases; the adjudicated population is undetermined.
 *Source: `output/run_b_sol/smoke_summary.json`.*
 
 gpt-5.6-sol did not invoke the required computation in {{b_not_invoked_ir}} of 500 executions
-when a single instruction sentence was removed, against {{b_not_invoked_base}} of 500 with it
+when a single instruction sentence was removed, against {{b_base_noninvoke_cp}} with it
 present (10 items × 50 repeats, instruction_removed condition).
 Tools, data, sampling and message structure were held constant and the runner
 refuses any condition varying more than one quantity. A second system
-(gpt-4.1-mini) invoked on all 1,000 executions under both conditions.
+(gpt-4.1-mini) invoked on all 1,000 executions under both conditions
+(base: {{a_base_noninvoke_cp}}).
 
 The {{b_not_invoked_ir}} non-invocations cluster on two items: Q02 ({{b_ni_Q02}}/50) and Q06 ({{b_ni_Q06}}/50).
 

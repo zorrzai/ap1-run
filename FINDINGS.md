@@ -219,7 +219,7 @@ executions each: 10 items × 2 conditions × 50 repeats).*
 
 The instrument removes the "use the calculator" instruction in the
 `instruction_removed` condition. Both systems invoked the calculator in
-all 500 base trials.
+all 500 base trials (0/500 (p_upper < 0.0060, 95% Clopper–Pearson)).
 
 | System | instruction_removed: not invoked |
 |---|---|
@@ -339,11 +339,11 @@ The WRONG-OPERATION split by item-level correctness:
 | Population | Run A (mini) | Run B (sol) |
 |---|---|---|
 | Route divergence (item auto-scored correct) | 468 | 79 |
-| Item answer auto-scored incorrect | **0** | **0** |
+| Item answer auto-scored incorrect | **0/468 auto-scored (p_upper < 0.0064, 95% Clopper–Pearson)** | **0/79 auto-scored (p_upper < 0.0372, 95% Clopper–Pearson)** |
 | Undetermined (item routed to adjudication) | 262 | 164 |
 
-Zero item-wrong among auto-scored WRONG-OPERATION calls: 468 of 730 for
-Run A, 79 of 243 for Run B. The remaining 262 and 164 respectively occurred
+Zero item-wrong among auto-scored WRONG-OPERATION calls: 0/468 auto-scored (p_upper < 0.0064, 95% Clopper–Pearson) for
+Run A, 0/79 auto-scored (p_upper < 0.0372, 95% Clopper–Pearson) for Run B. The remaining 262 and 164 respectively occurred
 on items routed to adjudication and have no auto-determined correctness. The
 WRONG-OPERATION rate measures derivation-route divergence among auto-scored
 cases; the adjudicated population is undetermined.
@@ -355,11 +355,12 @@ cases; the adjudicated population is undetermined.
 *Source: `output/run_b_sol/smoke_summary.json`.*
 
 gpt-5.6-sol did not invoke the required computation in 92 of 500 executions
-when a single instruction sentence was removed, against 0 of 500 with it
+when a single instruction sentence was removed, against 0/500 (p_upper < 0.0060, 95% Clopper–Pearson) with it
 present (10 items × 50 repeats, instruction_removed condition).
 Tools, data, sampling and message structure were held constant and the runner
 refuses any condition varying more than one quantity. A second system
-(gpt-4.1-mini) invoked on all 1,000 executions under both conditions.
+(gpt-4.1-mini) invoked on all 1,000 executions under both conditions
+(base: 0/500 (p_upper < 0.0060, 95% Clopper–Pearson)).
 
 The 92 non-invocations cluster on two items: Q02 (48/50) and Q06 (44/50).
 
