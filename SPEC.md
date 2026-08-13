@@ -75,8 +75,9 @@ derivation is not.
 
 ### 1.2 Non-goals — stated so they are not added later
 
-- **Scoring does not use a language model.** Fixtures and expected values
-  are static, scoring is regex extraction and float comparison within declared
+- **The instrument executes no language model.** The system under test
+  does — that is what is being measured. Fixtures and expected values are
+  static, scoring is regex extraction and float comparison within declared
   tolerance, figure identification is deterministic numeric matching, and
   re-running against the same fixture yields identical ground truth.
   The fixtures and expected values were authored by an AI coding agent, not

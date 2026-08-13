@@ -122,19 +122,20 @@ for the other.
 
 ## What it deliberately does not do
 
-- **No language model executes during evaluation** — fixtures and expected
-  values are static, scoring is regex extraction and float comparison within
-  declared tolerance, figure identification is deterministic numeric matching,
-  and re-running against the same fixture yields identical ground truth.
+- **The instrument executes no language model.** The system under test
+  does — that is what is being measured. Fixtures and expected values are
+  static, scoring is regex extraction and float comparison within declared
+  tolerance, figure identification is deterministic numeric matching, and
+  re-running against the same fixture yields identical ground truth.
   The fixtures and expected values were authored by an AI coding agent, not
   derived from an independent source.
 - **No guessing.** Where automated identification is ambiguous, the item goes to
   a human. A response that declines is never auto-scored as a figure.
 - **No automation of D3–D6.** Judging whether a refusal was correct means
   judging meaning, and the only available automation is a language model.
-  Putting one there would return a model to the verification path, which is
-  what the instrument exists to remove. Human adjudication is the design, not a
-  gap awaiting better tooling.
+  Using one would place a model in the scoring loop for dimensions that
+  require human judgement. Human adjudication is the design, not a gap
+  awaiting better tooling.
 - **No network egress** beyond the endpoint under test.
 - **No telemetry, no analytics, no hosted service.** If the author ran it for
   you, it would be the author's result again.
