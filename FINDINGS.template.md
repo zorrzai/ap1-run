@@ -195,7 +195,7 @@ invocation in the same session resolves at step 4 (computed in session).
 Without step 4, every multi-call derivation would score as originated
 regardless of whether the operands trace to governed computation.
 
-**Q10 demonstrates the mechanism.** gpt-4.1-mini issues three calculator
+**Q10 demonstrates the mechanism.** gpt-4.1-mini issues {{a_Q10_calls_per_exec}} calculator
 calls per Q10 execution. The return value of the first call (e.g. `3289.65`)
 appears as an operand in the second call and resolves at step 4. All {{a_Q10_auto_match}} Q10
 executions scored AUTO-MATCH (100% D1) while {{a_Q10_wo}} of {{a_Q10_total_ops}} invocations scored
@@ -205,8 +205,8 @@ OPERAND-ORIGINATED — the correct answer would appear ungoverned.
 
 Step-4 by item, Run A: Q05 ({{a_step4_Q05}}), Q07 ({{a_step4_Q07}}), Q08 ({{a_step4_Q08}}), Q09 ({{a_step4_Q09}}), Q10 ({{a_step4_Q10}}).
 Run B: {{b_step4_total}} step-4 operands — gpt-5.6-sol issues {{b_total_ops}} invocations across
-1,000 executions (approximately one per execution), so there are no chained
-returns to resolve.
+1,000 executions ({{b_ops_per_exec}} per execution), so chained
+returns are rare.
 
 ---
 
@@ -261,8 +261,8 @@ provenance outcomes remain ({{a_untraceable}} untraceable + {{a_ungrounded_chain
 
 ### Q08 — The discriminating item
 
-Q08 (mortgage balance after first payment, expected $287,069.25) is the
-only item where auto-scoring diverges:
+Q08 (mortgage balance after first payment, expected $287,069.25) shows
+a cross-model auto-scoring divergence:
 
 | System | Q08 base (50 repeats) | Scoring route |
 |---|---|---|
@@ -319,9 +319,9 @@ reference derivation did not anticipate.
 
 | Item | System | D1 AUTO-MATCH | D7.2(b) WRONG-OP |
 |---|---|---|---|
-| Q07 | Run A (mini) | {{a_Q07_auto_match}} / {{a_Q07_total}} (100%) | {{a_Q07_wo}} / {{a_Q07_total_ops}} ({{a_Q07_wo_pct}}%) |
-| Q10 | Run A (mini) | {{a_Q10_auto_match}} / {{a_Q10_total}} (100%) | {{a_Q10_wo}} / {{a_Q10_total_ops}} ({{a_Q10_wo_pct}}%) |
-| Q10 | Run B (sol) | {{b_Q10_auto_match}} / {{b_Q10_total}} (99%) | {{b_Q10_wo}} / {{b_Q10_total_ops}} ({{b_Q10_wo_pct}}%) |
+| Q07 | Run A (mini) | {{a_Q07_auto_match}} / {{a_Q07_total}} ({{a_Q07_am_pct}}%) | {{a_Q07_wo}} / {{a_Q07_total_ops}} ({{a_Q07_wo_pct}}%) |
+| Q10 | Run A (mini) | {{a_Q10_auto_match}} / {{a_Q10_total}} ({{a_Q10_am_pct}}%) | {{a_Q10_wo}} / {{a_Q10_total_ops}} ({{a_Q10_wo_pct}}%) |
+| Q10 | Run B (sol) | {{b_Q10_auto_match}} / {{b_Q10_total}} ({{b_Q10_am_pct}}%) | {{b_Q10_wo}} / {{b_Q10_total_ops}} ({{b_Q10_wo_pct}}%) |
 
 An accuracy measure alone reports success; the operation measure alone reports
 failure; neither is wrong and neither is sufficient.
@@ -353,7 +353,7 @@ cases; the adjudicated population is undetermined.
 *Source: `output/run_b_sol/smoke_summary.json`.*
 
 gpt-5.6-sol did not invoke the required computation in {{b_not_invoked_ir}} of 500 executions
-when a single instruction sentence was removed, against {{a_not_invoked_ir}} of 500 with it
+when a single instruction sentence was removed, against {{b_not_invoked_base}} of 500 with it
 present (10 items × 50 repeats, instruction_removed condition).
 Tools, data, sampling and message structure were held constant and the runner
 refuses any condition varying more than one quantity. A second system
@@ -418,8 +418,8 @@ multiplication (`monthly_net × 3 = {{q07_simple}}`); the compound reading produ
 
 | System | Q07 AUTO-MATCH | Dominant route |
 |---|---|---|
-| Run A (gpt-4.1-mini) | {{a_Q07_auto_match}} / {{a_Q07_total}} (100%) | Simple — matches reference |
-| Run B (gpt-5.6-sol) | {{b_Q07_auto_match}} / {{b_Q07_total}} (42%) | Compound — diverges from reference |
+| Run A (gpt-4.1-mini) | {{a_Q07_auto_match}} / {{a_Q07_total}} ({{a_Q07_am_pct}}%) | Simple — matches reference |
+| Run B (gpt-5.6-sol) | {{b_Q07_auto_match}} / {{b_Q07_total}} ({{b_Q07_am_pct}}%) | Compound — diverges from reference |
 
 Run A used the simple route and auto-matched on all {{a_Q07_total}} executions. Run B
 used the compound route on most executions and auto-matched on only {{b_Q07_auto_match}} of

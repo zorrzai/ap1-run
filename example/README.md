@@ -206,7 +206,7 @@ in standard financial formulae, not a value drawn from data. Flagging it
 makes D7.2(a) fire on correct behaviour by construction. Permitting it
 costs no meaningful attack surface: no real operand fabrication would use
 the value 1. The constant 1 is now in `STRUCTURAL_CONSTANTS` in
-`provenance.py`, along with 0, and does not need to be declared per item.
+`provenance.py` and does not need to be declared per item.
 
 Constant `4` was retained: it is a genuine time-division constant of the
 problem domain, equivalent to 12/3.

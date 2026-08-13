@@ -58,11 +58,27 @@ else.
 The worked example includes a calculator tool. **It uses an AST evaluator with
 an explicit allow-list of node types.**
 
-There is no `eval`, no `exec` and no `compile` anywhere in the instrument or
-in the example. The evaluator permits arithmetic operations over numeric
-literals and rejects attribute access, imports, function calls, subscripting,
+There is no call to Python’s `eval()` or `exec()` builtins in any executable
+code. The evaluator permits arithmetic operations over numeric literals and
+rejects attribute access, imports, function calls, subscripting,
 comprehensions and name resolution. Its self-test asserts that each of these
 is refused.
+
+**Execution mechanisms present in the codebase:**
+
+- `re.compile` in `adapter.py`, `numeric.py` and `verify_spec.py` — compiles
+  regular expressions for credential masking, numeric parsing and specification
+  checks. No user-supplied pattern is compiled.
+- `ast.parse` and `ast.NodeVisitor` in `example/calculator_tool.py` — the
+  expression evaluator itself; this is the guarded path described above.
+- `importlib` in `verify.py` — loads the operator’s ground-truth module by
+  name. The module path is read from the sealed configuration.
+- `subprocess` in `run_all_tests.py` — runs the test suites.
+
+**Network.** `verify_integration.py` starts a local mock HTTP server on
+loopback and makes requests to it via `adapter.send()`; this is the only HTTP
+traffic any test suite generates. The other eleven suites make no network
+calls of any kind.
 
 **This matters because the expression being evaluated originates from the
 system under test.** A model that emits a malicious expression must not be

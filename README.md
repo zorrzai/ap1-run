@@ -32,9 +32,9 @@ answer:
 | **D7.3** | Is the released figure the one the computation returned? | Yes |
 | **D3–D6** | Provenance, refusal integrity, adversarial resistance, degraded data | No — human adjudication |
 
-**D7.2(a) is the distinguishing measurement.** Tool-call tracing is widely
-available. Resolving each operand against the source values and the legitimate
-intermediates of a reference derivation is not.
+**D7.2(a) is the distinguishing measurement.** It resolves each operand
+against the source values and the legitimate intermediates of a reference
+derivation.
 
 D3, D4, D5 and D6 are all scored by human adjudication. The instrument enforces
 the minimum-item counts for D5 and D6 at load, and generates adjudication sheets
@@ -247,9 +247,7 @@ meaning, and a system computing interest on the magnitude then passes `2400`,
 which appears nowhere in the delivered context and resolves as originated. Two
 thousand executions across two systems produced 524 such operands from this
 cause alone. Represent the quantity and its direction as separate fields —
-`{"balance": 2400.00, "direction": "liability"}` — which is also how PDS4
-represents quantities, with the value in the element and its semantics in an
-attribute beside it. And every permitted transformation and declared constant
+`{"balance": 2400.00, "direction": "liability"}`. And every permitted transformation and declared constant
 widens what resolves as grounded: declare them before the run, never add one
 after seeing a result.
 

@@ -17,6 +17,7 @@ import re
 import sys
 from collections import Counter, defaultdict
 from decimal import Decimal, getcontext, ROUND_HALF_UP
+from report import clopper_pearson_upper_k0
 
 getcontext().prec = 50
 
@@ -308,6 +309,45 @@ def compute_figures():
 
     # Combined untraceable
     v["combined_untraceable"] = v["a_untraceable"] + v["b_untraceable"]
+
+    # Derived percentages for template (replacing hardcoded literals)
+    for pfx in ("a", "b"):
+        for qid in ("Q07", "Q08", "Q10"):
+            total_key = f"{pfx}_{qid}_total"
+            am_key = f"{pfx}_{qid}_auto_match"
+            if total_key in v and am_key in v and v[total_key] > 0:
+                v[f"{pfx}_{qid}_am_pct"] = pct(v[am_key], v[total_key])
+
+    # Ops per execution (for F4)
+    v["b_ops_per_exec"] = round(v["b_total_ops"] / v["b_total_entries"], 2)
+
+    # Q10 calls per execution for Run A
+    q10_a = [r for r in run_a["all_results"] if r["item_id"] == "Q10"]
+    q10_ops = sum(len(r.get("operation_correctness", [])) for r in q10_a)
+    q10_count = len(q10_a) if len(q10_a) > 0 else 1
+    v["a_Q10_calls_per_exec"] = round(q10_ops / q10_count, 1)
+
+    # F8 base non-invocations
+    for pfx, run in [("a", run_a), ("b", run_b)]:
+        base_r = [r for r in run["all_results"] if r["condition"] == "base"]
+        v[f"{pfx}_not_invoked_base"] = sum(
+            1 for r in base_r if r["invocation_outcome"] == "NOT-INVOKED")
+
+    # D7.5 Clopper-Pearson bounds for zero-failure figures
+    # Append bound string to key zero-count variables
+    cp_targets = [
+        ("a_wo_item_wrong", "a_wrong_ops"),    # Zero item-wrong WO, Run A
+        ("b_wo_item_wrong", "b_wrong_ops"),    # Zero item-wrong WO, Run B
+    ]
+    for k_key, n_key in cp_targets:
+        k_val = v.get(k_key, 0)
+        n_val = v.get(n_key, 0)
+        if k_val == 0 and n_val > 0:
+            bound = clopper_pearson_upper_k0(n_val)
+            v[f"{k_key}_cp"] = f"0/{n_val:,} (p_upper < {bound:.4f}, 95% Clopper–Pearson)"
+        else:
+            v[f"{k_key}_cp"] = f"{k_val}/{n_val:,}"
+
 
     # F2 superseded
     sup_results = run_s["all_results"]
