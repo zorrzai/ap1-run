@@ -1067,7 +1067,7 @@ a module-level constant definition, not added logic.
 | `verify_findings.py` | 127 | Findings reconciliation guard |
 | `generate_findings.py` | 518 | FINDINGS.md generator from artifacts |
 | `test_findings_mutation.py` | 197 | Mutation tests for findings pipeline |
-| `run_all_tests.py` | 216 | Test runner |
+| `run_all_tests.py` | 217 | Test runner |
 
 **Research questions are not held in this document.** Those on which the field
 has no settled answer are put to reviewers in AP-1 v1.3 §14. The standard asks;

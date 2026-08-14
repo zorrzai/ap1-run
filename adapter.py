@@ -6,9 +6,9 @@ Send requests to one interface class -- an OpenAI-compatible
 chat-completions endpoint with tool calling -- and return the
 raw response unmodified.
 
-Dependencies: requests (the only external dependency).
+Dependencies: requests (the external dependency used by this module).
 No SDK. No interpretation, no retry-on-content, no normalisation.
-No network call to any host other than the configured endpoint.
+Network calls target only the configured endpoint. Note: HTTP redirects are followed by default (requests library behaviour) and could reach other hosts.
 """
 
 import re

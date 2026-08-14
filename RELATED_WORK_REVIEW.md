@@ -50,7 +50,7 @@ The adjacent literature is overwhelmingly **enforcement against untrusted source
 | **Failure it prevents** | Injected instruction becomes an email recipient | Fabricated operand becomes a reported figure |
 | **Output** | Allow / deny / sandbox | An admissibility profile with declared evidence classes |
 
-**The consequence, and it is the load-bearing point:** a value the model fabricated from nothing **passes every information-flow check ever written**. There is no untrusted source to detect, because there is no source. Taint propagates from origins; an invented number has no origin to taint.
+**The consequence, and it is the load-bearing point:** a value the model fabricated from nothing has no origin to taint, so taint-propagation systems pass it by construction — there is no untrusted source to detect, because there is no source. Allowlist and graph-alignment systems fail closed on it instead: a value with no provenance edge fails a trusted-source check. But blocking is not measuring. Neither produces a rate, a denominator, or an evidence class for the no-source case; they decide, per action, whether to proceed. AP-1 D7.2(a) reports it as a measured outcome with its population and its bound.
 
 This is the same relationship AP-1 already draws with ToolGate in Appendix B. Enforcement mechanisms answer *should this call proceed*. AP-1 answers *can this figure be entered into a record*.
 
@@ -70,7 +70,7 @@ This is the same relationship AP-1 already draws with ToolGate in Appendix B. En
 
 **AgentSpec** (Wang et al., 2025), **AgentBound** (Bühler et al., 2025), **Progent** (arXiv:2504.11703). Specification-based, boundary-oriented and privilege-based runtime enforcement.
 
-**Assessment.** This family is mature, well-resourced — Microsoft Research, Google DeepMind — and orthogonal to AP-1. None produces an admissibility measurement, and none would detect a fabricated operand. AP-1 should cite FIDES, CaMeL and NeuroTaint as the enforcement counterpart to its measurement, and state the asymmetry explicitly.
+**Assessment.** This family is mature, well-resourced — Microsoft Research, Google DeepMind — and orthogonal to AP-1. None produces an admissibility measurement. Some would block a fabricated operand at runtime; none reports one as a measured outcome. AP-1 should cite FIDES, CaMeL and NeuroTaint as the enforcement counterpart to its measurement, and state the asymmetry explicitly.
 
 ---
 
@@ -88,7 +88,7 @@ This is the same relationship AP-1 already draws with ToolGate in Appendix B. En
 
 **ALCE** (Gao et al., 2023), **FActScore** (Min et al., 2023), **SourceCheckup** (Wu et al., 2024), **RAGAS** (Es et al., 2024), **ARES** (Saad-Falcon et al., 2024), **RAGChecker** (Ru et al., 2024), **RAGTruth** (Niu et al., 2024), **PaperTrail** (Martin-Boyle et al., 2026).
 
-*Measures operand provenance:* No, and the reason is structural. Faithfulness asks whether a generated claim is **supported by retrieved context**. A computed figure is not in the retrieved context — it is *derived from* it. Faithfulness has no purchase on arithmetic.
+*Measures operand provenance:* No, and the reason is structural. Faithfulness asks whether a generated claim is **supported by retrieved context**. A computed figure is not in the retrieved context — it is *derived from* it. Faithfulness as defined in this literature does not address arithmetic derivation.
 
 SourceCheckup’s finding is directly relevant and worth citing: a cited source may be topically relevant without supporting the specific claim. The operand analogue — a value that resembles a source field without being derived from it — is what D7.2(a)’s exact-match rule exists to catch.
 
@@ -112,7 +112,7 @@ SourceCheckup’s finding is directly relevant and worth citing: a cited source 
 
 *Measures operand provenance:* No. ALUE is a language-understanding benchmark. There is no computation to invoke and no operand to trace.
 
-**Two points AP-1 must state rather than leave implicit.** ALUE is the most relevant existing benchmark to any aerospace LLM assurance conversation — domain-specific, safety-critical, institutionally backed — and AP-1 does not cite it. And ALUE uses **LLMs as judges** in its correctness metrics, which AP-1 explicitly forbids in the answer-key path. That difference is defensible and must be framed as *appropriate to different problems*, never as AP-1 being stricter: claim decomposition over long-form aviation prose has no deterministic alternative, while numeric ground truth does.
+**Two points AP-1 must state rather than leave implicit.** ALUE is the closest existing benchmark to an aerospace LLM assurance conversation among the works surveyed here — domain-specific, safety-critical, institutionally backed — and AP-1 does not cite it. And ALUE uses **LLMs as judges** in its correctness metrics, which AP-1 explicitly forbids in the answer-key path. That difference is defensible and must be framed as *appropriate to different problems*, never as AP-1 being stricter: claim decomposition over long-form aviation prose is not addressed by any deterministic method among the works surveyed here, while numeric ground truth does.
 
 **VALOR** (NASA/TM–20260000076, Ames Research Center, January 2026). Already cited. Retrieval faithfulness, retrieval quality, uncertainty, robustness via Drop-in-Performance Ratio. No invocation dimension.
 
@@ -142,7 +142,7 @@ Already cited and load-bearing: it is the reason D2 was reframed in v1.3 from co
 
 Against this body of work, three things appear specific to AP-1:
 
-**The measurement/enforcement inversion.** Every provenance system found operates at runtime to prevent unsafe execution. AP-1 operates post-hoc to establish whether a figure is admissible. The threat models are complementary and neither substitutes for the other.
+**The measurement/enforcement inversion.** Most provenance systems found operate at runtime to prevent unsafe execution. The exceptions in this survey — Liao’s controlled audit, and the trace-recording work in §4 — record provenance without measuring admissibility. AP-1 operates post-hoc to establish whether a figure is admissible. The threat models are complementary and neither substitutes for the other.
 
 **The no-source case.** The literature tracks values from origins. AP-1’s primary detection target is a value with no origin — which every taint system passes by construction, because there is nothing to taint.
 

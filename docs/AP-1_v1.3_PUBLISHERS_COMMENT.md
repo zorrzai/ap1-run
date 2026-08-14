@@ -13,7 +13,7 @@ AP-1 v1.3 is published as a draft for public comment. The comment window closes 
 
 **v1.3 is not edited.** §0.4 states that prior versions remain permanently citable and are not silently altered. A published version whose text changes after deposit is not a version.
 
-Comments C-1 through C-8 and C-10 arise from constructing and executing the reference implementation. C-9 arises from a review of related work conducted on 5 August 2026.
+Comments C-1 through C-8 and C-10 arise from constructing and executing the reference implementation. C-9 arises from a review of related work conducted on 5 August 2026. C-11 through C-15 arise from adversarial review. C-16 arises from applying the naming convention across the reference implementation.
 
 ---
 
@@ -137,7 +137,7 @@ But a system expressing subtraction as addition of a negative — `15.2 + (−12
 
 **The distinction, which the citation must carry.** This work is **enforcement against untrusted sources**: a security threat model, applied at runtime, asking whether a value came from somewhere untrusted. D7.2(a) is **measurement of admissibility**: a provenance threat model, applied post-hoc, asking whether a value came from anywhere at all.
 
-A figure the model fabricated passes every information-flow check, because taint propagates from origins and an invented number has none. The two are complementary and neither substitutes for the other — the same relationship v1.3 already draws with ToolGate.
+A figure the model fabricated has no origin to taint, so taint-propagation systems pass it by construction. Allowlist and alignment systems may block it — a value with no provenance edge fails a trusted-source check — but they do not measure it: no rate, no denominator, no evidence class. The two are complementary and neither substitutes for the other.
 
 **Also uncited and relevant.** ALUE (FAA and MITRE, 2025), the aerospace LLM evaluation benchmark; and the Trusted AI Framework (The Aerospace Corporation, adapted for space mission autonomy with JPL), the institutional AI assurance framework for that domain.
 
@@ -247,13 +247,19 @@ Comments C-1 through C-8 and C-10 were identified by building the reference impl
 
 C-9 was identified by a review of related work conducted after publication.
 
-C-16 arises from applying the naming convention across the reference implementation.
+C-16 arises from applying the naming convention across the reference implementation. The C-9 correction of 13 August 2026 arises from adversarial review identifying a falsified universal negative.
 
 **C-11 through C-15 were identified by an adversarial review**, in which an independent language model was asked to examine the standard as a mission-assurance reviewer whose reputation would attach to approving it, and instructed to find what was wrong rather than to summarise. Four of the five concern definitions the author had read many times without noticing they were incompatible.
 
 That these are the first entries in v1.3's comment record is intentional. A standard whose author does not find defects in it has not applied it — and one whose author does not seek adversarial review has not tried.
 
 **C-11, C-12, C-13 and C-14 are load-bearing.** They concern the definition of admissibility, the falsifiability of the central claim, the absence of any pass criterion, and the meaning of the term the standard exists to measure. Every clause downstream inherits them. They are recorded here for disposition and resolved in v1.4; a reader should treat the affected clauses as under revision.
+
+---
+
+## Correction record
+
+**C-9 correction, 13 August 2026.** C-9 as originally filed stated that a fabricated figure "passes every information-flow check." That is false and the publisher withdraws it. Adversarial review established that a provenance-aware allowlist requires a trusted source, so a value with no source fails closed rather than passing. The claim was correct only of taint-propagation systems. The surviving distinction is stated above: enforcement systems may block the no-source case; they do not measure it. This correction is filed during the open comment window rather than at disposition, because a defect in the publisher’s own comment should be visible on the same terms as any other.
 
 ---
 

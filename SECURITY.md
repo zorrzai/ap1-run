@@ -12,8 +12,7 @@ for.
 
 ## Network behaviour
 
-**The instrument makes no network call except to the endpoint declared in
-configuration.**
+**The instrument targets only the endpoint declared in configuration.** Note: the `requests` library follows HTTP redirects by default; a redirecting endpoint could cause a request to a different host.
 
 There is no telemetry, no analytics, no usage reporting, no licence check, no
 update check, and no hosted component. Nothing is transmitted to ZORRZ or to any third party at any time.

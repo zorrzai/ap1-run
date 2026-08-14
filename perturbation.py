@@ -16,8 +16,8 @@ EXACTLY the fields it declares:
    naming the undeclared field.
 
 Perturbation: each numeric field is shifted by +1 (Decimal("1")).
-Non-numeric fields are skipped (but all fixture fields in the
-delivered context are numeric strings by construction).
+Non-numeric fields such as 'direction' are skipped: they are neither
+perturbed nor checked for declaration.
 """
 
 import copy

@@ -189,8 +189,9 @@ def main():
     # Explanatory note
     print('  The "checks" column counts what each suite reports. verify.py')
     print('  uses a check() counter and reports individual assertions; the')
-    print('  other suites report test-function outcomes. verify.py is the')
-    print('  only suite where checks and functions differ. Both columns are')
+    print('  other suites report test-function outcomes. Several suites have')
+    print('  different function and check counts (verify.py, verify_spec.py,')
+    print('  verify_conformance.py, test_findings_mutation.py). Both columns are')
     print('  shown so neither number is mistaken for the other.')
     print()
 

@@ -163,7 +163,7 @@ fixture the sign-convention population from magnitude encoding is **zero**.
 {{a_sign_inversions}} sign-inversion findings remain in Run A, all on `checking.monthly_fee`
 (value: `12.00`). These arise from the system expressing subtraction as
 addition of a negative — `15.2 + (-12)` rather than `15.2 - 12`. The source
-field is correctly positive; no fixture design removes this.
+field is correctly positive; no fixture design tested has removed this expression-form mechanism.
 
 Run B: {{b_sign_inversions}} sign-inversion findings.
 
@@ -179,7 +179,7 @@ platform rejects `temperature=0` with HTTP 400, so sampling cannot be pinned
 and the mechanism class is capped at OBSERVED-ONLY by provider policy rather
 than by architecture. This is the case D2.1 exists to distinguish.
 
-The rejection is model-independent: it applies to any model run under this
+The rejection was observed identically under both models tested with this
 config. The verbatim platform error is recorded in the config and reproduced
 in the report.
 
@@ -293,8 +293,8 @@ computation. Without the transitivity condition, a fabricated value passed
 into a computation would return a result that resolves as grounded, and every
 operand derived from it would inherit that grounding. The condition was
 specified and tested against a mock (D22, verify_phase_d.py) before this run;
-the `computed_in_session_ungrounded` resolution is its first observation at
-scale.
+the `computed_in_session_ungrounded` resolution is its first observation in
+the current run set.
 
 The three originated populations in Run A:
 

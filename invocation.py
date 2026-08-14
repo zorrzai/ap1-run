@@ -7,8 +7,8 @@ what class of evidence.
 
 Every outcome carries its R1.3.1 evidence class.
 
-Zero failures in n: "0/n; upper bound ~= 3/n". The string "100%" is
-NEVER printed alone anywhere in output.
+Zero failures in n: "0/n; upper bound ~= 3/n". In this module, a zero-failure rate is reported with its
+Clopper-Pearson bound rather than as a bare "100%".
 
 DPR = (I_base - I_removed) / I_base. Where I_base is zero the ratio
 is UNDEFINED, never 1.0.
@@ -97,7 +97,7 @@ def _summarise_class(items, evidence_class):
 
 
 def format_rate(failures, n):
-    """Format a failure rate. NEVER prints "100%" alone.
+    """Format a failure rate. Reports zero-failure rates with their Clopper-Pearson bound.
 
     Zero failures: exact one-sided 95% Clopper-Pearson upper bound.
       p_upper = 1 - alpha^(1/n)  with alpha = 0.05
