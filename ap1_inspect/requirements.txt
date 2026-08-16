@@ -1,0 +1,4 @@
+# AP-1 Inspect wrapper dependencies.
+# The runner core requires only: requests
+# This wrapper additionally requires:
+inspect-ai==0.3.255

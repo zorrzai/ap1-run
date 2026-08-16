@@ -314,9 +314,7 @@ def derive_q07(ctx):
                 "operation": "multiply",
                 "inputs": [
                     {"intermediate": "monthly_net"},
-                    {"constant": "2"},
                     {"constant": "3"},
-                    {"constant": "4"},
                 ],
             },
         ],

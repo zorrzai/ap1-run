@@ -44,6 +44,7 @@ SUITES = [
     ('verify_conformance.py',   'verify_conformance.py',  28, 79),
     ('verify_findings.py',       'verify_findings.py',      1,  1),
     ('test_findings_mutation.py', 'test_findings_mutation.py', 1,  7),
+    ('verify_inspect.py',          'verify_inspect.py',          3,  3),
 ]
 
 
@@ -193,6 +194,9 @@ def main():
     print('  different function and check counts (verify.py, verify_spec.py,')
     print('  verify_conformance.py, test_findings_mutation.py). Both columns are')
     print('  shown so neither number is mistaken for the other.')
+    print('  verify_inspect.py\'s agreement test skips when inspect-ai is not')
+    print('  installed; the skip is counted in the checks column, so the full')
+    print('  total is reached only when inspect-ai is present.')
     print()
 
     # Detail for any failed suites

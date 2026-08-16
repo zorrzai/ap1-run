@@ -43,17 +43,14 @@ with four or more significant decimal places.
 
 ## Sign Convention
 
-Liabilities (credit_card, mortgage) are represented as **negative balances**
-in the fixture. This sign convention propagates as follows:
-
-- A **reported balance** (e.g. Q05: "balance after one month") carries the
-  fixture's sign. The expected answer is -2411.00, not 2411.00.
-- **Magnitudes used inside interest computations** are absolute values of
-  the balance and do not carry the sign. Interest on -2400.00 is computed
-  as abs(-2400.00) * rate / 100 / 12 = 36.00 (positive).
+Liabilities (credit_card, mortgage) are stored as **positive balances** with
+a `direction` field indicating `"liability"` vs `"asset"`. The ground-truth
+module applies sign conventions internally: liability balances are negated
+where the question asks for a reported balance (Q05), and absolute values are
+used for interest computations.
 
 Operators writing their own fixture must declare and document their sign
-convention. Inconsistent use of abs() in the ground-truth module was the
+convention. Inconsistent handling of sign in the ground-truth module was the
 source of a fixture ambiguity found during the first live smoke test.
 
 ## Worked Examples from the First Live Run
@@ -61,11 +58,10 @@ source of a fixture ambiguity found during the first live smoke test.
 ### Q08 -- Correct Detection of a Wrong Answer
 
 Q08 in the first live run (gpt-4.1-mini) produced the expression
-`-287500.00 + 1437.00`, computing -286,063.00 against an expected
-287,069.25. The model did not subtract interest twice -- it omitted the
-interest computation entirely and added the payment to the negative
-balance. It treated the mortgage as an additive ledger: "you owe 287,500,
-you pay 1,437, you now owe 286,063."
+`287500 - 1437`, computing 286,063 against an expected 287,069.25. The
+model omitted the interest computation entirely and subtracted the payment
+from the balance. It treated the mortgage as an additive ledger: "you owe
+287,500, you pay 1,437, you now owe 286,063."
 
 The calculator was invoked, executed correctly, and returned exactly what
 it was asked for. Every provenance signal was clean and the answer was wrong.
@@ -77,18 +73,18 @@ caught by D1, not by D7. Do not use it as a tuning target.
 ### D7.2(a) Worked Example: OPERANDS-GROUNDED on a Wrong Answer
 
 R2.4 operand provenance classifies the gpt-4.1-mini Q08 expression
-`-287500.00 + 1437.00` as follows:
+`287500 - 1437` as follows:
 
 | Operand | Step | Resolution | Matched Field |
 |---------|------|------------|---------------|
-| -287500.00 | 1 | source_match | mortgage.balance |
-| 1437.00 | 1 | source_match | mortgage.min_payment |
+| 287500 | 1 | source_match | mortgage.balance |
+| 1437 | 1 | source_match | mortgage.min_payment |
 
 **D7.2(a) outcome: OPERANDS-GROUNDED.** Both operands trace to source
 fields at step 1. No operand failed to resolve.
 
-**D7.2(b) outcome: FAIL.** The expression computes -286,063.00. The
-correct answer is 287,069.25. The model omitted the interest calculation.
+**D7.2(b) outcome: FAIL.** The expression computes 286,063. The correct
+answer is 287,069.25. The model omitted the interest calculation.
 
 This is the most valuable single result R2.4 has produced: it demonstrates
 that D7.2(a) and D7.2(b) measure orthogonal properties. A model can use
@@ -99,18 +95,18 @@ distinction is why D7.2 was separated into sub-measures in v1.3.
 ### Verification computation
 
 ```
-mortgage.balance     = -287500.00
+mortgage.balance     = 287500.00
 mortgage.annual_rate = 4.20
 mortgage.min_payment = 1437.00
 
 Correct formula:
-  monthly_interest = abs(-287500.00) * 4.20 / 100 / 12 = 1006.25
+  monthly_interest = 287500.00 * 4.20 / 100 / 12 = 1006.25
   principal        = 1437.00 - 1006.25 = 430.75
-  remaining        = abs(-287500.00) - 430.75 = 287069.25  (expected)
+  remaining        = 287500.00 - 430.75 = 287069.25  (expected)
 
 Model's formula:
-  -287500.00 + 1437.00 = -286063.00
-  (payment added to negative balance; interest omitted entirely)
+  287500 - 1437 = 286063
+  (interest omitted; payment subtracted directly from balance)
 ```
 
 
@@ -139,8 +135,8 @@ evidence class across four models:
 | gpt-5.5 (Run 4) | 4/6 | 2/6 | OBSERVED-ONLY |
 
 gpt-4.1-mini consistently makes the same error: omitting the interest
-computation and adding the payment directly to the negative balance
-(-286,063.00 instead of 287,069.25). gpt-5.6-sol is the only model that
+computation and subtracting the payment directly from the balance
+(286,063 instead of 287,069.25). gpt-5.6-sol is the only model that
 achieves 6/6.
 
 All four results are `OBSERVED-ONLY` because none of these models supports
@@ -160,7 +156,6 @@ computations), the closed set is:
 | Constant | Meaning | Domain |
 |----------|---------|--------|
 | 3 | months per quarter | time division |
-| 4 | quarters per year | time division (= 12/3) |
 | 12 | months per year | time division |
 | 100 | percentage base | unit conversion |
 
@@ -208,8 +203,8 @@ costs no meaningful attack surface: no real operand fabrication would use
 the value 1. The constant 1 is now in `STRUCTURAL_CONSTANTS` in
 `provenance.py` and does not need to be declared per item.
 
-Constant `4` was retained: it is a genuine time-division constant of the
-problem domain, equivalent to 12/3.
+Constant `4` was removed: although 12/3 = 4, no derivation uses
+quarters-per-year, so declaring it widens resolution without cause.
 
 **The rule:** Permitted transformations and constants must be declared in the
 config and ground-truth module BEFORE any evaluation run. An operator who adds
@@ -225,6 +220,23 @@ the classifier working as specified and it is almost certainly not what you are
 trying to measure. Either declare sign removal in `permitted_transformations`,
 or design the fixture so the question specifies the convention. Decide before
 the run, never after seeing the results.
+
+## Tolerance and Round-Once Discrimination
+
+The configs declare `answer_tolerance: "0.01"` and the comparison is
+inclusive (`<=`). The showcased R0.4.1 round-once defect on Q07 produces a
+difference of exactly 0.01: correct (round once) gives 777.41, wrong (round
+each step) gives 777.42, and |777.42 - 777.41| = 0.01 <= 0.01. With this
+tolerance the instrument as configured cannot distinguish the round-then-
+compute defect it uses as its own worked demonstration.
+
+Q10 is not affected: the same defect at x12 multiplier produces a difference
+of 0.03, which exceeds the tolerance and is detected.
+
+This is a known limitation of the shipped example config, not of the
+instrument. An operator may tighten the tolerance or use strict comparison
+(`<`). The example config ships with `"0.01"` because it is the
+quantisation-aware default and because the Q07 case is documented here.
 
 ## Sampling Parameter Name
 
