@@ -21,6 +21,9 @@ pip install -r ap1_inspect/requirements.txt
 
 ## Usage
 
+These are the intended invocations; they have not been executed end-to-end,
+and the modules they drive are listed under "What Has Not Been Tested".
+
 ```bash
 # Base condition
 inspect eval ap1_inspect/task.py@ap1_base --model openai/gpt-5.6-sol
@@ -152,12 +155,12 @@ disagreements between runner and Inspect paths.
 
 ```
 ap1_inspect/
-  shim.py     Inspect ToolCall → runner dict shape. ~15 lines.
-  solver.py   Custom solver wrapping generate_loop().
-  scorer.py   Imports runner classifiers, calls them through shim.
-  task.py     @task functions with R1.1 seal enforcement.
-  metrics.py  Clopper-Pearson as a custom Inspect metric.
-  compare.py  Post-processing for cross-condition D7.1.
+  shim.py      87 lines. ToolCall → runner dict, JSON validation, ShimError.
+  solver.py   124 lines. Custom solver wrapping generate_loop().
+  scorer.py   128 lines. Imports runner classifiers, calls them through shim.
+  task.py     163 lines. @task functions with R1.1 seal enforcement.
+  metrics.py   44 lines. Clopper-Pearson as a custom Inspect metric.
+  compare.py  104 lines. Post-processing for cross-condition D7.1.
 ```
 
 The dependency runs one way only: wrapper imports runner. Nothing in
@@ -173,10 +176,10 @@ Provider API response (structured field)
   → OpenAI SDK ResponseFunctionToolCall (typed dataclass)
     → Inspect parse_tool_call (json.loads on arguments string)
       → Inspect ToolCall dataclass
-        → shim.inspect_tc_to_runner (field access only)
+        → shim.inspect_tc_to_runner (field access + JSON validation;
+            raises ShimError on malformed input, never degrades silently)
           → runner's classify_invocation
 ```
 
-Inspect is a third party to both the model and to the runner. An
-intermediary that preserves a record without interpreting it does not
-change its evidence class.
+Validation that rejects malformed input is structural: it preserves or
+refuses the record, never reinterprets it. The evidence class is unchanged.
