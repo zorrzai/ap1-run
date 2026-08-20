@@ -75,10 +75,12 @@ def ap1_solver(tools=None):
                 for tc in msg.tool_calls:
                     # D7.9: check for matching tool response
                     has_response = False
+                    tool_return_content = None
                     for j in range(i + 1, len(state.messages)):
                         if isinstance(state.messages[j], ChatMessageTool):
                             if state.messages[j].tool_call_id == tc.id:
                                 has_response = True
+                                tool_return_content = state.messages[j].text
                                 break
                         elif isinstance(state.messages[j], ChatMessageAssistant):
                             break
@@ -90,9 +92,11 @@ def ap1_solver(tools=None):
                             f'tool call {tc.id} has no matching response '
                             f'(D7.9 partial failure)')
 
-                    all_tool_calls_from_messages.append(
-                        inspect_tc_to_runner(tc, turn=turn_num)
+                    record = inspect_tc_to_runner(
+                        tc, turn=turn_num,
+                        return_value=tool_return_content,
                     )
+                    all_tool_calls_from_messages.append(record)
 
                 round_shapes.append(round_shapes_entry)
 

@@ -92,3 +92,31 @@ to `2` under HALF_EVEN but `3` under HALF_UP.
 **Files:** `example/calculator_tool.py` (`round()`);
 `operation_correctness.py` (`quantize` calls); example configs
 (`rounding_mode` field).
+
+---
+
+## 7. Transcript does not store intermediate API responses
+
+The runner's transcript (R0.3) stores the final API response and the
+accumulated tool-call records, but not the intermediate API responses
+that contained tool_calls during the tool loop. This means:
+
+- **Re-scoring is possible.** A third party can re-run the classifier
+  on the stored tool-call records and verify that classification is
+  deterministic and reproducible.
+
+- **Replay is not possible.** The conversation cannot be replayed
+  through a different framework (e.g. Inspect) or a mock model,
+  because the intermediate model responses that drove the tool loop
+  are not available. Independent reproduction requires a fresh run
+  against the same model, which is non-deterministic.
+
+This bounds what "independent reproduction" means for AP-1: it means
+re-scoring from the stored record, not replaying the model
+conversation. The standard draws this distinction explicitly (v1.3
+§6.7: "the raw responses are published (§5.6) so any party may
+re-score").
+
+**Files:** `transcript.py` (append function, L17-39);
+`engine.py` (`_drive_tool_loop`, L175-235 — intermediate responses
+overwritten on each loop iteration).

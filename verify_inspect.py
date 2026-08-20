@@ -33,6 +33,8 @@ from provenance_classify import classify_invocations_sequential
 from figure_id import identify_figure, AUTO_MATCH
 from accuracy import score_accuracy
 from context import build_delivered_context, check_lookup_collision
+from transcription import check_transcription
+from provenance_classify import _parse_return_value
 import ground_truth_example as gt_module
 
 WRAPPER_EXISTS = os.path.exists(
@@ -91,6 +93,283 @@ def _build_mock_scenario(item_id, fixture, questions, config):
     }
 
 
+def _build_chained_scenario(item_id, fixture, questions, config):
+    """Build a scenario that chains tool calls, matching live run shape.
+
+    Uses the ground-truth module's intermediates to build the exact
+    sequence of calculator calls the derivation implies. Each call's
+    return_value is attached in engine.py's shape: a JSON string like
+    '{"result": "286063"}'.
+    """
+    import calculator_tool
+
+    question = next(q for q in questions if q['id'] == item_id)
+    source_accounts = question.get('source_accounts', [])
+    ctx = build_delivered_context(fixture, source_accounts)
+    gt = gt_module.compute(item_id, ctx)
+
+    if not gt.get('derivable', True):
+        return None
+
+    expected = gt['final']
+    required_op = gt.get('required_operation', 'calculator')
+
+    # Build the derivation chain from intermediates
+    intermediates = gt.get('intermediates', [])
+    tc_records = []
+    computed_values = {}  # label -> value
+
+    for idx, inter in enumerate(intermediates):
+        # Build expression from typed inputs
+        parts = []
+        for inp in inter.get('inputs', []):
+            if 'source' in inp:
+                # Direct source reference
+                field_path = inp['source']
+                acct_id, field_name = field_path.rsplit('.', 1)
+                val = ctx.get(acct_id, {}).get(field_name)
+                if val is not None:
+                    parts.append(str(val))
+            elif 'intermediate' in inp:
+                label = inp['intermediate']
+                val = computed_values.get(label)
+                if val is not None:
+                    parts.append(str(val))
+            elif 'constant' in inp:
+                parts.append(str(inp['constant']))
+
+        if not parts:
+            continue
+
+        # Build expression based on operation
+        operation = inter.get('operation', 'unknown')
+        if operation == 'multiply':
+            expr = ' * '.join(parts)
+        elif operation == 'divide':
+            expr = ' / '.join(parts)
+        elif operation == 'subtract':
+            expr = ' - '.join(parts)
+        elif operation == 'add':
+            expr = ' + '.join(parts)
+        elif operation == 'multiply_then_divide':
+            # a * b / c / d ... -- first two multiply, rest divide
+            if len(parts) >= 2:
+                expr = parts[0] + ' * ' + parts[1]
+                for p in parts[2:]:
+                    expr += ' / ' + p
+            else:
+                expr = parts[0]
+        elif operation == 'sign_from_direction':
+            # balance - min_payment + interest (direction-dependent)
+            # Use the ground-truth value directly as the expression
+            # result, since sign_from_direction is not a simple
+            # arithmetic expression but depends on account direction.
+            inter_val = inter.get('value')
+            if inter_val is not None:
+                expr = str(inter_val)
+            else:
+                expr = ' + '.join(parts)
+        else:
+            # Unknown operation -- fail loudly so it is not silently
+            # skipped.
+            raise ValueError(
+                'unknown operation in chained scenario: '
+                + repr(operation) + ' for ' + repr(inter.get('label')))
+
+        # Execute to get return value
+        try:
+            result_val = calculator_tool.execute_calculator(expr)
+            return_value = json.dumps({'result': result_val})
+        except Exception:
+            return_value = json.dumps({'error': f'failed: {expr}'})
+            result_val = None
+
+        turn = idx + 1
+        tc_records.append({
+            'turn': turn,
+            'id': f'call_{item_id}_{turn}',
+            'type': 'function',
+            'function': {
+                'name': 'calculator',
+                'arguments': json.dumps({'expression': expr}),
+            },
+            'return_value': return_value,
+        })
+
+        # Track computed value for chaining
+        if result_val is not None:
+            computed_values[inter['label']] = result_val
+
+    if not tc_records:
+        # Fall back to single-call
+        return None
+
+    final_text = f'The answer is {expected}.'
+    final_response = {
+        'choices': [{
+            'message': {
+                'content': final_text,
+                'role': 'assistant',
+                'tool_calls': None,
+            }
+        }]
+    }
+
+    return {
+        'gt': gt, 'ctx': ctx, 'config': config,
+        'tool_calls': tc_records, 'final_text': final_text,
+        'final_response': final_response,
+        'required_operation': required_op,
+        'expected': expected,
+        'call_count': len(tc_records),
+    }
+
+
+
+def _build_step4_scenarios(fixture, questions, config):
+    """Build deliberate step-4 scenarios for agreement testing.
+
+    These scenarios simulate model behaviour where a computed intermediate
+    is quantised (rounded) before being reused in a subsequent call. The
+    rounded value does not match the declared reference intermediate, so
+    it misses step 3 and must resolve at step 4 (computed_in_session)
+    through prior_returns.
+
+    This is what live models do: they quantise, round, or take a different
+    route. Run A produced 424 step-4 resolutions; the reference-derived
+    chained scenarios produce near-zero because the values match the
+    intermediates exactly.
+
+    Returns a list of (label, scenario_dict) tuples.
+    """
+    from context import build_delivered_context
+
+    scenarios = []
+
+    # --- Scenario A: Q07-variant (quantised monthly_return) ---
+    # Reference: monthly_return = 42175 * 7.8 / 100 / 12 = 274.1375
+    # Model rounds to 274.14 before reusing.
+    # 274.14 - 15 = 259.14 (not the declared intermediate 259.1375)
+    # 259.14 * 3 = 777.42 (not the declared intermediate 777.4125)
+    q07 = next(q for q in questions if q['id'] == 'Q07')
+    ctx_q07 = build_delivered_context(fixture, q07.get('source_accounts', []))
+    gt_q07 = gt_module.compute('Q07', ctx_q07)
+
+    # Model truncates 274.1375 to 274.13 (drops last digit instead
+    # of rounding). 274.13 misses the raw intermediate (274.1375)
+    # AND its 2dp quantised form (274.14), so it cannot resolve at
+    # step 3. It IS the prior return value, so it resolves at step 4.
+    # Downstream: 274.13 - 15 = 259.13, 259.13 * 3 = 777.39 -- both
+    # also miss step 3 and resolve at step 4.
+    tc_q07 = [
+        {
+            'turn': 1,
+            'id': 'call_Q07s4_1',
+            'type': 'function',
+            'function': {
+                'name': 'calculator',
+                'arguments': json.dumps(
+                    {'expression': '42175.00 * 7.8 / 100 / 12'}),
+            },
+            'return_value': json.dumps({'result': '274.13'}),
+        },
+        {
+            'turn': 2,
+            'id': 'call_Q07s4_2',
+            'type': 'function',
+            'function': {
+                'name': 'calculator',
+                'arguments': json.dumps(
+                    {'expression': '274.13 - 15.00'}),
+            },
+            'return_value': json.dumps({'result': '259.13'}),
+        },
+        {
+            'turn': 3,
+            'id': 'call_Q07s4_3',
+            'type': 'function',
+            'function': {
+                'name': 'calculator',
+                'arguments': json.dumps(
+                    {'expression': '259.13 * 3'}),
+            },
+            'return_value': json.dumps({'result': '777.39'}),
+        },
+    ]
+    final_text_q07 = 'The answer is 777.39.'
+    scenarios.append(('Q07_step4', {
+        'gt': gt_q07, 'ctx': ctx_q07, 'config': config,
+        'tool_calls': tc_q07,
+        'final_text': final_text_q07,
+        'final_response': {
+            'choices': [{'message': {
+                'content': final_text_q07,
+                'role': 'assistant',
+                'tool_calls': None,
+            }}]},
+        'required_operation': gt_q07.get('required_operation', 'calculator'),
+        'expected': gt_q07['final'],
+        'call_count': 3,
+    }))
+
+    # --- Scenario B: Q04-variant (quantised monthly_interest) ---
+    # Reference: monthly_interest = 287500 * 4.20 / 100 / 12 = 1006.25
+    # Model gets 1006.25 (exact), principal = 1437 - 1006.25 = 430.75.
+    # But 430.75 IS the declared intermediate. So: use a DIFFERENT
+    # rounding: model uses 1006.3 instead of 1006.25.
+    # 1437 - 1006.3 = 430.7 (not 430.75 declared intermediate)
+    # 430.7 resolves at step 4 (matches prior return of 1006.3? no,
+    # but we need TWO calls where the SECOND uses the FIRST's return).
+    # Actually: 1006.3 itself in call[1] is not an intermediate either
+    # (intermediate is 1006.25). And 1006.3 matches call[0]'s return.
+    # So call[1] operand 1006.3 -> step 4.
+    q04 = next(q for q in questions if q['id'] == 'Q04')
+    ctx_q04 = build_delivered_context(fixture, q04.get('source_accounts', []))
+    gt_q04 = gt_module.compute('Q04', ctx_q04)
+
+    tc_q04 = [
+        {
+            'turn': 1,
+            'id': 'call_Q04s4_1',
+            'type': 'function',
+            'function': {
+                'name': 'calculator',
+                'arguments': json.dumps(
+                    {'expression': '287500 * 4.20 / 100 / 12'}),
+            },
+            'return_value': json.dumps({'result': '1006.3'}),
+        },
+        {
+            'turn': 2,
+            'id': 'call_Q04s4_2',
+            'type': 'function',
+            'function': {
+                'name': 'calculator',
+                'arguments': json.dumps(
+                    {'expression': '1437 - 1006.3'}),
+            },
+            'return_value': json.dumps({'result': '430.7'}),
+        },
+    ]
+    final_text_q04 = 'The answer is 430.7.'
+    scenarios.append(('Q04_step4', {
+        'gt': gt_q04, 'ctx': ctx_q04, 'config': config,
+        'tool_calls': tc_q04,
+        'final_text': final_text_q04,
+        'final_response': {
+            'choices': [{'message': {
+                'content': final_text_q04,
+                'role': 'assistant',
+                'tool_calls': None,
+            }}]},
+        'required_operation': gt_q04.get('required_operation', 'calculator'),
+        'expected': gt_q04['final'],
+        'call_count': 2,
+    }))
+
+    return scenarios
+
+
 def _classify(scenario, tool_calls, final_response):
     """Run all runner classifiers on the given inputs."""
     gt = scenario['gt']
@@ -144,6 +423,25 @@ def _classify(scenario, tool_calls, final_response):
     prov_results = classify_invocations_sequential(
         tool_calls, ctx, gt, config)
 
+    # D7.3: transcription — compare tool return against released figure
+    transcription_result = None
+    if tool_calls:
+        last_calc = None
+        for tc in reversed(tool_calls):
+            if tc.get('function', {}).get('name') == 'calculator':
+                last_calc = tc
+                break
+        if last_calc is not None:
+            tool_return_val = _parse_return_value(
+                last_calc.get('return_value'))
+            released = fig_result.get('released_figure')
+            transcription_result = check_transcription(
+                tool_return_val, released,
+                figure_outcome=fig_result.get('outcome'),
+                quantisation_digits=int(
+                    config.get('quantisation', {}).get('places', 2)),
+            )
+
     return {
         'evidence_class': ev_class,
         'invocation_outcome': inv_outcome,
@@ -151,6 +449,7 @@ def _classify(scenario, tool_calls, final_response):
         'accuracy_outcome': acc_result.get('outcome'),
         'operation_correctness': op_results,
         'provenance': prov_results,
+        'transcription': transcription_result,
     }
 
 
@@ -194,6 +493,17 @@ class TestInspectWrapperAgreement(unittest.TestCase):
                 self.assertEqual(
                     r_prov.get(key), o_prov.get(key),
                     f'DISAGREE on {item_id}/provenance/{key}')
+
+        # D7.3: transcription
+        r_trans = runner_r.get('transcription')
+        o_trans = other_r.get('transcription')
+        if r_trans is not None or o_trans is not None:
+            r_out = r_trans.get('outcome') if r_trans else None
+            o_out = o_trans.get('outcome') if o_trans else None
+            self.assertEqual(
+                r_out, o_out,
+                f'DISAGREE on {item_id}/transcription: '
+                f'runner={r_out}, {path_name}={o_out}')
 
     # ------------------------------------------------------------------
     # Test 1: Shim unit test — MockTC objects, no inspect-ai required
@@ -241,6 +551,13 @@ class TestInspectWrapperAgreement(unittest.TestCase):
 
         THE GATING TEST. Uses real inspect_ai.tool.ToolCall objects,
         not MockTC. If inspect-ai is absent, this test SKIPS.
+
+        Chained scenarios (Q04, Q05, Q07, Q08, Q09, Q10) are derived
+        from the ground-truth module's reference intermediates, not
+        replayed from a live run. Both paths receive the same
+        synthetic tool-call records. This tests that the two paths
+        CLASSIFY identically given identical records; it does not
+        reproduce the model's actual call sequence from any run.
         """
         from inspect_ai.tool import ToolCall
         from ap1_inspect.shim import inspect_tc_to_runner, build_final_response
@@ -253,14 +570,19 @@ class TestInspectWrapperAgreement(unittest.TestCase):
             if scenario is None:
                 continue
 
+            # Try chained scenario first, fall back to single-call
+            chained = _build_chained_scenario(
+                item_id, self.fixture, self.questions, self.config)
+            use_scenario = chained if chained else scenario
+
             # Path A: runner direct
             runner_r = _classify(
-                scenario, scenario['tool_calls'],
-                scenario['final_response'])
+                use_scenario, use_scenario['tool_calls'],
+                use_scenario['final_response'])
 
             # Path B: through real Inspect ToolCall objects
             shimmed = []
-            for tc in scenario['tool_calls']:
+            for tc in use_scenario['tool_calls']:
                 real_tc = ToolCall(
                     id=tc['id'],
                     function=tc['function']['name'],
@@ -268,15 +590,49 @@ class TestInspectWrapperAgreement(unittest.TestCase):
                     type=tc.get('type', 'function'),
                 )
                 shimmed.append(
-                    inspect_tc_to_runner(real_tc, turn=tc['turn']))
+                    inspect_tc_to_runner(
+                        real_tc, turn=tc['turn'],
+                        return_value=tc.get('return_value')))
 
             # Build final response via shim
             shim_response = build_final_response(
-                scenario['final_text'], tool_calls_present=False)
+                use_scenario['final_text'], tool_calls_present=False)
 
-            shim_r = _classify(scenario, shimmed, shim_response)
+            shim_r = _classify(use_scenario, shimmed, shim_response)
 
             self._compare(item_id, runner_r, shim_r, 'inspect')
+            tested += 1
+
+        # Deliberate step-4 scenarios: quantised intermediates that
+        # miss step 3 and must resolve through prior_returns.
+        step4_scenarios = _build_step4_scenarios(
+            self.fixture, self.questions, self.config)
+        for label, s4_scenario in step4_scenarios:
+            # Path A: runner direct
+            s4_runner = _classify(
+                s4_scenario, s4_scenario['tool_calls'],
+                s4_scenario['final_response'])
+
+            # Path B: through real Inspect ToolCall objects
+            s4_shimmed = []
+            for tc in s4_scenario['tool_calls']:
+                real_tc = ToolCall(
+                    id=tc['id'],
+                    function=tc['function']['name'],
+                    arguments=json.loads(tc['function']['arguments']),
+                    type=tc.get('type', 'function'),
+                )
+                s4_shimmed.append(
+                    inspect_tc_to_runner(
+                        real_tc, turn=tc['turn'],
+                        return_value=tc.get('return_value')))
+
+            s4_shim_response = build_final_response(
+                s4_scenario['final_text'], tool_calls_present=False)
+            s4_shim_r = _classify(
+                s4_scenario, s4_shimmed, s4_shim_response)
+
+            self._compare(label, s4_runner, s4_shim_r, 'inspect')
             tested += 1
 
         self.assertGreater(tested, 0,

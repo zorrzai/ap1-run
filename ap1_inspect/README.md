@@ -59,28 +59,94 @@ These are stated plainly before anyone finds them:
   epoch scores. Run with `epochs=N` and use `--no-epochs-reducer` to preserve
   per-epoch scores for D2 classification.
 
+## What Has Been Verified
+
+- **Shim and classifier path: verified against live run data.** The shim
+  and classifier pipeline (shim.py → classify_invocations_sequential)
+  has been tested against 500 base-condition Run A records with 170
+  step-4 (computed in session) resolutions and zero classification
+  disagreements between the runner and Inspect paths. This covers all
+  10 items, both single- and multi-call sequences, and chained
+  provenance with return-value propagation.
+
 ## What Has Not Been Tested
 
 Declared before a reviewer finds them:
 
-- **The agreement test covers shim.py and scorer.py only.** solver.py,
-  task.py, metrics.py and compare.py are not exercised by it. Those
-  modules are used only inside `inspect eval`, which is not part of the
-  agreement test path.
+- **solver.py, task.py, metrics.py and compare.py remain unexercised.**
+  The comparison was classifier-level: both paths received the same
+  tool-call records with return values and classified them
+  independently. The modules that construct those records inside
+  `inspect eval` (solver.py), define the Inspect task (task.py),
+  compute metrics (metrics.py), and compare conditions (compare.py)
+  are not part of the agreement test path.
 
-- **No end-to-end `inspect eval` has been run and compared against an
-  engine.py run.** The agreement test uses mock scenarios, not a live
-  model call through both paths with output comparison.
+- **No end-to-end `inspect eval` has been compared against an engine.py
+  run.** This would require replaying recorded API responses through
+  Inspect's model interface. The runner's transcript stores only the
+  final API response and the accumulated tool-call records; it does not
+  store the intermediate API responses (those containing tool_calls)
+  that drive the tool loop. No existing run can be replayed through
+  Inspect without a fresh recording run that captures all intermediate
+  responses.
 
-- **The fixture is 10 items.** All 10 are derivable and all 10 are covered
-  by the agreement test. This is the example fixture, not a sealed
-  evaluation set.
+- **The fixture is 10 items.** All 10 are derivable and all 10 are
+  covered by the agreement test, plus two derived step-4 scenarios
+  that simulate model quantisation. This is the example fixture, not
+  a sealed evaluation set.
 
-- **EV-2 on the Inspect path is argued structurally and is NOT mechanically
-  verified by verify_conformance.py.** The conformance suite tests runner
-  internals; it does not trace the Inspect provider-to-scorer chain.
-  The argument below (in Evidence Class) is a prose argument, not a
-  machine-checked proof.
+- **EV-2 on the Inspect path is argued structurally and is NOT
+  mechanically verified by verify_conformance.py.** The conformance
+  suite tests runner internals; it does not trace the Inspect
+  provider-to-scorer chain. The argument below (in Evidence Class) is
+  a prose argument, not a machine-checked proof. The EV-2 claim is
+  scoped to the OpenAI Responses chain at inspect-ai 0.3.255;
+  provider-agnostic execution does not mean equivalent evidence quality
+  across all providers.
+
+- **Replay blind spot.** The agreement test constructs tool-call records
+  and classifies them; it does not replay a model conversation through
+  Inspect's generate loop. If solver.py's message-walk produces a
+  different tool-call record from the same model output (e.g. a bug in
+  turn numbering or tool-call pairing), the agreement test cannot
+  detect it. This gap is closed only by a full `inspect eval` run
+  compared against engine.py output on the same model responses.
+
+## Defects Found During Verification
+
+### Shim dropped return_value (found by audit, fixed pre-release)
+
+The shim (`inspect_tc_to_runner`) did not carry the tool return value
+from `ChatMessageTool.content` to the runner's `return_value` field.
+This meant `prior_returns` was always empty on the Inspect path, and
+every step-4 operand fell through to step 5 (ORIGINATED).
+
+**Impact on the shipped fixture:** against Run A (1,000 executions,
+4,799 operand resolutions), the runner classifies 83 operands as
+ORIGINATED. With `prior_returns` empty, every operand that should
+resolve at step 4 (computed_in_session) instead falls through to
+ORIGINATED, inflating the count from 83 to 507 of 4,799 — from 1.7%
+to 10.6%, a six-fold inflation on the dimension AP-1 exists to measure.
+
+**How it was found:** by code audit of the shim against engine.py's
+`_drive_tool_loop`, not by the agreement test. The agreement test
+could not have found it: every scenario was a single tool call with no
+return value to propagate, so both paths received `None` for
+`return_value` and agreed.
+
+**What the agreement test's passing result meant before the fix:**
+field-name conversion (`ToolCall.function` → `function.name`) and
+single-turn provenance agreement, not chained provenance with
+return-value propagation.
+
+**Fix:** solver.py now extracts `ChatMessageTool.text` (handling both
+`str` and `list[Content]`) and passes it through the shim with JSON
+validation. The shim raises `ShimError` if the return value is not a
+valid JSON string, matching engine.py's `EngineError` on the same
+failure.
+
+**Verification:** 500 Run A records, 170 step-4 resolutions, zero
+disagreements between runner and Inspect paths.
 
 ## Architecture
 
