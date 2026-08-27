@@ -79,6 +79,10 @@ resolutions (14 of 4,750).
 
 ## F1. D7.2(a) Detects Ungoverned Arithmetic
 
+> **WITHDRAWN (E3).** The D7.2(a) operand provenance figures in this section
+> were computed under a defective constant set (constant `4` declared but
+> never used in Q07). See [FINDINGS_ERRATA.md](FINDINGS_ERRATA.md) E3.
+
 *Source: `output/run_b_sol/smoke_summary.json` — 14 originated operand
 values across 1,064 invocations; `output/run_a_mini/smoke_summary.json` —
 83 originated operand values across 1,720 invocations.*
@@ -237,6 +241,9 @@ The 92 non-invocations are concentrated on two items: Q02 (48) and Q06 (44).
 
 ### D7.2(a) — Operand provenance
 
+> **WITHDRAWN (E3).** The D7.2(a) figures below were computed under a
+> defective constant set. See [FINDINGS_ERRATA.md](FINDINGS_ERRATA.md) E3.
+
 | System | OPERANDS-GROUNDED | OPERAND-ORIGINATED | Total |
 |---|---|---|---|
 | gpt-5.6-sol | 1,053 / 1,064 (99.0%) | 11 / 1,064 (1.0%) | 1,064 |
@@ -247,6 +254,9 @@ The originated population in Run A is dominated by 62 sign inversions of
 provenance outcomes remain (7 untraceable + 14 ungrounded chain).
 
 ### Operand resolution breakdown
+
+> **WITHDRAWN (E3).** The operand resolution counts below were computed
+> under a defective constant set. See [FINDINGS_ERRATA.md](FINDINGS_ERRATA.md) E3.
 
 | Resolution | Run A (mini) | Run B (sol) |
 |---|---|---|
@@ -295,6 +305,9 @@ operand derived from it would inherit that grounding. The condition was
 specified and tested against a mock (D22, verify_phase_d.py) before this run;
 the `computed_in_session_ungrounded` resolution is its first observation in
 the current run set.
+
+> **WITHDRAWN (E3).** The originated population counts below were computed
+> under a defective constant set. See [FINDINGS_ERRATA.md](FINDINGS_ERRATA.md) E3.
 
 The three originated populations in Run A:
 

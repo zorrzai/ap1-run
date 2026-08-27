@@ -350,6 +350,8 @@ transcription.py         D7.3
 adjudication.py          printable sheets for the human-scored dimensions
 report.py                the result artifact
 
+verify_run_seal.py       verifies a published run's seal from report.md
+
 example/                 a worked fixture, questions, ground truth and config
 reference/               the sealed AP-1 text
 ```
@@ -361,6 +363,58 @@ test sit outside that constraint by design and are longer.
 
 Full architecture, verification contracts per module, threat model and
 conformance mapping: [`SPEC.md`](SPEC.md).
+
+---
+
+## Verifying a run's seal
+
+The pre-registration seal (§5.3) binds the **resolved** configuration —
+after environment variables have been written into the config dict — not
+the config file on disk. The on-disk `example/config.json` and
+`example/config_mini.json` contain placeholder values for `model` and
+`endpoint_url` that are overwritten at runtime by `AP1_SMOKE_MODEL` and
+`AP1_SMOKE_ENDPOINT` (see `smoke_test.py` L343-359).
+
+To verify a run's seal:
+
+```bash
+python verify_run_seal.py output/run_a_mini
+python verify_run_seal.py output/run_b_sol
+```
+
+This reads the seal record from `report.md` §1 and the resolved
+configuration from `report.md` §2, then recomputes and compares all five
+component hashes and the composite `seal_hash`. It reports each check
+individually and exits non-zero if any check fails.
+
+**Do not** hash `example/config.json` directly — it will not match the
+sealed `config_hash` because it contains the placeholder model, not the
+runtime model. This is expected behaviour, not a failure.
+
+**Ground truth module.** `example/ground_truth_example.py` has been
+modified since both published runs. The sealed `ground_truth_hash` no
+longer matches the current file. Erratum E3 in
+[FINDINGS_ERRATA.md](FINDINGS_ERRATA.md) records why: constant `4` was
+declared in Q07's derivation metadata but never used in the computation.
+The correction was made for cause; the sealed state is not restored.
+The verifier reports this mismatch with the E3 reference and exits
+non-zero.
+
+**Line endings.** `file_hash()` hashes raw bytes with no line-ending
+normalisation. The published sealed hashes were computed on a Windows
+checkout with `core.autocrlf=true`, producing CRLF line endings despite
+`.gitattributes` specifying `eol=lf`. A checkout with different line
+endings will not reproduce the sealed hash. This is a known limitation
+logged for the hardening list.
+
+| Hash | Source | Proves |
+|------|--------|--------|
+| `config_hash` | `report.md` §2 resolved config | Config as executed |
+| `fixture_hash` | `example/fixture.json` | Financial data unchanged |
+| `questions_hash` | `example/questions.json` | Question set unchanged |
+| `ground_truth_hash` | `example/ground_truth_example.py` | Ground-truth module unchanged (see E3) |
+| `ap1_text_hash` | `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` | AP-1 standard text unchanged |
+| `seal_hash` | All of the above | Composite integrity |
 
 ---
 
