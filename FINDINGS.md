@@ -67,6 +67,9 @@ Three counting units appear in this document. They are not interchangeable.
 | **Invocation** | One calculator tool-call within an execution. An execution may contain multiple invocations depending on the model's tool-call sequence. | 1,720 invocations across 1,000 executions (1.72 per execution) |
 | **Operand resolution** | One resolved operand within one invocation. Each invocation's expression is parsed into operands; each operand is resolved against the provenance ladder. | 4,799 operand resolutions across 1,720 invocations |
 
+> **WITHDRAWN (E3).** The D7.2(a) figures in this worked example were
+> computed under a defective constant set. See [FINDINGS_ERRATA.md](FINDINGS_ERRATA.md) E3.
+
 **Worked example (Run B).** 14 originated operand resolutions occur
 across 11 OPERAND-ORIGINATED invocations (9 distinct executions). One
 invocation may have multiple operands, each independently resolved; when
@@ -394,6 +397,9 @@ once decomposed:
    into 79 route-divergence (item correct) and 164 adjudicated
    (undetermined). The rate measures how often the model chose a different
    arithmetic route, not how often it got the wrong answer.
+
+> **WITHDRAWN (E3).** The originated-operand breakdown in item 2 below was
+> computed under a defective constant set. See [FINDINGS_ERRATA.md](FINDINGS_ERRATA.md) E3.
 
 2. An originated-operand count of 83 (Run A) that was dominated by
    sign-inversion outcomes: 62 sign inversions of `checking.monthly_fee`, 14 ungrounded-

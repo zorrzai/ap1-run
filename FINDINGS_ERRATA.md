@@ -35,6 +35,21 @@ Corrected text:
 > Q05: 8 (1 ungrounded chain + 7 untraceable).
 ---
 
+## E2. F3 — the temperature rejection was not observed during either run
+
+**Date:** 28 August 2026
+**Affects:** F3. No figures.
+
+F3 states that the platform rejects `temperature=0` with HTTP 400, that sampling therefore cannot be pinned, and that the rejection was observed identically under both models tested. Three corrections.
+
+**Temperature was not sent in either run.** The `sampling.temperature` field in both configs is a structured omission — `{"value": "omitted", "reason": "platform-rejected"}` — and the adapter omits structured-omission parameters from the request body. The platform was never given the opportunity to reject it during these runs. The declared rejection describes a prior, unrecorded experiment.
+
+**Sampling was partially pinned.** `max_completion_tokens=4096` was sent in both runs; `reasoning_effort="none"` was sent in Run B. Sampling was not absent.
+
+**The rejection was not observed under both models.** For Run A, `config_mini.json` quotes a `gpt-5.5` error message in a `gpt-4.1-mini` configuration. No record exists — in the transcript, the summary, or any output artifact — of `gpt-4.1-mini` rejecting `temperature=0`.
+
+**The OBSERVED-ONLY classification stands.** Temperature was not pinned, so reproducibility cannot be guaranteed, and D2.1 is the correct bucket. What is corrected is the stated basis: the cap was applied by code reading a configuration field, not by observing a platform rejection at runtime. The D2 cap path reads `config['sampling'][*]['reason']` and performs no runtime test.
+
 ## E3. Q07 declared an unused constant; D7.2(a) figures for both runs are withdrawn
 
 **Date:** 28 August 2026
