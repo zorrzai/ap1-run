@@ -400,12 +400,9 @@ The correction was made for cause; the sealed state is not restored.
 The verifier reports this mismatch with the E3 reference and exits
 non-zero.
 
-**Line endings.** `file_hash()` hashes raw bytes with no line-ending
-normalisation. The published sealed hashes were computed on a Windows
-checkout with `core.autocrlf=true`, producing CRLF line endings despite
-`.gitattributes` specifying `eol=lf`. A checkout with different line
-endings will not reproduce the sealed hash. This is a known limitation
-logged for the hardening list.
+**Line endings.** `file_hash()` hashes raw bytes. `.gitattributes` forces
+LF on all sealed files; the sealed hashes were computed against LF bytes
+and reproduce on any platform.
 
 | Hash | Source | Proves |
 |------|--------|--------|

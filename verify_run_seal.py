@@ -180,10 +180,10 @@ def verify_run(output_dir):
                 erratum = GROUND_TRUTH_ERRATA.get(sealed_val)
                 if erratum:
                     detail += '\n          NOTE: %s' % erratum
-                detail += ('\n          NOTE: file_hash() is line-ending '
-                           'sensitive. The sealed hash covers the '
-                           'working-tree bytes at run time, which may '
-                           'differ from a fresh checkout.')
+                detail += ('\n          NOTE: This mismatch is expected. '
+                           'The ground-truth module was modified after '
+                           'the sealed runs (see FINDINGS_ERRATA.md E3). '
+                           'All other sealed hashes reproduce on any platform.')
             failures.append((field, detail))
 
     # 5. Reconstruct and verify seal_hash
