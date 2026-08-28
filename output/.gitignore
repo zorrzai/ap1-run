@@ -1,2 +1,7 @@
-*
-!.gitignore
+# Ignore non-published artifacts within run directories
+adjudication_sheets.md
+DISCLAIMER.txt
+
+# Ignore working files in output root
+*.py
+__pycache__/

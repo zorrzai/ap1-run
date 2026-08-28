@@ -1,3 +1,11 @@
-output/
-__pycache__/
+# Working output — ignore by default
+output/*
 
+# Published runs — tracked
+!output/.gitignore
+!output/README.md
+!output/run_a_mini/
+!output/run_b_sol/
+!output/superseded/
+
+__pycache__/
