@@ -82,3 +82,38 @@ A second instance of C-2’s class. C-2 concerns a constant added to the declare
 ### Unaffected
 
 D1, D2, D7.1, D7.1b, D7.2(b), D7.3 and all completion figures are unchanged. D7.1 invocation detection uses `classify_invocation()` in `evidence.py`, which is independent of the provenance classifier and unmodified since the seal. The defect is confined to the constant set consulted by the D7.2(a) classifier.
+
+---
+
+## E4. Disclaimer states R2.4 is not built; R2.4 is built and reported
+
+**Date:** 29 August 2026
+**Affects:** Disclaimer text in both runs. No figures.
+
+### The defect
+
+The `DISCLAIMER` constant in `smoke_test.py` (L36-43) reads:
+
+> It is not conformant: R2.4 is not built, there is no adjudication, no
+> second scorer, no blind set, and the fixture is the shipped toy example.
+
+R2.4 is D7.2(a) operand provenance, implemented in `provenance.py` (232 lines), `provenance_classify.py` (232 lines), and `provenance_audit.py` (38 lines). FINDINGS.md reports D7.2(a) figures for both runs. The Phase D exit gate (`verify_phase_d.py`, 25 tests) validates the module. The claim "R2.4 is not built" was stale at run time and is false.
+
+The disclaimer is embedded in four published artifacts per run:
+
+| Artifact | Location |
+|----------|----------|
+| `DISCLAIMER.txt` L3 | Standalone file in the output directory |
+| `smoke_summary.json` `_disclaimer` key | First key of the summary JSON |
+| Console output | Printed at run start and run end |
+| `smoke_test.py` docstring L3-6 | Source file |
+
+Both `output/run_a_mini/` and `output/run_b_sol/` carry the stale claim. FINDINGS.md, generated from `smoke_summary.json` in each run, reports D7.2(a) operand provenance figures. Two published artifacts from one run contradict each other.
+
+### Direction
+
+The disclaimer understates the instrument's capability rather than overstating it. This does not make it acceptable. A published artifact contradicting another published artifact from the same run is the defect, regardless of which direction it errs.
+
+### Disposition
+
+The run artifacts are not edited. The disclaimer stands as the record of what the instrument said. The source is corrected in `smoke_test.py` for future runs.

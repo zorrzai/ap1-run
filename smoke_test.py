@@ -1,9 +1,10 @@
 """Smoke test runner for the AP-1 instrument.
 
 THIS IS AN INSTRUMENT SMOKE TEST, NOT AN AP-1 EVALUATION.
-Not conformant: R2.4 not built, no adjudication, no second scorer,
-toy fixture. Must never be reported, cited or described as an AP-1
-result. Output goes to ap1-runner/output/ which is gitignored.
+Not conformant: no adjudication, no second scorer, no blind set,
+the fixture is burned under §5.8, and 10 items < D1 minimum of 40.
+Must never be reported, cited or described as an AP-1 result.
+Output goes to ap1-runner/output/ which is gitignored.
 
 Usage:
     export AP1_SMOKE_API_KEY=<key>    (Linux/macOS)
@@ -33,11 +34,15 @@ import time
 from decimal import Decimal
 from pathlib import Path
 
+# NOTE: This disclaimer is a hand correction (E4). It will be replaced
+# by a generated disclaimer once the conformance-declaration mechanism
+# (operator_declaration + conformance_checks) is built.
 DISCLAIMER = (
     'THIS IS AN INSTRUMENT SMOKE TEST, NOT AN AP-1 EVALUATION.\n'
     '\n'
-    'It is not conformant: R2.4 is not built, there is no adjudication, no\n'
-    'second scorer, no blind set, and the fixture is the shipped toy example.\n'
+    'It is not conformant: no adjudication, no second scorer, no blind set,\n'
+    'the fixture is the shipped example (10 items, burned under AP-1 \xa75.8),\n'
+    'and the D1 minimum of 40 items is not met.\n'
     'No figure from it may be reported, cited, quoted or described as an AP-1\n'
     'result, by us or by anyone, in any document.\n'
 )
