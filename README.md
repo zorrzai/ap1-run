@@ -432,11 +432,13 @@ vulnerability.
 
 ## Licence
 
-The licence for public release is under review. See [`LICENSE`](LICENSE).
+This runner is licensed under the MIT Licence. See [LICENSE](LICENSE).
 
-AP-1 itself is published CC-BY 4.0 with no registry, no certificate and no fee.
-Any party may run it against any system — including the author's — without
-permission or notification.
+The AP-1 standard itself is published separately under Creative Commons
+Attribution 4.0 International (DOI 10.5281/zenodo.21324954).
+
+"AP-1" and "The Admissibility Protocol" are trademarks of the publisher.
+See [NOTICE](NOTICE).
 
 ---
 

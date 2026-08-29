@@ -993,10 +993,10 @@ they are compensated by ZORRZ in any form.
 unambiguous case. An instrument that guesses which figure was the answer
 produces exactly the defect that invalidated the V1 evaluation.
 
-**12.8 The runner is released under a permissive open-source licence.** The
-specific licence is under review and is not yet determined; LICENSE carries a
-placeholder while the repository is private and access is controlled by
-permission rather than by licence.
+**12.8 The runner is released under the MIT Licence.** See LICENSE.
+The AP-1 standard itself is published separately under Creative Commons
+Attribution 4.0 International. "AP-1" and "The Admissibility Protocol" are
+trademarks of the publisher; see NOTICE.
 
 The measurement kit is the adoption vehicle; the defensible assets are fixture
 manufacturing, the independent scorer network, the evidence-artifact format and
