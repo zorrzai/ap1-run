@@ -1,0 +1,13 @@
+﻿AP-1 Reference Runner
+Copyright (c) 2026 ZORRZ Financial Inc.
+
+This software implements AP-1 (The Admissibility Protocol), an open standard
+published under Creative Commons Attribution 4.0 International.
+
+AP-1 and The Admissibility Protocol are trademarks of ZORRZ Financial Inc.
+The MIT licence covering this software grants no right to use those marks,
+and nothing in this software should be read as implying endorsement by the
+publisher of any system evaluated with it.
+
+The optional Inspect integration in ap1_inspect/ depends on inspect-ai, which
+is MIT licensed, Copyright (c) 2024 UK AI Security Institute.
