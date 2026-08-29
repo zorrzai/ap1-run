@@ -120,3 +120,45 @@ re-score").
 **Files:** `transcript.py` (append function, L17-39);
 `engine.py` (`_drive_tool_loop`, L175-235 — intermediate responses
 overwritten on each loop iteration).
+
+---
+
+## 8. Transcript request_sent records messages only; adapter's full request is discarded
+
+`adapter.send` builds a complete `request_record` containing the endpoint
+URL, model, tools, and `sampling_as_sent` — the exact parameters that went
+over the wire, with structured omissions preserved (`adapter.py` L121-127).
+`adapter.send` returns this record alongside the raw response (`adapter.py`
+L77).
+
+`engine.py` discards the `request_record` returned by `adapter.send` and
+writes `request_sent` as `{'messages': messages}` only (`engine.py` L86,
+L144). The endpoint URL, model identifier, tool definitions, and sampling
+parameters — including which parameters were explicitly omitted and why —
+are not in the transcript.
+
+**Consequence for §5.6.** AP-1 v1.3 §5.6 requires "all raw responses,
+preserved and published." The raw *responses* are published. The raw
+*requests* are not — the published transcript records what messages were
+sent but not what endpoint, model, tools, or sampling parameters accompanied
+them. What was sent is recoverable only by reading `adapter.py` and
+simulating what it would have built from the sealed config, which is a
+reconstruction, not a record.
+
+**Affected published artifacts.** Both published runs carry the messages-only
+`request_sent` in their transcripts (`output/run_a_mini/`,
+`output/run_b_sol/`). These are sealed artifacts and are not edited.
+
+**Fix status.** A fix in `engine.py` — three hunks: renaming the
+`attempts`/`request_record` destructure, reconstructing the record on the
+error path where `adapter.send` did not return, and passing the full
+`request_record` through on the success path — is written and pending.
+It has not been applied because the execution path was frozen ahead of
+external reviewer access.
+
+No existing test asserts the shape of `request_sent` in stored transcripts;
+the fix will not break any test.
+
+**Files:** `engine.py` L76-86 and L140-144 (discards `request_record`);
+`adapter.py` L68-127 (builds and returns it);
+`transcript.py` L17-39 (stores whatever `request_sent` it receives).
