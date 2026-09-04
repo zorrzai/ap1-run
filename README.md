@@ -64,7 +64,7 @@ second, taken from a live run against a frontier model.
 The optional Inspect integration (`ap1_inspect/`) additionally requires
 `inspect-ai` and is not needed to run AP-1 directly.
 
-**Operating system:** Linux, macOS or Windows. The instrument and all twelve test
+**Operating system:** Linux, macOS or Windows. The instrument and all thirteen test
 suites are platform-independent — no OS-specific calls exist in any instrument
 module.
 
