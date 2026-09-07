@@ -1048,9 +1048,9 @@ a module-level constant definition, not added logic.
 | `evidence.py` | 296 | Instrument module |
 | `operation_correctness.py` | 298 | Instrument module |
 | `adjudication.py` | 258 | Instrument module |
-| `seal.py` | 278 | Instrument module |
+| `seal.py` | 282 | Instrument module |
 | `seal_constants.py` | 89 | Instrument module |
-| `config.py` | 255 | Instrument module |
+| `config.py` | 257 | Instrument module |
 | `reproducibility.py` | 197 | Instrument module |
 | `figure_id.py` | 194 | Instrument module |
 | `adapter.py` | 180 | Instrument module |
@@ -1061,7 +1061,7 @@ a module-level constant definition, not added logic.
 | `perturbation_guard.py` | 116 | Instrument module |
 | `transcription.py` | 110 | Instrument module |
 | `transcript.py` | 74 | Instrument module |
-| `smoke_test.py` | 915 | Demonstration tooling |
+| `smoke_test.py` | 981 | Demonstration tooling |
 | `example/ground_truth_example.py` | 566 | Example / demonstration |
 | `example/calculator_tool.py` | 209 | Example / demonstration |
 | `verify_*.py` | varies | Verification test suites |

@@ -363,6 +363,53 @@ def main():
     config['endpoint_url'] = endpoint
     config['model'] = model
 
+    # -- Sampling override: AP1_SMOKE_TEMPERATURE --
+    # gpt-5.6-sol rejects temperature=0 with HTTP 400 (verified 2026-09-07).
+    # Its error says: "Only the default (1) value is supported."
+    # gpt-4.1-mini accepts temperature=0 and temperature=1 (verified 2026-09-07).
+    #
+    # To keep both arms at the same temperature (1), the operator sets
+    # AP1_SMOKE_TEMPERATURE=1 for mini. For sol, the env var is not set
+    # and the structured omission (platform-rejected) is kept.
+    #
+    # This is a declared env-var override, not a model-name heuristic.
+    # The resolved config in report.md §2 records what was actually sent.
+    temp_override = os.environ.get('AP1_SMOKE_TEMPERATURE')
+    if temp_override is not None:
+        config['sampling']['temperature'] = temp_override
+        print(f'  temperature={temp_override} '
+              f'(AP1_SMOKE_TEMPERATURE override)')
+    else:
+        temp_val = config.get('sampling', {}).get('temperature')
+        if isinstance(temp_val, dict) and temp_val.get('value') == 'omitted':
+            print(f'  temperature omitted '
+                  f'(reason: {temp_val.get("reason", "?")})')
+        else:
+            print(f'  temperature={temp_val}')
+
+    # -- Sampling override: AP1_SMOKE_REASONING_EFFORT --
+    # gpt-4.1-mini does not support reasoning_effort (HTTP 400:
+    #   "Unrecognized request argument supplied: reasoning_effort").
+    # gpt-5.6-sol requires it and accepts "none" for tool use.
+    #
+    # For mini: set AP1_SMOKE_REASONING_EFFORT=omit to remove it.
+    # For sol:  leave unset, config value "none" is sent.
+    re_override = os.environ.get('AP1_SMOKE_REASONING_EFFORT')
+    if re_override == 'omit':
+        config['sampling']['reasoning_effort'] = {
+            'value': 'omitted',
+            'reason': 'not-supported',
+            'detail': 'gpt-4.1-mini does not recognize reasoning_effort',
+        }
+        print('  reasoning_effort omitted (AP1_SMOKE_REASONING_EFFORT=omit)')
+    elif re_override is not None:
+        config['sampling']['reasoning_effort'] = re_override
+        print(f'  reasoning_effort={re_override} '
+              f'(AP1_SMOKE_REASONING_EFFORT override)')
+    else:
+        re_val = config.get('sampling', {}).get('reasoning_effort')
+        print(f'  reasoning_effort={re_val} (from config)')
+
     with open(os.path.join(example_dir, 'fixture.json'), 'r', encoding='utf-8') as f:
         fixture = json.load(f)
 
@@ -396,6 +443,24 @@ def main():
               'and system_prompt_instruction_removed')
         return 1
 
+    # -- Runner version and source hash --
+    from version import resolve_runner_version, compute_runner_source_hash
+    runner_info = resolve_runner_version(base_dir)
+    config['runner_version_tag'] = runner_info['version_tag']
+    config['runner_version_commit'] = runner_info['version_commit']
+    config['runner_modified'] = runner_info.get('version_modified', False)
+    # runner_source_hash is NOT in config -- it is a separate seal
+    # component so a verifier can distinguish code changes from config
+    # changes. Computed here, passed to seal() as a separate argument.
+    runner_source_hash = compute_runner_source_hash(base_dir)
+    print(f'Runner version: {runner_info["version_tag"]} '
+          f'({runner_info["version_commit"][:12]})')
+    if runner_info.get('version_modified'):
+        print(f'  WARNING: runner appears modified '
+              f'(git HEAD: {runner_info.get("git_commit", "?")[:12]})')
+    print(f'Runner source hash: {runner_source_hash[:16]}...')
+    print()
+
     # -- SEAL: R1.1 pre-registration record --
     # The real seal, not a sentinel. A live run without a valid seal
     # is refused, exactly as R1.1 requires.
@@ -407,6 +472,7 @@ def main():
         questions_path=os.path.join(example_dir, 'questions.json'),
         ground_truth_path=os.path.join(example_dir, 'ground_truth_example.py'),
         ap1_text_path=ap1_text_path,
+        runner_source_hash=runner_source_hash,
     )
     seal_hash = seal_record['seal_hash']
     print(f'Seal hash: {seal_hash}')

@@ -20,7 +20,8 @@ class SealError(Exception):
 
 
 def seal(*, config, fixture_path, questions_path, ground_truth_path,
-         ap1_text_path=None, verification_keys=None):
+         ap1_text_path=None, verification_keys=None,
+         runner_source_hash=None):
     """Create a pre-registration record. R1.1.
 
     Hashes all inputs and timestamps the record. The seal_hash
@@ -41,6 +42,9 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
         'config_hash': canonical_hash(config),
         'ap1_version': config.get('ap1_version', ''),
         'ap1_version_doi': config.get('ap1_version_doi', ''),
+        'runner_version_tag': config.get('runner_version_tag', ''),
+        'runner_version_commit': config.get('runner_version_commit', ''),
+        'runner_source_hash': runner_source_hash or '',
     }
 
     # AP-1 text hash -- R1.1 normative

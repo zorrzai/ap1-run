@@ -1,0 +1,11 @@
+# AP-1 Runner Instrument Version
+# Format: <tag> <commit-sha-prefix>
+# A modified copy should update this file.
+# If the runner source is modified without updating this file,
+# the runner_source_hash in the seal will differ from the released
+# hash, making the modification detectable.
+# KNOWN LIMIT: a party who modifies the source and also edits this
+# file (or distributes a zip without .git) cannot be detected from
+# the run record alone. The runner_source_hash detects source
+# changes; it does not authenticate the VERSION file itself.
+v1.3.1 dd4c3e8

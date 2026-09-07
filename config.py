@@ -33,6 +33,8 @@ OPTIONAL_FIELDS = [
     'tools', 'tool_choice', 'system_prompt',
     'system_prompt_base', 'system_prompt_instruction_removed',
     'fixture_hash', 'message_template',
+    'runner_version_tag', 'runner_version_commit',
+    'runner_modified',
 ]
 
 # Minimum-n per dimension (AP-1 v1.3 section 4.5, 4.6)
