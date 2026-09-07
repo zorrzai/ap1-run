@@ -194,9 +194,8 @@ def derive_q05(ctx):
     min_pay = D(ctx["credit_card"]["min_payment"])
 
     monthly_interest = balance * rate / D("100") / D("12")
-    # Balance is positive magnitude of a liability.
-    # New magnitude = old + interest - payment. Reported as negative.
-    new_balance = -(balance + monthly_interest - min_pay)
+    # New balance = old + interest - payment.
+    new_balance = balance + monthly_interest - min_pay
 
     return {
         "final": new_balance,
@@ -212,16 +211,6 @@ def derive_q05(ctx):
                     {"source": "credit_card.annual_rate"},
                     {"constant": "100"},
                     {"constant": "12"},
-                ],
-            },
-            {
-                "label": "new_balance",
-                "value": new_balance,
-                "operation": "sign_from_direction",
-                "inputs": [
-                    {"source": "credit_card.balance"},
-                    {"intermediate": "monthly_interest"},
-                    {"source": "credit_card.min_payment"},
                 ],
             },
         ],
