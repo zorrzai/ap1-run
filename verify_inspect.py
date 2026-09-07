@@ -667,6 +667,74 @@ class TestInspectWrapperAgreement(unittest.TestCase):
             )
         self.assertIn('mismatch', str(cm.exception).lower())
 
+    # ------------------------------------------------------------------
+    # Test 4: Multi-call decomposition through classify path
+    # ------------------------------------------------------------------
+    def test_multi_call_decomposition_all_oc(self):
+        """Three-call Q07 decomposition through _classify.
+
+        Mirrors t12 from verify_d72b.py: calls 1 and 2 produce values
+        absent from the reference intermediates. Without the session-level
+        reclassify_session call, they would score WRONG-OPERATION. This
+        test exercises the same code path as ap1_inspect/scorer.py and
+        confirms the wiring is correct.
+
+        Does NOT require inspect-ai -- tests _classify directly.
+        """
+        import calculator_tool
+
+        q07 = next(q for q in self.questions if q['id'] == 'Q07')
+        source_accounts = q07.get('source_accounts', [])
+        from context import build_delivered_context
+        ctx = build_delivered_context(self.fixture, source_accounts)
+        gt = gt_module.compute('Q07', ctx)
+        expected = gt['final']
+
+        # Non-reference decomposition: quarterly return, then fees, then subtract
+        exprs = ['42175 * 7.8 / 100 / 4', '15 * 3', '822.4125 - 45']
+        tc_records = []
+        for i, expr in enumerate(exprs):
+            result_val = calculator_tool.execute_calculator(expr)
+            tc_records.append({
+                'turn': i + 1,
+                'id': f'call_Q07_alt_{i+1}',
+                'type': 'function',
+                'function': {
+                    'name': 'calculator',
+                    'arguments': json.dumps({'expression': expr}),
+                },
+                'return_value': json.dumps({'result': result_val}),
+            })
+
+        final_text = f'The answer is {expected}.'
+        final_response = {
+            'choices': [{
+                'message': {
+                    'content': final_text,
+                    'role': 'assistant',
+                    'tool_calls': None,
+                }
+            }]
+        }
+
+        scenario = {
+            'gt': gt, 'ctx': ctx, 'config': self.config,
+            'tool_calls': tc_records, 'final_text': final_text,
+            'final_response': final_response,
+            'required_operation': gt.get('required_operation', 'calculator'),
+            'expected': expected,
+        }
+
+        result = _classify(scenario, tc_records, final_response)
+        oc = result.get('operation_correctness', [])
+        self.assertEqual(len(oc), 3,
+            f'expected 3 OC results, got {len(oc)}')
+        for i, r in enumerate(oc):
+            self.assertEqual(r['outcome'], 'OPERATION-CORRECT',
+                f'call {i} should be OPERATION-CORRECT via '
+                f'reclassify_session, got {r["outcome"]}')
+
+
 
 def run_tests():
     """Entry point for run_all_tests.py integration."""
