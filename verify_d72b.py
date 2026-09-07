@@ -249,6 +249,90 @@ def test_t14_incomplete_computation():
     return True
 
 
+
+
+def test_t15_per_call_classifier_returns_wo_on_decomposed_calls():
+    """Regression witness: per-call classifier returns WRONG-OPERATION
+    on calls 1 and 2 of a three-call Q07 decomposition.
+
+    This is the defect E5 documents. classify_operation, called per
+    invocation, sees a number not in the reference and returns WO.
+    This test must pass before AND after the session-level fix.
+    """
+    ctx = {'investment': {'balance': '42175.00', 'annual_rate': '7.8',
+                          'monthly_fee': '15.00'}}
+    gt = compute('Q07', ctx)
+
+    r1 = classify_operation('42175 * 7.8 / 100 / 4', gt, MINI_CONFIG)
+    r2 = classify_operation('15 * 3', gt, MINI_CONFIG)
+    r3 = classify_operation('822.4125 - 45', gt, MINI_CONFIG)
+
+    assert r1['outcome'] == WRONG_OPERATION, \
+        f'per-call on 822.4125 should be WO, got {r1["outcome"]}'
+    assert r2['outcome'] == WRONG_OPERATION, \
+        f'per-call on 45 should be WO, got {r2["outcome"]}'
+    assert r3['outcome'] == OPERATION_CORRECT, \
+        f'per-call on 777.4125 should be OC, got {r3["outcome"]}'
+    return True
+
+
+def test_t16_declared_constants_check_catches_undeclared():
+    """AST declared-constant check catches the E3 defect pattern.
+
+    A module where derive_q99 uses D("4") but does not declare "4"
+    in any intermediate's inputs list must raise SealError.
+    """
+    import types
+    from decimal import Decimal as D
+    from seal import SealError
+    from seal_constants import declared_constants_check
+
+    mod = types.ModuleType('mock_gt')
+
+    def derive_q99(ctx):
+        balance = D(ctx['acct']['balance'])
+        quarterly = balance * D("7.8") / D("100") / D("4")
+        return {
+            "final": quarterly,
+            "derivable": True,
+            "required_operation": "calculator",
+            "intermediates": [
+                {
+                    "label": "quarterly",
+                    "value": quarterly,
+                    "operation": "divide",
+                    "inputs": [
+                        {"source": "acct.balance"},
+                        {"source": "acct.annual_rate"},
+                        {"constant": "100"},
+                    ],
+                },
+            ],
+            "source_fields_consumed": ["acct.balance", "acct.annual_rate"],
+        }
+
+    mod.derive_q99 = derive_q99
+
+    def compute_mock(item_id, ctx):
+        if item_id == 'Q99':
+            return derive_q99(ctx)
+        raise ValueError(f'unknown item {item_id}')
+
+    mod.compute = compute_mock
+
+    fixture = {"accounts": [{"id": "acct", "balance": "42175.00",
+                              "annual_rate": "7.8"}]}
+    questions = {"items": [{"id": "Q99", "source_accounts": ["acct"]}]}
+
+    try:
+        declared_constants_check(mod, fixture, questions)
+        assert False, 'should have raised SealError'
+    except SealError as e:
+        assert 'Q99' in str(e), f'error should mention Q99: {e}'
+        assert '"4"' in str(e), f'error should mention "4": {e}'
+    return True
+
+
 ALL_TESTS = [
     test_t1_correct_expression_q01,
     test_t2_wrong_expression_q01,
@@ -264,6 +348,8 @@ ALL_TESTS = [
     test_t12_multi_call_equivalent_route,
     test_t13_discarded_retry,
     test_t14_incomplete_computation,
+    test_t15_per_call_classifier_returns_wo_on_decomposed_calls,
+    test_t16_declared_constants_check_catches_undeclared,
 ]
 
 
