@@ -153,8 +153,14 @@ def perturbation_check(ground_truth_module, fixture, questions,
         # Compute baseline
         try:
             baseline = ground_truth_module.compute(item_id, ctx)
-        except Exception:
-            continue  # skip items that can't be computed
+        except Exception as exc:
+            failures.append({
+                'item_id': item_id,
+                'field': '(baseline)',
+                'reason': f'baseline computation raised '
+                          f'{type(exc).__name__}: {exc}',
+            })
+            continue
 
         baseline_final = baseline.get('final')
         if baseline_final is None:
@@ -177,7 +183,10 @@ def perturbation_check(ground_truth_module, fixture, questions,
             orig_val = perturbed_ctx[acct_id][field_name]
             try:
                 numeric_val = Decimal(str(orig_val))
-                perturbed_val = numeric_val * perturbation_factor
+                if numeric_val == 0:
+                    perturbed_val = Decimal('1')  # additive for zero
+                else:
+                    perturbed_val = numeric_val * perturbation_factor
                 perturbed_ctx[acct_id][field_name] = str(perturbed_val)
             except (InvalidOperation, ValueError):
                 continue  # non-numeric field, skip
@@ -185,7 +194,13 @@ def perturbation_check(ground_truth_module, fixture, questions,
             # Recompute with perturbed context
             try:
                 perturbed = ground_truth_module.compute(item_id, perturbed_ctx)
-            except Exception:
+            except Exception as exc:
+                failures.append({
+                    'item_id': item_id,
+                    'field': field_spec,
+                    'reason': f'perturbed computation raised '
+                              f'{type(exc).__name__}: {exc}',
+                })
                 continue
 
             perturbed_final = perturbed.get('final')
@@ -232,7 +247,13 @@ def source_fields_check(ground_truth_module, fixture, questions):
 
         try:
             result = ground_truth_module.compute(item_id, tracking)
-        except Exception:
+        except Exception as exc:
+            failures.append({
+                'item_id': item_id,
+                'undeclared_fields': [],
+                'declared_fields': [],
+                'reason': f'compute raised {type(exc).__name__}: {exc}',
+            })
             continue
 
         accessed = tracking.accessed_fields()
