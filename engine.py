@@ -12,6 +12,7 @@ Item selection (normative):
   from every invocation denominator.
 """
 
+import copy
 import json
 
 import transcript
@@ -68,12 +69,13 @@ def execute_item(item, *, condition, config, fixture,
         system_prompt=system_prompt, item=item,
         fixture=fixture, config=config,
     )
+    initial_messages = copy.deepcopy(messages)
     sampling = config.get('sampling', {})
     tools_offered = tools is not None and len(tools) > 0
 
     # Send to endpoint via adapter
     try:
-        response, attempts = adapter_send(
+        response, request_record = adapter_send(
             config['endpoint_url'], messages=messages,
             tools=tools, sampling=sampling,
             model=config.get('model'),
@@ -83,7 +85,7 @@ def execute_item(item, *, condition, config, fixture,
             transcript_path,
             item_id=item_id, arm_id=condition,
             condition=condition,
-            request_sent={'messages': messages},
+            request_sent={'messages': initial_messages},
             response_received=None, tool_calls=[],
             evidence_class=EV_0,
             error_state=f'TRANSPORT_FAILURE: {e}',
@@ -141,7 +143,7 @@ def execute_item(item, *, condition, config, fixture,
         transcript_path,
         item_id=item_id, arm_id=condition,
         condition=condition,
-        request_sent={'messages': messages},
+        request_sent={'messages': initial_messages, 'request_record': request_record},
         response_received=final_response,
         tool_calls=tool_calls_record,
         evidence_class=ev_class,
