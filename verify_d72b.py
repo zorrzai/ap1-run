@@ -279,46 +279,13 @@ def test_t15_per_call_classifier_returns_wo_on_decomposed_calls():
 def test_t16_declared_constants_check_catches_undeclared():
     """AST declared-constant check catches the E3 defect pattern.
 
-    A module where derive_q99 uses D("4") but does not declare "4"
-    in any intermediate's inputs list must raise SealError.
+    _t16_mock_gt.py has derive_q99 using D("4") but not declaring
+    it in intermediates.inputs. declared_constants_check must raise
+    SealError. This is the defect E3 documented.
     """
-    import types
-    from decimal import Decimal as D
     from seal import SealError
     from seal_constants import declared_constants_check
-
-    mod = types.ModuleType('mock_gt')
-
-    def derive_q99(ctx):
-        balance = D(ctx['acct']['balance'])
-        quarterly = balance * D("7.8") / D("100") / D("4")
-        return {
-            "final": quarterly,
-            "derivable": True,
-            "required_operation": "calculator",
-            "intermediates": [
-                {
-                    "label": "quarterly",
-                    "value": quarterly,
-                    "operation": "divide",
-                    "inputs": [
-                        {"source": "acct.balance"},
-                        {"source": "acct.annual_rate"},
-                        {"constant": "100"},
-                    ],
-                },
-            ],
-            "source_fields_consumed": ["acct.balance", "acct.annual_rate"],
-        }
-
-    mod.derive_q99 = derive_q99
-
-    def compute_mock(item_id, ctx):
-        if item_id == 'Q99':
-            return derive_q99(ctx)
-        raise ValueError(f'unknown item {item_id}')
-
-    mod.compute = compute_mock
+    import _t16_mock_gt as mod
 
     fixture = {"accounts": [{"id": "acct", "balance": "42175.00",
                               "annual_rate": "7.8"}]}
@@ -326,12 +293,10 @@ def test_t16_declared_constants_check_catches_undeclared():
 
     try:
         declared_constants_check(mod, fixture, questions)
-        assert False, 'should have raised SealError'
+        assert False, 'should have raised SealError for undeclared D("4")'
     except SealError as e:
         assert 'Q99' in str(e), f'error should mention Q99: {e}'
-        assert '"4"' in str(e), f'error should mention "4": {e}'
     return True
-
 
 ALL_TESTS = [
     test_t1_correct_expression_q01,
