@@ -159,6 +159,96 @@ def test_t11_wrong_op_split_route_divergence():
     assert wo_split['item_wrong'] == 0, f'expected 0 item_wrong, got {wo_split}'
     return True
 
+
+
+def test_t12_multi_call_equivalent_route():
+    """Three-call decomposition where the final call resolves.
+
+    Invocation 1: 42175 * 7.8 / 100 / 4 = 822.4125 (quarterly return)
+    Invocation 2: 15 * 3 = 45               (quarterly fees)
+    Invocation 3: 822.4125 - 45 = 777.4125   (matches expected)
+
+    After reclassify_session, all three should be OPERATION-CORRECT
+    because invocation 3 resolves under (a) and invocations 1 and 2
+    are operands of invocation 3 (rule c).
+    """
+    from operation_correctness import reclassify_session
+
+    ctx = {'investment': {'balance': '42175.00', 'annual_rate': '7.8',
+                          'monthly_fee': '15.00'}}
+    gt = compute('Q07', ctx)
+    exprs = ['42175 * 7.8 / 100 / 4', '15 * 3', '822.4125 - 45']
+    results = [classify_operation(e, gt, MINI_CONFIG) for e in exprs]
+
+    # Before reclassification: first two are WO, third is OC
+    assert results[0]['outcome'] == WRONG_OPERATION
+    assert results[1]['outcome'] == WRONG_OPERATION
+    assert results[2]['outcome'] == OPERATION_CORRECT
+
+    reclassified = reclassify_session(results, exprs)
+    assert reclassified[0]['outcome'] == OPERATION_CORRECT, \
+        f'invocation 1 should be OC, got {reclassified[0]["outcome"]}'
+    assert reclassified[1]['outcome'] == OPERATION_CORRECT, \
+        f'invocation 2 should be OC, got {reclassified[1]["outcome"]}'
+    assert reclassified[2]['outcome'] == OPERATION_CORRECT
+    return True
+
+
+def test_t13_discarded_retry():
+    """Garbage call then correct call -- garbage stays WRONG-OPERATION.
+
+    Invocation 1: 42175 + 999 = 43174  (garbage, not consumed)
+    Invocation 2: 42175 * 7.8 / 100 / 4 - 15 * 3 = 777.4125 (correct)
+
+    Invocation 1 result (43174) is not an operand of invocation 2.
+    It must stay WRONG-OPERATION.
+    """
+    from operation_correctness import reclassify_session
+
+    ctx = {'investment': {'balance': '42175.00', 'annual_rate': '7.8',
+                          'monthly_fee': '15.00'}}
+    gt = compute('Q07', ctx)
+    exprs = ['42175 + 999', '42175 * 7.8 / 100 / 4 - 15 * 3']
+    results = [classify_operation(e, gt, MINI_CONFIG) for e in exprs]
+
+    assert results[0]['outcome'] == WRONG_OPERATION
+    assert results[1]['outcome'] == OPERATION_CORRECT
+
+    reclassified = reclassify_session(results, exprs)
+    assert reclassified[0]['outcome'] == WRONG_OPERATION, \
+        f'garbage call should stay WO, got {reclassified[0]["outcome"]}'
+    assert reclassified[1]['outcome'] == OPERATION_CORRECT
+    return True
+
+
+def test_t14_incomplete_computation():
+    """Components computed but no final step -- all stay WRONG-OPERATION.
+
+    Invocation 1: 42175 * 7.8 / 100 / 4 = 822.4125
+    Invocation 2: 15 * 3 = 45
+
+    Neither resolves: 822.4125 and 45 are not the expected value, and
+    no later call consumes them. The chain does not resolve.
+    """
+    from operation_correctness import reclassify_session
+
+    ctx = {'investment': {'balance': '42175.00', 'annual_rate': '7.8',
+                          'monthly_fee': '15.00'}}
+    gt = compute('Q07', ctx)
+    exprs = ['42175 * 7.8 / 100 / 4', '15 * 3']
+    results = [classify_operation(e, gt, MINI_CONFIG) for e in exprs]
+
+    assert results[0]['outcome'] == WRONG_OPERATION
+    assert results[1]['outcome'] == WRONG_OPERATION
+
+    reclassified = reclassify_session(results, exprs)
+    assert reclassified[0]['outcome'] == WRONG_OPERATION, \
+        f'unresolved call should stay WO, got {reclassified[0]["outcome"]}'
+    assert reclassified[1]['outcome'] == WRONG_OPERATION, \
+        f'unresolved call should stay WO, got {reclassified[1]["outcome"]}'
+    return True
+
+
 ALL_TESTS = [
     test_t1_correct_expression_q01,
     test_t2_wrong_expression_q01,
@@ -171,6 +261,9 @@ ALL_TESTS = [
     test_t9_q08_gpt41mini_wrong_operation,
     test_t10_q07_gpt56sol_equivalent_route,
     test_t11_wrong_op_split_route_divergence,
+    test_t12_multi_call_equivalent_route,
+    test_t13_discarded_retry,
+    test_t14_incomplete_computation,
 ]
 
 
