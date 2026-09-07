@@ -159,16 +159,6 @@ def _build_chained_scenario(item_id, fixture, questions, config):
                     expr += ' / ' + p
             else:
                 expr = parts[0]
-        elif operation == 'sign_from_direction':
-            # balance - min_payment + interest (direction-dependent)
-            # Use the ground-truth value directly as the expression
-            # result, since sign_from_direction is not a simple
-            # arithmetic expression but depends on account direction.
-            inter_val = inter.get('value')
-            if inter_val is not None:
-                expr = str(inter_val)
-            else:
-                expr = ' + '.join(parts)
         else:
             # Unknown operation -- fail loudly so it is not silently
             # skipped.
