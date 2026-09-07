@@ -182,7 +182,9 @@ def verify_run(output_dir):
                     detail += '\n          NOTE: %s' % erratum
                 detail += ('\n          NOTE: This mismatch is expected. '
                            'The ground-truth module was modified after '
-                           'the sealed runs (see FINDINGS_ERRATA.md E3). '
+                           'the sealed runs: E3 removed an unused constant '
+                           'from Q07, and the Q05 sign-convention correction '
+                           'removed the negation (F10). '
                            'All other sealed hashes reproduce on any platform.')
             failures.append((field, detail))
 
