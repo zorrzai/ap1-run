@@ -28,7 +28,7 @@ if _EXAMPLE_DIR not in sys.path:
     sys.path.insert(0, _EXAMPLE_DIR)
 
 from evidence import classify_invocation, EV_0, EV_2
-from operation_correctness import classify_operation
+from operation_correctness import classify_operation, reclassify_session
 from provenance_classify import classify_invocations_sequential
 from figure_id import identify_figure, AUTO_MATCH
 from accuracy import score_accuracy
@@ -409,6 +409,18 @@ def _classify(scenario, tool_calls, final_response):
                     'outcome': 'OPERATION-UNOBSERVABLE',
                     'reason': str(e),
                 })
+
+    # Session-level reclassification
+    vi_exprs = []
+    for tc in tool_calls:
+        func = tc.get('function', {})
+        if func.get('name') == 'calculator':
+            try:
+                args = json.loads(func.get('arguments', '{}'))
+                vi_exprs.append(args.get('expression', ''))
+            except Exception:
+                vi_exprs.append('')
+    op_results = reclassify_session(op_results, vi_exprs)
 
     prov_results = classify_invocations_sequential(
         tool_calls, ctx, gt, config)

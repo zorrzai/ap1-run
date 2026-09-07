@@ -25,7 +25,7 @@ from evidence import classify_invocation, check_ev3_guard, EV_0, EV_2
 from figure_id import identify_figure, AUTO_MATCH
 from context import check_lookup_collision
 from accuracy import score_accuracy
-from operation_correctness import classify_operation
+from operation_correctness import classify_operation, reclassify_session
 from provenance_classify import classify_invocations_sequential
 
 
@@ -97,6 +97,18 @@ def ap1_scorer():
                         'outcome': 'OPERATION-UNOBSERVABLE',
                         'reason': f'{type(e).__name__}: {e}',
                     })
+
+        # Session-level reclassification
+        s_exprs = []
+        for tc in tool_calls:
+            func = tc.get('function', {})
+            if func.get('name') == 'calculator':
+                try:
+                    args = json.loads(func.get('arguments', '{}'))
+                    s_exprs.append(args.get('expression', ''))
+                except Exception:
+                    s_exprs.append('')
+        op_results = reclassify_session(op_results, s_exprs)
 
         # -- Provenance --
         prov_results = classify_invocations_sequential(

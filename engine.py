@@ -20,7 +20,7 @@ from evidence import (
     classify_invocation, classify_attestation,
     extract_attestation, check_ev3_guard, EV_0,
 )
-from operation_correctness import classify_operation
+from operation_correctness import classify_operation, reclassify_session
 from provenance_classify import classify_invocations_sequential
 
 
@@ -39,11 +39,7 @@ def execute_item(item, *, condition, config, fixture,
                  ground_truth_compute, adapter_send,
                  system_prompt, tools, transcript_path,
                  seal_hash):
-    """Execute one item under one condition.
-
-    Core loop per R1.2: send to model, drive tool loop, capture
-    evidence, write transcript. NO SCORING.
-    """
+    """Execute one item under one condition. R1.2 loop: send, drive, capture."""
     item_id = item['id']
     ctx = build_delivered_context(fixture, item['source_accounts'])
     gt = ground_truth_compute(item_id, ctx)
@@ -136,6 +132,10 @@ def execute_item(item, *, condition, config, fixture,
                     'reason': f'evaluation failed: '
                               f'{type(e).__name__}: {e}',
                 })
+
+    # Session-level reclassification (forward-dependency rule)
+    exprs = [_extract_calc_expression(tc) or '' for tc in tool_calls_record]
+    op_correctness_results = reclassify_session(op_correctness_results, exprs)
 
     # Write transcript
     transcript.append(
