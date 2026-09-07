@@ -1044,11 +1044,12 @@ a module-level constant definition, not added logic.
 | `provenance_classify.py` | 232 | Instrument module |
 | `provenance_audit.py` | 38 | Instrument module |
 | `numeric.py` | 300 | Instrument module |
-| `engine.py` | 299 | Instrument module |
+| `engine.py` | 300 | Instrument module |
 | `evidence.py` | 296 | Instrument module |
-| `operation_correctness.py` | 284 | Instrument module |
+| `operation_correctness.py` | 298 | Instrument module |
 | `adjudication.py` | 258 | Instrument module |
-| `seal.py` | 257 | Instrument module |
+| `seal.py` | 278 | Instrument module |
+| `seal_constants.py` | 89 | Instrument module |
 | `config.py` | 255 | Instrument module |
 | `reproducibility.py` | 197 | Instrument module |
 | `figure_id.py` | 194 | Instrument module |
@@ -1061,7 +1062,7 @@ a module-level constant definition, not added logic.
 | `transcription.py` | 110 | Instrument module |
 | `transcript.py` | 74 | Instrument module |
 | `smoke_test.py` | 915 | Demonstration tooling |
-| `example/ground_truth_example.py` | 577 | Example / demonstration |
+| `example/ground_truth_example.py` | 566 | Example / demonstration |
 | `example/calculator_tool.py` | 209 | Example / demonstration |
 | `verify_*.py` | varies | Verification test suites |
 | `verify_findings.py` | 127 | Findings reconciliation guard |

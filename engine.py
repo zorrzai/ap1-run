@@ -12,8 +12,7 @@ Item selection (normative):
   from every invocation denominator.
 """
 
-import copy
-import json
+import copy, json
 
 import transcript
 from context import build_delivered_context, format_fixture_context
