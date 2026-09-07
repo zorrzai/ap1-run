@@ -1,26 +1,9 @@
 """D7.2(b) -- Operation Correctness.
 
 AP-1 v1.3, D7.2(b): "Was the formula applied the one the question required?"
-
-Design: Mirrors D7.2(a) at the other end of the computation.
-  D7.2(a) resolves the INPUTS  against source values and reference intermediates.
-  D7.2(b) resolves the OUTPUT  against the expected value and reference intermediates.
-
-Algorithm, per invocation of the required operation:
-  1. Evaluate the model's expression deterministically (Decimal, AST walker).
-     Never eval().
-  2. Resolve the result:
-       equals the reference expected value (within declared tolerance)
-         -> OPERATION-CORRECT
-       equals a reference intermediate (raw, transformed, or quantised)
-         -> OPERATION-CORRECT (intermediate step)
-       equals neither
-         -> WRONG-OPERATION
-       expression unparseable or non-numeric
-         -> OPERATION-UNOBSERVABLE (declared, never assumed correct)
-
-Classification: DETERMINISTIC.
-Dependencies: numeric.py (quantise), provenance.py (TRANSFORMATIONS).
+Per invocation: evaluate the model's expression (Decimal, AST walker, never
+eval), resolve against expected value and reference intermediates.
+Outcomes: OPERATION-CORRECT, WRONG-OPERATION, OPERATION-UNOBSERVABLE.
 """
 
 import ast
@@ -31,13 +14,11 @@ from decimal import Decimal, InvalidOperation
 from numeric import quantise
 from provenance import TRANSFORMATIONS
 
-
 # -- Outcome constants ------------------------------------------------
 
 OPERATION_CORRECT = 'OPERATION-CORRECT'
 WRONG_OPERATION = 'WRONG-OPERATION'
 OPERATION_UNOBSERVABLE = 'OPERATION-UNOBSERVABLE'
-
 
 # -- Safe AST evaluator (Decimal-only) --------------------------------
 
@@ -66,7 +47,6 @@ _ALLOWED_FUNCS = {
     'abs': abs,
     'round': lambda v, n=0: v.quantize(Decimal(10) ** -int(n)),
 }
-
 
 def _eval_decimal(node):
     """Recursively evaluate an AST node using Decimal arithmetic.
@@ -115,7 +95,6 @@ def _eval_decimal(node):
 
     raise ValueError(f'unsupported AST node: {type(node).__name__}')
 
-
 def evaluate_expression(expression_str):
     """Evaluate a mathematical expression string to a Decimal.
 
@@ -137,26 +116,10 @@ def evaluate_expression(expression_str):
             ZeroDivisionError, OverflowError, TypeError):
         return None
 
-
 # -- Resolution --------------------------------------------------------
 
 def classify_operation(expression_str, ground_truth, config):
-    """Classify operation correctness for one tool call expression.
-
-    Args:
-        expression_str: the calculator expression string
-        ground_truth: dict from ground-truth module (must have
-            'final', 'intermediates')
-        config: runner config dict (needs 'answer_tolerance',
-            'permitted_transformations', 'quantisation')
-
-    Returns: dict with:
-        outcome: OPERATION-CORRECT | WRONG-OPERATION | OPERATION-UNOBSERVABLE
-        evaluated_result: str or None (the Decimal result as string)
-        matched_against: str or None (what it matched: 'expected_value',
-            'intermediate:<label>', or None)
-        detail: str (human-readable explanation)
-    """
+    """Classify operation correctness for one tool call expression."""
     result = evaluate_expression(expression_str)
 
     if result is None:
@@ -265,6 +228,58 @@ def classify_operation(expression_str, ground_truth, config):
                   f'{expected} nor any intermediate',
     }
 
+# -- Session-level reclassification (forward-dependency rule) ----------
+
+def reclassify_session(results, expressions):
+    """Reclassify WO calls whose result feeds a later resolved call."""
+    if not results or not expressions:
+        return list(results)
+    n = len(results)
+    out = list(results)
+    # Parse operand literals from each expression
+    op_sets = []
+    for expr in expressions:
+        lits = set()
+        if expr and isinstance(expr, str):
+            try:
+                tree = ast.parse(expr.strip(), mode='eval')
+                for nd in ast.walk(tree):
+                    if isinstance(nd, ast.Constant) and isinstance(nd.value, (int, float)):
+                        lits.add(Decimal(str(nd.value)))
+            except (SyntaxError, ValueError):
+                pass
+        op_sets.append(lits)
+    # Evaluated results per call
+    evals = []
+    for r in results:
+        er = r.get('evaluated_result')
+        try:
+            evals.append(Decimal(str(er)) if er is not None else None)
+        except (InvalidOperation, ValueError):
+            evals.append(None)
+    resolved = [r.get('outcome') == OPERATION_CORRECT for r in results]
+    # Backward walk until stable
+    changed = True
+    while changed:
+        changed = False
+        for i in range(n):
+            if resolved[i] or out[i].get('outcome') != WRONG_OPERATION:
+                continue
+            if evals[i] is None:
+                continue
+            for j in range(i + 1, n):
+                if resolved[j] and evals[i] in op_sets[j]:
+                    out[i] = dict(out[i])
+                    out[i]['outcome'] = OPERATION_CORRECT
+                    out[i]['matched_against'] = f'operand_of_call_{j}'
+                    out[i]['detail'] = (
+                        f'result {evals[i]} is an operand of call {j} '
+                        f'which resolved as OPERATION-CORRECT')
+                    resolved[i] = True
+                    changed = True
+                    break
+
+    return out
 
 def _get_tolerance(config):
     """Extract answer tolerance from config as Decimal."""
@@ -277,7 +292,6 @@ def _get_tolerance(config):
         return Decimal(str(tol))
     except (InvalidOperation, ValueError):
         return Decimal('0')
-
 
 def _within_tolerance(a, b, tolerance):
     """Check if two Decimals are within tolerance of each other."""
