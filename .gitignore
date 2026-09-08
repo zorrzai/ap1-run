@@ -6,6 +6,8 @@ output/*
 !output/README.md
 !output/run_a_mini/
 !output/run_b_sol/
+!output/run_e_mini/
+!output/run_f_sol/
 !output/superseded/
 
 __pycache__/

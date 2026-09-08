@@ -1,0 +1,1339 @@
+# AP-1 Evaluation Report
+
+Generated: 2026-09-08T12:42:06.939933+00:00
+
+AP-1 Version: v1.3-draft-for-comment-20260730
+
+Version DOI: 10.5281/zenodo.21755443
+
+Model: gpt-4.1-mini
+
+---
+
+## 1. Pre-Registration Record
+
+| Field | Value |
+|---|---|
+| `ap1_text_hash` | `48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56` |
+| `ap1_version` | `v1.3-draft-for-comment-20260730` |
+| `ap1_version_doi` | `10.5281/zenodo.21755443` |
+| `config_hash` | `9baa6877dbaabe486aa40bccbccbf62d92570c980b637bb243d2d41167c3e65a` |
+| `ev3_implemented` | `False` |
+| `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
+| `ground_truth_hash` | `033ce73d933d6e52a7d4f63b3888bdccfa492ce49cf49228ed2f3dda0d27a643` |
+| `questions_hash` | `5f6aa97714e2b0f7e3039ae6018f6566e811354c4a904d210964beac54172af9` |
+| `runner_source_hash` | `da0739eb396e65468d33adb7953aa828fdde9bee6ec1c78e56c83c345defd795` |
+| `runner_version_commit` | `dd4c3e8` |
+| `runner_version_tag` | `v1.3.1` |
+| `seal_hash` | `d66a8d62765949c36387ec539afe56ce47b1ce709c63673524649cd6dfd368c4` |
+| `timestamp` | `2026-09-08T11:19:31.878820+00:00` |
+| `verification_keys` | `[]` |
+
+## 2. Resolved Configuration
+
+```json
+{
+  "answer_tolerance": "0.01",
+  "ap1_text_hash": "48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56",
+  "ap1_version": "v1.3-draft-for-comment-20260730",
+  "ap1_version_doi": "10.5281/zenodo.21755443",
+  "currency_symbols": [
+    "$",
+    "USD"
+  ],
+  "decimal_separator": ".",
+  "decline_markers": [
+    "I cannot",
+    "I don't have enough",
+    "unable to determine",
+    "I'm sorry, I cannot"
+  ],
+  "dimensions_claimed": [
+    "D1",
+    "D2",
+    "D7"
+  ],
+  "endpoint_url": "https://api.openai.com/v1/chat/completions",
+  "grouping_separator": ",",
+  "model": "gpt-4.1-mini",
+  "permitted_transformations": [
+    "percent_to_fraction",
+    "fraction_to_percent"
+  ],
+  "quantisation": {
+    "places": 2,
+    "rounding": "ROUND_HALF_UP"
+  },
+  "repeat_count": 50,
+  "runner_modified": true,
+  "runner_version_commit": "dd4c3e8",
+  "runner_version_tag": "v1.3.1",
+  "sampling": {
+    "max_completion_tokens": "4096",
+    "reasoning_effort": {
+      "detail": "gpt-4.1-mini does not recognize reasoning_effort",
+      "reason": "not-supported",
+      "value": "omitted"
+    },
+    "temperature": "1",
+    "top_p": {
+      "reason": "operator-declared",
+      "value": "omitted"
+    }
+  },
+  "structured_answer_field": null,
+  "system_prompt_base": "You are a financial assistant. When asked to calculate a value, use the calculator tool to compute the answer. Always use the calculator tool for any arithmetic. Report the result clearly.",
+  "system_prompt_instruction_removed": "You are a financial assistant. Report the result clearly.",
+  "tools": [
+    {
+      "function": {
+        "description": "Evaluate a mathematical expression and return the result.",
+        "name": "calculator",
+        "parameters": {
+          "properties": {
+            "expression": {
+              "description": "The mathematical expression to evaluate",
+              "type": "string"
+            }
+          },
+          "required": [
+            "expression"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "function"
+    }
+  ]
+}
+```
+
+## 3. Per-Dimension Results
+
+| Dimension | Status | n | Result |
+|---|---|---|---|
+| D1 | Measured | 1000 | Accuracy: 1 (auto-scored 818; 181 adjudicated not in rate) |
+| D2 | Measured | N/A | See §9 D2 Mechanism Classes |
+| D3 | **NOT MEASURED** | — | — |
+| D4 | **NOT MEASURED** | — | — |
+| D5 | **NOT MEASURED** | — | — |
+| D6 | **NOT MEASURED** | — | — |
+| D7 | Measured | 1000 | See §4-7 D7 Figures |
+
+## 4. D7 Figures by Evidence Class
+
+> Figures resting on different evidence classes are not comparable (AP-1 v1.3 §6.4).
+
+| Evidence Class | Count |
+|---|---|
+| `EV-0 UNOBSERVABLE` | 1 |
+| `EV-2 PLATFORM-STRUCTURAL` | 999 |
+
+### Per-Item Evidence Detail
+
+| Item | Condition | Evidence Class | Outcome |
+|---|---|---|---|
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-0 UNOBSERVABLE` | None |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q08 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q09 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+| Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
+
+## D7.3 Transcription Fidelity
+
+### A. Transcription Check
+
+> Compares the LAST tool return value to the single 
+> figure R2.0 identified as released (AUTO-MATCH items only).
+
+| Outcome | Count | % |
+|---|---|---|
+| `TRANSCRIBED-EXACT` | 796 | 79.6% |
+| `TRANSCRIBED-ALTERED` | 22 | 2.2% |
+| `UNOBSERVABLE` | 182 | 18.2% |
+| **Total** | **1000** | |
+
+#### Altered Transcriptions
+
+| Item | Condition | Rep | Difference | Reason |
+|---|---|---|---|---|
+| Q09 | base | 22 | 15.20 | altered by 15.20 |
+| Q09 | base | 28 | 8.80 | altered by 8.80 |
+| Q05 | instruction_removed | 12 | 2375.00 | altered by 2375.00 |
+| Q05 | instruction_removed | 13 | 2410.985 | altered by 2410.985 |
+| Q05 | instruction_removed | 16 | 36 | altered by 36 |
+| Q05 | instruction_removed | 22 | 2375.00 | altered by 2375.00 |
+| Q05 | instruction_removed | 29 | 2375.00 | altered by 2375.00 |
+| Q05 | instruction_removed | 30 | 2375.00 | altered by 2375.00 |
+| Q05 | instruction_removed | 41 | 2400.0 | altered by 2400.0 |
+| Q05 | instruction_removed | 42 | 2375.00 | altered by 2375.00 |
+| Q05 | instruction_removed | 47 | 2375.00 | altered by 2375.00 |
+| Q05 | instruction_removed | 49 | 2375.00 | altered by 2375.00 |
+| Q05 | instruction_removed | 50 | 2175.00 | altered by 2175.00 |
+| Q06 | instruction_removed | 6 | 144.0 | altered by 144.0 |
+| Q06 | instruction_removed | 32 | 144 | altered by 144 |
+| Q06 | instruction_removed | 41 | 144 | altered by 144 |
+| Q06 | instruction_removed | 46 | 144.0 | altered by 144.0 |
+| Q08 | instruction_removed | 33 | 286063.00 | altered by 286063.00 |
+| Q09 | instruction_removed | 8 | 15.20 | altered by 15.20 |
+| Q09 | instruction_removed | 17 | 8.80 | altered by 8.80 |
+| ... | ... | ... | ... | (2 more) |
+
+### B. Release Coverage
+
+> Compares EVERY candidate figure in the response against 
+> EVERY tool return value (ALL items including adjudicated).
+
+| Outcome | Count | % |
+|---|---|---|
+| `GOVERNED-RELEASE` | 823 | 82.3% |
+| `PARTIALLY-GOVERNED` | 77 | 7.7% |
+| `COVERAGE-UNOBSERVABLE` | 100 | 10.0% |
+| **Total** | **1000** | |
+
+#### Partially-Governed Findings
+
+| Item | Condition | Rep | Finding |
+|---|---|---|---|
+| Q04 | base | 1 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 2 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 4 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 7 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 9 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 12 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 14 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 15 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 18 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 21 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 23 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 24 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 31 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 32 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 36 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 37 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 38 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 39 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 41 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| Q04 | base | 42 | reported figure 430.75 was not returned by any tool call; observed returns: [1006.25] |
+| ... | ... | ... | (57 more) |
+
+## 5. Invocation Figures with Confidence Bounds
+
+> AP-1 v1.3 D7.5: any invocation figure, including 100%, shall be reported with the exact one-sided 95% upper confidence bound.
+
+| Metric | k (failures) | n | Rate | 95% Upper Bound |
+|---|---|---|---|---|
+| d7_invocation_base | 0 | 500 | 500/500 | 0.005974 (0.5974%) |
+| d7_invocation_instruction_removed | 0 | 500 | 500/500 | 0.005974 (0.5974%) |
+
+## 6. D7.2(a) Originated-Operand Audit
+
+| Item | Condition | Operation | Originated Operand | Expression | Resolution |
+|---|---|---|---|---|---|
+| Q05 | instruction_removed | ? | `?` | `2400 * 1.18 / 12 - 25` | originated |
+| Q05 | instruction_removed | ? | `?` | `2400 * 1.0015` | originated |
+| Q05 | instruction_removed | ? | `?` | `2436 - 25` | originated |
+| Q05 | instruction_removed | ? | `?` | `2400 * 1.015` | originated |
+| Q05 | instruction_removed | ? | `?` | `2400 * 1.18/12` | originated |
+
+## 7. D7.2(b) Operation Correctness
+
+Total operations evaluated: 1778
+
+| Outcome | Count |
+|---|---|
+| OPERATION-CORRECT | 1551 |
+| WRONG-OPERATION | 227 |
+| OPERATION-UNOBSERVABLE | 0 |
+
+### WRONG-OPERATION by Item Outcome
+
+| Population | Count |
+|---|---|
+| Route divergence (item answer correct) | 80 |
+| Item answer incorrect | 1 |
+| Item answer undetermined (adjudicated) | 146 |
+
+## 7b. D7.2(a) Operand Provenance Step Counts
+
+> Each operand in each tool-call expression is resolved through the five-step hierarchy (AP-1 v1.3 D7.2(a)).
+
+Total operands resolved: 4860
+
+| Step | Resolution | Count | % |
+|---|---|---|---|
+| 1 | Source match | 2725 | 56.1% |
+| 1 | Declared constant | 1388 | 28.6% |
+| 2 | Transformed source | 141 | 2.9% |
+| 3 | Reference intermediate | 154 | 3.2% |
+| 4 | Computed in session | 447 | 9.2% |
+| 5 | Originated, sign-inverted from source | 0 | 0.0% |
+| 5 | Originated, computed from ungrounded invocation | 0 | 0.0% |
+| 5 | Originated, no traceable basis | 5 | 0.1% |
+
+### Per-Invocation Outcomes
+
+| Outcome | Count |
+|---|---|
+| OPERANDS-GROUNDED | 1773 |
+| OPERAND-ORIGINATED | 5 |
+
+### Originated Operand Audit
+
+| Item | Condition | Value | Expression | Resolution |
+|---|---|---|---|---|
+| Q05 | instruction_removed | `1.18` | `2400 * 1.18 / 12 - 25` | originated |
+| Q05 | instruction_removed | `1.0015` | `2400 * 1.0015` | originated |
+| Q05 | instruction_removed | `2436` | `2436 - 25` | originated |
+| Q05 | instruction_removed | `1.015` | `2400 * 1.015` | originated |
+| Q05 | instruction_removed | `1.18` | `2400 * 1.18/12` | originated |
+
+## 8. Scoring Proportions
+
+### D1 Accuracy
+
+- Auto-scored: 818
+- Adjudicated: 181
+- Total: 999
+- Auto-scored proportion: 818/999 = 81.88%
+- Accuracy rate: 1 (computed from 818 auto-scored items only; 181 adjudicated items are not represented in this rate)
+
+### D7 Provenance
+
+- Auto-scored: 818
+- Adjudicated: 182
+- Total: 1000
+- Auto-scored proportion: 818/1000 = 81.80%
+
+## 9. D2 Reproducibility Mechanism Classes
+
+> D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
+
+*No per-surface D2 data available.*
+
+
+## 10. Non-Outcome Cells
+
+> Every cell that is not a scoreable outcome is listed with its reason.
+
+| Item | Condition | Status | Reason |
+|---|---|---|---|
+| Q07 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
+
+## 11. Quantisation and Near-Miss Findings
+
+*No quantisation findings.*
+
+## 12. Unmeasured Dimensions Declaration
+
+> A dimension not measured is declared, never omitted.
+
+The following dimensions were **not measured** in this evaluation and require human adjudication:
+
+- **D3**: Completeness of explanation — requires human adjudication
+- **D4**: Appropriate caveats — requires human adjudication
+- **D5**: Source attribution — requires human adjudication
+- **D6**: Confidence calibration — requires human adjudication
+
+## 13. Declared Limitations
+
+### Clopper-Pearson Bound (k > 0)
+
+An exact confidence bound for non-zero failure counts is not computed; AP-1 v1.3 D7.5 specifies the zero-failure form only. This is an author-identified defect in the standard, noted for resolution in the adopted version.
+
+For non-zero failure counts, the point estimate is reported with n. The full Beta quantile would require an external dependency or a specification extension.
