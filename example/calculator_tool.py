@@ -135,6 +135,12 @@ def execute_calculator(expression):
             f'expression too long: {len(expression)} chars '
             f'(max {MAX_EXPRESSION_LENGTH})')
 
+    # E6: translate ^ to ** for correct mathematical precedence.
+    # Python's ^ is XOR (BitXor) with lower precedence than - and +.
+    # In math notation, ^ means exponentiation and binds tighter.
+    # Translating before ast.parse gives ** (Pow) the correct precedence.
+    expression = expression.replace('^', '**')
+
     try:
         tree = ast.parse(expression, mode='eval')
     except SyntaxError as e:
@@ -164,6 +170,7 @@ def selftest():
         'floor(3.9)': '3',
         '17 % 5': '2',
         '17 // 3': '5',
+        '(1+0.078/12)^3-1': None,  # E6: caret precedence
     }
 
     # Security: these MUST all be refused
@@ -189,6 +196,14 @@ def selftest():
         if expected is not None and got != expected:
             ok = False
             print(f'  FAIL  {expr!r} -> {got!r} (expected {expected!r})')
+
+    # E6 specific: verify caret precedence is correct
+    e6_result = execute_calculator('(1+0.078/12)^3-1')
+    e6_expected_approx = 0.01959  # approx (1.0065)^3 - 1
+    e6_val = float(e6_result)
+    if abs(e6_val - e6_expected_approx) > 0.001:
+        ok = False
+        print(f'  FAIL  E6 caret precedence: got {e6_val}, expected ~{e6_expected_approx}')
 
     for danger in dangers:
         try:

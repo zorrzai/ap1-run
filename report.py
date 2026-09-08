@@ -87,6 +87,9 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
     # 4. D7 figures with evidence class
     sections.append(_section_d7_figures(summary))
 
+    # 4b. D7.3 Transcription fidelity (E7 fix)
+    sections.append(_section_d73(summary))
+
     # 5. Zero-failure Clopper-Pearson bounds
     sections.append(_section_clopper_pearson(summary))
 
@@ -206,6 +209,92 @@ def _section_d7_figures(summary):
     lines.append('')
     return '\n'.join(lines)
 
+
+
+def _section_d73(summary):
+    """Section: D7.3 Transcription fidelity and Release coverage.
+
+    Renders two labelled sub-sections:
+    A. Transcription check  (check_transcription -- AUTO-MATCH items only)
+    B. Release coverage     (check_release_coverage -- ALL items)
+    """
+    lines = ['## D7.3 Transcription Fidelity\n']
+
+    # -- A. Transcription Check --
+    lines.append('### A. Transcription Check\n')
+    lines.append('> Compares the LAST tool return value to the single ')
+    lines.append('> figure R2.0 identified as released (AUTO-MATCH items only).\n')
+
+    tr_results = summary.get('transcription_results', [])
+    if not tr_results:
+        lines.append('*No transcription data available.*\n')
+    else:
+        from collections import Counter
+        counts = Counter(r['outcome'] for r in tr_results)
+        total = len(tr_results)
+
+        lines.append('| Outcome | Count | % |')
+        lines.append('|---|---|---|')
+        for outcome in ['TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED', 'UNOBSERVABLE']:
+            c = counts.get(outcome, 0)
+            pct = f'{100*c/total:.1f}' if total > 0 else '\u2014'
+            lines.append(f'| `{outcome}` | {c} | {pct}% |')
+        lines.append(f'| **Total** | **{total}** | |')
+
+        altered = [r for r in tr_results if r['outcome'] == 'TRANSCRIBED-ALTERED']
+        if altered:
+            lines.append('\n#### Altered Transcriptions\n')
+            lines.append('| Item | Condition | Rep | Difference | Reason |')
+            lines.append('|---|---|---|---|---|')
+            for r in altered[:20]:
+                lines.append(
+                    f'| {r.get("item_id", "?")} '
+                    f'| {r.get("condition", "?")} '
+                    f'| {r.get("repeat", "?")} '
+                    f'| {r.get("difference", "?")} '
+                    f'| {r.get("reason", "?")} |')
+            if len(altered) > 20:
+                lines.append(f'| ... | ... | ... | ... | ({len(altered)-20} more) |')
+        lines.append('')
+
+    # -- B. Release Coverage --
+    lines.append('### B. Release Coverage\n')
+    lines.append('> Compares EVERY candidate figure in the response against ')
+    lines.append('> EVERY tool return value (ALL items including adjudicated).\n')
+
+    rc_results = summary.get('release_coverage_results', [])
+    if not rc_results:
+        lines.append('*No release coverage data available.*\n')
+    else:
+        from collections import Counter
+        rc_counts = Counter(r['outcome'] for r in rc_results)
+        rc_total = len(rc_results)
+
+        lines.append('| Outcome | Count | % |')
+        lines.append('|---|---|---|')
+        for outcome in ['GOVERNED-RELEASE', 'PARTIALLY-GOVERNED',
+                        'COVERAGE-UNOBSERVABLE']:
+            c = rc_counts.get(outcome, 0)
+            pct = f'{100*c/rc_total:.1f}' if rc_total > 0 else '\u2014'
+            lines.append(f'| `{outcome}` | {c} | {pct}% |')
+        lines.append(f'| **Total** | **{rc_total}** | |')
+
+        pg = [r for r in rc_results if r['outcome'] == 'PARTIALLY-GOVERNED']
+        if pg:
+            lines.append('\n#### Partially-Governed Findings\n')
+            lines.append('| Item | Condition | Rep | Finding |')
+            lines.append('|---|---|---|---|')
+            for r in pg[:20]:
+                lines.append(
+                    f'| {r.get("item_id", "?")} '
+                    f'| {r.get("condition", "?")} '
+                    f'| {r.get("repeat", "?")} '
+                    f'| {r.get("finding", "?")} |')
+            if len(pg) > 20:
+                lines.append(f'| ... | ... | ... | ({len(pg)-20} more) |')
+        lines.append('')
+
+    return '\n'.join(lines)
 
 def _section_clopper_pearson(summary):
     """Section 5: Zero-failure Clopper-Pearson bounds.

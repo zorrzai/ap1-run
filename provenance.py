@@ -150,6 +150,23 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                 'sign_inversion_finding': None,
             }
 
+    # Step 1b -- magnitude match: -12 resolves to declared 12
+    for const_val in constants:
+        if const_val != 0 and operand_value == -const_val:
+            return {
+                'step': 1,
+                'resolution': 'constant_magnitude',
+                'matched_field': None,
+                'matched_intermediate': None,
+                'quantisation_finding': False,
+                'transform_used': None,
+                'sign_inversion_finding': {
+                    'type': 'CONSTANT-SIGN-INVERSION',
+                    'declared_constant': str(const_val),
+                    'operand_value': str(operand_value),
+                },
+            }
+
     # Step 2: transformed source
     for tname in permitted_transforms:
         tfunc = TRANSFORMATIONS.get(tname)

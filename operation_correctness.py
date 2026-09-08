@@ -107,7 +107,9 @@ def evaluate_expression(expression_str):
     if not isinstance(expression_str, str) or not expression_str.strip():
         return None
     try:
-        tree = ast.parse(expression_str.strip(), mode='eval')
+        # E6: translate ^ to ** for correct mathematical precedence
+        expr_clean = expression_str.strip().replace('^', '**')
+        tree = ast.parse(expr_clean, mode='eval')
         result = _eval_decimal(tree)
         if not isinstance(result, Decimal):
             result = Decimal(str(result))

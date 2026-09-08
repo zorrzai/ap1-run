@@ -27,6 +27,9 @@ from context import check_lookup_collision
 from accuracy import score_accuracy
 from operation_correctness import classify_operation, reclassify_session
 from provenance_classify import classify_invocations_sequential
+from release_coverage import check_release_coverage
+from numeric import extract_numeric_tokens
+from evidence import _extract_content
 
 
 @scorer(metrics=[])
@@ -115,6 +118,28 @@ def ap1_scorer():
             tool_calls, ctx, gt, config,
         )
 
+        # -- D7.3: Release coverage --
+        _rc_candidates = []
+        _rc_content, _, _ = _extract_content(final_response)
+        if _rc_content:
+            try:
+                _rc_tokens = extract_numeric_tokens(
+                    _rc_content,
+                    currency_symbols=config.get('currency_symbols', []))
+                _at = config.get('answer_tolerance', '0.01')
+                from decimal import Decimal as _Dec
+                _at = _Dec(str(_at)) if not isinstance(_at, _Dec) else _at
+                _exp = _Dec(str(expected)) if expected is not None else None
+                if _exp is not None:
+                    _rc_candidates = [
+                        t.value for t in _rc_tokens
+                        if abs(t.value - _exp) <= _at]
+            except Exception:
+                pass
+        coverage_result = check_release_coverage(
+            tool_calls, _rc_candidates,
+            expected if expected is not None else '')
+
         # -- Build Score --
         is_correct = (fig_result.get('outcome') == AUTO_MATCH)
 
@@ -126,6 +151,7 @@ def ap1_scorer():
             'accuracy': acc_result,
             'operation_correctness': op_results,
             'provenance': prov_results,
+            'release_coverage': coverage_result,
             'item_id': gt.get('id', state.sample_id),
             'condition': state.metadata.get('ap1_condition', 'base'),
         }

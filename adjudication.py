@@ -58,7 +58,8 @@ ADJUDICATION_REASONS = {
 }
 
 
-def generate_sheets(transcript_records, questions, fixture, config):
+def generate_sheets(transcript_records, questions, fixture, config,
+                     release_coverage_results=None):
     """Generate adjudication sheets for items routed to adjudication.
 
     Args:
@@ -66,6 +67,7 @@ def generate_sheets(transcript_records, questions, fixture, config):
         questions: dict with 'items' list
         fixture: dict with 'accounts' list
         config: runner config dict
+        release_coverage_results: list of release coverage dicts (optional)
 
     Returns:
         str -- complete markdown document with two sheets per item.
@@ -73,6 +75,12 @@ def generate_sheets(transcript_records, questions, fixture, config):
     # Build lookup maps
     question_map = {q['id']: q for q in questions.get('items', [])}
     account_map = {a['id']: a for a in fixture.get('accounts', [])}
+
+    # Build release coverage lookup: (item_id, condition) -> list of results
+    _rc_lookup = {}
+    for rc in (release_coverage_results or []):
+        _rc_key = (rc.get('item_id'), rc.get('condition'))
+        _rc_lookup.setdefault(_rc_key, []).append(rc)
 
     sheets = []
     sheets.append('# AP-1 Adjudication Sheets\n')
@@ -103,6 +111,8 @@ def generate_sheets(transcript_records, questions, fixture, config):
 
         # Generate TWO sheets for this item (two scorers per section 13.8)
         for scorer_num in (1, 2):
+            _rc_key = (item_id, condition)
+            _rc_for_item = _rc_lookup.get(_rc_key, [])
             sheet = _generate_one_sheet(
                 record=record,
                 question=question,
@@ -111,6 +121,7 @@ def generate_sheets(transcript_records, questions, fixture, config):
                 config=config,
                 scorer_num=scorer_num,
                 item_num=adjudication_count,
+                coverage_records=_rc_for_item,
             )
             sheets.append(sheet)
 
@@ -146,7 +157,8 @@ def _needs_adjudication(record):
 
 
 def _generate_one_sheet(*, record, question, account_map, fixture,
-                        config, scorer_num, item_num):
+                        config, scorer_num, item_num,
+                        coverage_records=None):
     """Generate a single adjudication sheet for one scorer."""
     item_id = record.get('item_id', 'unknown')
     condition = record.get('condition', 'unknown')
@@ -230,6 +242,20 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
     lines.append('- [ ] WRONG-SCOPE\n')
     lines.append('\n**Reasoning:**\n')
     lines.append('```\n\n\n\n```\n')
+
+    # Release coverage findings (E7)
+    if coverage_records:
+        pg = [r for r in coverage_records
+              if r.get('outcome') == 'PARTIALLY-GOVERNED']
+        if pg:
+            lines.append('### Release Coverage Finding\n')
+            lines.append('**Status: PARTIALLY-GOVERNED**\n')
+            for r in pg:
+                lines.append(f'- Repeat {r.get("repeat", "?")}: {r.get("finding", "")}')
+                uf = r.get('ungoverned_figures', [])
+                if uf:
+                    lines.append(f'  Ungoverned figures: {", ".join(str(f) for f in uf)}')
+            lines.append('')
 
     # Ground truth for scorer reference
     lines.append('### Reference Values\n')

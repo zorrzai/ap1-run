@@ -34,6 +34,7 @@ from figure_id import identify_figure, AUTO_MATCH
 from accuracy import score_accuracy
 from context import build_delivered_context, check_lookup_collision
 from transcription import check_transcription
+from release_coverage import check_release_coverage
 from provenance_classify import _parse_return_value
 import ground_truth_example as gt_module
 
@@ -444,6 +445,28 @@ def _classify(scenario, tool_calls, final_response):
                     config.get('quantisation', {}).get('places', 2)),
             )
 
+    # D7.3: release coverage -- all candidates vs all tool returns
+    from numeric import extract_numeric_tokens
+    from evidence import _extract_content
+    from decimal import Decimal as _Dec
+    _rc_candidates = []
+    _rc_content, _, _ = _extract_content(final_response)
+    if _rc_content:
+        try:
+            _rc_tokens = extract_numeric_tokens(
+                _rc_content,
+                currency_symbols=config.get('currency_symbols', []))
+            _at = config.get('answer_tolerance', '0.01')
+            _at = _Dec(str(_at)) if not isinstance(_at, _Dec) else _at
+            _expected = _Dec(str(gt.get('final', 0)))
+            _rc_candidates = [
+                t.value for t in _rc_tokens
+                if abs(t.value - _expected) <= _at]
+        except Exception:
+            pass
+    coverage_result = check_release_coverage(
+        tool_calls, _rc_candidates, gt.get('final', ''))
+
     return {
         'evidence_class': ev_class,
         'invocation_outcome': inv_outcome,
@@ -452,6 +475,7 @@ def _classify(scenario, tool_calls, final_response):
         'operation_correctness': op_results,
         'provenance': prov_results,
         'transcription': transcription_result,
+        'release_coverage': coverage_result,
     }
 
 

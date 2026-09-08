@@ -286,6 +286,11 @@ def derive_q07(ctx):
                     {"source": "investment.annual_rate"},
                     {"constant": "100"},
                     {"constant": "12"},
+                    # E3 rebound: Q07 asks for a "quarterly" figure.
+                    # 4 (quarters/year) is a domain constant alongside
+                    # 3 (months/quarter) and 12 (months/year).
+                    # A model dividing annual by 4 is a valid route.
+                    {"constant": "4"},
                 ],
             },
             {

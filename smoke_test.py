@@ -58,6 +58,9 @@ from evidence import EV_0, EV_2
 from figure_id import identify_figure, AUTO_MATCH, AUTO_NO_FIGURE, UNMEASURABLE
 from invocation import format_rate
 from accuracy import score_accuracy, summarise_accuracy
+from transcription import check_transcription
+from release_coverage import check_release_coverage
+from perturbation_guard import check_single_variable_perturbation
 from reproducibility import classify_mechanism
 from numeric import extract_numeric_tokens
 from seal import seal as create_seal
@@ -191,12 +194,16 @@ def _verify_invocation_consistency(results):
 
 def _build_summary(all_results, evidence_findings, *,
                    d1_summary=None, d2_results=None,
-                   d2_cap_reason=None):
+                   d2_cap_reason=None,
+                   transcription_results=None,
+                   release_coverage_results=None):
     """Build the summary dict that report.generate_report() expects.
 
     Aggregates per-item results into the structure report.py reads.
     """
     summary = {}
+    summary['transcription_results'] = transcription_results or []
+    summary['release_coverage_results'] = release_coverage_results or []
 
     # Evidence class counts
     ev_counts = {}
@@ -499,6 +506,24 @@ def main():
             sampling=sampling, model=model, api_key=api_key,
             timeout=timeout)
 
+    # -- Perturbation guard (R1.2): refuse run if more than system prompt differs --
+    import hashlib as _hashlib
+    _fixture_bytes = open(os.path.join(example_dir, 'fixture.json'), 'rb').read()
+    _fixture_hash = _hashlib.sha256(_fixture_bytes).hexdigest()
+    _base_guard = {
+        'system_prompt': system_prompt_base,
+        'tools': tools,
+        'tool_choice': config.get('tool_choice'),
+        'sampling': sampling,
+        'fixture_hash': _fixture_hash,
+        'message_template': config.get('message_template'),
+    }
+    _removed_guard = dict(_base_guard)
+    _removed_guard['system_prompt'] = system_prompt_removed
+    check_single_variable_perturbation(_base_guard, _removed_guard)
+    print('Perturbation guard: PASSED (single-variable: system_prompt only)')
+    print()
+
     # -- Collector for all findings --
     all_results = []
     all_accuracy_results = []  # D1: per-item accuracy scores
@@ -507,6 +532,8 @@ def main():
     decline_findings = []
     tool_call_structures = []
     evidence_findings = []
+    transcription_results = []  # E7: D7.3 transcription check
+    release_coverage_results = []  # E7: D7.3 release coverage check
     unmeasured_cells = []
 
     print(f'Running {len(items)} items x {len(conditions)} conditions x {repeat_count} repeats')
@@ -614,6 +641,68 @@ def main():
                     expected=str(expected),
                 )
 
+                # -- D7.3: Transcription check (E7 fix) --
+                # Extract last calculator tool return value
+                _tool_return_val = None
+                _tc_list = result.get('tool_calls', [])
+                for _tc in reversed(_tc_list):
+                    _rv = _tc.get('return_value', '')
+                    if _rv:
+                        import json as _json
+                        try:
+                            _parsed = _json.loads(_rv) if isinstance(_rv, str) else _rv
+                            if isinstance(_parsed, dict) and 'result' in _parsed:
+                                _tool_return_val = Decimal(str(_parsed['result']))
+                        except Exception:
+                            pass
+                        break
+
+                transcription_result = check_transcription(
+                    _tool_return_val,
+                    fig_result.get('released_figure'),
+                    figure_outcome=fig_result['outcome'],
+                    quantisation_digits=int(
+                        config.get('quantisation', {}).get('places', 2)),
+                )
+                transcription_results.append({
+                    'item_id': item_id,
+                    'condition': condition,
+                    'repeat': rep,
+                    'outcome': transcription_result['outcome'],
+                    'difference': str(transcription_result.get('difference', '')),
+                    'reason': transcription_result.get('reason', ''),
+                })
+
+                # -- D7.3: Release coverage check (E7 fix, all items) --
+                # Extract candidate figures: every number in the response
+                # matching expected within tolerance (per Steven's spec)
+                _rc_candidates = []
+                from evidence import _extract_content as _rc_extract
+                _rc_content, _, _ = _rc_extract(final_response)
+                if _rc_content:
+                    try:
+                        _rc_tokens = extract_numeric_tokens(
+                            _rc_content,
+                            currency_symbols=currency_symbols)
+                        _rc_candidates = [t.value for t in _rc_tokens
+                                          if abs(t.value - expected)
+                                          <= answer_tolerance]
+                    except Exception:
+                        pass
+                _rc_tool_calls = result.get('tool_calls', [])
+                coverage_result = check_release_coverage(
+                    _rc_tool_calls, _rc_candidates, expected)
+                release_coverage_results.append({
+                    'item_id': item_id,
+                    'condition': condition,
+                    'repeat': rep,
+                    'outcome': coverage_result['outcome'],
+                    'finding': coverage_result.get('finding', ''),
+                    'ungoverned_figures': [
+                        str(f) for f in
+                        coverage_result.get('ungoverned_figures', [])],
+                })
+
                 # -- D1: Accuracy scoring --
                 acc_result = score_accuracy(
                     fig_result,
@@ -704,6 +793,8 @@ def main():
                     'shape_ok': shape_ok,
                     'operation_correctness': op_correctness,
                     'provenance_results': result.get('provenance_results', []),
+                    'transcription_outcome': transcription_result['outcome'],
+                    'release_coverage_outcome': coverage_result['outcome'],
                 })
 
                 # Brief delay to avoid rate limiting
@@ -785,6 +876,26 @@ def main():
         print(f'  {cond}: invoked={invoked} not_invoked={not_invoked} n={n}')
         print(f'    failure rate: {rate_str}')
 
+    # 3h2. D7.3 Transcription
+    print(f'\\n3h2. D7.3 TRANSCRIPTION:')
+    from collections import Counter as _Counter
+    tr_counts = _Counter(r['outcome'] for r in transcription_results)
+    for outcome in ['TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED', 'UNOBSERVABLE']:
+        print(f'  {outcome}: {tr_counts.get(outcome, 0)}')
+
+    # 3h3. D7.3 Release Coverage
+    print(f'\n3h3. D7.3 RELEASE COVERAGE:')
+    rc_counts = _Counter(r['outcome'] for r in release_coverage_results)
+    for outcome in ['GOVERNED-RELEASE', 'PARTIALLY-GOVERNED',
+                    'COVERAGE-UNOBSERVABLE']:
+        print(f'  {outcome}: {rc_counts.get(outcome, 0)}')
+    pg_items = [r for r in release_coverage_results
+                if r['outcome'] == 'PARTIALLY-GOVERNED']
+    if pg_items:
+        print(f'  PARTIALLY-GOVERNED findings:')
+        for r in pg_items:
+            print(f'    {r["item_id"]}/{r["condition"]}/r{r["repeat"]}: {r["finding"]}')
+
     # 3i. D7.2(b) operation correctness
     print(f'\n3i. D7.2(b) OPERATION CORRECTNESS:')
     op_counts = {'OPERATION-CORRECT': 0, 'WRONG-OPERATION': 0,
@@ -855,7 +966,9 @@ def main():
     summary = _build_summary(
         all_results, evidence_findings,
         d1_summary=d1_summary, d2_results=d2_results,
-        d2_cap_reason=d2_cap_reason)
+        d2_cap_reason=d2_cap_reason,
+        transcription_results=transcription_results,
+        release_coverage_results=release_coverage_results)
 
     # 3j. D1 Accuracy
     print(f'\n3j. D1 ACCURACY:')
@@ -946,7 +1059,8 @@ def main():
     print('\nGENERATING ADJUDICATION SHEETS (adjudication.py)')
 
     sheets_text = adjudication.generate_sheets(
-        engine_records, questions, fixture, config)
+        engine_records, questions, fixture, config,
+        release_coverage_results=release_coverage_results)
 
     sheets_path = os.path.join(output_dir, 'adjudication_sheets.md')
     with open(sheets_path, 'w', encoding='utf-8') as f:

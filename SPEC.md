@@ -1021,12 +1021,12 @@ Test suites (`verify_*.py`, `run_all_tests.py`), demonstration tooling
 (`example/ground_truth_example.py`) are **not** instrument modules and are
 **excluded** from this constraint.
 
-**Declared exception — `report.py` (664 lines).**  `report.py` is a cohesive
+**Declared exception — `report.py` (768 lines).**  `report.py` is a cohesive
 renderer with thirteen sections.  Fragmenting it would make the rendering flow
 harder to follow without improving auditability.  This exception is documented,
 not implicit.
 
-**Declared exception — `provenance.py` (346 lines).**  The 9-line expansion
+**Declared exception — `provenance.py` (371 lines).**  The expansion
 adds `STRUCTURAL_CONSTANTS` (the additive and multiplicative identities 0 and
 1) to the provenance classifier.  These are structural in standard financial
 formulae and their addition was established by the first 1000-execution live
@@ -1039,15 +1039,15 @@ a module-level constant definition, not added logic.
 
 | File | Lines | Classification |
 |---|---|---|
-| `report.py` | 679 | Instrument module (excepted §12.9) |
-| `provenance.py` | 354 | Instrument module (excepted §12.9) |
+| `report.py` | 768 | Instrument module (excepted §12.9) |
+| `provenance.py` | 371 | Instrument module (excepted §12.9) |
 | `provenance_classify.py` | 232 | Instrument module |
 | `provenance_audit.py` | 38 | Instrument module |
 | `numeric.py` | 300 | Instrument module |
 | `engine.py` | 300 | Instrument module |
 | `evidence.py` | 296 | Instrument module |
-| `operation_correctness.py` | 298 | Instrument module |
-| `adjudication.py` | 258 | Instrument module |
+| `operation_correctness.py` | 300 | Instrument module |
+| `adjudication.py` | 284 | Instrument module |
 | `seal.py` | 282 | Instrument module |
 | `seal_constants.py` | 89 | Instrument module |
 | `config.py` | 257 | Instrument module |
@@ -1060,15 +1060,16 @@ a module-level constant definition, not added logic.
 | `context.py` | 121 | Instrument module |
 | `perturbation_guard.py` | 116 | Instrument module |
 | `transcription.py` | 110 | Instrument module |
+| `release_coverage.py` | 140 | Instrument module |
 | `transcript.py` | 74 | Instrument module |
-| `smoke_test.py` | 981 | Demonstration tooling |
-| `example/ground_truth_example.py` | 566 | Example / demonstration |
-| `example/calculator_tool.py` | 209 | Example / demonstration |
+| `smoke_test.py` | 1095 | Demonstration tooling |
+| `example/ground_truth_example.py` | 571 | Example / demonstration |
+| `example/calculator_tool.py` | 224 | Example / demonstration |
 | `verify_*.py` | varies | Verification test suites |
 | `verify_findings.py` | 127 | Findings reconciliation guard |
 | `generate_findings.py` | 518 | FINDINGS.md generator from artifacts |
 | `test_findings_mutation.py` | 197 | Mutation tests for findings pipeline |
-| `run_all_tests.py` | 221 | Test runner |
+| `run_all_tests.py` | 222 | Test runner |
 
 **Research questions are not held in this document.** Those on which the field
 has no settled answer are put to reviewers in AP-1 v1.3 §14. The standard asks;
