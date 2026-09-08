@@ -464,8 +464,11 @@ def _classify(scenario, tool_calls, final_response):
                 if abs(t.value - _expected) <= _at]
         except Exception:
             pass
+    _quant = config.get('quantisation', {})
     coverage_result = check_release_coverage(
-        tool_calls, _rc_candidates, gt.get('final', ''))
+        tool_calls, _rc_candidates, gt.get('final', ''),
+        quantisation_places=int(_quant.get('places', 2)),
+        quantisation_rounding=_quant.get('rounding', 'ROUND_HALF_UP'))
 
     return {
         'evidence_class': ev_class,
