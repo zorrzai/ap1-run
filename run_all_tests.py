@@ -45,7 +45,7 @@ SUITES = [
     ('verify_findings.py',       'verify_findings.py',      1,  1),
     ('test_findings_mutation.py', 'test_findings_mutation.py', 1,  7),
     ('verify_inspect.py',          'verify_inspect.py',          3,  4),
-    ('verify_e7_coverage.py',       'verify_e7_coverage.py',      13, 13),
+    ('verify_e7_coverage.py',       'verify_e7_coverage.py',      15, 15),
 ]
 
 

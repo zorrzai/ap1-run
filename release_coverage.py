@@ -16,11 +16,27 @@ Outcomes:
                           tool return (but tool calls exist)
   COVERAGE-UNOBSERVABLE   no tool calls, or no candidate figures
 
+Scope limitation:
+  This check only evaluates figures that matched the expected value
+  within tolerance.  An ungoverned WRONG figure (one that did not
+  match expected and therefore was never a candidate) is invisible
+  to this check.  That is inherent: coverage can only be assessed
+  for figures that the candidate filter selected.
+
+Comparison method:
+  Tool returns and candidates are both quantised to the declared
+  precision (config quantisation.places / quantisation.rounding)
+  before comparison.  This absorbs IEEE 754 float noise from the
+  reference calculator while still catching real substitutions at
+  the declared precision.
+
 Classification: DETERMINISTIC.  No model, no network.
 """
 
 import json
 from decimal import Decimal, InvalidOperation
+
+from numeric import quantise
 
 
 # -- Outcome constants -------------------------------------------------
@@ -54,7 +70,9 @@ def _parse_tool_returns(tool_calls):
     return returns
 
 
-def check_release_coverage(tool_calls, candidate_figures, expected_value):
+def check_release_coverage(tool_calls, candidate_figures, expected_value,
+                           quantisation_places=2,
+                           quantisation_rounding='ROUND_HALF_UP'):
     """Check whether reported figures are governed by tool returns.
 
     Args:
@@ -66,6 +84,11 @@ def check_release_coverage(tool_calls, candidate_figures, expected_value):
             numeric.extract_numeric_tokens + tolerance filter.
         expected_value: Decimal -- the ground-truth expected value.
             Used only for finding text, not for matching logic.
+        quantisation_places: int -- decimal places for normalising
+            both tool returns and candidates before comparison.
+            Uses the declared config quantisation.places.
+        quantisation_rounding: str -- rounding mode for quantisation.
+            Uses the declared config quantisation.rounding.
 
     Returns: dict with:
         outcome: GOVERNED-RELEASE / PARTIALLY-GOVERNED /
@@ -97,10 +120,16 @@ def check_release_coverage(tool_calls, candidate_figures, expected_value):
                        'found in response',
         }
 
-    # Check each candidate against ALL tool returns
-    returns_set = set(tool_returns)
+    # Quantise both sides to the declared precision before comparing.
+    # This absorbs IEEE 754 float noise from the reference calculator
+    # (e.g. 15.200000000000001 vs 15.20) while preserving real
+    # substitutions at the declared precision (e.g. 430.76 vs 430.75).
+    def _q(v):
+        return quantise(v, quantisation_places, quantisation_rounding)
+
+    quantised_returns = set(_q(r) for r in tool_returns)
     ungoverned_raw = [fig for fig in candidate_figures
-                      if fig not in returns_set]
+                      if _q(fig) not in quantised_returns]
 
     if not ungoverned_raw:
         return {

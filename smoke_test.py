@@ -690,8 +690,12 @@ def main():
                     except Exception:
                         pass
                 _rc_tool_calls = result.get('tool_calls', [])
+                _quant = config.get('quantisation', {})
                 coverage_result = check_release_coverage(
-                    _rc_tool_calls, _rc_candidates, expected)
+                    _rc_tool_calls, _rc_candidates, expected,
+                    quantisation_places=int(_quant.get('places', 2)),
+                    quantisation_rounding=_quant.get(
+                        'rounding', 'ROUND_HALF_UP'))
                 release_coverage_results.append({
                     'item_id': item_id,
                     'condition': condition,

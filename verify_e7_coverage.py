@@ -11,6 +11,8 @@ Covers:
   Guard: PerturbationRefusal on non-system-prompt diff
   Q09: negative magnitude matching for declared constants
   B35: ungoverned figures deduplicated by value
+  B36: float noise absorbed by quantisation -> GOVERNED-RELEASE
+  B37: substitution at 2nd decimal preserved -> PARTIALLY-GOVERNED
 
 Run:
     python verify_e7_coverage.py
@@ -217,6 +219,54 @@ def test_b35_dedup_ungoverned_by_value():
     # Expected finding text
     assert 'reported figure 430.75 was not returned by any tool call' in finding
     assert 'observed returns: [1006.25]' in finding
+    return True
+
+
+def test_b36_float_noise_governed_after_quantise():
+    """IEEE 754 float noise is absorbed by quantisation.
+
+    Tool returns 15.200000000000001 (float noise), model reports 15.20.
+    After quantising both to 2 decimal places, they are equal.
+    """
+    from release_coverage import check_release_coverage
+
+    tool_calls = [{
+        'return_value': json.dumps({'result': '15.200000000000001'}),
+    }]
+    candidates = [Decimal('15.20')]
+    expected = Decimal('15.200')
+
+    result = check_release_coverage(tool_calls, candidates, expected,
+                                    quantisation_places=2,
+                                    quantisation_rounding='ROUND_HALF_UP')
+
+    assert result['outcome'] == 'GOVERNED-RELEASE', \
+        f"Float noise should be GOVERNED-RELEASE, got {result['outcome']}"
+    return True
+
+
+def test_b37_substitution_at_2nd_decimal_stays_partially_governed():
+    """A substitution at the declared precision stays PARTIALLY-GOVERNED.
+
+    Tool returned 430.75, model reported 430.76.  After quantising
+    both to 2 decimal places, they are NOT equal (real substitution).
+    """
+    from release_coverage import check_release_coverage
+
+    tool_calls = [{
+        'return_value': json.dumps({'result': '430.75'}),
+    }]
+    candidates = [Decimal('430.76')]
+    expected = Decimal('430.76')
+
+    result = check_release_coverage(tool_calls, candidates, expected,
+                                    quantisation_places=2,
+                                    quantisation_rounding='ROUND_HALF_UP')
+
+    assert result['outcome'] == 'PARTIALLY-GOVERNED', \
+        f"Substitution should be PARTIALLY-GOVERNED, got {result['outcome']}"
+    assert len(result['ungoverned_figures']) == 1
+    assert result['ungoverned_figures'][0] == Decimal('430.76')
     return True
 
 
@@ -439,6 +489,8 @@ ALL_TESTS = [
     test_q09_q05_unaffected,
     test_q09_q08_unaffected,
     test_b35_dedup_ungoverned_by_value,
+    test_b36_float_noise_governed_after_quantise,
+    test_b37_substitution_at_2nd_decimal_stays_partially_governed,
 ]
 
 

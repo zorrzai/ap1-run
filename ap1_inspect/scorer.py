@@ -138,7 +138,11 @@ def ap1_scorer():
                 pass
         coverage_result = check_release_coverage(
             tool_calls, _rc_candidates,
-            expected if expected is not None else '')
+            expected if expected is not None else '',
+                    quantisation_places=int(
+                        config.get('quantisation', {}).get('places', 2)),
+                    quantisation_rounding=config.get(
+                        'quantisation', {}).get('rounding', 'ROUND_HALF_UP'))
 
         # -- Build Score --
         is_correct = (fig_result.get('outcome') == AUTO_MATCH)
