@@ -574,3 +574,108 @@ Output:
 run_e_mini [('Q07', 'base')]
 run_f_sol [('Q08', 'base')]
 ```
+
+---
+
+## Corrections by addition - 3 October 2026 (second set)
+
+**Date:** 3 October 2026
+**Affects:** Three statements in this file: one in E6 and two in the September sections (F11, E3 Addendum). No count, figure, verdict or withdrawal changes. The original lines are left as published and are corrected here. Each command runs from the repository root.
+
+### C3. E6, line 348: one of the 52 Run B records was AUTO-MATCH, not NONE-MATCHING
+
+E6 states (lines 347-348): "All 52 records scored WRONG-OPERATION ... All scored ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING".
+
+The first sentence holds: each of the 52 records has at least one WRONG-OPERATION call, and 49 have only WRONG-OPERATION calls. The second sentence holds for 51 of the 52. One record (Q07, base, repeat 7) is AUTO-MATCH. Its first call used `^` and returned `42709.66242644786`. A second call, `42175 * 0.078 / 4 - 15 * 3`, returned `777.4125`, and the record released `777.41`.
+
+**Correction:** for "All scored ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING" read "51 scored ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING. One (Q07, base, repeat 7) scored AUTO-MATCH after a second, simple-reading calculation". The 59 affected calls, the withdrawn figures and the fix are unchanged.
+
+```
+python - <<'EOF'
+import json
+S = json.load(open('output/run_b_sol/smoke_summary.json', encoding='utf-8'))['all_results']
+I = [r for r in map(json.loads, open('output/run_b_sol/smoke_run.jsonl', encoding='utf-8')) if r.get('record_type') != 'figure_identification']
+C = [(s['condition'], s['repeat'], s['figure_outcome']) for s, i in zip(S, I)
+     if s['item_id'] == 'Q07' and any('^' in t['function']['arguments'] for t in i['tool_calls'] or [])]
+print(len(C), [c for c in C if c[2] != 'ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING'])
+EOF
+```
+
+Output: `52 [('base', 7, 'AUTO-MATCH')]`
+
+### C4. F11, line 507: "the exact tool return in every case" holds at the declared precision, not at full precision
+
+F11 states (lines 506-507): "Across 618 clean AUTO-MATCH tool returns in run_e_mini and 479 in run_f_sol, the model released the exact tool return in every case."
+
+The counts 618 and 479 are correct, and so is the table row "Of clean returns: model altered 0 / 0" at the declared two-decimal precision. At full precision the released figure differs from the clean return in 99 run_e_mini records and 49 run_f_sol records. All 148 are Q07: the expected value, and the calculator's return, is `777.4125`, and the model released `777.41`. That is rounding to the declared precision, not an alteration.
+
+**Correction:** for "the model released the exact tool return in every case" read "the released figure equalled the tool return at the declared two-decimal precision in every case. At full precision, 99 (run_e_mini) and 49 (run_f_sol) Q07 releases rounded the return `777.4125` to `777.41`".
+
+```
+python - <<'EOF'
+import json
+from decimal import Decimal, InvalidOperation
+
+def load(run):
+    S = json.load(open(f'output/{run}/smoke_summary.json', encoding='utf-8'))['all_results']
+    I = [json.loads(l) for l in open(f'output/{run}/smoke_run.jsonl', encoding='utf-8')]
+    return S, [r for r in I if r.get('record_type') != 'figure_identification']
+
+def returns(rec):
+    out = []
+    for t in rec['tool_calls'] or []:
+        try:
+            out.append(Decimal(str(json.loads(t.get('return_value') or '{}').get('result'))))
+        except (InvalidOperation, ValueError, AttributeError):
+            pass
+    return out
+
+q2 = lambda d: d.quantize(Decimal('0.01'))
+for run in ('run_e_mini', 'run_f_sol'):
+    S, I = load(run)
+    clean = at2 = full = 0
+    for s, i in zip(S, I):
+        if s['figure_outcome'] != 'AUTO-MATCH' or s['tool_calls_count'] == 0:
+            continue
+        hit = [r for r in returns(i) if r == Decimal(str(s['expected']))]
+        if hit:
+            rel = Decimal(str(s['released_figure']))
+            clean += 1
+            at2 += q2(rel) != q2(hit[0])
+            full += rel != hit[0]
+    print(run, clean, at2, full)
+EOF
+```
+
+Output (run, clean returns, released differs at 2 dp, released differs at full precision):
+
+```
+run_e_mini 618 0 99
+run_f_sol 479 0 49
+```
+
+### C5. E3 Addendum, lines 177-179: 1.0015 is not a valid derivation from the fixture
+
+The Addendum states (lines 177-179): "(annual_rate 18.0 → growth factor 1.18 or monthly factor 1.015 or 1.0015; ...) ... None is a fabricated or genuinely wrong operand."
+
+The fixture's `credit_card` record has `annual_rate` `18.0`, `balance` `2400.00` and `reward_rate` `1.5`. The monthly factor is 1 + 18.0/100/12 = 1.015. Four of the five run_e_mini originated operands follow from these fields: 1.18 (twice), 1.015, and 2436 = 2400 × 1.015. The fifth, `1.0015` (Q05, instruction_removed, repeat 17, expression `2400 * 1.0015`), is not the monthly factor. Numerically it equals 1 + 1.5/1000, where 1.5 is both the reward rate and 18.0/12. Converting a percentage to a fraction divides by 100, which gives 1.015. No valid derivation of 1.0015 from the fixture was found. This record's figure outcome is ADJUDICATE-AMBIGUOUS.
+
+**Correction:** for "monthly factor 1.015 or 1.0015" read "monthly factor 1.015". For "None is a fabricated or genuinely wrong operand" read "Four are pre-computed intermediates derived from the fixture. The fifth, 1.0015, has no valid derivation from the fixture that was found."
+
+```
+python - <<'EOF'
+import json
+a = [x for x in json.load(open('example/fixture.json', encoding='utf-8'))['accounts'] if 'credit' in json.dumps(x).lower()]
+print(json.dumps(a)[:400])
+S = json.load(open('output/run_e_mini/smoke_summary.json', encoding='utf-8'))['all_results']
+print([(s['repeat'], o['operand_value'], o['expression']) for s in S for p in s['provenance_results']
+       for o in p['operand_resolutions'] if o['resolution'] == 'originated'])
+EOF
+```
+
+Output:
+
+```
+[{"id": "credit_card", "name": "Credit Card", "balance": "2400.00", "direction": "liability", "annual_rate": "18.0", "monthly_fee": "0.00", "credit_limit": "5000.00", "min_payment": "25.00", "reward_rate": "1.5"}]
+[(3, '1.18', '2400 * 1.18 / 12 - 25'), (17, '1.0015', '2400 * 1.0015'), (21, '2436', '2436 - 25'), (44, '1.015', '2400 * 1.015'), (50, '1.18', '2400 * 1.18/12')]
+```
