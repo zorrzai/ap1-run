@@ -679,3 +679,35 @@ Output:
 [{"id": "credit_card", "name": "Credit Card", "balance": "2400.00", "direction": "liability", "annual_rate": "18.0", "monthly_fee": "0.00", "credit_limit": "5000.00", "min_payment": "25.00", "reward_rate": "1.5"}]
 [(3, '1.18', '2400 * 1.18 / 12 - 25'), (17, '1.0015', '2400 * 1.0015'), (21, '2436', '2436 - 25'), (44, '1.015', '2400 * 1.015'), (50, '1.18', '2400 * 1.18/12')]
 ```
+
+---
+
+## Correction by addition - 3 October 2026 (third set)
+
+**Date:** 3 October 2026
+**Affects:** One count in F11's source line. No figure, verdict or withdrawal changes. The original lines are left as published and corrected here. The command runs from the repository root.
+
+### C6. F11, lines 496-497: 1,602 is all AUTO-MATCH records, not those with tool calls
+
+F11 states (lines 496-497): "1,097 clean tool returns across 1,602 AUTO-MATCH records with tool calls."
+
+1,602 is the number of AUTO-MATCH records: 818 (run_e_mini) + 784 (run_f_sol). The number with tool calls is 818 + 750 = 1,568, as F11's own table gives at lines 511-512. The 1,097 clean tool returns (618 + 479) are drawn from those 1,568.
+
+**Correction:** for "across 1,602 AUTO-MATCH records with tool calls" read "across 1,568 AUTO-MATCH records with tool calls (1,602 AUTO-MATCH records in all)".
+
+```
+python - <<'EOF'
+import json
+for run in ('run_e_mini', 'run_f_sol'):
+    S = json.load(open(f'output/{run}/smoke_summary.json', encoding='utf-8'))['all_results']
+    A = [s for s in S if s['figure_outcome'] == 'AUTO-MATCH']
+    print(run, len(A), sum(1 for s in A if s['tool_calls_count'] > 0))
+EOF
+```
+
+Output (run, AUTO-MATCH records, of which with tool calls):
+
+```
+run_e_mini 818 818
+run_f_sol 784 750
+```
