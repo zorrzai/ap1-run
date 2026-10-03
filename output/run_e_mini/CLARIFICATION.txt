@@ -1,0 +1,14 @@
+CLARIFICATION - 3 October 2026
+
+This file clarifies the scope of DISCLAIMER.txt beside it. It does not amend
+or replace that file.
+
+The figures in this run may be reported as demonstration-run results, labelled
+as such. They may never be reported as an AP-1 result, an AP-1 evaluation, or
+a conformance result.
+
+The runner code this run was sealed against is published at tag
+e7-quantise-fix. A clean checkout of that tag reproduces the seal's
+runner_source_hash (da0739eb396e65468d33adb7953aa828fdde9bee6ec1c78e56c83c345defd795)
+byte for byte. The seal's runner_version_commit (dd4c3e8) is a commit
+identifier from the repository before the public subtree split.
