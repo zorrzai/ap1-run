@@ -525,3 +525,52 @@ returns `15.200000000000001`, the model releases `15.20`; when it returns
 `2600.0`, the model releases `2600.0`. Both models transcribe clean
 calculator values faithfully. The rounding question is about the calculator's
 arithmetic precision, not about model fidelity.
+
+---
+
+## Corrections by addition - 3 October 2026
+
+**Date:** 3 October 2026
+**Affects:** Two counts in this file. No figure, verdict or withdrawal changes. The original lines are left as published and corrected here.
+
+### C1. E3, line 62: Run B count is 51 occurrences in 49 records, not "51 of 100" records
+
+E3 states: "Operand `4` appears in 96 of 100 Q07 records in Run A and 51 of 100 in Run B."
+
+The Run A figure is correct: 96 records, 96 occurrences. The Run B figure counts occurrences as if they were records. Two Run B records each carry operand `4` twice.
+
+| Run | Q07 invocation records | Records containing operand `4` | Occurrences |
+|-----|------------------------|--------------------------------|-------------|
+| Run A (`run_a_mini`) | 100 | 96 | 96 |
+| Run B (`run_b_sol`) | 100 | **49** | 51 |
+
+**Correction:** for "51 of 100 in Run B" read "49 of 100 in Run B (51 occurrences)".
+
+Command, run from the repository root (counts invocation records only; `smoke_run.jsonl` interleaves invocation and figure-identification records):
+
+```
+python -c "import json; R=[json.loads(l) for l in open('output/run_b_sol/smoke_run.jsonl',encoding='utf-8')]; Q=[r for r in R if r.get('record_type')!='figure_identification' and r['item_id']=='Q07']; H=[sum(1 for p in r['provenance_results'] for o in p['operand_resolutions'] if o['operand_value']=='4') for r in Q]; print(len(Q), sum(h>0 for h in H), sum(H))"
+```
+
+Output: `100 49 51` (Q07 records, records containing `4`, occurrences). Replacing `run_b_sol` with `run_a_mini` gives `100 96 96`.
+
+### C2. E7, COVERAGE-UNOBSERVABLE table: the sol EV-0 record is Q08, not Q10
+
+The E7 row reads: `EV-0 (no text) | 2 | Q07/mini/base (1), Q10/sol/base (1)`.
+
+The count of 2 and the mini record are correct. The sol record is item **Q08**, not Q10.
+
+**Correction:** for "Q10/sol/base (1)" read "Q08/sol/base (1)".
+
+Command, run from the repository root:
+
+```
+python -c "import json; [print(run, [(r['item_id'], r['condition']) for r in map(json.loads, open(f'output/{run}/smoke_run.jsonl',encoding='utf-8')) if r.get('record_type')!='figure_identification' and str(r.get('evidence_class')).startswith('EV-0')]) for run in ('run_e_mini','run_f_sol')]"
+```
+
+Output:
+
+```
+run_e_mini [('Q07', 'base')]
+run_f_sol [('Q08', 'base')]
+```
