@@ -711,3 +711,35 @@ Output (run, AUTO-MATCH records, of which with tool calls):
 run_e_mini 818 818
 run_f_sol 784 750
 ```
+
+## Note by addition - 3 October 2026: restoring the original ground-truth module
+
+**Date:** 3 October 2026
+**Affects:** No figure, verdict or withdrawal. Nothing above is edited. This note adds a verification step for the original seals.
+
+The original seals of `run_a_mini` and `run_b_sol` bind `ground_truth_hash` `dd3434bc62c4976af928798024d1446993ce59dd473e78cf4002832630314715`. The module was corrected after execution (E3; F10), so on the current tree `verify_run_seal.py` reports a mismatch on that one field and exits non-zero.
+
+The module bound by the original seals is in this repository's history: `example/ground_truth_example.py` as committed in `203fef4` (5 August 2026) and left unchanged until `4f737ce` (7 August 2026). Git stores it with LF line endings. The sealed hash is that of the same file with CRLF line endings. Restoring them reproduces the sealed hash, and both original seals then pass in full.
+
+From the root of a clean clone, in a POSIX shell (the last line puts the current module back):
+
+```
+git show 203fef4:example/ground_truth_example.py | sed 's/$/\r/' \
+    > example/ground_truth_example.py
+sha256sum example/ground_truth_example.py
+python verify_run_seal.py output/run_a_mini
+python verify_run_seal.py output/run_b_sol
+git checkout -- example/ground_truth_example.py
+```
+
+Output, from a clean clone at `5ff8cd8` (the closing lines of each verification shown):
+
+```
+dd3434bc62c4976af928798024d1446993ce59dd473e78cf4002832630314715  example/ground_truth_example.py
+  11 passed, 0 failed
+RESULT: PASS (11 checks)
+  11 passed, 0 failed
+RESULT: PASS (11 checks)
+```
+
+Each verification lists eleven PASS lines, including `ground_truth_hash: MATCH`. On Windows, Git Bash's `sha256sum` prints `*` before the file name.
