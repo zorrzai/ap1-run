@@ -4,6 +4,9 @@ reference/** -text
 
 # Hygiene for everything else -- LF on all platforms.
 *.md   text eol=lf
-*.py   text eol=lf
+# Branch september-seal: .py files are stored byte-for-byte as they were on
+# disk when the September runs were sealed (mixed CRLF/LF), so that a checkout
+# reproduces runner_source_hash exactly. Do not normalise them.
+*.py   -text
 *.json text eol=lf
 *.yml  text eol=lf
