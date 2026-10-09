@@ -10,9 +10,9 @@ Protocol. Model-, vendor- and domain-agnostic. Designed to be executed by a
 third party, against a system ZORRZ has never seen, without
 ZORRZ involvement.
 
-Companion material: AP-1 v1.3 draft-for-comment (28 July 2026); Certanum —
-System Build Specification v0.2.1; *Computational Provenance and Numerical
-Admissibility* (technical note, July 2026).
+Companion material: AP-1 v1.3 draft-for-comment (28 July 2026);
+*Computational Provenance and Numerical Admissibility* (technical note, July
+2026).
 
 **Alignment obligation.** Every contract here traces to a clause of **AP-1
 v1.3 draft-for-comment dated 28 July 2026**, whose canonical hash is recorded
