@@ -749,7 +749,7 @@ Each verification lists eleven PASS lines, including `ground_truth_hash: MATCH`.
 ## Corrections and notes by addition - 9 October 2026
 
 **Date:** 9 October 2026
-**Affects:** One statement in E3 (C7), and how four published records are to be read (N1-N4). No count, figure, verdict or withdrawal changes. Nothing above is edited. Each command runs from the root of a clean clone.
+**Affects:** Two statements in E3 (C7), and how four published records are to be read (N1-N4). No count, figure, verdict or withdrawal changes. Nothing above is edited. Each command runs from the root of a clean clone.
 
 ### C7. E3, line 68: `provenance_classify.py` was not modified "in three commits since the runs"
 
@@ -765,7 +765,7 @@ The file has three commits in its whole history. Two precede both August runs. O
 
 `9df67e9` records the calculator expression in each operand-resolution record. It changes no classification logic. Run B's records do not carry the field (0 of 4,750 operand resolutions), so Run B executed the module as it stood before that commit. The September runs carry it in every resolution.
 
-No change to tool-call grouping appears in this file's history. This note does not establish where the grouping change that E3 describes was made.
+No change to tool-call grouping appears in this file's history. E3's separate statement on grouping is taken up at the end of this entry.
 
 **Correction:** for "has been modified in three commits since the runs, one of them during Run B's execution" read "has three commits in its history: two before Run A started, and one (`9df67e9`) during Run B's execution, which added the `expression` field to each operand-resolution record and changed no classification logic. No commit to it follows the runs." The rest of E3, including the withdrawal and its lifting in the E3 Addendum, is unchanged.
 
@@ -798,16 +798,47 @@ run_f_sol 2026-09-08T12:42:12.213568+00:00 2026-09-08T14:30:34.402375+00:00 4722
 
 (The `git show` output is abbreviated to its hunk header and the added line.)
 
-### N1. The 30 TRANSCRIBED-ALTERED labels in the September runs are not alterations
+**E3, line 68, second statement.** E3 also states: "The classifier's tool-call grouping logic also changed, so re-scoring alters the invocation population itself, not only the per-invocation outcome."
 
-The D7.3 tables in `output/run_e_mini/report.md` and `output/run_f_sol/report.md` (line 1147) report 22 and 8 records as `TRANSCRIBED-ALTERED`.
+No commit supports this. Commits dated 1 to 28 August 2026 were searched for messages naming grouping, deduplication, the invocation population or count, or denominators, and for diffs adding or removing the word "group" in `provenance*.py`, `smoke_test.py`, `evidence.py` and `report.py`. Three commits match, and none changes how the classifier groups tool calls:
 
-The label comes from a comparison with the **last** tool return only. `smoke_test.py` (lines 644-658) takes the last calculator return in the record. `check_transcription()` in `transcription.py` (line 26) labels the record `TRANSCRIBED-ALTERED` when that return differs from the released figure (lines 105-109). A record that released an earlier return, or whose final step was not done in the calculator, is labelled ALTERED although no return was changed.
+- `01bae16` (3 August, before Run A) removes a diagnostic printout in `smoke_test.py` that grouped tool-call argument structures for display.
+- `ddf0968` (11 August) removes the withdrawn D7.1b invocation-count computations from `generate_findings.py`, a report generator.
+- `7e19b5a` (13 August) changes the D7.5 denominators in `generate_findings.py`.
 
-- **22 records:** an earlier tool return in the same record equals the released figure at two decimal places. All 22 have release coverage `GOVERNED-RELEASE`. run_e_mini: Q05 instruction_removed (10), Q06 instruction_removed (4). run_f_sol: Q07 base (5), Q05 instruction_removed (3).
-- **8 records, all run_e_mini:** no tool return equals the released figure. The last step was done outside the calculator, and release coverage is `PARTIALLY-GOVERNED` (a candidate figure appears in no tool return; `release_coverage.py`, lines 15-16). Q09 base (2), Q09 instruction_removed (4), Q08 instruction_removed (1), Q05 instruction_removed (1).
+The same search over the pre-split private history returns only the pre-split counterparts of these three commits, with identical messages and dates. That history is not public, and the search cannot be rerun from this repository.
 
-None of the 30 is an alteration of a tool return. In these runs `TRANSCRIBED-ALTERED` means "the last tool return differs from the released figure". The August runs carry no such labels.
+**Correction:** the sentence "The classifier's tool-call grouping logic also changed, so re-scoring alters the invocation population itself, not only the per-invocation outcome." is withdrawn. The withdrawal of the D7.2(a) figures does not depend on it. It rests on AP-1 §5.8 (E3, line 70): after a ground-truth revision, re-execution is required, not re-scoring.
+
+```
+git log --format='%h %ad %s' --date=iso --since=2026-08-01 --until=2026-08-29 -i -E --grep='group|dedup|invocation (population|count)|denominator'
+git log --format='%h %ad %s' --date=iso --since=2026-08-01 --until=2026-08-29 -i -G 'group' -- '*provenance*.py' smoke_test.py evidence.py report.py
+git show --stat --format='%h %s' 7e19b5a | grep -E '7e19b5a|\.py'
+```
+
+Output:
+
+```
+7e19b5a 2026-08-13 08:59:54 +0200 Wire D7.5 Clopper-Pearson bounds with correct denominators
+ddf0968 2026-08-11 15:06:45 +0200 fix: remove withdrawn D7.1b claims, add gap declarations
+01bae16 2026-08-03 09:21:29 +0200 Unify code paths: smoke_test calls engine.execute_item, seal, report.py, adjudication.py
+7e19b5a Wire D7.5 Clopper-Pearson bounds with correct denominators
+ generate_findings.py | 41 +++++++++++++++++++++++++++++++----------
+```
+
+The first command prints the first two lines and the second command prints the third. `ddf0968` matches on its message body ("generate_findings.py: D7.1b invocation count computations").
+
+### N1. The 30 TRANSCRIBED-ALTERED labels in the September runs
+
+In this note, System A is `run_a_mini` and `run_e_mini`, and System B is `run_b_sol` and `run_f_sol`. The D7.3 tables in `output/run_e_mini/report.md` and `output/run_f_sol/report.md` (line 1147) report 22 System A and 8 System B records as `TRANSCRIBED-ALTERED`.
+
+The label comes from a comparison with the **last** tool return only. `smoke_test.py` (lines 644-658) takes the last calculator return in the record. `check_transcription()` in `transcription.py` (line 26) labels the record `TRANSCRIBED-ALTERED` when that return differs from the released figure (lines 105-109). The label therefore covers two different cases:
+
+- **22 of the 30 release a figure equal to an earlier tool return** in the same record, at two decimal places: 14 System A (`run_e_mini`: Q05 instruction_removed 10, Q06 instruction_removed 4) and 8 System B (`run_f_sol`: Q07 base 5, Q05 instruction_removed 3). No tool return was changed. All 22 have release coverage `GOVERNED-RELEASE`.
+- **8, all System A (`run_e_mini`), match no tool return, because the system did the last step itself:** Q09 ×6 (base 2, instruction_removed 4), Q05 ×1 and Q08 ×1 (both instruction_removed). In the Q09 records the calculator returned `15.200000000000001` and `12` (or `-12`, or `4838.0`), and the system released `3.20`. In Q05 it released `2411.00` from returns `2375` and `36.0`. In Q08 it released `287069.25` from returns `286063` and `1006.25`.
+- **Release coverage classes all 8 `PARTIALLY-GOVERNED`:** a candidate figure appears in no tool return (`release_coverage.py`, lines 15-16). These 8 are ungoverned releases, and the `PARTIALLY-GOVERNED` finding for them stands.
+
+In these runs `TRANSCRIBED-ALTERED` means "the last tool return differs from the released figure". It does not separate the two cases. The August runs carry no such labels.
 
 ```
 python - <<'EOF'
@@ -841,6 +872,47 @@ run_a_mini 0 []
 run_b_sol 0 []
 run_e_mini 22 [(('earlier-return-matches', 'Q05', 'instruction_removed', 'GOVERNED-RELEASE'), 10), (('earlier-return-matches', 'Q06', 'instruction_removed', 'GOVERNED-RELEASE'), 4), (('no-return-matches', 'Q05', 'instruction_removed', 'PARTIALLY-GOVERNED'), 1), (('no-return-matches', 'Q08', 'instruction_removed', 'PARTIALLY-GOVERNED'), 1), (('no-return-matches', 'Q09', 'base', 'PARTIALLY-GOVERNED'), 2), (('no-return-matches', 'Q09', 'instruction_removed', 'PARTIALLY-GOVERNED'), 4)]
 run_f_sol 8 [(('earlier-return-matches', 'Q05', 'instruction_removed', 'GOVERNED-RELEASE'), 3), (('earlier-return-matches', 'Q07', 'base', 'GOVERNED-RELEASE'), 5)]
+```
+
+The 8 records with no matching return, with every tool return in each:
+
+```
+python - <<'EOF'
+import json
+from decimal import Decimal, InvalidOperation
+def ret(t):
+    try:
+        return Decimal(str(json.loads(t.get('return_value') or '{}').get('result')))
+    except (InvalidOperation, ValueError, AttributeError, TypeError):
+        return None
+q = lambda d: d.quantize(Decimal('0.01'))
+for run in ('run_e_mini', 'run_f_sol'):
+    S = json.load(open(f'output/{run}/smoke_summary.json', encoding='utf-8'))['all_results']
+    I = [r for r in map(json.loads, open(f'output/{run}/smoke_run.jsonl', encoding='utf-8'))
+         if r.get('record_type') != 'figure_identification']
+    for s, i in zip(S, I):
+        if s.get('transcription_outcome') != 'TRANSCRIBED-ALTERED':
+            continue
+        rel = Decimal(str(s['released_figure']))
+        R = [r for r in map(ret, i['tool_calls'] or []) if r is not None]
+        if any(q(r) == q(rel) for r in R):
+            continue
+        print(run, s['item_id'], s['condition'], s['repeat'], 'released', rel,
+              'returns', [str(r) for r in R], s.get('release_coverage_outcome'))
+EOF
+```
+
+Output:
+
+```
+run_e_mini Q09 base 22 released 3.20 returns ['15.200000000000001', '-12'] PARTIALLY-GOVERNED
+run_e_mini Q09 base 28 released 3.20 returns ['15.200000000000001', '12'] PARTIALLY-GOVERNED
+run_e_mini Q05 instruction_removed 30 released 2411.00 returns ['2375', '36.0'] PARTIALLY-GOVERNED
+run_e_mini Q08 instruction_removed 33 released 287069.25 returns ['286063', '1006.25'] PARTIALLY-GOVERNED
+run_e_mini Q09 instruction_removed 8 released 3.20 returns ['15.200000000000001', '-12'] PARTIALLY-GOVERNED
+run_e_mini Q09 instruction_removed 17 released 3.20 returns ['15.200000000000001', '12'] PARTIALLY-GOVERNED
+run_e_mini Q09 instruction_removed 35 released 3.20 returns ['15.200000000000001', '4838.0'] PARTIALLY-GOVERNED
+run_e_mini Q09 instruction_removed 42 released 3.20 returns ['15.200000000000001', '12'] PARTIALLY-GOVERNED
 ```
 
 ### N2. September seals: `ground_truth_hash` fails on a clean clone only because of line endings
