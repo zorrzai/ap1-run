@@ -1007,3 +1007,74 @@ run_b_sol {'no request_record': 1000} {}
 run_e_mini {'1': 1000} {"operator-declared / detail=''": 1000}
 run_f_sol {'platform-rejected': 1000} {"operator-declared / detail=''": 1000}
 ```
+
+---
+
+## Corrections by addition - 9 October 2026 (second set)
+
+**Date:** 9 October 2026
+**Affects:** One statement in E6 (C8) and one date in E3 (C9). No count, figure, verdict or withdrawal changes. Nothing above is edited. Each command runs from the root of a clean clone.
+
+### C8. E6, lines 334-335: gpt-4.1-mini did not use `**` notation
+
+E6 states (lines 334-335): "gpt-4.1-mini used `**` notation in all 1,720 tool calls. Zero expressions contained `^`."
+
+gpt-4.1-mini wrote no exponentiation operator at all: no `^`, no `**` and no `pow`, in 0 of 1,720 tool calls in `run_a_mini` and 0 of 1,778 in `run_e_mini`. Searching the raw records for the substring `pow` finds one tool-call id in `run_e_mini` (`call_lWvKFxwNmethTpow1o2Qg9ug`), not an expression. The conclusion of E6 for Run A stands: the calculator defect did not affect it.
+
+**Correction:** for "gpt-4.1-mini used `**` notation in all 1,720 tool calls. Zero expressions contained `^`." read "gpt-4.1-mini used no exponentiation operator in any of its 1,720 tool calls. Zero expressions contained `^` or `**`."
+
+`FINDINGS.md`, `README.md` and `KNOWN_ISSUES.md` do not repeat the claim. The last command below finds nothing in them (exit status 1).
+
+```
+python - <<'EOF'
+import json
+for run in ('run_a_mini', 'run_e_mini'):
+    I = [r for r in map(json.loads, open(f'output/{run}/smoke_run.jsonl', encoding='utf-8'))
+         if r.get('record_type') != 'figure_identification']
+    T = [t for r in I for t in r.get('tool_calls') or []]
+    E = [json.loads(t['function']['arguments']).get('expression', '') for t in T]
+    print(run, 'calls', len(T), {op: sum(op in e for e in E) for op in ('^', '**', 'pow')},
+          'raw records containing pow:', [(k, t.get('id')) for t in T for k, v in t.items() if 'pow' in json.dumps(v)])
+EOF
+git grep -n -I -E '\*\*` notation|used `\*\*`|\*\* notation' -- FINDINGS.md README.md KNOWN_ISSUES.md; echo "grep exit $?"
+```
+
+Output:
+
+```
+run_a_mini calls 1720 {'^': 0, '**': 0, 'pow': 0} raw records containing pow: []
+run_e_mini calls 1778 {'^': 0, '**': 0, 'pow': 0} raw records containing pow: [('id', 'call_lWvKFxwNmethTpow1o2Qg9ug')]
+grep exit 1
+```
+
+### C9. E3, line 76: the constant was removed on 16 August, not 20 August
+
+E3 states (line 76): "The constant was removed on 20 August as a documentation cleanup".
+
+The constant `4` was removed from Q07 in `85e8eeb`, dated 16 August 2026. The same commit also removed the declared constant `2`. Its pre-split counterpart, `eadd862`, which `verify_run_seal.py` cites (line 45), has the same date and time. No commit between 17 and 23 August touches `example/ground_truth_example.py`.
+
+**Correction:** for "The constant was removed on 20 August" read "The constant was removed on 16 August 2026 (`85e8eeb`; pre-split `eadd862`, same date)". The rest of E3 is unchanged.
+
+```
+git show -s --format='%h %ad %s' --date=iso 85e8eeb
+git show --format= 85e8eeb -- example/ground_truth_example.py | grep -E '^[-+].*constant'
+git log --format='%h %ad %s' --date=iso --since=2026-08-17 --until=2026-08-24 -- example/ground_truth_example.py; echo "log exit $?"
+sed -n '42,47p' verify_run_seal.py
+```
+
+Output:
+
+```
+85e8eeb 2026-08-16 09:02:58 +0200 Fix Q08 sign convention, remove unused constants, add tolerance disclosure, ship ap1_inspect
+-                    {"constant": "2"},
+-                    {"constant": "4"},
+log exit 0
+GROUND_TRUTH_ERRATA = {
+    "dd3434bc62c4976af928798024d1446993ce59dd473e78cf4002832630314715": (
+        "E3: constant '4' declared but never used in Q07 computation; "
+        "removed in commit eadd862. D7.2(a) figures withdrawn. "
+        "F10/Q05: sign negation removed (commit 8089923). "
+        "See FINDINGS_ERRATA.md."
+```
+
+The `git log` command prints no commit. Its exit status is 0 because an empty log is not an error.
