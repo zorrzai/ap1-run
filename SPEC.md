@@ -41,6 +41,13 @@ updated, and the standard governs.
 - **§11** rewritten for **Certanum**, with the assessment-surface requirement.
 - **§12.8** states the licence decision.
 
+### Editorial revision, 9 October 2026
+
+- **§11** restated without reference to any named system. It now describes
+  what the runner can consume from a system that executes tools internally,
+  and closes with the disclosure of interests. No contract, evidence class or
+  scoring rule changes. The entries above are left as published.
+
 ---
 
 ## 1. Purpose, and the one property that matters
@@ -909,55 +916,66 @@ declaration. Stated in the README rather than concealed by the mapping.
 
 ---
 
-## 11. Relationship to Certanum
+## 11. Systems that execute tools internally
 
 The runner is architecture-neutral and measures any system through the same
 interface. What differs is **evidence class**, and the report states which
 class each result rests on.
 
-### 11.1 Certanum requires an assessment surface
+### 11.1 Internal tool execution requires an assessment surface
 
-Certanum executes its tools internally, behind Stages 0-5. Through the generic
-interface class the runner would observe no tool-call structure and would score
-`EV-0 UNOBSERVABLE` on D7.1 and D7.2 — **the engine built to make computation
-provable would be unmeasurable by the instrument built to measure it.**
+A system that executes its tools internally, behind its own pipeline, exposes
+no tool-call structure through the generic interface class. The runner would
+score `EV-0 UNOBSERVABLE` on D7.1 and D7.2 — **a system built to make
+computation provable would be unmeasurable by the instrument built to measure
+it.**
 
-**This specification therefore places a requirement on the Certanum build
-specification**, to be added as a module contract (M4.2 or M0.4):
+Such a system can be measured at a higher evidence class only if it exposes an
+assessment surface:
 
-> Certanum shall expose an assessment surface: an evaluation endpoint that,
-> for each request, emits (a) structural tool-call records in the documented
-> format, (b) the M1.1 signed computation-provenance token, and (c) the
-> verification material — the signing public key, and the ledger reference plus
-> external anchor — sufficient for an independent runner to verify the token
-> without operator assistance.
+> an evaluation endpoint that, for each request, emits (a) structural tool-call
+> records in the documented format, (b) a signed computation-provenance token,
+> and (c) the verification material — the signing public key, and the ledger
+> reference plus external anchor — sufficient for an independent runner to
+> verify the token without operator assistance.
 
-Without (c), Certanum's token is `EV-1 SELF-REPORTED` and ranks below an
-ordinary provider record. With (c), it is `EV-3` and is admissible as
-structural evidence under AP-1 §6.3(b). **The verification material is what
-allows an independent party to establish that the attestation existed, was
-signed by the declared key, and has not been altered.** It does not establish
-that the attestation truthfully describes what executed — see C-15 in the
-publisher's comment. Without the verification material the token is EV-1 and
-ranks below an ordinary provider record; with it, the token's integrity is
-checkable and its semantic accuracy remains an open question the standard does
-not currently resolve.
+This states what the runner can consume. It places no requirement on the build
+of any particular system.
 
-### 11.2 Evidence available per system
+Without (c), the token is `EV-1 SELF-REPORTED` and ranks below an ordinary
+provider record. With (c), it is `EV-3` and is admissible as structural
+evidence under AP-1 §6.3(b). **The verification material is what allows an
+independent party to establish that the attestation existed, was signed by the
+declared key, and has not been altered.** It does not establish that the
+attestation truthfully describes what executed — see C-15 in the publisher's
+comment. Without the verification material the token is EV-1 and ranks below
+an ordinary provider record; with it, the token's integrity is checkable and
+its semantic accuracy remains an open question the standard does not currently
+resolve.
 
-| Measurement | Generic endpoint | Certanum with assessment surface |
+### 11.2 Evidence available per interface class
+
+| Measurement | Generic endpoint | System with an assessment surface |
 |---|---|---|
 | D7.1 invocation | `EV-2` platform tool-call record | `EV-3` provenance token, signature and ledger verified |
 | D7.2 operands | Arguments resolved against source and intermediates | Operand provenance references in the verified token |
-| D7.3 transcription | Compared via R2.0 identification | Result hash verified by M2.5 before release |
-| D2 mechanism | Observed; class operator-declared | STRUCTURAL for figures, CONFIGURED for prose |
+| D7.3 transcription | Compared via R2.0 identification | Released figure compared with the result hash in the verified token |
+| D2 mechanism | Observed; class operator-declared | Observed; class declared per surface (R2.2) |
 
-**The standard does not privilege Certanum.** Certanum produces evidence of a
-higher class for the same measurement, and it does so **only when it supplies
-the material that lets an independent party verify the claim**. The report
-states the class rather than scoring it higher. That distinction is what
-allows ZORRZ to author both without AP-1 becoming an
-advertisement.
+**The standard does not privilege any architecture.** A system with an
+assessment surface produces evidence of a higher class for the same
+measurement, and it does so **only when it supplies the material that lets an
+independent party verify the claim**. The report states the class rather than
+scoring it higher.
+
+### 11.3 Disclosure of interests
+
+Marcus Rupp is the author of AP-1. ZORRZ Financial Inc. publishes it. ZORRZ's
+own app, PILVI, was evaluated in the V1 reference evaluation (July 2026). No
+ZORRZ system is currently under evaluation. Any system ZORRZ submits in future
+will be evaluated under the same rules as any other, with no exception for its
+publisher. Marcus Rupp is also CEO of Certanum Technologies Inc., a separate
+company that builds a commercial engine designed to satisfy AP-1.
 
 ---
 
