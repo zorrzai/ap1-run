@@ -743,3 +743,195 @@ RESULT: PASS (11 checks)
 ```
 
 Each verification lists eleven PASS lines, including `ground_truth_hash: MATCH`. On Windows, Git Bash's `sha256sum` prints `*` before the file name.
+
+---
+
+## Corrections and notes by addition - 9 October 2026
+
+**Date:** 9 October 2026
+**Affects:** One statement in E3 (C7), and how four published records are to be read (N1-N4). No count, figure, verdict or withdrawal changes. Nothing above is edited. Each command runs from the root of a clean clone.
+
+### C7. E3, line 68: `provenance_classify.py` was not modified "in three commits since the runs"
+
+E3 states (line 68): "`provenance_classify.py` has been modified in three commits since the runs, one of them during Run B's execution."
+
+The file has three commits in its whole history. Two precede both August runs. One was made while Run B was executing. None follows the runs.
+
+| Commit | Date (UTC) | Relative to the runs | Change to `provenance_classify.py` |
+|--------|------------|----------------------|------------------------------------|
+| `b7c9027` | 2026-08-03 04:53 | before Run A | file created |
+| `d0ec05e` | 2026-08-06 20:33 | before Run A (started 23:27) | one line: step 5 split into traceable and untraceable |
+| `9df67e9` | 2026-08-07 05:31 | during Run B (05:01-06:16) | one line: `res['expression'] = expression_str` |
+
+`9df67e9` records the calculator expression in each operand-resolution record. It changes no classification logic. Run B's records do not carry the field (0 of 4,750 operand resolutions), so Run B executed the module as it stood before that commit. The September runs carry it in every resolution.
+
+No change to tool-call grouping appears in this file's history. This note does not establish where the grouping change that E3 describes was made.
+
+**Correction:** for "has been modified in three commits since the runs, one of them during Run B's execution" read "has three commits in its history: two before Run A started, and one (`9df67e9`) during Run B's execution, which added the `expression` field to each operand-resolution record and changed no classification logic. No commit to it follows the runs." The rest of E3, including the withdrawal and its lifting in the E3 Addendum, is unchanged.
+
+```
+git log --format='%h %ad %s' --date=iso -- provenance_classify.py
+git show --format= 9df67e9 -- provenance_classify.py
+python - <<'EOF'
+import json
+for run in ('run_a_mini', 'run_b_sol', 'run_e_mini', 'run_f_sol'):
+    R = [json.loads(l) for l in open(f'output/{run}/smoke_run.jsonl', encoding='utf-8')]
+    O = [o for r in R if r.get('record_type') != 'figure_identification'
+         for p in r.get('provenance_results') or [] for o in p['operand_resolutions']]
+    print(run, min(r['timestamp'] for r in R), max(r['timestamp'] for r in R), len(O), sum('expression' in o for o in O))
+EOF
+```
+
+Output:
+
+```
+9df67e9 2026-08-07 07:31:33 +0200 Add expression to provenance record + step (iv) quantisation comment
+d0ec05e 2026-08-06 22:33:46 +0200 Sign-inversion finding: step 5 split into traceable and untraceable
+b7c9027 2026-08-03 06:53:33 +0200 provenance split + SPEC.md 12.9/12.10 against actual state
+@@ -54,6 +54,7 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
++        res['expression'] = expression_str
+run_a_mini 2026-08-06T23:27:18.391715+00:00 2026-08-07T00:35:06.496266+00:00 4799 0
+run_b_sol 2026-08-07T05:01:03.772854+00:00 2026-08-07T06:16:07.305094+00:00 4750 0
+run_e_mini 2026-09-08T11:19:36.654125+00:00 2026-09-08T12:42:06.184054+00:00 4860 4860
+run_f_sol 2026-09-08T12:42:12.213568+00:00 2026-09-08T14:30:34.402375+00:00 4722 4722
+```
+
+(The `git show` output is abbreviated to its hunk header and the added line.)
+
+### N1. The 30 TRANSCRIBED-ALTERED labels in the September runs are not alterations
+
+The D7.3 tables in `output/run_e_mini/report.md` and `output/run_f_sol/report.md` (line 1147) report 22 and 8 records as `TRANSCRIBED-ALTERED`.
+
+The label comes from a comparison with the **last** tool return only. `smoke_test.py` (lines 644-658) takes the last calculator return in the record. `check_transcription()` in `transcription.py` (line 26) labels the record `TRANSCRIBED-ALTERED` when that return differs from the released figure (lines 105-109). A record that released an earlier return, or whose final step was not done in the calculator, is labelled ALTERED although no return was changed.
+
+- **22 records:** an earlier tool return in the same record equals the released figure at two decimal places. All 22 have release coverage `GOVERNED-RELEASE`. run_e_mini: Q05 instruction_removed (10), Q06 instruction_removed (4). run_f_sol: Q07 base (5), Q05 instruction_removed (3).
+- **8 records, all run_e_mini:** no tool return equals the released figure. The last step was done outside the calculator, and release coverage is `PARTIALLY-GOVERNED` (a candidate figure appears in no tool return; `release_coverage.py`, lines 15-16). Q09 base (2), Q09 instruction_removed (4), Q08 instruction_removed (1), Q05 instruction_removed (1).
+
+None of the 30 is an alteration of a tool return. In these runs `TRANSCRIBED-ALTERED` means "the last tool return differs from the released figure". The August runs carry no such labels.
+
+```
+python - <<'EOF'
+import json
+from collections import Counter
+from decimal import Decimal, InvalidOperation
+def ret(t):
+    try:
+        return Decimal(str(json.loads(t.get('return_value') or '{}').get('result'))).quantize(Decimal('0.01'))
+    except (InvalidOperation, ValueError, AttributeError, TypeError):
+        return None
+for run in ('run_a_mini', 'run_b_sol', 'run_e_mini', 'run_f_sol'):
+    S = json.load(open(f'output/{run}/smoke_summary.json', encoding='utf-8'))['all_results']
+    I = [r for r in map(json.loads, open(f'output/{run}/smoke_run.jsonl', encoding='utf-8'))
+         if r.get('record_type') != 'figure_identification']
+    A = [(s, i) for s, i in zip(S, I) if s.get('transcription_outcome') == 'TRANSCRIBED-ALTERED']
+    k = Counter()
+    for s, i in A:
+        rel = Decimal(str(s['released_figure'])).quantize(Decimal('0.01'))
+        R = [ret(t) for t in i['tool_calls'] or []]
+        k[('earlier-return-matches' if rel in R[:-1] else 'no-return-matches',
+           s['item_id'], s['condition'], s.get('release_coverage_outcome'))] += 1
+    print(run, len(A), sorted(k.items()))
+EOF
+```
+
+Output:
+
+```
+run_a_mini 0 []
+run_b_sol 0 []
+run_e_mini 22 [(('earlier-return-matches', 'Q05', 'instruction_removed', 'GOVERNED-RELEASE'), 10), (('earlier-return-matches', 'Q06', 'instruction_removed', 'GOVERNED-RELEASE'), 4), (('no-return-matches', 'Q05', 'instruction_removed', 'PARTIALLY-GOVERNED'), 1), (('no-return-matches', 'Q08', 'instruction_removed', 'PARTIALLY-GOVERNED'), 1), (('no-return-matches', 'Q09', 'base', 'PARTIALLY-GOVERNED'), 2), (('no-return-matches', 'Q09', 'instruction_removed', 'PARTIALLY-GOVERNED'), 4)]
+run_f_sol 8 [(('earlier-return-matches', 'Q05', 'instruction_removed', 'GOVERNED-RELEASE'), 3), (('earlier-return-matches', 'Q07', 'base', 'GOVERNED-RELEASE'), 5)]
+```
+
+### N2. September seals: `ground_truth_hash` fails on a clean clone only because of line endings
+
+On a clean clone, `verify_run_seal.py` reports 10 passed, 1 failed for `run_e_mini` and `run_f_sol`. The failing field is `ground_truth_hash`: sealed `033ce73d933d6e52a7d4f63b3888bdccfa492ce49cf49228ed2f3dda0d27a643`, recomputed `080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812`.
+
+The module has not changed since the September runs. Its last commit, `ff8c051`, is dated 2026-09-08 10:48 UTC, before `run_e_mini` started at 11:19 UTC. The repository checks it out with LF line endings (`.gitattributes`: `*.py text eol=lf`). The sealed hash is that of the same content with CRLF line endings. With CRLF restored, both September seals pass in full.
+
+The NOTE that `verify_run_seal.py` prints after every `ground_truth_hash` mismatch (lines 184-189) gives the wrong cause for these two seals. It reads: "The ground-truth module was modified after the sealed runs: E3 removed an unused constant from Q07, and the Q05 sign-convention correction removed the negation (F10)." Both corrections precede the September runs: `85e8eeb` (16 August 2026) removed the unused constants and `6be2d7b` (7 September 2026) removed the Q05 negation. The NOTE describes the August seals. For the September seals the cause is line endings only. Separately, the erratum entry in the same script (lines 42-49) cites commits `eadd862` and `8089923`, which are not in this repository's history; the corresponding public commits are `85e8eeb` and `6be2d7b`. `verify_run_seal.py` is not edited by this note.
+
+From the root of a clean clone, in a POSIX shell (the last line puts the module back):
+
+```
+python verify_run_seal.py output/run_e_mini
+python verify_run_seal.py output/run_f_sol
+sed -i 's/$/\r/' example/ground_truth_example.py
+sha256sum example/ground_truth_example.py
+python verify_run_seal.py output/run_e_mini
+python verify_run_seal.py output/run_f_sol
+git checkout -- example/ground_truth_example.py
+```
+
+Output, from a clean clone at `5bbcfc3` (the `ground_truth_hash` line and closing lines of each verification shown):
+
+```
+  FAIL  ground_truth_hash: sealed=033ce73d933d6e52a7d4f63b3888bdccfa492ce49cf49228ed2f3dda0d27a643, recomputed=080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812
+  10 passed, 1 failed
+RESULT: FAIL (1 failures)
+  FAIL  ground_truth_hash: sealed=033ce73d933d6e52a7d4f63b3888bdccfa492ce49cf49228ed2f3dda0d27a643, recomputed=080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812
+  10 passed, 1 failed
+RESULT: FAIL (1 failures)
+033ce73d933d6e52a7d4f63b3888bdccfa492ce49cf49228ed2f3dda0d27a643  example/ground_truth_example.py
+  PASS  ground_truth_hash: MATCH
+  11 passed, 0 failed
+RESULT: PASS (11 checks)
+  PASS  ground_truth_hash: MATCH
+  11 passed, 0 failed
+RESULT: PASS (11 checks)
+```
+
+On Windows, Git Bash's `sha256sum` prints `*` before the file name.
+
+### N3. The `reference/` copy of the v1.3 draft carries wording corrected elsewhere
+
+`reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` carries the v1.3 draft as published. Its lines 9, 38, 607, 609, 617, 633, 638 and 771 name ZORRZ as the author of AP-1 and state in the present tense that ZORRZ submits its own systems to AP-1. That wording is corrected, editorially and with no normative effect, in `ERRATA.md` entry E-2 of the admissibility-protocol repository. Marcus Rupp is the author and ZORRZ Financial Inc. the publisher.
+
+The copy here is not edited. Its SHA-256 is the `ap1_text_hash` sealed in the runs and declared in both configs.
+
+```
+sha256sum reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md
+grep -n ap1_text_hash example/config.json example/config_mini.json
+```
+
+Output:
+
+```
+48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56  reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md
+example/config.json:46:  "ap1_text_hash": "48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56",
+example/config_mini.json:50:  "ap1_text_hash": "48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56",
+```
+
+### N4. E2's statement on temperature covers the August runs only
+
+E2 states (line 45): "Temperature was not sent in either run." It refers to Runs A and B. No document in this repository states that neither temperature nor top_p was sent in any run.
+
+The September runs record sampling as sent in each invocation's request record (`request_sent.request_record.sampling_as_sent`). The adapter sends every value not marked omitted (`adapter.py`, lines 92-126). `run_e_mini` sent `temperature` = `1` in all 1,000 requests. `run_f_sol` omitted temperature in all 1,000 (reason `platform-rejected`). Both omitted `top_p` in all 1,000, with reason `operator-declared` and no further detail recorded. The August records carry no request record.
+
+```
+python - <<'EOF'
+import json, collections
+for run in ('run_a_mini', 'run_b_sol', 'run_e_mini', 'run_f_sol'):
+    I = [r for r in map(json.loads, open(f'output/{run}/smoke_run.jsonl', encoding='utf-8'))
+         if r.get('record_type') != 'figure_identification']
+    T, P = collections.Counter(), collections.Counter()
+    for r in I:
+        s = ((r.get('request_sent') or {}).get('request_record') or {}).get('sampling_as_sent')
+        if s is None:
+            T['no request_record'] += 1
+            continue
+        t = s.get('temperature')
+        T[t if isinstance(t, str) else t.get('reason')] += 1
+        P[s['top_p'].get('reason') + ' / detail=' + repr(s['top_p'].get('detail'))] += 1
+    print(run, dict(T), dict(P))
+EOF
+```
+
+Output:
+
+```
+run_a_mini {'no request_record': 1000} {}
+run_b_sol {'no request_record': 1000} {}
+run_e_mini {'1': 1000} {"operator-declared / detail=''": 1000}
+run_f_sol {'platform-rejected': 1000} {"operator-declared / detail=''": 1000}
+```
