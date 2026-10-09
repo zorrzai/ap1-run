@@ -974,7 +974,7 @@ Marcus Rupp is the author of AP-1. ZORRZ Financial Inc. publishes it. ZORRZ's
 own app, PILVI, was evaluated in the V1 reference evaluation (July 2026). No
 ZORRZ system is currently under evaluation. Any system ZORRZ submits in future
 will be evaluated under the same rules as any other, with no exception for its
-publisher. Marcus Rupp is also CEO of Certanum Technologies Inc., a separate
+publisher. Marcus Rupp is also founder and CEO of Certanum Technologies Inc., a separate
 company that builds a commercial engine designed to satisfy AP-1.
 
 ---
