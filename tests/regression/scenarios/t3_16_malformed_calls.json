@@ -1,0 +1,12 @@
+{
+  "description": "T3-16: malformed or wrongly keyed calculator calls count as INVOKED but vanish from D7.2(a) and D7.2(b); a calculator error with the figure stated anyway; a malformed call before a valid one.",
+  "exercises": ["T3-16", "calculator error return", "OPERANDS-/OPERATION-UNOBSERVABLE never emitted", "reclassify_session alignment"],
+  "extends": "clean",
+  "config": {"repeat_count": "2"},
+  "responses": {
+    "Q01/*/*": [{"calls": [{"name": "calculator", "arguments": "15200*1.2/100/12"}]}, {"say": "The monthly interest earned is $15.20."}],
+    "Q02/*/*": [{"calls": [{"name": "calculator", "arguments": "{\"expr\": \"5000 - 2400\"}"}]}, {"say": "The available credit is $2,600.00."}],
+    "Q03/*/*": [{"call": "2400 * rate / 12"}, {"say": "The calculator returned an error, but the monthly interest charge is $36.00."}],
+    "Q04/*/*": [{"calls": [{"name": "calculator", "arguments": "not json"}, "1437.00 - (287500.00 * (4.20 / 100) / 12)"]}, {"say": "The principal portion is ${result}."}]
+  }
+}

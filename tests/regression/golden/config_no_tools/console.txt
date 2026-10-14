@@ -1,0 +1,7 @@
+Endpoint: <MOCK>/v1/chat/completions
+Model: mock-model
+API key: present (33 chars)
+
+  temperature omitted (reason: platform-rejected)
+  reasoning_effort=none (from config)
+ERROR: config.json must contain a "tools" array

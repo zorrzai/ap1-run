@@ -1,0 +1,4 @@
+{
+  "exit_code": null,
+  "exception": "SealError: AP-1 text hash mismatch: config declares '0000000000000000000000000000000000000000000000000000000000000000', file hashes to '48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56'"
+}

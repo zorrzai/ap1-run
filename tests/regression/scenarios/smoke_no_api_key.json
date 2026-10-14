@@ -1,0 +1,5 @@
+{
+  "description": "smoke_test.py run directly with no API key: setup instructions, exit 1, no request sent.",
+  "exercises": ["smoke_test.py entry point", "_get_api_key"],
+  "command": ["smoke_test.py"]
+}

@@ -1,0 +1,13 @@
+{
+  "description": "Chained intermediates over several rounds, several calls in one round, and intermediate assistant text that the transcript does not keep (V12-3).",
+  "exercises": ["tool loop over several rounds", "D7.2(a)(iv) computed in session", "D7.2(a) reference intermediate", "release coverage", "V12-3 intermediate responses discarded"],
+  "extends": "clean",
+  "config": {"repeat_count": "2"},
+  "responses": {
+    "Q05/*/*": [{"calls": ["2400.00 * (18.0 / 100) / 12", "2400.00 - 25.00"], "say": "First the monthly interest and the balance after the payment."}, {"call": "2375.0 + 36.0", "say": "Now adding the interest."}, {"say": "The credit card balance after one month is ${result}."}],
+    "Q07/*/*": [{"calls": ["42175 * (7.8/100) / 4", "15 * 3"]}, {"call": "822.4125 - 45"}, {"say": "The quarterly net growth of the investment account after fees is ${result}."}],
+    "Q09/*/*": [{"calls": ["15200.00 * (1.2 / 100) / 12", "12.00"]}, {"call": "15.200000000000001 - 12.0"}, {"say": "The net monthly income is ${result}."}],
+    "Q10/*/*": [{"call": "42175 * 0.078"}, {"call": "15 * 12"}, {"call": "3289.65 - 180"}, {"say": "The annual gross growth is $3,289.65. After the fees of $180.00, the net growth is ${result}."}],
+    "Q04/*/*": [{"call": "287500.00 * (4.20 / 100) / 12"}, {"call": "1437.00 - 1006.25"}, {"say": "The interest is $1006.25, so the principal portion is ${result}."}]
+  }
+}

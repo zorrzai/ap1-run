@@ -1,0 +1,4 @@
+Endpoint: <MOCK>/v1/chat/completions
+Model: mock-model
+API key: present (33 chars)
+

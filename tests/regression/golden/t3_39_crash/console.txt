@@ -1,0 +1,18 @@
+Endpoint: <MOCK>/v1/chat/completions
+Model: mock-model
+API key: present (33 chars)
+
+  temperature omitted (reason: platform-rejected)
+  reasoning_effort=none (from config)
+Runner version: v1.3.1 (e0d9ec9)
+Runner source hash: <RUNNER_SOURCE_HASH>...
+
+Seal hash: <SEAL_HASH>
+AP-1 text hash: 48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56
+
+Perturbation guard: PASSED (single-variable: system_prompt only)
+
+Running 10 items x 2 conditions x 1 repeats
+Total requests: 20
+============================================================
+  Q01/base/r1: 

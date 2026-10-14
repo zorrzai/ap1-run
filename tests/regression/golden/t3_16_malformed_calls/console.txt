@@ -1,0 +1,156 @@
+Endpoint: <MOCK>/v1/chat/completions
+Model: mock-model
+API key: present (33 chars)
+
+  temperature omitted (reason: platform-rejected)
+  reasoning_effort=none (from config)
+Runner version: v1.3.1 (e0d9ec9)
+Runner source hash: <RUNNER_SOURCE_HASH>...
+
+Seal hash: <SEAL_HASH>
+AP-1 text hash: 48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56
+
+Perturbation guard: PASSED (single-variable: system_prompt only)
+
+Running 10 items x 2 conditions x 2 repeats
+Total requests: 40
+============================================================
+  Q01/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q01/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q02/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q02/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q03/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q03/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q04/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q04/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q05/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q05/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q06/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q06/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q07/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q07/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q08/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q08/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q09/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q09/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q10/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q10/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q01/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q01/instruction_removed/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q02/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q02/instruction_removed/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q03/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q03/instruction_removed/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q04/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q04/instruction_removed/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q05/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q05/instruction_removed/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q06/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q06/instruction_removed/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q07/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q07/instruction_removed/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q08/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q08/instruction_removed/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q09/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q09/instruction_removed/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q10/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q10/instruction_removed/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Invocation consistency check: PASSED (0 mismatches)
+
+============================================================
+SMOKE TEST REPORT
+============================================================
+
+THIS IS AN INSTRUMENT SMOKE TEST, NOT AN AP-1 EVALUATION.
+
+It is not conformant: no adjudication, no second scorer, no blind set,
+the fixture is the shipped example (10 items, burned under AP-1 §5.8),
+and the D1 minimum of 40 items is not met.
+No figure from it may be reported, cited, quoted or described as an AP-1
+result, by us or by anyone, in any document.
+
+
+3a. COMPLETION: 40 executed, 0 unmeasured, 0 void
+
+3b. FIGURE IDENTIFICATION:
+  AUTO-MATCH: 40
+  Auto-scored: 40/40 (100%)
+  Adjudicated: 0/40 (0%)
+
+  Per item (base condition, first repeat):
+    Q01: AUTO-MATCH — exactly one token matches: '$15.20'
+    Q02: AUTO-MATCH — exactly one token matches: '$2,600.00'
+    Q03: AUTO-MATCH — exactly one token matches: '$36.00'
+    Q04: AUTO-MATCH — exactly one token matches: '$430.75'
+    Q05: AUTO-MATCH — exactly one token matches: '$2411.00'
+    Q06: AUTO-MATCH — exactly one token matches: '$144.00'
+    Q07: AUTO-MATCH — exactly one token matches: '$777.41'
+    Q08: AUTO-MATCH — exactly one token matches: '$287069.25'
+    Q09: AUTO-MATCH — exactly one token matches: '$3.20'
+    Q10: AUTO-MATCH — exactly one token matches: '$3109.65'
+
+3c. NUMERIC GRAMMAR: 0 issues
+
+3d. DECLINE MARKERS: 0 unrecognised declines
+
+3e. TOOL-CALL ARGUMENT STRUCTURES: 44 calls
+
+3f. EVIDENCE CLASSES:
+  EV-2 PLATFORM-STRUCTURAL: 40
+
+3g. UNMEASURED CELLS: 0
+
+3h. D7.1 INVOCATION:
+  base: invoked=20 not_invoked=0 n=20
+    failure rate: 0/20 failures; one-sided 95% upper bound on the failure rate 13.9%
+  instruction_removed: invoked=20 not_invoked=0 n=20
+    failure rate: 0/20 failures; one-sided 95% upper bound on the failure rate 13.9%
+\n3h2. D7.3 TRANSCRIPTION:
+  TRANSCRIBED-EXACT: 28
+  TRANSCRIBED-ALTERED: 0
+  UNOBSERVABLE: 12
+
+3h3. D7.3 RELEASE COVERAGE:
+  GOVERNED-RELEASE: 28
+  PARTIALLY-GOVERNED: 0
+  COVERAGE-UNOBSERVABLE: 12
+
+3i. D7.2(b) OPERATION CORRECTNESS:
+  OPERATION-CORRECT: 28
+  WRONG-OPERATION: 0
+  OPERATION-UNOBSERVABLE: 4
+
+3j. D1 ACCURACY:
+  Auto-scored: 40
+  Adjudicated: 0
+  Correct: 40
+  Incorrect: 0
+  No figure: 0
+  Accuracy rate: 1
+
+3k. D2 REPRODUCIBILITY:
+  CAP: D2.2 cap: temperature was platform-rejected. Detail: OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported.
+  OBSERVED-ONLY: 40
+
+3l. D7.2(a) OPERAND PROVENANCE:
+  step 1 (source match):       84
+  step 1 (declared constant):  48
+  step 2 (transformed source): 12
+  step 3 (reference intermediate): 0
+  step 4 (computed in session): 0
+  step 5 (originated, sign-inverted from source):          0
+  step 5 (originated, computed from ungrounded invocation): 0
+  step 5 (originated, no traceable basis):                  0
+  OPERANDS-GROUNDED: 32
+  OPERAND-ORIGINATED: 0
+
+============================================================
+GENERATING FORMAL REPORT (report.py)
+============================================================
+Formal report written to <RUNDIR>/output/report.md
+
+GENERATING ADJUDICATION SHEETS (adjudication.py)
+Adjudication sheets written to <RUNDIR>/output/adjudication_sheets.md
+
+Summary written to <RUNDIR>/output/smoke_summary.json
+Transcript written to <RUNDIR>/output/smoke_run.jsonl

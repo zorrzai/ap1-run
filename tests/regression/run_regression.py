@@ -79,6 +79,9 @@ def make_copy(scenario):
     tree = os.path.join(copy_dir, 'repo')
     shutil.copytree(REPO, tree, ignore=_ignore)
     os.makedirs(os.path.join(tree, 'output'))
+    for sub in scenario.get('copy_output', []):
+        shutil.copytree(os.path.join(REPO, 'output', sub),
+                        os.path.join(tree, 'output', sub))
     config_path = os.path.join(tree, 'example', 'config.json')
     if 'config_file' in scenario:
         shutil.copyfile(os.path.join(tree, scenario['config_file']),
@@ -95,15 +98,37 @@ def make_copy(scenario):
 
 # -- one run ---------------------------------------------------------
 
+def load_scenario(name):
+    """Load a scenario, resolving "extends": the named scenario's config,
+    env and responses are the base; this one's entries override them."""
+    with open(os.path.join(SCENARIOS, f'{name}.json'), encoding='utf-8') as f:
+        scenario = json.load(f)
+    parent = scenario.pop('extends', None)
+    if parent:
+        base = load_scenario(parent)
+        for key in ('config', 'env', 'responses'):
+            merged = json.loads(json.dumps(base.get(key, {})))
+            if key == 'config':
+                _deep_merge(merged, scenario.get(key, {}))
+            else:
+                merged.update(scenario.get(key, {}))
+            if merged:
+                scenario[key] = merged
+    return scenario
+
+
 def run_scenario(name, coverage_dir=None):
     """Run one scenario. Returns {golden file name: normalised text}."""
-    path = os.path.join(SCENARIOS, f'{name}.json')
-    with open(path, encoding='utf-8') as f:
-        scenario = json.load(f)
+    scenario = load_scenario(name)
     copy_dir, tree = make_copy(scenario)
     result_dir = os.path.join(copy_dir, 'result')
     os.makedirs(result_dir)
+    path = os.path.join(copy_dir, 'scenario.json')
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(scenario, f, indent=2)
     try:
+        if 'command' in scenario:
+            return run_command(name, scenario, tree, result_dir, coverage_dir)
         cmd = [sys.executable]
         if coverage_dir:
             cmd += ['-m', 'coverage', 'run', '--branch',
@@ -119,6 +144,34 @@ def run_scenario(name, coverage_dir=None):
         return collect(scenario, tree, result_dir, proc)
     finally:
         shutil.rmtree(copy_dir, ignore_errors=True)
+
+
+def run_command(name, scenario, tree, result_dir, coverage_dir):
+    """A command scenario: run one entry point in the scratch copy and
+    pin its console, exit code and the files it writes."""
+    cmd = [sys.executable]
+    args = list(scenario['command'])
+    if coverage_dir:
+        cmd += ['-m', 'coverage', 'run', '--branch',
+                f'--data-file={os.path.join(coverage_dir, ".coverage." + name)}',
+                f'--context=regression:{name}', f'--source={tree}']
+    env = {k: v for k, v in os.environ.items()
+           if not k.startswith('AP1_SMOKE_')}
+    env.update(PYTHONHASHSEED='0', PYTHONIOENCODING='utf-8',
+               PYTHONDONTWRITEBYTECODE='1')
+    env.update(scenario.get('env', {}))
+    proc = subprocess.run(cmd + args, cwd=tree, env=env, capture_output=True,
+                          text=True, encoding='utf-8', timeout=3600)
+    raw = {
+        'console.txt': proc.stdout,
+        'stderr.txt': proc.stderr,
+        'exit.json': json.dumps({'exit_code': proc.returncode}, indent=2) + '\n',
+    }
+    for rel in scenario.get('collect', []):
+        p = os.path.join(tree, rel)
+        key = rel.replace('/', '__')
+        raw[key] = _read(p) if os.path.exists(p) else '(not written)\n'
+    return {k: normalise(v, tree, []) for k, v in raw.items()}
 
 
 def _read(path):
@@ -194,6 +247,8 @@ _ISO = re.compile(
     r'\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?(?:\+00:00|Z)')
 _EPOCH = re.compile(r'("timestamp":\s*)\d{9,}(?:\.\d+)?')
 _MOCK = re.compile(r'http://127\.0\.0\.1:\d+')
+# Printed before the seal exists, so not covered by the seal's values.
+_SOURCE_HASH_LINE = re.compile(r'(Runner source hash: )[0-9a-f]+')
 
 
 def normalise(text, tree, seals):
@@ -204,6 +259,7 @@ def normalise(text, tree, seals):
     text = _MOCK.sub('<MOCK>', text)
     text = _ISO.sub('<TIMESTAMP>', text)
     text = _EPOCH.sub(r'\1"<EPOCH>"', text)
+    text = _SOURCE_HASH_LINE.sub(r'\1<RUNNER_SOURCE_HASH>', text)
     for seal in seals:
         for field, label in (('seal_hash', '<SEAL_HASH>'),
                              ('config_hash', '<CONFIG_HASH>'),
