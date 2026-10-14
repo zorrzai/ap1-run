@@ -34,7 +34,9 @@ What is compared for each scenario:
   execution.
 
 For the two replays, the large files are kept as a digest only, and
-`outcomes.jsonl` carries the detail.
+`outcomes.jsonl` carries the detail. Storing them in full would add about
+25 MB. When a digest differs, `--keep DIR` writes the full normalised files;
+run it at both commits and diff the two directories.
 
 **Normalisation** happens in the comparison, never in the runner. It covers:
 - line endings;
@@ -54,6 +56,8 @@ python tests/regression/run_regression.py              # compare everything
 python tests/regression/run_regression.py clean t3_1_unrecognised_shape
 python tests/regression/run_regression.py --runs 3     # determinism check
 python tests/regression/run_regression.py --update     # rewrite golden output
+python tests/regression/run_regression.py --keep DIR replay_run_e_mini
+                                                       # full output, digested files too
 python tests/regression/check_imports.py               # every module imports
 python tests/regression/coverage_report.py OUTDIR      # legacy suites + scenarios
 ```

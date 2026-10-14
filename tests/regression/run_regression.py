@@ -16,6 +16,9 @@ Usage:
     python tests/regression/run_regression.py --runs 3     # determinism
     python tests/regression/run_regression.py --coverage DIR
                                        # also write coverage data to DIR
+    python tests/regression/run_regression.py --keep DIR replay_run_e_mini
+                                       # also write the full output to DIR,
+                                       # including files kept only as digests
 
 Each run happens in a scratch copy of the repository (without .git and
 output/), so the runner writes to the copy's output/, never to the
@@ -197,9 +200,13 @@ def collect(scenario, tree, result_dir, proc):
         raw['outcomes.jsonl'] = outcome_table(raw['smoke_run.jsonl'])
 
     seals = json.loads(_read(os.path.join(result_dir, 'seal.json')))
-    out = {k: normalise(v, tree, seals) for k, v in raw.items()}
+    return {k: normalise(v, tree, seals) for k, v in raw.items()}
 
-    # Large outputs: keep a digest; the details stay in outcomes.jsonl.
+
+def digest_large(scenario, produced):
+    """Large outputs: keep a digest; the details stay in outcomes.jsonl.
+    The full files are available with --keep."""
+    out = dict(produced)
     for name in scenario.get('digest_only', []):
         if name in out:
             text = out.pop(name)
@@ -302,15 +309,18 @@ def compare(name, produced):
     return problems
 
 
-def update(name, produced):
-    golden_dir = os.path.join(GOLDEN, name)
-    if os.path.isdir(golden_dir):
-        shutil.rmtree(golden_dir)
-    os.makedirs(golden_dir)
+def write_dir(directory, produced):
+    if os.path.isdir(directory):
+        shutil.rmtree(directory)
+    os.makedirs(directory)
     for fname, text in produced.items():
-        with open(os.path.join(golden_dir, fname), 'w', encoding='utf-8',
+        with open(os.path.join(directory, fname), 'w', encoding='utf-8',
                   newline='\n') as f:
             f.write(text)
+
+
+def update(name, produced):
+    write_dir(os.path.join(GOLDEN, name), produced)
 
 
 def main(argv=None):
@@ -322,6 +332,10 @@ def main(argv=None):
                     help='run each scenario N times (determinism check)')
     ap.add_argument('--coverage', metavar='DIR',
                     help='write coverage data files to DIR')
+    ap.add_argument('--keep', metavar='DIR',
+                    help='also write the full normalised output of each '
+                         'scenario to DIR/<scenario>/, including files the '
+                         'golden output keeps only as a digest')
     args = ap.parse_args(argv)
 
     names = args.scenarios or sorted(
@@ -332,8 +346,11 @@ def main(argv=None):
     failures = 0
     for name in names:
         for run in range(1, args.runs + 1):
-            produced = run_scenario(
+            full = run_scenario(
                 name, coverage_dir=args.coverage if run == 1 else None)
+            if args.keep and run == 1:
+                write_dir(os.path.join(args.keep, name), full)
+            produced = digest_large(load_scenario(name), full)
             label = f'{name}' + (f' (run {run})' if args.runs > 1 else '')
             if args.update and run == 1:
                 update(name, produced)
