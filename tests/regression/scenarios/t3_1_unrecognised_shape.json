@@ -1,0 +1,266 @@
+{
+  "description": "T3-1 (critical): unrecognised response shapes and mid-loop failures give EV-0, which today counts as a successful invocation in D7.1. One question per kind, and the whole instruction_removed condition answering in the Anthropic Messages shape.",
+  "exercises": [
+    "T3-1",
+    "EV-0",
+    "D7.9 unrecognised round",
+    "mid-loop adapter failure",
+    "D7.1 aggregation"
+  ],
+  "extends": "clean",
+  "config": {
+    "repeat_count": "2"
+  },
+  "responses": {
+    "Q01/base/*": [
+      {
+        "call": "15200.00 * 1.2 / 100 / 12"
+      },
+      {
+        "raw": {
+          "id": "msg_mock",
+          "type": "message",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": "The monthly interest is $15.20."
+            }
+          ],
+          "stop_reason": "end_turn"
+        }
+      }
+    ],
+    "Q02/base/*": [
+      {
+        "call": "5000 - 2400"
+      },
+      {
+        "http": 500,
+        "body": "{\"error\": {\"message\": \"internal error\"}}"
+      }
+    ],
+    "Q03/base/*": [
+      {
+        "call": "2400 * (18.0 / 100) / 12"
+      },
+      {
+        "raw": {
+          "id": "resp_mock",
+          "object": "response",
+          "output": [
+            {
+              "type": "message",
+              "content": [
+                {
+                  "type": "output_text",
+                  "text": "The monthly interest charge is $36.00."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "Q01/instruction_removed/*": [
+      {
+        "raw": {
+          "id": "msg_mock",
+          "type": "message",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "toolu_1",
+              "name": "calculator",
+              "input": {
+                "expression": "1 + 1"
+              }
+            }
+          ],
+          "stop_reason": "tool_use"
+        }
+      }
+    ],
+    "Q02/instruction_removed/*": [
+      {
+        "raw": {
+          "id": "msg_mock",
+          "type": "message",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "toolu_1",
+              "name": "calculator",
+              "input": {
+                "expression": "1 + 1"
+              }
+            }
+          ],
+          "stop_reason": "tool_use"
+        }
+      }
+    ],
+    "Q03/instruction_removed/*": [
+      {
+        "raw": {
+          "id": "msg_mock",
+          "type": "message",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "toolu_1",
+              "name": "calculator",
+              "input": {
+                "expression": "1 + 1"
+              }
+            }
+          ],
+          "stop_reason": "tool_use"
+        }
+      }
+    ],
+    "Q04/instruction_removed/*": [
+      {
+        "raw": {
+          "id": "msg_mock",
+          "type": "message",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "toolu_1",
+              "name": "calculator",
+              "input": {
+                "expression": "1 + 1"
+              }
+            }
+          ],
+          "stop_reason": "tool_use"
+        }
+      }
+    ],
+    "Q05/instruction_removed/*": [
+      {
+        "raw": {
+          "id": "msg_mock",
+          "type": "message",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "toolu_1",
+              "name": "calculator",
+              "input": {
+                "expression": "1 + 1"
+              }
+            }
+          ],
+          "stop_reason": "tool_use"
+        }
+      }
+    ],
+    "Q06/instruction_removed/*": [
+      {
+        "raw": {
+          "id": "msg_mock",
+          "type": "message",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "toolu_1",
+              "name": "calculator",
+              "input": {
+                "expression": "1 + 1"
+              }
+            }
+          ],
+          "stop_reason": "tool_use"
+        }
+      }
+    ],
+    "Q07/instruction_removed/*": [
+      {
+        "raw": {
+          "id": "msg_mock",
+          "type": "message",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "toolu_1",
+              "name": "calculator",
+              "input": {
+                "expression": "1 + 1"
+              }
+            }
+          ],
+          "stop_reason": "tool_use"
+        }
+      }
+    ],
+    "Q08/instruction_removed/*": [
+      {
+        "raw": {
+          "id": "msg_mock",
+          "type": "message",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "toolu_1",
+              "name": "calculator",
+              "input": {
+                "expression": "1 + 1"
+              }
+            }
+          ],
+          "stop_reason": "tool_use"
+        }
+      }
+    ],
+    "Q09/instruction_removed/*": [
+      {
+        "raw": {
+          "id": "msg_mock",
+          "type": "message",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "toolu_1",
+              "name": "calculator",
+              "input": {
+                "expression": "1 + 1"
+              }
+            }
+          ],
+          "stop_reason": "tool_use"
+        }
+      }
+    ],
+    "Q10/instruction_removed/*": [
+      {
+        "raw": {
+          "id": "msg_mock",
+          "type": "message",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "toolu_1",
+              "name": "calculator",
+              "input": {
+                "expression": "1 + 1"
+              }
+            }
+          ],
+          "stop_reason": "tool_use"
+        }
+      }
+    ]
+  }
+}

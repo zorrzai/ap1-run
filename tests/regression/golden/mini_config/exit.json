@@ -1,0 +1,4 @@
+{
+  "exit_code": null,
+  "exception": "ConfigError: sampling.reasoning_effort: invalid or missing reason 'model-unsupported'. Permitted reasons: operator-declared, platform-rejected, platform-unsupported"
+}

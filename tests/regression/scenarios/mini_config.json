@@ -1,0 +1,17 @@
+{
+  "description": "The shipped example/config_mini.json, with the environment overrides of the published mini runs. Today it is refused at load: its reasoning_effort omission gives the reason 'model-unsupported', which config validation does not permit.",
+  "exercises": [
+    "config_mini.json",
+    "config validation of omission reasons",
+    "ConfigError before any request"
+  ],
+  "extends": "clean",
+  "config_file": "example/config_mini.json",
+  "config": {
+    "repeat_count": "2"
+  },
+  "env": {
+    "AP1_SMOKE_TEMPERATURE": "1",
+    "AP1_SMOKE_REASONING_EFFORT": "omit"
+  }
+}

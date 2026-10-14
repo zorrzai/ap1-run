@@ -1,0 +1,4 @@
+{
+  "exit_code": null,
+  "exception": "RuntimeError: FATAL: invocation consistency check failed. Q06/base/r1: NOT-INVOKED but tool_calls_count=1. A scoring outcome that contradicts its own evidence is a defect, not a finding."
+}

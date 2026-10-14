@@ -1,0 +1,11 @@
+{
+  "description": "T3-5: sign-inverted values that coincide with a declared constant (-12 on Q09, -1 anywhere) are grounded by the undocumented constant_magnitude rule. A sign-inverted source field on Q02 for contrast.",
+  "exercises": ["T3-5", "constant_magnitude", "step 5 sign inversion"],
+  "extends": "clean",
+  "config": {"repeat_count": "2"},
+  "responses": {
+    "Q09/*/*": [{"call": "15200 * (1.2 / 100) / 12"}, {"call": "15.2 + -12"}, {"say": "The net monthly income is ${result}."}],
+    "Q02/*/*": [{"call": "5000 + -2400"}, {"say": "The available credit is ${result}."}],
+    "Q06/*/*": [{"call": "12.00 * 12 * -1 * -1"}, {"say": "The total annual cost is ${result}."}]
+  }
+}

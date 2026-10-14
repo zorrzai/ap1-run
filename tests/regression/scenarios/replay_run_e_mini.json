@@ -1,0 +1,23 @@
+{
+  "description": "Replay of the published run output/run_e_mini (gpt-4.1-mini, 1,000 executions) through today's runner: the recorded final responses, and the recorded assistant messages for the intermediate rounds. Configured as the transcript's sampling_as_sent shows the run was: example/config.json with AP1_SMOKE_TEMPERATURE=1 and AP1_SMOKE_REASONING_EFFORT=omit (example/config_mini.json is rejected by today's config validation; see scenario mini_config).",
+  "exercises": [
+    "re-scoring a published run end to end",
+    "real model output",
+    "T3-1 in published data (Q07 r44)",
+    "T3-5 in published data (Q09)"
+  ],
+  "replay": "output/run_e_mini/smoke_run.jsonl",
+  "config": {
+    "repeat_count": "50"
+  },
+  "env": {
+    "AP1_SMOKE_TEMPERATURE": "1",
+    "AP1_SMOKE_REASONING_EFFORT": "omit"
+  },
+  "digest_only": [
+    "smoke_run.jsonl",
+    "smoke_summary.json",
+    "requests.jsonl",
+    "console.txt"
+  ]
+}

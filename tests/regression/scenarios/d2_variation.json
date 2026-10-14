@@ -1,0 +1,12 @@
+{
+  "description": "Answers that vary across repeats: different figures, different wording, and one repeat without a tool call, for D2 reproducibility and per-repeat aggregation.",
+  "exercises": ["D2 classify_mechanism", "per-repeat outcomes", "mixed invocation within a question"],
+  "extends": "clean",
+  "config": {"repeat_count": "3"},
+  "responses": {
+    "Q01/*/r2": [{"call": "15200 * 0.012 / 12"}, {"say": "Interest per month: ${result}"}],
+    "Q01/*/r3": [{"say": "About $15.20 per month."}],
+    "Q02/*/r2": [{"call": "5000 - 2400"}, {"say": "You have ${result} of credit left."}],
+    "Q02/*/r3": [{"call": "5000 - 2500"}, {"say": "You have ${result} of credit left."}]
+  }
+}

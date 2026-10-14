@@ -1,0 +1,14 @@
+{
+  "description": "Transport and HTTP failures: rate limit and server error in round 0 and mid-loop, a dropped connection (three retries), and a non-JSON body.",
+  "exercises": ["adapter errors", "UNMEASURED cells", "transport retries", "mid-loop failure", "rate limiting"],
+  "extends": "clean",
+  "config": {"repeat_count": "2"},
+  "responses": {
+    "Q03/base/r1": [{"http": 429, "body": "{\"error\": {\"message\": \"Rate limit reached\"}}"}],
+    "Q04/base/r1": [{"http": 500, "body": "{\"error\": {\"message\": \"server error\"}}"}],
+    "Q05/base/r1": [{"close": true}],
+    "Q06/base/r1": [{"http": 200, "body": "this is not json"}],
+    "Q07/base/r1": [{"call": "42175 * (0.078 / 4) - (15 * 3)"}, {"http": 429, "body": "{\"error\": {\"message\": \"Rate limit reached\"}}"}],
+    "Q08/*/*": [{"http": 401, "body": "{\"error\": {\"message\": \"Incorrect API key provided: sk-abcdefghijklmnop1234\"}}"}]
+  }
+}

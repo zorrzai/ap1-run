@@ -185,11 +185,30 @@ class MockEndpoint:
         rr = (rec.get('request_sent') or {}).get('request_record') or {}
         assistant = [m for m in rr.get('messages', [])
                      if m.get('role') == 'assistant']
-        if rnd < len(assistant):
-            return ('reply', 200, self._envelope(assistant[rnd])), source
-        if rec.get('response_received') is None:
+        final = rec.get('response_received')
+        if final is None:
             return ('reply', 503, str(rec.get('error_state'))), source
-        return ('reply', 200, rec['response_received']), source
+        # A recorded final response that still asks for tools means the
+        # loop ended because the next request failed (a mid-loop failure,
+        # EV-0). That response is also the last assistant message.
+        unfinished = bool(self._tool_calls_of(final))
+        n_before_final = len(assistant) - 1 if unfinished else len(assistant)
+        if rnd < n_before_final:
+            return ('reply', 200, self._envelope(assistant[rnd])), source
+        if rnd == n_before_final:
+            return ('reply', 200, final), source
+        if unfinished:
+            return ('reply', 502,
+                    'replayed mid-loop failure: the recorded loop ended '
+                    'here without a response'), source
+        return ('reply', 500, 'mock script exhausted'), source
+
+    @staticmethod
+    def _tool_calls_of(response):
+        try:
+            return response['choices'][0]['message'].get('tool_calls')
+        except (KeyError, IndexError, TypeError, AttributeError):
+            return None
 
     # -- rendering --------------------------------------------------
 
