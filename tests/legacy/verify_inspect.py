@@ -680,7 +680,7 @@ class TestInspectWrapperAgreement(unittest.TestCase):
         bad_config = dict(self.config)
         bad_config['ap1_text_hash'] = 'deadbeef' * 8
 
-        spec_path = os.path.join(_RUNNER_DIR, 'SPEC.md')
+        spec_path = os.path.join(_RUNNER_DIR, 'docs', 'SPEC.md')
         if not os.path.exists(spec_path):
             self.skipTest('SPEC.md not found')
 
