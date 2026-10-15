@@ -1,4 +1,10 @@
 {
+  "runner/console": {
+    "killed": 467,
+    "mutants": 470,
+    "notes": "All 3 survivors are equivalent. Two let n = 0 reach format_rate, which itself returns 'no observations' for n = 0. One changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
+    "score": 0.9936
+  },
   "runner/credentials": {
     "killed": 116,
     "mutants": 117,
