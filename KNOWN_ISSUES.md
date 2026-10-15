@@ -33,7 +33,7 @@ and the item is treated as "affected by perturbation" (i.e., not constant).
 Additionally, zero-valued source fields are untestable under the ×1.1
 multiplicative perturbation (`0 × 1.1 = 0`).
 
-**File:** `seal.py`, `perturbation_check` function.
+**File:** `src/ap1_run/execution/seal.py`, `perturbation_check` function.
 
 ---
 
@@ -45,7 +45,7 @@ intermediate in declaration order. If multiple intermediates share the same
 numeric value (possible in multi-step derivations), the attribution may be
 non-deterministic or order-dependent.
 
-**File:** `provenance.py`, step-4 computed-in-session resolution.
+**File:** `src/ap1_run/scoring/provenance/provenance.py`, step-4 computed-in-session resolution.
 
 ---
 
@@ -60,7 +60,7 @@ are approximations, not exact representations.
 The instrument's "never through float" design principle (stated in
 `numeric.py`'s docstring) is not applied to these constants.
 
-**File:** `operation_correctness.py`, π/e constant construction.
+**File:** `src/ap1_run/scoring/operation_correctness.py`, π/e constant construction.
 
 ---
 
@@ -72,7 +72,7 @@ stripped. In European locales where comma is the decimal separator, the
 intended value is `1.23`. The parser does not validate grouping-separator
 position (e.g., requiring groups of three digits).
 
-**File:** `numeric.py`, `parse_decimal`, grouping-separator stripping.
+**File:** `src/ap1_run/foundation/numeric.py`, `parse_decimal`, grouping-separator stripping.
 
 ---
 
@@ -90,7 +90,7 @@ only when a specific input hits the 0.5 ULP boundary — e.g., `2.5` rounds
 to `2` under HALF_EVEN but `3` under HALF_UP.
 
 **Files:** `example/calculator_tool.py` (`round()`);
-`operation_correctness.py` (`quantize` calls); example configs
+`src/ap1_run/scoring/operation_correctness.py` (`quantize` calls); example configs
 (`rounding_mode` field).
 
 ---
@@ -117,8 +117,8 @@ conversation. The standard draws this distinction explicitly (v1.3
 §6.7: "the raw responses are published (§5.6) so any party may
 re-score").
 
-**Files:** `transcript.py` (append function, L17-39);
-`engine.py` (`_drive_tool_loop`, L175-235 — intermediate responses
+**Files:** `src/ap1_run/foundation/transcript.py` (append function, L17-39);
+`src/ap1_run/execution/engine.py` (`_drive_tool_loop`, L175-235 — intermediate responses
 overwritten on each loop iteration).
 
 ---
@@ -127,12 +127,12 @@ overwritten on each loop iteration).
 
 `adapter.send` builds a complete `request_record` containing the endpoint
 URL, model, tools, and `sampling_as_sent` — the exact parameters that went
-over the wire, with structured omissions preserved (`adapter.py` L121-127).
-`adapter.send` returns this record alongside the raw response (`adapter.py`
+over the wire, with structured omissions preserved (`src/ap1_run/foundation/adapter.py` L121-127).
+`adapter.send` returns this record alongside the raw response (`src/ap1_run/foundation/adapter.py`
 L77).
 
 `engine.py` discards the `request_record` returned by `adapter.send` and
-writes `request_sent` as `{'messages': messages}` only (`engine.py` L86,
+writes `request_sent` as `{'messages': messages}` only (`src/ap1_run/execution/engine.py` L86,
 L144). The endpoint URL, model identifier, tool definitions, and sampling
 parameters — including which parameters were explicitly omitted and why —
 are not in the transcript.
@@ -159,6 +159,6 @@ external reviewer access.
 No existing test asserts the shape of `request_sent` in stored transcripts;
 the fix will not break any test.
 
-**Files:** `engine.py` L76-86 and L140-144 (discards `request_record`);
-`adapter.py` L68-127 (builds and returns it);
-`transcript.py` L17-39 (stores whatever `request_sent` it receives).
+**Files:** `src/ap1_run/execution/engine.py` L76-86 and L140-144 (discards `request_record`);
+`src/ap1_run/foundation/adapter.py` L68-127 (builds and returns it);
+`src/ap1_run/foundation/transcript.py` L17-39 (stores whatever `request_sent` it receives).
