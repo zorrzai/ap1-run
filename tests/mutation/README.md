@@ -27,6 +27,11 @@ surviving mutant of such a module is reviewed: either a test is added, or
 the entry's `"notes"` says why the mutant is acceptable (for example, it
 changes only a message, or it is equivalent to the original).
 
+A commit that changes a module's code changes its set of mutants, so the
+score can move without the tests getting weaker (an extracted function
+brings its own equivalent mutants, say). Such a commit re-records the
+score with `--record`, and the entry's notes account for every survivor.
+
 A mutant that no test runs counts as a survivor. A score is only
 comparable with itself: it measures the unit tests of one module, not
 the legacy suites or the regression baseline.
