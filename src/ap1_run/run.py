@@ -62,10 +62,9 @@ from ap1_run.execution.perturbation_guard import check_single_variable_perturbat
 from ap1_run.foundation.numeric import extract_numeric_tokens
 from ap1_run.execution.seal import seal as create_seal
 from ap1_run.foundation import transcript
-from ap1_run.reporting import report
-from ap1_run.reporting import adjudication
 from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.credentials import get_api_key
+from ap1_run.runner.outputs import write_outputs
 from ap1_run.runner.summary import (
     build_summary, classify_reproducibility, find_d2_cap,
     verify_invocation_consistency,
@@ -569,68 +568,13 @@ def main():
     # 3j-3l. D1, D2, operand provenance
     print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary)
 
-    # -- Generate formal report (report.py) --
-    print('\n' + '=' * 60)
-    print('GENERATING FORMAL REPORT (report.py)')
-    print('=' * 60)
-
-    # Read full transcript for report
-    tr_records = transcript.read_all(transcript_path)
-
-    # Merge figure_outcome into engine transcript records
-    # Engine records don't have figure_outcome; figure_identification records do
-    engine_records = [r for r in tr_records
-                      if r.get('record_type') != 'figure_identification']
-    figure_records = [r for r in tr_records
-                      if r.get('record_type') == 'figure_identification']
-
-    # Build lookup: (item_id, condition) -> list of figure_outcomes
-    fig_lookup = {}
-    for fr in figure_records:
-        key = (fr.get('item_id'), fr.get('condition'))
-        fig_lookup.setdefault(key, []).append(fr.get('figure_outcome', ''))
-
-    # Attach figure_outcome to engine records for adjudication routing
-    for er in engine_records:
-        key = (er.get('item_id'), er.get('condition'))
-        figs = fig_lookup.get(key, [])
-        if figs:
-            er['figure_outcome'] = figs.pop(0)
-
-    report_text = report.generate_report(
-        summary=summary,
-        config=config,
-        seal_record=seal_record,
-        transcript_records=engine_records,
-    )
-
-    report_path = os.path.join(output_dir, 'report.md')
-    with open(report_path, 'w', encoding='utf-8') as f:
-        f.write(report_text)
-    print(f'Formal report written to {report_path}')
-
-    # -- Generate adjudication sheets (adjudication.py) --
-    print('\nGENERATING ADJUDICATION SHEETS (adjudication.py)')
-
-    sheets_text = adjudication.generate_sheets(
-        engine_records, questions, fixture, config,
-        release_coverage_results=release_coverage_results)
-
-    sheets_path = os.path.join(output_dir, 'adjudication_sheets.md')
-    with open(sheets_path, 'w', encoding='utf-8') as f:
-        f.write(sheets_text)
-    print(f'Adjudication sheets written to {sheets_path}')
-
-    # Write disclaimer file
-    disclaimer_path = os.path.join(output_dir, 'DISCLAIMER.txt')
-    with open(disclaimer_path, 'w', encoding='utf-8') as f:
-        f.write(DISCLAIMER)
-
-    # Write summary to output
-    summary_path = os.path.join(output_dir, 'smoke_summary.json')
-    with open(summary_path, 'w', encoding='utf-8') as f:
-        json.dump({
-            '_disclaimer': DISCLAIMER.replace('\n', ' ').strip(),
+    # -- Output files: report, adjudication sheets, disclaimer, summary --
+    write_outputs(
+        output_dir, transcript_path, summary=summary, config=config,
+        seal_record=seal_record, questions=questions, fixture=fixture,
+        release_coverage_results=release_coverage_results,
+        disclaimer=DISCLAIMER,
+        smoke_summary={
             'seal_hash': seal_hash,
             'all_results': all_results,
             'grammar_issues': grammar_issues,
@@ -638,9 +582,7 @@ def main():
             'tool_call_structures': tool_call_structures,
             'evidence_findings': evidence_findings,
             'unmeasured_cells': unmeasured_cells,
-        }, f, indent=2, default=str, ensure_ascii=False)
-    print(f'\nSummary written to {summary_path}')
-    print(f'Transcript written to {transcript_path}')
+        })
 
     return 0
 

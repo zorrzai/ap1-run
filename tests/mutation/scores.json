@@ -11,6 +11,12 @@
     "notes": "The one survivor is equivalent: decode('UTF-16-LE') names the same codec as 'utf-16-le'. read_credential_windows is tested against a fake ctypes, so its Windows API use is checked by shape, not on Windows.",
     "score": 0.9915
   },
+  "runner/outputs": {
+    "killed": 174,
+    "mutants": 189,
+    "notes": "All 15 survivors are equivalent here. Twelve drop or change encoding='utf-8' on the four files written: 'UTF-8' is the same codec, and None or no argument means the locale's encoding, which is UTF-8 on macOS and Linux (the CI's Windows runs would differ; the regression baseline is made on macOS). Two give fig_lookup.get() a None default, which is falsy like []. One passes ensure_ascii=None, falsy like False.",
+    "score": 0.9206
+  },
   "runner/summary": {
     "killed": 542,
     "mutants": 554,
