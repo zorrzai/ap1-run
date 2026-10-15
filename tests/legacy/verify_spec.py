@@ -82,7 +82,7 @@ def _count_lines(filepath):
 
 def test_spec_line_counts_match_files():
     """Every line count in §12.10 matches the actual file."""
-    spec_path = _base / 'SPEC.md'
+    spec_path = _base / 'docs' / 'SPEC.md'
     spec_text = spec_path.read_text(encoding='utf-8')
     rows = _parse_classification_table(spec_text)
 
@@ -114,7 +114,7 @@ def test_spec_constraint_holds():
     """Every instrument module <=300 unless declared exception.
     Declared exceptions must still exceed 300 (stale exception = failure).
     """
-    spec_path = _base / 'SPEC.md'
+    spec_path = _base / 'docs' / 'SPEC.md'
     spec_text = spec_path.read_text(encoding='utf-8')
     rows = _parse_classification_table(spec_text)
     exceptions = _parse_declared_exceptions(spec_text)

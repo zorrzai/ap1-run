@@ -327,7 +327,7 @@ concept DOI [10.5281/zenodo.21324954](https://doi.org/10.5281/zenodo.21324954) Â
 
 ## Layout
 
-The package follows the layers of the build specification (SPEC.md).
+The package follows the layers of the build specification (docs/SPEC.md).
 
 ```
 pyproject.toml               package metadata; `pip install -e .`; the `ap1-run` command
@@ -376,6 +376,8 @@ tests/
   fixtures/                  mock endpoint and test modules
 
 ap1_inspect/                 the optional Inspect wrapper (its own package)
+docs/                        build specification (SPEC.md), KNOWN_ISSUES.md,
+                             RELATED_WORK_REVIEW.md, REPRODUCING.md, the publisher's comments
 example/                     a worked fixture, questions, ground truth and config
 reference/                   the sealed AP-1 text
 ```
@@ -386,7 +388,7 @@ the build specification. Test suites, the worked example and the smoke
 test sit outside that constraint by design and are longer.
 
 Full architecture, verification contracts per module, threat model and
-conformance mapping: [`SPEC.md`](SPEC.md).
+conformance mapping: [`docs/SPEC.md`](docs/SPEC.md).
 
 ### Where the files used to be
 
@@ -405,10 +407,11 @@ those records are not edited. To follow such a reference today:
 | `generate_findings.py`, `verify_run_seal.py` | `tools/` |
 | `verify*.py`, `test_findings_mutation.py` | `tests/legacy/` |
 | `_t16_mock_gt.py` | `tests/fixtures/` |
+| `SPEC.md`, `KNOWN_ISSUES.md`, `RELATED_WORK_REVIEW.md`, `REPRODUCING.md` | `docs/` |
 
 Line numbers inside the moved modules are unchanged, except in `run.py`, the
 tools and the test suites. To reproduce a published run at the code it was
-sealed against, see [`REPRODUCING.md`](REPRODUCING.md).
+sealed against, see [`docs/REPRODUCING.md`](docs/REPRODUCING.md).
 
 ---
 
