@@ -23,7 +23,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: pip install requests
+        run: pip install -e .
 
       - name: Run full test suite
         run: python run_all_tests.py
