@@ -25,6 +25,9 @@ def legacy_suites():
     names = [s[0] if isinstance(s, (tuple, list)) else s
              for s in run_all_tests.SUITES]
     base = os.path.dirname(os.path.abspath(run_all_tests.__file__))
+    legacy = os.path.join(base, 'tests', 'legacy')
+    if os.path.isdir(legacy):
+        base = legacy
     return [os.path.join(base, n) for n in names]
 
 

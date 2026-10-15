@@ -47,26 +47,30 @@ DISCLAIMER = (
     'result, by us or by anyone, in any document.\n'
 )
 
-# Runner modules
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Runner modules: the ap1_run package, or src/ when it is not installed
+try:
+    import ap1_run  # noqa: F401
+except ImportError:
+    sys.path.insert(0, os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), 'src'))
 
-import adapter
-from config import load_config
-from context import build_delivered_context, check_lookup_collision, format_fixture_context
-from engine import execute_item
-from evidence import EV_0, EV_2
-from figure_id import identify_figure, AUTO_MATCH, AUTO_NO_FIGURE, UNMEASURABLE
-from invocation import format_rate
-from accuracy import score_accuracy, summarise_accuracy
-from transcription import check_transcription
-from release_coverage import check_release_coverage
-from perturbation_guard import check_single_variable_perturbation
-from reproducibility import classify_mechanism
-from numeric import extract_numeric_tokens
-from seal import seal as create_seal
-import transcript
-import report
-import adjudication
+from ap1_run.foundation import adapter
+from ap1_run.foundation.config import load_config
+from ap1_run.execution.context import build_delivered_context, check_lookup_collision, format_fixture_context
+from ap1_run.execution.engine import execute_item
+from ap1_run.execution.evidence import EV_0, EV_2
+from ap1_run.scoring.figure_id import identify_figure, AUTO_MATCH, AUTO_NO_FIGURE, UNMEASURABLE
+from ap1_run.scoring.invocation import format_rate
+from ap1_run.scoring.accuracy import score_accuracy, summarise_accuracy
+from ap1_run.scoring.transcription import check_transcription
+from ap1_run.scoring.release_coverage import check_release_coverage
+from ap1_run.execution.perturbation_guard import check_single_variable_perturbation
+from ap1_run.scoring.reproducibility import classify_mechanism
+from ap1_run.foundation.numeric import extract_numeric_tokens
+from ap1_run.execution.seal import seal as create_seal
+from ap1_run.foundation import transcript
+from ap1_run.reporting import report
+from ap1_run.reporting import adjudication
 
 
 # Credential target for the API key
@@ -451,7 +455,7 @@ def main():
         return 1
 
     # -- Runner version and source hash --
-    from version import resolve_runner_version, compute_runner_source_hash
+    from ap1_run.execution.version import resolve_runner_version, compute_runner_source_hash
     runner_info = resolve_runner_version(base_dir)
     config['runner_version_tag'] = runner_info['version_tag']
     config['runner_version_commit'] = runner_info['version_commit']
@@ -677,7 +681,7 @@ def main():
                 # Extract candidate figures: every number in the response
                 # matching expected within tolerance (per Steven's spec)
                 _rc_candidates = []
-                from evidence import _extract_content as _rc_extract
+                from ap1_run.execution.evidence import _extract_content as _rc_extract
                 _rc_content, _, _ = _rc_extract(final_response)
                 if _rc_content:
                     try:
@@ -741,7 +745,7 @@ def main():
                     })
 
                 # -- Numeric grammar check --
-                from evidence import _extract_content
+                from ap1_run.execution.evidence import _extract_content
                 content, shape_ok, shape_reason = _extract_content(final_response)
                 if content:
                     try:

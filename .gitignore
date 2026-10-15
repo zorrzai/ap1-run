@@ -11,3 +11,7 @@ output/*
 !output/superseded/
 
 __pycache__/
+
+# Packaging (pip install -e .)
+*.egg-info/
+build/
