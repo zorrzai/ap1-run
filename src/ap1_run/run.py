@@ -34,28 +34,17 @@ import os
 import sys
 import time
 from decimal import Decimal
-from pathlib import Path
 
-# NOTE: This disclaimer is a hand correction (E4). It will be replaced
-# by a generated disclaimer once the conformance-declaration mechanism
-# (operator_declaration + conformance_checks) is built.
-DISCLAIMER = (
-    'THIS IS AN INSTRUMENT SMOKE TEST, NOT AN AP-1 EVALUATION.\n'
-    '\n'
-    'It is not conformant: no adjudication, no second scorer, no blind set,\n'
-    'the fixture is the shipped example (10 items, burned under AP-1 \xa75.8),\n'
-    'and the D1 minimum of 40 items is not met.\n'
-    'No figure from it may be reported, cited, quoted or described as an AP-1\n'
-    'result, by us or by anyone, in any document.\n'
+from ap1_run.execution.context import (
+    build_delivered_context, check_lookup_collision,
 )
-
+from ap1_run.execution.engine import execute_item
+from ap1_run.execution.seal import seal as create_seal
+from ap1_run.execution.version import (
+    compute_runner_source_hash, resolve_runner_version,
+)
 from ap1_run.foundation import adapter
 from ap1_run.foundation.config import load_config
-from ap1_run.execution.context import build_delivered_context, check_lookup_collision, format_fixture_context
-from ap1_run.execution.engine import execute_item
-from ap1_run.execution.evidence import EV_0, EV_2
-from ap1_run.scoring.accuracy import summarise_accuracy
-from ap1_run.execution.seal import seal as create_seal
 from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.credentials import get_api_key
 from ap1_run.runner.executions import (
@@ -70,7 +59,20 @@ from ap1_run.runner.summary import (
     build_summary, classify_reproducibility, find_d2_cap,
     verify_invocation_consistency,
 )
+from ap1_run.scoring.accuracy import summarise_accuracy
 
+# NOTE: This disclaimer is a hand correction (E4). It will be replaced
+# by a generated disclaimer once the conformance-declaration mechanism
+# (operator_declaration + conformance_checks) is built.
+DISCLAIMER = (
+    'THIS IS AN INSTRUMENT SMOKE TEST, NOT AN AP-1 EVALUATION.\n'
+    '\n'
+    'It is not conformant: no adjudication, no second scorer, no blind set,\n'
+    'the fixture is the shipped example (10 items, burned under AP-1 \xa75.8),\n'
+    'and the D1 minimum of 40 items is not met.\n'
+    'No figure from it may be reported, cited, quoted or described as an AP-1\n'
+    'result, by us or by anyone, in any document.\n'
+)
 
 def main():
     if hasattr(sys.stdout, 'reconfigure'):
@@ -137,7 +139,6 @@ def main():
         return 1
 
     # -- Runner version and source hash --
-    from ap1_run.execution.version import resolve_runner_version, compute_runner_source_hash
     runner_info = resolve_runner_version(base_dir)
     config['runner_version_tag'] = runner_info['version_tag']
     config['runner_version_commit'] = runner_info['version_commit']
