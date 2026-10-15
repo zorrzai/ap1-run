@@ -1074,7 +1074,6 @@ a module-level constant definition, not added logic.
 | `src/ap1_run/foundation/adapter.py` | 180 | Instrument module |
 | `src/ap1_run/scoring/invocation.py` | 171 | Instrument module |
 | `src/ap1_run/scoring/accuracy.py` | 142 | Instrument module |
-| `src/ap1_run/execution/perturbation.py` | 128 | Instrument module |
 | `src/ap1_run/execution/context.py` | 121 | Instrument module |
 | `src/ap1_run/execution/perturbation_guard.py` | 116 | Instrument module |
 | `src/ap1_run/scoring/transcription.py` | 110 | Instrument module |

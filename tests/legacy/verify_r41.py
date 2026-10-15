@@ -64,7 +64,6 @@ from ap1_run.foundation.numeric import parse_decimal, extract_numeric_tokens
 from ap1_run.scoring.reproducibility import check_parameter_echo
 
 # -- Perturbation imports ---------------------------------------------
-from ap1_run.execution.perturbation import perturbation_check, PerturbationError
 
 # -- Config imports ---------------------------------------------------
 from ap1_run.foundation.config import load_config, ConfigError, validate_minimum_n
