@@ -342,6 +342,7 @@ src/ap1_run/
   runner/                    the parts run.py drives
     console.py               the console report, sections 3a to 3l
     credentials.py           the API key: environment, or Windows Credential Manager
+    outputs.py               writes report.md, the adjudication sheets and the summary
     summary.py               invocation consistency check, D2 per item, the summary report.py reads
   foundation/                SPEC Layer 0
     config.py                configuration; refuses defaults that affect a result
