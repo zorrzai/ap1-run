@@ -16,10 +16,11 @@ scores.json lists others under "tests".
 
 The score is killed / (killed + survived + no tests + timeout): a mutant
 that no test runs counts as a survivor. --record writes the measured
-score to scores.json (and creates the entry). --survivors prints the diff
-of each surviving mutant, for review and for the notes in scores.json.
+score to scores.json (and creates the entry), even if it fell. --survivors
+prints the diff of each surviving mutant, for review and for the notes in
+scores.json.
 
-Exit code 0 if no score fell, 1 otherwise.
+Exit code 0 if no score fell (or --record), 1 otherwise.
 """
 
 import argparse
@@ -171,6 +172,10 @@ def main(argv=None):
         save_scores(scores)
     if fell:
         print(f'\nScore fell for: {", ".join(fell)}')
+        if args.record:
+            print('Recorded anyway (--record): account for the survivors '
+                  'in the notes.')
+            return 0
         return 1
     return 0
 
