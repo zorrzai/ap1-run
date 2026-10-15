@@ -70,8 +70,10 @@ all scenarios takes about 30 seconds.
 
 The harness is deliberately **not** registered in `run_all_tests.py`, so the
 legacy suite counts stay the same across the restructure: 226 test functions
-and 406 checks, or 404 since step 2 deleted `perturbation.py` and with it two
-of `verify_spec.py`'s per-file checks.
+and 406 checks in step 1. In step 2 only `verify_spec.py`'s check count moves,
+because it checks each file listed in SPEC §12.10 (one check per file, and
+one more per instrument module): files deleted, renamed or split change it,
+and `run_all_tests.py` records the new count in the same commit.
 
 ## Scenarios
 

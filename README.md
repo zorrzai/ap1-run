@@ -336,6 +336,8 @@ smoke_test.py                shim: `python smoke_test.py` runs ap1_run.run
 
 src/ap1_run/
   run.py                     drives a live endpoint (was smoke_test.py)
+  runner/                    the parts run.py drives
+    credentials.py           the API key: environment, or Windows Credential Manager
   foundation/                SPEC Layer 0
     config.py                configuration; refuses defaults that affect a result
     adapter.py               HTTP transport; records the request as sent

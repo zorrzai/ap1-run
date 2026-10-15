@@ -6,12 +6,10 @@ import types
 
 import pytest
 
-from ap1_run.run import (
-    _CRED_TARGET, _get_api_key as get_api_key,
-    _read_credential_windows as read_credential_windows,
+from ap1_run.runner import credentials as module
+from ap1_run.runner.credentials import (
+    CRED_TARGET, get_api_key, read_credential_windows,
 )
-
-import ap1_run.run as module
 
 
 @pytest.fixture
@@ -20,7 +18,7 @@ def no_key(monkeypatch):
 
 
 def test_credential_target_name():
-    assert _CRED_TARGET == 'ap1-smoke:openai'
+    assert CRED_TARGET == 'ap1-smoke:openai'
 
 
 def test_get_api_key_from_environment(monkeypatch, capsys):
@@ -40,7 +38,7 @@ def test_get_api_key_empty_environment_value_counts_as_missing(
 def test_get_api_key_missing_prints_instructions_and_exits_1(
         no_key, monkeypatch, capsys):
     monkeypatch.setattr(sys, 'platform', 'linux')
-    monkeypatch.setattr(module, '_read_credential_windows',
+    monkeypatch.setattr(module, 'read_credential_windows',
                         lambda target: pytest.fail('not on Windows'))
     with pytest.raises(SystemExit) as exc:
         get_api_key()
@@ -63,7 +61,7 @@ def test_get_api_key_windows_reads_credential_manager(
     def fake_read(target):
         seen.append(target)
         return 'sk-from-store'
-    monkeypatch.setattr(module, '_read_credential_windows', fake_read)
+    monkeypatch.setattr(module, 'read_credential_windows', fake_read)
     assert get_api_key() == 'sk-from-store'
     assert seen == ['ap1-smoke:openai']
     assert capsys.readouterr().out == ''
@@ -72,7 +70,7 @@ def test_get_api_key_windows_reads_credential_manager(
 def test_get_api_key_windows_missing_prints_windows_instructions(
         no_key, monkeypatch, capsys):
     monkeypatch.setattr(sys, 'platform', 'win32')
-    monkeypatch.setattr(module, '_read_credential_windows', lambda t: None)
+    monkeypatch.setattr(module, 'read_credential_windows', lambda t: None)
     with pytest.raises(SystemExit) as exc:
         get_api_key()
     assert exc.value.code == 1
@@ -96,7 +94,7 @@ def test_get_api_key_environment_wins_over_credential_manager(
         monkeypatch):
     monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-env')
     monkeypatch.setattr(sys, 'platform', 'win32')
-    monkeypatch.setattr(module, '_read_credential_windows',
+    monkeypatch.setattr(module, 'read_credential_windows',
                         lambda target: pytest.fail('env var comes first'))
     assert get_api_key() == 'sk-env'
 
@@ -159,13 +157,14 @@ class FakeCtypes:
 
 
 def test_read_credential_windows_decodes_utf16_and_frees(monkeypatch):
-    fake = FakeCtypes(stored='sk-stored\x00'.encode('utf-16-le'))
+    # Only trailing NULs are stripped (a key may end in any character).
+    fake = FakeCtypes(stored='sk-storedX\x00'.encode('utf-16-le'))
     for name, mod in fake.modules.items():
         monkeypatch.setitem(sys.modules, name, mod)
-    assert read_credential_windows('ap1-smoke:openai') == 'sk-stored'
+    assert read_credential_windows('ap1-smoke:openai') == 'sk-storedX'
     assert fake.calls == [
         ('CredReadW', 'ap1-smoke:openai', 1, 0),
-        ('string_at', 'blob-address', 20),
+        ('string_at', 'blob-address', 22),
         ('CredFree', 'blob-address'),
     ]
     assert fake.structure.__name__ == 'CREDENTIAL'
