@@ -5,6 +5,12 @@
     "notes": "The one survivor is equivalent: decode('UTF-16-LE') names the same codec as 'utf-16-le'. read_credential_windows is tested against a fake ctypes, so its Windows API use is checked by shape, not on Windows.",
     "score": 0.9915
   },
+  "runner/summary": {
+    "killed": 485,
+    "mutants": 495,
+    "notes": "All 10 survivors are equivalent. Nine replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE. One changes n > 0 to n >= 0 where n is always at least 1.",
+    "score": 0.9798
+  },
   "scoring/provenance/audit": {
     "killed": 51,
     "mutants": 51,

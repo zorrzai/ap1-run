@@ -3,9 +3,8 @@ check and the summary that report.generate_report() reads."""
 
 import pytest
 
-from ap1_run.run import (
-    _build_summary as build_summary,
-    _verify_invocation_consistency as verify_invocation_consistency,
+from ap1_run.runner.summary import (
+    build_summary, verify_invocation_consistency,
 )
 
 
@@ -261,3 +260,63 @@ def test_summary_non_outcome_cells():
         {'item_id': 'Q05', 'condition': 'base', 'status': 'VOID',
          'reason': ''},
     ]
+
+
+# -- counting: rows that were not executed come first, and every counter
+#    reaches at least 2, so a skipped row or a counter that is set rather
+#    than incremented shows.
+
+def test_consistency_checks_rows_after_a_non_executed_row():
+    with pytest.raises(RuntimeError, match='Q09/'):
+        verify_invocation_consistency([
+            {'status': 'VOID'},
+            executed('Q09', invocation_outcome='INVOKED', tool_calls_count=0),
+        ])
+
+
+def test_summary_counts_accumulate_after_non_executed_rows():
+    def oc(outcome):
+        return [{'outcome': outcome}]
+    void = {'status': 'VOID', 'item_id': 'Q00', 'condition': 'base'}
+    results = [
+        void,
+        executed(invocation_outcome='NOT-INVOKED'),
+        executed(invocation_outcome='NOT-INVOKED'),
+        executed(figure_outcome='AUTO-MATCH',
+                 operation_correctness=oc('WRONG-OPERATION')),
+        executed(figure_outcome='AUTO-MATCH',
+                 operation_correctness=oc('WRONG-OPERATION')),
+        executed(figure_outcome='ADJUDICATE-DECLINE',
+                 operation_correctness=oc('WRONG-OPERATION')),
+        executed(figure_outcome='ADJUDICATE-DECLINE',
+                 operation_correctness=oc('WRONG-OPERATION')),
+        # no figure outcome at all: the answer counts as wrong
+        executed(operation_correctness=oc('WRONG-OPERATION')),
+        executed(figure_outcome='AUTO-NO-FIGURE',
+                 operation_correctness=oc('WRONG-OPERATION')),
+        executed(provenance_results=[
+            prov('OPERAND-ORIGINATED',
+                 {'step': 1, 'resolution': 'constant'},
+                 {'step': 1, 'resolution': 'constant'},
+                 {'step': 5, 'sign_inversion_finding': {'type': 'S'}},
+                 {'step': 5, 'sign_inversion_finding': {'type': 'S'}},
+                 {'step': 5, 'resolution': 'computed_in_session_ungrounded'},
+                 {'step': 5, 'resolution': 'computed_in_session_ungrounded'},
+                 {'step': 5, 'resolution': 'computed_in_session_ungrounded'},
+                 {'step': 5, 'resolution': 'originated'},
+                 {'step': 5, 'resolution': 'originated'}),
+            prov('OPERAND-ORIGINATED'),
+        ]),
+    ]
+    s = build_summary(results, [])
+    assert s['invocation_figures']['d7_invocation_base'] == {
+        'failures': 2, 'n': 9, 'rate': '7/9'}
+    assert s['wrong_operation_split'] == {
+        'route_divergence': 2, 'item_wrong': 2, 'undetermined': 2}
+    assert s['provenance_outcomes'] == {'OPERANDS-GROUNDED': 0,
+                                        'OPERAND-ORIGINATED': 2}
+    assert s['step_1_constant'] == 2
+    assert (s['step_5_sign_inverted'], s['step_5_ungrounded_chain'],
+            s['step_5_untraceable']) == (2, 3, 2)
+    assert s['d7_results'] == {'n': 9, 'auto_scored_n': 3,
+                               'adjudicated_n': 2}
