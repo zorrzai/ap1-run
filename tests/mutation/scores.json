@@ -23,6 +23,11 @@
     "notes": "All 15 survivors are equivalent here. Twelve drop or change encoding='utf-8' on the four files written: 'UTF-8' is the same codec, and None or no argument means the locale's encoding, which is UTF-8 on macOS and Linux (the CI's Windows runs would differ; the regression baseline is made on macOS). Two give fig_lookup.get() a None default, which is falsy like []. One passes ensure_ascii=None, falsy like False.",
     "score": 0.9206
   },
+  "runner/settings": {
+    "killed": 138,
+    "mutants": 138,
+    "score": 1.0
+  },
   "runner/summary": {
     "killed": 542,
     "mutants": 554,
