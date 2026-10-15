@@ -407,7 +407,8 @@ those records are not edited. To follow such a reference today:
 | `_t16_mock_gt.py` | `tests/fixtures/` |
 
 Line numbers inside the moved modules are unchanged, except in `run.py`, the
-tools and the test suites.
+tools and the test suites. To reproduce a published run at the code it was
+sealed against, see [`REPRODUCING.md`](REPRODUCING.md).
 
 ---
 
