@@ -15,3 +15,6 @@ __pycache__/
 # Packaging (pip install -e .)
 *.egg-info/
 build/
+
+# Written by tests/legacy/verify_hashes.py on every run
+hash_digest.txt
