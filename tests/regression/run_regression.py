@@ -51,7 +51,8 @@ GOLDEN = os.path.join(HERE, 'golden')
 DRIVER = os.path.join(HERE, 'driver.py')
 
 # Not copied into the scratch tree.
-_SKIP_TOP = {'.git', '.venv', 'output', 'graphify-out', 'review_output'}
+_SKIP_TOP = {'.git', '.venv', 'output', 'graphify-out', 'review_output',
+             'mutants', '.pytest_cache'}
 
 # Files the runner writes to output/.
 _OUTPUTS = ['report.md', 'adjudication_sheets.md', 'smoke_summary.json',
