@@ -69,8 +69,9 @@ were made with Python 3.11, which is in the CI matrix. A full comparison of
 all scenarios takes about 30 seconds.
 
 The harness is deliberately **not** registered in `run_all_tests.py`, so the
-legacy suite counts (226 test functions, 406 checks) stay the same across the
-restructure.
+legacy suite counts stay the same across the restructure: 226 test functions
+and 406 checks, or 404 since step 2 deleted `perturbation.py` and with it two
+of `verify_spec.py`'s per-file checks.
 
 ## Scenarios
 
@@ -118,5 +119,5 @@ differs: model name, endpoint, hashes, timestamps and runner commit.
 
 Every production module is executed, except that the Inspect wrapper
 (`ap1_inspect/compare, metrics, scorer, solver, task`) is only imported:
-`check_imports.py` covers it at import level. `perturbation.py` is dead code
-(8 %).
+`check_imports.py` covers it at import level. `perturbation.py` was dead code
+(8 %) and was deleted in step 2.

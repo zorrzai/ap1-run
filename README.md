@@ -348,7 +348,6 @@ src/ap1_run/
     engine.py                execution loop
     context.py               delivered-context construction
     perturbation_guard.py    refuses a condition that varies more than one quantity
-    perturbation.py          unused; to be removed
     evidence.py              invocation evidence classification
   scoring/                   SPEC Layer 2
     figure_id.py             which figure in the response is the answer
@@ -401,7 +400,8 @@ those records are not edited. To follow such a reference today:
 |---|---|
 | `smoke_test.py` | `src/ap1_run/run.py` (the root `smoke_test.py` is now a shim) |
 | `config.py`, `adapter.py`, `transcript.py`, `numeric.py` | `src/ap1_run/foundation/` |
-| `seal.py`, `seal_constants.py`, `version.py`, `engine.py`, `context.py`, `perturbation_guard.py`, `perturbation.py`, `evidence.py` | `src/ap1_run/execution/` |
+| `seal.py`, `seal_constants.py`, `version.py`, `engine.py`, `context.py`, `perturbation_guard.py`, `evidence.py` | `src/ap1_run/execution/` |
+| `perturbation.py` | deleted (it was never used; the seal's own `perturbation_check` is the one that runs) |
 | `figure_id.py`, `accuracy.py`, `reproducibility.py`, `invocation.py`, `operation_correctness.py`, `transcription.py`, `release_coverage.py` | `src/ap1_run/scoring/` |
 | `provenance.py`, `provenance_classify.py`, `provenance_audit.py` | `src/ap1_run/scoring/provenance/` |
 | `report.py`, `adjudication.py` | `src/ap1_run/reporting/` |
