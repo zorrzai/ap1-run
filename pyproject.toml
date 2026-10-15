@@ -15,5 +15,8 @@ dependencies = ["requests"]
 [project.optional-dependencies]
 inspect = ["inspect-ai==0.3.255"]
 
+[project.scripts]
+ap1-run = "ap1_run.run:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
