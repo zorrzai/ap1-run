@@ -1,4 +1,10 @@
 {
+  "runner/credentials": {
+    "killed": 116,
+    "mutants": 117,
+    "notes": "The one survivor is equivalent: decode('UTF-16-LE') names the same codec as 'utf-16-le'. read_credential_windows is tested against a fake ctypes, so its Windows API use is checked by shape, not on Windows.",
+    "score": 0.9915
+  },
   "scoring/provenance/audit": {
     "killed": 51,
     "mutants": 51,
