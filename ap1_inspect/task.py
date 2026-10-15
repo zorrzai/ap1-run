@@ -55,7 +55,7 @@ def _create_seal(config, fixture_path, questions_path, gt_path):
     Raises SealError if the AP-1 text hash mismatches.
     """
     ap1_text_path = None
-    spec_path = os.path.join(_RUNNER_DIR, 'SPEC.md')
+    spec_path = os.path.join(_RUNNER_DIR, 'docs', 'SPEC.md')
     if os.path.exists(spec_path):
         ap1_text_path = spec_path
 

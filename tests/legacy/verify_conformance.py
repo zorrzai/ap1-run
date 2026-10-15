@@ -619,7 +619,7 @@ def test_not_enforceable_declared():
 
     Tests that SPEC.md §10 lists each NOT ENFORCEABLE clause.
     """
-    spec_path = _base / 'SPEC.md'
+    spec_path = _base / 'docs' / 'SPEC.md'
     spec = spec_path.read_text(encoding='utf-8')
 
     ne_clauses = [
@@ -807,7 +807,7 @@ def test_conformance_table_consistency():
     'not wired' in the conformance mapping.
     """
     import re as _re
-    spec_path = _base / 'SPEC.md'
+    spec_path = _base / 'docs' / 'SPEC.md'
     spec = spec_path.read_text(encoding='utf-8')
 
     # D7.2(a)(iv): must be marked IMPLEMENTED
