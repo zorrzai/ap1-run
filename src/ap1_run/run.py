@@ -18,6 +18,10 @@ Usage:
     ap1-run                           (after pip install -e .)
     python smoke_test.py              (the same, from a clone)
 
+    Options (ap1-run --help) move the inputs and outputs from example/,
+    reference/ and output/: --config, --fixture-dir, --output-dir,
+    --ap1-text.
+
 On Windows only, if AP1_SMOKE_API_KEY is not set, the runner will attempt
 to read from Windows Credential Manager (target: ap1-smoke:openai).
 
@@ -54,6 +58,7 @@ from ap1_run.runner.executions import (
 from ap1_run.runner.outputs import write_outputs
 from ap1_run.runner.settings import (
     apply_sampling_overrides, check_condition_guard, endpoint_and_model,
+    parse_args,
 )
 from ap1_run.runner.summary import (
     build_summary, classify_reproducibility, find_d2_cap,
@@ -74,7 +79,18 @@ DISCLAIMER = (
     'result, by us or by anyone, in any document.\n'
 )
 
-def main():
+# The repository root: this file is src/ap1_run/run.py.
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__))))
+
+
+def main(argv=None):
+    # -- Command line: where the inputs and outputs are --
+    # The defaults are the shipped example, reference/ and output/.
+    args = parse_args(sys.argv[1:] if argv is None else argv, BASE_DIR)
+    base_dir = BASE_DIR
+    fixture_dir = args.fixture_dir
+
     if hasattr(sys.stdout, 'reconfigure'):
         sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
@@ -91,13 +107,8 @@ def main():
     print(f'API key: present ({key_length} chars)')
     print()
 
-    # -- Load example configuration --
-    # The repository root: this file is src/ap1_run/run.py.
-    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(
-        os.path.abspath(__file__))))
-    example_dir = os.path.join(base_dir, 'example')
-
-    config = load_config(os.path.join(example_dir, 'config.json'))
+    # -- Load configuration --
+    config = load_config(args.config)
 
     config['endpoint_url'] = endpoint
     config['model'] = model
@@ -105,18 +116,18 @@ def main():
     # -- Sampling overrides: AP1_SMOKE_TEMPERATURE, AP1_SMOKE_REASONING_EFFORT --
     apply_sampling_overrides(config)
 
-    with open(os.path.join(example_dir, 'fixture.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(fixture_dir, 'fixture.json'), 'r', encoding='utf-8') as f:
         fixture = json.load(f)
 
-    with open(os.path.join(example_dir, 'questions.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(fixture_dir, 'questions.json'), 'r', encoding='utf-8') as f:
         questions = json.load(f)
 
     # -- Load ground-truth module --
-    sys.path.insert(0, example_dir)
+    sys.path.insert(0, fixture_dir)
     import ground_truth_example as gt_module
 
     # -- Output directory --
-    output_dir = os.path.join(base_dir, 'output')
+    output_dir = args.output_dir
     os.makedirs(output_dir, exist_ok=True)
     transcript_path = os.path.join(output_dir, 'smoke_run.jsonl')
 
@@ -158,13 +169,12 @@ def main():
     # -- SEAL: R1.1 pre-registration record --
     # The real seal, not a sentinel. A live run without a valid seal
     # is refused, exactly as R1.1 requires.
-    ap1_text_path = os.path.join(
-        base_dir, 'reference', 'AP-1_v1.3_DRAFT_FOR_COMMENT.md')
+    ap1_text_path = args.ap1_text
     seal_record = create_seal(
         config=config,
-        fixture_path=os.path.join(example_dir, 'fixture.json'),
-        questions_path=os.path.join(example_dir, 'questions.json'),
-        ground_truth_path=os.path.join(example_dir, 'ground_truth_example.py'),
+        fixture_path=os.path.join(fixture_dir, 'fixture.json'),
+        questions_path=os.path.join(fixture_dir, 'questions.json'),
+        ground_truth_path=os.path.join(fixture_dir, 'ground_truth_example.py'),
         ap1_text_path=ap1_text_path,
         runner_source_hash=runner_source_hash,
     )
@@ -194,7 +204,7 @@ def main():
             timeout=timeout)
 
     # -- Perturbation guard (R1.2): refuse run if more than system prompt differs --
-    check_condition_guard(config, os.path.join(example_dir, 'fixture.json'),
+    check_condition_guard(config, os.path.join(fixture_dir, 'fixture.json'),
                           system_prompt_base, system_prompt_removed, tools,
                           sampling)
 

@@ -130,8 +130,21 @@ The `ap1-run` command and `python -m ap1_run.run` do not: they run whichever
 clone is installed in the environment, and that clone's `output/` receives the
 results. Use one environment per clone, or run `python smoke_test.py`, which
 always uses its own clone's `src/`.
-The runner reads `example/` and `reference/` and writes `output/` relative to
-the clone, so run it from a clone (an editable install), not from a wheel.
+
+By default the runner reads `example/` and `reference/` and writes `output/`
+in the clone. Options move them (`ap1-run --help`):
+
+```bash
+ap1-run --config my/config.json \
+        --fixture-dir my/fixture/ \
+        --output-dir runs/today/ \
+        --ap1-text reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md
+```
+
+`--fixture-dir` holds `fixture.json`, `questions.json` and
+`ground_truth_example.py`. The AP-1 text must be the one the seal expects. The
+runner still takes its version and source hash from the clone, so run it from
+a clone (an editable install), not from a wheel.
 
 `run_all_tests.py` reports two columns. `verify.py` counts individual
 assertions; the other suites count test functions. Running `pytest` directly

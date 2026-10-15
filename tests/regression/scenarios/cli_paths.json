@@ -1,0 +1,14 @@
+{
+  "description": "The clean run with every input and the output moved: --config, --fixture-dir, --output-dir and --ap1-text point at copies elsewhere in the tree. Everything but the printed paths matches clean, and the default output/ is left empty.",
+  "exercises": ["ap1-run --config --fixture-dir --output-dir --ap1-text"],
+  "extends": "clean",
+  "copy_paths": {
+    "example": "inputs/my_example",
+    "reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md": "texts/ap1.md"
+  },
+  "args": ["--config", "inputs/my_example/config.json",
+           "--fixture-dir", "inputs/my_example",
+           "--output-dir", "runs/cli",
+           "--ap1-text", "texts/ap1.md"],
+  "output_dir": "runs/cli"
+}

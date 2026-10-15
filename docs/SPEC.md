@@ -1080,12 +1080,12 @@ a module-level constant definition, not added logic.
 | `src/ap1_run/scoring/transcription.py` | 110 | Instrument module |
 | `src/ap1_run/scoring/release_coverage.py` | 169 | Instrument module |
 | `src/ap1_run/foundation/transcript.py` | 74 | Instrument module |
-| `src/ap1_run/run.py` | 326 | Demonstration tooling |
+| `src/ap1_run/run.py` | 336 | Demonstration tooling |
 | `src/ap1_run/runner/console.py` | 185 | Demonstration tooling |
 | `src/ap1_run/runner/credentials.py` | 98 | Demonstration tooling |
 | `src/ap1_run/runner/executions.py` | 259 | Demonstration tooling |
 | `src/ap1_run/runner/outputs.py` | 99 | Demonstration tooling |
-| `src/ap1_run/runner/settings.py` | 96 | Demonstration tooling |
+| `src/ap1_run/runner/settings.py` | 134 | Demonstration tooling |
 | `src/ap1_run/runner/summary.py` | 242 | Demonstration tooling |
 | `example/ground_truth_example.py` | 571 | Example / demonstration |
 | `example/calculator_tool.py` | 224 | Example / demonstration |
