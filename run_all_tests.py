@@ -120,7 +120,7 @@ def main():
     failed_output = []
 
     for script, label, exp_functions, exp_checks in SUITES:
-        script_path = base / script
+        script_path = base / 'tests' / 'legacy' / script
 
         # Run the suite in its native form
         proc = subprocess.run(

@@ -1025,7 +1025,7 @@ commercial use or modification would contradict AP-1 §10.2 and make R4.2
 unsatisfiable.
 
 **12.9 Module size constraint: ≤300 lines.**  Each instrument module (the
-`.py` files in `ap1-runner/` that implement R0–R3) is kept at or under 300
+`.py` files under `src/ap1_run/` that implement R0–R3) is kept at or under 300
 lines.  The constraint is ≤300, not <300; a module at exactly 300 complies.
 This was stated explicitly when the counts were corrected on 2 August 2026.
 
@@ -1034,17 +1034,17 @@ including blank lines.  Earlier figures in this specification were measured by
 `Measure-Object -Line`, which excludes blank lines and produced systematically
 lower numbers.  Those figures were wrong and have been corrected.
 
-Test suites (`verify_*.py`, `run_all_tests.py`), demonstration tooling
+Test suites (`tests/legacy/verify_*.py`, `run_all_tests.py`), demonstration tooling
 (`smoke_test.py`), and the example ground-truth module
 (`example/ground_truth_example.py`) are **not** instrument modules and are
 **excluded** from this constraint.
 
-**Declared exception — `report.py` (768 lines).**  `report.py` is a cohesive
+**Declared exception — `src/ap1_run/reporting/report.py` (768 lines).**  `report.py` is a cohesive
 renderer with thirteen sections.  Fragmenting it would make the rendering flow
 harder to follow without improving auditability.  This exception is documented,
 not implicit.
 
-**Declared exception — `provenance.py` (371 lines).**  The expansion
+**Declared exception — `src/ap1_run/scoring/provenance/provenance.py` (371 lines).**  The expansion
 adds `STRUCTURAL_CONSTANTS` (the additive and multiplicative identities 0 and
 1) to the provenance classifier.  These are structural in standard financial
 formulae and their addition was established by the first 1000-execution live
@@ -1057,36 +1057,36 @@ a module-level constant definition, not added logic.
 
 | File | Lines | Classification |
 |---|---|---|
-| `report.py` | 768 | Instrument module (excepted §12.9) |
-| `provenance.py` | 371 | Instrument module (excepted §12.9) |
-| `provenance_classify.py` | 232 | Instrument module |
-| `provenance_audit.py` | 38 | Instrument module |
-| `numeric.py` | 300 | Instrument module |
-| `engine.py` | 300 | Instrument module |
-| `evidence.py` | 296 | Instrument module |
-| `operation_correctness.py` | 300 | Instrument module |
-| `adjudication.py` | 284 | Instrument module |
-| `seal.py` | 282 | Instrument module |
-| `seal_constants.py` | 89 | Instrument module |
-| `config.py` | 257 | Instrument module |
-| `reproducibility.py` | 197 | Instrument module |
-| `figure_id.py` | 194 | Instrument module |
-| `adapter.py` | 180 | Instrument module |
-| `invocation.py` | 171 | Instrument module |
-| `accuracy.py` | 142 | Instrument module |
-| `perturbation.py` | 128 | Instrument module |
-| `context.py` | 121 | Instrument module |
-| `perturbation_guard.py` | 116 | Instrument module |
-| `transcription.py` | 110 | Instrument module |
-| `release_coverage.py` | 169 | Instrument module |
-| `transcript.py` | 74 | Instrument module |
-| `smoke_test.py` | 1099 | Demonstration tooling |
+| `src/ap1_run/reporting/report.py` | 768 | Instrument module (excepted §12.9) |
+| `src/ap1_run/scoring/provenance/provenance.py` | 371 | Instrument module (excepted §12.9) |
+| `src/ap1_run/scoring/provenance/provenance_classify.py` | 232 | Instrument module |
+| `src/ap1_run/scoring/provenance/provenance_audit.py` | 38 | Instrument module |
+| `src/ap1_run/foundation/numeric.py` | 300 | Instrument module |
+| `src/ap1_run/execution/engine.py` | 300 | Instrument module |
+| `src/ap1_run/execution/evidence.py` | 296 | Instrument module |
+| `src/ap1_run/scoring/operation_correctness.py` | 300 | Instrument module |
+| `src/ap1_run/reporting/adjudication.py` | 284 | Instrument module |
+| `src/ap1_run/execution/seal.py` | 282 | Instrument module |
+| `src/ap1_run/execution/seal_constants.py` | 89 | Instrument module |
+| `src/ap1_run/foundation/config.py` | 257 | Instrument module |
+| `src/ap1_run/scoring/reproducibility.py` | 197 | Instrument module |
+| `src/ap1_run/scoring/figure_id.py` | 194 | Instrument module |
+| `src/ap1_run/foundation/adapter.py` | 180 | Instrument module |
+| `src/ap1_run/scoring/invocation.py` | 171 | Instrument module |
+| `src/ap1_run/scoring/accuracy.py` | 142 | Instrument module |
+| `src/ap1_run/execution/perturbation.py` | 128 | Instrument module |
+| `src/ap1_run/execution/context.py` | 121 | Instrument module |
+| `src/ap1_run/execution/perturbation_guard.py` | 116 | Instrument module |
+| `src/ap1_run/scoring/transcription.py` | 110 | Instrument module |
+| `src/ap1_run/scoring/release_coverage.py` | 169 | Instrument module |
+| `src/ap1_run/foundation/transcript.py` | 74 | Instrument module |
+| `smoke_test.py` | 1103 | Demonstration tooling |
 | `example/ground_truth_example.py` | 571 | Example / demonstration |
 | `example/calculator_tool.py` | 224 | Example / demonstration |
-| `verify_*.py` | varies | Verification test suites |
-| `verify_findings.py` | 127 | Findings reconciliation guard |
-| `generate_findings.py` | 518 | FINDINGS.md generator from artifacts |
-| `test_findings_mutation.py` | 197 | Mutation tests for findings pipeline |
+| `tests/legacy/verify_*.py` | varies | Verification test suites |
+| `tests/legacy/verify_findings.py` | 127 | Findings reconciliation guard |
+| `tools/generate_findings.py` | 524 | FINDINGS.md generator from artifacts |
+| `tests/legacy/test_findings_mutation.py` | 197 | Mutation tests for findings pipeline |
 | `run_all_tests.py` | 222 | Test runner |
 
 **Research questions are not held in this document.** Those on which the field
