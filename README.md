@@ -115,6 +115,14 @@ python run_all_tests.py       # offline, reports its own totals
 change the hash (T3-70 in `docs/REVIEW_FINDINGS.md`). For the same reason,
 keep virtual environments outside the clone.
 
+For development, `pip install -e .[dev]` adds pytest, mutmut and coverage:
+
+```bash
+python -m pytest                            # unit tests (tests/unit/)
+python tests/regression/run_regression.py   # the regression baseline, about 30 s
+python tests/mutation/run_mutation.py       # mutation scores, against tests/mutation/scores.json
+```
+
 Then run the worked example against your own endpoint:
 
 ```bash
@@ -147,9 +155,9 @@ runner still takes its version and source hash from the clone, so run it from
 a clone (an editable install), not from a wheel.
 
 `run_all_tests.py` reports two columns. `verify.py` counts individual
-assertions; the other suites count test functions. Running `pytest` directly
-reports the function count only — both numbers are shown so neither is mistaken
-for the other.
+assertions; the other suites count test functions. Running pytest on
+`tests/legacy/` directly reports the function count only — both numbers are
+shown so neither is mistaken for the other.
 
 ---
 
@@ -405,6 +413,8 @@ tools/
   generate_findings.py       regenerates findings/FINDINGS.md from the published runs
 
 tests/
+  unit/                      pytest unit tests, mirroring src/ap1_run/
+  mutation/                  mutation scores per module (mutmut), a ratchet
   legacy/                    the original verify_*.py suites, run by run_all_tests.py
   regression/                the regression baseline: canned model responses, golden output
   fixtures/                  mock endpoint and test modules
