@@ -18,3 +18,8 @@ build/
 
 # Written by tests/legacy/verify_hashes.py on every run
 hash_digest.txt
+
+# Test tooling
+.pytest_cache/
+.coverage
+mutants/

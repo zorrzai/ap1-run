@@ -14,9 +14,22 @@ dependencies = ["requests"]
 
 [project.optional-dependencies]
 inspect = ["inspect-ai==0.3.255"]
+dev = ["pytest>=8", "mutmut>=3.3", "coverage"]
 
 [project.scripts]
 ap1-run = "ap1_run.run:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+# The new unit tests (tests/unit/). The legacy suites keep running through
+# run_all_tests.py until they are retired, and the regression baseline
+# through tests/regression/run_regression.py (CI: regression.yml).
+testpaths = ["tests/unit"]
+# Import the package from src/ even without an install.
+pythonpath = ["src"]
+addopts = ["--strict-markers", "--import-mode=importlib"]
+markers = [
+    "req(*ids): the requirement IDs a test checks, e.g. @pytest.mark.req('R2.4')",
+]
