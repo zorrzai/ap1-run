@@ -1035,7 +1035,7 @@ including blank lines.  Earlier figures in this specification were measured by
 lower numbers.  Those figures were wrong and have been corrected.
 
 Test suites (`tests/legacy/verify_*.py`, `run_all_tests.py`), demonstration tooling
-(`smoke_test.py`), and the example ground-truth module
+(`src/ap1_run/run.py`), and the example ground-truth module
 (`example/ground_truth_example.py`) are **not** instrument modules and are
 **excluded** from this constraint.
 
@@ -1080,7 +1080,7 @@ a module-level constant definition, not added logic.
 | `src/ap1_run/scoring/transcription.py` | 110 | Instrument module |
 | `src/ap1_run/scoring/release_coverage.py` | 169 | Instrument module |
 | `src/ap1_run/foundation/transcript.py` | 74 | Instrument module |
-| `smoke_test.py` | 1103 | Demonstration tooling |
+| `src/ap1_run/run.py` | 1098 | Demonstration tooling |
 | `example/ground_truth_example.py` | 571 | Example / demonstration |
 | `example/calculator_tool.py` | 224 | Example / demonstration |
 | `tests/legacy/verify_*.py` | varies | Verification test suites |

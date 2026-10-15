@@ -47,13 +47,6 @@ DISCLAIMER = (
     'result, by us or by anyone, in any document.\n'
 )
 
-# Runner modules: the ap1_run package, or src/ when it is not installed
-try:
-    import ap1_run  # noqa: F401
-except ImportError:
-    sys.path.insert(0, os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), 'src'))
-
 from ap1_run.foundation import adapter
 from ap1_run.foundation.config import load_config
 from ap1_run.execution.context import build_delivered_context, check_lookup_collision, format_fixture_context
@@ -366,7 +359,9 @@ def main():
     print()
 
     # -- Load example configuration --
-    base_dir = os.path.dirname(os.path.abspath(__file__))
+    # The repository root: this file is src/ap1_run/run.py.
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__))))
     example_dir = os.path.join(base_dir, 'example')
 
     config = load_config(os.path.join(example_dir, 'config.json'))
