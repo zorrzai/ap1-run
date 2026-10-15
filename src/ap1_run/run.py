@@ -4,7 +4,8 @@ THIS IS AN INSTRUMENT SMOKE TEST, NOT AN AP-1 EVALUATION.
 Not conformant: no adjudication, no second scorer, no blind set,
 the fixture is burned under §5.8, and 10 items < D1 minimum of 40.
 Must never be reported, cited or described as an AP-1 result.
-Output goes to ap1-runner/output/ which is gitignored.
+Output goes to output/ in the repository, which is gitignored
+(apart from the published runs).
 
 Usage:
     export AP1_SMOKE_API_KEY=<key>    (Linux/macOS)
@@ -14,7 +15,8 @@ Usage:
     Optional:
     export AP1_SMOKE_ENDPOINT=<url>   (default: https://api.openai.com/v1/chat/completions)
     export AP1_SMOKE_MODEL=<model>    (default: gpt-4o-mini)
-    python smoke_test.py
+    ap1-run                           (after pip install -e .)
+    python smoke_test.py              (the same, from a clone)
 
 On Windows only, if AP1_SMOKE_API_KEY is not set, the runner will attempt
 to read from Windows Credential Manager (target: ap1-smoke:openai).

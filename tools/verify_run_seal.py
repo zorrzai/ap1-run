@@ -1,8 +1,8 @@
 """Verify a published run's seal from its report artifacts alone.
 
 Usage:
-    python verify_run_seal.py output/run_a_mini
-    python verify_run_seal.py output/run_b_sol
+    python tools/verify_run_seal.py output/run_a_mini
+    python tools/verify_run_seal.py output/run_b_sol
 
 Reads the seal record from report.md section 1 (Pre-Registration Record) and
 the resolved configuration from report.md section 2 (Resolved Configuration).
@@ -16,7 +16,7 @@ EXIT CODES:
 NOTE: The on-disk config files (example/config.json, example/config_mini.json)
 contain placeholder values for model and endpoint_url. These are overwritten
 with runtime values from environment variables BEFORE the seal is computed
-(smoke_test.py L358-359). The sealed config_hash therefore matches the
+(src/ap1_run/run.py, main()). The sealed config_hash therefore matches the
 RESOLVED configuration in report.md section 2, NOT the on-disk config file.
 A verifier who hashes config.json directly will get a mismatch -- that is
 correct behaviour, not a failure.
@@ -27,7 +27,7 @@ import os
 import re
 import sys
 
-# Determine base_dir (ap1-runner root) from this file's location
+# Determine base_dir (the repository root) from this file's location
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 try:
     import ap1_run  # noqa: F401
@@ -244,11 +244,11 @@ def verify_run(output_dir):
 
 def main():
     if len(sys.argv) < 2:
-        print('Usage: python verify_run_seal.py <output_dir> '
+        print('Usage: python tools/verify_run_seal.py <output_dir> '
               '[<output_dir2> ...]')
         print()
         print('Example:')
-        print('  python verify_run_seal.py output/run_a_mini '
+        print('  python tools/verify_run_seal.py output/run_a_mini '
               'output/run_b_sol')
         return 1
 
