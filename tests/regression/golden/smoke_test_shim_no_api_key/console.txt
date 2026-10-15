@@ -1,0 +1,7 @@
+ERROR: API key not found.
+
+Set the AP1_SMOKE_API_KEY environment variable:
+
+  export AP1_SMOKE_API_KEY=<key>
+
+The key is never printed, logged, or written to any file.
