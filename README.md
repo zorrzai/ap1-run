@@ -337,6 +337,7 @@ smoke_test.py                shim: `python smoke_test.py` runs ap1_run.run
 src/ap1_run/
   run.py                     drives a live endpoint (was smoke_test.py)
   runner/                    the parts run.py drives
+    console.py               the console report, sections 3a to 3l
     credentials.py           the API key: environment, or Windows Credential Manager
     summary.py               invocation consistency check, D2 per item, the summary report.py reads
   foundation/                SPEC Layer 0
