@@ -69,7 +69,10 @@ def main():
     outcome = {}
     seals = []
     try:
-        import smoke_test
+        if os.path.exists(os.path.join(copy_dir, 'smoke_test.py')):
+            import smoke_test
+        else:  # the runner has moved, and there is no shim (yet)
+            import ap1_run.run as smoke_test
         # smoke_test.py may be a shim; patch the module main() lives in.
         runner = sys.modules[smoke_test.main.__module__]
 

@@ -383,8 +383,7 @@ def test_consistency_check_halts_on_invoked_without_tool_calls():
     not a finding. The instrument must refuse to report it.
     """
     # Import the consistency check from smoke_test
-    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-    from smoke_test import _verify_invocation_consistency
+    from ap1_run.run import _verify_invocation_consistency
 
     # Deliberately inconsistent: INVOKED but no tool_calls
     bad_results = [{
