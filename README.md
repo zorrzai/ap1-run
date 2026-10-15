@@ -361,9 +361,9 @@ src/ap1_run/
     transcription.py         D7.3
     release_coverage.py      D7.3 release coverage
     provenance/              D7.2(a)
-      provenance.py          the five-step resolution ladder
-      provenance_classify.py invocation, item and sequential classification
-      provenance_audit.py    originated-operand listing
+      trace.py               the five-step resolution ladder
+      classify.py            invocation, item and sequential classification
+      audit.py               originated-operand listing
   reporting/                 SPEC Layer 3
     adjudication.py          printable sheets for the human-scored dimensions
     report.py                the result artifact
@@ -406,7 +406,7 @@ those records are not edited. To follow such a reference today:
 | `seal.py`, `seal_constants.py`, `version.py`, `engine.py`, `context.py`, `perturbation_guard.py`, `evidence.py` | `src/ap1_run/execution/` |
 | `perturbation.py` | deleted (it was never used; the seal's own `perturbation_check` is the one that runs) |
 | `figure_id.py`, `accuracy.py`, `reproducibility.py`, `invocation.py`, `operation_correctness.py`, `transcription.py`, `release_coverage.py` | `src/ap1_run/scoring/` |
-| `provenance.py`, `provenance_classify.py`, `provenance_audit.py` | `src/ap1_run/scoring/provenance/` |
+| `provenance.py`, `provenance_classify.py`, `provenance_audit.py` | `src/ap1_run/scoring/provenance/`, renamed in step 2 to `trace.py`, `classify.py`, `audit.py` |
 | `report.py`, `adjudication.py` | `src/ap1_run/reporting/` |
 | `generate_findings.py`, `verify_run_seal.py` | `tools/` |
 | `verify*.py`, `test_findings_mutation.py` | `tests/legacy/` |
