@@ -96,7 +96,7 @@ restructure.
 | `replay_run_f_sol` | the published gpt-5.6-sol run, 1,000 executions, replayed |
 | `tool_verify_run_seal` | `verify_run_seal.py` on the four published runs |
 | `tool_verify_run_seal_usage` | `verify_run_seal.py` with no arguments |
-| `tool_generate_findings` | `generate_findings.py`; its output equals the committed `FINDINGS.md` |
+| `tool_generate_findings` | `generate_findings.py`; its output equals the committed `findings/FINDINGS.md` |
 | `smoke_no_api_key` | `python -m ap1_run.run` with no key: instructions, exit 1 |
 | `smoke_test_shim_no_api_key` | the root `smoke_test.py` shim with no key: the same golden output as `smoke_no_api_key` |
 
