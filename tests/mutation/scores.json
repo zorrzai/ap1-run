@@ -1,1 +1,18 @@
-{}
+{
+  "scoring/provenance/provenance": {
+    "killed": 417,
+    "mutants": 417,
+    "score": 1.0
+  },
+  "scoring/provenance/provenance_audit": {
+    "killed": 51,
+    "mutants": 51,
+    "score": 1.0
+  },
+  "scoring/provenance/provenance_classify": {
+    "killed": 226,
+    "mutants": 253,
+    "notes": "All 27 survivors are equivalent mutants. 23 are in classify_item's dead code: is_chained is computed but never used, and the 'if not intermediates and derivable: pass' block does nothing; any_originated=None behaves as False. The other 4 change a default that behaves the same: quantisation {} vs None (both skip quantisation), and arguments '{}' vs None or an invalid string (all give no expression).",
+    "score": 0.8933
+  }
+}
