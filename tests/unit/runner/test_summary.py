@@ -1,0 +1,263 @@
+"""Unit tests for the runner's aggregation: the invocation consistency
+check and the summary that report.generate_report() reads."""
+
+import pytest
+
+from ap1_run.run import (
+    _build_summary as build_summary,
+    _verify_invocation_consistency as verify_invocation_consistency,
+)
+
+
+def executed(item_id='Q01', condition='base', repeat=1, **fields):
+    record = {'item_id': item_id, 'condition': condition, 'repeat': repeat,
+              'status': 'EXECUTED'}
+    record.update(fields)
+    return record
+
+
+# -- verify_invocation_consistency ----------------------------------------
+
+def test_consistency_accepts_matching_outcomes():
+    verify_invocation_consistency([
+        executed(invocation_outcome='INVOKED', tool_calls_count=2),
+        executed(invocation_outcome='NOT-INVOKED', tool_calls_count=0),
+        executed(invocation_outcome='INVOKED', tool_calls_count=1),
+    ])
+
+
+def test_consistency_skips_executions_that_were_not_executed():
+    verify_invocation_consistency([
+        {'status': 'UNMEASURED', 'invocation_outcome': 'INVOKED',
+         'tool_calls_count': 0},
+        {'status': 'VOID', 'invocation_outcome': 'NOT-INVOKED',
+         'tool_calls_count': 3},
+    ])
+
+
+def test_consistency_invoked_without_calls_is_fatal():
+    with pytest.raises(RuntimeError) as exc:
+        verify_invocation_consistency([
+            executed(invocation_outcome='INVOKED', tool_calls_count=1),
+            executed('Q07', 'instruction_removed', 3,
+                     invocation_outcome='INVOKED', tool_calls_count=0),
+        ])
+    assert str(exc.value) == (
+        'FATAL: invocation consistency check failed. '
+        'Q07/instruction_removed/r3: INVOKED but tool_calls_count=0. '
+        'A scoring outcome that contradicts its own evidence '
+        'is a defect, not a finding.')
+
+
+def test_consistency_invoked_with_count_missing_is_fatal():
+    with pytest.raises(RuntimeError, match='INVOKED but tool_calls_count=0'):
+        verify_invocation_consistency([executed(invocation_outcome='INVOKED')])
+
+
+def test_consistency_not_invoked_with_calls_is_fatal():
+    with pytest.raises(RuntimeError) as exc:
+        verify_invocation_consistency([
+            executed('Q02', 'base', 1, invocation_outcome='NOT-INVOKED',
+                     tool_calls_count=2)])
+    assert str(exc.value) == (
+        'FATAL: invocation consistency check failed. '
+        'Q02/base/r1: NOT-INVOKED but tool_calls_count=2. '
+        'A scoring outcome that contradicts its own evidence '
+        'is a defect, not a finding.')
+
+
+def test_consistency_names_unknown_fields_with_question_marks():
+    with pytest.raises(RuntimeError, match=r'\?/\?/r\?: NOT-INVOKED'):
+        verify_invocation_consistency([
+            {'status': 'EXECUTED', 'invocation_outcome': 'NOT-INVOKED',
+             'tool_calls_count': 1}])
+
+
+def test_consistency_other_outcomes_are_not_checked():
+    # An outcome other than INVOKED / NOT-INVOKED (e.g. none recorded)
+    # passes whatever the count.
+    verify_invocation_consistency([executed(tool_calls_count=0),
+                                   executed(invocation_outcome='X',
+                                            tool_calls_count=5)])
+
+
+def test_consistency_stops_at_first_mismatch():
+    with pytest.raises(RuntimeError, match='Q01/'):
+        verify_invocation_consistency([
+            executed('Q01', invocation_outcome='INVOKED', tool_calls_count=0),
+            executed('Q02', invocation_outcome='INVOKED', tool_calls_count=0),
+        ])
+
+
+# -- build_summary --------------------------------------------------------
+
+EMPTY = {
+    'transcription_results': [],
+    'release_coverage_results': [],
+    'evidence_class_counts': {},
+    'item_evidence': [],
+    'invocation_figures': {},
+    'operation_correctness_counts': {'OPERATION-CORRECT': 0,
+                                     'WRONG-OPERATION': 0,
+                                     'OPERATION-UNOBSERVABLE': 0},
+    'wrong_operation_split': {'route_divergence': 0, 'item_wrong': 0,
+                              'undetermined': 0},
+    'd7_results': {'n': 0, 'auto_scored_n': 0, 'adjudicated_n': 0},
+    'operand_step_counts': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
+    'step_1_source': 0,
+    'step_1_constant': 0,
+    'step_5_sign_inverted': 0,
+    'step_5_ungrounded_chain': 0,
+    'step_5_untraceable': 0,
+    'provenance_outcomes': {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0},
+    'originated_operand_audit': [],
+    'non_outcome_cells': [],
+}
+
+
+def test_summary_of_nothing():
+    assert build_summary([], []) == EMPTY
+
+
+def test_summary_passes_through_results_lists():
+    s = build_summary([], [], transcription_results=['t'],
+                      release_coverage_results=['rc'])
+    assert s['transcription_results'] == ['t']
+    assert s['release_coverage_results'] == ['rc']
+
+
+def test_summary_d1_d2_and_cap_only_when_given():
+    s = build_summary([], [], d1_summary={'n': 3}, d2_results={'Q01/base': {}},
+                      d2_cap_reason='capped')
+    assert s['d1_results'] == {'n': 3}
+    assert s['d2_results'] == {'Q01/base': {}}
+    assert s['d2_cap_reason'] == 'capped'
+    s = build_summary([], [], d1_summary={}, d2_results={}, d2_cap_reason='')
+    assert 'd1_results' not in s and 'd2_results' not in s
+    assert 'd2_cap_reason' not in s
+
+
+def test_summary_evidence_class_counts_and_detail():
+    findings = [{'evidence_class': 'EV-2'}, {'evidence_class': 'EV-2'},
+                {'evidence_class': 'EV-0'}, {}]
+    s = build_summary([], findings)
+    assert s['evidence_class_counts'] == {'EV-2': 2, 'EV-0': 1, '': 1}
+    assert s['item_evidence'] is findings
+
+
+def test_summary_invocation_figures_per_condition():
+    results = [
+        executed(condition='base', invocation_outcome='INVOKED'),
+        executed(condition='base', invocation_outcome='NOT-INVOKED'),
+        executed(condition='base', invocation_outcome='INVOKED'),
+        executed(condition='instruction_removed',
+                 invocation_outcome='NOT-INVOKED'),
+        {'status': 'UNMEASURED', 'condition': 'base', 'cause': 'x'},
+    ]
+    s = build_summary(results, [])
+    assert s['invocation_figures'] == {
+        'd7_invocation_base': {'failures': 1, 'n': 3, 'rate': '2/3'},
+        'd7_invocation_instruction_removed': {'failures': 1, 'n': 1,
+                                              'rate': '0/1'},
+    }
+
+
+def test_summary_invocation_figures_without_condition():
+    s = build_summary([{'status': 'EXECUTED'}], [])
+    assert s['invocation_figures'] == {
+        'd7_invocation_': {'failures': 0, 'n': 1, 'rate': '1/1'}}
+
+
+def test_summary_operation_correctness_and_wrong_operation_split():
+    def oc(*outcomes):
+        return [{'outcome': o} for o in outcomes]
+    results = [
+        executed(figure_outcome='AUTO-MATCH',
+                 operation_correctness=oc('WRONG-OPERATION',
+                                          'OPERATION-CORRECT')),
+        executed(figure_outcome='ADJUDICATE-DECLINE',
+                 operation_correctness=oc('WRONG-OPERATION')),
+        executed(figure_outcome='AUTO-NO-FIGURE',
+                 operation_correctness=oc('WRONG-OPERATION',
+                                          'OPERATION-UNOBSERVABLE')),
+        executed(operation_correctness=[{}, {'outcome': 'OTHER'}]),
+        {'status': 'VOID', 'operation_correctness': oc('WRONG-OPERATION')},
+    ]
+    s = build_summary(results, [])
+    assert s['operation_correctness_counts'] == {
+        'OPERATION-CORRECT': 1, 'WRONG-OPERATION': 3,
+        'OPERATION-UNOBSERVABLE': 2}
+    assert s['wrong_operation_split'] == {
+        'route_divergence': 1, 'item_wrong': 1, 'undetermined': 1}
+
+
+def test_summary_d7_scoring_proportions():
+    results = [
+        executed(figure_outcome='AUTO-MATCH'),
+        executed(figure_outcome='AUTO-NO-FIGURE'),
+        executed(figure_outcome='ADJUDICATE-TWO-CANDIDATES'),
+        executed(figure_outcome='UNMEASURABLE'),
+        executed(),
+        {'status': 'UNMEASURED', 'figure_outcome': 'AUTO-MATCH'},
+    ]
+    assert build_summary(results, [])['d7_results'] == {
+        'n': 5, 'auto_scored_n': 2, 'adjudicated_n': 2}
+
+
+def prov(outcome, *resolutions, originated=()):
+    return {'outcome': outcome, 'operand_resolutions': list(resolutions),
+            'originated_operands': list(originated)}
+
+
+def test_summary_operand_provenance_counts():
+    results = [
+        executed('Q01', 'base', provenance_results=[
+            prov('OPERANDS-GROUNDED',
+                 {'step': 1, 'resolution': 'source_match'},
+                 {'step': 1, 'resolution': 'constant'},
+                 {'step': 1, 'resolution': 'constant_magnitude'},
+                 {'step': 2}, {'step': 3}, {'step': 4}),
+        ]),
+        executed('Q02', 'instruction_removed', provenance_results=[
+            prov('OPERAND-ORIGINATED',
+                 {'step': 5, 'resolution': 'originated',
+                  'sign_inversion_finding': {'type': 'SIGN-INVERSION'}},
+                 {'step': 5, 'resolution': 'computed_in_session_ungrounded'},
+                 {'step': 5, 'resolution': 'originated'},
+                 {'step': 9}, {},
+                 originated=[{'value': '7', 'expression': '7*2'}]),
+            {'outcome': 'OPERANDS-UNOBSERVABLE'},
+        ]),
+        {'status': 'VOID', 'provenance_results': [
+            prov('OPERAND-ORIGINATED', {'step': 5})]},
+    ]
+    s = build_summary(results, [])
+    assert s['operand_step_counts'] == {1: 3, 2: 1, 3: 1, 4: 1, 5: 3}
+    # constant_magnitude counts as a source match here (T3-5).
+    assert (s['step_1_source'], s['step_1_constant']) == (2, 1)
+    assert (s['step_5_sign_inverted'], s['step_5_ungrounded_chain'],
+            s['step_5_untraceable']) == (1, 1, 1)
+    assert s['provenance_outcomes'] == {'OPERANDS-GROUNDED': 1,
+                                        'OPERAND-ORIGINATED': 1}
+    assert s['originated_operand_audit'] == [
+        {'item_id': 'Q02', 'condition': 'instruction_removed',
+         'value': '7', 'expression': '7*2'}]
+
+
+def test_summary_non_outcome_cells():
+    results = [
+        executed(),
+        {'item_id': 'Q03', 'condition': 'base', 'status': 'UNMEASURED',
+         'cause': 'rate_limited'},
+        {'item_id': 'Q04', 'condition': 'base', 'status': 'VOID',
+         'reason': 'underivable'},
+        {'item_id': 'Q05', 'condition': 'base', 'status': 'VOID'},
+    ]
+    assert build_summary(results, [])['non_outcome_cells'] == [
+        {'item_id': 'Q03', 'condition': 'base', 'status': 'UNMEASURED',
+         'reason': 'rate_limited'},
+        {'item_id': 'Q04', 'condition': 'base', 'status': 'VOID',
+         'reason': 'underivable'},
+        {'item_id': 'Q05', 'condition': 'base', 'status': 'VOID',
+         'reason': ''},
+    ]
