@@ -55,7 +55,6 @@ from ap1_run.execution.context import build_delivered_context, check_lookup_coll
 from ap1_run.execution.engine import execute_item
 from ap1_run.execution.evidence import EV_0, EV_2
 from ap1_run.scoring.accuracy import summarise_accuracy
-from ap1_run.execution.perturbation_guard import check_single_variable_perturbation
 from ap1_run.execution.seal import seal as create_seal
 from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.credentials import get_api_key
@@ -64,6 +63,9 @@ from ap1_run.runner.executions import (
     score_execution,
 )
 from ap1_run.runner.outputs import write_outputs
+from ap1_run.runner.settings import (
+    apply_sampling_overrides, check_condition_guard, endpoint_and_model,
+)
 from ap1_run.runner.summary import (
     build_summary, classify_reproducibility, find_d2_cap,
     verify_invocation_consistency,
@@ -80,9 +82,7 @@ def main():
     key_length = len(api_key)
 
     # Endpoint and model are not secrets -- read from env or defaults
-    endpoint = os.environ.get('AP1_SMOKE_ENDPOINT',
-                              'https://api.openai.com/v1/chat/completions')
-    model = os.environ.get('AP1_SMOKE_MODEL', 'gpt-4o-mini')
+    endpoint, model = endpoint_and_model()
 
     print(f'Endpoint: {endpoint}')
     print(f'Model: {model}')
@@ -100,52 +100,8 @@ def main():
     config['endpoint_url'] = endpoint
     config['model'] = model
 
-    # -- Sampling override: AP1_SMOKE_TEMPERATURE --
-    # gpt-5.6-sol rejects temperature=0 with HTTP 400 (verified 2026-09-07).
-    # Its error says: "Only the default (1) value is supported."
-    # gpt-4.1-mini accepts temperature=0 and temperature=1 (verified 2026-09-07).
-    #
-    # To keep both arms at the same temperature (1), the operator sets
-    # AP1_SMOKE_TEMPERATURE=1 for mini. For sol, the env var is not set
-    # and the structured omission (platform-rejected) is kept.
-    #
-    # This is a declared env-var override, not a model-name heuristic.
-    # The resolved config in report.md §2 records what was actually sent.
-    temp_override = os.environ.get('AP1_SMOKE_TEMPERATURE')
-    if temp_override is not None:
-        config['sampling']['temperature'] = temp_override
-        print(f'  temperature={temp_override} '
-              f'(AP1_SMOKE_TEMPERATURE override)')
-    else:
-        temp_val = config.get('sampling', {}).get('temperature')
-        if isinstance(temp_val, dict) and temp_val.get('value') == 'omitted':
-            print(f'  temperature omitted '
-                  f'(reason: {temp_val.get("reason", "?")})')
-        else:
-            print(f'  temperature={temp_val}')
-
-    # -- Sampling override: AP1_SMOKE_REASONING_EFFORT --
-    # gpt-4.1-mini does not support reasoning_effort (HTTP 400:
-    #   "Unrecognized request argument supplied: reasoning_effort").
-    # gpt-5.6-sol requires it and accepts "none" for tool use.
-    #
-    # For mini: set AP1_SMOKE_REASONING_EFFORT=omit to remove it.
-    # For sol:  leave unset, config value "none" is sent.
-    re_override = os.environ.get('AP1_SMOKE_REASONING_EFFORT')
-    if re_override == 'omit':
-        config['sampling']['reasoning_effort'] = {
-            'value': 'omitted',
-            'reason': 'not-supported',
-            'detail': 'gpt-4.1-mini does not recognize reasoning_effort',
-        }
-        print('  reasoning_effort omitted (AP1_SMOKE_REASONING_EFFORT=omit)')
-    elif re_override is not None:
-        config['sampling']['reasoning_effort'] = re_override
-        print(f'  reasoning_effort={re_override} '
-              f'(AP1_SMOKE_REASONING_EFFORT override)')
-    else:
-        re_val = config.get('sampling', {}).get('reasoning_effort')
-        print(f'  reasoning_effort={re_val} (from config)')
+    # -- Sampling overrides: AP1_SMOKE_TEMPERATURE, AP1_SMOKE_REASONING_EFFORT --
+    apply_sampling_overrides(config)
 
     with open(os.path.join(example_dir, 'fixture.json'), 'r', encoding='utf-8') as f:
         fixture = json.load(f)
@@ -237,22 +193,9 @@ def main():
             timeout=timeout)
 
     # -- Perturbation guard (R1.2): refuse run if more than system prompt differs --
-    import hashlib as _hashlib
-    _fixture_bytes = open(os.path.join(example_dir, 'fixture.json'), 'rb').read()
-    _fixture_hash = _hashlib.sha256(_fixture_bytes).hexdigest()
-    _base_guard = {
-        'system_prompt': system_prompt_base,
-        'tools': tools,
-        'tool_choice': config.get('tool_choice'),
-        'sampling': sampling,
-        'fixture_hash': _fixture_hash,
-        'message_template': config.get('message_template'),
-    }
-    _removed_guard = dict(_base_guard)
-    _removed_guard['system_prompt'] = system_prompt_removed
-    check_single_variable_perturbation(_base_guard, _removed_guard)
-    print('Perturbation guard: PASSED (single-variable: system_prompt only)')
-    print()
+    check_condition_guard(config, os.path.join(example_dir, 'fixture.json'),
+                          system_prompt_base, system_prompt_removed, tools,
+                          sampling)
 
     # -- Collector for all findings --
     findings = Findings()
