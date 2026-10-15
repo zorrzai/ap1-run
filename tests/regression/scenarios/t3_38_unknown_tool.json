@@ -3,7 +3,7 @@
   "seal_attempts": 1,
   "seal_records": 1,
   "sealed_outputs": ["smoke_run.jsonl"],
-  "exercises": ["T3-38", "unknown tool", "_verify_invocation_consistency"],
+  "exercises": ["T3-38", "unknown tool", "runner.summary.verify_invocation_consistency"],
   "extends": "clean",
   "config": {"repeat_count": "1"},
   "responses": {
