@@ -1,8 +1,9 @@
 """Cross-platform canonical hash verification.
 
 Run by CI on ubuntu-latest, macos-latest, windows-latest.
-Produces hash_digest.txt with a deterministic digest from known inputs.
-CI compares the three digests -- they must be identical.
+Computes a deterministic digest from known inputs and checks it against
+EXPECTED_DIGEST, so every platform must produce the same digest. Also
+writes it to hash_digest.txt (not tracked).
 """
 
 import sys
@@ -16,6 +17,11 @@ if hasattr(sys.stdout, 'reconfigure'):
 
 from decimal import Decimal
 from ap1_run.foundation.numeric import canonical_hash, canonical_json
+
+# The digest of test_obj below, as committed in hash_digest.txt until that
+# file stopped being tracked.
+EXPECTED_DIGEST = (
+    '831709b2231846ed20fd63ff0bc0764d73cee50db271f733e6a2f1c377c7cff3')
 
 
 def main():
@@ -39,7 +45,11 @@ def main():
     print(f'Canonical JSON: {json_text}')
     print(f'SHA-256 digest: {digest}')
 
-    # Write digest to file for CI comparison
+    # Same digest on every platform (explicit checks: python -O drops asserts)
+    if digest != EXPECTED_DIGEST:
+        return fail(f'digest {digest} != pinned {EXPECTED_DIGEST}')
+
+    # Write digest to file (not tracked; kept for inspection)
     digest_path = os.path.join(
         os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
         'hash_digest.txt')
@@ -47,8 +57,8 @@ def main():
         f.write(digest)
 
     # Self-check: same input produces same hash
-    digest2 = canonical_hash(test_obj)
-    assert digest == digest2, f'Non-deterministic: {digest} != {digest2}'
+    if (digest2 := canonical_hash(test_obj)) != digest:
+        return fail(f'non-deterministic: {digest} != {digest2}')
 
     # Self-check: key order does not matter
     reordered = {
@@ -62,11 +72,16 @@ def main():
         'decimal_value': Decimal('274.1375'),
         'a_first': 'should sort first',
     }
-    digest3 = canonical_hash(reordered)
-    assert digest == digest3, f'Key-order sensitive: {digest} != {digest3}'
+    if (digest3 := canonical_hash(reordered)) != digest:
+        return fail(f'key-order sensitive: {digest} != {digest3}')
 
     print('PASS: all hash checks passed')
     return 0
+
+
+def fail(message):
+    print(f'FAIL: {message}')
+    return 1
 
 
 if __name__ == '__main__':
