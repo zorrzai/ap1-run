@@ -60,14 +60,16 @@ from ap1_run.scoring.accuracy import score_accuracy, summarise_accuracy
 from ap1_run.scoring.transcription import check_transcription
 from ap1_run.scoring.release_coverage import check_release_coverage
 from ap1_run.execution.perturbation_guard import check_single_variable_perturbation
-from ap1_run.scoring.reproducibility import classify_mechanism
 from ap1_run.foundation.numeric import extract_numeric_tokens
 from ap1_run.execution.seal import seal as create_seal
 from ap1_run.foundation import transcript
 from ap1_run.reporting import report
 from ap1_run.reporting import adjudication
 from ap1_run.runner.credentials import get_api_key
-from ap1_run.runner.summary import build_summary, verify_invocation_consistency
+from ap1_run.runner.summary import (
+    build_summary, classify_reproducibility, find_d2_cap,
+    verify_invocation_consistency,
+)
 
 
 def main():
@@ -662,40 +664,9 @@ def main():
     d1_summary['n'] = len(all_accuracy_results)
 
     # -- D2 classification per (item, condition) per surface --
-    d2_results = {}
-    sampling_cfg = config.get('sampling', {})
-    # D2.2 cap: if any sampling parameter was platform-rejected,
-    # mechanism class is capped at OBSERVED-ONLY.
-    # The config encodes omissions inside the sampling block:
-    # {"temperature": {"value": "omitted", "reason": "platform-rejected", ...}}
-    d2_cap_reason = None
-    for param_name, param_val in sampling_cfg.items():
-        if not isinstance(param_val, dict):
-            continue
-        reason = param_val.get('reason', '')
-        if 'platform-rejected' in reason.lower() or \
-                'platform-unsupported' in reason.lower():
-            detail = param_val.get('detail', reason)
-            d2_cap_reason = (
-                f'D2.2 cap: {param_name} was {reason}. '
-                f'Detail: {detail}')
-            break
-
-    for (item_id, cond), responses in d2_responses.items():
-        key = f'{item_id}/{cond}'
-        d2_results[key] = {}
-        for surface in ('figures', 'prose'):
-            mech = classify_mechanism(
-                responses,
-                surface=surface,
-                minimum_runs=repeat_count,
-                operator_declared=None,
-            )
-            # D2.2 cap: platform-rejected -> cap at OBSERVED-ONLY
-            if d2_cap_reason and mech['mechanism'] not in ('UNMEASURED',):
-                mech['mechanism'] = 'OBSERVED-ONLY'
-                mech['d2_cap'] = d2_cap_reason
-            d2_results[key][surface] = mech
+    d2_cap_reason = find_d2_cap(config.get('sampling', {}))
+    d2_results = classify_reproducibility(d2_responses, repeat_count,
+                                          d2_cap_reason)
 
     summary = build_summary(
         all_results, evidence_findings,

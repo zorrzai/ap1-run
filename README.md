@@ -341,7 +341,7 @@ src/ap1_run/
   run.py                     drives a live endpoint (was smoke_test.py)
   runner/                    the parts run.py drives
     credentials.py           the API key: environment, or Windows Credential Manager
-    summary.py               invocation consistency check; the summary report.py reads
+    summary.py               invocation consistency check, D2 per item, the summary report.py reads
   foundation/                SPEC Layer 0
     config.py                configuration; refuses defaults that affect a result
     adapter.py               HTTP transport; records the request as sent
