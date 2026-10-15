@@ -10,7 +10,7 @@ Classification: DETERMINISTIC.
 import json
 from decimal import Decimal, InvalidOperation
 
-from ap1_run.scoring.provenance.provenance import (
+from ap1_run.scoring.provenance.trace import (
     extract_operands, resolve_operand, _collect_constants,
 )
 

@@ -1,9 +1,9 @@
-"""Unit tests for scoring/provenance/provenance_audit.py: the
+"""Unit tests for scoring/provenance/audit.py: the
 originated-operand listing in the report (R2.4)."""
 
 import pytest
 
-from ap1_run.scoring.provenance.provenance_audit import build_audit_listing
+from ap1_run.scoring.provenance.audit import build_audit_listing
 
 NO_MATCH = 'no source, transformed source, or intermediate matched'
 

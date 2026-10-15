@@ -1,4 +1,4 @@
-"""Unit tests for scoring/provenance/provenance_classify.py: provenance
+"""Unit tests for scoring/provenance/classify.py: provenance
 of one invocation, of an item, and of a sequence of calls (D7.2(a))."""
 
 import json
@@ -6,7 +6,7 @@ from decimal import Decimal
 
 import pytest
 
-from ap1_run.scoring.provenance.provenance_classify import (
+from ap1_run.scoring.provenance.classify import (
     _extract_expression, _parse_return_value, classify_invocation,
     classify_invocations_sequential, classify_item,
 )

@@ -1,11 +1,11 @@
-"""Unit tests for scoring/provenance/provenance.py: operand extraction and
+"""Unit tests for scoring/provenance/trace.py: operand extraction and
 the five-step resolution of one operand (D7.2(a), R2.4)."""
 
 from decimal import Decimal, InvalidOperation
 
 import pytest
 
-from ap1_run.scoring.provenance.provenance import (
+from ap1_run.scoring.provenance.trace import (
     STRUCTURAL_CONSTANTS, TRANSFORMATIONS, _collect_constants,
     extract_operands, resolve_operand,
 )

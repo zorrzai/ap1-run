@@ -27,7 +27,7 @@ def inspect_tc_to_runner(tc, *, turn=1, return_value=None):
         return_value: str or None -- the tool return text extracted
             via ChatMessageTool.text (which handles both str and
             list[Content]).  Must be a JSON string parseable by
-            provenance_classify._parse_return_value.  Matches the
+            provenance.classify._parse_return_value.  Matches the
             shape engine.py attaches at L217.
 
     Returns:
@@ -66,7 +66,7 @@ def inspect_tc_to_runner(tc, *, turn=1, return_value=None):
             raise ShimError(
                 'return_value is not valid JSON: '
                 + repr(return_value)
-                + '; provenance_classify._parse_return_value will '
+                + '; provenance.classify._parse_return_value will '
                 + 'fail: ' + str(e)
             ) from e
         record['return_value'] = return_value

@@ -214,9 +214,9 @@ def test_d7_2a_operand_admissibility():
     (i) Source value, (ii) Transformed source, (iii) Reference
     intermediate.'
 
-    IMPLEMENTED: provenance.py resolve_operand.
+    IMPLEMENTED: provenance/trace.py resolve_operand.
     """
-    from ap1_run.scoring.provenance.provenance import resolve_operand
+    from ap1_run.scoring.provenance.trace import resolve_operand
     ctx = {'acct1': {'balance': '15200'}}
     intermediates = [{'label': 'net', 'value': Decimal('1000')}]
     constants = set()
@@ -242,7 +242,7 @@ def test_d7_2a_operand_admissibility():
           f'expected step 5, got {res["step"]}')
 
     # Step 1 declared constant: resolves at step 1 with resolution 'constant'
-    from ap1_run.scoring.provenance.provenance import STRUCTURAL_CONSTANTS
+    from ap1_run.scoring.provenance.trace import STRUCTURAL_CONSTANTS
     const_set = set(STRUCTURAL_CONSTANTS) | constants
     res = resolve_operand(Decimal('1'), ctx, intermediates,
                           const_set, transforms, quant)
@@ -278,11 +278,11 @@ def test_d7_2a_iv_computed_in_session():
     prior invocation was itself operands-grounded.'
 
     FINDING: SPEC.md §10 marks this as NOT BUILT, but
-    classify_invocations_sequential EXISTS in provenance_classify.py
+    classify_invocations_sequential EXISTS in provenance/classify.py
     and is tested by verify_r41.py B25-B30. The conformance table is
     stale — this is a SPECIFICATION DEFECT.
     """
-    from ap1_run.scoring.provenance.provenance_classify import classify_invocations_sequential
+    from ap1_run.scoring.provenance.classify import classify_invocations_sequential
     ctx = {'acct1': {'balance': '100'}}
     gt = {'intermediates': []}
     config = {
@@ -813,7 +813,7 @@ def test_conformance_table_consistency():
     # D7.2(a)(iv): must be marked IMPLEMENTED
     has_sequential = True
     try:
-        from ap1_run.scoring.provenance.provenance_classify import classify_invocations_sequential
+        from ap1_run.scoring.provenance.classify import classify_invocations_sequential
     except ImportError:
         has_sequential = False
 

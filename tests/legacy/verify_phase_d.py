@@ -31,14 +31,14 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
                                 'example'))
 
 from decimal import Decimal
-from ap1_run.scoring.provenance.provenance import (
+from ap1_run.scoring.provenance.trace import (
     extract_operands, resolve_operand, TRANSFORMATIONS,
 )
-from ap1_run.scoring.provenance.provenance_classify import (
+from ap1_run.scoring.provenance.classify import (
     classify_invocation, classify_item,
     classify_invocations_sequential,
 )
-from ap1_run.scoring.provenance.provenance_audit import build_audit_listing
+from ap1_run.scoring.provenance.audit import build_audit_listing
 from ap1_run.execution.context import build_delivered_context, TrackingContext
 from ap1_run.execution.seal import perturbation_check, source_fields_check, SealError
 

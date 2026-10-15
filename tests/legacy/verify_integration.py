@@ -632,7 +632,7 @@ def test_live_path_calls_every_scorer():
         prov = result.get('provenance_results', [])
         assert len(prov) > 0, \
             'FAIL: provenance_results is empty — ' \
-            'provenance_classify not reached from engine.py'
+            'provenance.classify not reached from engine.py'
 
         # Assert provenance has operand_resolutions with step data
         has_steps = any(
