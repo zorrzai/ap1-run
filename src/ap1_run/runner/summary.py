@@ -1,9 +1,12 @@
 """The live runner's aggregation of per-execution results.
 
 verify_invocation_consistency refuses a run whose invocation outcomes
-contradict their own evidence; build_summary assembles the summary that
+contradict their own evidence; find_d2_cap and classify_reproducibility
+give D2 per item and condition; build_summary assembles the summary that
 report.generate_report() reads.
 """
+
+from ap1_run.scoring.reproducibility import classify_mechanism
 
 
 def verify_invocation_consistency(results):
@@ -38,6 +41,55 @@ def verify_invocation_consistency(results):
                 f'NOT-INVOKED but tool_calls_count={tc_count}. '
                 f'A scoring outcome that contradicts its own evidence '
                 f'is a defect, not a finding.')
+
+
+def find_d2_cap(sampling):
+    """The D2.2 cap reason, or None.
+
+    If any sampling parameter was platform-rejected, the mechanism class
+    is capped at OBSERVED-ONLY. The config encodes omissions inside the
+    sampling block:
+    {"temperature": {"value": "omitted", "reason": "platform-rejected", ...}}
+    The first such parameter gives the reason.
+    """
+    d2_cap_reason = None
+    for param_name, param_val in sampling.items():
+        if not isinstance(param_val, dict):
+            continue
+        reason = param_val.get('reason', '')
+        if 'platform-rejected' in reason.lower() or \
+                'platform-unsupported' in reason.lower():
+            detail = param_val.get('detail', reason)
+            d2_cap_reason = (
+                f'D2.2 cap: {param_name} was {reason}. '
+                f'Detail: {detail}')
+            break
+    return d2_cap_reason
+
+
+def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason):
+    """D2 mechanism class per (item, condition) and per surface.
+
+    d2_responses maps (item_id, condition) to the responses of its
+    repeats. Returns {'<item_id>/<condition>': {surface: mechanism}}.
+    """
+    d2_results = {}
+    for (item_id, cond), responses in d2_responses.items():
+        key = f'{item_id}/{cond}'
+        d2_results[key] = {}
+        for surface in ('figures', 'prose'):
+            mech = classify_mechanism(
+                responses,
+                surface=surface,
+                minimum_runs=repeat_count,
+                operator_declared=None,
+            )
+            # D2.2 cap: platform-rejected -> cap at OBSERVED-ONLY
+            if d2_cap_reason and mech['mechanism'] not in ('UNMEASURED',):
+                mech['mechanism'] = 'OBSERVED-ONLY'
+                mech['d2_cap'] = d2_cap_reason
+            d2_results[key][surface] = mech
+    return d2_results
 
 
 def build_summary(all_results, evidence_findings, *,

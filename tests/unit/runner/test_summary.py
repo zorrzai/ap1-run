@@ -3,8 +3,10 @@ check and the summary that report.generate_report() reads."""
 
 import pytest
 
+from ap1_run.runner import summary as summary_module
 from ap1_run.runner.summary import (
-    build_summary, verify_invocation_consistency,
+    build_summary, classify_reproducibility, find_d2_cap,
+    verify_invocation_consistency,
 )
 
 
@@ -320,3 +322,96 @@ def test_summary_counts_accumulate_after_non_executed_rows():
             s['step_5_untraceable']) == (2, 3, 2)
     assert s['d7_results'] == {'n': 9, 'auto_scored_n': 3,
                                'adjudicated_n': 2}
+
+
+# -- find_d2_cap ----------------------------------------------------------
+
+def omitted(reason, **extra):
+    return dict({'value': 'omitted', 'reason': reason}, **extra)
+
+
+@pytest.mark.req('D2.2')
+def test_d2_cap_platform_rejected_parameter():
+    sampling = {'temperature': omitted('platform-rejected',
+                                       detail='only the default (1)')}
+    assert find_d2_cap(sampling) == (
+        'D2.2 cap: temperature was platform-rejected. '
+        'Detail: only the default (1)')
+
+
+def test_d2_cap_platform_unsupported_any_case_without_detail():
+    sampling = {'seed': omitted('Platform-Unsupported')}
+    assert find_d2_cap(sampling) == (
+        'D2.2 cap: seed was Platform-Unsupported. '
+        'Detail: Platform-Unsupported')
+
+
+def test_d2_cap_none_for_values_and_other_omission_reasons():
+    sampling = {'temperature': 0, 'top_p': '1',
+                'reasoning_effort': omitted('not-supported', detail='x'),
+                'seed': {'value': 'omitted'}}
+    assert find_d2_cap(sampling) is None
+    assert find_d2_cap({}) is None
+
+
+def test_d2_cap_first_capping_parameter_wins():
+    sampling = {'top_p': 1,
+                'temperature': omitted('platform-rejected', detail='a'),
+                'seed': omitted('platform-rejected', detail='b')}
+    assert find_d2_cap(sampling).startswith('D2.2 cap: temperature ')
+
+
+# -- classify_reproducibility ---------------------------------------------
+
+@pytest.fixture
+def fake_mechanism(monkeypatch):
+    calls = []
+
+    def classify(responses, *, surface, minimum_runs, operator_declared=None):
+        calls.append((list(responses), surface, minimum_runs,
+                      operator_declared))
+        mechanism = responses[0] if responses else 'UNMEASURED'
+        return {'mechanism': mechanism, 'surface': surface}
+    monkeypatch.setattr(summary_module, 'classify_mechanism', classify)
+    return calls
+
+
+@pytest.mark.req('D2')
+def test_reproducibility_per_item_condition_and_surface(fake_mechanism):
+    d2 = {('Q01', 'base'): ['STRUCTURAL', 'r2'],
+          ('Q01', 'instruction_removed'): []}
+    assert classify_reproducibility(d2, 3, None) == {
+        'Q01/base': {
+            'figures': {'mechanism': 'STRUCTURAL', 'surface': 'figures'},
+            'prose': {'mechanism': 'STRUCTURAL', 'surface': 'prose'}},
+        'Q01/instruction_removed': {
+            'figures': {'mechanism': 'UNMEASURED', 'surface': 'figures'},
+            'prose': {'mechanism': 'UNMEASURED', 'surface': 'prose'}},
+    }
+    assert fake_mechanism == [
+        (['STRUCTURAL', 'r2'], 'figures', 3, None),
+        (['STRUCTURAL', 'r2'], 'prose', 3, None),
+        ([], 'figures', 3, None),
+        ([], 'prose', 3, None),
+    ]
+
+
+@pytest.mark.req('D2.2')
+def test_reproducibility_cap_lowers_measured_classes_only(fake_mechanism):
+    d2 = {('Q01', 'base'): ['CONFIGURED'], ('Q02', 'base'): []}
+    result = classify_reproducibility(d2, 1, 'D2.2 cap: why')
+    assert result['Q01/base']['figures'] == {
+        'mechanism': 'OBSERVED-ONLY', 'surface': 'figures',
+        'd2_cap': 'D2.2 cap: why'}
+    assert result['Q02/base']['prose'] == {'mechanism': 'UNMEASURED',
+                                           'surface': 'prose'}
+
+
+def test_reproducibility_with_the_real_classifier_below_minimum():
+    result = classify_reproducibility({('Q01', 'base'): []}, 3, 'cap')
+    assert result['Q01/base']['figures']['mechanism'] == 'UNMEASURED'
+    assert 'd2_cap' not in result['Q01/base']['figures']
+
+
+def test_reproducibility_of_nothing():
+    assert classify_reproducibility({}, 3, None) == {}
