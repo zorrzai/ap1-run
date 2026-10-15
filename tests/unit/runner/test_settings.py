@@ -9,7 +9,7 @@ from ap1_run.execution.perturbation_guard import PerturbationRefusal
 from ap1_run.runner import settings
 from ap1_run.runner.settings import (
     DEFAULT_ENDPOINT, DEFAULT_MODEL, apply_sampling_overrides,
-    check_condition_guard, endpoint_and_model,
+    check_condition_guard, endpoint_and_model, parse_args,
 )
 
 
@@ -161,3 +161,76 @@ def test_guard_refusal_propagates_and_prints_nothing(fixture_file, capsys,
     with pytest.raises(PerturbationRefusal, match='tools differ'):
         check_condition_guard({}, fixture_file, 'A', 'B', [], {})
     assert capsys.readouterr().out == ''
+
+
+# -- parse_args -----------------------------------------------------------
+
+BASE = '/repo'
+
+
+def test_parse_args_defaults_are_the_fixed_paths():
+    args = parse_args([], BASE)
+    assert vars(args) == {
+        'config': '/repo/example/config.json',
+        'fixture_dir': '/repo/example',
+        'output_dir': '/repo/output',
+        'ap1_text': '/repo/reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md',
+    }
+
+
+def test_parse_args_absolute_paths_kept():
+    args = parse_args(['--config', '/a/c.json', '--fixture-dir', '/b',
+                       '--output-dir', '/c/out', '--ap1-text', '/d/ap1.md'],
+                      BASE)
+    assert vars(args) == {'config': '/a/c.json', 'fixture_dir': '/b',
+                          'output_dir': '/c/out', 'ap1_text': '/d/ap1.md'}
+
+
+def test_parse_args_relative_paths_resolve_against_the_working_directory(
+        tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    args = parse_args(['--config', 'c.json', '--fixture-dir', 'in',
+                       '--output-dir', 'out/x', '--ap1-text', '../t.md'],
+                      BASE)
+    root = str(tmp_path.resolve())
+    parent = str(tmp_path.resolve().parent)
+    assert vars(args) == {'config': f'{root}/c.json',
+                          'fixture_dir': f'{root}/in',
+                          'output_dir': f'{root}/out/x',
+                          'ap1_text': f'{parent}/t.md'}
+
+
+def test_parse_args_rejects_unknown_options(capsys):
+    with pytest.raises(SystemExit) as exc:
+        parse_args(['--model', 'x'], BASE)
+    assert exc.value.code == 2
+    assert 'unrecognized arguments: --model x' in capsys.readouterr().err
+
+
+def test_parse_args_help_text(capsys, monkeypatch):
+    monkeypatch.setenv('COLUMNS', '200')  # one line per help string
+    with pytest.raises(SystemExit) as exc:
+        parse_args(['--help'], BASE)
+    assert exc.value.code == 0
+    pad = ' ' * 24
+    assert capsys.readouterr().out == (
+        'usage: ap1-run [-h] [--config CONFIG] [--fixture-dir FIXTURE_DIR] '
+        '[--output-dir OUTPUT_DIR] [--ap1-text AP1_TEXT]\n'
+        '\n'
+        'Run the AP-1 instrument smoke test against a live endpoint. The '
+        'endpoint, model and API key come from the AP1_SMOKE_* environment '
+        'variables.\n'
+        '\n'
+        'options:\n'
+        '  -h, --help            show this help message and exit\n'
+        '  --config CONFIG       the run configuration '
+        '(default: example/config.json)\n'
+        '  --fixture-dir FIXTURE_DIR\n'
+        f'{pad}the directory holding fixture.json, questions.json and '
+        'ground_truth_example.py (default: example/)\n'
+        '  --output-dir OUTPUT_DIR\n'
+        f'{pad}where the transcript, report and summary are written; files '
+        'of the same name there are replaced (default: output/)\n'
+        '  --ap1-text AP1_TEXT   the AP-1 text to seal; its hash must match '
+        'the one the runner expects '
+        '(default: reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md)\n')

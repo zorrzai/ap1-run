@@ -86,6 +86,9 @@ def main():
             return record
         runner.create_seal = observed_seal
 
+        # The runner reads its options from sys.argv; give it the
+        # scenario's, not this driver's.
+        sys.argv = ['ap1-run'] + scenario.get('args', [])
         outcome['exit_code'] = smoke_test.main()
     except SystemExit as e:
         outcome['exit_code'] = e.code

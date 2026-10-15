@@ -117,9 +117,22 @@ ap1-run                       # or: python smoke_test.py
 ```
 
 `python smoke_test.py` still works, even without the install step: it is a
-shim for the runner, which now lives in `src/ap1_run/run.py`. The runner reads
-`example/` and `reference/` and writes `output/` relative to the clone, so run
-it from a clone (an editable install), not from a wheel.
+shim for the runner, which now lives in `src/ap1_run/run.py`.
+
+By default the runner reads `example/` and `reference/` and writes `output/`
+in the clone. Options move them (`ap1-run --help`):
+
+```bash
+ap1-run --config my/config.json \
+        --fixture-dir my/fixture/ \
+        --output-dir runs/today/ \
+        --ap1-text reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md
+```
+
+`--fixture-dir` holds `fixture.json`, `questions.json` and
+`ground_truth_example.py`. The AP-1 text must be the one the seal expects. The
+runner still takes its version and source hash from the clone, so run it from
+a clone (an editable install), not from a wheel.
 
 `run_all_tests.py` reports two columns. `verify.py` counts individual
 assertions; the other suites count test functions. Running `pytest` directly

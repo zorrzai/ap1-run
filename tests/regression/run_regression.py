@@ -97,6 +97,15 @@ def make_copy(scenario):
         with open(config_path, 'w', encoding='utf-8') as f:
             json.dump(config, f, indent=2, ensure_ascii=False)
             f.write('\n')
+    # Copies inside the tree, after the config edits (for the runner's
+    # path options): {"from": "to"}, a file or a directory.
+    for src, dst in scenario.get('copy_paths', {}).items():
+        src, dst = os.path.join(tree, src), os.path.join(tree, dst)
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        if os.path.isdir(src):
+            shutil.copytree(src, dst)
+        else:
+            shutil.copyfile(src, dst)
     return copy_dir, tree
 
 
@@ -194,12 +203,18 @@ def collect(scenario, tree, result_dir, proc):
         'requests.jsonl': _read(os.path.join(result_dir, 'requests.jsonl')),
     }
     produced = []
+    output_dir = scenario.get('output_dir', 'output')
     for name in _OUTPUTS:
-        p = os.path.join(tree, 'output', name)
+        p = os.path.join(tree, output_dir, name)
         if os.path.exists(p):
             produced.append(name)
             raw[name] = _read(p)
     raw['files.txt'] = ''.join(f'{n}\n' for n in produced)
+    if output_dir != 'output':
+        # The runner was pointed elsewhere: its default output/ must
+        # stay as the copy made it.
+        raw['default_output.txt'] = ''.join(
+            f'{n}\n' for n in sorted(os.listdir(os.path.join(tree, 'output'))))
     if 'smoke_run.jsonl' in raw:
         raw['outcomes.jsonl'] = outcome_table(raw['smoke_run.jsonl'])
 

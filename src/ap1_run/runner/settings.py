@@ -1,10 +1,12 @@
-"""The live runner's settings from the environment, and the R1.2 guard.
+"""The live runner's settings, and the R1.2 guard.
 
-The endpoint, model and two sampling overrides come from AP1_SMOKE_*
-environment variables; check_condition_guard refuses a run whose two
-conditions differ in more than the system prompt.
+Where the inputs and outputs are comes from the command line
+(parse_args); the endpoint, model and two sampling overrides come from
+AP1_SMOKE_* environment variables; check_condition_guard refuses a run
+whose two conditions differ in more than the system prompt.
 """
 
+import argparse
 import hashlib
 import os
 
@@ -14,6 +16,42 @@ from ap1_run.execution.perturbation_guard import (
 
 DEFAULT_ENDPOINT = 'https://api.openai.com/v1/chat/completions'
 DEFAULT_MODEL = 'gpt-4o-mini'
+
+
+AP1_TEXT = os.path.join('reference', 'AP-1_v1.3_DRAFT_FOR_COMMENT.md')
+
+
+def parse_args(argv, base_dir):
+    """The command-line options, as absolute paths.
+
+    Every option defaults to the path the runner has always used under
+    base_dir (the repository root), so a run without options is unchanged.
+    """
+    example_dir = os.path.join(base_dir, 'example')
+    parser = argparse.ArgumentParser(
+        prog='ap1-run',
+        description='Run the AP-1 instrument smoke test against a live '
+                    'endpoint. The endpoint, model and API key come from '
+                    'the AP1_SMOKE_* environment variables.')
+    parser.add_argument(
+        '--config', default=os.path.join(example_dir, 'config.json'),
+        help='the run configuration (default: example/config.json)')
+    parser.add_argument(
+        '--fixture-dir', default=example_dir,
+        help='the directory holding fixture.json, questions.json and '
+             'ground_truth_example.py (default: example/)')
+    parser.add_argument(
+        '--output-dir', default=os.path.join(base_dir, 'output'),
+        help='where the transcript, report and summary are written; files '
+             'of the same name there are replaced (default: output/)')
+    parser.add_argument(
+        '--ap1-text', default=os.path.join(base_dir, AP1_TEXT),
+        help='the AP-1 text to seal; its hash must match the one the '
+             'runner expects (default: ' + AP1_TEXT + ')')
+    args = parser.parse_args(argv)
+    for name in ('config', 'fixture_dir', 'output_dir', 'ap1_text'):
+        setattr(args, name, os.path.abspath(getattr(args, name)))
+    return args
 
 
 def endpoint_and_model(environ=os.environ):
