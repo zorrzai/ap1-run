@@ -18,6 +18,14 @@ package, imported from `src/`, never against copies.
 - A test checks one behaviour, with inputs built in the test or in a
   small fixture beside it, and needs no network or model.
 
+## The gate before a module's internals change
+
+1. Its unit tests are green.
+2. Its mutation score has been measured with mutmut and recorded in
+   `tests/mutation/scores.json`, and does not drop (see
+   `tests/mutation/README.md`).
+3. The regression baseline (`tests/regression/`) is unchanged.
+
 Modules get full unit tests as they are changed. The legacy suites in
 `tests/legacy/` still cover the rest, and are retired module by module
 as unit tests replace them.
