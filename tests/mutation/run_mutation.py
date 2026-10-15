@@ -41,11 +41,13 @@ _SKIP_TOP = {'.git', '.venv', 'output', 'mutants', '.pytest_cache',
 
 # mutmut 3 copies only the mutated files; the rest of the package must be
 # copied too (also_copy), and src/ must come first on the path, or the
-# editable install of the repository would be imported instead.
+# editable install of the repository would be imported instead. Tests
+# that run the runner end to end also need the example, the AP-1 text,
+# VERSION and the mock endpoint.
 _CONFIG = '''
 [tool.mutmut]
 source_paths = [{source}]
-also_copy = ["src/"]
+also_copy = ["src/", "example/", "reference/", "VERSION", "tests/fixtures/"]
 pytest_add_cli_args_test_selection = [{tests}]
 '''
 
