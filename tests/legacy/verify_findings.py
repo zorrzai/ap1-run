@@ -16,7 +16,7 @@ import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-FINDINGS = os.path.join(ROOT, "FINDINGS.md")
+FINDINGS = os.path.join(ROOT, "findings", "FINDINGS.md")
 
 REQUIRED_ARTIFACTS = [
     os.path.join(ROOT, "output", "run_a_mini", "smoke_summary.json"),

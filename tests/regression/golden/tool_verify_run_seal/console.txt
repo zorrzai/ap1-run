@@ -11,7 +11,7 @@
   PASS  seal_hash: MATCH
   PASS  transcript seal_hash: matches report
   FAIL  ground_truth_hash: sealed=dd3434bc62c4976af928798024d1446993ce59dd473e78cf4002832630314715, recomputed=080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812
-          NOTE: E3: constant '4' declared but never used in Q07 computation; removed in commit eadd862. D7.2(a) figures withdrawn. F10/Q05: sign negation removed (commit 8089923). See FINDINGS_ERRATA.md.
+          NOTE: E3: constant '4' declared but never used in Q07 computation; removed in commit eadd862. D7.2(a) figures withdrawn. F10/Q05: sign negation removed (commit 8089923). See findings/FINDINGS_ERRATA.md.
           NOTE: This mismatch is expected. The ground-truth module was modified after the sealed runs: E3 removed an unused constant from Q07, and the Q05 sign-convention correction removed the negation (F10). All other sealed hashes reproduce on any platform.
 
   10 passed, 1 failed
@@ -29,7 +29,7 @@
   PASS  seal_hash: MATCH
   PASS  transcript seal_hash: matches report
   FAIL  ground_truth_hash: sealed=dd3434bc62c4976af928798024d1446993ce59dd473e78cf4002832630314715, recomputed=080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812
-          NOTE: E3: constant '4' declared but never used in Q07 computation; removed in commit eadd862. D7.2(a) figures withdrawn. F10/Q05: sign negation removed (commit 8089923). See FINDINGS_ERRATA.md.
+          NOTE: E3: constant '4' declared but never used in Q07 computation; removed in commit eadd862. D7.2(a) figures withdrawn. F10/Q05: sign negation removed (commit 8089923). See findings/FINDINGS_ERRATA.md.
           NOTE: This mismatch is expected. The ground-truth module was modified after the sealed runs: E3 removed an unused constant from Q07, and the Q05 sign-convention correction removed the negation (F10). All other sealed hashes reproduce on any platform.
 
   10 passed, 1 failed

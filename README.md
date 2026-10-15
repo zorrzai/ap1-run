@@ -368,7 +368,7 @@ src/ap1_run/
 
 tools/
   verify_run_seal.py         verifies a published run's seal from report.md
-  generate_findings.py       regenerates FINDINGS.md from the published runs
+  generate_findings.py       regenerates findings/FINDINGS.md from the published runs
 
 tests/
   legacy/                    the original verify_*.py suites, run by run_all_tests.py
@@ -378,6 +378,7 @@ tests/
 ap1_inspect/                 the optional Inspect wrapper (its own package)
 docs/                        build specification (SPEC.md), KNOWN_ISSUES.md,
                              RELATED_WORK_REVIEW.md, REPRODUCING.md, the publisher's comments
+findings/                    FINDINGS.md (generated from FINDINGS.template.md), FINDINGS_ERRATA.md
 example/                     a worked fixture, questions, ground truth and config
 reference/                   the sealed AP-1 text
 ```
@@ -408,6 +409,7 @@ those records are not edited. To follow such a reference today:
 | `verify*.py`, `test_findings_mutation.py` | `tests/legacy/` |
 | `_t16_mock_gt.py` | `tests/fixtures/` |
 | `SPEC.md`, `KNOWN_ISSUES.md`, `RELATED_WORK_REVIEW.md`, `REPRODUCING.md` | `docs/` |
+| `FINDINGS.md`, `FINDINGS.template.md`, `FINDINGS_ERRATA.md` | `findings/` |
 
 Line numbers inside the moved modules are unchanged, except in `run.py`, the
 tools and the test suites. To reproduce a published run at the code it was
@@ -443,7 +445,7 @@ runtime model. This is expected behaviour, not a failure.
 **Ground truth module.** `example/ground_truth_example.py` has changed
 since both published runs (`4f737ce`, `85e8eeb`, `6be2d7b`, `ff8c051`), so
 the sealed `ground_truth_hash` no longer matches the current file. Erratum
-E3 in [FINDINGS_ERRATA.md](FINDINGS_ERRATA.md), as corrected by C10,
+E3 in [FINDINGS_ERRATA.md](findings/FINDINGS_ERRATA.md), as corrected by C10,
 records why the D7.2(a) figures are withdrawn. The note of 3 October 2026
 in the same file gives the commands that restore the sealed module and
 verify both original seals. The verifier reports this mismatch with the E3
@@ -455,7 +457,7 @@ out `*.py`, `*.md`, `*.json` and `*.yml` with LF line endings and leaves
 hashes of the module with CRLF line endings, so on a clean clone the
 September seals fail on that field although the module has not changed
 since those runs; with CRLF restored, both pass in full (note N2 of
-9 October 2026 in [FINDINGS_ERRATA.md](FINDINGS_ERRATA.md)). The August
+9 October 2026 in [FINDINGS_ERRATA.md](findings/FINDINGS_ERRATA.md)). The August
 seals likewise pass once the sealed module is restored with CRLF line
 endings (note of 3 October 2026). The other sealed hashes reproduce on a
 clean clone.

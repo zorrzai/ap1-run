@@ -29,8 +29,8 @@ from ap1_run.reporting.report import clopper_pearson_upper_k0  # noqa: E402
 getcontext().prec = 50
 
 OUTPUT = os.path.join(ROOT, "output")
-TEMPLATE = os.path.join(ROOT, "FINDINGS.template.md")
-TARGET = os.path.join(ROOT, "FINDINGS.md")
+TEMPLATE = os.path.join(ROOT, "findings", "FINDINGS.template.md")
+TARGET = os.path.join(ROOT, "findings", "FINDINGS.md")
 
 
 def load_json(path):

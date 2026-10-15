@@ -47,7 +47,7 @@ GROUND_TRUTH_ERRATA = {
         "E3: constant '4' declared but never used in Q07 computation; "
         "removed in commit eadd862. D7.2(a) figures withdrawn. "
         "F10/Q05: sign negation removed (commit 8089923). "
-        "See FINDINGS_ERRATA.md."
+        "See findings/FINDINGS_ERRATA.md."
     ),
 }
 
