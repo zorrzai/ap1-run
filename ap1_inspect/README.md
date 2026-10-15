@@ -16,8 +16,14 @@ The **optional Inspect integration** (this directory) additionally requires
 `inspect-ai` and is not needed to run AP-1 directly.
 
 ```
+pip install -e .[inspect]                     # the runner package plus inspect-ai
+# or, with the package already installed:
 pip install -r ap1_inspect/requirements.txt
 ```
+
+The wrapper imports the runner as the `ap1_run` package (`src/ap1_run/`).
+`ap1_inspect/` itself stays a separate top-level package; run it from the
+repository root.
 
 ## Usage
 

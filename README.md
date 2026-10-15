@@ -102,7 +102,7 @@ Running the test suites requires none of this — they are offline.
 ```bash
 git clone <this repo>
 cd <clone directory>
-pip install requests
+pip install -e .              # the ap1_run package and its one dependency, requests
 python run_all_tests.py       # offline, reports its own totals
 ```
 
@@ -110,8 +110,13 @@ Then run the worked example against your own endpoint:
 
 ```bash
 export AP1_SMOKE_API_KEY=<key>
-python smoke_test.py
+ap1-run                       # or: python smoke_test.py
 ```
+
+`python smoke_test.py` still works, even without the install step: it is a
+shim for the runner, which now lives in `src/ap1_run/run.py`. The runner reads
+`example/` and `reference/` and writes `output/` relative to the clone, so run
+it from a clone (an editable install), not from a wheel.
 
 `run_all_tests.py` reports two columns. `verify.py` counts individual
 assertions; the other suites count test functions. Running `pytest` directly
@@ -286,7 +291,7 @@ The runner claims conformance to specific clauses of AP-1 v1.3. That claim is
 executable:
 
 ```bash
-python verify_conformance.py
+python tests/legacy/verify_conformance.py
 ```
 
 One test per clause. Each names the clause, quotes it verbatim from the sealed
@@ -296,7 +301,7 @@ disclosure, both process obligations — have tests asserting the runner *declar
 the limitation rather than staying silent.
 
 ```bash
-python verify_spec.py
+python tests/legacy/verify_spec.py
 ```
 
 The build specification records line counts and a size constraint. This suite
@@ -322,38 +327,57 @@ concept DOI [10.5281/zenodo.21324954](https://doi.org/10.5281/zenodo.21324954) �
 
 ## Layout
 
+The package follows the layers of the build specification (SPEC.md).
+
 ```
-run_all_tests.py         one command, all suites
-smoke_test.py            drives a live endpoint
+pyproject.toml               package metadata; `pip install -e .`; the `ap1-run` command
+run_all_tests.py             one command, all legacy suites
+smoke_test.py                shim: `python smoke_test.py` runs ap1_run.run
 
-config.py                configuration; refuses defaults that affect a result
-adapter.py               HTTP transport; records the request as sent
-transcript.py            append-only run log
-numeric.py               Decimal arithmetic, token grammar, canonical hashing
-seal.py                  pre-registration: hash and timestamp before any request
+src/ap1_run/
+  run.py                     drives a live endpoint (was smoke_test.py)
+  foundation/                SPEC Layer 0
+    config.py                configuration; refuses defaults that affect a result
+    adapter.py               HTTP transport; records the request as sent
+    transcript.py            append-only run log
+    numeric.py               Decimal arithmetic, token grammar, canonical hashing
+  execution/                 SPEC Layer 1
+    seal.py                  pre-registration: hash and timestamp before any request
+    seal_constants.py        declared-constant checks on the ground-truth module
+    version.py               runner version and source hash
+    engine.py                execution loop
+    context.py               delivered-context construction
+    perturbation_guard.py    refuses a condition that varies more than one quantity
+    perturbation.py          unused; to be removed
+    evidence.py              invocation evidence classification
+  scoring/                   SPEC Layer 2
+    figure_id.py             which figure in the response is the answer
+    accuracy.py              D1
+    reproducibility.py       D2
+    invocation.py            D7.1
+    operation_correctness.py D7.2(b)
+    transcription.py         D7.3
+    release_coverage.py      D7.3 release coverage
+    provenance/              D7.2(a)
+      provenance.py          the five-step resolution ladder
+      provenance_classify.py invocation, item and sequential classification
+      provenance_audit.py    originated-operand listing
+  reporting/                 SPEC Layer 3
+    adjudication.py          printable sheets for the human-scored dimensions
+    report.py                the result artifact
 
-engine.py                execution loop
-context.py               delivered-context construction
-perturbation_guard.py    refuses a condition that varies more than one quantity
-evidence.py              invocation evidence classification
+tools/
+  verify_run_seal.py         verifies a published run's seal from report.md
+  generate_findings.py       regenerates FINDINGS.md from the published runs
 
-figure_id.py             which figure in the response is the answer
-accuracy.py              D1
-reproducibility.py       D2
-invocation.py            D7.1
-provenance.py            D7.2(a) — the five-step resolution ladder
-provenance_classify.py   invocation, item and sequential classification
-provenance_audit.py      originated-operand listing
-operation_correctness.py D7.2(b)
-transcription.py         D7.3
+tests/
+  legacy/                    the original verify_*.py suites, run by run_all_tests.py
+  regression/                the regression baseline: canned model responses, golden output
+  fixtures/                  mock endpoint and test modules
 
-adjudication.py          printable sheets for the human-scored dimensions
-report.py                the result artifact
-
-verify_run_seal.py       verifies a published run's seal from report.md
-
-example/                 a worked fixture, questions, ground truth and config
-reference/               the sealed AP-1 text
+ap1_inspect/                 the optional Inspect wrapper (its own package)
+example/                     a worked fixture, questions, ground truth and config
+reference/                   the sealed AP-1 text
 ```
 
 Instrument modules are kept at or under 300 lines so a reviewer can read
@@ -364,6 +388,27 @@ test sit outside that constraint by design and are longer.
 Full architecture, verification contracts per module, threat model and
 conformance mapping: [`SPEC.md`](SPEC.md).
 
+### Where the files used to be
+
+Until October 2026 every module sat at the repository root. Published runs,
+FINDINGS_ERRATA and the paper refer to those paths, at their own commits;
+those records are not edited. To follow such a reference today:
+
+| old path | new path |
+|---|---|
+| `smoke_test.py` | `src/ap1_run/run.py` (the root `smoke_test.py` is now a shim) |
+| `config.py`, `adapter.py`, `transcript.py`, `numeric.py` | `src/ap1_run/foundation/` |
+| `seal.py`, `seal_constants.py`, `version.py`, `engine.py`, `context.py`, `perturbation_guard.py`, `perturbation.py`, `evidence.py` | `src/ap1_run/execution/` |
+| `figure_id.py`, `accuracy.py`, `reproducibility.py`, `invocation.py`, `operation_correctness.py`, `transcription.py`, `release_coverage.py` | `src/ap1_run/scoring/` |
+| `provenance.py`, `provenance_classify.py`, `provenance_audit.py` | `src/ap1_run/scoring/provenance/` |
+| `report.py`, `adjudication.py` | `src/ap1_run/reporting/` |
+| `generate_findings.py`, `verify_run_seal.py` | `tools/` |
+| `verify*.py`, `test_findings_mutation.py` | `tests/legacy/` |
+| `_t16_mock_gt.py` | `tests/fixtures/` |
+
+Line numbers inside the moved modules are unchanged, except in `run.py`, the
+tools and the test suites.
+
 ---
 
 ## Verifying a run's seal
@@ -373,13 +418,13 @@ after environment variables have been written into the config dict — not
 the config file on disk. The on-disk `example/config.json` and
 `example/config_mini.json` contain placeholder values for `model` and
 `endpoint_url` that are overwritten at runtime by `AP1_SMOKE_MODEL` and
-`AP1_SMOKE_ENDPOINT` (see `smoke_test.py` L343-359).
+`AP1_SMOKE_ENDPOINT` (see `src/ap1_run/run.py` L352-370).
 
 To verify a run's seal:
 
 ```bash
-python verify_run_seal.py output/run_a_mini
-python verify_run_seal.py output/run_b_sol
+python tools/verify_run_seal.py output/run_a_mini
+python tools/verify_run_seal.py output/run_b_sol
 ```
 
 This reads the seal record from `report.md` §1 and the resolved
