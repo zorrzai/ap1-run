@@ -1035,7 +1035,7 @@ including blank lines.  Earlier figures in this specification were measured by
 lower numbers.  Those figures were wrong and have been corrected.
 
 Test suites (`tests/legacy/verify_*.py`, `run_all_tests.py`), demonstration tooling
-(`src/ap1_run/run.py`), and the example ground-truth module
+(`src/ap1_run/run.py` and its `smoke_test.py` shim), and the example ground-truth module
 (`example/ground_truth_example.py`) are **not** instrument modules and are
 **excluded** from this constraint.
 
