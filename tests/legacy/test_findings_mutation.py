@@ -20,8 +20,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, os.path.join(ROOT, 'tools'))
 import generate_findings  # noqa: E402
 
-FINDINGS = os.path.join(ROOT, "FINDINGS.md")
-TEMPLATE = os.path.join(ROOT, "FINDINGS.template.md")
+FINDINGS = os.path.join(ROOT, "findings", "FINDINGS.md")
+TEMPLATE = os.path.join(ROOT, "findings", "FINDINGS.template.md")
 RUN_A = os.path.join(ROOT, "output", "run_a_mini", "smoke_summary.json")
 RUN_B = os.path.join(ROOT, "output", "run_b_sol", "smoke_summary.json")
 

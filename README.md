@@ -368,7 +368,7 @@ src/ap1_run/
 
 tools/
   verify_run_seal.py         verifies a published run's seal from report.md
-  generate_findings.py       regenerates FINDINGS.md from the published runs
+  generate_findings.py       regenerates findings/FINDINGS.md from the published runs
 
 tests/
   legacy/                    the original verify_*.py suites, run by run_all_tests.py
@@ -378,6 +378,7 @@ tests/
 ap1_inspect/                 the optional Inspect wrapper (its own package)
 docs/                        build specification (SPEC.md), KNOWN_ISSUES.md,
                              RELATED_WORK_REVIEW.md, REPRODUCING.md, the publisher's comments
+findings/                    FINDINGS.md (generated from FINDINGS.template.md), FINDINGS_ERRATA.md
 example/                     a worked fixture, questions, ground truth and config
 reference/                   the sealed AP-1 text
 ```
@@ -408,6 +409,7 @@ those records are not edited. To follow such a reference today:
 | `verify*.py`, `test_findings_mutation.py` | `tests/legacy/` |
 | `_t16_mock_gt.py` | `tests/fixtures/` |
 | `SPEC.md`, `KNOWN_ISSUES.md`, `RELATED_WORK_REVIEW.md`, `REPRODUCING.md` | `docs/` |
+| `FINDINGS.md`, `FINDINGS.template.md`, `FINDINGS_ERRATA.md` | `findings/` |
 
 Line numbers inside the moved modules are unchanged, except in `run.py`, the
 tools and the test suites. To reproduce a published run at the code it was
@@ -443,7 +445,7 @@ runtime model. This is expected behaviour, not a failure.
 **Ground truth module.** `example/ground_truth_example.py` has been
 modified since both published runs. The sealed `ground_truth_hash` no
 longer matches the current file. Erratum E3 in
-[FINDINGS_ERRATA.md](FINDINGS_ERRATA.md) records why: constant `4` was
+[FINDINGS_ERRATA.md](findings/FINDINGS_ERRATA.md) records why: constant `4` was
 declared in Q07's derivation metadata but never used in the computation.
 The correction was made for cause; the sealed state is not restored.
 The verifier reports this mismatch with the E3 reference and exits

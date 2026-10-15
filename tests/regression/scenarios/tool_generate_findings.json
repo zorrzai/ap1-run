@@ -3,5 +3,5 @@
   "exercises": ["generate_findings.py", "entry point", "FINDINGS.md generation"],
   "command": ["tools/generate_findings.py"],
   "copy_output": ["run_a_mini", "run_b_sol", "superseded"],
-  "collect": ["FINDINGS.md"]
+  "collect": ["findings/FINDINGS.md"]
 }
