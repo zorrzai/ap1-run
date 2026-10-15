@@ -1079,7 +1079,7 @@ a module-level constant definition, not added logic.
 | `src/ap1_run/scoring/transcription.py` | 110 | Instrument module |
 | `src/ap1_run/scoring/release_coverage.py` | 169 | Instrument module |
 | `src/ap1_run/foundation/transcript.py` | 74 | Instrument module |
-| `src/ap1_run/run.py` | 1098 | Demonstration tooling |
+| `src/ap1_run/run.py` | 1100 | Demonstration tooling |
 | `example/ground_truth_example.py` | 571 | Example / demonstration |
 | `example/calculator_tool.py` | 224 | Example / demonstration |
 | `tests/legacy/verify_*.py` | varies | Verification test suites |
