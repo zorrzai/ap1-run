@@ -1,4 +1,10 @@
 {
+  "foundation/numeric": {
+    "killed": 299,
+    "mutants": 323,
+    "notes": "All 24 survivors are equivalent or unkillable. parse_decimal (7): is_neg=None is falsy like False; decimal_sep != 'XX.XX' only replaces '.' by '.'; the inner sign test 'XX-\\u2212XX' only differs for 'X', which the outer test never lets through; sorting leading currency symbols by key=None or no key (4) is reverse alphabetical, and for startswith a symbol can only shadow another it is a prefix of, which sorts first either way. _build_extraction_re (2): key=None or no key for the alternation order is likewise equivalent (the regex backtracks; only a prefix can shadow). extract_numeric_tokens (9): currency_symbols=None reaches the same empty handling; finditer returns non-overlapping matches in order, so the dedup sort key (5 mutants) and last_end=-2 change nothing; every match contains a digit, so the 'no digits' guard and its continue->break (2) are unreachable. canonical_json ensure_ascii=None is falsy like False; canonical_hash 'UTF-8' is the same codec. file_hash (4): read(None) and read(8193) give the same digest; sentinel None or b'XXXX' never matches b'' and loops forever, which mutmut reports as a timeout.",
+    "score": 0.9257
+  },
   "run": {
     "killed": 553,
     "mutants": 568,
