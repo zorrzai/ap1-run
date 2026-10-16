@@ -1,4 +1,16 @@
 {
+  "reporting/adjudication": {
+    "killed": 475,
+    "mutants": 501,
+    "notes": "All 26 survivors are equivalent. Nine are in _needs_adjudication's TRANSPORT_FAILURE guard, which returns False where the fall-through also returns False, so it is dead code (T3-9: it comes after the ADJUDICATE check); one more there changes the figure_outcome default '' to 'XXXX', which is neither ADJUDICATE* nor UNMEASURABLE either. Two pass fixture=None and config=None to _generate_one_sheet, which never reads either parameter. Fourteen replace a .get() default ([] or {} or '') by None or no default, falsy alike: the release-coverage lookup, account_map, tool_calls, operation_correctness, ungoverned_figures, choices and message content.",
+    "score": 0.9481
+  },
+  "reporting/report": {
+    "killed": 1518,
+    "mutants": 1569,
+    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan').",
+    "score": 0.9675
+  },
   "run": {
     "killed": 553,
     "mutants": 568,
