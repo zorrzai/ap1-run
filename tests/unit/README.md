@@ -26,6 +26,8 @@ package, imported from `src/`, never against copies.
    `tests/mutation/README.md`).
 3. The regression baseline (`tests/regression/`) is unchanged.
 
-Modules get full unit tests as they are changed. The legacy suites in
-`tests/legacy/` still cover the rest, and are retired module by module
-as unit tests replace them.
+Every module in `src/ap1_run/` has unit tests and a recorded mutation
+score (step 3). Tests that pin today's behaviour where it is known to be
+wrong carry `@pytest.mark.finding(...)` with the finding's ID; fixing the
+defect changes the test. `tests/legacy/RETIREMENT.md` maps every check of
+the legacy suites to the tests that now cover it.
