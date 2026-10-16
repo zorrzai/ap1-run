@@ -1078,3 +1078,223 @@ GROUND_TRUTH_ERRATA = {
 ```
 
 The `git log` command prints no commit. Its exit status is 0 because an empty log is not an error.
+
+---
+
+## Correction by addition - 16 October 2026
+
+**Date:** 16 October 2026
+**Affects:** Five statements: the four that cite AP-1 §5.8, including the re-scoring reason in the E3 Addendum, and E3's statement that the published D7.2(a) figures overstate grounding (C10). No count, figure, verdict or withdrawal changes. Nothing above is edited.
+
+### C10. E3, E3 Addendum, E5 and C7: AP-1 §5.8 does not require re-execution after a scoring change
+
+Four statements in this file attribute a re-execution rule to AP-1 §5.8:
+
+- E3 (line 70): "AP-1 §5.8 states that results are not portable across a ground-truth revision and that re-execution, not re-scoring, is required. That rule applies here to the publisher’s own evaluation."
+- E3 Addendum (lines 132-133): "Re-scoring was ruled out because `provenance_classify.py` had changed since the seal, and AP-1 §5.8 requires re-execution, not re-scoring."
+- E5 (lines 253-254): "They cannot be corrected by re-scoring because the classifier changed and §5.8 requires re-execution."
+- C7 (line 811): "It rests on AP-1 §5.8 (E3, line 70): after a ground-truth revision, re-execution is required, not re-scoring."
+
+§5.8 is the burned-set rule. It reads the same in AP-1 v1.2 (line 201) and in the v1.3 draft (line 462):
+
+> **5.8** A system may not be modified to pass a specific question and then re-evaluated on the same set. **Remediation requires a new held-out set, and the history must be disclosed.** A question set is **burned** the moment it is run; publishing it (§5.1) confirms it is burned. Every evaluation therefore uses a freshly constructed set (§11).
+
+It says nothing about ground-truth revision, re-scoring or re-execution. Disposition C-7 (`DISPOSITION_RECORD_v1.3.md`, lines 133 and 137, in the admissibility-protocol repository) records this and draws the distinction:
+
+> §5.8 states a question set is burned once run and is silent on what a fixture revision does to results already obtained.
+
+> **v1.4 adds the distinction to §5.8.** Transcripts are portable across **scoring** changes and not across **fixture** changes. A change to the declared constant set, the permitted transformations or the ground-truth derivation alters how a stored response is scored, and re-analysis is valid. A change to the fixture alters what the system was given, and re-execution is required.
+
+Removing Q07's constant `4` is a change to the declared constant set: a scoring change, for which re-analysis of the stored transcripts is valid. A classifier change, as in E5, also alters how a stored response is scored and not what the system was given. On C-7's distinction it is a scoring change too.
+
+**E3, line 68: the two re-analysis attempts.** E3 states (line 68): "Two attempts produced materially different results, and one produced a grounded-plus-originated total exceeding the invocation population." That is the record made at the time.
+
+The two attempts were made on 28 August 2026, at 00:14 and 00:33 (+0200), before E3 was committed. Both re-scored the stored August transcripts against the ground-truth module as it stood after `85e8eeb`, which no longer declared `4` for Q07. Their outputs are in the publisher's local log of that working session. They are not in this repository and are not public. The counts are of invocations by D7.2(a) outcome, grounded or originated:
+
+| | Published | First attempt | Second attempt |
+|---|---|---|---|
+| Run A OPERANDS-GROUNDED | 1,637 | 1,446 | 1,534 |
+| Run A OPERAND-ORIGINATED | 83 | 274 | 179 |
+| Run A sum | 1,720 | 1,720 | 1,713 |
+| Run B OPERANDS-GROUNDED | 1,053 | 1,002 | 1,028 |
+| Run B OPERAND-ORIGINATED | 11 | 62 | 37 |
+| Run B sum | 1,064 | 1,064 | 1,065 |
+
+The invocation populations are 1,720 (Run A) and 1,064 (Run B). The second attempt's Run B sum, 1,065, exceeds its population. The two attempts were not reconciled at the time, and the figures were withdrawn rather than replaced by either.
+
+**What a review on 16 October 2026 found.**
+
+- **The second attempt's impossible total came from a record-pairing defect in its script, `rescore_summaries.py`.** The script paired the summary record for repeat *r* with the *r*-th transcript record of the same item and condition. In the transcripts each execution writes an invocation record followed by a figure-identification record. The paired record therefore belonged to a different execution, or was a figure-identification record with no tool calls, in which case the script kept the stored outcome. Counting the stored invocations under that pairing reproduces the second attempt's sums of 1,713 and 1,065. The correct pairing, with the *r*-th invocation record, matches all 1,000 summary records in both runs. The two diagnoses recorded on 28 August were wrong: that the classifier's tool-call grouping had changed (no commit changes it; C7), and that the first attempt's script truncated its comparison with `zip()` (it contains no `zip()`).
+- **The published summaries are unchanged.** `rescore_summaries.py` writes its results back to `smoke_summary.json`. Run in the pre-split working tree, it overwrote the local copies. The published `smoke_summary.json` files were committed on 8 August 2026 (`b5e5d2d`), and no later commit changes them. The local copies are byte-identical to them: 1,637 grounded and 83 originated invocations in Run A, and 1,053 and 11 in Run B.
+- **The first attempt has no pairing step.** Its script, `compare_d72.py`, re-scored each transcript record against that record's own tool calls and compared the result with the same record's stored outcomes. The ground-truth module it loaded is identical to `85e8eeb`'s. Between the start of the August runs and that state, the classifier modules changed only by `9df67e9` (a record field) and `4f737ce` (a comment), and the fixture and questions did not change. `config.json` and `config_mini.json` declare the same quantisation and permitted transformations. Its sums equal the populations. As far as these facts show, the first attempt is a re-score of the August transcripts against the `85e8eeb` ground truth. It was not reproduced for this correction, because nothing was re-scored. Run B's change, 51 more originated invocations, equals the number of Run B Q07 invocations that use `4`: 51, in 49 records (C1). Run A's change, 191, exceeds its 96 such invocations; how the remainder arises was not established here.
+
+The withdrawal stands. The replacement figures are those of the September re-executions (E3 Addendum).
+
+**Q07's constant `4` at the seal and now.** At the seal (`203fef4`), Q07 declared `4` on its last step, `quarterly_net` (line 318), whose reference computation is `monthly_net × 3`. That is the defect E3 describes (line 60): the step does not use `4`. `85e8eeb` removed it, together with the constant `2`, which `4f737ce` had added to the same step on 7 August. `ff8c051` declares `4` again, on the first step, `monthly_return`, in the `e7-quantise-fix` code state (on which the September re-executions ran) and at the current tree (line 293), with the comment:
+
+> E3 rebound: Q07 asks for a "quarterly" figure. 4 (quarters/year) is a domain constant alongside 3 (months/quarter) and 12 (months/year). A model dividing annual by 4 is a valid route.
+
+The route is valid. The annual return divided by 4 is the quarterly return: 42175 × 7.8 / 100 / 4 = 822.4125, the same as `monthly_return` × 3, and less three months' fees (45) it gives the reference value 777.4125. Every August Q07 tool call that uses `4` divides an annual figure by it: 96 calls in 96 records in Run A (for example `42175 * (7.8 / 100) / 4`) and 51 calls in 49 records in Run B (C1; for example `42175.00 * (0.078 / 4) - (15.00 * 3)`).
+
+The classifier pools an item's declared constants across all its steps (`_collect_constants`, `provenance.py`), so the step a constant is declared on does not change how an operand resolves. Q07's declared constants are 3, 4, 12 and 100 at the seal and at the current tree, and 3, 12 and 100 at `85e8eeb`, each with the structural constant 1. An operand `4` therefore resolves as a declared constant at the seal and at the current tree alike, and as originated only against the `85e8eeb` state, which both attempts used. In the stored August records every operand `4` in Q07 is resolved as `constant`: 96 in Run A and 51 in Run B.
+
+The seal also records the basis for `4`. `example/README.md` at `203fef4` lists it in the constant-set table as "quarters per year", "time division (= 12/3)" (line 163), and states (lines 211-212): "Constant `4` was retained: it is a genuine time-division constant of the problem domain, equivalent to 12/3." The module's docstring permits "4 (quarters/year)" (line 9), and `verify_d72b.py` accepts the annual/4 route: "Model used annual/4 instead of monthly*3. Both = 777.4125." (line 101). The same README records how `4` entered the set. It was the third of three widenings "applied to make the gpt-5.6-sol run resolve as OPERANDS-GROUNDED" during Phase D construction (lines 182-183):
+
+> 3. `{"constant": "4"}` was added to Q07 -- allows quarters-per-year.
+
+The README continues (lines 191-192): "Each was individually defensible. The sequence was not: run, find operands that did not resolve, widen what resolves, report success."
+
+E3 treated `4` as a defect because the reference computation does not use it (line 60). The `monthly_return` step on which `ff8c051` declares it does not use it either (`balance * rate / D("100") / D("12")`), and `ff8c051` restates the domain-constant basis the seal already recorded. E3's "Relationship to C-2" (line 80) calls this "a constant declared without use", as distinct from C-2's "constant added to the declared set after a live run". The README shows that `4` was itself added after a development run, to make that run resolve: C-2's own class. Disposition C-2 (`DISPOSITION_RECORD_v1.3.md`, line 67) bounds the set: "An operator adding constants until a run passes is the failure mode, and v1.4 says so."
+
+**E3, line 66, and the basis of the withdrawal.** E3 states (line 66): "The published D7.2(a) figures overstate grounding. The magnitude cannot be established from the stored artifacts." Under the constant set the instrument documented at the seal, every August operand `4` resolves as a declared constant, as published, so the figures are not shown to overstate grounding on that account. What E3's concern does capture is how `4` entered the set: it was added during construction to make the gpt-5.6-sol run resolve (README, lines 182-194), the class of change disposition C-2 addresses. The publisher keeps the withdrawal on that basis and because the two re-analysis attempts were not reconciled at the time. It does not rest on a finding that those operands were inadmissible.
+
+**E3 Addendum, lines 132-133: the reason given for not re-scoring.** `provenance_classify.py` changed no classification logic after the seal (C7). When E3 was written, the only commit to `provenance.py` after the seal was `4f737ce` (7 August), which adds a comment and no code. No change in either module separated re-scoring from the constant correction.
+
+`ff8c051` (8 September), made before the E3 Addendum, changes two things re-scoring would use:
+
+- In `provenance.py` it adds Step 1b (lines 153-168). An operand equal to the negative of a declared constant now resolves at step 1 as `constant_magnitude`, before steps 2 to 5. In the stored Run A records, 75 operand resolutions would be re-resolved this way: `-12` or `-12.0` in Q09, in 75 invocations of 62 records. All 75 invocations are stored as OPERAND-ORIGINATED; 62 of the operands are stored as `originated` and 13 as `computed_in_session_ungrounded`. The Run B records contain none.
+- In `example/ground_truth_example.py` it declares `4` again for Q07, as described above.
+
+Re-scoring the stored transcripts at the current tree would therefore apply Step 1b. It would not apply the removal of `4`, because `4` is declared again. `6be2d7b` (7 September) also changed Q05's derivation; its effect on the stored records is not assessed here.
+
+**E5.** The published D7.2(b) figures are withdrawn because the classifier did not implement D7.2(b) correctly: it scored route divergence as WRONG-OPERATION (E5, "The defect"). The corrected figures in E5 come from the September re-executions, `run_e_mini` and `run_f_sol`, not from re-scoring the published runs.
+
+**Correction:** for "The published D7.2(a) figures overstate grounding. The magnitude cannot be established from the stored artifacts." read "Under the constant set the instrument documented at the seal, every August operand `4` resolves as a declared constant, as published (96 in Run A; 51 in 49 records in Run B, C1), so the figures are not shown to overstate grounding on that account. What E3's concern does capture is how `4` entered the set: it was added during construction to make the gpt-5.6-sol run resolve (`example/README.md` at the seal, lines 182-194), the class of change disposition C-2 addresses. The publisher keeps the withdrawal on that basis and because the two re-analysis attempts were not reconciled at the time (C10). It does not rest on a finding that those operands were inadmissible."
+
+**Correction:** for "AP-1 §5.8 states that results are not portable across a ground-truth revision and that re-execution, not re-scoring, is required. That rule applies here to the publisher’s own evaluation." read "AP-1 §5.8 is the burned-set rule and says nothing about re-scoring. Under disposition C-7, removing `4` from Q07's declared constants is a scoring change, for which re-analysis of the stored transcripts is valid. The publisher keeps the withdrawal because `4` was added to the declared set during construction to make the gpt-5.6-sol run resolve (`example/README.md` at the seal, lines 182-194), the class of change disposition C-2 addresses, and because two attempts at re-analysis produced materially different results that were not reconciled at the time (C10). It does not rest on a finding that those operands were inadmissible."
+
+**Correction:** for "Re-scoring was ruled out because `provenance_classify.py` had changed since the seal, and AP-1 §5.8 requires re-execution, not re-scoring." read "Re-scoring was not used because two attempts produced materially different results (E3, line 68; C10). When E3 was written, no classification change in `provenance_classify.py` or `provenance.py` separated re-scoring from the constant correction. Since `ff8c051` (8 September), re-scoring at the current tree would also apply Step 1b in `provenance.py`, and would not apply the removal of `4`, because the same commit declares `4` again for Q07, as a domain constant for the route that divides the annual figure by 4 (C10). The publisher keeps the withdrawal because `4` was added to the declared set during construction to make the gpt-5.6-sol run resolve (`example/README.md` at the seal, lines 182-194), the class of change disposition C-2 addresses, and because two attempts at re-analysis produced materially different results that were not reconciled at the time (C10). It does not rest on a finding that those operands were inadmissible. AP-1 §5.8 does not govern re-scoring."
+
+**Correction:** for "They cannot be corrected by re-scoring because the classifier changed and §5.8 requires re-execution." read "The classifier did not implement D7.2(b) correctly. AP-1 §5.8 does not require re-execution after a classifier change; under disposition C-7 that is a scoring change. The corrected figures below come from the September re-executions."
+
+**Correction:** for "It rests on AP-1 §5.8 (E3, line 70): after a ground-truth revision, re-execution is required, not re-scoring." read "It rests on the basis stated in C10. `4` was added to the declared set during construction to make the gpt-5.6-sol run resolve (`example/README.md` at the seal, lines 182-194), the class of change disposition C-2 addresses. Two attempts at re-analysis produced materially different results that were not reconciled at the time (E3, line 68); one produced a grounded-plus-originated total exceeding the invocation population, which came from a record-pairing defect in the second attempt's script. It does not rest on a finding that those operands were inadmissible."
+
+The two attempts' counts cannot be reproduced from this repository, and nothing here re-scores the transcripts. The disposition record is in the admissibility-protocol repository. The commands below cover the rest of this entry.
+
+```
+git show 203fef4:example/README.md | sed -n '163p;182,183p;189p;191,192p;211,212p'
+git show 203fef4:example/ground_truth_example.py | sed -n '9p'
+git show 203fef4:verify_d72b.py | sed -n '101p'
+sed -n '/^def derive_q07/,/^def derive_q08/p' example/ground_truth_example.py | grep 'monthly_return = '
+git log --format='%h %ad %s' --date=short -- output/run_a_mini/smoke_summary.json output/run_b_sol/smoke_summary.json
+git diff --stat ee8957e 85e8eeb -- provenance_classify.py provenance.py context.py numeric.py example/fixture.json example/questions.json example/config.json example/config_mini.json example/ground_truth_example.py
+git show --format= 4f737ce -- provenance.py | grep -E '^\+[^+]' | grep -vcE '^\+\s*#'
+git show --format= ff8c051 -- provenance.py | grep -E '^\+[^+]' | grep -vcE '^\+\s*#'
+sed -n '153,156p' provenance.py
+git log --format='%h %ad' --date=short -S 'E3 rebound' -- example/ground_truth_example.py
+sed -n '289,293p' example/ground_truth_example.py
+python - <<'EOF'
+import json, re, subprocess
+from collections import Counter, defaultdict
+show = lambda spec: subprocess.run(['git', 'show', spec], capture_output=True, encoding='utf-8').stdout
+for f in ('config.json', 'config_mini.json'):
+    c = json.loads(show(f'85e8eeb:example/{f}'))
+    print(f, c['quantisation'], c['permitted_transformations'])
+for rev in ('203fef4', '85e8eeb', 'e7-quantise-fix', 'HEAD'):
+    L = show(f'{rev}:example/ground_truth_example.py').splitlines()
+    a = next(i for i, l in enumerate(L) if l.startswith('def derive_q07'))
+    b = next(i for i, l in enumerate(L) if l.startswith('def derive_q08'))
+    step, out = None, []
+    for i in range(a, b):
+        m = re.search(r'"label": "(\w+)"', L[i])
+        step = m.group(1) if m else step
+        m = re.search(r'\{"constant": "(\d+)"\}', L[i])
+        if m:
+            out.append(f'{m.group(1)}@{step}:{i + 1}')
+    print(rev, ' '.join(out))
+n = lambda r: len(r.get('provenance_results') or [])
+for run in ('run_a_mini', 'run_b_sol'):
+    S = json.load(open(f'output/{run}/smoke_summary.json', encoding='utf-8'))['all_results']
+    G = defaultdict(list)
+    for r in map(json.loads, open(f'output/{run}/smoke_run.jsonl', encoding='utf-8')):
+        G[(r['item_id'], r['condition'])].append(r)
+    I = {k: [r for r in v if r.get('record_type') != 'figure_identification'] for k, v in G.items()}
+    P = [p['outcome'] for s in S for p in s.get('provenance_results') or []]
+    correct = sum(n(s) == n(I[(s['item_id'], s['condition'])][s['repeat'] - 1]) for s in S)
+    paired = [G[(s['item_id'], s['condition'])][s['repeat'] - 1] for s in S]
+    attempt2 = sum(n(t) if t.get('tool_calls') else n(s) for s, t in zip(S, paired))
+    Q = I[('Q07', 'base')] + I[('Q07', 'instruction_removed')]
+    E = [json.loads(t['function']['arguments'])['expression'] for x in Q for t in x.get('tool_calls') or []]
+    E4 = [e for e in E if re.search(r'(?<![\d.])4(?![\d.])', e)]
+    V = [[o['resolution'] for p in x.get('provenance_results') or [] for o in p['operand_resolutions']
+          if o['operand_value'] == '4'] for x in Q]
+    print(run, 'summary', P.count('OPERANDS-GROUNDED'), P.count('OPERAND-ORIGINATED'), len(P),
+          '| correct pairing equal', correct, 'of', len(S), '| second-attempt pairing sum', attempt2,
+          '| Q07 calls using 4:', len(E4), 'dividing by 4:', sum(bool(re.search(r'/\s*4(?![\d.])', e)) for e in E4),
+          '| stored operand 4:', dict(Counter(v for x in V for v in x)), 'in records:', sum(bool(x) for x in V))
+EOF
+python - <<'EOF'
+import json, sys
+from collections import Counter
+from decimal import Decimal
+sys.path[:0] = ['.', 'example']
+from context import build_delivered_context
+from provenance import _collect_constants
+import ground_truth_example as gt
+fx = json.load(open('example/fixture.json', encoding='utf-8'))
+items = {i['id']: i for i in json.load(open('example/questions.json', encoding='utf-8'))['items']}
+C = {k: _collect_constants(gt.compute(k, build_delivered_context(fx, v['source_accounts']))) for k, v in items.items()}
+for run in ('run_a_mini', 'run_b_sol'):
+    R = [r for r in map(json.loads, open(f'output/{run}/smoke_run.jsonl', encoding='utf-8'))
+         if r.get('record_type') != 'figure_identification']
+    hits, outcomes, records = Counter(), Counter(), 0
+    for r in R:
+        found = False
+        for p in r.get('provenance_results') or []:
+            h = [o for o in p['operand_resolutions'] if o['resolution'] not in ('source_match', 'constant')
+                 and any(c and Decimal(o['operand_value']) == -c for c in C[r['item_id']])]
+            hits.update((r['item_id'], o['operand_value'], o['resolution']) for o in h)
+            if h:
+                outcomes[p['outcome']] += 1
+                found = True
+        records += found
+    print(run, sum(hits.values()), 'resolutions in', sum(outcomes.values()), 'invocations of', records, 'records',
+          dict(outcomes), sorted(hits.items()))
+EOF
+```
+
+Output:
+
+```
+| 4 | quarters per year | time division (= 12/3) |
+**Example from this build:** During Phase D construction, three widenings were
+applied to make the gpt-5.6-sol run resolve as OPERANDS-GROUNDED:
+3. `{"constant": "4"}` was added to Q07 -- allows quarters-per-year.
+Each was individually defensible. The sequence was not: run, find operands
+that did not resolve, widen what resolves, report success. That is the
+Constant `4` was retained: it is a genuine time-division constant of the
+problem domain, equivalent to 12/3.
+    problem: 12 (months), 3 (quarter), 4 (quarters/year), 100 (percentage conversion).
+    # Model used annual/4 instead of monthly*3. Both = 777.4125.
+    monthly_return = balance * rate / D("100") / D("12")
+b5e5d2d 2026-08-08 Commit run artifacts; graceful skip on absent artifacts; clone-verification trap
+ example/config.json             | 4 ++--
+ example/ground_truth_example.py | 1 -
+ provenance.py                   | 8 ++++++++
+ provenance_classify.py          | 1 +
+ 4 files changed, 11 insertions(+), 3 deletions(-)
+0
+15
+    # Step 1b -- magnitude match: -12 resolves to declared 12
+    for const_val in constants:
+        if const_val != 0 and operand_value == -const_val:
+            return {
+ff8c051 2026-09-08
+                    # E3 rebound: Q07 asks for a "quarterly" figure.
+                    # 4 (quarters/year) is a domain constant alongside
+                    # 3 (months/quarter) and 12 (months/year).
+                    # A model dividing annual by 4 is a valid route.
+                    {"constant": "4"},
+config.json {'places': '2', 'rounding': 'ROUND_HALF_UP'} ['percent_to_fraction', 'fraction_to_percent']
+config_mini.json {'places': '2', 'rounding': 'ROUND_HALF_UP'} ['percent_to_fraction', 'fraction_to_percent']
+203fef4 100@monthly_return:298 12@monthly_return:299 3@quarterly_net:317 4@quarterly_net:318
+85e8eeb 100@monthly_return:298 12@monthly_return:299 3@quarterly_net:317
+e7-quantise-fix 100@monthly_return:287 12@monthly_return:288 4@monthly_return:293 3@quarterly_net:311
+HEAD 100@monthly_return:287 12@monthly_return:288 4@monthly_return:293 3@quarterly_net:311
+run_a_mini summary 1637 83 1720 | correct pairing equal 1000 of 1000 | second-attempt pairing sum 1713 | Q07 calls using 4: 96 dividing by 4: 96 | stored operand 4: {'constant': 96} in records: 96
+run_b_sol summary 1053 11 1064 | correct pairing equal 1000 of 1000 | second-attempt pairing sum 1065 | Q07 calls using 4: 51 dividing by 4: 51 | stored operand 4: {'constant': 51} in records: 49
+run_a_mini 75 resolutions in 75 invocations of 62 records {'OPERAND-ORIGINATED': 75} [(('Q09', '-12', 'computed_in_session_ungrounded'), 9), (('Q09', '-12', 'originated'), 24), (('Q09', '-12.0', 'computed_in_session_ungrounded'), 4), (('Q09', '-12.0', 'originated'), 38)]
+run_b_sol 0 resolutions in 0 invocations of 0 records {} []
+```
+
+The README, docstring and test lines are read from the seal (`203fef4`). `ee8957e` is the last commit before Run A started. `203fef4` holds the module bound by the original seals (see the note of 3 October 2026). `85e8eeb` is the last change to the module before E3. The two counts of non-comment lines added to `provenance.py` are for `4f737ce` and `ff8c051`.
