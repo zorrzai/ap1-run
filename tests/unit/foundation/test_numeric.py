@@ -764,6 +764,9 @@ def test_canonical_hash_known_digest_of_verify_hashes_input():
         '"inner_b":"777.4125"},"unicode":"−","z_last":"should sort last"}')
     assert canonical_hash(obj) == \
         hashlib.sha256(text.encode('utf-8')).hexdigest()
+    # The digest verify_hashes.py prints, the same on every platform.
+    assert canonical_hash(obj) == \
+        '831709b2231846ed20fd63ff0bc0764d73cee50db271f733e6a2f1c377c7cff3'
 
 
 def test_canonical_hash_trailing_zero_changes_hash():
