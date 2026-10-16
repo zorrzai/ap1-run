@@ -1,4 +1,10 @@
 {
+  "execution/seal": {
+    "killed": 336,
+    "mutants": 361,
+    "notes": "All 25 survivors are equivalent. 21 rename a key ('item_id', 'reason', 'declared_fields') or change the exception type name inside the failure dicts of perturbation_check and source_fields_check. Those dicts are never observable: any failure raises SealError, whose message uses only 'field' (perturbation) or 'item_id' and 'undeclared_fields' (source fields), and the functions only ever return an empty list (S3-g3-3). 4 replace the '' default of ap1_version_doi in verify_seal with None or no default, which is falsy like '' and skips the DOI check the same way.",
+    "score": 0.9307
+  },
   "execution/seal_constants": {
     "killed": 100,
     "mutants": 102,
