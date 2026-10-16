@@ -55,5 +55,22 @@
     "killed": 417,
     "mutants": 417,
     "score": 1.0
+  },
+  "scoring/release_coverage": {
+    "killed": 110,
+    "mutants": 113,
+    "notes": "All 3 survivors are equivalent. They change the default of tc.get('return_value', '') to None, to no default (also None) or to 'XXXX': None is falsy like '' and is skipped by the same 'if not rv', and 'XXXX' fails json.loads, whose JSONDecodeError is caught, so the call is skipped either way.",
+    "score": 0.9735
+  },
+  "scoring/reproducibility": {
+    "killed": 188,
+    "mutants": 196,
+    "notes": "All 8 survivors are equivalent. Each is in _extract_surface_values and replaces a .get() default with None or drops it (also None): r.get('choices', []) on the figures and the prose surface (4), and .get('content', '') on both surfaces (4). None is falsy like [] and '', and every use is guarded by 'if choices:' or followed by \"or ''\", so the value is the same.",
+    "score": 0.9592
+  },
+  "scoring/transcription": {
+    "killed": 91,
+    "mutants": 91,
+    "score": 1.0
   }
 }
