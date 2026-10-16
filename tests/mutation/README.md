@@ -15,6 +15,8 @@ python tests/mutation/run_mutation.py                  # check every recorded mo
 python tests/mutation/run_mutation.py scoring/accuracy # check one
 python tests/mutation/run_mutation.py --record scoring/accuracy
 python tests/mutation/run_mutation.py --survivors scoring/accuracy
+python tests/mutation/run_mutation.py --tests tests/legacy/verify_phase_c.py scoring/accuracy
+                                                       # another test set's strength, not recorded
 ```
 
 A module is named by its path under `src/ap1_run/`, without `.py`. Its
