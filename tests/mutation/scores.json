@@ -1,4 +1,9 @@
 {
+  "execution/context": {
+    "killed": 76,
+    "mutants": 76,
+    "score": 1.0
+  },
   "run": {
     "killed": 553,
     "mutants": 568,
