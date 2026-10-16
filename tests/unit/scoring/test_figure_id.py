@@ -307,7 +307,7 @@ def test_identify_figure_takes_matching_token_over_the_conclusion():
     assert r['released_figure'] == D('15.20')
 
 
-@pytest.mark.finding('S3-g4-scoring-a-2')
+@pytest.mark.finding('S3-G4-2')
 def test_identify_figure_percentage_token_matches_a_money_value():
     # The token's percent flag is ignored: '15.20%' matches an expected
     # $15.20. Correct: a percentage is not the released money figure

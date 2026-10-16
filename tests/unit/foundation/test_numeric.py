@@ -156,21 +156,21 @@ def test_parse_decimal_space_after_sign_ignored():
     assert parsed('+ 5')[0] == D('5')
 
 
-@pytest.mark.finding('S3-g1-2')
+@pytest.mark.finding('S3-G1-2')
 def test_parse_decimal_double_minus_is_positive():
     # Current behaviour: the sign step removes one '-', Decimal reads the
     # second, and the two cancel. Correct: '--5' is not a number (refuse).
     assert parsed('--5')[0] == D('5')
 
 
-@pytest.mark.finding('S3-g1-2')
+@pytest.mark.finding('S3-G1-2')
 def test_parse_decimal_plus_minus_is_negative():
     # Current behaviour: '+' is removed, Decimal reads '-5'. Correct:
     # refuse a doubled sign.
     assert parsed('+-5')[0] == D('-5')
 
 
-@pytest.mark.finding('S3-g1-2')
+@pytest.mark.finding('S3-G1-2')
 def test_parse_decimal_parenthesised_negative_is_positive():
     # Current behaviour: the parentheses negate, the sign step is skipped
     # (is_neg is already set) and Decimal reads '-5', so -(-5) = 5.
@@ -289,7 +289,7 @@ def test_parse_decimal_symbols_none_and_empty_list_agree():
                                                        currency_symbols=[])
 
 
-@pytest.mark.finding('S3-g1-4')
+@pytest.mark.finding('S3-G1-4')
 def test_parse_decimal_percent_then_trailing_currency_raises():
     # Current behaviour: the percent step runs before the trailing-currency
     # step, so '5%$' leaves '5%' and fails. Correct: (5, True, '$'), as
@@ -357,7 +357,7 @@ def test_parse_decimal_ambiguity_checked_after_stripping():
                       currency_symbols=['$'])
 
 
-@pytest.mark.finding('S3-g1-3')
+@pytest.mark.finding('S3-G1-3')
 def test_parse_decimal_grouping_positions_not_checked():
     # Current behaviour: every grouping separator is removed wherever it
     # is, so '1,23' is 123 and '1,2,3' is 123. Correct: groups of three
@@ -366,7 +366,7 @@ def test_parse_decimal_grouping_positions_not_checked():
     assert parsed('1,2,3')[0] == D('123')
 
 
-@pytest.mark.finding('S3-g1-1')
+@pytest.mark.finding('S3-G1-1')
 def test_parse_decimal_accepts_special_values():
     # Current behaviour: anything Decimal() accepts gets through, as the
     # "digits + separators only" step 6 only checks for emptiness.
@@ -377,14 +377,14 @@ def test_parse_decimal_accepts_special_values():
     assert parsed('inf')[0] == D('Infinity')
 
 
-@pytest.mark.finding('S3-g1-1')
+@pytest.mark.finding('S3-G1-1')
 def test_parse_decimal_accepts_exponent_and_underscore():
     # Current behaviour: '1e3' is 1000 and '1_000' is 1000. Correct: refuse.
     assert parsed('1e3')[0] == D('1E+3')
     assert parsed('1_000')[0] == D('1000')
 
 
-@pytest.mark.finding('S3-g1-7')
+@pytest.mark.finding('S3-G1-7')
 def test_parse_decimal_accepts_non_ascii_digits():
     # Current behaviour: Arabic-Indic digits parse (Decimal accepts any
     # Unicode decimal digit). Correct per R0.4.2: decide and declare.
@@ -520,7 +520,7 @@ def test_extract_overlap_keeps_longest_match():
         ('-5', False, '$', '-$5')]
 
 
-@pytest.mark.finding('S3-g1-5')
+@pytest.mark.finding('S3-G1-5')
 def test_extract_subtraction_operand_read_as_negative():
     # Current behaviour: the sign-led pattern takes the minus of a
     # subtraction, so '1437.00 - 1006.25 = 430.75' yields -1006.25.
@@ -532,7 +532,7 @@ def test_extract_subtraction_operand_read_as_negative():
         ('430.75', False, '', '430.75')]
 
 
-@pytest.mark.finding('S3-g1-6')
+@pytest.mark.finding('S3-G1-6')
 def test_extract_digits_inside_words_are_tokens():
     # Current behaviour: no word boundary, so identifiers and version
     # strings yield numbers ('Q04' -> 4, 'v2.0.1' -> 2.0 and 1, '1e5' ->
@@ -542,16 +542,16 @@ def test_extract_digits_inside_words_are_tokens():
     assert values('1e5') == ['1', '5']
 
 
-@pytest.mark.finding('S3-g1-4')
+@pytest.mark.finding('S3-G1-4')
 def test_extract_percent_then_currency_token_dropped():
-    # Current behaviour: '10%USD' matches, fails to parse (S3-g1-4) and is
+    # Current behaviour: '10%USD' matches, fails to parse (S3-G1-4) and is
     # silently skipped; extraction then carries on with the next match.
     # Correct: 10, percent, 'USD'.
     assert tokens('10%USD and 5', currency_symbols=['USD']) == [
         ('5', False, '', '5')]
 
 
-@pytest.mark.finding('S3-g1-8')
+@pytest.mark.finding('S3-G1-8')
 def test_extract_parenthesised_percent_loses_negative():
     # Current behaviour: the parenthesised pattern has no '%', so
     # '(12.5%)' is read as +12.5 %. Correct: -12.5 %.
@@ -598,9 +598,9 @@ def test_extract_same_separators_unambiguous_token_passes():
     assert values('1780', decimal_sep='.', grouping_sep='.') == ['1780']
 
 
-@pytest.mark.finding('S3-g1-7')
+@pytest.mark.finding('S3-G1-7')
 def test_extract_non_ascii_digits_are_tokens():
-    # Current behaviour: '\d' matches any Unicode digit. See S3-g1-7.
+    # Current behaviour: '\d' matches any Unicode digit. See S3-G1-7.
     assert values('٣٤ and ５') == ['34', '5']
 
 
@@ -651,7 +651,7 @@ def test_quantise_unknown_mode_raises():
     assert str(e.value) == "unsupported rounding mode: 'ROUND_DOWN'"
 
 
-@pytest.mark.finding('S3-g1-9')
+@pytest.mark.finding('S3-G1-9')
 def test_quantise_negative_places_rounds_to_integer():
     # Current behaviour: 10 ** 2 = Decimal('100') has exponent 0, so
     # places=-2 rounds to units, not hundreds. Correct: refuse negative

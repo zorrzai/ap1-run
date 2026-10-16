@@ -7,7 +7,7 @@
   "execution/engine": {
     "killed": 490,
     "mutants": 513,
-    "notes": "All 23 survivors are equivalent or unreachable. Two pass tool_calls=None instead of [] in the VOID and transport-failure records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Two drop the f'call_{turn}' default for a missing tool-call id and three change the '' default of tool_call_id in the tool message: a call without an id raises EngineError on the return-value lookup right after (S3-g2-2), so neither default is ever observed. Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). Two change the [] default of choices in _extract_tool_calls to None: both falsy, both give [].",
+    "notes": "All 23 survivors are equivalent or unreachable. Two pass tool_calls=None instead of [] in the VOID and transport-failure records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Two drop the f'call_{turn}' default for a missing tool-call id and three change the '' default of tool_call_id in the tool message: a call without an id raises EngineError on the return-value lookup right after (S3-G2-2), so neither default is ever observed. Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). Two change the [] default of choices in _extract_tool_calls to None: both falsy, both give [].",
     "score": 0.9552
   },
   "execution/evidence": {
@@ -19,13 +19,13 @@
   "execution/perturbation_guard": {
     "killed": 163,
     "mutants": 195,
-    "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is returned only when it holds nothing but the identical-prompt entry (S3-g3-4). _summarise itself is tested directly.",
+    "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is returned only when it holds nothing but the identical-prompt entry (S3-G3-4). _summarise itself is tested directly.",
     "score": 0.8359
   },
   "execution/seal": {
     "killed": 336,
     "mutants": 361,
-    "notes": "All 25 survivors are equivalent. 21 rename a key ('item_id', 'reason', 'declared_fields') or change the exception type name inside the failure dicts of perturbation_check and source_fields_check. Those dicts are never observable: any failure raises SealError, whose message uses only 'field' (perturbation) or 'item_id' and 'undeclared_fields' (source fields), and the functions only ever return an empty list (S3-g3-3). 4 replace the '' default of ap1_version_doi in verify_seal with None or no default, which is falsy like '' and skips the DOI check the same way.",
+    "notes": "All 25 survivors are equivalent. 21 rename a key ('item_id', 'reason', 'declared_fields') or change the exception type name inside the failure dicts of perturbation_check and source_fields_check. Those dicts are never observable: any failure raises SealError, whose message uses only 'field' (perturbation) or 'item_id' and 'undeclared_fields' (source fields), and the functions only ever return an empty list (S3-G3-3). 4 replace the '' default of ap1_version_doi in verify_seal with None or no default, which is falsy like '' and skips the DOI check the same way.",
     "score": 0.9307
   },
   "execution/seal_constants": {
@@ -43,7 +43,7 @@
   "foundation/adapter": {
     "killed": 160,
     "mutants": 166,
-    "notes": "All 6 survivors are unobservable: they change the two request_record['attempts'] stores made just before raising (after the last transport failure, and the unreachable 'exhausted retries' path). That record is never returned or attached to the exception, so no caller can see it (finding S3-g1-18); the fix will make these mutants killable. The tests replace requests.post, time.sleep and time.time with fakes; the real HTTP path is covered by the regression scenarios against the mock endpoint.",
+    "notes": "All 6 survivors are unobservable: they change the two request_record['attempts'] stores made just before raising (after the last transport failure, and the unreachable 'exhausted retries' path). That record is never returned or attached to the exception, so no caller can see it (finding S3-G1-18); the fix will make these mutants killable. The tests replace requests.post, time.sleep and time.time with fakes; the real HTTP path is covered by the regression scenarios against the mock endpoint.",
     "score": 0.9639
   },
   "foundation/config": {

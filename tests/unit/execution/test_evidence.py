@@ -376,7 +376,7 @@ def test_extract_attestation_absent_none(resp):
     assert extract_attestation(resp) is None
 
 
-@pytest.mark.finding('S3-g2-1')
+@pytest.mark.finding('S3-G2-1')
 @pytest.mark.parametrize('resp, error', [
     ({'choices': ['x']}, AttributeError),
     ({'choices': [{'message': None}]}, AttributeError),
@@ -384,7 +384,7 @@ def test_extract_attestation_absent_none(resp):
     ({'choices': [{'message': {'metadata': 'attestation'}}]}, TypeError),
 ], ids=['str-choice', 'null-message', 'dict-choices', 'str-metadata'])
 def test_extract_attestation_malformed_shape_raises(resp, error):
-    # S3-g2-1: shapes that _extract_model_tool_calls reports as
+    # S3-G2-1: shapes that _extract_model_tool_calls reports as
     # unrecognised (EV-0) make extract_attestation raise; in execute_item
     # that is uncaught. Correct: None for any shape it cannot read.
     with pytest.raises(error):

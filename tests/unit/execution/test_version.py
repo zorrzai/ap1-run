@@ -134,7 +134,7 @@ def test_resolve_version_head_differs_modified_with_warning(tmp_path, git):
         'Runner may be modified.']
 
 
-@pytest.mark.finding('S3-g3-2')
+@pytest.mark.finding('S3-G3-2')
 def test_resolve_version_one_character_commit_matches_any_head_with_it(
         tmp_path, git):
     # Current behaviour: the cross-check is a bare prefix test, so a

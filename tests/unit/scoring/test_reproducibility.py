@@ -74,7 +74,7 @@ def test_classify_mechanism_below_minimum_ignores_operator_declaration():
     assert r['operator_declared'] is False
 
 
-@pytest.mark.finding('S3-g5-scoring-b-3')
+@pytest.mark.finding('S3-G5-3')
 def test_classify_mechanism_no_responses_with_zero_minimum_is_observed():
     # Today: with minimum_runs=0 an empty pool passes the minimum and is
     # classified OBSERVED-ONLY from 0 runs and 0 distinct values.
@@ -172,7 +172,7 @@ def test_classify_mechanism_errored_runs_are_left_out_of_the_values():
     assert r['distinct_values'] == 1
 
 
-@pytest.mark.finding('S3-g5-scoring-b-3')
+@pytest.mark.finding('S3-G5-3')
 def test_classify_mechanism_unknown_surface_has_no_values():
     # Today: a surface other than 'figures' or 'prose' is not refused;
     # it yields no values and is classified OBSERVED-ONLY with 0 distinct
@@ -314,7 +314,7 @@ def test_parameter_echo_compares_as_strings():
     assert check_parameter_echo({'t': 0.0}, {'t': '0.0'})['status'] == 'VERIFIED'
 
 
-@pytest.mark.finding('S3-g5-scoring-b-4')
+@pytest.mark.finding('S3-G5-4')
 def test_parameter_echo_numerically_equal_values_can_mismatch():
     # Today: values are compared as strings, so temperature 0 requested
     # and 0.0 echoed is reported as "silently ignored". Correct: compare
