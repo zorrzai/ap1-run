@@ -47,7 +47,7 @@ _SKIP_TOP = {'.git', '.venv', 'output', 'mutants', '.pytest_cache',
 _CONFIG = '''
 [tool.mutmut]
 source_paths = [{source}]
-also_copy = ["src/", "example/", "reference/", "VERSION", "tests/fixtures/"]
+also_copy = ["src/", "example/", "reference/", "docs/", "VERSION", "tests/fixtures/"]
 pytest_add_cli_args_test_selection = [{tests}]
 '''
 
@@ -166,6 +166,10 @@ def main(argv=None):
         recorded = entry.get('score') if entry else None
         line = (f'{module}: {result["killed"]}/{result["mutants"]} killed, '
                 f'score {result["score"]}')
+        unchecked = result['counts'].get('not checked', 0)
+        if unchecked:
+            line += (f' [{unchecked} not checked: the tests did not run '
+                     f'cleanly in the copy]')
         if recorded is not None and args.tests:
             line += f' (its own tests: {recorded})'
         elif recorded is not None:
