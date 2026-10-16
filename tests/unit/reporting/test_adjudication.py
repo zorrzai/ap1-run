@@ -386,6 +386,20 @@ def test_sheet_reason_is_the_routing_text(outcome):
         f'\n{ADJUDICATION_REASONS[outcome]}\n'
 
 
+@pytest.mark.finding('T3-83')
+def test_sheet_ambiguous_reason_given_for_same_value_written_twice():
+    # figure_id routes "$15.20 ... so $15.20" to ADJUDICATE-AMBIGUOUS, and
+    # the sheet tells the scorer which token is released is ambiguous,
+    # though both are the same value. Correct: one distinct value is not
+    # ambiguous (the fix is in figure_id; the sheet text follows).
+    text = one_sheet(figure_outcome='ADJUDICATE-AMBIGUOUS',
+                     response_received='Interest is $15.20, so $15.20.')
+    assert 'Interest is $15.20, so $15.20.' in text
+    assert section(text, 'Reason for Adjudication') == (
+        '\nMultiple numeric tokens in the response match the expected '
+        'value. Which one is the released figure is ambiguous.\n')
+
+
 def test_sheet_reason_for_unlisted_outcome_names_it():
     text = one_sheet(figure_outcome='ADJUDICATE-NEW')
     assert section(text, 'Reason for Adjudication') == \
