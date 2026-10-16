@@ -391,18 +391,25 @@ individually and exits non-zero if any check fails.
 sealed `config_hash` because it contains the placeholder model, not the
 runtime model. This is expected behaviour, not a failure.
 
-**Ground truth module.** `example/ground_truth_example.py` has been
-modified since both published runs. The sealed `ground_truth_hash` no
-longer matches the current file. Erratum E3 in
-[FINDINGS_ERRATA.md](FINDINGS_ERRATA.md) records why: constant `4` was
-declared in Q07's derivation metadata but never used in the computation.
-The correction was made for cause; the sealed state is not restored.
-The verifier reports this mismatch with the E3 reference and exits
-non-zero.
+**Ground truth module.** `example/ground_truth_example.py` has changed
+since both published runs (`4f737ce`, `85e8eeb`, `6be2d7b`, `ff8c051`), so
+the sealed `ground_truth_hash` no longer matches the current file. Erratum
+E3 in [FINDINGS_ERRATA.md](FINDINGS_ERRATA.md), as corrected by C10,
+records why the D7.2(a) figures are withdrawn. The note of 3 October 2026
+in the same file gives the commands that restore the sealed module and
+verify both original seals. The verifier reports this mismatch with the E3
+reference and exits non-zero.
 
-**Line endings.** `file_hash()` hashes raw bytes. `.gitattributes` forces
-LF on all sealed files; the sealed hashes were computed against LF bytes
-and reproduce on any platform.
+**Line endings.** `file_hash()` hashes raw bytes. `.gitattributes` checks
+out `*.py`, `*.md`, `*.json` and `*.yml` with LF line endings and leaves
+`reference/**` unconverted. The sealed `ground_truth_hash` values are
+hashes of the module with CRLF line endings, so on a clean clone the
+September seals fail on that field although the module has not changed
+since those runs; with CRLF restored, both pass in full (note N2 of
+9 October 2026 in [FINDINGS_ERRATA.md](FINDINGS_ERRATA.md)). The August
+seals likewise pass once the sealed module is restored with CRLF line
+endings (note of 3 October 2026). The other sealed hashes reproduce on a
+clean clone.
 
 | Hash | Source | Proves |
 |------|--------|--------|
