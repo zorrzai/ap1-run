@@ -614,7 +614,7 @@ def test_source_fields_check_no_items_returns_empty_list():
     assert source_fields_check(module(reads('acct.balance')), FIXTURE, {}) == []
 
 
-@pytest.mark.finding('S3-g3-3')
+@pytest.mark.finding('S3-G3-3')
 def test_source_fields_check_compute_raising_reported_as_empty_access():
     # Current behaviour: a compute that raises is refused (fail closed),
     # but the message says it "reads undeclared fields" and shows

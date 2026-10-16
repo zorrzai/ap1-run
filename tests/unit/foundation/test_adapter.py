@@ -156,7 +156,7 @@ def test_send_infinite_sampling_value_sent_as_string(transport):
     assert t.calls[0]['json']['max_tokens'] == 'Infinity'
 
 
-@pytest.mark.finding('S3-g1-19')
+@pytest.mark.finding('S3-G1-19')
 def test_send_nan_sampling_value_sent_as_float_nan(transport):
     # Current behaviour: 'NaN' is not integral, so it is sent as
     # float('nan'), which json.dumps writes as the non-JSON token NaN.
@@ -194,7 +194,7 @@ def test_send_dict_not_omitted_sent_as_is(transport):
     assert record['sampling_as_sent'] == {'x': "{'value': '1'}"}
 
 
-@pytest.mark.finding('S3-g1-21')
+@pytest.mark.finding('S3-G1-21')
 def test_send_sampling_key_overrides_body_field(transport):
     # Current behaviour: sampling keys are written into the same body as
     # model and messages, so a sampling 'model' replaces the configured
@@ -259,7 +259,7 @@ def test_send_transport_failure_every_attempt_raises(transport):
     assert t.sleeps == [1.0, 1.0]   # no sleep after the last attempt
 
 
-@pytest.mark.finding('S3-g1-18')
+@pytest.mark.finding('S3-G1-18')
 def test_send_transport_failure_attempts_not_reachable(transport):
     # Current behaviour: the attempt log is written into a request_record
     # that is never returned or attached to the exception, so the caller
@@ -272,7 +272,7 @@ def test_send_transport_failure_attempts_not_reachable(transport):
     assert not hasattr(e.value, 'attempts')
 
 
-@pytest.mark.finding('S3-g1-20')
+@pytest.mark.finding('S3-G1-20')
 def test_send_transport_error_text_not_masked(transport):
     # Current behaviour: HTTP error bodies are masked, but the transport
     # exception text goes into the message unmasked. Correct: mask it too

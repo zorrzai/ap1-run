@@ -75,7 +75,7 @@ def test_parse_tool_returns_skips_unparseable_returns():
     ]) == [D('4')]
 
 
-@pytest.mark.finding('S3-g5-scoring-b-2')
+@pytest.mark.finding('S3-G5-2')
 def test_parse_tool_returns_counts_any_tool_name():
     # Today: the return of any tool counts, so a lookup tool that hands
     # back the expected figure "governs" its release. Correct: only
@@ -102,7 +102,7 @@ def test_release_coverage_no_tool_calls_is_unobservable():
     }
 
 
-@pytest.mark.finding('S3-g5-scoring-b-1')
+@pytest.mark.finding('S3-G5-1')
 def test_release_coverage_unobservable_lists_candidates_as_ungoverned():
     # Today: with no tool returns the result is COVERAGE-UNOBSERVABLE,
     # yet every candidate is listed under ungoverned_figures (with a

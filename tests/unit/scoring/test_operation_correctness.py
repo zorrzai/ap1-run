@@ -114,7 +114,7 @@ def test_evaluate_expression_round_is_half_even():
     assert evaluate_expression('round(2.5)') == D('2')
 
 
-@pytest.mark.finding('S3-g4-scoring-a-3')
+@pytest.mark.finding('S3-G4-3')
 def test_evaluate_expression_floor_division_and_mod_truncate_toward_zero():
     # Decimal // and % truncate toward zero; the reference calculator
     # (Python floats) floors, giving -4 and 2. D7.2(b) then judges a
@@ -179,7 +179,7 @@ def test_evaluate_expression_calculator_functions_are_refused(expression):
     assert evaluate_expression(expression) is None
 
 
-@pytest.mark.finding('S3-g4-scoring-a-4')
+@pytest.mark.finding('S3-G4-4')
 def test_evaluate_expression_decimal_overflow_raises():
     # Correct (docstring): None for a non-numeric result. decimal.Overflow
     # is not caught; the engine's own try turns it into
@@ -188,7 +188,7 @@ def test_evaluate_expression_decimal_overflow_raises():
         evaluate_expression('10 ** 10 ** 10')
 
 
-@pytest.mark.finding('S3-g4-scoring-a-4')
+@pytest.mark.finding('S3-G4-4')
 def test_evaluate_expression_deep_nesting_raises_recursion_error():
     with pytest.raises(RecursionError):
         evaluate_expression('-' * 5000 + '1')
@@ -608,7 +608,7 @@ def test_reclassify_session_skipped_calls_do_not_stop_the_pass():
     assert out[1]['outcome'] == WO
 
 
-@pytest.mark.finding('S3-g4-scoring-a-5')
+@pytest.mark.finding('S3-G4-5')
 def test_reclassify_session_bool_literal_raises_invalid_operation():
     # Model-controlled input. True is an int, Decimal('True') raises
     # decimal.InvalidOperation, which is not caught; the engine calls
@@ -618,7 +618,7 @@ def test_reclassify_session_bool_literal_raises_invalid_operation():
         reclassify_session([wo('45')], ['True + 1'])
 
 
-@pytest.mark.finding('S3-g4-scoring-a-5')
+@pytest.mark.finding('S3-G4-5')
 def test_reclassify_session_deep_nesting_raises_recursion_error():
     with pytest.raises(RecursionError):
         reclassify_session([wo('45')], ['-' * 5000 + '1'])
