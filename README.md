@@ -115,7 +115,7 @@ python run_all_tests.py       # offline, reports its own totals
 For development, `pip install -e .[dev]` adds pytest, mutmut and coverage:
 
 ```bash
-python -m pytest                            # unit tests (tests/unit/)
+python -m pytest                            # unit, conformance, functional and Inspect tests
 python tests/regression/run_regression.py   # the regression baseline, about 30 s
 python tests/mutation/run_mutation.py       # mutation scores, against tests/mutation/scores.json
 ```
@@ -406,9 +406,13 @@ tools/
   generate_findings.py       regenerates findings/FINDINGS.md from the published runs
 
 tests/
-  unit/                      pytest unit tests, mirroring src/ap1_run/
+  unit/                      pytest unit tests, mirroring src/ap1_run/ (and tools/)
+  conformance/               one test per AP-1 clause the runner claims, quoting it
+  functional/                tests across several modules
+  inspect/                   tests of ap1_inspect/ (skipped without inspect-ai)
   mutation/                  mutation scores per module (mutmut), a ratchet
-  legacy/                    the original verify_*.py suites, run by run_all_tests.py
+  legacy/                    the original verify_*.py suites, run by run_all_tests.py;
+                             RETIREMENT.md maps each of their checks to the new tests
   regression/                the regression baseline: canned model responses, golden output
   fixtures/                  mock endpoint and test modules
 
