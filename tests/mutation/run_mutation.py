@@ -96,7 +96,10 @@ def measure(module, tests, show_survivors=False):
                 source=json.dumps(source),
                 tests=', '.join(json.dumps(t) for t in tests)))
         env = dict(os.environ, PYTHONPATH='src')
-        run = subprocess.run([sys.executable, '-m', 'mutmut', 'run'],
+        cmd = [sys.executable, '-m', 'mutmut', 'run']
+        if os.environ.get('AP1_MUTMUT_MAX_CHILDREN'):
+            cmd += ['--max-children', os.environ['AP1_MUTMUT_MAX_CHILDREN']]
+        run = subprocess.run(cmd,
                              cwd=tree, env=env, capture_output=True,
                              text=True)
         results = subprocess.run(
