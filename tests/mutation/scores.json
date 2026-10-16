@@ -4,6 +4,12 @@
     "mutants": 76,
     "score": 1.0
   },
+  "execution/evidence": {
+    "killed": 216,
+    "mutants": 224,
+    "notes": "All 8 survivors are equivalent. Six replace a .get() default by None or no default where the value is then only tested for truth or replaced by '' when falsy: 'content' in _extract_content, 'choices' and 'metadata' in extract_attestation (two mutants each). One makes the accumulated_tool_calls test always true: tc is then None instead of [], both falsy, so the final-response fallback and NOT-INVOKED follow the same way. One changes ranks_above's default rank for an unknown first argument from -1 to -2; an unknown first argument never ranks above anything either way.",
+    "score": 0.9643
+  },
   "run": {
     "killed": 553,
     "mutants": 568,
