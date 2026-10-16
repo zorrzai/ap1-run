@@ -40,6 +40,12 @@
     "notes": "All 12 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One changes n > 0 to n >= 0 where n is always at least 1. One drops operator_declared=None, which is classify_mechanism's default.",
     "score": 0.9783
   },
+  "scoring/invocation": {
+    "killed": 166,
+    "mutants": 167,
+    "notes": "The one survivor is equivalent: 'n > 0' to 'n >= 0' in the cross-class warning, where every class in per_class has at least one item, so n is always at least 1. The module-level getcontext().prec = 50 is not mutated by mutmut; test_invocation_import_sets_global_decimal_precision_to_50 pins it (T3-60).",
+    "score": 0.994
+  },
   "scoring/provenance/audit": {
     "killed": 51,
     "mutants": 51,
