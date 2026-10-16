@@ -1,6 +1,5 @@
 """Unit tests for the runner's console report, compared as exact text."""
 
-import pytest
 
 from ap1_run.runner.console import print_run_report, print_scoring_report
 
