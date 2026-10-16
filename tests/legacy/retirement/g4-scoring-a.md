@@ -20,3 +20,4 @@ their groups. Unit test files: `tests/unit/scoring/test_<module>.py`.
 | verify_phase_c.py | test_dpr_zero_base_undefined | zero base: None, UNDEFINED, no '1.0' | test_invocation.py::test_compute_dpr_zero_base_rate_is_undefined_never_one | exact tuple pinned |
 | verify_phase_c.py | test_dpr_nonzero_base | 45/50 vs 10/50 gives 77.8% | test_invocation.py::test_compute_dpr_relative_drop_in_rate | value and string pinned |
 | verify_phase_c.py | test_cross_class_aggregate_warning | EV-2 + EV-0 warns 'not comparable' | test_invocation.py::test_measure_invocation_two_classes_warn_not_comparable_in_sorted_order | whole warning pinned |
+| verify_phase_c.py | test_d1_separate_counts | summarise_accuracy: auto-scored 3, adjudicated 2, correct/incorrect/no-figure 1 each, rate 0.5 | test_accuracy.py::test_summarise_accuracy_reports_auto_and_adjudicated_n_separately | adds one UNMEASURABLE record (unmeasurable_n = 1) |
