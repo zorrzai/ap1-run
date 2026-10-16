@@ -7,7 +7,6 @@ without SPEC.md it seals no text; the record is discarded either way.
 """
 
 import hashlib
-import json
 from pathlib import Path
 
 import pytest
