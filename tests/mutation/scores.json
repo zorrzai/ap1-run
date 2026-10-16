@@ -5,6 +5,12 @@
     "notes": "Both survivors are equivalent: they rename the 'reason' key of a failure dict. The dicts are never observable, because any failure raises SealError (whose message does not use 'reason') and the function only ever returns an empty list. Legacy suites verify_d72b.py + verify_e7_coverage.py score 0.7549 on the same mutants.",
     "score": 0.9804
   },
+  "execution/version": {
+    "killed": 155,
+    "mutants": 167,
+    "notes": "All 12 survivors are equivalent. Three touch dead code: the local 'modified' (False to None or True) and the first 'result = {}' are assigned and never read. Three change the unreachable else of 'parts[0] if parts else ...' (a stripped non-empty line always splits into at least one part). Five change how VERSION is opened or a path is encoded: 'UTF-8' is the same codec; no 'r', no encoding or encoding=None mean the locale's, UTF-8 on macOS and Linux. One opens 'version' instead of 'VERSION', which macOS's case-insensitive file system finds anyway. No legacy suite imports version.py (0 % legacy coverage); the regression scenarios run it end to end.",
+    "score": 0.9281
+  },
   "run": {
     "killed": 553,
     "mutants": 568,
