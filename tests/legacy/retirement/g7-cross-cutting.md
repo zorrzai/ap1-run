@@ -161,3 +161,40 @@ keep only the §12.9 ≤300-line constraint as a test; or keep the full table.
 | verify_spec | test_spec_constraint_holds | constraint-&lt;file&gt; for the 19 other instrument modules | none | dropped on purpose, pending Steven's ruling (19 checks) |
 | verify_spec | test_spec_constraint_holds | no-undeclared-breaches | none | dropped on purpose, pending Steven's ruling |
 | verify_spec | test_spec_constraint_holds | no-stale-exceptions | none | dropped on purpose, pending Steven's ruling |
+
+## verify_integration.py (10 functions, 10 checks)
+
+Each function is one check (several asserts). New tests in `F/`; the engine
+tests run `engine.execute_item` against a scripted endpoint on 127.0.0.1
+(`F/conftest.py`).
+
+| suite | function | check | new test(s) | note |
+|---|---|---|---|---|
+| verify_integration | test_multiround_loop_reports_invoked_not_final_response | accumulated calls give EV-2 INVOKED; final response alone gives NOT-INVOKED | F/test_tool_loop.py::test_multi_round_loop_classifies_from_accumulated_calls; test_final_response_alone_would_read_as_not_invoked; R: multi_round | test defect: legacy drove its own copy of the tool loop (`_run_tool_loop`), not the engine's; the new tests drive `execute_item` |
+| verify_integration | test_unrecognised_shape_in_round2_yields_ev0 | EV-0, outcome None | test_unrecognised_shape_in_round_2_gives_ev0_with_no_outcome; R: t3_1_unrecognised_shape | same test defect as above; the scenario pins how EV-0 then enters D7.1 (T3-1) |
+| verify_integration | test_required_operation_match_determines_invocation | calculator INVOKED; other_tool NOT-INVOKED | test_invocation_requires_a_call_to_the_required_operation[calculator-INVOKED], [other_tool-NOT-INVOKED]; test_call_to_an_unknown_tool_is_recorded_and_not_invoked; R: t3_38_unknown_tool | new test pins T3-38 through the engine |
+| verify_integration | test_perturbation_guard_passes_on_config_prompts | prompts present and differ; one changed quantity | F/test_run_guards.py::test_example_config_declares_two_different_prompts; test_condition_guard_passes_on_the_example_prompts; test_condition_guard_passes_when_both_prompts_are_identical | test defect: legacy counted the differences itself and never called the guard; new tests call runner.settings.check_condition_guard; the third pins T3-46 |
+| verify_integration | test_consistency_check_halts_on_invoked_without_tool_calls | INVOKED/0 calls FATAL naming item; NOT-INVOKED/3 calls FATAL; consistent rows pass | U/runner/test_summary.py::test_consistency_invoked_without_calls_is_fatal, test_consistency_not_invoked_with_calls_is_fatal, test_consistency_accepts_matching_outcomes (step 2); F/test_tool_loop.py::test_call_to_an_unknown_tool_is_recorded_and_not_invoked | existing unit tests already pin the exact messages; no duplicate written |
+| verify_integration | test_credential_masking_in_error_bodies | 4 key shapes redacted, error text kept; HTTPError message and body masked; safe text, '' and None unchanged | F/test_adapter_errors.py::test_mask_credentials_redacts_key_and_keeps_the_rest (4 params); test_http_error_from_endpoint_carries_only_masked_text (4 params); test_rate_limit_error_from_endpoint_is_masked; test_mask_credentials_leaves_other_text_unchanged (3 params); R: transport_errors | stronger: legacy built the HTTPError itself from masked text; new tests get it from adapter.send against an endpoint returning the key |
+| verify_integration | test_caret_exponentiation_bitxor_to_pow | 2^10, 287500*(1+0.042/12), 100^0.5 | F/test_example_calculator.py::test_calculator_maps_caret_to_power (3 params); test_engine_dispatches_caret_expression_to_example_calculator | stronger: exact result strings (legacy compared floats within 0.01) |
+| verify_integration | test_live_path_calls_every_scorer | EXECUTED; provenance with steps; D1 computable; D2 mechanism | F/test_tool_loop.py::test_live_path_result_feeds_every_scorer; R: clean | stronger: resolutions, outcomes and counts pinned |
+| verify_integration | test_d22_laundering_through_live_path | both calls OPERAND-ORIGINATED | test_return_of_originated_call_stays_originated_in_next_call; R: t3_2_leading_whitespace | stronger: step and resolution of the laundered operand pinned |
+| verify_integration | test_d2_platform_rejected_caps_mechanism | OBSERVED-ONLY without cap; cap reason names parameter and reason; cap applied | F/test_run_guards.py::test_identical_repeats_are_observed_only_without_a_cap; test_example_config_platform_rejection_caps_every_surface; U/runner/test_summary.py::test_reproducibility_cap_lowers_measured_classes_only, test_d2_cap_platform_rejected_parameter (step 2) | test defect: legacy re-implemented the cap search and its application inside the test; new tests call find_d2_cap and classify_reproducibility |
+
+## verify_findings.py (1 function, 1 check)
+
+| suite | function | check | new test(s) | note |
+|---|---|---|---|---|
+| verify_findings | verify (and the `__main__` artifacts-committed gate) | FINDINGS.md equals generation from artifacts; cited artifacts tracked by git | F/test_findings.py::test_committed_findings_equal_generation_from_artifacts; test_artifacts_the_findings_cite_are_tracked_by_git; R: tool_generate_findings | skipped, as legacy, when the artifacts are absent |
+
+## test_findings_mutation.py (1 function, 7 checks)
+
+| suite | function | check | new test(s) | note |
+|---|---|---|---|---|
+| test_findings_mutation | (module) | table-figure-243 | F/test_findings.py::test_edited_figure_in_findings_differs_from_generation[table-figure-243] | legacy rewrote the committed FINDINGS.md and restored it; the new test edits a string in memory |
+| test_findings_mutation | (module) | prose-figure-62-sign-inv | test_edited_figure_in_findings_differs_from_generation[prose-figure-62-sign-inv] | as above |
+| test_findings_mutation | (module) | percentage-22.8 | test_edited_figure_in_findings_differs_from_generation[percentage-22.8] | as above |
+| test_findings_mutation | (module) | narrative-figure-sup-524 | test_edited_figure_in_findings_differs_from_generation[narrative-figure-sup-524] | as above |
+| test_findings_mutation | (module) | artifact-invocation-count | test_changed_artifact_changes_the_generated_findings[artifact-invocation-count] | legacy rewrote the sealed output/run_b_sol/smoke_summary.json in place (restored from a .bak); the new test mutates a copy. Stronger: the changed figures are pinned |
+| test_findings_mutation | (module) | artifact-wrong-op-count | test_changed_artifact_changes_the_generated_findings[artifact-wrong-op-count] | as above (output/run_a_mini) |
+| test_findings_mutation | (module) | artifact-sign-inv-count | test_changed_artifact_changes_the_generated_findings[artifact-sign-inv-count]; test_f7_counts_an_outcome_the_runner_never_emits; test_f7_item_wrong_count_stays_zero_when_a_figure_stops_matching | the last two pin T3-14 (FINDINGS F7's 0/468) |
