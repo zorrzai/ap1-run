@@ -1,10 +1,15 @@
 """Run one regression scenario: the real runner against the mock endpoint.
 
-Invoked by run_regression.py in a fresh subprocess, inside a scratch copy
-of the repository (so the runner's output/ directory is the copy's, never
-the repository's published output/):
+Invoked by run_regression.py in a fresh subprocess, from the code tree the
+runner is imported from: the repository itself (the scenario's args then
+include --config and a temporary --output-dir, so nothing is written under
+the repository), or a scratch copy of it:
 
-    python driver.py <copy_dir> <scenario.json> <result_dir> <repo_dir>
+    python driver.py <code_dir> <scenario.json> <result_dir> <repo_dir>
+
+The mock endpoint reads the questions and system prompts from the files the
+runner will use: --config and --fixture-dir in the scenario's args, or the
+defaults under <code_dir>/example/.
 
 The runner's console output is this process's stdout. Driver messages go
 to stderr. The result directory receives:
@@ -13,25 +18,40 @@ to stderr. The result directory receives:
     requests.jsonl  every request the mock endpoint received
 """
 
+import argparse
 import json
 import os
 import sys
 import time
 
 
+def input_paths(code_dir, args):
+    """The config and fixture directory the runner will read: the
+    scenario's --config and --fixture-dir (relative to code_dir, the
+    runner's working directory), or the runner's defaults."""
+    ap = argparse.ArgumentParser(add_help=False)
+    ap.add_argument('--config',
+                    default=os.path.join('example', 'config.json'))
+    ap.add_argument('--fixture-dir', default='example')
+    known, _ = ap.parse_known_args(args)
+    known.config = os.path.join(code_dir, known.config)
+    known.fixture_dir = os.path.join(code_dir, known.fixture_dir)
+    return known
+
+
 def main():
-    copy_dir, scenario_path, result_dir, repo_dir = sys.argv[1:5]
+    code_dir, scenario_path, result_dir, repo_dir = sys.argv[1:5]
     with open(scenario_path, encoding='utf-8') as f:
         scenario = json.load(f)
 
     sys.path.insert(0, os.path.join(repo_dir, 'tests', 'fixtures'))
     from mock_endpoint import MockEndpoint
 
-    with open(os.path.join(copy_dir, 'example', 'questions.json'),
+    paths = input_paths(code_dir, scenario.get('args', []))
+    with open(os.path.join(paths.fixture_dir, 'questions.json'),
               encoding='utf-8') as f:
         questions = json.load(f)
-    with open(os.path.join(copy_dir, 'example', 'config.json'),
-              encoding='utf-8') as f:
+    with open(paths.config, encoding='utf-8') as f:
         config = json.load(f)
     system_prompts = {
         config['system_prompt_base']: 'base',
@@ -61,15 +81,15 @@ def main():
     # transport retries. Neither changes behaviour; skip them.
     time.sleep = lambda seconds: None
 
-    os.chdir(copy_dir)
-    if os.path.isdir(os.path.join(copy_dir, 'src')):
-        sys.path.insert(0, os.path.join(copy_dir, 'src'))
-    sys.path.insert(0, copy_dir)
+    os.chdir(code_dir)
+    if os.path.isdir(os.path.join(code_dir, 'src')):
+        sys.path.insert(0, os.path.join(code_dir, 'src'))
+    sys.path.insert(0, code_dir)
 
     outcome = {}
     seals = []
     try:
-        if os.path.exists(os.path.join(copy_dir, 'smoke_test.py')):
+        if os.path.exists(os.path.join(code_dir, 'smoke_test.py')):
             import smoke_test
         else:  # the runner has moved, and there is no shim (yet)
             import ap1_run.run as smoke_test
