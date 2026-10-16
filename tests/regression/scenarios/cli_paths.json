@@ -1,6 +1,7 @@
 {
   "description": "The clean run with every input and the output moved: --config, --fixture-dir, --output-dir and --ap1-text point at copies elsewhere in the tree. Everything but the printed paths matches clean, and the default output/ is left empty.",
   "exercises": ["ap1-run --config --fixture-dir --output-dir --ap1-text"],
+  "scratch_copy": "Runs in a scratch copy: it checks that the default output/ stays untouched (default_output.txt) when every path option is given, which needs a disposable default output/ that starts empty; in the real tree a failure would write into the published output/.",
   "extends": "clean",
   "copy_paths": {
     "example": "inputs/my_example",

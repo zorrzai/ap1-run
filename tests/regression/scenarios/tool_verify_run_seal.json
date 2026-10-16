@@ -1,6 +1,5 @@
 {
   "description": "verify_run_seal.py on the four published runs: seal, component hashes and transcript seal_hash checks.",
-  "exercises": ["verify_run_seal.py", "seal.verify_seal path", "entry point"],
-  "command": ["tools/verify_run_seal.py", "output/run_a_mini", "output/run_b_sol", "output/run_e_mini", "output/run_f_sol"],
-  "copy_output": ["run_a_mini", "run_b_sol", "run_e_mini", "run_f_sol"]
+  "exercises": ["verify_run_seal.py", "component and seal_hash recomputation (it does not call seal.verify_seal)", "entry point"],
+  "command": ["tools/verify_run_seal.py", "output/run_a_mini", "output/run_b_sol", "output/run_e_mini", "output/run_f_sol"]
 }
