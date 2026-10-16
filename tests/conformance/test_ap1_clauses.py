@@ -356,6 +356,18 @@ def test_recoverable_expression_matching_expected_is_operation_correct():
         'detail': 'result 200 matches expected value 200 (tolerance 0)'}
 
 
+@pytest.mark.req('AP-1 D7.2(b)', 'R2.4')
+def test_result_matching_a_reference_intermediate_is_operation_correct():
+    from ap1_run.scoring.operation_correctness import classify_operation
+    gt = {'final': Decimal('200'),
+          'intermediates': [{'label': 'balance', 'value': Decimal('100')}]}
+    result = classify_operation('50 * 2', gt, SESSION_CONFIG)
+    assert result == {
+        'outcome': 'OPERATION-CORRECT', 'evaluated_result': '100',
+        'matched_against': 'intermediate:balance',
+        'detail': 'result 100 matches intermediate balance=100'}
+
+
 # =====================================================================
 # D7.3 Transcription fidelity
 # =====================================================================
@@ -384,6 +396,48 @@ def test_released_figure_differing_from_tool_return_is_transcribed_altered():
                                  figure_outcome=AUTO_MATCH)
     assert (result['outcome'], result['difference'], result['reason']) == \
         ('TRANSCRIBED-ALTERED', Decimal('0.005'), 'altered by 0.005')
+
+
+@pytest.mark.req('AP-1 D7.3', 'R2.5')
+def test_adjudication_routed_figure_has_unobservable_transcription():
+    """
+    > Outcomes: TRANSCRIBED-EXACT, TRANSCRIBED-ALTERED (including rounding not licensed by the declared quantisation policy), UNOBSERVABLE.
+    (AP-1 v1.3 D7.3, L388)
+    """
+    from ap1_run.scoring.transcription import check_transcription
+    result = check_transcription(Decimal('15.20'), None,
+                                 figure_outcome='ADJUDICATE-AMBIGUOUS')
+    assert (result['outcome'], result['difference'], result['reason']) == (
+        'UNOBSERVABLE', None,
+        'R2.0 outcome is ADJUDICATE-AMBIGUOUS, not AUTO-MATCH')
+
+
+@pytest.mark.req('AP-1 D7.3', 'R2.5')
+def test_rounding_licensed_by_quantisation_is_transcribed_exact():
+    from ap1_run.scoring.figure_id import AUTO_MATCH
+    from ap1_run.scoring.transcription import check_transcription
+    result = check_transcription(Decimal('15.2049'), Decimal('15.20'),
+                                 figure_outcome=AUTO_MATCH,
+                                 quantisation_digits=2)
+    assert (result['outcome'], result['difference']) == \
+        ('TRANSCRIBED-EXACT', Decimal('0.0049'))
+    assert result['reason'] == ('values differ by 0.0049 but are equal '
+                                'under quantisation to 2 digits')
+
+
+@pytest.mark.finding('T3-27')
+@pytest.mark.req('AP-1 D7.3', 'R2.5')
+def test_licensed_rounding_uses_half_even_not_the_declared_policy():
+    # 15.205 rounds to 15.21 under the declared ROUND_HALF_UP, so 15.21 is
+    # licensed; transcription quantises with the context default
+    # (ROUND_HALF_EVEN, 15.20) and reports ALTERED. Correct: quantise with
+    # the declared rounding mode.
+    from ap1_run.scoring.figure_id import AUTO_MATCH
+    from ap1_run.scoring.transcription import check_transcription
+    result = check_transcription(Decimal('15.205'), Decimal('15.21'),
+                                 figure_outcome=AUTO_MATCH,
+                                 quantisation_digits=2)
+    assert result['outcome'] == 'TRANSCRIBED-ALTERED'
 
 
 # =====================================================================

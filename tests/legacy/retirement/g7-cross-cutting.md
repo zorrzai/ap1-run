@@ -53,7 +53,7 @@ ellipsis, and wrong line ranges), and are corrected in the new docstrings.
 | verify_conformance | test_d7_2a_iv_computed_in_session | D7.2a-iv-sequential-runs | test_sequential_classification_runs_one_result_per_call | stronger: outcomes pinned. Test defect: the legacy comment expects call 1 GROUNDED; both calls are ORIGINATED (literals 0 and 2), and step (iv) is never reached |
 | verify_conformance | test_d7_2a_iv_computed_in_session | D7.2a-iv-function-exists | test_operand_equal_to_grounded_prior_return_resolves_at_step_4; test_operand_equal_to_originated_prior_return_is_originated | test defect: legacy check is `check(..., True)`; the new tests exercise step (iv) both ways |
 | verify_conformance | test_d7_3_transcription_fidelity | D7.3-exact-match | test_released_figure_equal_to_tool_return_is_transcribed_exact | |
-| verify_conformance | test_d7_3_transcription_fidelity | D7.3-altered-detected | test_released_figure_differing_from_tool_return_is_transcribed_altered | |
+| verify_conformance | test_d7_3_transcription_fidelity | D7.3-altered-detected | test_released_figure_differing_from_tool_return_is_transcribed_altered; test_adjudication_routed_figure_has_unobservable_transcription; test_rounding_licensed_by_quantisation_is_transcribed_exact; test_licensed_rounding_uses_half_even_not_the_declared_policy | the last three cover transcription.py lines legacy reached only through verify_inspect's copy of the scorer; the third pins T3-27 |
 | verify_conformance | test_d7_5_clopper_pearson_bound | D7.5-bound-computed | test_zero_failure_bound_is_one_minus_alpha_to_the_one_over_n | |
 | verify_conformance | test_d7_5_clopper_pearson_bound | D7.5-bound-positive | test_zero_failure_bound_is_one_minus_alpha_to_the_one_over_n | |
 | verify_conformance | test_d7_5_clopper_pearson_bound | D7.5-bound-below-1 | test_zero_failure_bound_is_one_minus_alpha_to_the_one_over_n | |
@@ -87,7 +87,7 @@ ellipsis, and wrong line ranges), and are corrected in the new docstrings.
 | verify_conformance | test_5_11_sampling_per_arm_partial | 5.11-has-mechanism | test_mechanism_is_classified_for_a_single_configuration | |
 | verify_conformance | test_6_3b_structural_evidence_partial | 6.3b-ev3-gated | test_structural_evidence_is_gated_by_refusing_ev3 | |
 | verify_conformance | test_d7_2b_operation_correctness | D7.2b-returns-dict | test_recoverable_expression_matching_expected_is_operation_correct | stronger: result pinned |
-| verify_conformance | test_d7_2b_operation_correctness | D7.2b-has-outcome | test_recoverable_expression_matching_expected_is_operation_correct | |
+| verify_conformance | test_d7_2b_operation_correctness | D7.2b-has-outcome | test_recoverable_expression_matching_expected_is_operation_correct; test_result_matching_a_reference_intermediate_is_operation_correct | the second covers operation_correctness.py lines legacy reached only through verify_inspect's copy of the scorer |
 | verify_conformance | test_r0_1_strict_schema_sampling_param_at_top_level | R0.1-sampling-param-refused | test_sampling_parameter_at_top_level_is_refused_suggesting_sampling | |
 | verify_conformance | test_r0_1_strict_schema_sampling_param_at_top_level | R0.1-names-key | test_sampling_parameter_at_top_level_is_refused_suggesting_sampling | |
 | verify_conformance | test_r0_1_strict_schema_sampling_param_at_top_level | R0.1-suggests-sampling | test_sampling_parameter_at_top_level_is_refused_suggesting_sampling | stronger: message prefix pinned |
@@ -218,3 +218,12 @@ I/test_metrics.py (T3-43), I/test_solver.py (S3-G7-5),
 I/test_task.py::test_dataset_has_one_sample_per_derivable_item and
 test_instruction_removed_samples_are_identical_to_base (S3-G7-4),
 I/test_scorer.py::test_scorer_registers_no_metrics (S3-G7-3).
+
+## Coverage: legacy versus new (coverage.py, branch)
+
+Union of the six mapped suites (verify_spec excluded) against the union of
+the new tests (plus `U/runner/test_summary.py`, mapped above): legacy 2241
+lines / 2912 arcs, new 2759 lines / 3619 arcs. The only lines legacy executes
+and the new tests do not are `scoring/provenance/audit.py` lines 1 and 10,
+executed by legacy verify_r41's unused import of `build_audit_listing` (module
+definition only, no behaviour). Per-suite tables are in the G7 report.
