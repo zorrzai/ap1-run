@@ -55,5 +55,10 @@
     "killed": 417,
     "mutants": 417,
     "score": 1.0
+  },
+  "scoring/transcription": {
+    "killed": 91,
+    "mutants": 91,
+    "score": 1.0
   }
 }
