@@ -2,9 +2,11 @@
 R3.1 seal-time ground-truth guards (perturbation and source fields)."""
 
 import hashlib
+import importlib.util
 import json
 from datetime import timezone
 from decimal import Decimal
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -645,3 +647,29 @@ def test_source_fields_check_misses_reads_through_get():
     mod = module(reads('acct.balance', declared=['acct.balance'],
                        via_get=['acct.rate']))
     assert source_fields_check(mod, FIXTURE, questions('Q01')) == []
+
+
+# -- the shipped example module --------------------------------------------
+# The guards are never called on a live run (T3-7), so these are the only
+# checks that the example ground-truth module satisfies them. Read only.
+
+EXAMPLE = Path(__file__).resolve().parents[3] / 'example'
+
+
+@pytest.fixture(scope='module')
+def example():
+    spec = importlib.util.spec_from_file_location(
+        '_s3_g3_ground_truth_example', EXAMPLE / 'ground_truth_example.py')
+    gt = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(gt)
+    load = lambda name: json.loads(  # noqa: E731
+        (EXAMPLE / name).read_text(encoding='utf-8'))
+    return gt, load('fixture.json'), load('questions.json')
+
+
+def test_perturbation_check_passes_example_module(example):
+    assert perturbation_check(*example) == []
+
+
+def test_source_fields_check_passes_example_module(example):
+    assert source_fields_check(*example) == []
