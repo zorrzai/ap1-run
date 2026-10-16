@@ -246,7 +246,7 @@ def test_load_config_top_level_sampling_param_suggests_sampling(load):
         f"Permitted top-level fields: {PERMITTED_LIST}")
 
 
-@pytest.mark.finding('S3-g1-15')
+@pytest.mark.finding('S3-G1-15')
 def test_load_config_unknown_field_message_omits_optional_fields(load):
     # Current behaviour: the list of permitted fields names only the
     # required ones, though the optional ones (tools, ...) are accepted.
@@ -338,7 +338,7 @@ def test_load_config_omission_checked_before_bare_numerics(load):
     assert msg.startswith('sampling.temperature: omitted without a reason')
 
 
-@pytest.mark.finding('S3-g1-14')
+@pytest.mark.finding('S3-G1-14')
 def test_load_config_sampling_not_an_object_loads(load):
     # Current behaviour: a non-object 'sampling' skips validation and
     # loads. Correct: refuse, as for 'quantisation'.
@@ -387,7 +387,7 @@ def test_load_config_omission_shape_needs_reason_to_skip_check(load):
         'bare numeric literal at tools[0].n: 5 --')
 
 
-@pytest.mark.finding('S3-g1-13')
+@pytest.mark.finding('S3-G1-13')
 def test_load_config_omission_shaped_object_skips_bare_numeric_check(load):
     # Current behaviour: any object with value 'omitted' and a 'reason'
     # key, anywhere in the tree and with any reason, is not walked, so the
@@ -397,7 +397,7 @@ def test_load_config_omission_shaped_object_skips_bare_numeric_check(load):
     assert cfg['tools'] == [{'value': 'omitted', 'reason': 'any', 'n': 5}]
 
 
-@pytest.mark.finding('S3-g1-13')
+@pytest.mark.finding('S3-G1-13')
 def test_load_config_bare_numeric_detail_in_omission_accepted(load):
     o = {'value': 'omitted', 'reason': 'operator-declared', 'detail': 5}
     assert load(sampling={'top_p': o})['sampling']['top_p']['detail'] == 5
@@ -432,7 +432,7 @@ def test_load_config_tolerance_keeps_exact_text(load):
         '0.0050'
 
 
-@pytest.mark.finding('S3-g1-11')
+@pytest.mark.finding('S3-G1-11')
 def test_load_config_tolerance_nan_and_negative_accepted(load):
     # Current behaviour: any Decimal() text loads, including NaN and
     # negative values. Correct: refuse; a tolerance is finite and >= 0.
@@ -474,7 +474,7 @@ def test_load_config_quantisation_rounding_not_validated(load):
         'quantisation']['rounding'] == 'BOGUS'
 
 
-@pytest.mark.finding('S3-g1-10')
+@pytest.mark.finding('S3-G1-10')
 def test_load_config_quantisation_places_not_integer_raises_valueerror(load):
     # Current behaviour: int('abc') escapes as ValueError, not ConfigError.
     # Correct: ConfigError naming quantisation.places.
@@ -482,7 +482,7 @@ def test_load_config_quantisation_places_not_integer_raises_valueerror(load):
         load(quantisation={'places': 'abc', 'rounding': 'ROUND_HALF_UP'})
 
 
-@pytest.mark.finding('S3-g1-10')
+@pytest.mark.finding('S3-G1-10')
 def test_load_config_quantisation_places_bool_and_negative_accepted(load):
     # Current behaviour: places true loads as 1 (booleans pass the
     # bare-numeric check) and '-2' as -2. Correct: a quoted non-negative
@@ -511,7 +511,7 @@ def test_load_config_repeat_count_surrounding_spaces_accepted(load):
     assert load(repeat_count=' 5 ')['repeat_count'] == 5
 
 
-@pytest.mark.finding('S3-g1-12')
+@pytest.mark.finding('S3-G1-12')
 def test_load_config_repeat_count_zero_and_negative_accepted(load):
     # Current behaviour: '0' and '-3' load. Correct: refuse a repeat count
     # below 1.

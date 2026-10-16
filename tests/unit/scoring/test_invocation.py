@@ -291,7 +291,7 @@ def test_compute_dpr_removed_above_base_is_negative():
     assert compute_dpr(5, 10, 10, 10) == (D(-1), '-100.0%')
 
 
-@pytest.mark.finding('S3-g4-scoring-a-1')
+@pytest.mark.finding('S3-G4-1')
 def test_compute_dpr_no_removed_observations_reports_full_drop():
     # Correct: with no observations in the removed arm, DPR is
     # UNDEFINED like the zero-base case. Today the removed rate is taken

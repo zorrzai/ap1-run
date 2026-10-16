@@ -98,7 +98,7 @@ def test_append_extra_fields_added(tmp_path):
     assert rec['repeat'] == 2
 
 
-@pytest.mark.finding('S3-g1-16')
+@pytest.mark.finding('S3-G1-16')
 def test_append_extra_timestamp_overrides_the_clock(tmp_path, fixed_time):
     # Current behaviour: extras are merged last, so a caller's
     # 'timestamp' replaces the store's own. Correct: the store owns the
@@ -188,7 +188,7 @@ def test_read_all_invalid_line_raises_with_line_number(tmp_path):
     assert isinstance(e.value.__cause__, json.JSONDecodeError)
 
 
-@pytest.mark.finding('S3-g1-17')
+@pytest.mark.finding('S3-G1-17')
 def test_read_all_interrupted_last_line_raises(tmp_path):
     # Current behaviour: a run killed mid-write leaves a truncated last
     # line, and read_all refuses the whole transcript. Correct (per its

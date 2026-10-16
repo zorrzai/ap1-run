@@ -308,7 +308,7 @@ def test_declared_constants_check_indented_source_item_skipped(gt_module):
     assert_only_q09_fails(mod, 'Q01')
 
 
-@pytest.mark.finding('S3-g3-1')
+@pytest.mark.finding('S3-G3-1')
 def test_declared_constants_check_only_sees_string_d_calls(gt_module):
     # Current behaviour: only D("<str>") is inspected, although the module
     # docstring promises "every numeric literal". D(4), Decimal("4"), a bare

@@ -420,9 +420,9 @@ def test_execute_item_call_without_function_unknown_tool(tmp_path,
     assert result['invocation_outcome'] == 'NOT-INVOKED'
 
 
-@pytest.mark.finding('S3-g2-2')
+@pytest.mark.finding('S3-G2-2')
 def test_execute_item_call_without_id_raises(tmp_path, calculator):
-    # S3-g2-2: the record's id defaults to 'call_<turn>', but the return
+    # S3-G2-2: the record's id defaults to 'call_<turn>', but the return
     # value is looked up by tc.get('id', ''), so a call without an id
     # raises EngineError and the whole run stops. Correct: match by the
     # same default (or by position), never abort on a platform omission.
@@ -434,10 +434,10 @@ def test_execute_item_call_without_id_raises(tmp_path, calculator):
                               "cannot attach return_value")
 
 
-@pytest.mark.finding('S3-g2-3')
+@pytest.mark.finding('S3-G2-3')
 def test_execute_item_repeated_call_id_return_on_first_record(
         tmp_path, calculator):
-    # S3-g2-3: return values are attached to the first record with the
+    # S3-G2-3: return values are attached to the first record with the
     # same id, so a repeated id (here across turns) overwrites the first
     # call's return and leaves the second without one. Correct: attach
     # to the record of this turn's call.
@@ -552,7 +552,7 @@ def test_drive_tool_loop_round_shapes_one_per_response(calculator):
     assert shapes == [(True, None)] * 3
 
 
-@pytest.mark.finding('S3-g2-1')
+@pytest.mark.finding('S3-G2-1')
 @pytest.mark.parametrize('final, error', [
     ({'choices': [{'message': None}]}, AttributeError),
     ({'choices': ['x']}, AttributeError),
@@ -560,7 +560,7 @@ def test_drive_tool_loop_round_shapes_one_per_response(calculator):
                                'metadata': 'attestation'}}]}, TypeError),
 ], ids=['null-message', 'str-choice', 'str-metadata'])
 def test_execute_item_malformed_response_shape_raises(tmp_path, final, error):
-    # S3-g2-1: shapes the evidence code reports as unrecognised (EV-0)
+    # S3-G2-1: shapes the evidence code reports as unrecognised (EV-0)
     # make _extract_tool_calls or extract_attestation raise, and
     # execute_item does not catch it: the run stops. Correct: EV-0 (or
     # UNMEASURED), the run continues.
@@ -706,10 +706,10 @@ def test_extract_calc_expression(record, expected):
     assert engine._extract_calc_expression(record) == expected
 
 
-@pytest.mark.finding('S3-g2-4')
+@pytest.mark.finding('S3-G2-4')
 @pytest.mark.parametrize('arguments', ['["1+1"]', '"1+1"', '15.2'])
 def test_extract_calc_expression_non_object_json_raises(arguments):
-    # S3-g2-4: arguments that are valid JSON but not an object raise
+    # S3-G2-4: arguments that are valid JSON but not an object raise
     # AttributeError (only JSONDecodeError and TypeError are caught).
     # In execute_item the same input reaches provenance's copy of this
     # function first (T3-39 class); both are uncaught. Correct: None.

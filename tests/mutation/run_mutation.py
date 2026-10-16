@@ -168,8 +168,8 @@ def main(argv=None):
                 f'score {result["score"]}')
         unchecked = result['counts'].get('not checked', 0)
         if unchecked:
-            line += (f' [{unchecked} not checked: the tests did not run '
-                     f'cleanly in the copy]')
+            line += (f' [{unchecked} not checked: no test reached the '
+                     f'mutated code, or the tests failed in the copy]')
         if recorded is not None and args.tests:
             line += f' (its own tests: {recorded})'
         elif recorded is not None:

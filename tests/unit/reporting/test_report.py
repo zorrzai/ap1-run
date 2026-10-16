@@ -1064,7 +1064,7 @@ def test_cells_non_string_error_state_without_colon_is_stringified():
     assert '| Q | c | 504 | 504 |' in text
 
 
-@pytest.mark.finding('S3-g6-1')
+@pytest.mark.finding('S3-G6-1')
 def test_cells_non_string_error_state_with_colon_raises():
     # The colon test goes through str() but the split does not, so a
     # non-string error_state whose text contains ':' raises and no
@@ -1154,11 +1154,11 @@ def test_unmeasured_dimensions_does_not_declare_d7_parts():
     assert 'D7' not in text
 
 
-@pytest.mark.finding('T3-33', 'S3-g6-2')
+@pytest.mark.finding('T3-33', 'S3-G6-2')
 def test_unmeasured_dimensions_all_unclaimed():
     # Every unclaimed dimension is said to "require human adjudication",
     # D1, D2 and D7 included, which the runner measures automatically
-    # (S3-g6-2). D7 is called "Provenance" (T3-33). Correct: the AP-1
+    # (S3-G6-2). D7 is called "Provenance" (T3-33). Correct: the AP-1
     # names, and the reason each one was not measured.
     text = report._section_unmeasured_dimensions({})
     assert text.endswith(md(
