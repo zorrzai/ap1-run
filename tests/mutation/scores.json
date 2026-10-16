@@ -1,4 +1,10 @@
 {
+  "execution/seal_constants": {
+    "killed": 100,
+    "mutants": 102,
+    "notes": "Both survivors are equivalent: they rename the 'reason' key of a failure dict. The dicts are never observable, because any failure raises SealError (whose message does not use 'reason') and the function only ever returns an empty list. Legacy suites verify_d72b.py + verify_e7_coverage.py score 0.7549 on the same mutants.",
+    "score": 0.9804
+  },
   "run": {
     "killed": 553,
     "mutants": 568,
