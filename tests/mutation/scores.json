@@ -45,6 +45,12 @@
     "mutants": 145,
     "score": 1.0
   },
+  "scoring/figure_id": {
+    "killed": 144,
+    "mutants": 158,
+    "notes": "All 14 survivors are in unreachable code: the defensive 'if len(matched) == 0 and len(tokens) == 0' block after the match loop (two mutants of the condition, twelve of the returned dict). An empty token list already returns AUTO-NO-FIGURE above, so tokens is never empty there; the legacy suites do not reach it either.",
+    "score": 0.9114
+  },
   "scoring/invocation": {
     "killed": 166,
     "mutants": 167,
