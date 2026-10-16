@@ -93,6 +93,29 @@
     "notes": "All 12 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One changes n > 0 to n >= 0 where n is always at least 1. One drops operator_declared=None, which is classify_mechanism's default.",
     "score": 0.9783
   },
+  "scoring/accuracy": {
+    "killed": 145,
+    "mutants": 145,
+    "score": 1.0
+  },
+  "scoring/figure_id": {
+    "killed": 144,
+    "mutants": 158,
+    "notes": "All 14 survivors are in unreachable code: the defensive 'if len(matched) == 0 and len(tokens) == 0' block after the match loop (two mutants of the condition, twelve of the returned dict). An empty token list already returns AUTO-NO-FIGURE above, so tokens is never empty there; the legacy suites do not reach it either.",
+    "score": 0.9114
+  },
+  "scoring/invocation": {
+    "killed": 166,
+    "mutants": 167,
+    "notes": "The one survivor is equivalent: 'n > 0' to 'n >= 0' in the cross-class warning, where every class in per_class has at least one item, so n is always at least 1. The module-level getcontext().prec = 50 is not mutated by mutmut; test_invocation_import_sets_global_decimal_precision_to_50 pins it (T3-60).",
+    "score": 0.994
+  },
+  "scoring/operation_correctness": {
+    "killed": 341,
+    "mutants": 362,
+    "notes": "All 21 non-killed mutants are equivalent or message-only. 11 change the text of a ValueError raised in _eval_decimal, which evaluate_expression always swallows (returns None). 4 are in evaluate_expression's 'if not isinstance(result, Decimal)' branch, which is unreachable (every evaluator path returns Decimal; converting a Decimal through str keeps value and exponent). In classify_operation: 'and' to 'or' in the expected-value conversion (None becomes Decimal('None'), which fails and gives None again), and two quantisation defaults ({} vs None, both falsy). In reclassify_session: 'er is not None or True' (Decimal('None') fails and gives None again), changed = None (falsy like False), and changed = True, an endless loop that mutmut reports as a timeout (the tests hang, so it is detected, but the score counts only kills).",
+    "score": 0.942
+  },
   "scoring/provenance/audit": {
     "killed": 51,
     "mutants": 51,
