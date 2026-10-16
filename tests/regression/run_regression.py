@@ -20,13 +20,19 @@ Usage:
                                        # also write the full output to DIR,
                                        # including files kept only as digests
 
-Each run happens in a scratch copy of the repository (without .git and
-output/), so the runner writes to the copy's output/, never to the
-published runs under output/.
+Most scenarios run from the real tree: the runner gets the scenario's
+config (written to a temporary directory) with --config and a temporary
+--output-dir, so it never writes under the repository. A scenario that
+sets "scratch_copy" (with the reason) runs instead in a scratch copy of
+the repository (without .git and output/): one that writes files at fixed
+repository paths, or checks that the default output/ stays untouched.
+Either way git is hidden from the run (GIT_DIR points nowhere), as in a
+copy without .git, so the result does not depend on the checkout's state.
 
 Normalisation (in the comparison, never in the runner):
   - line endings to LF
-  - the scratch copy's path, and the mock endpoint's address and port
+  - the scratch copy's path (or the repository's and the temporary run
+    directory's), and the mock endpoint's address and port
   - ISO timestamps, and the adapter's epoch timestamps
   - this run's seal_hash, config_hash and runner_source_hash, read from
     the seal the run actually made (the config hash covers the mock's
@@ -57,6 +63,61 @@ _SKIP_TOP = {'.git', '.venv', 'output', 'graphify-out', 'review_output',
 # Files the runner writes to output/.
 _OUTPUTS = ['report.md', 'adjudication_sheets.md', 'smoke_summary.json',
             'smoke_run.jsonl', 'DISCLAIMER.txt']
+
+
+# -- inputs ----------------------------------------------------------
+
+def write_config(scenario, base_path, config_path):
+    """The scenario's config: base_path with the scenario's "config"
+    entries merged in, written to config_path."""
+    with open(base_path, encoding='utf-8') as f:
+        config = json.load(f)
+    _deep_merge(config, scenario.get('config', {}))
+    with open(config_path, 'w', encoding='utf-8') as f:
+        json.dump(config, f, indent=2, ensure_ascii=False)
+        f.write('\n')
+
+
+def scenario_config(scenario, directory):
+    """The config file a real-tree run uses: the shipped one, or a merged
+    copy in directory when the scenario changes it."""
+    base = os.path.join(REPO, scenario.get('config_file',
+                                           os.path.join('example',
+                                                        'config.json')))
+    if 'config' not in scenario:
+        return base
+    os.makedirs(directory, exist_ok=True)
+    path = os.path.join(directory, 'config.json')
+    write_config(scenario, base, path)
+    return path
+
+
+def _env(*, runner_env=False):
+    """The environment of a run: nothing AP1_SMOKE_* inherited for a
+    command, fixed hashing and encoding, no bytecode, and no git."""
+    env = dict(os.environ)
+    if not runner_env:  # the driver clears and sets these itself
+        env = {k: v for k, v in env.items() if not k.startswith('AP1_SMOKE_')}
+    env.update(PYTHONHASHSEED='0', PYTHONIOENCODING='utf-8',
+               PYTHONDONTWRITEBYTECODE='1',
+               # The runner cross-checks VERSION against git HEAD. The
+               # golden output pins a run without git (as in a copy
+               # without .git); a checkout on any branch must give it.
+               GIT_DIR=os.path.join(tempfile.gettempdir(),
+                                    'ap1rt-no-git', 'none'))
+    return env
+
+
+def snapshot(directory):
+    """Every file under directory, with its size and mtime."""
+    found = {}
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            p = os.path.join(root, f)
+            st = os.stat(p)
+            found[os.path.relpath(p, directory)] = (st.st_size,
+                                                    st.st_mtime_ns)
+    return found
 
 
 # -- scratch copy ----------------------------------------------------
@@ -91,12 +152,7 @@ def make_copy(scenario):
         shutil.copyfile(os.path.join(tree, scenario['config_file']),
                         config_path)
     if 'config' in scenario:
-        with open(config_path, encoding='utf-8') as f:
-            config = json.load(f)
-        _deep_merge(config, scenario['config'])
-        with open(config_path, 'w', encoding='utf-8') as f:
-            json.dump(config, f, indent=2, ensure_ascii=False)
-            f.write('\n')
+        write_config(scenario, config_path, config_path)
     # Copies inside the tree, after the config edits (for the runner's
     # path options): {"from": "to"}, a file or a directory.
     for src, dst in scenario.get('copy_paths', {}).items():
@@ -133,47 +189,95 @@ def load_scenario(name):
 def run_scenario(name, coverage_dir=None):
     """Run one scenario. Returns {golden file name: normalised text}."""
     scenario = load_scenario(name)
-    copy_dir, tree = make_copy(scenario)
-    result_dir = os.path.join(copy_dir, 'result')
-    os.makedirs(result_dir)
-    path = os.path.join(copy_dir, 'scenario.json')
-    with open(path, 'w', encoding='utf-8') as f:
-        json.dump(scenario, f, indent=2)
+    if scenario.get('scratch_copy'):
+        return run_in_copy(name, scenario, coverage_dir)
+    # The published runs must come out of a real-tree run untouched.
+    published = snapshot(os.path.join(REPO, 'output'))
+    try:
+        return run_in_tree(name, scenario, coverage_dir)
+    finally:
+        if snapshot(os.path.join(REPO, 'output')) != published:
+            raise RuntimeError(f'{name}: the run changed {REPO}/output')
+
+
+def _coverage(name, coverage_dir, source):
+    if not coverage_dir:
+        return []
+    return ['-m', 'coverage', 'run', '--branch',
+            f'--data-file={os.path.join(coverage_dir, ".coverage." + name)}',
+            f'--context=regression:{name}', f'--source={source}']
+
+
+def run_in_tree(name, scenario, coverage_dir):
+    """Run from the repository itself. The runner reads its inputs from
+    the tree (the config from a temporary copy when the scenario edits
+    it) and writes to a temporary run directory, which stands where the
+    scratch copy's root stood: <RUNDIR>/output/."""
+    copy_only = {'copy_paths', 'output_dir', 'copy_output'} & set(scenario)
+    if copy_only:
+        raise RuntimeError(f'{name}: {", ".join(sorted(copy_only))} '
+                           'need "scratch_copy"')
+    work = tempfile.mkdtemp(prefix='ap1rt-')
     try:
         if 'command' in scenario:
-            return run_command(name, scenario, tree, result_dir, coverage_dir)
-        cmd = [sys.executable]
-        if coverage_dir:
-            cmd += ['-m', 'coverage', 'run', '--branch',
-                    f'--data-file={os.path.join(coverage_dir, ".coverage." + name)}',
-                    f'--context=regression:{name}', f'--source={tree}']
-        cmd += [DRIVER, tree, path, result_dir, REPO]
-        env = dict(os.environ, PYTHONHASHSEED='0', PYTHONIOENCODING='utf-8',
-                   PYTHONDONTWRITEBYTECODE='1')
-        proc = subprocess.run(cmd, cwd=tree, env=env, capture_output=True,
-                              text=True, encoding='utf-8', timeout=3600)
-        if not os.path.exists(os.path.join(result_dir, 'exit.json')):
-            raise RuntimeError(f'driver failed for {name}:\n{proc.stderr}')
-        return collect(scenario, tree, result_dir, proc)
+            return run_command(name, scenario, REPO, coverage_dir)
+        run_dir = os.path.join(work, 'run')
+        output_dir = os.path.join(run_dir, 'output')
+        os.makedirs(output_dir)
+        config_path = scenario_config(scenario, os.path.join(work, 'inputs'))
+        scenario = dict(scenario, args=['--config', config_path,
+                                        '--output-dir', output_dir]
+                        + scenario.get('args', []))
+        proc, result_dir = _drive(name, scenario, REPO, work, coverage_dir)
+        return collect(proc, result_dir, output_dir, [REPO, run_dir])
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
+
+
+def run_in_copy(name, scenario, coverage_dir):
+    """Run in a scratch copy of the repository (see "scratch_copy")."""
+    copy_dir, tree = make_copy(scenario)
+    try:
+        if 'command' in scenario:
+            return run_command(name, scenario, tree, coverage_dir)
+        proc, result_dir = _drive(name, scenario, tree, copy_dir,
+                                  coverage_dir)
+        output_dir = os.path.join(tree, scenario.get('output_dir', 'output'))
+        default_output = os.path.join(tree, 'output')
+        return collect(proc, result_dir, output_dir, [tree],
+                       default_output=(default_output
+                                       if output_dir != default_output
+                                       else None))
     finally:
         shutil.rmtree(copy_dir, ignore_errors=True)
 
 
-def run_command(name, scenario, tree, result_dir, coverage_dir):
-    """A command scenario: run one entry point in the scratch copy and
-    pin its console, exit code and the files it writes."""
-    cmd = [sys.executable]
+def _drive(name, scenario, code_dir, work, coverage_dir):
+    """The runner under the driver, from code_dir; results under work."""
+    result_dir = os.path.join(work, 'result')
+    os.makedirs(result_dir)
+    path = os.path.join(work, 'scenario.json')
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(scenario, f, indent=2)
+    cmd = ([sys.executable] + _coverage(name, coverage_dir, code_dir)
+           + [DRIVER, code_dir, path, result_dir, REPO])
+    proc = subprocess.run(cmd, cwd=code_dir, env=_env(runner_env=True),
+                          capture_output=True, text=True, encoding='utf-8',
+                          timeout=3600)
+    if not os.path.exists(os.path.join(result_dir, 'exit.json')):
+        raise RuntimeError(f'driver failed for {name}:\n{proc.stderr}')
+    return proc, result_dir
+
+
+def run_command(name, scenario, tree, coverage_dir):
+    """A command scenario: run one entry point from tree (the repository
+    or a scratch copy) and pin its console, exit code and the files it
+    writes."""
+    cmd = [sys.executable] + _coverage(name, coverage_dir, tree)
     args = list(scenario['command'])
-    if coverage_dir:
-        cmd += ['-m', 'coverage', 'run', '--branch',
-                f'--data-file={os.path.join(coverage_dir, ".coverage." + name)}',
-                f'--context=regression:{name}', f'--source={tree}']
-    env = {k: v for k, v in os.environ.items()
-           if not k.startswith('AP1_SMOKE_')}
-    env.update(PYTHONHASHSEED='0', PYTHONIOENCODING='utf-8',
-               PYTHONDONTWRITEBYTECODE='1')
+    env = _env()
     if os.path.isdir(os.path.join(tree, 'src')):
-        # The copy's package, not an installed one.
+        # The tree's package, not an installed one.
         env['PYTHONPATH'] = os.path.join(tree, 'src')
     env.update(scenario.get('env', {}))
     proc = subprocess.run(cmd + args, cwd=tree, env=env, capture_output=True,
@@ -187,7 +291,7 @@ def run_command(name, scenario, tree, result_dir, coverage_dir):
         p = os.path.join(tree, rel)
         key = rel.replace('/', '__')
         raw[key] = _read(p) if os.path.exists(p) else '(not written)\n'
-    return {k: normalise(v, tree, []) for k, v in raw.items()}
+    return {k: normalise(v, [tree], []) for k, v in raw.items()}
 
 
 def _read(path):
@@ -195,7 +299,10 @@ def _read(path):
         return f.read()
 
 
-def collect(scenario, tree, result_dir, proc):
+def collect(proc, result_dir, output_dir, roots, default_output=None):
+    """What a runner scenario produced. roots are the paths that become
+    <RUNDIR>; default_output, when the runner was pointed elsewhere, is
+    the default output/ that must stay as the copy made it."""
     raw = {
         'console.txt': proc.stdout,
         'stderr.txt': proc.stderr,
@@ -203,23 +310,20 @@ def collect(scenario, tree, result_dir, proc):
         'requests.jsonl': _read(os.path.join(result_dir, 'requests.jsonl')),
     }
     produced = []
-    output_dir = scenario.get('output_dir', 'output')
     for name in _OUTPUTS:
-        p = os.path.join(tree, output_dir, name)
+        p = os.path.join(output_dir, name)
         if os.path.exists(p):
             produced.append(name)
             raw[name] = _read(p)
     raw['files.txt'] = ''.join(f'{n}\n' for n in produced)
-    if output_dir != 'output':
-        # The runner was pointed elsewhere: its default output/ must
-        # stay as the copy made it.
+    if default_output:
         raw['default_output.txt'] = ''.join(
-            f'{n}\n' for n in sorted(os.listdir(os.path.join(tree, 'output'))))
+            f'{n}\n' for n in sorted(os.listdir(default_output)))
     if 'smoke_run.jsonl' in raw:
         raw['outcomes.jsonl'] = outcome_table(raw['smoke_run.jsonl'])
 
     seals = json.loads(_read(os.path.join(result_dir, 'seal.json')))
-    return {k: normalise(v, tree, seals) for k, v in raw.items()}
+    return {k: normalise(v, roots, seals) for k, v in raw.items()}
 
 
 def digest_large(scenario, produced):
@@ -277,9 +381,10 @@ _MOCK = re.compile(r'http://127\.0\.0\.1:\d+')
 _SOURCE_HASH_LINE = re.compile(r'(Runner source hash: )[0-9a-f]+')
 
 
-def normalise(text, tree, seals):
+def normalise(text, roots, seals):
     text = text.replace('\r\n', '\n')
-    for p in sorted({tree, os.path.realpath(tree)}, key=len, reverse=True):
+    paths = set(roots) | {os.path.realpath(r) for r in roots}
+    for p in sorted(paths, key=len, reverse=True):
         text = text.replace(p, '<RUNDIR>')
         text = text.replace(json.dumps(p)[1:-1], '<RUNDIR>')
     text = _MOCK.sub('<MOCK>', text)

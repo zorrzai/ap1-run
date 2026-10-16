@@ -17,10 +17,12 @@ real adapter and HTTP transport:
 - `../fixtures/mock_endpoint.py`: a local HTTP server that speaks the
   chat-completions API. It serves scripted turns per question, condition,
   repeat and round, or it replays a published transcript.
-- `driver.py`: runs the runner's `main()` in a scratch copy of the
-  repository, so the runner writes to the copy's `output/`, never to the
-  published runs. It imports `smoke_test`, or `ap1_run.run` when the tree
-  has no `smoke_test.py`.
+- `driver.py`: runs the runner's `main()` from the repository itself. The
+  runner gets the scenario's config with `--config` (a temporary merged copy
+  when the scenario edits it) and a temporary `--output-dir`, so it never
+  writes under the repository; `run_regression.py` checks that `output/` is
+  unchanged after every real-tree scenario. It imports `smoke_test`, or
+  `ap1_run.run` when the tree has no `smoke_test.py`.
 - `run_regression.py`: runs each scenario, normalises the output and compares
   it exactly with `golden/<scenario>/`.
 - `scenarios/*.json`: one scenario per file. A scenario can `extend` another
@@ -29,7 +31,18 @@ real adapter and HTTP transport:
   give the runner command-line `args`, make `copy_paths` inside the copy
   (`{"from": "to"}`, after the config edits), and name the `output_dir` the
   outputs are read from; the default `output/` must then stay empty
-  (`default_output.txt`).
+  (`default_output.txt`). `copy_paths`, `output_dir` and `copy_output`
+  (published runs copied into the copy's `output/`) need a scratch copy.
+- **Scratch copy.** A scenario that sets `"scratch_copy"` (its value says
+  why) runs in a scratch copy of the repository, without `.git` and
+  `output/`, instead of the real tree. Two do: `cli_paths` (it checks that
+  the default `output/` stays empty, which needs a disposable one) and
+  `tool_generate_findings` (the tool writes `findings/FINDINGS.md` at a
+  fixed path).
+- **No git.** Every run gets `GIT_DIR` pointing nowhere. The runner
+  cross-checks `VERSION` against git `HEAD` and records `runner_modified`;
+  the golden output pins a run without git (as in a copy without `.git`),
+  so it does not depend on the branch the checkout is on.
 
 What is compared for each scenario:
 - the console output, stderr and exit code (or the exception);
@@ -46,7 +59,9 @@ run it at both commits and diff the two directories.
 
 **Normalisation** happens in the comparison, never in the runner. It covers:
 - line endings;
-- the scratch path and the mock's address and port;
+- the run's root path (the scratch copy, or the repository and the
+  temporary run directory whose `output/` the runner writes to) and the
+  mock's address and port;
 - ISO and epoch timestamps;
 - this run's `seal_hash`, `config_hash` and `runner_source_hash`, read from
   the seal the run actually made. The config hash covers the mock's port. The
