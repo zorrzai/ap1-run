@@ -2,8 +2,10 @@
 literal in a derive function must be declared as a constant."""
 
 import importlib.util
+import json
 import sys
 import textwrap
+from pathlib import Path
 
 import pytest
 
@@ -324,3 +326,19 @@ def test_declared_constants_check_only_sees_string_d_calls(gt_module):
             return result(helper(b) / D(4) / Decimal("5") / 7)
     ''')
     assert declared_constants_check(mod, FIXTURE, questions('Q01')) == []
+
+
+# -- the shipped example module --------------------------------------------
+# Never called on a live run (T3-7); the only check that the example
+# module declares its constants (it declares 4 for Q07 without using it).
+
+def test_declared_constants_check_passes_example_module():
+    example = Path(__file__).resolve().parents[3] / 'example'
+    spec = importlib.util.spec_from_file_location(
+        '_s3_g3_ground_truth_example_c', example / 'ground_truth_example.py')
+    gt = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(gt)
+    load = lambda name: json.loads(  # noqa: E731
+        (example / name).read_text(encoding='utf-8'))
+    assert declared_constants_check(
+        gt, load('fixture.json'), load('questions.json')) == []
