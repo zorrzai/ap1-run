@@ -198,3 +198,23 @@ tests run `engine.execute_item` against a scripted endpoint on 127.0.0.1
 | test_findings_mutation | (module) | artifact-invocation-count | test_changed_artifact_changes_the_generated_findings[artifact-invocation-count] | legacy rewrote the sealed output/run_b_sol/smoke_summary.json in place (restored from a .bak); the new test mutates a copy. Stronger: the changed figures are pinned |
 | test_findings_mutation | (module) | artifact-wrong-op-count | test_changed_artifact_changes_the_generated_findings[artifact-wrong-op-count] | as above (output/run_a_mini) |
 | test_findings_mutation | (module) | artifact-sign-inv-count | test_changed_artifact_changes_the_generated_findings[artifact-sign-inv-count]; test_f7_counts_an_outcome_the_runner_never_emits; test_f7_item_wrong_count_stays_zero_when_a_figure_stops_matching | the last two pin T3-14 (FINDINGS F7's 0/468) |
+
+## verify_inspect.py (4 test methods, 4 checks; run_all_tests counts 3 functions)
+
+New tests in `I/`. The shim and the comparison run in every environment;
+scorer, solver, task and metrics tests skip without inspect-ai and run in
+`ap1-run-inspect`.
+
+| suite | function | check | new test(s) | note |
+|---|---|---|---|---|
+| verify_inspect | TestInspectWrapperAgreement.test_shim_unit | shim maps id, name, arguments | I/test_shim.py::test_shim_maps_fields_to_runner_record; test_shim_defaults_turn_one_and_type_function; test_shim_attaches_json_return_value_unchanged; test_shim_refuses_non_string_return_value; test_shim_refuses_return_value_that_is_not_json; test_final_response_has_runner_shape (2 params); test_final_response_of_no_text_has_empty_content | stronger: whole record pinned, error paths covered |
+| verify_inspect | TestInspectWrapperAgreement.test_inspect_wrapper_agrees_with_runner | runner and shimmed records classify identically, every item and step-4 scenario | I/test_shim.py::test_real_inspect_toolcalls_round_trip_to_identical_records (Q07_step4, Q04_step4); I/test_scorer.py::test_auto_match_scores_correct_with_runner_outcomes, test_decline_without_figures_is_auto_no_figure_not_decline, test_adjudication_routed_response_is_logged_incorrect, test_transcription_is_not_checked | test defect (T3-43): legacy classified both paths with its own `_classify`, a copy of the scorer, so it compared the shim's output only and never ran ap1_inspect/scorer.py. Identical records imply identical classification, so the new shim test says the same more directly; the scorer tests pin where the real scorer diverges from the runner (T3-43). Legacy skipped without inspect-ai but counted as passing |
+| verify_inspect | TestInspectWrapperAgreement.test_seal_refusal_on_wrong_hash | wrong hash raises SealError 'mismatch' | I/test_task.py::test_wrong_ap1_text_hash_is_refused; test_shipped_config_with_the_real_ap1_hash_is_refused; test_seal_with_spec_hash_records_spec_as_the_ap1_text; test_seal_without_spec_md_seals_no_text; test_both_tasks_refuse_with_the_shipped_config; test_samples_carry_no_seal_hash | test defect (T3-44): the legacy test passes for the wrong reason, since the task refuses even the correct AP-1 hash; the new tests pin T3-44 and F7 |
+| verify_inspect | TestInspectWrapperAgreement.test_multi_call_decomposition_all_oc | three-call Q07 decomposition all OPERATION-CORRECT | I/test_scorer.py::test_three_call_decomposition_is_operation_correct_after_session_rule | legacy ran its own copy of the scorer without inspect-ai; the new test runs ap1_inspect's scorer, so it needs inspect-ai. The same runner behaviour without inspect-ai is pinned by verify_d72b t12's successor (G4/G5) and R: multi_round (Q07) |
+
+Additional ap1_inspect tests with no legacy counterpart: I/test_compare.py
+(compare.py, incl. T3-43 k=0 bound and unobservable counted as not invoked),
+I/test_metrics.py (T3-43), I/test_solver.py (S3-G7-5),
+I/test_task.py::test_dataset_has_one_sample_per_derivable_item and
+test_instruction_removed_samples_are_identical_to_base (S3-G7-4),
+I/test_scorer.py::test_scorer_registers_no_metrics (S3-G7-3).
