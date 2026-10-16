@@ -158,7 +158,7 @@ keep only the §12.9 ≤300-line constraint as a test; or keep the full table.
 | verify_spec | test_spec_line_counts_match_files | spec-no-stale-counts | none | dropped on purpose, pending Steven's ruling |
 | verify_spec | test_spec_constraint_holds | instrument-modules-found | none | dropped on purpose, pending Steven's ruling |
 | verify_spec | test_spec_constraint_holds | exception-still-breaches-&lt;file&gt; for report.py and provenance/trace.py | none | dropped on purpose, pending Steven's ruling (2 checks) |
-| verify_spec | test_spec_constraint_holds | constraint-&lt;file&gt; for the 19 other instrument modules | none | dropped on purpose, pending Steven's ruling (19 checks) |
+| verify_spec | test_spec_constraint_holds | constraint-&lt;file&gt; for the 20 other instrument modules (provenance/classify, provenance/audit, numeric, engine, evidence, operation_correctness, adjudication, seal, seal_constants, config, reproducibility, figure_id, adapter, invocation, accuracy, context, perturbation_guard, transcription, release_coverage, transcript) | none | dropped on purpose, pending Steven's ruling (20 checks) |
 | verify_spec | test_spec_constraint_holds | no-undeclared-breaches | none | dropped on purpose, pending Steven's ruling |
 | verify_spec | test_spec_constraint_holds | no-stale-exceptions | none | dropped on purpose, pending Steven's ruling |
 
