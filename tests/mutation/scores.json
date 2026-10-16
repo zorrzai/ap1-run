@@ -1,4 +1,10 @@
 {
+  "execution/perturbation_guard": {
+    "killed": 163,
+    "mutants": 195,
+    "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is returned only when it holds nothing but the identical-prompt entry (S3-g3-4). _summarise itself is tested directly.",
+    "score": 0.8359
+  },
   "execution/seal": {
     "killed": 336,
     "mutants": 361,
