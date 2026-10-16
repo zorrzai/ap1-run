@@ -56,6 +56,12 @@
     "mutants": 417,
     "score": 1.0
   },
+  "scoring/release_coverage": {
+    "killed": 110,
+    "mutants": 113,
+    "notes": "All 3 survivors are equivalent. They change the default of tc.get('return_value', '') to None, to no default (also None) or to 'XXXX': None is falsy like '' and is skipped by the same 'if not rv', and 'XXXX' fails json.loads, whose JSONDecodeError is caught, so the call is skipped either way.",
+    "score": 0.9735
+  },
   "scoring/transcription": {
     "killed": 91,
     "mutants": 91,
