@@ -1,4 +1,10 @@
 {
+  "foundation/adapter": {
+    "killed": 160,
+    "mutants": 166,
+    "notes": "All 6 survivors are unobservable: they change the two request_record['attempts'] stores made just before raising (after the last transport failure, and the unreachable 'exhausted retries' path). That record is never returned or attached to the exception, so no caller can see it (finding S3-g1-18); the fix will make these mutants killable. The tests replace requests.post, time.sleep and time.time with fakes; the real HTTP path is covered by the regression scenarios against the mock endpoint.",
+    "score": 0.9639
+  },
   "foundation/config": {
     "killed": 215,
     "mutants": 223,
