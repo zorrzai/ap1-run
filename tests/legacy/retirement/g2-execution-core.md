@@ -40,3 +40,10 @@ Suites mapped here (the module-level suites that execute these modules): `verify
 | verify_phase_c | test_gemini_shape_unmeasurable_not_auto_no_figure | reason mentions Gemini | ev::test_extract_shape_unrecognised_reason[gemini] | as above |
 | verify_phase_c | test_cross_class_aggregate_warning, test_49_limited_1_success_unmeasured | use `EV_0`, `EV_2` constants as input | ev::test_evidence_class_constants_exact_labels | the checks are about scoring/invocation (other group) |
 | verify_e7_coverage | (whole suite) | `evidence.py` is only imported (through `scoring.release_coverage` -> `figure_id`); its 11 % coverage is module load | (none needed) | no check of evidence.py |
+| verify_phase_b | test_underivable_item_void | underivable item: VOID, reason underivable, adapter never called, one transcript record with `error_state` VOID | eng::test_execute_item_underivable_void_without_request | the new test pins the whole record |
+
+`engine.py` is executed by no other module-level suite. Its live wiring (the tool loop over HTTP,
+mid-loop failures, transport errors) is also exercised by G7's `verify_integration.py` and end to
+end by the regression scenarios `clean`, `multi_round`, `transport_errors`,
+`t3_1_unrecognised_shape`, `t3_16_malformed_calls`, `t3_38_unknown_tool` and `t3_39_crash`; every
+line and branch of the three modules is also executed by the new unit tests (100 % branch coverage).
