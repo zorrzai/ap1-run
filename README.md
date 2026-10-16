@@ -15,6 +15,12 @@ It measures whether the numbers a deployed AI system produces can be traced back
 > If you run it and something breaks, that is the report we most want. Open an
 > issue.
 
+> ### Which version of AP-1
+>
+> ap1-run implements the **AP-1 v1.3 Draft for Comment**. **v1.2 remains the
+> version in force.** The runs published here are **demonstration runs, not
+> conformance results** under either version. See [Conformance](#conformance).
+
 ---
 
 ## What it does
@@ -305,8 +311,10 @@ decides whether it is adequate for their use.
 > **AP-1 v1.3 is a draft for public comment and is not adopted.** v1.2 remains
 > the version in force. This instrument targets the v1.3 draft because it
 > incorporates requirements arising from documented defects in the v1.2
-> reference evaluation. Conformance will be re-verified against the adopted
-> text.
+> reference evaluation. There will be no final v1.3: the changes accepted in the
+> comment cycle go into v1.4, and ap1-run will carry the differences to v1.4
+> once it is adopted. The runs in `output/` are demonstration runs, not
+> conformance results under v1.2 or v1.3.
 
 The runner claims conformance to specific clauses of AP-1 v1.3. That claim is
 executable:
