@@ -23,10 +23,13 @@ ap1-run = "ap1_run.run:main"
 where = ["src"]
 
 [tool.pytest.ini_options]
-# The new unit tests (tests/unit/). The legacy suites keep running through
-# run_all_tests.py until they are retired, and the regression baseline
-# through tests/regression/run_regression.py (CI: regression.yml).
-testpaths = ["tests/unit"]
+# The new tests: unit (tests/unit/), AP-1 clause and SPEC R4.1 conformance
+# (tests/conformance/), multi-module behaviour (tests/functional/) and the
+# Inspect wrapper (tests/inspect/, skipped unless inspect-ai is installed).
+# The legacy suites keep running through run_all_tests.py until they are
+# retired, and the regression baseline through
+# tests/regression/run_regression.py (CI: regression.yml).
+testpaths = ["tests/unit", "tests/conformance", "tests/functional", "tests/inspect"]
 # Import the package from src/ even without an install.
 pythonpath = ["src"]
 addopts = ["--strict-markers", "--import-mode=importlib"]
