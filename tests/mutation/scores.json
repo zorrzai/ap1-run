@@ -1,4 +1,28 @@
 {
+  "execution/perturbation_guard": {
+    "killed": 163,
+    "mutants": 195,
+    "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is returned only when it holds nothing but the identical-prompt entry (S3-g3-4). _summarise itself is tested directly.",
+    "score": 0.8359
+  },
+  "execution/seal": {
+    "killed": 336,
+    "mutants": 361,
+    "notes": "All 25 survivors are equivalent. 21 rename a key ('item_id', 'reason', 'declared_fields') or change the exception type name inside the failure dicts of perturbation_check and source_fields_check. Those dicts are never observable: any failure raises SealError, whose message uses only 'field' (perturbation) or 'item_id' and 'undeclared_fields' (source fields), and the functions only ever return an empty list (S3-g3-3). 4 replace the '' default of ap1_version_doi in verify_seal with None or no default, which is falsy like '' and skips the DOI check the same way.",
+    "score": 0.9307
+  },
+  "execution/seal_constants": {
+    "killed": 100,
+    "mutants": 102,
+    "notes": "Both survivors are equivalent: they rename the 'reason' key of a failure dict. The dicts are never observable, because any failure raises SealError (whose message does not use 'reason') and the function only ever returns an empty list. Legacy suites verify_d72b.py + verify_e7_coverage.py score 0.7549 on the same mutants.",
+    "score": 0.9804
+  },
+  "execution/version": {
+    "killed": 155,
+    "mutants": 167,
+    "notes": "All 12 survivors are equivalent. Three touch dead code: the local 'modified' (False to None or True) and the first 'result = {}' are assigned and never read. Three change the unreachable else of 'parts[0] if parts else ...' (a stripped non-empty line always splits into at least one part). Five change how VERSION is opened or a path is encoded: 'UTF-8' is the same codec; no 'r', no encoding or encoding=None mean the locale's, UTF-8 on macOS and Linux. One opens 'version' instead of 'VERSION', which macOS's case-insensitive file system finds anyway. No legacy suite imports version.py (0 % legacy coverage); the regression scenarios run it end to end.",
+    "score": 0.9281
+  },
   "reporting/adjudication": {
     "killed": 475,
     "mutants": 501,
