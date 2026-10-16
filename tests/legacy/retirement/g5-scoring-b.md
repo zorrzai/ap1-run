@@ -33,3 +33,13 @@ Unit test files: `tests/unit/scoring/test_transcription.py` (T),
 | verify_e7_coverage.py | test_b36_float_noise_governed_after_quantise | 15.200000000000001 vs 15.20 at 2 places HALF_UP -> GOVERNED-RELEASE | C `test_release_coverage_quantising_absorbs_float_noise` | |
 | verify_e7_coverage.py | test_b37_substitution_at_2nd_decimal_stays_partially_governed | 430.75 vs 430.76 -> PARTIALLY-GOVERNED | C `test_release_coverage_lists_only_the_ungoverned_figures`, `test_release_coverage_default_places_are_two` | |
 | verify_e7_coverage.py | test_b37_substitution_at_2nd_decimal_stays_partially_governed | one ungoverned figure, 430.76 | C `test_release_coverage_lists_only_the_ungoverned_figures` | |
+| verify_phase_c.py | test_49_limited_1_success_unmeasured | 49 rate-limited + 1 success, minimum 3 -> UNMEASURED | R `test_classify_mechanism_rate_limited_runs_do_not_count` | exit gate 7 |
+| verify_phase_c.py | test_49_limited_1_success_unmeasured | successful_runs == 1 | R `test_classify_mechanism_rate_limited_runs_do_not_count` | |
+| verify_phase_c.py | test_49_limited_1_success_unmeasured | reason does not say "1 distinct" | R `test_classify_mechanism_rate_limited_runs_do_not_count`, `test_classify_mechanism_below_minimum_is_unmeasured` | exact reason asserted |
+| verify_phase_c.py | test_parameter_echo_mismatch | temperature 0.0 requested, 0.7 echoed, top_p missing -> MISMATCH | R `test_parameter_echo_changed_and_missing_parameters_are_findings` | same inputs |
+| verify_phase_c.py | test_parameter_echo_mismatch | at least one finding | R `test_parameter_echo_changed_and_missing_parameters_are_findings` | exact list |
+| verify_phase_c.py | test_parameter_echo_mismatch | a finding says "silently ignored" | R `test_parameter_echo_changed_and_missing_parameters_are_findings` | |
+| verify_phase_c.py | test_parameter_echo_unverified | no echo -> UNVERIFIED | R `test_parameter_echo_no_echo_is_unverified` | |
+| verify_phase_c.py | test_operator_declared_marked | STRUCTURAL declared on figures, 5 runs, minimum 3 -> STRUCTURAL | R `test_classify_mechanism_operator_declared_structural_is_marked` | |
+| verify_phase_c.py | test_operator_declared_marked | operator_declared is True | R `test_classify_mechanism_operator_declared_structural_is_marked` | |
+| verify_phase_c.py | test_operator_declared_marked | reason contains "operator-declared" | R `test_classify_mechanism_operator_declared_structural_is_marked` | exact reason |
