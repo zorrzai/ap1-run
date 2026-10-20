@@ -92,11 +92,33 @@ def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason):
     return d2_results
 
 
+def summarise_parameter_echo(checks):
+    """The run's D2.2 parameter-echo result: MISMATCH if any response
+    shows a requested parameter not applied, VERIFIED if every response
+    echoed and matched, UNVERIFIED otherwise (including no responses);
+    with each distinct finding once, in first-seen order."""
+    statuses = {c['status'] for c in checks}
+    if 'MISMATCH' in statuses:
+        status = 'MISMATCH'
+    elif statuses == {'VERIFIED'}:
+        status = 'VERIFIED'
+    else:
+        status = 'UNVERIFIED'
+    findings = []
+    for c in checks:
+        for f in c['findings']:
+            if f not in findings:
+                findings.append(f)
+    return {'status': status, 'responses': len(checks),
+            'findings': findings}
+
+
 def build_summary(all_results, evidence_findings, *,
                   d1_summary=None, d2_results=None,
                   d2_cap_reason=None,
                   transcription_results=None,
-                  release_coverage_results=None):
+                  release_coverage_results=None,
+                  parameter_echo=None):
     """Build the summary dict that report.generate_report() expects.
 
     Aggregates per-item results into the structure report.py reads.
@@ -179,6 +201,7 @@ def build_summary(all_results, evidence_findings, *,
         summary['d2_results'] = d2_results
     if d2_cap_reason:
         summary['d2_cap_reason'] = d2_cap_reason
+    summary['parameter_echo'] = summarise_parameter_echo(parameter_echo or [])
 
     # Operand provenance step counts (D7.2(a))
     step_counts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}

@@ -71,16 +71,16 @@
     "score": 0.9498
   },
   "reporting/report": {
-    "killed": 1518,
-    "mutants": 1569,
+    "killed": 1605,
+    "mutants": 1656,
     "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan').",
-    "score": 0.9675
+    "score": 0.9692
   },
   "run": {
-    "killed": 525,
-    "mutants": 540,
+    "killed": 527,
+    "mutants": 542,
     "notes": "All 15 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored.",
-    "score": 0.9722
+    "score": 0.9723
   },
   "runner/console": {
     "killed": 470,
@@ -95,10 +95,10 @@
     "score": 0.9915
   },
   "runner/executions": {
-    "killed": 531,
-    "mutants": 535,
+    "killed": 564,
+    "mutants": 568,
     "notes": "All 4 survivors are equivalent. tool_calls=None in the figure record: transcript.append writes None as []. A None default for return_value is falsy like ''. 'and' to 'or' in the result check only lets values through that then raise inside the try, which the except turns into the same None.",
-    "score": 0.9925
+    "score": 0.993
   },
   "runner/outputs": {
     "killed": 174,
@@ -112,10 +112,10 @@
     "score": 1.0
   },
   "runner/summary": {
-    "killed": 542,
-    "mutants": 554,
+    "killed": 576,
+    "mutants": 588,
     "notes": "All 12 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One changes n > 0 to n >= 0 where n is always at least 1. One drops operator_declared=None, which is classify_mechanism's default.",
-    "score": 0.9783
+    "score": 0.9796
   },
   "scoring/accuracy": {
     "killed": 145,

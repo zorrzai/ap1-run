@@ -350,7 +350,8 @@ def test_main_full_run_calls(r, capsys):
     assert kw == {'d1_summary': {'d1': True, 'n': 0},
                   'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
                   'transcription_results': [],
-                  'release_coverage_results': []}
+                  'release_coverage_results': [],
+                  'parameter_echo': []}
     assert r.named('scoring_report') == [(
         {'d1': True, 'n': 0}, {'d2': 'results'}, 'CAP', {'summary': True})]
 

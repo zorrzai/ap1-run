@@ -577,9 +577,6 @@ def test_r41_signed_attestation_is_ev1_never_ev3(ap1_run, attestation):
 
 
 @pytest.mark.finding('T3-22', 'T3-30', 'T3-90')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-22/T3-90: check_parameter_echo is never '
-                          'called; an ignored temperature is not reported')
 @pytest.mark.req('R4.1', 'R2.2', 'AP-1 D2.2')
 def test_r41_requested_temperature_ignored_is_a_d2_platform_finding(ap1_run):
     # Row "Requested temperature ignored | D2 platform finding"; AP-1 v1.3
@@ -627,9 +624,6 @@ def test_report_states_which_defeat_condition_links_were_cleared(ap1_run):
 
 
 @pytest.mark.finding('T3-30')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-30: the D2 result does not disclose the '
-                          'serving stack or concurrency (D2.2)')
 @pytest.mark.req('AP-1 D2.2', 'R2.2')
 def test_report_d2_result_discloses_execution_conditions(ap1_run):
     # AP-1 v1.3 D2.2 (l.237): "Every D2 result shall report: the serving

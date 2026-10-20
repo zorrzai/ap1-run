@@ -5,6 +5,7 @@ import pytest
 
 from ap1_run.runner import summary as summary_module
 from ap1_run.runner.summary import (
+    summarise_parameter_echo,
     build_summary, classify_reproducibility, find_d2_cap,
     verify_invocation_consistency,
 )
@@ -113,6 +114,8 @@ EMPTY = {
     'provenance_outcomes': {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0},
     'originated_operand_audit': [],
     'non_outcome_cells': [],
+    'parameter_echo': {'status': 'UNVERIFIED', 'responses': 0,
+                       'findings': []},
 }
 
 
@@ -562,3 +565,35 @@ def test_summary_d71_n_counts_questions_not_repeats():
         for q in ('Q01', 'Q02') for rep in (1, 2, 3)], [])
     base = s['invocation_figures']['d7_invocation_base']
     assert (base['failures'], base['n']) == (0, 2)
+
+
+# -- summarise_parameter_echo (D2.2) ----------------------------------------
+
+def echo(status, *findings):
+    return {'status': status, 'findings': list(findings)}
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+@pytest.mark.parametrize('statuses, status', [
+    ([], 'UNVERIFIED'),
+    (['VERIFIED', 'VERIFIED'], 'VERIFIED'),
+    (['VERIFIED', 'UNVERIFIED'], 'UNVERIFIED'),
+    (['UNVERIFIED'], 'UNVERIFIED'),
+    (['VERIFIED', 'MISMATCH', 'UNVERIFIED'], 'MISMATCH'),
+])
+def test_summarise_parameter_echo_status(statuses, status):
+    assert summarise_parameter_echo([echo(s) for s in statuses]) == {
+        'status': status, 'responses': len(statuses), 'findings': []}
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+def test_summarise_parameter_echo_findings_once_in_order():
+    checks = [echo('MISMATCH', 'b', 'a'), echo('VERIFIED'),
+              echo('MISMATCH', 'a', 'c')]
+    assert summarise_parameter_echo(checks)['findings'] == ['b', 'a', 'c']
+
+
+def test_build_summary_passes_parameter_echo():
+    s = build_summary([], [], parameter_echo=[echo('VERIFIED')])
+    assert s['parameter_echo'] == {'status': 'VERIFIED', 'responses': 1,
+                                   'findings': []}

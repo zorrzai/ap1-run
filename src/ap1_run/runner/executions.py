@@ -16,6 +16,7 @@ from ap1_run.foundation.numeric import extract_numeric_tokens
 from ap1_run.scoring.accuracy import score_accuracy
 from ap1_run.scoring.figure_id import identify_figure
 from ap1_run.scoring.release_coverage import check_release_coverage
+from ap1_run.scoring.reproducibility import check_parameter_echo
 from ap1_run.scoring.transcription import check_transcription
 
 
@@ -32,6 +33,7 @@ class Findings:
     transcription_results: list = field(default_factory=list)  # D7.3
     release_coverage_results: list = field(default_factory=list)  # D7.3
     unmeasured_cells: list = field(default_factory=list)
+    parameter_echo: list = field(default_factory=list)  # D2.2
 
 
 def record_underivable(findings, item_id, condition):
@@ -62,6 +64,21 @@ def record_not_scored(findings, item_id, condition, rep, status, result):
         'repeat': rep, 'status': status,
         'cause': result.get('error', result.get('reason', '')),
     })
+
+
+def echo_check(sampling, response):
+    """check_parameter_echo for one response (AP-1 v1.3 D2.2).
+
+    The requested parameters are the sampling values sent (omissions are
+    not sent). The endpoint echoes a parameter by returning it at the top
+    level of its response body; a response that echoes none of them is
+    UNVERIFIED.
+    """
+    requested = {name: value for name, value in sampling.items()
+                 if not isinstance(value, dict)}
+    body = response if isinstance(response, dict) else {}
+    echoed = {name: body[name] for name in requested if name in body}
+    return check_parameter_echo(requested, echoed or None)
 
 
 def _figure_text(fig_result):
@@ -185,6 +202,11 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
     d2_key = (item_id, condition)
     findings.d2_responses.setdefault(d2_key, []).append(
         result.get('response'))
+
+    # -- D2.2: were the requested sampling parameters applied? --
+    findings.parameter_echo.append(dict(
+        item_id=item_id, condition=condition, repeat=rep,
+        **echo_check(config.get('sampling', {}), final_response)))
 
     ev_class = result.get('evidence_class', '')
     inv_outcome = result.get('invocation_outcome', '')

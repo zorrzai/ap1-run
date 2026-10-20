@@ -1310,6 +1310,18 @@ Total operands resolved: 4860
 *No per-surface D2 data available.*
 
 
+## 9b. D2.2 Execution Conditions
+
+- Serving stack and version: not disclosed by the endpoint; the runner cannot observe it.
+- Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
+- Concurrency: one request at a time, sequentially, from a single process.
+- Sampling parameters sent:
+  - `max_completion_tokens`: `4096`
+  - `reasoning_effort`: not sent (platform-unsupported)
+  - `temperature`: `1`
+  - `top_p`: not sent (operator-declared)
+- Parameter echo: `UNVERIFIED` (1000 responses checked)
+
 ## 10. Non-Outcome Cells
 
 > Every cell that is not a scoreable outcome is listed with its reason.

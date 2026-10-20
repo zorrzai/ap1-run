@@ -414,7 +414,7 @@ def test_findings_start_empty_and_separate():
         'grammar_issues': [], 'decline_findings': [],
         'tool_call_structures': [], 'evidence_findings': [],
         'transcription_results': [], 'release_coverage_results': [],
-        'unmeasured_cells': []}
+        'unmeasured_cells': [], 'parameter_echo': []}
 
 
 # -- the real scoring modules, on a realistic response --------------------
@@ -699,3 +699,43 @@ def test_record_not_scored_unmeasured_listed_with_cause(error, word):
             for c in findings.unmeasured_cells] == [('Q03', 'base', 1)]
     assert word in findings.unmeasured_cells[0]['cause'].lower()
     assert [r['status'] for r in findings.all_results] == ['UNMEASURED']
+
+
+# -- echo_check (D2.2 parameter echo) --------------------------------------
+
+@pytest.mark.finding('T3-22', 'T3-90')
+def test_echo_check_ignored_temperature_is_a_finding():
+    sampling = {'temperature': '1',
+                'top_p': {'value': 'omitted', 'reason': 'operator-declared'}}
+    assert executions.echo_check(sampling, {'temperature': 0.7,
+                                            'top_p': 0.9}) == {
+        'verified': False, 'status': 'MISMATCH',
+        'findings': ["parameter 'temperature': requested='1', applied=0.7 "
+                     '— silently ignored']}
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+@pytest.mark.parametrize('response', [{'choices': []}, None, 'text'])
+def test_echo_check_nothing_echoed_is_unverified(response):
+    assert executions.echo_check({'temperature': '1'}, response)[
+        'status'] == 'UNVERIFIED'
+
+
+def test_echo_check_applied_values_verified():
+    assert executions.echo_check({'temperature': '1', 'seed': '7'},
+                                 {'temperature': '1', 'seed': 7})[
+        'status'] == 'VERIFIED'
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+def test_score_execution_records_the_echo_check(fakes, tpath):
+    findings = Findings()
+    score(findings, {'response': dict(response('It is $15.20.'),
+                                      temperature=0.5),
+                     'tool_calls': []}, tpath,
+          config=dict(CONFIG, sampling={'temperature': '0'}))
+    assert findings.parameter_echo == [{
+        'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+        'verified': False, 'status': 'MISMATCH',
+        'findings': ["parameter 'temperature': requested='0', applied=0.5 "
+                     '— silently ignored']}]

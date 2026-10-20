@@ -306,7 +306,8 @@ def main(argv=None):
         d1_summary=d1_summary, d2_results=d2_results,
         d2_cap_reason=d2_cap_reason,
         transcription_results=findings.transcription_results,
-        release_coverage_results=findings.release_coverage_results)
+        release_coverage_results=findings.release_coverage_results,
+        parameter_echo=findings.parameter_echo)
 
     # 3j-3l. D1, D2, operand provenance
     print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary)
