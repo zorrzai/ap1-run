@@ -100,12 +100,13 @@ def check_release_coverage(tool_calls, candidate_figures, expected_value,
     """
     tool_returns = _parse_tool_returns(tool_calls)
 
-    # No tool calls or no candidate figures -> UNOBSERVABLE
+    # No tool calls or no candidate figures -> UNOBSERVABLE.  Coverage
+    # could not be assessed, so no figure is named ungoverned.
     if not tool_calls or not tool_returns:
         return {
             'outcome': COVERAGE_UNOBSERVABLE,
             'tool_returns': tool_returns,
-            'ungoverned_figures': list(candidate_figures),
+            'ungoverned_figures': [],
             'ungoverned_token_count': 0,
             'finding': 'no tool returns available',
         }

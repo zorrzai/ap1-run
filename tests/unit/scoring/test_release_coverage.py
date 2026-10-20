@@ -96,23 +96,10 @@ def test_release_coverage_no_tool_calls_is_unobservable():
     assert check_release_coverage([], [D('430.75')], D('430.75')) == {
         'outcome': 'COVERAGE-UNOBSERVABLE',
         'tool_returns': [],
-        'ungoverned_figures': [D('430.75')],
+        'ungoverned_figures': [],
         'ungoverned_token_count': 0,
         'finding': NO_RETURNS,
     }
-
-
-@pytest.mark.finding('S3-G5-1')
-def test_release_coverage_unobservable_lists_candidates_as_ungoverned():
-    # Today: with no tool returns the result is COVERAGE-UNOBSERVABLE,
-    # yet every candidate is listed under ungoverned_figures (with a
-    # token count of 0), and runner/executions.py records the list.
-    # Correct: an unobservable result names no ungoverned figures (empty
-    # list), as the no-candidates branch does.
-    r = check_release_coverage([], [D('1'), D('1')], D('1'))
-    assert r['outcome'] == COVERAGE_UNOBSERVABLE
-    assert r['ungoverned_figures'] == [D('1'), D('1')]
-    assert r['ungoverned_token_count'] == 0
 
 
 def test_release_coverage_calls_without_parseable_returns_are_unobservable():
@@ -120,7 +107,7 @@ def test_release_coverage_calls_without_parseable_returns_are_unobservable():
     assert check_release_coverage(calls, [D('430.75')], D('430.75')) == {
         'outcome': 'COVERAGE-UNOBSERVABLE',
         'tool_returns': [],
-        'ungoverned_figures': [D('430.75')],
+        'ungoverned_figures': [],
         'ungoverned_token_count': 0,
         'finding': NO_RETURNS,
     }
@@ -299,9 +286,6 @@ def test_release_coverage_unquantisable_return_raises(result):
 
 @pytest.mark.finding('S3-G5-1')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G5-1: an unobservable result (no tool returns) '
-                          'lists every candidate as ungoverned')
 def test_release_coverage_no_tool_returns_names_no_ungoverned_figures():
     # COVERAGE-UNOBSERVABLE means coverage could not be assessed, so it
     # names no ungoverned figure, as the no-candidates branch already does
