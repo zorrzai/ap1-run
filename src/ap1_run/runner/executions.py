@@ -64,6 +64,13 @@ def record_not_scored(findings, item_id, condition, rep, status, result):
     })
 
 
+def _figure_text(fig_result):
+    """The released figure as recorded: its text, or None (JSON null)
+    where no figure was released."""
+    figure = fig_result.get('released_figure')
+    return None if figure is None else str(figure)
+
+
 def score_execution(findings, result, *, item_id, condition, rep, expected,
                     ctx, collision, config, answer_tolerance,
                     decline_markers, currency_symbols, transcript_path,
@@ -94,7 +101,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         record_type='figure_identification',
         figure_outcome=fig_result['outcome'],
         figure_reason=fig_result.get('reason', ''),
-        released_figure=str(fig_result.get('released_figure', '')),
+        released_figure=_figure_text(fig_result),
         expected=str(expected),
     )
 
@@ -249,7 +256,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'figure_outcome': outcome,
         'figure_reason': fig_result.get('reason', ''),
         'tool_calls_count': len(tool_calls),
-        'released_figure': str(fig_result.get('released_figure', '')),
+        'released_figure': _figure_text(fig_result),
         'expected': str(expected),
         'shape_ok': shape_ok,
         'operation_correctness': op_correctness,

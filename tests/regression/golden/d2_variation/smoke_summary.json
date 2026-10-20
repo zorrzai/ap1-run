@@ -294,7 +294,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "1 numeric tokens found, none matching expected",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "2600.00",
       "shape_ok": true,
       "operation_correctness": [
@@ -2793,7 +2793,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "1 numeric tokens found, none matching expected",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "2600.00",
       "shape_ok": true,
       "operation_correctness": [

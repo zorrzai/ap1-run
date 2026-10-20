@@ -554,7 +554,7 @@
       "figure_outcome": "UNMEASURABLE",
       "figure_reason": "response has no text content",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "777.4125",
       "shape_ok": true,
       "operation_correctness": [

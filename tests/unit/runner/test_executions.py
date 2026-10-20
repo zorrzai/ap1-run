@@ -213,13 +213,13 @@ def test_score_execution_defaults_for_a_bare_result(fakes, tpath, capsys):
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
         'status': 'EXECUTED', 'evidence_class': '', 'invocation_outcome': '',
         'figure_outcome': 'AUTO-NO-FIGURE', 'figure_reason': '',
-        'tool_calls_count': 0, 'released_figure': '', 'expected': '638.40',
+        'tool_calls_count': 0, 'released_figure': None, 'expected': '638.40',
         'shape_ok': False, 'operation_correctness': [],
         'provenance_results': [], 'transcription_outcome':
         'TRANSCRIBED-EXACT', 'release_coverage_outcome': 'PARTIALLY-GOVERNED'}]
     figure_record = transcript.read_all(tpath)[-1]
     assert (figure_record['evidence_class'], figure_record['figure_reason'],
-            figure_record['released_figure']) == (None, '', '')
+            figure_record['released_figure']) == (None, '', None)
 
 
 def test_score_execution_empty_results_from_scorers(fakes, tpath, monkeypatch):
@@ -667,24 +667,6 @@ NO_FIGURE = {'outcome': 'ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING',
 
 
 @pytest.mark.finding('S4-G9-1')
-def test_score_execution_no_released_figure_written_as_string_none(fakes,
-                                                                    tpath):
-    # Current behaviour: identify_figure gives released_figure None for
-    # every outcome that releases no figure, and score_execution writes
-    # str(None), so the transcript and smoke_summary.json say "None" (the
-    # no-key case writes ''). Correct: no figure is recorded as null.
-    fakes.figure = dict(NO_FIGURE)
-    findings = Findings()
-    score(findings, {'response': response('It is $15.25.'),
-                     'tool_calls': []}, tpath)
-    assert transcript.read_all(tpath)[-1]['released_figure'] == 'None'
-    assert findings.all_results[0]['released_figure'] == 'None'
-
-
-@pytest.mark.finding('S4-G9-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="S4-G9-1: no released figure is written as the "
-                          "string 'None'")
 def test_score_execution_no_released_figure_recorded_as_null(fakes, tpath):
     # R0.3: the transcript records what happened; a figure that was not
     # released is null, not the text "None".

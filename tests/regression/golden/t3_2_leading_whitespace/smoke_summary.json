@@ -12,7 +12,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "1 numeric tokens found, none matching expected",
       "tool_calls_count": 2,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "15.200",
       "shape_ok": true,
       "operation_correctness": [
@@ -94,7 +94,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "1 numeric tokens found, none matching expected",
       "tool_calls_count": 2,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "15.200",
       "shape_ok": true,
       "operation_correctness": [
@@ -1186,7 +1186,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "1 numeric tokens found, none matching expected",
       "tool_calls_count": 2,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "3.200",
       "shape_ok": true,
       "operation_correctness": [
@@ -1318,7 +1318,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "1 numeric tokens found, none matching expected",
       "tool_calls_count": 2,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "3.200",
       "shape_ok": true,
       "operation_correctness": [
@@ -1636,7 +1636,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "1 numeric tokens found, none matching expected",
       "tool_calls_count": 2,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "15.200",
       "shape_ok": true,
       "operation_correctness": [
@@ -1718,7 +1718,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "1 numeric tokens found, none matching expected",
       "tool_calls_count": 2,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "15.200",
       "shape_ok": true,
       "operation_correctness": [
@@ -2810,7 +2810,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "1 numeric tokens found, none matching expected",
       "tool_calls_count": 2,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "3.200",
       "shape_ok": true,
       "operation_correctness": [
@@ -2942,7 +2942,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "1 numeric tokens found, none matching expected",
       "tool_calls_count": 2,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "3.200",
       "shape_ok": true,
       "operation_correctness": [
