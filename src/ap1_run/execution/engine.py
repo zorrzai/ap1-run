@@ -145,6 +145,9 @@ def execute_item(item, *, condition, config, fixture,
         round_shapes=round_shapes,
         required_operation=gt.get('required_operation'))
     check_ev3_guard(ev_class)
+    # EV-0: the record names the cause and the round (SPEC R1.3)
+    error_state = (_unobservable_cause(round_shapes, rounds, tools_offered)
+                   if ev_class == EV_0 else None)
 
     # Check for attestation
     attestation = extract_attestation(final_response)
@@ -189,7 +192,7 @@ def execute_item(item, *, condition, config, fixture,
         response_received=final_response,
         tool_calls=tool_calls_record,
         evidence_class=ev_class,
-        error_state=None, seal_hash=seal_hash,
+        error_state=error_state, seal_hash=seal_hash,
         repeat=repeat,
         invocation_outcome=outcome,
         self_report=self_report,
@@ -286,6 +289,26 @@ def _drive_tool_loop(*, response, messages, config, tools,
         _record_shape(current, round_shapes)
 
     return all_tool_calls, current, round_shapes
+
+def _unobservable_cause(round_shapes, rounds, tools_offered):
+    """The error state of an EV-0 execution: why the invocation could not
+    be observed, and in which round (round 0 is the first request).
+
+    A round is unobservable when its request failed (rounds holds the
+    error) or its response came back in an unrecognised shape.
+    """
+    if not tools_offered:
+        return 'UNOBSERVABLE: no tools offered'
+    for number, (recognised, reason) in enumerate(round_shapes):
+        if recognised:
+            continue
+        if number < len(rounds) and 'error' in rounds[number]:
+            return (f'UNOBSERVABLE: round {number}: request failed: '
+                    f'{rounds[number]["error"]}')
+        return (f'UNOBSERVABLE: round {number}: unrecognised response '
+                f'shape: {reason}')
+    return 'UNOBSERVABLE'
+
 
 def _failed_round(number, messages, error):
     """The transcript entry of a round whose request failed: the messages

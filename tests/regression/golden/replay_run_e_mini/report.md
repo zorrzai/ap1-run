@@ -1331,7 +1331,7 @@ Total operands resolved: 4860
 
 | Item | Condition | Status | Reason |
 |---|---|---|---|
-| Q07 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
+| Q07 | base | UNOBSERVABLE | UNOBSERVABLE: round 2: request failed: HTTP 502: replayed mid-loop failure: the recorded loop ended here without a response |
 
 ## 11. Quantisation and Near-Miss Findings
 

@@ -131,9 +131,10 @@ The replayed `report.md` files agree with the published `output/run_e_mini`
 and `output/run_f_sol` reports in every scored figure except the D7.1
 figures of §5 (and console 3h), which step 5 corrected (T3-1, T3-11, V12-5):
 n is now the 10 computable questions, not the 500 executions, and the one
-EV-0 execution per run is out of n and listed per evidence class. Otherwise
-only run metadata differs: model name, endpoint, hashes, timestamps and
-runner commit.
+EV-0 execution per run is out of n and listed per evidence class. In §10,
+that execution's row gives its cause and round (T3-35: the mock's replayed
+mid-loop failure), not just its evidence class. Otherwise only run metadata
+differs: model name, endpoint, hashes, timestamps and runner commit.
 
 ## Coverage (at `77514b4`, Python 3.11, with inspect-ai installed)
 

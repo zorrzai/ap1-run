@@ -316,7 +316,7 @@ Total operands resolved: 129
 | Q05 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
 | Q06 | base | TRANSPORT_FAILURE | TRANSPORT_FAILURE: response is not valid JSON: this is not json |
 | Q06 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q07 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
+| Q07 | base | UNOBSERVABLE | UNOBSERVABLE: round 1: request failed: rate limited (HTTP 429): {"error": {"message": "Rate limit reached"}} |
 | Q08 | base | TRANSPORT_FAILURE | TRANSPORT_FAILURE: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} |
 | Q08 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
 | Q08 | instruction_removed | TRANSPORT_FAILURE | TRANSPORT_FAILURE: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} |

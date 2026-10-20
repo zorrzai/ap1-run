@@ -377,10 +377,11 @@ def test_execute_item_whitespace_response_is_not_empty(tmp_path):
 @pytest.mark.parametrize('tools', [None, []])
 def test_execute_item_no_tools_ev0(tmp_path, tools):
     send = FakeAdapter(answer())
-    result, _ = run(tmp_path, send, tools=tools)
+    result, records = run(tmp_path, send, tools=tools)
     assert (result['evidence_class'], result['invocation_outcome']) == (
         EV_0, None)
     assert send.calls[0]['tools'] == tools
+    assert records[0]['error_state'] == 'UNOBSERVABLE: no tools offered'
 
 
 def test_execute_item_attestation_reason_recorded_class_unchanged(tmp_path):
@@ -558,33 +559,61 @@ ANTHROPIC = {'type': 'message', 'role': 'assistant',
              'content': [{'type': 'text', 'text': '15.20'}]}
 
 
-@pytest.mark.finding('T3-1')
+@pytest.mark.finding('T3-1', 'T3-35')
 def test_execute_item_unrecognised_first_response_executed_ev0(tmp_path):
     # T3-1: EXECUTED with outcome None (EV-0). Since the T3-1 fix the
     # run's summary keeps it out of the D7.1 rate and reports it per
-    # class.
+    # class. T3-35 (fixed): the record names the cause and the round.
     send = FakeAdapter(ANTHROPIC)
     result, records = run(tmp_path, send)
     assert len(send.calls) == 1
     assert (result['status'], result['evidence_class'],
             result['invocation_outcome']) == ('EXECUTED', EV_0, None)
-    assert records[0]['error_state'] is None
+    assert records[0]['error_state'] == (
+        'UNOBSERVABLE: round 0: unrecognised response shape: response '
+        'appears Anthropic-shaped (has type=message, content)')
 
 
 def test_execute_item_unrecognised_later_response_ev0(tmp_path, calculator):
-    result, _ = run(tmp_path, FakeAdapter(calls(tool_call()), ANTHROPIC))
+    result, records = run(tmp_path, FakeAdapter(calls(tool_call()),
+                                                 ANTHROPIC))
     assert (result['evidence_class'], result['invocation_outcome']) == (
         EV_0, None)
     assert result['response'] == ANTHROPIC
+    assert records[0]['error_state'] == (
+        'UNOBSERVABLE: round 1: unrecognised response shape: response '
+        'appears Anthropic-shaped (has type=message, content)')
+
+
+@pytest.mark.finding('T3-35')
+def test_unobservable_cause_first_unrecognised_round_named():
+    # The first unobservable round is named; a failed request is told
+    # apart from an unrecognised shape by the error its round holds.
+    shapes = [(True, None), (False, 'choices is empty or not a list'),
+              (False, 'later')]
+    rounds = [{'round': 0}, {'round': 1, 'response': {}}]
+    assert engine._unobservable_cause(shapes, rounds, True) == (
+        'UNOBSERVABLE: round 1: unrecognised response shape: choices is '
+        'empty or not a list')
+    rounds[1] = {'round': 1, 'error': 'HTTP 503: down'}
+    assert engine._unobservable_cause(shapes, rounds, True) == (
+        'UNOBSERVABLE: round 1: request failed: HTTP 503: down')
+    # a shape failure past the recorded rounds is still a shape failure
+    assert engine._unobservable_cause([(False, 'r')], [], True) == (
+        'UNOBSERVABLE: round 0: unrecognised response shape: r')
+    assert engine._unobservable_cause([(True, None)], [], True) == \
+        'UNOBSERVABLE'
+    assert engine._unobservable_cause([(False, 'r')], [], False) == \
+        'UNOBSERVABLE: no tools offered'
 
 
 @pytest.mark.finding('T3-1', 'T3-35')
-def test_execute_item_later_send_fails_executed_ev0_no_error(
+def test_execute_item_later_send_fails_executed_ev0_cause_recorded(
         tmp_path, calculator):
     # T3-1: a mid-loop failure is EXECUTED with outcome None (EV-0); since
-    # the T3-1 fix it is out of the D7.1 rate. T3-35: the failure itself
-    # is not recorded (error_state None; the last good response stands
-    # as final). Correct: the cause of the EV-0 is recorded.
+    # the T3-1 fix it is out of the D7.1 rate. The last good response
+    # stands as final. T3-35 (fixed): the record's error state names the
+    # failed request and its round.
     first = calls(tool_call())
     send = FakeAdapter(first, adapter.RateLimitError('Rate limit reached'))
     result, records = run(tmp_path, send)
@@ -593,7 +622,8 @@ def test_execute_item_later_send_fails_executed_ev0_no_error(
             result['invocation_outcome']) == ('EXECUTED', EV_0, None)
     assert result['response'] == first
     assert len(result['tool_calls']) == 1
-    assert records[0]['error_state'] is None
+    assert records[0]['error_state'] == (
+        'UNOBSERVABLE: round 1: request failed: Rate limit reached')
 
 
 def test_drive_tool_loop_failed_round_recorded_unrecognised(calculator):
@@ -909,10 +939,6 @@ def test_execute_item_every_round_request_and_response_recorded(
 
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: a mid-loop send failure gives EV-0 with '
-                          'error_state None; cause and round only in the '
-                          'unwritten round_shapes')
 def test_execute_item_later_send_fails_error_state_names_cause_and_round(
         tmp_path, calculator):
     # Correct (SPEC R1.3 "EV-0 UNOBSERVABLE with the round identified";
@@ -933,9 +959,6 @@ def test_execute_item_later_send_fails_error_state_names_cause_and_round(
 
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: an unrecognised later response gives EV-0 '
-                          'with error_state None and the round unidentified')
 def test_execute_item_unrecognised_later_response_error_state_names_round(
         tmp_path, calculator):
     # Correct (SPEC R1.3, as above): the record names the unrecognised

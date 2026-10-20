@@ -311,19 +311,19 @@ Total operands resolved: 88
 
 | Item | Condition | Status | Reason |
 |---|---|---|---|
-| Q01 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q02 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q03 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q01 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q02 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q03 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q04 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q05 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q06 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q07 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q08 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q09 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q10 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
+| Q01 | base | UNOBSERVABLE | UNOBSERVABLE: round 1: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) |
+| Q02 | base | UNOBSERVABLE | UNOBSERVABLE: round 1: request failed: HTTP 500: {"error": {"message": "internal error"}} |
+| Q03 | base | UNOBSERVABLE | UNOBSERVABLE: round 1: unrecognised response shape: unrecognised response shape (top-level keys: ['id', 'object', 'output']) |
+| Q01 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) |
+| Q02 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) |
+| Q03 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) |
+| Q04 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) |
+| Q05 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) |
+| Q06 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) |
+| Q07 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) |
+| Q08 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) |
+| Q09 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) |
+| Q10 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) |
 
 ## 11. Quantisation and Near-Miss Findings
 
