@@ -1268,3 +1268,25 @@ def test_verify_seal_input_deleted_after_the_seal_is_named(files, frozen,
     with pytest.raises(SealError) as exc:
         verify(record, files)
     assert f'  {name}: cannot read: ' in str(exc.value)
+
+
+# -- Step 5 (report-honesty): lookup collisions recorded at seal (T3-75) --
+
+@pytest.mark.finding('T3-75')
+@pytest.mark.req('R3.1')
+@pytest.mark.parametrize('collisions, text', [
+    ([('Q09', 'checking.atm_fee')], 'Q09 (checking.atm_fee)'),
+    ([('Q01', 'a.x'), ('Q04', 'b.y')], 'Q01 (a.x); Q04 (b.y)'),
+    ([], 'none')])
+def test_seal_records_lookup_collisions_in_the_hash(files, frozen,
+                                                    collisions, text):
+    record = make_seal(files, lookup_collisions=collisions)
+    assert record['lookup_collisions'] == text
+    body = {k: v for k, v in record.items()
+            if k not in ('timestamp', 'seal_hash')}
+    assert record['seal_hash'] == canon(body)
+    assert record['seal_hash'] != make_seal(files)['seal_hash']
+
+
+def test_seal_without_lookup_collisions_has_no_field(files, frozen):
+    assert 'lookup_collisions' not in make_seal(files)

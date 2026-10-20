@@ -131,6 +131,20 @@ def test_score_execution_collects_every_record(fakes, capsys):
         'decline_markers': ['cannot'], 'currency_symbols': ['$'],
         'decimal_separator': '.', 'grouping_separator': ','})]
 
+
+        'decline_markers': ['cannot'], 'structured_answer_field': None,
+        'currency_symbols': ['$']})]
+    records = transcript.read_all(tpath)
+    figure_record = records[-1]
+    del figure_record['timestamp']
+    assert figure_record == {
+        'item_id': 'Q01', 'arm_id': 'base', 'condition': 'base',
+        'request_sent': None, 'response_received': None, 'tool_calls': [],
+        'evidence_class': 'EV-2', 'error_state': None, 'seal_hash': 'seal-1',
+        'record_type': 'figure_identification', 'repeat': 2,
+        'figure_outcome': 'AUTO-MATCH', 'figure_reason': 'one figure', 'released_figure': '638.40',
+        'expected': '638.40'}
+
     # D7.3 transcription
     assert fakes.calls['check_transcription'] == [(([D('638.4')], D('638.40')), {
         'figure_outcome': 'AUTO-MATCH', 'quantisation_digits': 3,
@@ -854,6 +868,9 @@ def test_as_recorded_json_round_trip_sorted_with_str():
                    reason='T3-75: structured_answer_field is not passed to '
                           'identify_figure, so R2.0 step 1 never runs live')
 def test_score_execution_passes_structured_answer_field(fakes):
+
+
+def test_score_execution_passes_structured_answer_field(fakes, tpath):
     # SPEC R2.0 step 1: "If structured_answer_field is configured and
     # present, that value is the released figure. Preferred path." The
     # config loader parses the field (R0.1). Correct: score_execution

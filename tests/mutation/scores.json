@@ -6,8 +6,8 @@
     "score": 1.0
   },
   "execution/context": {
-    "killed": 93,
-    "mutants": 93,
+    "killed": 129,
+    "mutants": 129,
     "score": 1.0
   },
   "execution/engine": {
@@ -29,10 +29,10 @@
     "score": 0.8367
   },
   "execution/seal": {
-    "killed": 485,
-    "mutants": 486,
-    "notes": "The 1 survivor is equivalent: it sets perturbed_any = None instead of False in perturbation_check: both are falsy, and the flag is only ever tested for truth. (The R3.1 guard fixes, T3-7: the failure dicts no longer carry a 'field' key, which nothing read; every failure's item and reason are in the SealError message, S3-G3-3.) (The seal fixes: seal() and verify_seal() rewritten for the format-2 record (T3-15, T3-17, T3-47, T3-48, T3-50, T3-68, T3-72, T3-30); the 4 old DOI-default survivors are killed by test_verify_seal_record_without_doi_named_once.)",
-    "score": 0.9979
+    "killed": 406,
+    "mutants": 411,
+    "notes": "All 5 survivors are equivalent. 1 sets perturbed_any = None instead of False in perturbation_check: both are falsy, and the flag is only ever tested for truth. 4 replace the '' default of ap1_version_doi in verify_seal with None or no default, which is falsy like '' and skips the DOI check the same way. (Step 5 seal-gt-guards: the failure dicts no longer carry a 'field' key, which nothing read; every failure's item and reason are in the SealError message, S3-G3-3.)",
+    "score": 0.9878
   },
   "execution/seal_constants": {
     "killed": 173,
@@ -89,10 +89,10 @@
     "score": 0.9838
   },
   "run": {
-    "killed": 595,
-    "mutants": 610,
+    "killed": 606,
+    "mutants": 621,
     "notes": "All 15 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored.",
-    "score": 0.9754
+    "score": 0.9758
   },
   "runner/console": {
     "killed": 550,
@@ -107,8 +107,8 @@
     "score": 0.9915
   },
   "runner/executions": {
-    "killed": 600,
-    "mutants": 602,
+    "killed": 605,
+    "mutants": 607,
     "notes": "Both survivors are equivalent. tool_calls=None in the figure record: transcript.append writes None as []. 'and' to 'or' in _operation_returns' result check only lets values through that then raise inside the try (a dict without 'result' raises KeyError), which the except turns into the same skipped call.",
     "score": 0.9967
   },

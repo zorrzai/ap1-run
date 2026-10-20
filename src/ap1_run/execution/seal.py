@@ -105,7 +105,8 @@ def _declared_ap1_hash(config):
 
 def seal(*, config, fixture_path, questions_path, ground_truth_path,
          calculator_path, ap1_text_path=None, verification_keys=None,
-         runner_source_hash=None, expected_values=None, loaded=None):
+         runner_source_hash=None, expected_values=None, loaded=None,
+         lookup_collisions=None):
     """Create a pre-registration record. R1.1.
 
     Hashes all inputs and timestamps the record. The seal_hash covers
@@ -123,6 +124,9 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
     'calculator', the bytes the run read and executes. When given, these
     are hashed instead of the files being read again (T3-72: seal what is
     executed).
+    lookup_collisions, if given (a list of (item_id, field), from
+    context.lookup_collisions), is recorded in the sealed record as text,
+    'none' if empty: R3.1 reports collisions at seal (T3-75).
 
     Returns: dict with component hashes and seal_hash.
     """
@@ -173,6 +177,10 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
         'verification_keys': verification_keys or [],
         'ev3_implemented': False,
     }
+    if lookup_collisions is not None:
+        record['lookup_collisions'] = '; '.join(
+            f'{item_id} ({field})'
+            for item_id, field in lookup_collisions) or 'none'
 
     # Seal: hash the entire record, the timestamp included
     record['seal_hash'] = record_hash(record)
