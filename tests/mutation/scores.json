@@ -53,10 +53,10 @@
     "score": 0.9641
   },
   "foundation/numeric": {
-    "killed": 299,
-    "mutants": 323,
+    "killed": 350,
+    "mutants": 374,
     "notes": "All 24 survivors are equivalent or unkillable. parse_decimal (7): is_neg=None is falsy like False; decimal_sep != 'XX.XX' only replaces '.' by '.'; the inner sign test 'XX-\\u2212XX' only differs for 'X', which the outer test never lets through; sorting leading currency symbols by key=None or no key (4) is reverse alphabetical, and for startswith a symbol can only shadow another it is a prefix of, which sorts first either way. _build_extraction_re (2): key=None or no key for the alternation order is likewise equivalent (the regex backtracks; only a prefix can shadow). extract_numeric_tokens (9): currency_symbols=None reaches the same empty handling; finditer returns non-overlapping matches in order, so the dedup sort key (5 mutants) and last_end=-2 change nothing; every match contains a digit, so the 'no digits' guard and its continue->break (2) are unreachable. canonical_json ensure_ascii=None is falsy like False; canonical_hash 'UTF-8' is the same codec. file_hash (4): read(None) and read(8193) give the same digest; sentinel None or b'XXXX' never matches b'' and loops forever, which mutmut reports as a timeout.",
-    "score": 0.9257
+    "score": 0.9358
   },
   "foundation/transcript": {
     "killed": 67,
@@ -134,16 +134,16 @@
     "score": 0.9114
   },
   "scoring/invocation": {
-    "killed": 178,
-    "mutants": 179,
-    "notes": "The one survivor is equivalent: it changes the '#' in the key ('#', i) that _summarise_class gives a record without an item_id; any tuple key is distinct from every item_id string and from the other records' keys. The module-level getcontext().prec = 50 is not mutated by mutmut; test_invocation_import_sets_global_decimal_precision_to_50 pins it (T3-60).",
-    "score": 0.9944
+    "killed": 193,
+    "mutants": 194,
+    "notes": "The one survivor is equivalent: it changes the '#' in the key ('#', i) that _summarise_class gives a record without an item_id; any tuple key is distinct from every item_id string and from the other records' keys. (Step 5 numeric-hardening, T3-60: the module no longer sets the global Decimal precision on import; format_rate, _exact_upper_bound and compute_dpr compute in numeric.DECIMAL_CONTEXT, and the mutants replacing it are killed.)",
+    "score": 0.9948
   },
   "scoring/operation_correctness": {
-    "killed": 341,
-    "mutants": 362,
+    "killed": 342,
+    "mutants": 363,
     "notes": "All 21 non-killed mutants are equivalent or message-only. 11 change the text of a ValueError raised in _eval_decimal, which evaluate_expression always swallows (returns None). 4 are in evaluate_expression's 'if not isinstance(result, Decimal)' branch, which is unreachable (every evaluator path returns Decimal; converting a Decimal through str keeps value and exponent). In classify_operation: 'and' to 'or' in the expected-value conversion (None becomes Decimal('None'), which fails and gives None again), and two quantisation defaults ({} vs None, both falsy). In reclassify_session: 'er is not None or True' (Decimal('None') fails and gives None again), changed = None (falsy like False), and changed = True, an endless loop that mutmut reports as a timeout (the tests hang, so it is detected, but the score counts only kills).",
-    "score": 0.942
+    "score": 0.9421
   },
   "scoring/provenance/audit": {
     "killed": 51,

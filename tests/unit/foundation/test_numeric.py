@@ -156,28 +156,6 @@ def test_parse_decimal_space_after_sign_ignored():
     assert parsed('+ 5')[0] == D('5')
 
 
-@pytest.mark.finding('S3-G1-2')
-def test_parse_decimal_double_minus_is_positive():
-    # Current behaviour: the sign step removes one '-', Decimal reads the
-    # second, and the two cancel. Correct: '--5' is not a number (refuse).
-    assert parsed('--5')[0] == D('5')
-
-
-@pytest.mark.finding('S3-G1-2')
-def test_parse_decimal_plus_minus_is_negative():
-    # Current behaviour: '+' is removed, Decimal reads '-5'. Correct:
-    # refuse a doubled sign.
-    assert parsed('+-5')[0] == D('-5')
-
-
-@pytest.mark.finding('S3-G1-2')
-def test_parse_decimal_parenthesised_negative_is_positive():
-    # Current behaviour: the parentheses negate, the sign step is skipped
-    # (is_neg is already set) and Decimal reads '-5', so -(-5) = 5.
-    # Correct: refuse '(-5)' as not in the grammar.
-    assert parsed('(-5)')[0] == D('5')
-
-
 def test_parse_decimal_sign_before_parenthesis_raises():
     with pytest.raises(NumericParseError):
         parse_decimal('-(5)')
@@ -289,15 +267,6 @@ def test_parse_decimal_symbols_none_and_empty_list_agree():
                                                        currency_symbols=[])
 
 
-@pytest.mark.finding('S3-G1-4')
-def test_parse_decimal_percent_then_trailing_currency_raises():
-    # Current behaviour: the percent step runs before the trailing-currency
-    # step, so '5%$' leaves '5%' and fails. Correct: (5, True, '$'), as
-    # for '$5%'.
-    with pytest.raises(NumericParseError):
-        parse_decimal('5%$', currency_symbols=['$'])
-
-
 # -- parse_decimal: separators --------------------------------------------
 
 @pytest.mark.req('R0.4.2')
@@ -358,30 +327,41 @@ def test_parse_decimal_ambiguity_checked_after_stripping():
 
 
 @pytest.mark.finding('S3-G1-3')
-def test_parse_decimal_grouping_positions_not_checked():
-    # Current behaviour: every grouping separator is removed wherever it
-    # is, so '1,23' is 123 and '1,2,3' is 123. Correct: groups of three
-    # only (as extraction's regex requires), otherwise refuse.
-    assert parsed('1,23')[0] == D('123')
-    assert parsed('1,2,3')[0] == D('123')
+def test_parse_decimal_grammar_refusal_names_digits_and_text():
+    with pytest.raises(NumericParseError) as e:
+        parse_decimal('$1,23', currency_symbols=['$'])
+    assert str(e.value) == "not a number under R0.4.2: '1,23' from '$1,23'"
 
 
-@pytest.mark.finding('S3-G1-1')
-def test_parse_decimal_accepts_special_values():
-    # Current behaviour: anything Decimal() accepts gets through, as the
-    # "digits + separators only" step 6 only checks for emptiness.
-    # Correct: refuse; R0.4.2's grammar has no NaN, Infinity or exponents.
-    # Reachable through figure_id's structured-answer path.
-    assert parsed('NaN')[0].is_nan()
-    assert parsed('Infinity')[0] == D('Infinity')
-    assert parsed('inf')[0] == D('Infinity')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.parametrize('text, decimal_sep, grouping_sep, value', [
+    ('1,234,567.5', '.', ',', '1234567.5'),
+    ('1.234.567,5', ',', '.', '1234567.5'),
+    ('12,5', ',', '.', '12.5'),
+    ('1234567', '.', ',', '1234567'),
+    ('1234,5', ',', '.', '1234.5'),
+    ('1,5', ',', '', '1.5'),
+])
+def test_parse_decimal_grammar_accepts_well_formed(text, decimal_sep,
+                                                   grouping_sep, value):
+    assert str(parsed(text, decimal_sep=decimal_sep,
+                      grouping_sep=grouping_sep)[0]) == value
 
 
-@pytest.mark.finding('S3-G1-1')
-def test_parse_decimal_accepts_exponent_and_underscore():
-    # Current behaviour: '1e3' is 1000 and '1_000' is 1000. Correct: refuse.
-    assert parsed('1e3')[0] == D('1E+3')
-    assert parsed('1_000')[0] == D('1000')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.parametrize('text, decimal_sep, grouping_sep', [
+    ('1234,567', '.', ','),     # a group of four before the separator
+    ('1,2345', '.', ','),       # a group of four after it
+    (',123', '.', ','),         # no leading group
+    ('1,234.5,6', '.', ','),    # grouping in the decimal part
+    ('1.234,5', ',', ''),       # no grouping configured
+    ('1.5', ',', '.'),          # '.' configured as grouping: misplaced
+])
+def test_parse_decimal_grammar_refuses_malformed(text, decimal_sep,
+                                                 grouping_sep):
+    with pytest.raises(NumericParseError):
+        parse_decimal(text, decimal_sep=decimal_sep,
+                      grouping_sep=grouping_sep)
 
 
 @pytest.mark.finding('S3-G1-7')
@@ -542,13 +522,14 @@ def test_extract_digits_inside_words_are_tokens():
     assert values('1e5') == ['1', '5']
 
 
-@pytest.mark.finding('S3-G1-4')
-def test_extract_percent_then_currency_token_dropped():
-    # Current behaviour: '10%USD' matches, fails to parse (S3-G1-4) and is
-    # silently skipped; extraction then carries on with the next match.
-    # Correct: 10, percent, 'USD'.
-    assert tokens('10%USD and 5', currency_symbols=['USD']) == [
-        ('5', False, '', '5')]
+def test_extract_unparseable_match_is_skipped_and_extraction_goes_on():
+    # T3-55: a mutant ending extraction at the first unparseable match
+    # ('continue' -> 'break') survived the legacy suites. '($5$)' matches
+    # the parenthesised pattern but has two currency symbols, so
+    # parse_decimal refuses it; the 7 after it is still extracted. (This
+    # replaces the S3-G1-4 pin on '10%USD', which now parses.)
+    assert tokens('($5$) and 7', currency_symbols=['$']) == [
+        ('7', False, '', '7')]
 
 
 @pytest.mark.finding('S3-G1-8')
@@ -652,26 +633,28 @@ def test_quantise_unknown_mode_raises():
 
 
 @pytest.mark.finding('S3-G1-9')
-def test_quantise_negative_places_rounds_to_integer():
-    # Current behaviour: 10 ** 2 = Decimal('100') has exponent 0, so
-    # places=-2 rounds to units, not hundreds. Correct: refuse negative
-    # places, or quantise to Decimal('1E2').
-    assert str(quantise(D('1234.5'), -2)) == '1235'
+@pytest.mark.parametrize('places', [-1, 2.0, '2', True, None])
+def test_quantise_places_not_a_non_negative_int_refused(places):
+    with pytest.raises(ValueError) as e:
+        quantise(D('1.5'), places)
+    assert str(e.value) == (
+        f'quantisation places must be a non-negative int: {places!r}')
+
+
+def test_quantise_zero_places_rounds_to_units():
+    assert str(quantise(D('2.5'), 0)) == '3'
 
 
 @pytest.mark.finding('T3-60')
-def test_quantise_overflow_depends_on_context_precision():
-    # Current behaviour: quantise uses the global Decimal context, which
-    # invocation.py sets to precision 50 on import (T3-60). So 1E30 to two
-    # places fails at 28 digits and works at 50. Correct: one fixed
-    # context for every comparison path.
-    with localcontext() as ctx:
-        ctx.prec = 28
-        with pytest.raises(InvalidOperation):
-            quantise(D('1E30'), 2)
-    with localcontext() as ctx:
-        ctx.prec = 50
-        assert quantise(D('1E30'), 2) == D('1E30')
+def test_quantise_overflow_does_not_depend_on_context_precision():
+    # T3-60 fixed: quantise runs in numeric.DECIMAL_CONTEXT (precision
+    # 50), so 1E30 to two places gives the same result whatever the
+    # caller's precision, and the caller's context is left as it was.
+    for prec in (28, 50):
+        with localcontext() as ctx:
+            ctx.prec = prec
+            assert quantise(D('1E30'), 2) == D('1E30')
+            assert ctx.prec == prec
 
 
 # -- _check_no_float ------------------------------------------------------
@@ -847,9 +830,6 @@ def parse_outcome(text, **kw):
 
 @pytest.mark.finding('S3-G1-1')
 @pytest.mark.req('R0.4.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-1: parse_decimal accepts NaN, Infinity, '
-                          'exponents and underscores')
 @pytest.mark.parametrize('text', ['NaN', 'Infinity', 'inf', '1e3', '1_000'])
 def test_parse_decimal_value_outside_grammar_is_refused(text):
     # SPEC R0.4.2: a token is digits, optionally grouped, with an optional
@@ -862,9 +842,6 @@ def test_parse_decimal_value_outside_grammar_is_refused(text):
 
 @pytest.mark.finding('S3-G1-2')
 @pytest.mark.req('R0.4.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-2: doubled signs parse (--5 -> 5, +-5 -> -5, '
-                          '(-5) -> 5)')
 @pytest.mark.parametrize('text', ['--5', '+-5', '(-5)'])
 def test_parse_decimal_doubled_sign_is_refused(text):
     # SPEC R0.4.2 item 2: "an optional sign -- a leading +/-, OR an
@@ -874,9 +851,6 @@ def test_parse_decimal_doubled_sign_is_refused(text):
 
 @pytest.mark.finding('S3-G1-3')
 @pytest.mark.req('R0.4.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-3: grouping separators are removed wherever '
-                          'they are (1,23 -> 123)')
 @pytest.mark.parametrize('text', ['1,23', '1,2,3'])
 def test_parse_decimal_misplaced_grouping_separator_is_refused(text):
     # SPEC R0.4.2 item 3: digits "optionally grouped by the configured
@@ -888,9 +862,6 @@ def test_parse_decimal_misplaced_grouping_separator_is_refused(text):
 
 @pytest.mark.finding('S3-G1-4')
 @pytest.mark.req('R0.4.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-4: percent is stripped before a trailing '
-                          'currency, so 5%$ fails to parse')
 def test_parse_decimal_percent_then_trailing_currency_parses():
     # SPEC R0.4.2: currency "leading or trailing" and an optional trailing
     # '%'; '5%$' is 5, percent, '$', as '$5%' is.
@@ -899,9 +870,6 @@ def test_parse_decimal_percent_then_trailing_currency_parses():
 
 @pytest.mark.finding('S3-G1-4')
 @pytest.mark.req('R0.4.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-4: 10%USD is silently dropped from '
-                          'extraction')
 def test_extract_percent_then_currency_token_kept():
     assert tokens('10%USD and 5', currency_symbols=['USD']) == [
         ('10', True, 'USD', '10%USD'), ('5', False, '', '5')]
@@ -953,8 +921,6 @@ def test_extract_parenthesised_percent_is_negative():
 
 @pytest.mark.finding('S3-G1-9')
 @pytest.mark.req('R0.4.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-9: quantise(x, -2) rounds to units')
 def test_quantise_negative_places_refused_or_rounds_to_hundreds():
     # Either refuse negative places (ValueError), or honour them:
     # 1234.5 to -2 places is 1.2E+3. Today: 1235.
@@ -1020,8 +986,6 @@ def test_canonical_hash_pinned_digest_same_on_every_platform():
     assert canonical_hash(reordered) == VERIFY_HASHES_DIGEST
 
 @pytest.mark.finding('T3-77', 'S3-G1-3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-77 (KNOWN_ISSUES #5): '1,23' parses as 123")
 @pytest.mark.parametrize('text', ['1,23', '12,5', '1,2,3'])
 def test_parse_decimal_misplaced_grouping_separator_refused(text):
     # KNOWN_ISSUES #5; SPEC R0.4.2 step 3: digits "optionally grouped by
