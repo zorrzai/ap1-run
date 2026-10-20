@@ -5,6 +5,7 @@ Expected text is written as the list of lines the section joins with
 newlines, so a test reads like the markdown it pins.
 """
 
+import decimal
 import json
 import math
 import re
@@ -46,8 +47,10 @@ def test_all_dimensions_are_d1_to_d7_in_order():
 def test_clopper_pearson_k0_is_one_minus_alpha_to_one_over_n():
     # T3-61: in Decimal (SPEC R0.4.1), the one implementation in
     # invocation.py.
-    assert clopper_pearson_upper_k0(10, 0.05) == \
-        1 - Decimal('0.05') ** (Decimal(1) / 10)
+    from ap1_run.foundation.numeric import DECIMAL_CONTEXT
+    with decimal.localcontext(DECIMAL_CONTEXT):
+        assert clopper_pearson_upper_k0(10, 0.05) == \
+            1 - Decimal('0.05') ** (Decimal(1) / 10)
     assert abs(clopper_pearson_upper_k0(10, 0.05) - Decimal('0.25887')) < \
         Decimal('1e-5')
 
@@ -807,9 +810,6 @@ def test_d72a_audit_without_entries_says_so():
 
 
 @pytest.mark.finding('T3-64')
-def test_d72a_audit_renders_operation_and_operand_fields():
-
-
 def test_d72a_audit_renders_the_live_entries():
     # Fixed (T3-64): the columns are the fields build_summary writes; the
     # operand is its literal, else its value.
@@ -832,22 +832,6 @@ def test_d72a_audit_renders_the_live_entries():
 
 
 @pytest.mark.finding('T3-64')
-def test_d72a_audit_live_entries_render_question_marks():
-    # The live audit entries (runner/summary.build_summary) carry 'value'
-    # and 'literal', not 'operation' and 'originated_operand', so two
-    # columns read '?'. Correct: the operand shown, as §7b does.
-    text = report._section_d72a_audit({'originated_operand_audit': [
-        {'item_id': 'Q03', 'condition': 'base', 'value': '81.0',
-         'literal': '81.0', 'expression': '2400 * (81.0 / 100) / 12',
-         'resolution': 'originated', 'sign_inversion_finding': None}]})
-    assert ('| Q03 | base | ? | `?` | `2400 * (81.0 / 100) / 12` '
-            '| originated |') in text
-
-
-@pytest.mark.finding('T3-64')
-def test_d72a_audit_missing_fields_read_question_marks():
-
-
 def test_d72a_audit_missing_fields_read_dashes():
     text = report._section_d72a_audit({'originated_operand_audit': [{}]})
     assert '| \u2014 | \u2014 | \u2014 | `\u2014` | `\u2014` | \u2014 |\n' \
@@ -1192,32 +1176,6 @@ def test_d2_cap_reason_shown_before_note():
 
 
 @pytest.mark.finding('T3-4')
-def test_d2_surfaces_table_sorted_with_basis():
-    text = report._section_d2_mechanisms({'d2_results': {'surfaces': {
-        'prose': {'mechanism': 'STRUCTURAL', 'operator_declared': True,
-                  'distinct_values': 1, 'successful_runs': 3,
-                  'parameter_echo_status': 'VERIFIED'},
-        'figures': {}}}})
-    assert text == md(
-        '## 9. D2 Reproducibility Mechanism Classes\n',
-        D2_NOTE,
-        '| Surface | Mechanism Class | Basis | Distinct Values | Runs | '
-        'Parameter Echo |',
-        '|---|---|---|---|---|---|',
-        '| figures | `unknown` | evidence | \u2014 | \u2014 | `UNVERIFIED` |',
-        '| prose | `STRUCTURAL` | operator-declared | 1 | 3 | `VERIFIED` |',
-        '')
-
-
-@pytest.mark.finding('T3-4', 'T3-75')
-def test_d2_live_shape_has_no_per_surface_data():
-    # build_summary passes d2_results keyed '<item>/<condition>'; this
-    # section reads d2['surfaces'], which the live shape never has, so
-    # §9 says there is no data while §3 says D2 was measured (T3-4).
-    # The note above uses UNMEASURED, a term SPEC also uses for other
-    # things (T3-75). Correct: D2 rendered from the live shape.
-
-
 def test_d2_live_shape_table_per_question_condition_and_surface():
     # Fixed (T3-4): §9 reads the live shape, keyed '<item>/<condition>'.
     text = report._section_d2_mechanisms({'d2_results': {
@@ -1355,9 +1313,6 @@ def test_cells_from_summary_listed():
 
 
 @pytest.mark.finding('T3-35')
-def test_cells_from_transcript_error_state_and_ev0():
-
-
 def test_cells_from_transcript_error_state_or_ev0_one_row_per_record():
     # An execution-level cell per transcript record: its error state, else
     # its EV-0 class (never both). Figure-identification records are not
@@ -1682,16 +1637,6 @@ def test_declared_limitations_text():
 
 # -- _format_dim_result ---------------------------------------------------
 
-@pytest.mark.finding('T3-29', 'T3-4')
-def test_format_dim_result_d2_and_d7_point_to_sections():
-    # The helper behind the D2 and D7 rows of the section-level tests
-    # marked T3-4 and T3-29: fixing either changes these strings.
-    assert report._format_dim_result('D2', {'x': 1}) == \
-        'See \u00a79 D2 Mechanism Classes'
-    assert report._format_dim_result('D7', {'x': 1}) == \
-        'See \u00a74-7 D7 Figures'
-
-
 def test_format_dim_result_d1_defaults_counts_to_zero():
     assert report._format_dim_result('D1', {'accuracy_rate': '0.5'}) == \
         'Accuracy: 0.5 (auto-scored 0; 0 adjudicated not in rate)'
@@ -1762,9 +1707,6 @@ def test_cells_duplicate_does_not_stop_later_cells():
 
 
 @pytest.mark.finding('T3-35')
-def test_cells_ev0_record_without_ids_reads_question_marks():
-
-
 def test_cells_ev0_record_without_ids_reads_dashes():
     text = report._section_unmeasured_cells({}, [
         {'evidence_class': 'EV-0 UNOBSERVABLE'}])
@@ -2312,6 +2254,45 @@ def test_clopper_pearson_section_lists_failing_questions_beside_k():
     assert (f'| d7_invocation_instruction_removed | 2 (Q02 48/50, Q06 21/50) '
             f'| 10 | 8/10 (80.0%) | 0.506902 (50.6902%) | `{EV2}` |') in text
     assert f'| d7_invocation_base | 0 | 10 | 10/10 (100.0%) |' in text
+
+
+# -- Step 5 (report-honesty): served model and fingerprints (V12-8) -------
+
+@pytest.mark.finding('V12-8')
+@pytest.mark.req('AP-1 §5.2')
+def test_report_header_records_served_model_and_fingerprints():
+    text = generate_report(summary={'served': {
+        'models': {'m-2026-01-01': 4},
+        'fingerprints': {'fp_b': 1, 'fp_a': 3}}},
+        config=CONFIG, seal_record={})
+    head = text[:text.index('## 1.')]
+    assert ('Model: test-model\n\n'
+            'Served model (as the responses report it, with responses): '
+            'm-2026-01-01 (4)\n\n'
+            'Backend fingerprints (system_fingerprint): fp_a (3), '
+            'fp_b (1)\n\n'
+            '> More than one served model or backend fingerprint: the run '
+            'does not show that the system under test was frozen for its '
+            'duration (AP-1 §5.2).\n\n'
+            '> **Demonstration run') in head
+
+
+@pytest.mark.finding('V12-8')
+@pytest.mark.parametrize('served, warned', [
+    ({'models': {'a': 1, 'b': 1}, 'fingerprints': {}}, True),
+    ({'models': {'a': 2}, 'fingerprints': {'f': 2}}, False),
+    ({'models': {}, 'fingerprints': {}}, False)])
+def test_served_lines_warn_only_when_more_than_one(served, warned):
+    text = report._served_lines(served)
+    assert ('frozen' in text) is warned
+    if not served['fingerprints']:
+        assert 'Backend fingerprints (system_fingerprint): not reported\n' \
+            in text
+
+
+def test_report_header_without_served_data_has_no_served_lines():
+    text = generate_report(summary={}, config=CONFIG, seal_record={})
+    assert 'Served model' not in text
 
 
 # -- 9b. D2.2 execution conditions -----------------------------------------

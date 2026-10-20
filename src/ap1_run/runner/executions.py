@@ -54,6 +54,25 @@ class Findings:
     release_coverage_results: list = field(default_factory=list)  # D7.3
     unmeasured_cells: list = field(default_factory=list)
     parameter_echo: list = field(default_factory=list)  # D2.2
+    # model -> responses, fingerprint -> responses (V12-8)
+    served: dict = field(default_factory=lambda: {'models': {},
+                                                  'fingerprints': {}})
+
+
+def record_served(findings, response):
+    """Count the model and backend fingerprint a response says served
+    it (V12-8; AP-1 §5.2: the system under test frozen for the run).
+    The scoring pass counts every response the transcript records, tool-
+    call rounds included; a value the response does not carry is not
+    counted."""
+    if not isinstance(response, dict):
+        return
+    for key, name in (('models', 'model'),
+                      ('fingerprints', 'system_fingerprint')):
+        value = response.get(name)
+        if value:
+            counts = findings.served[key]
+            counts[str(value)] = counts.get(str(value), 0) + 1
 
 
 def record_underivable(findings, item_id, condition):

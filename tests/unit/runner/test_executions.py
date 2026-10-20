@@ -128,22 +128,9 @@ def test_score_execution_collects_every_record(fakes, capsys):
         'expected_value': D('638.40'),
         'delivered_context': {'savings': {'balance': '1'}},
         'lookup_collision': False, 'answer_tolerance': D('0.01'),
-        'decline_markers': ['cannot'], 'currency_symbols': ['$'],
-        'decimal_separator': '.', 'grouping_separator': ','})]
-
-
         'decline_markers': ['cannot'], 'structured_answer_field': None,
-        'currency_symbols': ['$']})]
-    records = transcript.read_all(tpath)
-    figure_record = records[-1]
-    del figure_record['timestamp']
-    assert figure_record == {
-        'item_id': 'Q01', 'arm_id': 'base', 'condition': 'base',
-        'request_sent': None, 'response_received': None, 'tool_calls': [],
-        'evidence_class': 'EV-2', 'error_state': None, 'seal_hash': 'seal-1',
-        'record_type': 'figure_identification', 'repeat': 2,
-        'figure_outcome': 'AUTO-MATCH', 'figure_reason': 'one figure', 'released_figure': '638.40',
-        'expected': '638.40'}
+        'currency_symbols': ['$'],
+        'decimal_separator': '.', 'grouping_separator': ','})]
 
     # D7.3 transcription
     assert fakes.calls['check_transcription'] == [(([D('638.4')], D('638.40')), {
@@ -530,7 +517,8 @@ def test_findings_start_empty_and_separate():
         'grammar_issues': [], 'decline_findings': [],
         'tool_call_structures': [], 'evidence_findings': [],
         'transcription_results': [], 'release_coverage_results': [],
-        'unmeasured_cells': [], 'parameter_echo': []}
+        'unmeasured_cells': [], 'parameter_echo': [],
+        'served': {'models': {}, 'fingerprints': {}}}
 
 
 # -- the real scoring modules, on a realistic response --------------------
@@ -864,13 +852,7 @@ def test_as_recorded_json_round_trip_sorted_with_str():
 # xfail(strict=True) until the fix.
 
 @pytest.mark.finding('T3-75')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-75: structured_answer_field is not passed to '
-                          'identify_figure, so R2.0 step 1 never runs live')
 def test_score_execution_passes_structured_answer_field(fakes):
-
-
-def test_score_execution_passes_structured_answer_field(fakes, tpath):
     # SPEC R2.0 step 1: "If structured_answer_field is configured and
     # present, that value is the released figure. Preferred path." The
     # config loader parses the field (R0.1). Correct: score_execution
@@ -1235,6 +1217,25 @@ def test_apply_question_measurability_without_a_chain_changes_nothing():
                              'answer_outcome': 'COMPUTED'}]
     assert apply_question_measurability(findings) == 0
     assert findings.all_results[0]['answer_outcome'] == 'COMPUTED'
+
+
+# -- record_served (V12-8) ---------------------------------------------------
+
+@pytest.mark.finding('V12-8')
+def test_record_served_counts_models_and_fingerprints():
+    from ap1_run.runner.executions import record_served
+    findings = Findings()
+    for response in [
+            {'model': 'm-2026-01-01', 'system_fingerprint': 'fp_a'},
+            {'model': 'm-2026-01-01', 'system_fingerprint': 'fp_b'},
+            {'model': 'm-2026-01-01', 'system_fingerprint': None},
+            {'model': '', 'choices': []}, {}, None, 'not a dict',
+            {'model': 7, 'system_fingerprint': 'fp_a'}]:
+        record_served(findings, response)
+    assert findings.served == {
+        'models': {'m-2026-01-01': 3, '7': 1},
+        'fingerprints': {'fp_a': 2, 'fp_b': 1}}
+    assert Findings().served is not Findings().served
 
 
 # An execution the engine flagged is flagged in
