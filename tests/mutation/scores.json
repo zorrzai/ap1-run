@@ -5,16 +5,16 @@
     "score": 1.0
   },
   "execution/engine": {
-    "killed": 543,
-    "mutants": 567,
-    "notes": "All 24 survivors are equivalent or unreachable. Three pass tool_calls=None instead of [] in the VOID, transport-failure and empty-response (T3-10) records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Two drop the f'call_{turn}' default for a missing tool-call id and three change the '' default of tool_call_id in the tool message: a call without an id raises EngineError on the return-value lookup right after (S3-G2-2), so neither default is ever observed. Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). Two change the [] default of choices in _extract_tool_calls to None: both falsy, both give [].",
-    "score": 0.9577
+    "killed": 542,
+    "mutants": 559,
+    "notes": "All 17 survivors are equivalent or unreachable. Three pass tool_calls=None instead of [] in the VOID, transport-failure and empty-response (T3-10) records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so its shape was read and choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression).",
+    "score": 0.9696
   },
   "execution/evidence": {
-    "killed": 216,
-    "mutants": 224,
-    "notes": "All 8 survivors are equivalent. Six replace a .get() default by None or no default where the value is then only tested for truth or replaced by '' when falsy: 'content' in _extract_content, 'choices' and 'metadata' in extract_attestation (two mutants each). One makes the accumulated_tool_calls test always true: tc is then None instead of [], both falsy, so the final-response fallback and NOT-INVOKED follow the same way. One changes ranks_above's default rank for an unknown first argument from -1 to -2; an unknown first argument never ranks above anything either way.",
-    "score": 0.9643
+    "killed": 201,
+    "mutants": 205,
+    "notes": "All 4 survivors are equivalent. Two replace the 'content' default of message.get in _extract_content by None or no default: the value is replaced by '' when falsy. One makes the accumulated_tool_calls test always true: tc is then None instead of [], both falsy, so the final-response fallback and NOT-INVOKED follow the same way. One changes ranks_above's default rank for an unknown first argument from -1 to -2; an unknown first argument never ranks above anything either way.",
+    "score": 0.9805
   },
   "execution/perturbation_guard": {
     "killed": 149,
@@ -65,10 +65,10 @@
     "score": 0.8933
   },
   "reporting/adjudication": {
-    "killed": 530,
-    "mutants": 545,
+    "killed": 540,
+    "mutants": 555,
     "notes": "All 15 survivors are equivalent. One changes _needs_adjudication's figure_outcome default '' to 'XXXX', which is neither ADJUDICATE* nor UNMEASURABLE either. Two pass fixture=None and config=None to _generate_one_sheet, which never reads either parameter. Twelve replace a .get() default ([] or {} or '') by None or no default, falsy alike: account_map, tool_calls, operation_correctness, ungoverned_figures, choices and message content.",
-    "score": 0.9725
+    "score": 0.973
   },
   "reporting/report": {
     "killed": 1758,
@@ -77,16 +77,16 @@
     "score": 0.9745
   },
   "run": {
-    "killed": 581,
-    "mutants": 596,
-    "notes": "All 15 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored.",
-    "score": 0.9748
+    "killed": 562,
+    "mutants": 567,
+    "notes": "All 5 survivors are equivalent. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored. (The open() mutants for fixture.json and questions.json are killed by test_main_reads_fixture_and_questions_as_utf8_text.)",
+    "score": 0.9912
   },
   "runner/console": {
-    "killed": 523,
-    "mutants": 524,
+    "killed": 544,
+    "mutants": 545,
     "notes": "The one survivor is equivalent: it changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
-    "score": 0.9981
+    "score": 0.9982
   },
   "runner/credentials": {
     "killed": 116,
@@ -95,10 +95,10 @@
     "score": 0.9915
   },
   "runner/executions": {
-    "killed": 594,
-    "mutants": 596,
+    "killed": 621,
+    "mutants": 623,
     "notes": "Both survivors are equivalent. tool_calls=None in the figure record: transcript.append writes None as []. 'and' to 'or' in _operation_returns' result check only lets values through that then raise inside the try (a dict without 'result' raises KeyError), which the except turns into the same skipped call.",
-    "score": 0.9966
+    "score": 0.9968
   },
   "runner/outputs": {
     "killed": 170,
@@ -112,10 +112,10 @@
     "score": 1.0
   },
   "runner/summary": {
-    "killed": 709,
-    "mutants": 720,
+    "killed": 717,
+    "mutants": 728,
     "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default. [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
-    "score": 0.9847
+    "score": 0.9849
   },
   "scoring/accuracy": {
     "killed": 149,
@@ -162,20 +162,20 @@
     "score": 1.0
   },
   "scoring/release_coverage": {
-    "killed": 109,
-    "mutants": 112,
+    "killed": 110,
+    "mutants": 113,
     "notes": "All 3 survivors are equivalent. They change the default of tc.get('return_value', '') to None, to no default (also None) or to 'XXXX': None is falsy like '' and is skipped by the same 'if not rv', and 'XXXX' fails json.loads, whose JSONDecodeError is caught, so the call is skipped either way.",
-    "score": 0.9732
+    "score": 0.9735
   },
   "scoring/reproducibility": {
-    "killed": 207,
-    "mutants": 215,
-    "notes": "All 8 survivors are equivalent. Each is in _extract_surface_values and replaces a .get() default with None or drops it (also None): r.get('choices', []) on the figures and the prose surface (4), and .get('content', '') on both surfaces (4). None is falsy like [] and '', and every use is guarded by 'if choices:' or followed by \"or ''\", so the value is the same.",
-    "score": 0.9628
+    "killed": 182,
+    "mutants": 186,
+    "notes": "All 4 survivors are equivalent. Each is in _extract_surface_values and replaces the .get('content', '') default by None or drops it (also None), on the figures and the prose surface: the value is followed by \"or ''\", so it is the same.",
+    "score": 0.9785
   },
   "scoring/transcription": {
-    "killed": 124,
-    "mutants": 124,
+    "killed": 128,
+    "mutants": 128,
     "score": 1.0
   }
 }
