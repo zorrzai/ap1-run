@@ -129,6 +129,14 @@ re-score").
 `src/ap1_run/execution/engine.py` (`_drive_tool_loop`, L175-235 — intermediate responses
 overwritten on each loop iteration).
 
+**Fixed for new runs** (step 5 of the 2026-10 reorganization, V12-3). Each
+transcript record now has a `rounds` list: every round of the tool loop, in
+order, with the request as the adapter sent it and the raw response (or, for
+a request that failed, the messages it sent and the error). A run can be
+replayed from its transcript. The published runs in `output/` were written
+before the fix and still lack the intermediate responses; they are sealed
+and are not edited.
+
 ---
 
 ## 8. Transcript request_sent records messages only; adapter's full request is discarded
@@ -166,6 +174,13 @@ external reviewer access.
 
 No existing test asserts the shape of `request_sent` in stored transcripts;
 the fix will not break any test.
+
+**Fixed for new runs** (step 5 of the 2026-10 reorganization). `request_sent`
+carries the adapter's `request_record` (endpoint, model, tools, sampling as
+sent, attempts), and each round's record is in `rounds` (issue 7). The adapter
+copies the messages into the record, so the round-0 record is the request as
+sent, not the message list as the tool loop later extended it (S4-G4-1). The
+published runs are unchanged.
 
 **Files:** `src/ap1_run/execution/engine.py` L76-86 and L140-144 (discards `request_record`);
 `src/ap1_run/foundation/adapter.py` L68-127 (builds and returns it);

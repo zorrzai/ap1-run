@@ -218,6 +218,25 @@ def test_send_request_record_as_sent(transport):
                       'timestamp': 1000.5}]}
 
 
+@pytest.mark.finding('S4-G4-1')
+@pytest.mark.req('R0.2')
+def test_send_request_record_unchanged_when_caller_extends_messages(
+        transport):
+    # SPEC R0.2 "The request as sent": the record holds copies, so a
+    # caller that goes on extending its message list (the engine's tool
+    # loop) or its tools does not change what the record says was sent.
+    messages = [{'role': 'user', 'content': 'hi'}]
+    tools = [{'type': 'function', 'function': {'name': 'calculator'}}]
+    transport(FakeResponse(200, OK))
+    _, record = send(URL, messages=messages, tools=tools)
+    messages.append({'role': 'assistant', 'content': 'later'})
+    messages[0]['content'] = 'changed'
+    tools[0]['function']['name'] = 'changed'
+    assert record['messages'] == [{'role': 'user', 'content': 'hi'}]
+    assert record['tools'] == [{'type': 'function',
+                                'function': {'name': 'calculator'}}]
+
+
 def test_send_request_record_defaults(transport):
     _, _, record = ok_send(transport)
     assert (record['model'], record['tools'], record['sampling_as_sent']) \

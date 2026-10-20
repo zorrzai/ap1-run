@@ -97,7 +97,7 @@ October 2026; `tests/RETIREMENT.md` records where each of their checks went.
 |---|---|
 | `clean` | all ten questions correct with grounded calls, both conditions: the main path, every scorer, the report |
 | `wrong_answers` | wrong final figure, wrong operation, transposed operand, no tool call |
-| `multi_round` | chained intermediates over several rounds, several calls per round, intermediate assistant text (V12-3: not kept) |
+| `multi_round` | chained intermediates over several rounds, several calls per round, intermediate assistant text (kept in each record's `rounds` since the V12-3 fix) |
 | `d2_variation` | answers that vary across repeats (D2) |
 | `non_answers` | empty and null content (UNMEASURED, T3-10), declined, unrecognised decline, refusal reciting balances, two candidates, no figure |
 | `transport_errors` | 429, 500 and 401 in round 0 and mid-loop, a dropped connection with retries, a non-JSON body |
@@ -121,8 +121,10 @@ October 2026; `tests/RETIREMENT.md` records where each of their checks went.
 | `cli_help` | `ap1-run --help`: the options and their defaults |
 
 **About the replays:** the recorded final responses are served as they were.
-The intermediate rounds survive only as assistant messages (V12-3), so each
-one is wrapped in a standard envelope. A recorded loop that ended mid-way
+The published transcripts were written before the V12-3 fix: their
+intermediate rounds survive only as assistant messages (in the round-0
+request record, which the tool loop kept extending, S4-G4-1), so each one is
+wrapped in a standard envelope. A recorded loop that ended mid-way
 (EV-0) is replayed as a failure of the next request.
 
 The replayed `report.md` files agree with the published `output/run_e_mini`

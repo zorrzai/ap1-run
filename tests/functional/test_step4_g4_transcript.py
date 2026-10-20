@@ -283,9 +283,6 @@ def test_rescore_of_finished_run_reproduces_its_summary(cli, tmp_path):
 
 @pytest.mark.finding('V12-3', 'T3-52')
 @pytest.mark.req('R0.2', 'R0.3', 'AP-1 §5.6')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-3: the raw responses of the intermediate '
-                          'tool-loop rounds are not in the transcript')
 def test_run_multi_round_every_raw_response_in_transcript(cli):
     # Correct (SPEC R0.2 "Every request and response is written to the
     # transcript before any other processing"; AP-1 §5.6): every response
@@ -303,9 +300,6 @@ def test_run_multi_round_every_raw_response_in_transcript(cli):
 
 @pytest.mark.finding('V12-3', 'T3-52')
 @pytest.mark.req('R0.2', 'R0.3', 'AP-1 §5.6')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-3: the requests of the intermediate '
-                          'tool-loop rounds are not in the transcript')
 def test_run_multi_round_every_request_in_transcript(cli):
     # Correct (SPEC R0.2 "Every request and response is written to the
     # transcript ... The request as sent"): the messages of every request
@@ -515,25 +509,6 @@ def _round0_request_messages(cli):
 
 @pytest.mark.finding('S4-G4-1')
 @pytest.mark.req('R0.2')
-def test_run_round0_request_record_holds_the_messages_of_later_rounds(cli):
-    # S4-G4-1, today's behaviour: adapter.send puts the messages list it
-    # was given into request_record by reference, and the engine's tool
-    # loop keeps appending to that list. So the transcript's round-0
-    # "request as sent" shows the messages of the last request (7: the
-    # assistant and tool messages of rounds 0 and 1 too), while the
-    # request actually sent in round 0 had 2. (The regression mock's
-    # replay relies on this to rebuild the intermediate rounds of the
-    # published runs.)
-    recorded, sent = _round0_request_messages(cli)
-    assert [len(m) for m in sent] == [2, 5, 7]
-    assert recorded == sent[2]
-
-
-@pytest.mark.finding('S4-G4-1')
-@pytest.mark.req('R0.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S4-G4-1: the round-0 request record is mutated by '
-                          'the tool loop after it was sent')
 def test_run_round0_request_record_is_the_request_as_sent(cli):
     # Correct (SPEC R0.2 "The request as sent -- not as constructed -- is
     # recorded"): the recorded round-0 request has exactly the messages

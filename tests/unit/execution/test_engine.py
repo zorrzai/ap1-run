@@ -259,7 +259,10 @@ def test_execute_item_first_send_fails_unmeasured(tmp_path, error):
         'request_sent': {'messages': INITIAL}, 'response_received': None,
         'tool_calls': [], 'evidence_class': EV_0,
         'error_state': f'TRANSPORT_FAILURE: {error}', 'seal_hash': 'seal-1',
-        'repeat': None}]
+        'repeat': None,
+        # V12-3: the failed round, with the messages it sent
+        'rounds': [{'round': 0, 'request': {'messages': INITIAL},
+                    'error': str(error)}]}]
 
 
 # -- the repeat index (T3-9) --------------------------------------------
@@ -301,7 +304,9 @@ def test_execute_item_answer_without_tools_record_exact(tmp_path):
         'invocation_outcome': 'NOT-INVOKED', 'self_report': None,
         'attestation_reason': None, 'ground_truth_final': '15.20',
         'required_operation': 'calculator', 'operation_correctness': [],
-        'provenance_results': []}]
+        'provenance_results': [],
+        'rounds': [{'round': 0, 'request': {'request_no': 1},
+                    'response': answer()}]}]
     assert result == {
         'item_id': 'Q01', 'condition': 'base', 'status': 'EXECUTED',
         'evidence_class': EV_2, 'invocation_outcome': 'NOT-INVOKED',
@@ -330,6 +335,9 @@ def test_execute_item_empty_response_recorded_as_empty_without_outcome(
             records[0]['tool_calls']) == ('UNMEASURED: empty response', None, [])
     assert records[0]['request_sent'] == {
         'messages': INITIAL, 'request_record': {'request_no': 1}}
+    assert records[0]['rounds'] == [{'round': 0,
+                                     'request': {'request_no': 1},
+                                     'response': answer('')}]
     assert (records[0]['seal_hash'], records[0]['item_id'],
             records[0]['arm_id'], records[0]['condition']) == (
         'seal-1', 'Q01', 'base', 'base')
@@ -600,6 +608,47 @@ def test_drive_tool_loop_failed_round_recorded_unrecognised(calculator):
     assert len(tcs) == 1
 
 
+@pytest.mark.finding('V12-3')
+@pytest.mark.req('R0.2', 'AP-1 §5.6')
+def test_execute_item_rounds_recorded_in_order_failed_round_with_error(
+        tmp_path, calculator):
+    # V12-3: the record's rounds hold, in order, each round's request as
+    # the adapter returned it and the raw response; a round whose request
+    # failed holds the messages it sent and the error.
+    first = calls(tool_call(id='a'))
+    second = calls(tool_call(id='b'))
+    send = FakeAdapter(first, second, RuntimeError('reset by peer'))
+    _, records = run(tmp_path, send)
+    rounds = records[0]['rounds']
+    assert [r['round'] for r in rounds] == [0, 1, 2]
+    assert rounds[0] == {'round': 0, 'request': {'request_no': 1},
+                         'response': first}
+    assert rounds[1] == {'round': 1, 'request': {'request_no': 2},
+                         'response': second}
+    assert rounds[2] == {'round': 2,
+                         'request': {'messages': send.calls[2]['messages']},
+                         'error': 'reset by peer'}
+
+
+def test_drive_tool_loop_rounds_receive_later_rounds_only(calculator):
+    # The caller records round 0; the loop appends rounds 1 onwards, and
+    # the failed round's messages are a copy taken when it was sent.
+    send = FakeAdapter(calls(tool_call(id='b')), RuntimeError('down'))
+    messages, rounds = [], []
+    engine._drive_tool_loop(
+        response=calls(tool_call(id='a')), messages=messages, config=CONFIG,
+        tools=TOOLS, adapter_send=send, sampling={}, rounds=rounds)
+    assert rounds == [
+        {'round': 1, 'request': {'request_no': 1},
+         'response': calls(tool_call(id='b'))},
+        {'round': 2, 'request': {'messages': send.calls[1]['messages']},
+         'error': 'down'}]
+    recorded = copy.deepcopy(rounds[1]['request']['messages'])
+    messages[0]['content'] = 'changed later'
+    messages.append('later')
+    assert rounds[1]['request']['messages'] == recorded
+
+
 def test_drive_tool_loop_max_turns_parameter_bounds_sends(calculator):
     send = FakeAdapter(*[calls(tool_call(id=f'c{n}')) for n in range(5)])
     tcs, _, shapes = engine._drive_tool_loop(
@@ -841,9 +890,6 @@ def test_execute_item_record_has_no_scoring_fields(tmp_path, calculator):
 
 @pytest.mark.finding('V12-3', 'T3-52')
 @pytest.mark.req('R0.2', 'R0.3', 'AP-1 §5.6')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-3: only the first request and the final '
-                          'response of a tool loop reach the transcript')
 def test_execute_item_every_round_request_and_response_recorded(
         tmp_path, calculator):
     # Correct (SPEC R0.2 "Every request and response is written to the

@@ -11,6 +11,7 @@ No SDK. No interpretation, no retry-on-content, no normalisation.
 Network calls target only the configured endpoint. Note: HTTP redirects are followed by default (requests library behaviour) and could reach other hosts.
 """
 
+import copy
 import re
 import time
 from decimal import Decimal
@@ -118,11 +119,13 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
 
+    # A copy, so the record stays the request as sent when the caller
+    # goes on to extend its message list (SPEC R0.2).
     request_record = {
         "endpoint_url": endpoint_url,
         "model": model or "",
-        "messages": messages,
-        "tools": tools,
+        "messages": copy.deepcopy(messages),
+        "tools": copy.deepcopy(tools),
         "sampling_as_sent": sampling_as_sent,
     }
 
