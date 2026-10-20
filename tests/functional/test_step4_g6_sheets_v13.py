@@ -112,10 +112,6 @@ Q02_DECLINE = {'say': 'I cannot be certain of this. REP3-MARKER'}
 @pytest.mark.finding('T3-9')
 @pytest.mark.req('R3.2', 'AP-1 §13.1')
 @pytest.mark.filterwarnings('ignore:VERSION file says')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-9: after a transport failure on repeat 1 the '
-                          'figure outcomes shift by one repeat; the declined '
-                          'repeat 3 gets no sheet')
 def test_run_transport_failure_on_repeat_1_sheets_show_repeat_3(
         tmp_path, monkeypatch):
     """A transport failure on repeat 1 must not shift repeats 2..n.
@@ -142,8 +138,6 @@ def test_run_transport_failure_on_repeat_1_sheets_show_repeat_3(
 @pytest.mark.finding('T3-9')
 @pytest.mark.req('R0.3', 'R3.2')
 @pytest.mark.filterwarnings('ignore:VERSION file says')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-9: transcript records carry no repeat index')
 def test_run_transcript_records_carry_their_repeat_index(tmp_path,
                                                          monkeypatch):
     """Every transcript record (engine and figure-identification, the
@@ -171,9 +165,6 @@ def test_run_transcript_records_carry_their_repeat_index(tmp_path,
 @pytest.mark.finding('T3-37')
 @pytest.mark.req('R3.2')
 @pytest.mark.filterwarnings('ignore:VERSION file says')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-37: the sheet of repeat 2 shows repeat 1's "
-                          'PARTIALLY-GOVERNED finding')
 def test_run_sheet_coverage_finding_is_its_own_executions(tmp_path,
                                                           monkeypatch):
     """Repeat 1 releases 2600.00 from a call that returned 2601
@@ -200,9 +191,6 @@ def test_run_sheet_coverage_finding_is_its_own_executions(tmp_path,
 @pytest.mark.finding('T3-13')
 @pytest.mark.req('AP-1 §6.8')
 @pytest.mark.filterwarnings('ignore:VERSION file says')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-13: no auto-scored response carries a §6.8 '
-                          'outcome (COMPUTED / ORIGINATED / ...)')
 def test_run_auto_scored_responses_carry_one_section_6_8_outcome(
         tmp_path, monkeypatch):
     """AP-1 v1.3 §6.8: "Every response is scored as exactly one of" the six

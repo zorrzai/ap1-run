@@ -9,7 +9,7 @@ Version DOI: 10.5281/zenodo.21755443
 ---
 
 
-## Item 1: Q02 (Condition: base) — Scorer 1
+## Item 1: Q02, repeat 1 — Scorer 1
 
 ### Question
 
@@ -100,7 +100,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 1: Q02 (Condition: base) — Scorer 2
+## Item 1: Q02, repeat 1 — Scorer 2
 
 ### Question
 
@@ -191,7 +191,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 2: Q02 (Condition: base) — Scorer 1
+## Item 2: Q02, repeat 2 — Scorer 1
 
 ### Question
 
@@ -282,7 +282,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 2: Q02 (Condition: base) — Scorer 2
+## Item 2: Q02, repeat 2 — Scorer 2
 
 ### Question
 
@@ -373,7 +373,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 3: Q03 (Condition: base) — Scorer 1
+## Item 3: Q03, repeat 1 — Scorer 1
 
 ### Question
 
@@ -464,7 +464,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 3: Q03 (Condition: base) — Scorer 2
+## Item 3: Q03, repeat 1 — Scorer 2
 
 ### Question
 
@@ -555,7 +555,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 4: Q03 (Condition: base) — Scorer 1
+## Item 4: Q03, repeat 2 — Scorer 1
 
 ### Question
 
@@ -646,7 +646,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 4: Q03 (Condition: base) — Scorer 2
+## Item 4: Q03, repeat 2 — Scorer 2
 
 ### Question
 
@@ -737,7 +737,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 5: Q07 (Condition: base) — Scorer 1
+## Item 5: Q07, repeat 1 — Scorer 1
 
 ### Question
 
@@ -777,6 +777,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -827,7 +831,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 5: Q07 (Condition: base) — Scorer 2
+## Item 5: Q07, repeat 1 — Scorer 2
 
 ### Question
 
@@ -867,6 +871,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -917,7 +925,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 6: Q07 (Condition: base) — Scorer 1
+## Item 6: Q07, repeat 2 — Scorer 1
 
 ### Question
 
@@ -957,6 +965,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1007,7 +1019,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 6: Q07 (Condition: base) — Scorer 2
+## Item 6: Q07, repeat 2 — Scorer 2
 
 ### Question
 
@@ -1047,6 +1059,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1097,7 +1113,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 7: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 7: Q02, repeat 1 — Scorer 1
 
 ### Question
 
@@ -1188,7 +1204,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 7: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 7: Q02, repeat 1 — Scorer 2
 
 ### Question
 
@@ -1279,7 +1295,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 8: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 8: Q02, repeat 2 — Scorer 1
 
 ### Question
 
@@ -1370,7 +1386,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 8: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 8: Q02, repeat 2 — Scorer 2
 
 ### Question
 
@@ -1461,7 +1477,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 9: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 9: Q03, repeat 1 — Scorer 1
 
 ### Question
 
@@ -1552,7 +1568,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 9: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 9: Q03, repeat 1 — Scorer 2
 
 ### Question
 
@@ -1643,7 +1659,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 10: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 10: Q03, repeat 2 — Scorer 1
 
 ### Question
 
@@ -1734,7 +1750,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 10: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 10: Q03, repeat 2 — Scorer 2
 
 ### Question
 
@@ -1825,7 +1841,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 11: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 11: Q07, repeat 1 — Scorer 1
 
 ### Question
 
@@ -1865,6 +1881,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1915,7 +1935,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 11: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 11: Q07, repeat 1 — Scorer 2
 
 ### Question
 
@@ -1955,6 +1975,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2005,7 +2029,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 12: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 12: Q07, repeat 2 — Scorer 1
 
 ### Question
 
@@ -2045,6 +2069,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2095,7 +2123,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 12: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 12: Q07, repeat 2 — Scorer 2
 
 ### Question
 
@@ -2135,6 +2163,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 

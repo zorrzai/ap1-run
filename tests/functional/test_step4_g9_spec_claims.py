@@ -210,15 +210,17 @@ def report_text(result):
 
 
 def sheet_sections(result):
-    """{(item_id, condition): [sheet text, ...]} from
-    adjudication_sheets.md."""
+    """{item_id: [sheet text, ...]} from adjudication_sheets.md. The
+    sheets do not name the arm (T3-36, AP-1 v1.3 §13.8), so both arms'
+    sheets of an item are listed together; script() gives both arms the
+    same responses."""
     import re
     text = (result.output_dir / 'adjudication_sheets.md').read_text('utf-8')
     sheets = {}
     for chunk in re.split(r'(?m)^## Item ', text)[1:]:
-        m = re.match(r'\d+: (\S+) \(Condition: (\S+)\)', chunk)
+        m = re.match(r'\d+: ([^\s,]+)', chunk)
         if m:
-            sheets.setdefault((m.group(1), m.group(2)), []).append(chunk)
+            sheets.setdefault(m.group(1), []).append(chunk)
     return sheets
 
 
@@ -362,7 +364,7 @@ def test_r41_correct_answer_without_tool_call_is_not_invoked_retrieved_candidate
         'say': 'The total annual cost of maintaining the checking account '
                'is $144.00.'}]))
     assert base_record(result, 'Q06')['invocation_outcome'] == 'NOT-INVOKED'
-    sheets = sheet_sections(result).get(('Q06', 'base'), [])
+    sheets = sheet_sections(result).get('Q06', [])
     assert sheets, ('no adjudication sheet for Q06/base; figure outcome '
                     + base_figure(result, 'Q06')['figure_outcome'])
     reason = sheets[0].split('### Reason for Adjudication', 1)[-1].split(
@@ -476,7 +478,7 @@ def test_r41_refusal_reciting_fixture_balances_goes_to_adjudication(ap1_run):
                "$2,400.00 and the annual rate is 18.0%."}]))
     assert base_figure(result, 'Q03')['figure_outcome'].startswith(
         'ADJUDICATE')
-    assert ('Q03', 'base') in sheet_sections(result)
+    assert 'Q03' in sheet_sections(result)
 
 
 @pytest.mark.finding('T3-22')

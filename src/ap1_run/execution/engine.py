@@ -38,8 +38,12 @@ VALID_CONDITIONS = {CONDITION_BASE, CONDITION_INSTRUCTION_REMOVED}
 def execute_item(item, *, condition, config, fixture,
                  ground_truth_compute, adapter_send,
                  system_prompt, tools, transcript_path,
-                 seal_hash):
-    """Execute one item under one condition. R1.2 loop: send, drive, capture."""
+                 seal_hash, repeat=None):
+    """Execute one item under one condition. R1.2 loop: send, drive, capture.
+
+    `repeat` (the runner's 1-based repeat index) is written on every
+    transcript record, so outputs join a record to its own execution.
+    """
     item_id = item['id']
     ctx = build_delivered_context(fixture, item['source_accounts'])
     gt = ground_truth_compute(item_id, ctx)
@@ -53,6 +57,7 @@ def execute_item(item, *, condition, config, fixture,
             response_received=None, tool_calls=[],
             evidence_class=None, error_state='VOID',
             seal_hash=seal_hash, void_reason='underivable',
+            repeat=repeat,
         )
         return {
             'item_id': item_id, 'condition': condition,
@@ -84,7 +89,7 @@ def execute_item(item, *, condition, config, fixture,
             response_received=None, tool_calls=[],
             evidence_class=EV_0,
             error_state=f'TRANSPORT_FAILURE: {e}',
-            seal_hash=seal_hash,
+            seal_hash=seal_hash, repeat=repeat,
         )
         return {
             'item_id': item_id, 'condition': condition,
@@ -168,6 +173,7 @@ def execute_item(item, *, condition, config, fixture,
         tool_calls=tool_calls_record,
         evidence_class=ev_class,
         error_state=None, seal_hash=seal_hash,
+        repeat=repeat,
         invocation_outcome=outcome,
         self_report=self_report,
         attestation_reason=att_reason,
