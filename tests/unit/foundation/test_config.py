@@ -625,3 +625,151 @@ def test_minimum_n_d5_counts_every_question():
     validate_minimum_n({'dimensions_claimed': ['D5', 'D6']},
                        questions(20, 'ordinary'))
 
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+import re  # noqa: E402
+
+V13 = 'v1.3-draft-for-comment-20260730'  # example/config.json
+
+
+def config_error(fn, *args, **kwargs):
+    """The ConfigError message fn raises, or None if it returns."""
+    try:
+        fn(*args, **kwargs)
+    except ConfigError as e:
+        return str(e)
+    return None
+
+
+def numbers_in(message):
+    """The integers a message names, not counting the digit of a
+    dimension name such as D6."""
+    return set(re.findall(r'(?<![A-Za-z\d.])\d+(?![\d.])', message or ''))
+
+
+@pytest.mark.finding('T3-12')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-12: a dimension AP-1 does not define loads')
+@pytest.mark.req('R0.1')
+def test_load_config_undefined_dimension_refused(load):
+    # SPEC R0.1 verification contract: "A dimensions_claimed entry the
+    # fixture cannot support is refused at load." AP-1 defines D1-D7;
+    # 'D99' cannot be supported by any fixture.
+    msg = config_error(load, dimensions_claimed=['D1', 'D99'])
+    assert msg is not None and 'D99' in msg, msg
+
+
+@pytest.mark.finding('T3-12')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-12: no D1 total of 40 is checked')
+@pytest.mark.req('R0.1')
+def test_minimum_n_d1_under_forty_items_refused():
+    # AP-1 v1.3 D1 Method (l.204): "a held-out question set (minimum 40
+    # items)", and §11.1 "Minimum 40 items for D1" (same in v1.2). Two
+    # categories of 10 meet the per-category minimum but not the total.
+    # SPEC R0.1: the refusal names the dimension, the count and the minimum.
+    msg = config_error(validate_minimum_n, {'dimensions_claimed': ['D1'],
+                                            'ap1_version': V13},
+                       questions(10, 'A') + questions(10, 'B'))
+    assert msg is not None and 'D1' in msg, msg
+    assert {'20', '40'} <= numbers_in(msg), msg
+
+
+@pytest.mark.finding('T3-12')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-12: D5/D6 count every question, not the '
+                          'adversarial or conflict items')
+@pytest.mark.req('R0.1')
+@pytest.mark.parametrize('dim, minimum', [('D5', '20'), ('D6', '10')])
+def test_minimum_n_d5_d6_ordinary_items_not_counted_refused(dim, minimum):
+    # SPEC R0.1: "the loader counts eligible items". D5 counts adversarial
+    # inputs (AP-1 v1.3 §11.5), D6 items with degraded or contradictory
+    # source data (§11.6). Twenty ordinary computation items, with only a
+    # category, are none of these, so the eligible count is 0 whatever
+    # schema the fix uses to mark D5/D6 items.
+    msg = config_error(validate_minimum_n, {'dimensions_claimed': [dim],
+                                            'ap1_version': V13},
+                       questions(20, 'interest'))
+    assert msg is not None and dim in msg, msg
+    assert {'0', minimum} <= numbers_in(msg), msg
+
+
+@pytest.mark.finding('V12-7', 'T3-12')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='V12-7: minimum-n ignores ap1_version; v1.2 '
+                          'minimums are D5 5 and D6 1')
+@pytest.mark.req('R0.1')
+@pytest.mark.parametrize('dim, v12_min, v13_min', [('D5', '5', '20'),
+                                                    ('D6', '1', '10')])
+def test_minimum_n_minimum_named_is_the_declared_versions(dim, v12_min,
+                                                          v13_min):
+    # The minimums are per AP-1 version (choices-for-marcus entry 2; fix
+    # plan §2a V12-7): v1.3 D5 20 (l.279), D6 10 (l.301); v1.2 D5 5
+    # (v1.2 l.149), D6 1 (v1.2 §11.6, l.292). With no eligible items both
+    # versions refuse, and the refusal names the declared version's
+    # minimum. 'v1.2' is the ap1_version a v1.2 config would declare.
+    v13 = config_error(validate_minimum_n,
+                       {'dimensions_claimed': [dim], 'ap1_version': V13}, [])
+    v12 = config_error(validate_minimum_n,
+                       {'dimensions_claimed': [dim], 'ap1_version': 'v1.2'},
+                       [])
+    assert v13 is not None and v13_min in numbers_in(v13), v13
+    assert v12 is not None and v12_min in numbers_in(v12), v12
+    assert v13_min not in numbers_in(v12), v12
+
+
+@pytest.mark.finding('T3-51')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-51: missing quantisation places/rounding '
+                          'default to 2 and ROUND_HALF_UP')
+@pytest.mark.req('R0.1')
+@pytest.mark.parametrize('quantisation, missing', [
+    ({}, 'places'),
+    ({'rounding': 'ROUND_HALF_UP'}, 'places'),
+    ({'places': '2'}, 'rounding'),
+])
+def test_load_config_quantisation_field_missing_refused(load, quantisation,
+                                                        missing):
+    # SPEC R0.1: "Every field required; no defaults for anything affecting
+    # a result. A missing field is an error, not a fallback." AP-1 v1.3
+    # §6.9: "Every evaluation shall declare its rounding policy".
+    msg = config_error(load, quantisation=quantisation)
+    assert msg is not None and missing in msg, msg
+
+
+@pytest.mark.finding('T3-51')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-51: the rounding string is not validated')
+@pytest.mark.req('R0.1')
+def test_load_config_quantisation_unknown_rounding_mode_refused(load):
+    # SPEC R0.1 (incomplete configuration halts before any request).
+    # Today 'BOGUS' loads and fails only when quantise() first runs.
+    msg = config_error(load, quantisation={'places': '2',
+                                           'rounding': 'BOGUS'})
+    assert msg is not None and 'rounding' in msg, msg
+
+
+@pytest.mark.finding('F1', 'T3-79')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='F1/T3-79: example/config_mini.json is refused '
+                          "(reason 'model-unsupported')")
+def test_load_config_example_config_mini_is_the_mini_runs_config():
+    # Steven's ruling (choices-for-marcus entry 5): config_mini.json is a
+    # valid, complete config for the mini run, with the omission label
+    # platform-unsupported and an accurate detail. The published mini runs
+    # sent temperature "1" and omitted reasoning_effort
+    # (output/run_e_mini smoke_run.jsonl sampling_as_sent).
+    path = REPO / 'example' / 'config_mini.json'
+    cfg, msg = None, None
+    try:
+        cfg = load_config(path)
+    except ConfigError as e:
+        msg = str(e)
+    assert msg is None, msg
+    effort = cfg['sampling']['reasoning_effort']
+    assert effort['value'] == 'omitted'
+    assert effort['reason'] == 'platform-unsupported'
+    assert effort.get('detail')
+    assert cfg['sampling']['temperature'] == '1'
