@@ -15,8 +15,23 @@
       "released_figure": "15.20",
       "expected": "15.200",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -35,8 +50,23 @@
       "released_figure": "15.20",
       "expected": "15.200",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -55,8 +85,23 @@
       "released_figure": "2600.00",
       "expected": "2600.00",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -75,8 +120,23 @@
       "released_figure": "2600.00",
       "expected": "2600.00",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -215,6 +275,12 @@
       "shape_ok": true,
       "operation_correctness": [
         {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        },
+        {
           "detail": "result 430.75000 matches expected value 430.7500 (tolerance 0.01)",
           "evaluated_result": "430.75000",
           "matched_against": "expected_value",
@@ -222,6 +288,13 @@
         }
       ],
       "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        },
         {
           "outcome": "OPERANDS-GROUNDED",
           "operand_resolutions": [
@@ -310,6 +383,12 @@
       "shape_ok": true,
       "operation_correctness": [
         {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        },
+        {
           "detail": "result 430.75000 matches expected value 430.7500 (tolerance 0.01)",
           "evaluated_result": "430.75000",
           "matched_against": "expected_value",
@@ -317,6 +396,13 @@
         }
       ],
       "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        },
         {
           "outcome": "OPERANDS-GROUNDED",
           "operand_resolutions": [
@@ -1519,8 +1605,23 @@
       "released_figure": "15.20",
       "expected": "15.200",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -1539,8 +1640,23 @@
       "released_figure": "15.20",
       "expected": "15.200",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -1559,8 +1675,23 @@
       "released_figure": "2600.00",
       "expected": "2600.00",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -1579,8 +1710,23 @@
       "released_figure": "2600.00",
       "expected": "2600.00",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -1719,6 +1865,12 @@
       "shape_ok": true,
       "operation_correctness": [
         {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        },
+        {
           "detail": "result 430.75000 matches expected value 430.7500 (tolerance 0.01)",
           "evaluated_result": "430.75000",
           "matched_against": "expected_value",
@@ -1726,6 +1878,13 @@
         }
       ],
       "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        },
         {
           "outcome": "OPERANDS-GROUNDED",
           "operand_resolutions": [
@@ -1814,6 +1973,12 @@
       "shape_ok": true,
       "operation_correctness": [
         {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        },
+        {
           "detail": "result 430.75000 matches expected value 430.7500 (tolerance 0.01)",
           "evaluated_result": "430.75000",
           "matched_against": "expected_value",
@@ -1821,6 +1986,13 @@
         }
       ],
       "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        },
         {
           "outcome": "OPERANDS-GROUNDED",
           "operand_resolutions": [

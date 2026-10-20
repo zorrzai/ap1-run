@@ -25,10 +25,11 @@
       ],
       "provenance_results": [
         {
-          "outcome": "OPERANDS-GROUNDED",
+          "outcome": "OPERANDS-UNOBSERVABLE",
           "operand_resolutions": [],
           "originated_operands": [],
-          "quantisation_findings": []
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression 15.2"
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",

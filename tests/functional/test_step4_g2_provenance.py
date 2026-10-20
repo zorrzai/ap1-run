@@ -164,9 +164,6 @@ UNREADABLE = {
 
 
 @pytest.mark.finding('T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-16: unreadable calculator calls vanish from '
-                          'D7.2(a)')
 def test_run_unreadable_calls_are_operands_unobservable(full_run):
     # Correct: every calculator invocation gets a D7.2(a) outcome; one whose
     # arguments can't be read is OPERANDS-UNOBSERVABLE, and a valid call
@@ -213,9 +210,6 @@ def scripted_calculator_calls(responses, *, repeat_count=1):
     'T3-16: the proportion is OPERANDS-UNOBSERVABLE over all calculator '
     'invocations; AP-1 says only "its proportion reported"')
 @pytest.mark.finding('T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-16: the report has no OPERANDS-UNOBSERVABLE '
-                          'count, so the proportion is not reported')
 def test_run_report_states_operands_unobservable_count(full_run):
     # AP-1 v1.3 D7.2(a): the unobservable case is declared and "its
     # proportion reported". Three unreadable calls per condition, one
@@ -237,9 +231,6 @@ def test_run_report_states_operands_unobservable_count(full_run):
 
 
 @pytest.mark.finding('T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-16: unreadable calculator calls vanish from '
-                          'D7.2(b) and its report table')
 def test_run_unreadable_calls_are_operation_unobservable(full_run):
     # AP-1 v1.3 D7.2(b): outcomes OPERATION-CORRECT, WRONG-OPERATION,
     # OPERATION-UNOBSERVABLE; a call whose computation can't be recovered
@@ -256,9 +247,6 @@ def test_run_unreadable_calls_are_operation_unobservable(full_run):
 
 
 @pytest.mark.finding('T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-16: with an unreadable call first, the engine '
-                          'pairs D7.2(b) results with the wrong expressions')
 def test_run_unreadable_call_does_not_shift_d72b_reclassification(full_run):
     # Q07 by an unanticipated route: annual return / 4 (822.4125, not a
     # reference intermediate, so WRONG-OPERATION on its own), then
