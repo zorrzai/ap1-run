@@ -56,8 +56,7 @@ from ap1_run.runner.executions import (
 )
 from ap1_run.runner.outputs import write_outputs
 from ap1_run.runner.settings import (
-    apply_sampling_overrides, check_condition_guard, endpoint_and_model,
-    parse_args,
+    check_condition_guard, endpoint_and_model, parse_args, print_sampling,
 )
 from ap1_run.runner.summary import (
     build_summary, classify_reproducibility, find_d2_cap,
@@ -112,8 +111,8 @@ def main(argv=None):
     config['endpoint_url'] = endpoint
     config['model'] = model
 
-    # -- Sampling overrides: AP1_SMOKE_TEMPERATURE, AP1_SMOKE_REASONING_EFFORT --
-    apply_sampling_overrides(config)
+    # -- Sampling: exactly as the config declares it (F1) --
+    print_sampling(config)
 
     with open(os.path.join(fixture_dir, 'fixture.json'), 'r', encoding='utf-8') as f:
         fixture = json.load(f)

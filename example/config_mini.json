@@ -1,12 +1,8 @@
 {
-  "endpoint_url": "http://localhost:8080/v1/chat/completions",
-  "model": "example-model-v1",
+  "endpoint_url": "https://api.openai.com/v1/chat/completions",
+  "model": "gpt-4.1-mini",
   "sampling": {
-    "temperature": {
-      "value": "omitted",
-      "reason": "platform-rejected",
-      "detail": "gpt-5.5 returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported."
-    },
+    "temperature": "1",
     "top_p": {
       "value": "omitted",
       "reason": "operator-declared"
@@ -14,8 +10,8 @@
     "max_completion_tokens": "4096",
     "reasoning_effort": {
       "value": "omitted",
-      "reason": "model-unsupported",
-      "detail": "gpt-4.1-mini is not a reasoning model; reasoning_effort not applicable"
+      "reason": "platform-unsupported",
+      "detail": "gpt-4.1-mini returned HTTP 400: Unrecognized request argument supplied: reasoning_effort"
     }
   },
   "answer_tolerance": "0.01",

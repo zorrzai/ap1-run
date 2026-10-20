@@ -309,9 +309,6 @@ def assert_run_used_the_file(result, config_path):
 
 
 @pytest.mark.finding('F1', 'T3-79')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="F1/T3-79: config_mini.json is refused at load "
-                          "(reason 'model-unsupported')")
 def test_run_with_config_mini_seals_exactly_that_files_settings(ap1_run,
                                                                 tmp_path):
     # Steven's ruling (choices-for-marcus entry 5; decisions file, F1,
@@ -323,10 +320,6 @@ def test_run_with_config_mini_seals_exactly_that_files_settings(ap1_run,
 
 
 @pytest.mark.finding('T3-67', 'F1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-67/F1: AP1_SMOKE_TEMPERATURE and '
-                          'AP1_SMOKE_REASONING_EFFORT rewrite the sampling '
-                          'block after validation')
 @pytest.mark.req('R0.1')
 @pytest.mark.parametrize('env', [
     {'AP1_SMOKE_TEMPERATURE': '1'},
@@ -337,7 +330,7 @@ def test_run_sampling_environment_variable_changes_nothing(ap1_run, tmp_path,
                                                            env):
     # Steven's ruling (choices-for-marcus entry 5): the two overrides are
     # removed, so "no environment variable can change a sampling setting
-    # after validation". Today AP1_SMOKE_REASONING_EFFORT=omit writes the
+    # after validation". AP1_SMOKE_REASONING_EFFORT=omit used to write the
     # reason 'not-supported', which load_config refuses, into the sealed
     # config (T3-67). A run that refuses to start while such a variable
     # is set would also be correct.

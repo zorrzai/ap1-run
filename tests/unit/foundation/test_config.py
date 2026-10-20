@@ -299,29 +299,20 @@ def test_load_config_omission_unknown_reason_refused(load):
 
 @pytest.mark.finding('F1', 'T3-79')
 def test_load_config_model_unsupported_reason_refused(load):
-    # Current behaviour: 'model-unsupported', the reason used in
-    # example/config_mini.json, is not a permitted reason. Correct: either
-    # the reason is permitted or the shipped config uses a permitted one;
-    # the two must agree.
+    # 'model-unsupported', the reason example/config_mini.json used to
+    # give, is not a permitted reason; the file now says
+    # platform-unsupported.
     o = omission('model-unsupported', 'not a reasoning model')
     assert refused(load, sampling={'reasoning_effort': o}).startswith(
         "sampling.reasoning_effort: invalid or missing reason "
         "'model-unsupported'.")
 
 
-@pytest.mark.finding('F1', 'T3-79')
-def test_load_config_example_config_mini_refused():
-    # Current behaviour: the shipped example/config_mini.json does not
-    # load (regression scenario mini_config). Correct: it loads.
-    with pytest.raises(ConfigError, match="sampling.reasoning_effort: "
-                       "invalid or missing reason 'model-unsupported'"):
-        load_config(REPO / 'example' / 'config_mini.json')
-
-
 @pytest.mark.finding('T3-67')
 def test_load_config_not_supported_reason_refused(load):
-    # The reason smoke_test.py writes for AP1_SMOKE_REASONING_EFFORT=omit
-    # into the sealed config; load_config refuses it (T3-67).
+    # The reason the removed AP1_SMOKE_REASONING_EFFORT=omit override
+    # wrote into the published mini runs' sealed config; load_config
+    # refuses it (T3-67).
     o = omission('not-supported', 'x')
     assert 'invalid or missing reason' in refused(
         load, sampling={'reasoning_effort': o})
@@ -917,9 +908,6 @@ def test_load_config_quantisation_unknown_rounding_mode_refused(load):
 
 
 @pytest.mark.finding('F1', 'T3-79')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F1/T3-79: example/config_mini.json is refused '
-                          "(reason 'model-unsupported')")
 def test_load_config_example_config_mini_is_the_mini_runs_config():
     # Steven's ruling (choices-for-marcus entry 5): config_mini.json is a
     # valid, complete config for the mini run, with the omission label

@@ -70,8 +70,8 @@ Model: mock-model
   "sampling": {
     "max_completion_tokens": "4096",
     "reasoning_effort": {
-      "detail": "gpt-4.1-mini does not recognize reasoning_effort",
-      "reason": "not-supported",
+      "detail": "gpt-4.1-mini returned HTTP 400: Unrecognized request argument supplied: reasoning_effort",
+      "reason": "platform-unsupported",
       "value": "omitted"
     },
     "temperature": "1",
@@ -1300,6 +1300,10 @@ Total operands resolved: 4860
 - Auto-scored proportion: 818/1000 = 81.80%
 
 ## 9. D2 Reproducibility Mechanism Classes
+
+> **D2.2 cap: reasoning_effort was platform-unsupported. Detail: gpt-4.1-mini returned HTTP 400: Unrecognized request argument supplied: reasoning_effort**
+
+> *The platform-rejection detail above is the verbatim error recorded during config setup. The rejection is model-independent: it applies to any model run under this config.*
 
 > D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
 

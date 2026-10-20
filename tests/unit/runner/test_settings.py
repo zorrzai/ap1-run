@@ -8,8 +8,8 @@ import pytest
 from ap1_run.execution.perturbation_guard import PerturbationRefusal
 from ap1_run.runner import settings
 from ap1_run.runner.settings import (
-    DEFAULT_ENDPOINT, DEFAULT_MODEL, apply_sampling_overrides,
-    check_condition_guard, endpoint_and_model, parse_args,
+    DEFAULT_ENDPOINT, DEFAULT_MODEL, check_condition_guard,
+    endpoint_and_model, parse_args, print_sampling,
 )
 
 
@@ -33,89 +33,68 @@ def test_endpoint_and_model_reads_os_environ_by_default(monkeypatch):
     assert endpoint_and_model() == (DEFAULT_ENDPOINT, 'from-os-environ')
 
 
-# -- apply_sampling_overrides ---------------------------------------------
+# -- print_sampling -------------------------------------------------------
 
-def overrides(sampling, env, capsys):
+def printed(sampling, capsys):
     config = {'sampling': dict(sampling)}
-    apply_sampling_overrides(config, env)
-    return config['sampling'], capsys.readouterr().out
+    print_sampling(config)
+    assert config == {'sampling': sampling}   # printed, never changed
+    return capsys.readouterr().out
 
 
-def test_overrides_none_set_reports_config_values(capsys):
-    sampling, out = overrides({'temperature': 0, 'reasoning_effort': 'none'},
-                              {}, capsys)
-    assert sampling == {'temperature': 0, 'reasoning_effort': 'none'}
-    assert out == ('  temperature=0\n'
-                   '  reasoning_effort=none (from config)\n')
+def test_print_sampling_reports_config_values(capsys):
+    assert printed({'temperature': '0', 'reasoning_effort': 'none'},
+                   capsys) == ('  temperature=0\n'
+                               '  reasoning_effort=none (from config)\n')
 
 
-def test_overrides_reports_omitted_temperature_with_reason(capsys):
+def test_print_sampling_omitted_temperature_with_reason(capsys):
     omitted = {'value': 'omitted', 'reason': 'platform-rejected'}
-    _, out = overrides({'temperature': omitted}, {}, capsys)
-    assert out == ('  temperature omitted (reason: platform-rejected)\n'
-                   '  reasoning_effort=None (from config)\n')
+    assert printed({'temperature': omitted}, capsys) == (
+        '  temperature omitted (reason: platform-rejected)\n'
+        '  reasoning_effort=None (from config)\n')
 
 
-def test_overrides_omitted_temperature_without_reason(capsys):
-    _, out = overrides({'temperature': {'value': 'omitted'}}, {}, capsys)
-    assert out.startswith('  temperature omitted (reason: ?)\n')
+def test_print_sampling_omitted_temperature_without_reason(capsys):
+    assert printed({'temperature': {'value': 'omitted'}}, capsys).startswith(
+        '  temperature omitted (reason: ?)\n')
 
 
-def test_overrides_temperature_dict_not_omitted_is_printed_as_is(capsys):
-    _, out = overrides({'temperature': {'value': 1}}, {}, capsys)
-    assert out.startswith("  temperature={'value': 1}\n")
+def test_print_sampling_temperature_dict_not_omitted_printed_as_is(capsys):
+    assert printed({'temperature': {'value': 1}}, capsys).startswith(
+        "  temperature={'value': 1}\n")
 
 
-def test_overrides_temperature_from_environment(capsys):
-    sampling, out = overrides({'temperature': {'value': 'omitted'}},
-                              {'AP1_SMOKE_TEMPERATURE': '1'}, capsys)
-    assert sampling['temperature'] == '1'
-    assert out.startswith('  temperature=1 (AP1_SMOKE_TEMPERATURE override)\n')
+def test_print_sampling_omitted_reasoning_effort_with_reason(capsys):
+    effort = {'value': 'omitted', 'reason': 'platform-unsupported',
+              'detail': 'x'}
+    assert printed({'temperature': '1', 'reasoning_effort': effort},
+                   capsys) == ('  temperature=1\n'
+                               '  reasoning_effort omitted '
+                               '(reason: platform-unsupported)\n')
 
 
-def test_overrides_empty_temperature_still_overrides(capsys):
-    sampling, _ = overrides({'temperature': 0},
-                            {'AP1_SMOKE_TEMPERATURE': ''}, capsys)
-    assert sampling['temperature'] == ''
+def test_print_sampling_omitted_reasoning_effort_without_reason(capsys):
+    assert printed({'reasoning_effort': {'value': 'omitted'}},
+                   capsys).endswith('  reasoning_effort omitted (reason: ?)\n')
 
 
-def test_overrides_reasoning_effort_omit(capsys):
-    sampling, out = overrides({'reasoning_effort': 'none'},
-                              {'AP1_SMOKE_REASONING_EFFORT': 'omit'}, capsys)
-    assert sampling['reasoning_effort'] == {
-        'value': 'omitted', 'reason': 'not-supported',
-        'detail': 'gpt-4.1-mini does not recognize reasoning_effort'}
-    assert out.endswith(
-        '  reasoning_effort omitted (AP1_SMOKE_REASONING_EFFORT=omit)\n')
-
-
-def test_overrides_reasoning_effort_value(capsys):
-    sampling, out = overrides({}, {'AP1_SMOKE_REASONING_EFFORT': 'low'},
-                              capsys)
-    assert sampling == {'reasoning_effort': 'low'}
-    assert out == ('  temperature=None\n'
-                   '  reasoning_effort=low '
-                   '(AP1_SMOKE_REASONING_EFFORT override)\n')
-
-
-def test_overrides_empty_reasoning_effort_still_overrides(capsys):
-    sampling, _ = overrides({'reasoning_effort': 'none'},
-                            {'AP1_SMOKE_REASONING_EFFORT': ''}, capsys)
-    assert sampling['reasoning_effort'] == ''
-
-
-def test_overrides_without_sampling_block(capsys):
-    apply_sampling_overrides({}, {})
+def test_print_sampling_without_sampling_block(capsys):
+    print_sampling({})
     assert capsys.readouterr().out == ('  temperature=None\n'
                                        '  reasoning_effort=None (from config)\n')
 
 
-def test_overrides_read_os_environ_by_default(monkeypatch, capsys):
+@pytest.mark.finding('F1', 'T3-67')
+def test_print_sampling_environment_changes_nothing(monkeypatch, capsys):
+    # The AP1_SMOKE_TEMPERATURE and AP1_SMOKE_REASONING_EFFORT overrides
+    # are gone (Steven's ruling, choices-for-marcus entry 5).
     monkeypatch.setenv('AP1_SMOKE_TEMPERATURE', '0.5')
-    monkeypatch.delenv('AP1_SMOKE_REASONING_EFFORT', raising=False)
-    config = {'sampling': {}}
-    apply_sampling_overrides(config)
-    assert config['sampling'] == {'temperature': '0.5'}
+    monkeypatch.setenv('AP1_SMOKE_REASONING_EFFORT', 'omit')
+    assert printed({'temperature': '1', 'reasoning_effort': 'none'},
+                   capsys) == ('  temperature=1\n'
+                               '  reasoning_effort=none (from config)\n')
+    assert not hasattr(settings, 'apply_sampling_overrides')
 
 
 # -- check_condition_guard ------------------------------------------------
