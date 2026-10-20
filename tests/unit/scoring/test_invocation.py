@@ -8,6 +8,7 @@ live caller; format_rate is used by runner/console.
 
 import decimal
 import importlib
+import re
 from decimal import Decimal
 
 import pytest
@@ -297,3 +298,20 @@ def test_compute_dpr_no_removed_observations_reports_full_drop():
     # UNDEFINED like the zero-base case. Today the removed rate is taken
     # as 0 and DPR is reported as 100.0 %, a full drop measured on no data.
     assert compute_dpr(10, 5, 10, 0) == (D(1), '100.0%')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-61')
+@pytest.mark.req('AP-1 D7.5', 'R2.3', 'R0.4.1')
+@pytest.mark.parametrize('n', [49, 6000])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-61: the displayed upper bound is rounded to '
+                          'nearest (half-even), not up')
+def test_format_rate_displayed_bound_is_never_below_the_exact_bound(n):
+    # An upper bound rounded down is no longer an upper bound. Exact at
+    # n = 49: 5.9306 %, shown 5.9 %; at n = 6000: 0.0499 %, shown 0.0 %.
+    # Correct: rounded up at whatever precision is shown (6.0 %, 0.1 %).
+    text = format_rate(0, n)
+    shown = D(re.search(r'failure rate (\d+(?:\.\d+)?)%', text).group(1))
+    assert shown >= _exact_upper_bound(n) * 100, text

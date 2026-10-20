@@ -1281,3 +1281,93 @@ def test_cells_ev0_record_without_ids_reads_question_marks():
         {'evidence_class': 'EV-0 UNOBSERVABLE'}])
     assert '| ? | ? | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |' \
         in text
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+def exact_cp_upper(k, n, alpha=Decimal('0.05')):
+    """The exact one-sided 95 % Clopper-Pearson upper bound for k failures
+    in n: the p at which P(X <= k; n, p) = alpha, i.e. the 1 - alpha
+    quantile of Beta(k+1, n-k). Bisection in Decimal; for k = 0 it agrees
+    with 1 - alpha^(1/n), for k = 1, n = 2 with sqrt(0.95)."""
+    from decimal import localcontext
+    with localcontext() as ctx:
+        ctx.prec = 50
+
+        def cdf(p):
+            term = (1 - p) ** n
+            total = term
+            for i in range(k):
+                term = term * (n - i) / (i + 1) * p / (1 - p)
+                total += term
+            return total
+        lo, hi = Decimal(0), Decimal(1)
+        for _ in range(120):
+            mid = (lo + hi) / 2
+            if cdf(mid) > alpha:
+                lo = mid
+            else:
+                hi = mid
+        return +hi
+
+
+def bound_cell_values(text, metric):
+    """The numbers in the 95% Upper Bound cell of `metric`'s row in §5,
+    as fractions (a number followed by '%' divided by 100)."""
+    row = next(line for line in text.splitlines()
+               if line.startswith(f'| {metric} |'))
+    cell = row.split('|')[5]
+    return cell, [Decimal(num) / (100 if pct else 1) for num, pct in
+                  re.findall(r'(\d+(?:\.\d+)?)\s*(%?)', cell)]
+
+
+@pytest.mark.finding('T3-61')
+@pytest.mark.req('AP-1 D7.5', 'R0.4.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-61: report.py computes the D7.5 bound in '
+                          'float, apart from invocation.py')
+def test_clopper_pearson_upper_k0_is_the_decimal_bound_of_invocation():
+    # SPEC R0.4.1: binary floating point is prohibited anywhere a value is
+    # reported. Correct: one Decimal implementation of the D7.5 bound
+    # (invocation._exact_upper_bound), the one report.py uses. Today
+    # report.py has its own float copy.
+    from ap1_run.scoring.invocation import _exact_upper_bound
+    bound = clopper_pearson_upper_k0(49)
+    assert isinstance(bound, Decimal) and bound == _exact_upper_bound(49), \
+        repr(bound)
+
+
+@pytest.mark.finding('T3-61')
+@pytest.mark.req('AP-1 D7.5', 'R3.3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-61: report §5 rounds the upper bound to '
+                          'nearest, not up')
+def test_clopper_pearson_section_bound_is_rounded_up():
+    # Exact at n = 49: 0.05930601...; today shown "0.059306 (5.9306%)",
+    # both below it. Correct: every displayed form is >= the exact bound.
+    text = report._section_clopper_pearson({'invocation_figures': {
+        'd7_invocation_base': {'failures': 0, 'n': 49, 'rate': '49/49'}}})
+    cell, shown = bound_cell_values(text, 'd7_invocation_base')
+    exact = exact_cp_upper(0, 49)
+    assert shown and all(v >= exact for v in shown), cell
+
+
+@pytest.mark.finding('T3-81')
+@pytest.mark.req('AP-1 D7.5', 'R3.3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-81: no D7.5 bound for k > 0 ("not computed")')
+def test_clopper_pearson_section_bounds_nonzero_failures():
+    # AP-1 v1.3 D7.5: "Any invocation figure ... shall be reported with n
+    # and with the exact one-sided 95% upper confidence bound on the
+    # failure rate"; disposition C-1 adopts the general form, the 0.95
+    # quantile of Beta(k+1, n-k). run_b_sol instruction_removed was 92/500
+    # failures: exact bound 0.214873 (21.49 %). Correct: §5 shows it,
+    # rounded up, to within 0.1 percentage point.
+    text = report._section_clopper_pearson({'invocation_figures': {
+        'd7_invocation_instruction_removed': {
+            'failures': 92, 'n': 500, 'rate': '408/500'}}})
+    cell, shown = bound_cell_values(text,
+                                    'd7_invocation_instruction_removed')
+    exact = exact_cp_upper(92, 500)
+    assert shown and all(exact <= v <= exact + Decimal('0.001')
+                         for v in shown), cell
