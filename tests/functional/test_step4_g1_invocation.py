@@ -25,6 +25,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(
 EXAMPLE = os.path.join(ROOT, 'example')
 CLEAN = os.path.join(ROOT, 'tests', 'regression', 'scenarios', 'clean.json')
 
+# A run from a git checkout warns that VERSION is not HEAD (as in
+# tests/unit/test_run.py's end-to-end test).
+pytestmark = pytest.mark.filterwarnings('ignore:VERSION file says')
+
 
 class Run:
     """What one run of the runner left behind."""
