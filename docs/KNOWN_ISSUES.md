@@ -21,6 +21,12 @@ without warning.
 
 **File:** `example/calculator_tool.py`, expression evaluation block.
 
+**Status: partly fixed (T3-77).** An arithmetic error (`1/0`, `1 % 0`,
+`log(-1)`, `sqrt(-1)`, an overflow converting to float) is now refused with
+`CalculatorError`, keeping the exception's message, and a complex result is
+refused as "not a real number". The magnitude guard is still missing:
+`9**9**9**9` still runs until memory or time runs out.
+
 ---
 
 ## 2. Perturbation check: fail-open exception handling
@@ -62,6 +68,10 @@ The instrument's "never through float" design principle (stated in
 
 **File:** `src/ap1_run/scoring/operation_correctness.py`, π/e constant construction.
 
+**Status: fixed (T3-77).** π comes from a 100-digit decimal string and e from
+`Decimal(1).exp()`, both rounded to the Decimal context's precision when the
+expression is evaluated.
+
 ---
 
 ## 5. Numeric parser: grouping separator produces silent misparse
@@ -73,6 +83,10 @@ intended value is `1.23`. The parser does not validate grouping-separator
 position (e.g., requiring groups of three digits).
 
 **File:** `src/ap1_run/foundation/numeric.py`, `parse_decimal`, grouping-separator stripping.
+
+**Status: fixed (T3-77, S3-G1-3).** A grouping separator is accepted only
+between groups of three digits in the integer part; `'1,23'`, `'12,5'` and
+`'1,2,3'` are refused ("misplaced grouping separator").
 
 ---
 
@@ -92,6 +106,10 @@ to `2` under HALF_EVEN but `3` under HALF_UP.
 **Files:** `example/calculator_tool.py` (`round()`);
 `src/ap1_run/scoring/operation_correctness.py` (`quantize` calls); example configs
 (`rounding_mode` field).
+
+**Status: fixed (T3-77).** Both the example calculator's `round()` and
+D7.2(b)'s `round()` round half away from zero (ROUND_HALF_UP), as the example
+configs' `quantisation.rounding` declares: `round(2.5)` is 3.
 
 ---
 

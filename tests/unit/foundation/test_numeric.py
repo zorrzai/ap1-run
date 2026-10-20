@@ -357,13 +357,36 @@ def test_parse_decimal_ambiguity_checked_after_stripping():
                       currency_symbols=['$'])
 
 
-@pytest.mark.finding('S3-G1-3')
-def test_parse_decimal_grouping_positions_not_checked():
-    # Current behaviour: every grouping separator is removed wherever it
-    # is, so '1,23' is 123 and '1,2,3' is 123. Correct: groups of three
-    # only (as extraction's regex requires), otherwise refuse.
-    assert parsed('1,23')[0] == D('123')
-    assert parsed('1,2,3')[0] == D('123')
+@pytest.mark.finding('S3-G1-3', 'T3-77')
+@pytest.mark.parametrize('text', ['1,23', '1,2,3', '1234,567', ',123',
+                                  '123,', '1,234.5,6', '$1,23'])
+def test_parse_decimal_misplaced_grouping_separator_message(text):
+    # Groups of three in the integer part only (as extraction's regex
+    # requires); otherwise refused, naming the separator and the token.
+    with pytest.raises(NumericParseError) as e:
+        parse_decimal(text, currency_symbols=['$'])
+    assert str(e.value) == f"misplaced grouping separator ',' in {text!r}"
+
+
+@pytest.mark.parametrize('text, value', [
+    ('1,780', '1780'), ('12,345,678.90', '12345678.90'), ('-1,000', '-1000'),
+    ('1,000%', '1000')])
+def test_parse_decimal_grouping_in_threes_accepted(text, value):
+    assert parsed(text)[0] == D(value)
+
+
+def test_parse_decimal_grouping_checked_before_the_first_decimal_sep():
+    # Only the first '.' ends the integer part; a second makes the token
+    # unparseable, not misgrouped.
+    with pytest.raises(NumericParseError, match='^cannot parse as Decimal'):
+        parse_decimal('1,234.5.6')
+
+
+def test_parse_decimal_european_grouping_in_threes_accepted():
+    assert parse_decimal('1.780,00', decimal_sep=',', grouping_sep='.')[0] \
+        == D('1780.00')
+    with pytest.raises(NumericParseError, match='misplaced'):
+        parse_decimal('1.78,00', decimal_sep=',', grouping_sep='.')
 
 
 @pytest.mark.finding('S3-G1-1')
@@ -889,9 +912,6 @@ def test_parse_decimal_doubled_sign_is_refused(text):
 
 @pytest.mark.finding('S3-G1-3')
 @pytest.mark.req('R0.4.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-3: grouping separators are removed wherever '
-                          'they are (1,23 -> 123)')
 @pytest.mark.parametrize('text', ['1,23', '1,2,3'])
 def test_parse_decimal_misplaced_grouping_separator_is_refused(text):
     # SPEC R0.4.2 item 3: digits "optionally grouped by the configured
@@ -1035,8 +1055,6 @@ def test_canonical_hash_pinned_digest_same_on_every_platform():
     assert canonical_hash(reordered) == VERIFY_HASHES_DIGEST
 
 @pytest.mark.finding('T3-77', 'S3-G1-3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-77 (KNOWN_ISSUES #5): '1,23' parses as 123")
 @pytest.mark.parametrize('text', ['1,23', '12,5', '1,2,3'])
 def test_parse_decimal_misplaced_grouping_separator_refused(text):
     # KNOWN_ISSUES #5; SPEC R0.4.2 step 3: digits "optionally grouped by

@@ -101,17 +101,24 @@ def test_evaluate_expression_caret_is_power_with_power_precedence():
 
 
 @pytest.mark.finding('T3-77')
-def test_evaluate_expression_pi_and_e_come_from_float():
-    # Correct (R0.4): constants at Decimal precision; today str(math.pi).
-    assert evaluate_expression('pi') == D('3.141592653589793')
-    assert evaluate_expression('e') == D('2.718281828459045')
+def test_evaluate_expression_pi_and_e_at_context_precision():
+    # R0.4: never through float; to the context's precision.
+    with decimal.localcontext() as ctx:
+        ctx.prec = 28
+        assert evaluate_expression('pi') == D('3.141592653589793238462643383')
+        assert evaluate_expression('e') == D('2.718281828459045235360287471')
+        ctx.prec = 10
+        assert evaluate_expression('pi') == D('3.141592654')
+        assert evaluate_expression('e') == D('2.718281828')
 
 
 @pytest.mark.finding('T3-77')
-def test_evaluate_expression_round_is_half_even():
-    # Correct: the declared HALF_UP policy (3); Decimal.quantize defaults
-    # to half-even, so round(2.5) is 2.
-    assert evaluate_expression('round(2.5)') == D('2')
+@pytest.mark.parametrize('expression, value', [
+    ('round(2.5)', '3'), ('round(-2.5)', '-3'), ('round(2.4)', '2'),
+    ('round(0.125, 2)', '0.13')])
+def test_evaluate_expression_round_is_half_up(expression, value):
+    # The declared HALF_UP policy, as the reference calculator rounds.
+    assert evaluate_expression(expression) == D(value)
 
 
 @pytest.mark.finding('S3-G4-3')
@@ -734,9 +741,6 @@ E_60 = D('2.71828182845904523536028747135266249775724709369995957496697')
 
 
 @pytest.mark.finding('T3-77')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-77 (KNOWN_ISSUES #4): pi and e are built '
-                          'from float')
 @pytest.mark.parametrize('name, exact', [('pi', PI_60), ('e', E_60)])
 def test_evaluate_expression_pi_and_e_exact_to_decimal_precision(name,
                                                                  exact):
@@ -748,9 +752,6 @@ def test_evaluate_expression_pi_and_e_exact_to_decimal_precision(name,
 
 
 @pytest.mark.finding('T3-77')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-77 (KNOWN_ISSUES #6): round() in D7.2(b) is '
-                          'half-even, not the declared ROUND_HALF_UP')
 def test_classify_operation_round_uses_declared_half_up():
     # KNOWN_ISSUES #6: the declared rounding policy is ROUND_HALF_UP
     # (CONFIG; AP-1 v1.3 §6.9), so round(2.5) evaluates to 3 and matches an

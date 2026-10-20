@@ -106,8 +106,16 @@ def parse_decimal(text, *, decimal_sep='.', grouping_sep=',',
     # Step 7: ambiguity check
     _check_ambiguity(s, decimal_sep, grouping_sep)
 
-    # Step 8: remove grouping separators
-    if grouping_sep and grouping_sep != decimal_sep:
+    # Step 8: remove grouping separators. They group the integer part in
+    # threes ('1,780'); anywhere else ('1,23', '1,2,3', a separator in the
+    # fraction) the token is refused, not read as 123.
+    if grouping_sep and grouping_sep != decimal_sep and grouping_sep in s:
+        integer = s.partition(decimal_sep)[0]
+        fraction = s[len(integer):]
+        grouped = r'\d{1,3}(?:' + re.escape(grouping_sep) + r'\d{3})+'
+        if grouping_sep in fraction or not re.fullmatch(grouped, integer):
+            raise NumericParseError(
+                f'misplaced grouping separator {grouping_sep!r} in {text!r}')
         s = s.replace(grouping_sep, '')
 
     # Step 9: normalise decimal separator to '.'
