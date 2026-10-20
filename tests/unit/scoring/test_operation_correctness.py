@@ -660,3 +660,32 @@ def test_reclassify_session_pairs_results_and_expressions_by_position():
     out = reclassify_session([wo('822.4125'), oc('777.4125')],
                              ['', '42175 * 7.8 / 100 / 4', '822.4125 - 45'])
     assert out[0]['outcome'] == WO
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-58', 'F5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-58/F5: expression literals are read through '
+                          'float before the Decimal evaluation')
+@pytest.mark.parametrize('literal', ['15.20', '15200.0000000000000001',
+                                     '0.12345678901234567890'])
+def test_evaluate_expression_reads_literal_text_exactly(literal):
+    # Correct (Steven, 2026-10-20, choices-for-marcus #8; SPEC R0.4.1 "All
+    # numeric values on any comparison path are Decimal, parsed from
+    # string"; R0.4.2 "never through float"): a literal evaluates to the
+    # Decimal of its text, digits and trailing zeros kept.
+    assert str(evaluate_expression(literal)) == literal
+
+
+@pytest.mark.finding('T3-58', 'F5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-58/F5: 0.1000000000000000001 is read as the '
+                          'float 0.1 and taken for the earlier result 0.1')
+def test_reclassify_session_operand_beyond_float_precision_is_not_the_result():
+    # Read exactly, 0.1000000000000000001 is not the first call's result
+    # 0.1, so the first call does not feed the second and stays
+    # WRONG-OPERATION (same ruling and SPEC lines as above).
+    out = reclassify_session([wo('0.1'), oc('1')],
+                             ['1 / 10', '0.1000000000000000001 + 0.9'])
+    assert out[0]['outcome'] == WO

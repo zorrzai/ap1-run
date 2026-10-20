@@ -440,3 +440,63 @@ def test_collect_constants_returns_a_new_mutable_set():
     constants.add(D('99'))
     assert STRUCTURAL_CONSTANTS == frozenset({D('1')})
     assert isinstance(constants, set)
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-2: leading whitespace makes the expression '
+                          'unparseable, so no operands are extracted')
+@pytest.mark.parametrize('expression', [' 1520 * 0.01', '\t1520*0.01'])
+def test_extract_operands_leading_whitespace_is_stripped(expression):
+    # Correct: the expression is normalised (stripped) before parsing, as
+    # the calculator and D7.2(b) already do, so its operands are found and
+    # resolved. AP-1 v1.3 D7.2(a): every numeric operand shall be traceable;
+    # the chain "fails closed at the first unresolved link".
+    assert extract_operands(expression) == [
+        (D('1520'), '1520'), (D('0.01'), '0.01')]
+
+
+@pytest.mark.finding('T3-58', 'F5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-58/F5: operand literals are read through float')
+@pytest.mark.parametrize('literal', [
+    '53.20',                    # trailing zero kept in the literal text
+    '-53.20',
+    '15200.0000000000000001',   # 17+ significant digits, not rounded
+    '0.12345678901234567890',
+])
+def test_extract_operands_reads_literal_text_exactly_as_decimal(literal):
+    # Correct (Steven, 2026-10-20, choices-for-marcus #8; SPEC R0.4.1 and
+    # R0.4.2 "parsed to Decimal from its literal text, never through
+    # float"; the function's own docstring): the operand is the Decimal of
+    # the text the model wrote, and the recorded literal is that text.
+    [(value, text)] = extract_operands(literal)
+    assert text == literal
+    assert str(value) == literal
+
+
+@pytest.mark.finding('T3-57')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-57: step 4 takes the first matching prior '
+                          'return, so the outcome depends on call order')
+def test_resolve_step4_grounded_matching_prior_return_grounds_in_any_order():
+    # SPEC R2.4 step 4: an operand is computed in session when it "exactly
+    # equals the return value of a prior invocation ... and that prior
+    # invocation was itself OPERANDS-GROUNDED" (AP-1 v1.3 D7.2(a)(iv)).
+    # With two prior returns of the same value, one grounded and one not,
+    # a grounded prior invocation returning that value exists, so the
+    # condition holds whatever the order of the calls: computed_in_session
+    # (step 4). The "if not grounded, originated" clause applies when no
+    # grounded prior invocation returned the value. Nothing is laundered:
+    # the value has a grounded derivation in the session.
+    ungrounded = {'value': D('7'), 'grounded': False}
+    grounded = {'value': D('7'), 'grounded': True}
+    outcomes = {}
+    for order, prior in [('ungrounded_first', [ungrounded, grounded]),
+                         ('grounded_first', [grounded, ungrounded])]:
+        r = resolve('7', ctx={}, prior=prior)
+        outcomes[order] = (r['step'], r['resolution'])
+    assert outcomes == {'ungrounded_first': (4, 'computed_in_session'),
+                        'grounded_first': (4, 'computed_in_session')}
