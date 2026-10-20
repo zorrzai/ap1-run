@@ -107,8 +107,8 @@
     "score": 0.929
   },
   "runner/settings": {
-    "killed": 260,
-    "mutants": 260,
+    "killed": 197,
+    "mutants": 197,
     "score": 1.0
   },
   "runner/summary": {
