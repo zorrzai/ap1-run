@@ -160,3 +160,25 @@ def test_scorer_registers_no_metrics():
 def test_answer_is_the_released_figure_as_text(score):
     s = score('The monthly interest is $15.200.', Q01_CALL)
     assert s.answer == str(Decimal('15.200'))
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('S3-G7-3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G7-3: ap1_scorer is declared with metrics=[]; '
+                          'the metrics in ap1_inspect.metrics never run')
+def test_scorer_attaches_every_metric_the_package_defines():
+    # The correct behaviour is either of the two in the step-3 pin:
+    # attach the metrics, or remove them. Both satisfy "no metric is
+    # defined and never computed". (Inspect is unsupported for now,
+    # Marcus 2026-10-16; attaching them exposes T3-43's metric defects.)
+    import ap1_inspect.metrics as metrics_module
+    from inspect_ai._util.registry import is_registry_object, registry_info
+    defined = {registry_info(obj).name
+               for obj in vars(metrics_module).values()
+               if callable(obj) and is_registry_object(obj, type='metric')}
+    attached = {registry_info(m).name
+                for m in registry_info(ap1_scorer).metadata.get('metrics', [])
+                if is_registry_object(m)}
+    assert defined <= attached, sorted(defined - attached)
