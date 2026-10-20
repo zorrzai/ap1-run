@@ -571,16 +571,14 @@ def test_single_variable_perturbation_with_unchecked_key_is_accepted():
 
 @pytest.mark.finding('S3-G7-2')
 @pytest.mark.req('AP-1 D7.8', 'AP-1 §13.9', 'R1.2')
-def test_perturbation_guard_ignores_a_change_of_model():
-    # The guard compares a fixed list of fields (system_prompt, tools,
-    # tool_choice, sampling, fixture_hash, message_template). A second
-    # changed quantity outside that list, here the model, passes.
-    # Correct: every request field other than the instruction is held
-    # constant and compared.
-    from ap1_run.execution.perturbation_guard import \
-        check_single_variable_perturbation
+def test_perturbation_guard_refuses_a_change_of_model():
+    # Every request field other than the instruction is held constant
+    # and compared, not only a fixed list: a changed model is refused.
+    from ap1_run.execution.perturbation_guard import (
+        PerturbationRefusal, check_single_variable_perturbation)
     changed = dict(PERTURBATION_BASE, model='other', system_prompt='x')
-    assert check_single_variable_perturbation(PERTURBATION_BASE, changed) == []
+    with pytest.raises(PerturbationRefusal, match='model differs'):
+        check_single_variable_perturbation(PERTURBATION_BASE, changed)
 
 
 @pytest.mark.finding('T3-46')

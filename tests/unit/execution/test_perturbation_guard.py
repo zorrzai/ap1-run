@@ -234,9 +234,6 @@ def test_guard_identical_prompts_plus_violation_refusal_says_prompt_unchanged():
 
 
 @pytest.mark.finding('S3-G7-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G7-2: the guard compares a fixed field list; '
-                          'a change of model passes')
 @pytest.mark.req('AP-1 D7.8', 'R1.2')
 def test_guard_model_changed_with_prompt_refused_naming_model():
     # AP-1 v1.3 D7.8 holds "all other request content" constant; SPEC R1.2:
@@ -251,3 +248,25 @@ def test_guard_model_changed_with_prompt_refused_naming_model():
     else:
         message = None
     assert message is not None and 'model' in message, message
+
+
+@pytest.mark.finding('S3-G7-2')
+def test_guard_other_fields_refusal_message_names_each():
+    # Fields beyond the named six are compared in sorted order, and a
+    # field present on one side only counts as changed.
+    base = {**BASE, 'model': 'a', 'endpoint_url': 'http://x'}
+    other = {**removed(), 'model': 'b', 'seed': '1',
+             'endpoint_url': 'http://x'}
+    with pytest.raises(PerturbationRefusal) as e:
+        check_single_variable_perturbation(base, other)
+    assert str(e.value).endswith(
+        '  - model: model differs between conditions\n'
+        '  - seed: seed differs between conditions')
+    assert 'changes 3 quantities' in str(e.value)
+
+
+@pytest.mark.finding('S3-G7-2')
+def test_guard_other_fields_equal_accepted():
+    base = {**BASE, 'model': 'a', 'extra': {'k': [1, 2]}}
+    other = {**removed(), 'model': 'a', 'extra': {'k': [1, 2]}}
+    assert check_single_variable_perturbation(base, other) == []
