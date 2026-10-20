@@ -1034,7 +1034,7 @@ including blank lines.  Earlier figures in this specification were measured by
 `Measure-Object -Line`, which excludes blank lines and produced systematically
 lower numbers.  Those figures were wrong and have been corrected.
 
-Test suites (`tests/legacy/verify_*.py`, `run_all_tests.py`), demonstration tooling
+Tests (`tests/`, `run_all_tests.py`), demonstration tooling
 (`src/ap1_run/run.py`, the parts it drives in `src/ap1_run/runner/`, and its
 `smoke_test.py` shim), and the example ground-truth module
 (`example/ground_truth_example.py`) are **not** instrument modules and are
@@ -1089,11 +1089,9 @@ a module-level constant definition, not added logic.
 | `src/ap1_run/runner/summary.py` | 242 | Demonstration tooling |
 | `example/ground_truth_example.py` | 571 | Example / demonstration |
 | `example/calculator_tool.py` | 224 | Example / demonstration |
-| `tests/legacy/verify_*.py` | varies | Verification test suites |
-| `tests/legacy/verify_findings.py` | 127 | Findings reconciliation guard |
+| `tests/` | varies | Tests (unit, conformance, functional, regression, mutation) |
 | `tools/generate_findings.py` | 524 | FINDINGS.md generator from artifacts |
-| `tests/legacy/test_findings_mutation.py` | 197 | Mutation tests for findings pipeline |
-| `run_all_tests.py` | 222 | Test runner |
+| `run_all_tests.py` | 29 | Test runner (runs pytest) |
 
 **Research questions are not held in this document.** Those on which the field
 has no settled answer are put to reviewers in AP-1 v1.3 §14. The standard asks;

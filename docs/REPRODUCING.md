@@ -93,5 +93,7 @@ seals, restore the module from `203fef4` with CRLF; see FINDINGS_ERRATA,
   ```
 
 - **Commands:** `python smoke_test.py` still works; it is now a shim for
-  `ap1_run.run`, also available as the `ap1-run` command. The test suites are
-  in `tests/legacy/`; `python run_all_tests.py` runs them as before.
+  `ap1_run.run`, also available as the `ap1-run` command. The original test suites
+  were retired in October 2026 (`tests/RETIREMENT.md` maps each check to its
+  replacement); `python run_all_tests.py` now runs pytest. At the commits named
+  above, `python run_all_tests.py` runs the original suites.

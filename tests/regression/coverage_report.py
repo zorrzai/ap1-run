@@ -1,4 +1,4 @@
-"""Measure what the safety net executes: the legacy suites plus the
+"""Measure what the safety net executes: the pytest suite plus the
 regression scenarios, with per-test contexts, combined.
 
     python tests/regression/coverage_report.py OUTDIR
@@ -18,19 +18,6 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
 
 
-def legacy_suites():
-    """The suites run_all_tests.py runs, wherever they live."""
-    sys.path.insert(0, REPO)
-    import run_all_tests
-    names = [s[0] if isinstance(s, (tuple, list)) else s
-             for s in run_all_tests.SUITES]
-    base = os.path.dirname(os.path.abspath(run_all_tests.__file__))
-    legacy = os.path.join(base, 'tests', 'legacy')
-    if os.path.isdir(legacy):
-        base = legacy
-    return [os.path.join(base, n) for n in names]
-
-
 def main():
     out = os.path.abspath(sys.argv[1])
     data = os.path.join(out, 'data')
@@ -48,14 +35,12 @@ def main():
     env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1',
                PYTHONIOENCODING='utf-8')
 
-    for suite in legacy_suites():
-        name = os.path.basename(suite)[:-3]
-        subprocess.run(
-            [sys.executable, '-m', 'coverage', 'run', '--branch',
-             f'--data-file={os.path.join(data, ".coverage.legacy-" + name)}',
-             f'--context=legacy:{name}', f'--source={REPO}', suite],
-            cwd=os.path.dirname(suite), env=env,
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run(
+        [sys.executable, '-m', 'coverage', 'run', '--branch',
+         f'--data-file={os.path.join(data, ".coverage.pytest")}',
+         '--context=pytest', f'--source={REPO}', '-m', 'pytest', '-q',
+         '-p', 'no:cacheprovider'],
+        cwd=REPO, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     subprocess.run([sys.executable, os.path.join(HERE, 'run_regression.py'),
                     '--coverage', data], env=env, stdout=subprocess.DEVNULL)

@@ -16,7 +16,7 @@ __pycache__/
 *.egg-info/
 build/
 
-# Written by tests/legacy/verify_hashes.py on every run
+# Written by the retired verify_hashes.py; ignored in case an old checkout writes it
 hash_digest.txt
 
 # Test tooling

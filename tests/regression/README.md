@@ -80,19 +80,16 @@ python tests/regression/run_regression.py --update     # rewrite golden output
 python tests/regression/run_regression.py --keep DIR replay_run_e_mini
                                                        # full output, digested files too
 python tests/regression/check_imports.py               # every module imports
-python tests/regression/coverage_report.py OUTDIR      # legacy suites + scenarios
+python tests/regression/coverage_report.py OUTDIR      # pytest suite + scenarios
 ```
 
 It needs `requests`, and `coverage` for the coverage report. The golden files
 were made with Python 3.11, which is in the CI matrix. A full comparison of
 all scenarios takes about 30 seconds.
 
-The harness is deliberately **not** registered in `run_all_tests.py`, so the
-legacy suite counts stay the same across the restructure: 226 test functions
-and 406 checks in step 1. In step 2 only `verify_spec.py`'s check count moves,
-because it checks each file listed in SPEC §12.10 (one check per file, and
-one more per instrument module): files deleted, renamed or split change it,
-and `run_all_tests.py` records the new count in the same commit.
+The harness runs separately from pytest (`python -m pytest` doesn't collect
+it). The original verify_*.py suites it was built beside were retired in
+October 2026; `tests/RETIREMENT.md` records where each of their checks went.
 
 ## Scenarios
 

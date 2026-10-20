@@ -108,14 +108,13 @@ Running the test suites requires none of this — they are offline.
 ```bash
 git clone <this repo>
 cd <clone directory>
-pip install -e .              # the ap1_run package and its one dependency, requests
-python run_all_tests.py       # offline, reports its own totals
+pip install -e .[dev]         # the ap1_run package, requests, and pytest, mutmut, coverage
+python -m pytest              # offline: unit, conformance, functional and Inspect tests
 ```
 
-For development, `pip install -e .[dev]` adds pytest, mutmut and coverage:
+`python run_all_tests.py` does the same (it runs pytest). For development:
 
 ```bash
-python -m pytest                            # unit, conformance, functional and Inspect tests
 python tests/regression/run_regression.py   # the regression baseline, about 30 s
 python tests/mutation/run_mutation.py       # mutation scores, against tests/mutation/scores.json
 ```
@@ -144,11 +143,6 @@ ap1-run --config my/config.json \
 `ground_truth_example.py`. The AP-1 text must be the one the seal expects. The
 runner still takes its version and source hash from the clone, so run it from
 a clone (an editable install), not from a wheel.
-
-`run_all_tests.py` reports two columns. `verify.py` counts individual
-assertions; the other suites count test functions. Running pytest on
-`tests/legacy/` directly reports the function count only — both numbers are
-shown so neither is mistaken for the other.
 
 ---
 
@@ -320,7 +314,7 @@ The runner claims conformance to specific clauses of AP-1 v1.3. That claim is
 executable:
 
 ```bash
-python tests/legacy/verify_conformance.py
+python -m pytest tests/conformance
 ```
 
 One test per clause. Each names the clause, quotes it verbatim from the sealed
@@ -328,14 +322,6 @@ standard text with line numbers, and asserts the behaviour it requires. Clauses
 the runner **cannot** enforce — independent key implementation and authorship
 disclosure, both process obligations — have tests asserting the runner *declares*
 the limitation rather than staying silent.
-
-```bash
-python tests/legacy/verify_spec.py
-```
-
-The build specification records line counts and a size constraint. This suite
-parses those claims and compares them against the files, so the specification
-cannot drift from the code without failing.
 
 **This instrument alone cannot produce a conformance claim.** AP-1 v1.3 §4
 states that a system may not claim compliance having omitted any dimension. D3
@@ -360,7 +346,7 @@ The package follows the layers of the build specification (docs/SPEC.md).
 
 ```
 pyproject.toml               package metadata; `pip install -e .`; the `ap1-run` command
-run_all_tests.py             one command, all legacy suites
+run_all_tests.py             runs pytest (kept so the old command still works)
 smoke_test.py                shim: `python smoke_test.py` runs ap1_run.run
 
 src/ap1_run/
@@ -411,8 +397,7 @@ tests/
   functional/                tests across several modules
   inspect/                   tests of ap1_inspect/ (skipped without inspect-ai)
   mutation/                  mutation scores per module (mutmut), a ratchet
-  legacy/                    the original verify_*.py suites, run by run_all_tests.py;
-                             RETIREMENT.md maps each of their checks to the new tests
+  RETIREMENT.md              maps each check of the retired verify_*.py suites to its new test
   regression/                the regression baseline: canned model responses, golden output
   fixtures/                  mock endpoint and test modules
 
@@ -448,7 +433,7 @@ those records are not edited. To follow such a reference today:
 | `provenance.py`, `provenance_classify.py`, `provenance_audit.py` | `src/ap1_run/scoring/provenance/`, renamed in step 2 to `trace.py`, `classify.py`, `audit.py` |
 | `report.py`, `adjudication.py` | `src/ap1_run/reporting/` |
 | `generate_findings.py`, `verify_run_seal.py` | `tools/` |
-| `verify*.py`, `test_findings_mutation.py` | `tests/legacy/` |
+| `verify*.py`, `test_findings_mutation.py` | `tests/legacy/`, then retired in October 2026; `tests/RETIREMENT.md` maps every check to its replacement |
 | `_t16_mock_gt.py` | `tests/fixtures/` |
 | `SPEC.md`, `KNOWN_ISSUES.md`, `RELATED_WORK_REVIEW.md`, `REPRODUCING.md` | `docs/` |
 | `FINDINGS.md`, `FINDINGS.template.md`, `FINDINGS_ERRATA.md` | `findings/` |

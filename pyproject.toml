@@ -26,9 +26,9 @@ where = ["src"]
 # The new tests: unit (tests/unit/), AP-1 clause and SPEC R4.1 conformance
 # (tests/conformance/), multi-module behaviour (tests/functional/) and the
 # Inspect wrapper (tests/inspect/, skipped unless inspect-ai is installed).
-# The legacy suites keep running through run_all_tests.py until they are
-# retired, and the regression baseline through
-# tests/regression/run_regression.py.
+# The regression baseline runs separately, through
+# tests/regression/run_regression.py. The original verify_*.py suites were
+# retired in October 2026 (tests/RETIREMENT.md).
 testpaths = ["tests/unit", "tests/conformance", "tests/functional", "tests/inspect"]
 # Import the package from src/ even without an install.
 pythonpath = ["src"]

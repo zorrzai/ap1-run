@@ -15,7 +15,7 @@ python tests/mutation/run_mutation.py                  # check every recorded mo
 python tests/mutation/run_mutation.py scoring/accuracy # check one
 python tests/mutation/run_mutation.py --record scoring/accuracy
 python tests/mutation/run_mutation.py --survivors scoring/accuracy
-python tests/mutation/run_mutation.py --tests tests/legacy/verify_phase_c.py scoring/accuracy
+python tests/mutation/run_mutation.py --tests tests/unit/scoring/test_accuracy.py scoring/accuracy
                                                        # another test set's strength, not recorded
 ```
 

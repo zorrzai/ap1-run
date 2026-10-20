@@ -746,8 +746,9 @@ def test_canonical_hash_key_order_irrelevant():
 
 
 def test_canonical_hash_known_digest_of_verify_hashes_input():
-    # The input of tests/legacy/verify_hashes.py; CI compares this digest
-    # across platforms.
+    # The input of the retired verify_hashes.py. CI runs this test on Linux,
+    # macOS and Windows (.github/workflows/hashes.yml), so a platform that
+    # hashes differently fails against the pinned digest.
     obj = {
         'z_last': 'should sort last',
         'a_first': 'should sort first',

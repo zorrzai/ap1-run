@@ -72,7 +72,7 @@ is refused.
   expression evaluator itself; this is the guarded path described above.
 - `importlib` in `verify.py` — loads the operator’s ground-truth module by
   name. The module path is read from the sealed configuration.
-- `subprocess` in `run_all_tests.py` — runs the test suites.
+- `subprocess` in `run_all_tests.py` — runs pytest.
 
 **Network.** `verify_integration.py` starts a local mock HTTP server on
 loopback and makes requests to it via `adapter.send()`; this is the only HTTP

@@ -22,7 +22,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install
-        run: pip install -e .
+        run: pip install -e .[dev]
 
-      - name: Verify sealed hash
-        run: python tests/legacy/verify_hashes.py
+      - name: Verify the pinned canonical-hash digest
+        run: python -m pytest tests/unit/foundation/test_numeric.py -k known_digest

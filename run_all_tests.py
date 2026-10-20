@@ -1,221 +1,28 @@
-"""AP-1 runner -- full test suite.
+"""AP-1 runner -- run the test suite.
 
-Single entry point that invokes each verification suite in its native form
-and reports a combined result with both function counts and check counts.
+    python run_all_tests.py [pytest options]
 
-Usage:
-    python run_all_tests.py
+Runs pytest over tests/unit, tests/conformance, tests/functional and
+tests/inspect (as configured in pyproject.toml); extra arguments go to pytest.
+Needs the development extras: pip install -e .[dev].
 
-Exit code 0 if all suites pass, 1 if any fail.
-A new suite is added by appending one entry to the SUITES list.
+The original verify_*.py suites that this script used to run were retired in
+October 2026; tests/RETIREMENT.md maps each of their 410 checks to the tests
+that replace it. The regression baseline runs separately:
+python tests/regression/run_regression.py.
+
+Exit code: pytest's (0 when every test passes).
 """
 
 import os
-import re
 import subprocess
 import sys
-from pathlib import Path
 
 
-# ---------------------------------------------------------------------------
-# Suite registry
-#
-# Each entry: (script, label, expected_functions, expected_checks)
-#
-# expected_functions: number of test_* functions/methods pytest discovers
-# expected_checks:    number of individual pass/fail assertions the
-#                     native runner reports (equals expected_functions
-#                     except where a single function contains multiple
-#                     check() calls, as in verify.py)
-#
-# To add a new suite, append one tuple.
-# ---------------------------------------------------------------------------
-
-SUITES = [
-    ('verify.py',             'verify.py (Phase A)',   13, 79),
-    ('verify_phase_b.py',     'verify_phase_b.py',     25, 25),
-    ('verify_phase_c.py',     'verify_phase_c.py',     28, 28),
-    ('verify_integration.py', 'verify_integration.py', 10, 10),
-    ('verify_phase_d.py',     'verify_phase_d.py',     25, 25),
-    ('verify_d72b.py',        'verify_d72b.py',        16, 16),
-    ('verify_phase_e.py',     'verify_phase_e.py',     29, 29),
-    ('verify_r41.py',          'verify_r41.py (R4.1)',  30, 30),
-    ('verify_spec.py',          'verify_spec.py (Spec)',   2, 62),
-    ('verify_conformance.py',   'verify_conformance.py',  28, 79),
-    ('verify_findings.py',       'verify_findings.py',      1,  1),
-    ('test_findings_mutation.py', 'test_findings_mutation.py', 1,  7),
-    ('verify_inspect.py',          'verify_inspect.py',          3,  4),
-    ('verify_e7_coverage.py',       'verify_e7_coverage.py',      15, 15),
-]
-
-
-def _parse_check_count(output):
-    """Extract passed, failed, and skipped counts from suite output.
-
-    Handles three output formats:
-      Custom runners:  "N passed, M failed"
-      Custom runners:  "N passed, M failed, K skipped"
-      unittest/pytest: "Ran N tests" + "OK" or "FAILED"
-      Skipped suite:   "0 passed, 0 failed, K skipped"
-
-    Returns (passed, failed, skipped) or (None, None, 0) if unparseable.
-    """
-    # Check for skipped-only output first
-    m = re.search(r'(\d+)\s+passed,\s+(\d+)\s+failed,\s+(\d+)\s+skipped', output)
-    if m:
-        return int(m.group(1)), int(m.group(2)), int(m.group(3))
-
-    # Custom runner format: '76 passed, 0 failed'
-    m = re.search(r'(\d+)\s+passed,\s+(\d+)\s+failed', output)
-    if m:
-        return int(m.group(1)), int(m.group(2)), 0
-
-    # unittest format: 'Ran 29 tests in 0.08s' + 'OK' or 'FAILED (...)'
-    m = re.search(r'Ran\s+(\d+)\s+test', output)
-    if m:
-        total = int(m.group(1))
-        fm = re.search(
-            r'FAILED\s*\('
-            r'(?:failures=(\d+))?'
-            r'(?:,\s*)?'
-            r'(?:errors=(\d+))?'
-            r'\)',
-            output,
-        )
-        if fm:
-            failures = int(fm.group(1) or 0) + int(fm.group(2) or 0)
-            return total - failures, failures, 0
-        if re.search(r'\bOK\b', output):
-            return total, 0, 0
-
-    return None, None, 0
-
-
-def main():
-    base = Path(__file__).parent
-    python = sys.executable
-
-    print()
-    print('AP-1 runner -- full test suite')
-    print()
-
-    # Column widths
-    w_label = 30
-    w_func = 9
-    w_check = 7
-    w_result = 6
-
-    header = (f'  {"suite":<{w_label}s}  '
-              f'{"functions":>{w_func}s}  '
-              f'{"checks":>{w_check}s}  '
-              f'{"result":<{w_result}s}')
-    sep = '  ' + '-' * (w_label + w_func + w_check + w_result + 8)
-
-    print(header)
-    print(sep)
-
-    total_functions = 0
-    total_checks = 0
-    any_failed = False
-    failed_output = []
-
-    for script, label, exp_functions, exp_checks in SUITES:
-        script_path = base / 'tests' / 'legacy' / script
-
-        # Run the suite in its native form
-        proc = subprocess.run(
-            [python, str(script_path)],
-            capture_output=True, text=True, timeout=120,
-            cwd=str(base),
-            env={**os.environ, 'PYTHONIOENCODING': 'utf-8'},
-        )
-
-        combined = proc.stdout + '\n' + proc.stderr
-        passed, failed, skipped = _parse_check_count(combined)
-
-        suite_ok = proc.returncode == 0
-        is_skipped = skipped > 0 and (passed or 0) == 0 and (failed or 0) == 0
-
-        if passed is not None:
-            observed_checks = passed + (failed or 0) + skipped
-        else:
-            observed_checks = None
-            if not is_skipped:
-                suite_ok = False  # unparseable output is a failure
-
-        # Assert expected check count
-        count_note = ''
-        if observed_checks is not None:
-            if observed_checks < exp_checks:
-                suite_ok = False
-                count_note = (f'    *** FEWER CHECKS THAN EXPECTED: '
-                              f'{observed_checks} < {exp_checks}')
-            elif observed_checks > exp_checks:
-                count_note = (f'    (new: {observed_checks} checks, '
-                              f'expected {exp_checks} -- update SUITES)')
-
-        if failed and failed > 0:
-            suite_ok = False
-
-        if is_skipped:
-            result_str = 'SKIP'
-        elif suite_ok:
-            result_str = 'PASS'
-        else:
-            result_str = 'FAIL'
-        if not suite_ok:
-            any_failed = True
-            failed_output.append((label, combined))
-
-        checks_str = (str(observed_checks)
-                      if observed_checks is not None else '?')
-
-        print(f'  {label:<{w_label}s}  '
-              f'{exp_functions:>{w_func}d}  '
-              f'{checks_str:>{w_check}s}  '
-              f'{result_str:<{w_result}s}')
-        if count_note:
-            print(count_note)
-
-        total_functions += exp_functions
-        total_checks += observed_checks if observed_checks is not None else 0
-
-    print(sep)
-    final_str = 'PASS' if not any_failed else 'FAIL'
-    print(f'  {"TOTAL":<{w_label}s}  '
-          f'{total_functions:>{w_func}d}  '
-          f'{total_checks:>{w_check}d}  '
-          f'{final_str:<{w_result}s}')
-    print()
-
-    # Explanatory note
-    print('  The "checks" column counts what each suite reports. verify.py')
-    print('  uses a check() counter and reports individual assertions; the')
-    print('  other suites report test-function outcomes. Several suites have')
-    print('  different function and check counts (verify.py, verify_spec.py,')
-    print('  verify_conformance.py, test_findings_mutation.py). Both columns are')
-    print('  shown so neither number is mistaken for the other.')
-    print('  verify_inspect.py\'s agreement test skips when inspect-ai is not')
-    print('  installed; the skip is counted in the checks column, so the full')
-    print('  total is reached only when inspect-ai is present.')
-    print()
-
-    # Detail for any failed suites
-    if any_failed:
-        print('=' * 60)
-        print('FAILED SUITE OUTPUT:')
-        for label, output in failed_output:
-            print(f'\n--- {label} ---')
-            lines = output.strip().split('\n')
-            for line in lines[-30:]:
-                print(f'  {line}')
-        print()
-
-    print('=' * 60)
-    print(f'RESULT: {final_str}')
-    print('=' * 60)
-
-    return 0 if not any_failed else 1
+def main(argv=None):
+    here = os.path.dirname(os.path.abspath(__file__))
+    args = sys.argv[1:] if argv is None else argv
+    return subprocess.call([sys.executable, '-m', 'pytest', *args], cwd=here)
 
 
 if __name__ == '__main__':
