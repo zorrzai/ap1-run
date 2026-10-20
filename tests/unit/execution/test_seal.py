@@ -677,6 +677,19 @@ def test_source_fields_check_passes_example_module(example):
 
 # --- Step 4: correct behaviour (failing until fixed) ---
 
+def full_seal(files, config=CONFIG, **kwargs):
+    """A seal that is valid after every fix: the AP-1 text is passed and
+    its hash declared (T3-68 makes both required)."""
+    config = {**config, 'ap1_text_hash': files.hashes['ap1_text']}
+    return seal(config=config, **files.kwargs,
+                ap1_text_path=files.paths['ap1_text'], **kwargs)
+
+
+def full_verify(record, files, config=CONFIG, **kwargs):
+    config = {**config, 'ap1_text_hash': files.hashes['ap1_text']}
+    return verify_seal(record, config=config, **files.kwargs, **kwargs)
+
+
 def _refused(fn):
     """Call fn; return the SealError it raises, or None if it returned."""
     try:
@@ -701,7 +714,7 @@ def test_seal_hash_two_timestamps_give_two_hashes(files, monkeypatch):
         def now(tz=None):
             return SimpleNamespace(isoformat=lambda s=next(stamps): s)
     monkeypatch.setattr(seal_mod, 'datetime', Clock)
-    first, second = make_seal(files), make_seal(files)
+    first, second = full_seal(files), full_seal(files)
     assert first['seal_hash'] != second['seal_hash']
 
 
@@ -765,9 +778,9 @@ def test_verify_seal_any_rewritten_field_refused_naming_it(
     # the record and refuses a record any field of which was rewritten,
     # naming the field or the seal_hash mismatch. Here the inputs are
     # unchanged and no AP-1 text path is passed.
-    record = make_seal(files, ap1_text_path=files.paths['ap1_text'])
+    record = full_seal(files)
     record[field] = value
-    error = _refused(lambda: verify(record, files))
+    error = _refused(lambda: full_verify(record, files))
     assert error is not None, '%s rewritten, verify_seal returned True' % field
     assert field in str(error) or 'seal_hash' in str(error)
 
@@ -783,9 +796,9 @@ def test_verify_seal_deleted_field_refused(files, frozen, field):
     # Correct: a record missing a field the seal always writes is not a
     # valid record (SPEC R1.1 "A run that starts without a valid record is
     # refused"); seal_hash no longer matches.
-    record = make_seal(files, ap1_text_path=files.paths['ap1_text'])
+    record = full_seal(files)
     del record[field]
-    assert _refused(lambda: verify(record, files)) is not None, \
+    assert _refused(lambda: full_verify(record, files)) is not None, \
         '%s deleted, verify_seal returned True' % field
 
 
@@ -800,8 +813,8 @@ def test_verify_seal_doi_on_one_side_only_named_as_mismatch(
     # Correct: a DOI present on one side only is a DOI mismatch, named as
     # such (today only the config hash line appears).
     config = {**CONFIG, 'ap1_version_doi': sealed}
-    record = make_seal(files, config=config)
-    error = _refused(lambda: verify(
+    record = full_seal(files, config=config)
+    error = _refused(lambda: full_verify(
         record, files, config={**config, 'ap1_version_doi': current}))
     assert error is not None
     assert 'ap1_version_doi' in str(error)
@@ -834,6 +847,6 @@ VARIANTS = {'crlf': LF_TEXT.replace(b'\n', b'\r\n'),
 def test_seal_text_input_hash_independent_of_line_endings_and_bom(
         files, frozen, name, variant):
     files.paths[name].write_bytes(LF_TEXT)
-    lf = make_seal(files)['%s_hash' % name]
+    lf = full_seal(files)['%s_hash' % name]
     files.paths[name].write_bytes(VARIANTS[variant])
-    assert make_seal(files)['%s_hash' % name] == lf == sha(LF_TEXT)
+    assert full_seal(files)['%s_hash' % name] == lf == sha(LF_TEXT)
