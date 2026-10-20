@@ -830,3 +830,22 @@ def test_file_hash_no_newline_translation(tmp_path):
 def test_file_hash_missing_file_raises(tmp_path):
     with pytest.raises(FileNotFoundError):
         file_hash(tmp_path / 'nope')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-77', 'S3-G1-3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason="T3-77 (KNOWN_ISSUES #5): '1,23' parses as 123")
+@pytest.mark.parametrize('text', ['1,23', '12,5', '1,2,3'])
+def test_parse_decimal_misplaced_grouping_separator_refused(text):
+    # KNOWN_ISSUES #5; SPEC R0.4.2 step 3: digits "optionally grouped by
+    # the configured grouping_separator", i.e. in groups of three, as the
+    # extraction regex already requires. A comma anywhere else is not a
+    # grouping separator, so the token is refused rather than read as 123
+    # (in a European locale '1,23' means 1.23).
+    try:
+        value = parse_decimal(text)[0]
+    except (NumericParseError, AmbiguousLocaleError):
+        return
+    assert False, f'{text!r} parsed as {value}'
