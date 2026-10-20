@@ -130,16 +130,26 @@ def perturbation_check(ground_truth_module, fixture, questions,
     change is returning constants and is refused, with the perturbation
     named.
 
+    Each declared numeric field of each derivable item is perturbed in
+    turn (multiplied by the factor; a zero set to 1). Fails closed (T3-7):
+    a derivable item is a failure if its final value is None, if compute
+    raises, if it declares no source fields, if a declared field is not
+    of the form account.field or is not in the delivered context, or if
+    none of its declared fields is numeric (so nothing could be
+    perturbed). Only an item that declares itself non-derivable is
+    exempt.
+
     Args:
         ground_truth_module: module with compute(item_id, ctx) function
         fixture: the fixture dict
         questions: the questions dict
         perturbation_factor: Decimal multiplier (default 1.1)
 
-    Returns: list of failure dicts, each with item_id and field_name.
+    Returns: list of failure dicts, each with item_id and reason.
              Empty list = all items pass.
 
-    Raises: SealError if any item fails.
+    Raises: SealError if any item fails, naming for each failure the
+            item, the field and the perturbation or error (S3-G3-3).
     """
     from decimal import Decimal, InvalidOperation
     from ap1_run.execution.context import build_delivered_context
@@ -148,6 +158,9 @@ def perturbation_check(ground_truth_module, fixture, questions,
         perturbation_factor = Decimal('1.1')
 
     failures = []
+
+    def fail(item_id, reason):
+        failures.append({'item_id': item_id, 'reason': reason})
 
     for item in questions.get('items', []):
         item_id = item['id']
@@ -158,69 +171,93 @@ def perturbation_check(ground_truth_module, fixture, questions,
         try:
             baseline = ground_truth_module.compute(item_id, ctx)
         except Exception as exc:
-            failures.append({
-                'item_id': item_id,
-                'field': '(baseline)',
-                'reason': f'baseline computation raised '
-                          f'{type(exc).__name__}: {exc}',
-            })
+            fail(item_id,
+                 f'baseline computation raised {type(exc).__name__}: {exc}')
+            continue
+
+        if not baseline.get('derivable', True):
             continue
 
         baseline_final = baseline.get('final')
         if baseline_final is None:
+            fail(item_id,
+                 'final is None on an item declared derivable')
+            continue
+
+        declared = baseline.get('source_fields_consumed')
+        if not declared:
+            fail(item_id,
+                 f'declares no source fields to perturb '
+                 f'(source_fields_consumed is {declared!r})')
             continue
 
         # For each declared source field, perturb it and check
-        for field_spec in baseline.get('source_fields_consumed', []):
-            parts = field_spec.split('.', 1)
+        perturbed_any = False
+        non_numeric = []
+        for field_spec in declared:
+            parts = str(field_spec).split('.', 1)
             if len(parts) != 2:
+                fail(item_id,
+                     f'declared source field {field_spec!r} is not of '
+                     f'the form account.field')
                 continue
             acct_id, field_name = parts
 
             # Build a fresh context and perturb one field
             perturbed_ctx = build_delivered_context(fixture, source_accounts)
             if acct_id not in perturbed_ctx:
+                fail(item_id,
+                     f'declared source field {field_spec!r}: account '
+                     f'{acct_id!r} is not in the delivered context')
                 continue
             if field_name not in perturbed_ctx[acct_id]:
+                fail(item_id,
+                     f'declared source field {field_spec!r}: account '
+                     f'{acct_id!r} has no field {field_name!r}')
                 continue
 
             orig_val = perturbed_ctx[acct_id][field_name]
             try:
                 numeric_val = Decimal(str(orig_val))
+                if not numeric_val.is_finite():
+                    raise InvalidOperation
                 if numeric_val == 0:
                     perturbed_val = Decimal('1')  # additive for zero
+                    perturbation = 'set from 0 to 1'
                 else:
                     perturbed_val = numeric_val * perturbation_factor
+                    perturbation = f'multiplied by {perturbation_factor}'
                 perturbed_ctx[acct_id][field_name] = str(perturbed_val)
             except (InvalidOperation, ValueError):
-                continue  # non-numeric field, skip
+                non_numeric.append(field_spec)
+                continue  # non-numeric field: cannot be perturbed
+            perturbed_any = True
 
             # Recompute with perturbed context
             try:
                 perturbed = ground_truth_module.compute(item_id, perturbed_ctx)
             except Exception as exc:
-                failures.append({
-                    'item_id': item_id,
-                    'field': field_spec,
-                    'reason': f'perturbed computation raised '
-                              f'{type(exc).__name__}: {exc}',
-                })
+                fail(item_id,
+                     f'perturbed computation ({field_spec} {perturbation}) '
+                     f'raised {type(exc).__name__}: {exc}')
                 continue
 
             perturbed_final = perturbed.get('final')
             if perturbed_final == baseline_final:
-                failures.append({
-                    'item_id': item_id,
-                    'field': field_spec,
-                    'reason': f'output unchanged when {field_spec} '
-                              f'perturbed by factor {perturbation_factor}',
-                })
+                fail(item_id,
+                     f'output unchanged when {field_spec} {perturbation}')
+
+        if not perturbed_any and non_numeric:
+            fail(item_id,
+                 f'no declared source field could be perturbed: '
+                 f'{", ".join(non_numeric)} not numeric')
 
     if failures:
-        names = ', '.join(f['field'] for f in failures)
+        details = '; '.join(
+            f'{f["item_id"]}: {f["reason"]}' for f in failures)
         raise SealError(
-            f'perturbation check failed: constant-returning module '
-            f'detected. Fields that had no effect: {names}')
+            f'perturbation check failed: the module\'s output does not '
+            f'follow its declared source fields. {details}')
 
     return failures
 
@@ -230,12 +267,14 @@ def source_fields_check(ground_truth_module, fixture, questions):
     source fields.
 
     A module reading a field NOT in source_fields_consumed is refused,
-    with the field named.
+    with the field named. A module whose compute raises is refused, with
+    the error named (S3-G3-3).
 
     Uses TrackingContext to instrument field access.
 
     Returns: list of failure dicts. Empty = pass.
-    Raises: SealError if any undeclared access detected.
+    Raises: SealError if any undeclared access detected or compute
+            raises.
     """
     from ap1_run.execution.context import build_delivered_context, TrackingContext
 
@@ -254,8 +293,6 @@ def source_fields_check(ground_truth_module, fixture, questions):
         except Exception as exc:
             failures.append({
                 'item_id': item_id,
-                'undeclared_fields': [],
-                'declared_fields': [],
                 'reason': f'compute raised {type(exc).__name__}: {exc}',
             })
             continue
@@ -267,16 +304,12 @@ def source_fields_check(ground_truth_module, fixture, questions):
         if undeclared:
             failures.append({
                 'item_id': item_id,
-                'undeclared_fields': sorted(undeclared),
-                'declared_fields': sorted(declared),
+                'reason': f'reads undeclared fields {sorted(undeclared)}',
             })
 
     if failures:
         details = '; '.join(
-            f'{f["item_id"]}: accessed {f["undeclared_fields"]}'
-            for f in failures)
-        raise SealError(
-            f'source fields check failed: module reads undeclared '
-            f'fields. {details}')
+            f'{f["item_id"]}: {f["reason"]}' for f in failures)
+        raise SealError(f'source fields check failed: {details}')
 
     return failures
