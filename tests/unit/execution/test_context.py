@@ -227,3 +227,29 @@ def test_tracking_context_non_subscript_read_not_recorded(read):
     tc = TrackingContext({'savings': {'balance': '1', 'annual_rate': '2'}})
     read(tc['savings'])
     assert tc.accessed_fields() == set()
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# Group g3-seal-guards; see inbox/2026-10-20_step4-g3-seal-guards-report.md.
+
+@pytest.mark.finding('T3-8')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-8: TrackingAccount records __getitem__ only')
+@pytest.mark.parametrize('read', [
+    lambda acct: acct.get('annual_rate'),
+    lambda acct: list(acct.items()),
+    lambda acct: list(acct.values()),
+    lambda acct: acct.copy()['annual_rate'],
+    lambda acct: dict(acct)['annual_rate'],
+    lambda acct: {**acct}['annual_rate'],
+], ids=['get', 'items', 'values', 'copy', 'dict', 'unpack'])
+def test_tracking_context_non_subscript_read_recorded(read):
+    # Correct (T3-8; R3.1 via source_fields_check: an undeclared read is
+    # refused with the field named): every path that hands out a field's
+    # value records the field. Each read here exposes annual_rate, so it
+    # must be among the accessed fields (a path that exposes every value,
+    # like .items(), may record every field). Today nothing is recorded.
+    tc = TrackingContext({'savings': {'balance': '1', 'annual_rate': '2'}})
+    read(tc['savings'])
+    assert 'savings.annual_rate' in tc.accessed_fields()
