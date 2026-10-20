@@ -14,6 +14,7 @@ import json
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
+from ap1_run.foundation.adapter import BODY_FIELDS
 from ap1_run.foundation.numeric import ROUNDING_MODES
 
 
@@ -133,7 +134,7 @@ def load_config(path):
             f'quantisation.rounding: unknown rounding mode {rounding!r}. '
             f'Permitted: {", ".join(sorted(ROUNDING_MODES))}')
     config['quantisation'] = {
-        'places': int(q['places']),
+        'places': _parse_places(q['places']),
         'rounding': rounding,
     }
 
@@ -146,6 +147,8 @@ def load_config(path):
         config['repeat_count'] = int(rc)
     except ValueError:
         raise ConfigError(f'repeat_count: cannot parse as integer: {rc!r}')
+    if config['repeat_count'] < 1:
+        raise ConfigError(f'repeat_count: must be at least 1: {rc!r}')
 
     # 7. Validate structured_answer_field
     saf = raw['structured_answer_field']
@@ -170,7 +173,7 @@ def _refuse_unknown_fields(raw):
     matches a known sampling parameter, the error suggests the sampling
     sub-dict.
     """
-    permitted = set(REQUIRED_FIELDS) | set(OPTIONAL_FIELDS)
+    permitted = sorted(set(REQUIRED_FIELDS) | set(OPTIONAL_FIELDS))
     for key in raw:
         if key not in permitted:
             if key in KNOWN_SAMPLING_PARAMS:
@@ -179,16 +182,17 @@ def _refuse_unknown_fields(raw):
                     f'Sampling parameters belong inside the '
                     f'"sampling" sub-dict, e.g. '
                     f'{{"sampling": {{"{key}": ...}}}}. '
-                    f'Permitted top-level fields: '
-                    f'{sorted(REQUIRED_FIELDS)}')
+                    f'Permitted top-level fields: {permitted}')
             raise ConfigError(
                 f'unrecognised top-level field: {key!r}. '
-                f'Permitted top-level fields: '
-                f'{sorted(REQUIRED_FIELDS)}')
+                f'Permitted top-level fields: {permitted}')
 
 
 def _validate_sampling(sampling_dict):
-    """Validate sampling parameters per R0.1.
+    """Validate sampling parameters per R0.1. sampling is an object
+    (S3-G1-14). A key may not name a request body field (model,
+    messages, tools; S3-G1-21), and a numeric value must be finite
+    (S3-G1-19): the adapter would otherwise send NaN, which is not JSON.
 
     A sampling parameter may be:
     - A quoted numeric string (e.g. "0", "4096") — sent to the endpoint.
@@ -201,8 +205,16 @@ def _validate_sampling(sampling_dict):
         platform-unsupported   — the endpoint does not accept the parameter; detail required
     """
     if not isinstance(sampling_dict, dict):
-        return
+        raise ConfigError(
+            f'sampling must be an object, got '
+            f'{type(sampling_dict).__name__}: {sampling_dict!r}')
     for k, v in sampling_dict.items():
+        if k in BODY_FIELDS:
+            raise ConfigError(
+                f'sampling.{k}: a request body field, not a sampling '
+                f'parameter')
+        if isinstance(v, str) and _non_finite(v):
+            raise ConfigError(f'sampling.{k}: must be a finite number: {v!r}')
         if isinstance(v, str) and v == 'omitted':
             raise ConfigError(
                 f'sampling.{k}: omitted without a reason. '
@@ -219,6 +231,14 @@ def _validate_sampling(sampling_dict):
                     f'sampling.{k}: detail is required when reason is {reason!r}')
 
 
+def _non_finite(text):
+    """True if text reads as a Decimal that is NaN or infinite."""
+    try:
+        return not Decimal(text).is_finite()
+    except InvalidOperation:
+        return False
+
+
 def _refuse_bare_numerics(obj, path=''):
     """Walk the JSON tree and refuse any int or float value.
 
@@ -233,9 +253,8 @@ def _refuse_bare_numerics(obj, path=''):
             f'numeric values must be quoted strings, '
             f'e.g. "{obj}" not {obj}')
     if isinstance(obj, dict):
-        # Skip structured omission objects (validated by _validate_sampling)
-        if obj.get('value') == 'omitted' and 'reason' in obj:
-            return
+        # Omission objects are walked too: they hold strings only
+        # (S3-G1-13).
         for k, v in obj.items():
             _refuse_bare_numerics(v, f'{path}.{k}' if path else k)
     elif isinstance(obj, (list, tuple)):
@@ -250,9 +269,30 @@ def _parse_decimal_field(raw, field):
         raise ConfigError(
             f'{field}: expected quoted string, got {type(val).__name__}: {val!r}')
     try:
-        return Decimal(val)
+        value = Decimal(val)
     except InvalidOperation:
         raise ConfigError(f'{field}: cannot parse as Decimal: {val!r}')
+    if not value.is_finite() or value < 0:
+        raise ConfigError(
+            f'{field}: must be a finite, non-negative number: {val!r}')
+    return value
+
+
+def _parse_places(val):
+    """quantisation.places: a quoted non-negative integer (S3-G1-10)."""
+    if not isinstance(val, str):
+        raise ConfigError(
+            f'quantisation.places: expected quoted string, got '
+            f'{type(val).__name__}: {val!r}')
+    try:
+        places = int(val)
+    except ValueError:
+        raise ConfigError(
+            f'quantisation.places: cannot parse as integer: {val!r}')
+    if places < 0:
+        raise ConfigError(
+            f'quantisation.places: must be a non-negative integer: {val!r}')
+    return places
 
 
 def _validate_dimensions(dims):

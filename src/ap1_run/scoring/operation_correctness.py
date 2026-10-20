@@ -7,11 +7,10 @@ Outcomes: OPERATION-CORRECT, WRONG-OPERATION, OPERATION-UNOBSERVABLE.
 """
 
 import ast
-import decimal
 import operator
-from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
+from decimal import ROUND_HALF_UP, Decimal, InvalidOperation, localcontext
 
-from ap1_run.foundation.numeric import quantise
+from ap1_run.foundation.numeric import DECIMAL_CONTEXT, quantise
 from ap1_run.scoring.provenance.trace import (
     TRANSFORMATIONS, is_number, literal_decimal, parse_expression,
 )
@@ -47,7 +46,8 @@ _PI = Decimal('3.14159265358979323846264338327950288419716939937510'
 
 def _pi():
     """pi rounded to the current Decimal precision (exact for any
-    precision up to 100 digits; the runner uses 28 or 50)."""
+    precision up to 100 digits; evaluate_expression uses DECIMAL_CONTEXT,
+    precision 50)."""
     return +_PI
 
 
@@ -56,7 +56,7 @@ def _e():
     return Decimal(1).exp()
 
 
-# Evaluated when the expression is, at the context's precision (R0.4).
+# Evaluated when the expression is, at DECIMAL_CONTEXT's precision (R0.4).
 _ALLOWED_NAMES = {
     'pi': _pi,
     'e': _e,
@@ -133,9 +133,10 @@ def evaluate_expression(expression_str):
         # E6: translate ^ to ** for correct mathematical precedence
         expr_clean = expression_str.strip().replace('^', '**')
         tree = ast.parse(expr_clean, mode='eval')
-        result = _eval_decimal(tree, expr_clean)
-        if not isinstance(result, Decimal):
-            result = Decimal(str(result))
+        with localcontext(DECIMAL_CONTEXT):
+            result = _eval_decimal(tree, expr_clean)
+            if not isinstance(result, Decimal):
+                result = Decimal(str(result))
         return result
     except (SyntaxError, ValueError, InvalidOperation,
             ZeroDivisionError, OverflowError, TypeError):

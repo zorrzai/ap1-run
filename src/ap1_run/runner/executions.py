@@ -119,6 +119,11 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
                     decline_markers, currency_symbols, transcript_path,
                     seal_hash):
     """Score one executed response and print its outcome line."""
+    # The configured separators (R0.1, sealed) govern every extraction
+    # (R0.4.2, T3-41).
+    separators = {'decimal_sep': config.get('decimal_separator', '.'),
+                  'grouping_sep': config.get('grouping_separator', ',')}
+
     # -- Figure identification (after execute_item) --
     final_response = result.get('response')
     fig_result = identify_figure(
@@ -129,6 +134,8 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         answer_tolerance=answer_tolerance,
         decline_markers=decline_markers,
         currency_symbols=currency_symbols,
+        decimal_separator=separators['decimal_sep'],
+        grouping_separator=separators['grouping_sep'],
     )
 
     # Append figure_outcome to the transcript record
@@ -181,7 +188,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         try:
             _rc_tokens = extract_numeric_tokens(
                 _rc_content,
-                currency_symbols=currency_symbols)
+                currency_symbols=currency_symbols, **separators)
             _rc_candidates = [t.value for t in _rc_tokens
                               if abs(t.value - expected)
                               <= answer_tolerance]
@@ -248,7 +255,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
     if content:
         try:
             tokens = extract_numeric_tokens(
-                content, currency_symbols=currency_symbols)
+                content, currency_symbols=currency_symbols, **separators)
         except Exception as e:
             findings.grammar_issues.append({
                 'item_id': item_id, 'condition': condition,

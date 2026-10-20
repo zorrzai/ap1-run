@@ -12,8 +12,8 @@ import requests
 
 from ap1_run.foundation import adapter
 from ap1_run.foundation.adapter import (
-    MAX_RETRIES, RETRY_DELAY, AdapterError, HTTPError, RateLimitError,
-    _mask_credentials, send,
+    BODY_FIELDS, MAX_RETRIES, RETRY_DELAY, AdapterError, HTTPError,
+    RateLimitError, _mask_credentials, send,
 )
 
 URL = 'http://endpoint.test/v1/chat/completions'
@@ -150,22 +150,6 @@ def test_send_non_numeric_sampling_value_sent_as_is(transport):
                                           'stop': "['\\n']"}
 
 
-def test_send_infinite_sampling_value_sent_as_string(transport):
-    # int(Decimal('Infinity')) raises, and the except keeps the text.
-    t, _, _ = ok_send(transport, sampling={'max_tokens': 'Infinity'})
-    assert t.calls[0]['json']['max_tokens'] == 'Infinity'
-
-
-@pytest.mark.finding('S3-G1-19')
-def test_send_nan_sampling_value_sent_as_float_nan(transport):
-    # Current behaviour: 'NaN' is not integral, so it is sent as
-    # float('nan'), which json.dumps writes as the non-JSON token NaN.
-    # Correct: refuse a non-finite sampling value (at config load).
-    t, _, _ = ok_send(transport, sampling={'temperature': 'NaN'})
-    v = t.calls[0]['json']['temperature']
-    assert type(v) is float and v != v
-
-
 @pytest.mark.req('R0.2')
 def test_send_structured_omission_recorded_not_sent(transport):
     o = {'value': 'omitted', 'reason': 'platform-rejected', 'detail': 'd',
@@ -192,16 +176,6 @@ def test_send_dict_not_omitted_sent_as_is(transport):
     t, _, record = ok_send(transport, sampling={'x': {'value': '1'}})
     assert t.calls[0]['json']['x'] == {'value': '1'}
     assert record['sampling_as_sent'] == {'x': "{'value': '1'}"}
-
-
-@pytest.mark.finding('S3-G1-21')
-def test_send_sampling_key_overrides_body_field(transport):
-    # Current behaviour: sampling keys are written into the same body as
-    # model and messages, so a sampling 'model' replaces the configured
-    # model (the request record still shows 'm'). Correct: refuse sampling
-    # keys that name body fields.
-    t, _, _ = ok_send(transport, model='m', sampling={'model': 'other'})
-    assert t.calls[0]['json']['model'] == 'other'
 
 
 # -- request record -------------------------------------------------------
@@ -257,29 +231,6 @@ def test_send_transport_failure_every_attempt_raises(transport):
     assert isinstance(e.value.__cause__, requests.ConnectionError)
     assert len(t.calls) == 3
     assert t.sleeps == [1.0, 1.0]   # no sleep after the last attempt
-
-
-@pytest.mark.finding('S3-G1-18')
-def test_send_transport_failure_attempts_not_reachable(transport):
-    # Current behaviour: the attempt log is written into a request_record
-    # that is never returned or attached to the exception, so the caller
-    # cannot record the attempts ("every attempt logged"). Correct: the
-    # exception carries the request record with its attempts.
-    transport(*[requests.ConnectionError('x')] * 3)
-    with pytest.raises(AdapterError) as e:
-        send(URL, messages=MESSAGES)
-    assert not hasattr(e.value, 'request_record')
-    assert not hasattr(e.value, 'attempts')
-
-
-@pytest.mark.finding('S3-G1-20')
-def test_send_transport_error_text_not_masked(transport):
-    # Current behaviour: HTTP error bodies are masked, but the transport
-    # exception text goes into the message unmasked. Correct: mask it too
-    # (a URL with a key in its query string would leak).
-    transport(*[requests.ConnectionError('GET ?key=sk-abcdefghijklmnop')] * 3)
-    with pytest.raises(AdapterError, match='sk-abcdefghijklmnop'):
-        send(URL, messages=MESSAGES)
 
 
 def test_send_non_requests_exception_not_retried(transport):
@@ -406,9 +357,6 @@ def test_mask_credentials_empty_returned_as_is(empty):
 
 @pytest.mark.finding('S3-G1-18')
 @pytest.mark.req('R0.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-18: the attempt log of a failed send is '
-                          'not reachable from the exception')
 def test_send_transport_failure_exception_carries_attempt_log(transport):
     # send()'s docstring and SPEC R0.2: retries "bounded, every attempt
     # logged". When all attempts fail, the AdapterError carries the request
@@ -423,9 +371,6 @@ def test_send_transport_failure_exception_carries_attempt_log(transport):
 
 @pytest.mark.finding('S3-G1-19')
 @pytest.mark.req('R0.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-19: a NaN sampling value is sent as '
-                          'float nan, which is not JSON')
 def test_send_non_finite_sampling_value_never_reaches_the_wire(transport):
     # A request body must be valid JSON; json.dumps writes float('nan') as
     # the non-JSON token NaN. Correct: refuse a non-finite sampling value
@@ -443,9 +388,6 @@ def test_send_non_finite_sampling_value_never_reaches_the_wire(transport):
 
 @pytest.mark.finding('S3-G1-20')
 @pytest.mark.req('R0.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-20: the transport exception text is not '
-                          'masked')
 def test_send_transport_error_text_is_masked(transport):
     # Rule 0c (adapter.py): credential-shaped text is redacted "BEFORE any
     # error text enters an exception, transcript, or log"; the transport
@@ -459,10 +401,6 @@ def test_send_transport_error_text_is_masked(transport):
 
 @pytest.mark.finding('S3-G1-21')
 @pytest.mark.req('R0.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-21: a sampling key named like a body field '
-                          'overwrites it; the request record disagrees with '
-                          'what was sent')
 @pytest.mark.parametrize('key', ['model', 'messages'])
 def test_send_sampling_key_cannot_overwrite_body_field(transport, key):
     # SPEC R0.2: the request record is "the request AS SENT". A sampling
@@ -477,3 +415,61 @@ def test_send_sampling_key_cannot_overwrite_body_field(transport, key):
     except (AdapterError, ValueError) as e:
         outcome = 'refused' if not t.calls else f'raised after send: {e}'
     assert outcome in ('refused', 'kept'), outcome
+
+
+# --- Step 5 numeric-hardening ---
+
+@pytest.mark.finding('S3-G1-19')
+@pytest.mark.parametrize('value', ['NaN', 'Infinity', '-inf', 'sNaN'])
+def test_send_non_finite_sampling_value_refused_before_sending(transport,
+                                                               value):
+    t = transport(FakeResponse(200, OK))
+    with pytest.raises(AdapterError) as e:
+        send(URL, messages=MESSAGES, sampling={'temperature': value})
+    assert str(e.value) == (f'sampling.temperature: not a finite number: '
+                            f'{value!r}; not sent')
+    assert t.calls == []
+
+
+@pytest.mark.finding('S3-G1-21')
+@pytest.mark.parametrize('key', BODY_FIELDS)
+def test_send_sampling_body_field_refused_before_sending(transport, key):
+    t = transport(FakeResponse(200, OK))
+    with pytest.raises(AdapterError) as e:
+        send(URL, messages=MESSAGES, sampling={key: 'x'})
+    assert str(e.value) == (f'sampling.{key}: names a request body field; '
+                            f'not sent')
+    assert t.calls == []
+
+
+def test_body_fields_are_model_messages_tools():
+    assert BODY_FIELDS == ('model', 'messages', 'tools')
+
+
+@pytest.mark.finding('S3-G1-18', 'S3-G1-20')
+def test_send_transport_failure_record_is_the_request_with_masked_attempts(
+        transport):
+    transport(*[requests.ConnectionError('GET ?key=sk-abcdefghijklmnop')] * 3)
+    with pytest.raises(AdapterError) as e:
+        send(URL, messages=MESSAGES, model='m',
+             sampling={'temperature': '0'})
+    assert str(e.value) == \
+        'transport failure after 3 attempts: GET ?key=[REDACTED]'
+    assert e.value.request_record == {
+        'endpoint_url': URL, 'model': 'm', 'messages': MESSAGES,
+        'tools': None, 'sampling_as_sent': {'temperature': '0'},
+        'attempts': [{'attempt': i, 'status_code': None,
+                      'error': 'GET ?key=[REDACTED]', 'timestamp': 1000.5}
+                     for i in (1, 2, 3)]}
+
+
+@pytest.mark.finding('S3-G1-18')
+def test_adapter_error_without_transport_failure_has_no_record():
+    assert AdapterError('x').request_record is None
+    assert RateLimitError('x').request_record is None
+
+
+def test_send_non_numeric_sampling_string_sent_as_is(transport):
+    t, _, record = ok_send(transport, sampling={'reasoning_effort': 'low'})
+    assert t.calls[0]['json']['reasoning_effort'] == 'low'
+    assert record['sampling_as_sent'] == {'reasoning_effort': 'low'}

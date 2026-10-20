@@ -41,28 +41,28 @@
     "score": 0.9281
   },
   "foundation/adapter": {
-    "killed": 160,
-    "mutants": 166,
-    "notes": "All 6 survivors are unobservable: they change the two request_record['attempts'] stores made just before raising (after the last transport failure, and the unreachable 'exhausted retries' path). That record is never returned or attached to the exception, so no caller can see it (finding S3-G1-18); the fix will make these mutants killable. The tests replace requests.post, time.sleep and time.time with fakes; the real HTTP path is covered by the regression scenarios against the mock endpoint.",
-    "score": 0.9639
+    "killed": 173,
+    "mutants": 176,
+    "notes": "All 3 survivors change the request_record['attempts'] store on the unreachable 'exhausted retries' path after the loop (every iteration returns or raises). Step 5 numeric-hardening (S3-G1-18): the record of a transport failure on every attempt is now attached to the AdapterError as request_record, so the mutants of that store, survivors before, are killed. The tests replace requests.post, time.sleep and time.time with fakes; the real HTTP path is covered by the regression scenarios against the mock endpoint.",
+    "score": 0.983
   },
   "foundation/config": {
-    "killed": 253,
-    "mutants": 261,
+    "killed": 272,
+    "mutants": 280,
     "notes": "All 8 survivors are equivalent. Four change how config.json is opened: 'UTF-8' is the same codec, no 'r' is the default mode, and encoding None or no encoding means the locale's, which is UTF-8 on macOS and Linux (the tests load a non-ASCII config; on Windows these would be killed). Four change the .get() default for 'sampling' and 'quantisation' ({} to None or no default): both are required fields, checked present just before, so the default is never used.",
-    "score": 0.9693
+    "score": 0.9714
   },
   "foundation/numeric": {
-    "killed": 320,
-    "mutants": 344,
-    "notes": "All 24 survivors are equivalent or unkillable. parse_decimal (7): is_neg=None is falsy like False; decimal_sep != 'XX.XX' only replaces '.' by '.'; the inner sign test 'XX-\\u2212XX' only differs for 'X', which the outer test never lets through; sorting leading currency symbols by key=None or no key (4) is reverse alphabetical, and for startswith a symbol can only shadow another it is a prefix of, which sorts first either way. _build_extraction_re (2): key=None or no key for the alternation order is likewise equivalent (the regex backtracks; only a prefix can shadow). extract_numeric_tokens (9): currency_symbols=None reaches the same empty handling; finditer returns non-overlapping matches in order, so the dedup sort key (5 mutants) and last_end=-2 change nothing; every match contains a digit, so the 'no digits' guard and its continue->break (2) are unreachable. canonical_json ensure_ascii=None is falsy like False; canonical_hash 'UTF-8' is the same codec. file_hash (4): read(None) and read(8193) give the same digest; sentinel None or b'XXXX' never matches b'' and loops forever, which mutmut reports as a timeout.",
-    "score": 0.9302
+    "killed": 432,
+    "mutants": 456,
+    "notes": "All 24 survivors are equivalent or unkillable. parse_decimal (7): is_neg=None is falsy like False; decimal_sep != 'XX.XX' only replaces '.' by '.'; the inner sign test 'XX-\\u2212XX' only differs for 'X', which the outer test never lets through; sorting leading currency symbols by key=None or no key (4) is reverse alphabetical, and for startswith a symbol can only shadow another it is a prefix of, which sorts first either way. _build_extraction_re (2): key=None or no key for the alternation order is likewise equivalent (the regex backtracks; only a prefix can shadow). extract_numeric_tokens (9): currency_symbols=None reaches the same empty handling; finditer returns non-overlapping matches in order, so the dedup sort key (5 mutants) and last_end=-2 change nothing; every match contains a digit, so the 'no digits' guard and its continue->break (2) are unreachable. canonical_json ensure_ascii=None is falsy like False; canonical_hash 'UTF-8' is the same codec. file_hash (4): read(None) and read(8193) give the same digest; sentinel None or b'XXXX' never matches b'' and loops forever, which mutmut reports as a timeout. (Step 5 numeric-hardening: parse_decimal's R0.4.2 grammar check, quantise's places check, DECIMAL_CONTEXT, the operator reading of a sign after a number and _matches_inside_words added 132 mutants, all killed; the 'no digits' guard stays unreachable, as the token left after an operator always has digits.)",
+    "score": 0.9474
   },
   "foundation/transcript": {
-    "killed": 67,
-    "mutants": 75,
+    "killed": 78,
+    "mutants": 86,
     "notes": "All 8 survivors are equivalent. Seven change how run.jsonl is opened ('UTF-8' is the same codec; no 'r' is the default mode; encoding None or none given means the locale's, UTF-8 on macOS and Linux, so the non-ASCII round trip passes; on Windows these would be killed). One passes ensure_ascii=None, falsy like False.",
-    "score": 0.8933
+    "score": 0.907
   },
   "reporting/adjudication": {
     "killed": 547,
@@ -95,10 +95,10 @@
     "score": 0.9915
   },
   "runner/executions": {
-    "killed": 621,
-    "mutants": 623,
+    "killed": 650,
+    "mutants": 652,
     "notes": "Both survivors are equivalent. tool_calls=None in the figure record: transcript.append writes None as []. 'and' to 'or' in _operation_returns' result check only lets values through that then raise inside the try (a dict without 'result' raises KeyError), which the except turns into the same skipped call.",
-    "score": 0.9968
+    "score": 0.9969
   },
   "runner/outputs": {
     "killed": 170,
@@ -128,22 +128,22 @@
     "score": 1.0
   },
   "scoring/figure_id": {
-    "killed": 144,
-    "mutants": 158,
+    "killed": 165,
+    "mutants": 179,
     "notes": "All 14 survivors are in unreachable code: the defensive 'if len(matched) == 0 and len(tokens) == 0' block after the match loop (two mutants of the condition, twelve of the returned dict). An empty token list already returns AUTO-NO-FIGURE above, so tokens is never empty there; the legacy suites do not reach it either.",
-    "score": 0.9114
+    "score": 0.9218
   },
   "scoring/invocation": {
-    "killed": 178,
-    "mutants": 179,
-    "notes": "The one survivor is equivalent: it changes the '#' in the key ('#', i) that _summarise_class gives a record without an item_id; any tuple key is distinct from every item_id string and from the other records' keys. The module-level getcontext().prec = 50 is not mutated by mutmut; test_invocation_import_sets_global_decimal_precision_to_50 pins it (T3-60).",
-    "score": 0.9944
+    "killed": 193,
+    "mutants": 194,
+    "notes": "The one survivor is equivalent: it changes the '#' in the key ('#', i) that _summarise_class gives a record without an item_id; any tuple key is distinct from every item_id string and from the other records' keys. (Step 5 numeric-hardening, T3-60: the module no longer sets the global Decimal precision on import; format_rate, _exact_upper_bound and compute_dpr compute in numeric.DECIMAL_CONTEXT, and the mutants replacing it are killed.)",
+    "score": 0.9948
   },
   "scoring/operation_correctness": {
-    "killed": 364,
-    "mutants": 385,
+    "killed": 365,
+    "mutants": 386,
     "notes": "All 21 non-killed mutants are equivalent or message-only. 11 change the text of a ValueError raised in _eval_decimal, which evaluate_expression always swallows (returns None). 4 are in evaluate_expression's 'if not isinstance(result, Decimal)' branch, which is unreachable (every evaluator path returns Decimal; converting a Decimal through str keeps value and exponent). In classify_operation: 'and' to 'or' in the expected-value conversion (None becomes Decimal('None'), which fails and gives None again), and two quantisation defaults ({} vs None, both falsy). In reclassify_session: 'er is not None or True' (Decimal('None') fails and gives None again), changed = None (falsy like False), and changed = True, an endless loop that mutmut reports as a timeout (the tests hang, so it is detected, but the score counts only kills).",
-    "score": 0.9455
+    "score": 0.9456
   },
   "scoring/provenance/audit": {
     "killed": 51,

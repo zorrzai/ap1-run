@@ -102,14 +102,15 @@ def test_evaluate_expression_caret_is_power_with_power_precedence():
 
 @pytest.mark.finding('T3-77')
 def test_evaluate_expression_pi_and_e_at_context_precision():
-    # R0.4: never through float; to the context's precision.
-    with decimal.localcontext() as ctx:
-        ctx.prec = 28
-        assert evaluate_expression('pi') == D('3.141592653589793238462643383')
-        assert evaluate_expression('e') == D('2.718281828459045235360287471')
-        ctx.prec = 10
-        assert evaluate_expression('pi') == D('3.141592654')
-        assert evaluate_expression('e') == D('2.718281828')
+    # R0.4: never through float. evaluate_expression runs in
+    # DECIMAL_CONTEXT (precision 50, T3-60), whatever the caller's context.
+    pi_50 = D('3.1415926535897932384626433832795028841971693993751')
+    e_50 = D('2.7182818284590452353602874713526624977572470937000')
+    for prec in (10, 28, 60):
+        with decimal.localcontext() as ctx:
+            ctx.prec = prec
+            assert evaluate_expression('pi') == pi_50
+            assert evaluate_expression('e') == e_50
 
 
 @pytest.mark.finding('T3-77')
@@ -131,16 +132,14 @@ def test_evaluate_expression_floor_division_and_mod_truncate_toward_zero():
 
 
 @pytest.mark.finding('T3-60')
-def test_evaluate_expression_result_depends_on_context_precision():
-    # The module uses whatever global precision is current, which
-    # invocation.py sets to 50 on import. Correct: a fixed, declared
-    # precision.
-    with decimal.localcontext() as ctx:
-        ctx.prec = 28
-        assert len(str(evaluate_expression('1 / 3'))) == 30
-    with decimal.localcontext() as ctx:
-        ctx.prec = 50
-        assert len(str(evaluate_expression('1 / 3'))) == 52
+def test_evaluate_expression_result_does_not_depend_on_context_precision():
+    # T3-60 fixed: the walker runs in numeric.DECIMAL_CONTEXT (precision
+    # 50, as the live runner had through invocation.py's global setting),
+    # whatever the caller's precision.
+    for prec in (28, 50):
+        with decimal.localcontext() as ctx:
+            ctx.prec = prec
+            assert len(str(evaluate_expression('1 / 3'))) == 52
 
 
 def test_evaluate_expression_huge_literal_is_exact_not_infinity():
