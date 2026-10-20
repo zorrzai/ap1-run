@@ -498,12 +498,11 @@ def test_execute_item_hallucinated_tool_not_invoked_with_calls(
 
 
 @pytest.mark.finding('T3-67')
-def test_execute_item_tool_loop_stops_after_ten_turns_silently(
+def test_execute_item_tool_loop_stops_after_ten_turns_flagged(
         tmp_path, calculator):
-    # T3-67: after 10 turns the 11th response's calls are neither
-    # executed nor flagged; the item is EXECUTED/INVOKED as usual.
-    # Correct: the exhaustion is recorded (and the item not scored as
-    # complete).
+    # After 10 turns the 11th response's calls are not executed; the
+    # execution is still EXECUTED/INVOKED (the calls made were observed),
+    # and the exhaustion is recorded in the transcript and the result.
     replies = [calls(tool_call(id=f'c{n}')) for n in range(1, 12)]
     send = FakeAdapter(*replies)
     result, records = run(tmp_path, send)
@@ -513,7 +512,32 @@ def test_execute_item_tool_loop_stops_after_ten_turns_silently(
     assert result['response'] == replies[10]
     assert (result['status'], result['invocation_outcome']) == (
         'EXECUTED', 'INVOKED')
+    flag = ('TOOL_LOOP_EXHAUSTED: the response after 10 tool turns still '
+            'asked for 1 tool call(s), which were not executed')
+    assert records[0]['error_state'] == flag
+    assert result['error_state'] == flag
+
+
+@pytest.mark.finding('T3-67')
+def test_execute_item_loop_ending_at_turn_limit_not_flagged(tmp_path,
+                                                           calculator):
+    # Ten tool turns followed by an answer: the loop completed.
+    replies = [calls(tool_call(id=f'c{n}')) for n in range(1, 11)]
+    result, records = run(tmp_path, FakeAdapter(*replies, answer()))
+    assert len(result['tool_calls']) == 10
     assert records[0]['error_state'] is None
+    assert 'error_state' not in result
+
+
+def test_loop_exhaustion_counts_pending_calls():
+    final = calls(tool_call(id='a'), tool_call(id='b'))
+    assert engine._loop_exhaustion(final, [(True, None)]) == (
+        'TOOL_LOOP_EXHAUSTED: the response after 10 tool turns still '
+        'asked for 2 tool call(s), which were not executed')
+    assert engine._loop_exhaustion(final, [(True, None), (False, 'x')]) \
+        is None
+    assert engine._loop_exhaustion(final, []) is None
+    assert engine._loop_exhaustion(answer(), [(True, None)]) is None
 
 
 # -- unrecognised shapes and mid-loop failures -------------------------
@@ -882,8 +906,6 @@ def test_execute_item_empty_response_unmeasured(tmp_path, content):
 
 
 @pytest.mark.finding('T3-67')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-67: tool-loop exhaustion is silent')
 def test_execute_item_tool_loop_exhausted_flagged_in_transcript(
         tmp_path, calculator):
     # Correct (T3 review T3-67; SPEC R0.1, R1.3 "the accumulation is

@@ -413,3 +413,24 @@ def test_run_tool_call_without_id_executed_and_scored(full_run):
                 and t['condition'] == 'base'
                 and t.get('record_type') != 'figure_identification']
     assert 'result' in json.loads(record['tool_calls'][0]['return_value'])
+
+
+# Step 5 (run-robustness): tool-loop exhaustion is flagged end to end ------
+
+@pytest.mark.finding('T3-67')
+def test_run_tool_loop_exhausted_flagged_run_completes(full_run):
+    """Q01/base asks for the calculator eleven times in a row. The run
+    completes; the execution is flagged in the transcript, in
+    smoke_summary.json and on the console (under 3a)."""
+    call = {'calls': [{'name': 'calculator',
+                       'arguments': '{"expression": "15200 * 1.2 / 100 / 12"}'}]}
+    r = full_run({'Q01/base/*': [call] * 11})
+    assert_completed(r)
+    [q01] = r.results('Q01', 'base')
+    assert q01['error_state'].startswith('TOOL_LOOP_EXHAUSTED')
+    [record] = [t for t in r.transcript if t['item_id'] == 'Q01'
+                and t['condition'] == 'base'
+                and t.get('record_type') != 'figure_identification']
+    assert record['error_state'] == q01['error_state']
+    assert len(record['tool_calls']) == 10
+    assert f"Q01/base/r1: {q01['error_state']}" in r.console_section('3a')

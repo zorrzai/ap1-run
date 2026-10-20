@@ -422,3 +422,17 @@ def test_run_report_3h_two_observed_classes_rate_per_class(capsys):
         '    failure rate (EV-1 SELF-REPORTED): 1/1 (100.0%)\n'
         '    failure rate (EV-2 PLATFORM-STRUCTURAL): 0/1 failures; '
         'one-sided 95% upper bound on the failure rate 95.0%\n') in out
+
+
+# Step 5 (run-robustness): executions the engine flagged are named under 3a
+# (T3-67).
+
+@pytest.mark.finding('T3-67')
+def test_run_report_3a_names_flagged_executions(capsys):
+    out = run_report(capsys, [
+        executed('Q01', 'base', 1, 'AUTO-MATCH'),
+        executed('Q02', 'base', 3, 'AUTO-NO-FIGURE',
+                 error_state='TOOL_LOOP_EXHAUSTED: x')])
+    assert ('\n3a. COMPLETION: 2 executed, 0 unmeasured, 0 void\n'
+            '  Q02/base/r3: TOOL_LOOP_EXHAUSTED: x\n'
+            '\n3b. ') in out

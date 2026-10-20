@@ -741,3 +741,25 @@ def test_record_not_scored_unmeasured_listed_with_cause(error, word):
             for c in findings.unmeasured_cells] == [('Q03', 'base', 1)]
     assert word in findings.unmeasured_cells[0]['cause'].lower()
     assert [r['status'] for r in findings.all_results] == ['UNMEASURED']
+
+
+# Step 5 (run-robustness): an execution the engine flagged is flagged in
+# the runner too (T3-67).
+
+@pytest.mark.finding('T3-67')
+def test_score_execution_engine_error_state_printed_and_kept(fakes, tpath,
+                                                             capsys):
+    flag = 'TOOL_LOOP_EXHAUSTED: the response after 10 tool turns ...'
+    findings = Findings()
+    score(findings, {'response': response(None), 'tool_calls': [],
+                     'evidence_class': 'EV-2', 'invocation_outcome': 'INVOKED',
+                     'error_state': flag}, tpath)
+    assert capsys.readouterr().out == f'AUTO-MATCH | EV-2 | INVOKED | {flag}\n'
+    assert findings.all_results[0]['error_state'] == flag
+
+
+@pytest.mark.finding('T3-67')
+def test_score_execution_no_error_state_no_key(fakes, tpath, capsys):
+    findings = Findings()
+    score(findings, {'response': response('x'), 'tool_calls': []}, tpath)
+    assert 'error_state' not in findings.all_results[0]
