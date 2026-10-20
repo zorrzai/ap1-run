@@ -8,7 +8,8 @@ raw response unmodified.
 
 Dependencies: requests (the external dependency used by this module).
 No SDK. No interpretation, no retry-on-content, no normalisation.
-Network calls target only the configured endpoint. Note: HTTP redirects are followed by default (requests library behaviour) and could reach other hosts.
+Network calls target only the configured endpoint: HTTP redirects are not
+followed (a 3xx is an HTTP error), so no request reaches another host.
 """
 
 import copy
@@ -133,9 +134,11 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
 
     for attempt in range(1, MAX_RETRIES + 1):
         try:
+            # Never follow a redirect: it could send the request (with
+            # the fixture data in it) to another host (SPEC R0.2).
             resp = _requests.post(
                 endpoint_url, json=body, headers=headers,
-                timeout=timeout)
+                timeout=timeout, allow_redirects=False)
             attempts.append({
                 "attempt": attempt,
                 "status_code": resp.status_code,

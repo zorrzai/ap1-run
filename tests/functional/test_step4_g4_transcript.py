@@ -352,9 +352,6 @@ class _Server:
 
 @pytest.mark.finding('T3-52')
 @pytest.mark.req('R0.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-52: the adapter follows an HTTP redirect to '
-                          'another host')
 def test_adapter_redirect_to_other_host_not_followed():
     # Correct (SPEC R0.2 verification contract: "The adapter makes no
     # network call to any host other than the configured endpoint"; §9

@@ -99,7 +99,7 @@ def test_send_minimal_body_and_headers(transport):
         'url': URL,
         'json': {'model': '', 'messages': MESSAGES},
         'headers': {'Content-Type': 'application/json'},
-        'timeout': 120}]
+        'timeout': 120, 'allow_redirects': False}]
 
 
 def test_send_model_tools_key_and_timeout(transport):
@@ -235,6 +235,20 @@ def test_send_request_record_unchanged_when_caller_extends_messages(
     assert record['messages'] == [{'role': 'user', 'content': 'hi'}]
     assert record['tools'] == [{'type': 'function',
                                 'function': {'name': 'calculator'}}]
+
+
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2')
+@pytest.mark.parametrize('status', [301, 302, 307, 308])
+def test_send_redirect_not_followed_http_error(transport, status):
+    # SPEC R0.2: no network call to any host but the configured endpoint.
+    # requests is told not to follow redirects, and a 3xx is an HTTP
+    # error like any other non-200 status, never retried.
+    t = transport(FakeResponse(status, text=''))
+    with pytest.raises(HTTPError) as e:
+        send(URL, messages=MESSAGES)
+    assert e.value.status_code == status
+    assert [c['allow_redirects'] for c in t.calls] == [False]
 
 
 def test_send_request_record_defaults(transport):
