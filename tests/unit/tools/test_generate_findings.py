@@ -703,3 +703,49 @@ def test_paths_are_fixed_under_the_repository_root(gf):
     assert gf.TEMPLATE == os.path.join(root, 'findings',
                                        'FINDINGS.template.md')
     assert gf.TARGET == os.path.join(root, 'findings', 'FINDINGS.md')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('S3-G8-6')
+@pytest.mark.parametrize('num, denom, shown', [(1, 16, '6.3'), (5, 16, '31.3'),
+                                               (9, 16, '56.3')])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G8-6: pct rounds half to even; ROUND_HALF_UP is '
+                          'imported and never used')
+def test_pct_rounds_half_up(gf, num, denom, shown):
+    # Correct: the module imports ROUND_HALF_UP for pct, and the example
+    # config's quantisation declares "rounding": "ROUND_HALF_UP", so
+    # 6.25 % prints as 6.3. Each case is a tie on an even digit, where the
+    # two modes differ.
+    assert str(gf.pct(num, denom)) == shown
+
+
+@pytest.mark.finding('S3-G8-7')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G8-7: the base non-invocation bound uses a '
+                          'fixed n = 500')
+def test_compute_base_noninvocation_bound_uses_the_runs_base_count(figures):
+    # Correct: n is the run's own count of base executions: here 2 (the
+    # instruction_removed result does not count).
+    v = figures(a=[result('Q01'), result('Q02'), result('Q01', condition=IR)])
+    assert v['a_base_noninvoke_cp'] == (
+        '0/2 (p_upper < %.4f, 95%% Clopper–Pearson)'
+        % clopper_pearson_upper_k0(2))
+
+
+@pytest.mark.finding('S3-G8-8')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G8-8: an empty run B raises ZeroDivisionError')
+def test_compute_empty_run_b_no_zero_division(figures):
+    # Correct: like run A's guarded average, an empty run B gives 0 ops per
+    # execution, or a clear error that names the empty run; never a bare
+    # ZeroDivisionError.
+    try:
+        v = figures(b=[])
+    except ZeroDivisionError as e:
+        raise AssertionError('ZeroDivisionError: %s' % e)
+    except Exception as e:  # a clear error is acceptable if it names the run
+        assert 'run_b' in str(e) or 'run b' in str(e).lower(), repr(e)
+    else:
+        assert v['b_ops_per_exec'] == 0
