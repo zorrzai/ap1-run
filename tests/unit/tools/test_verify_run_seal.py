@@ -800,3 +800,22 @@ def test_main_relative_path_under_base_dir_is_found(vrs, base, monkeypatch,
 
 def test_base_dir_is_the_repository_root(vrs):
     assert vrs.BASE_DIR == os.path.dirname(os.path.dirname(TOOL))
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('F1', 'T3-79')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='F1: verify_run reports two non-checks against '
+                          'the on-disk configs')
+def test_verify_run_makes_no_check_against_on_disk_configs(vrs, run):
+    # Steven's ruling (choices-for-marcus entry 5; decisions file, F1,
+    # "Steven's Response 2"): verify_run_seal.py drops its two non-checks
+    # against the on-disk files. They always print "does NOT match seal --
+    # EXPECTED" and can never fail; once each run's config file is sealed
+    # as it stands, they are also untrue.
+    run_dir, _, _ = run
+    checks, failures = vrs.verify_run(str(run_dir))
+    assert failures == []
+    assert [name for name in names(checks) if name.startswith('on-disk')] \
+        == []
