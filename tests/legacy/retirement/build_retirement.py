@@ -545,8 +545,11 @@ def join(inv, groups):
             pat = next(p for n, p in SPEC_PATTERNS if name.startswith(n))
             x = next(x for x in groups if x['suite'] == 'verify_spec'
                      and x['check'].startswith(pat))
-            new_text, note, src = '', x['note'], x['group']
-            status = 'pending'
+            new_text, src = '', x['group']
+            note = ("dropped by Steven's ruling, 2026-10-20: SPEC's line-count "
+                    "table (§12.10) and 300-line limit (§12.9) are not tested; "
+                    "their removal from SPEC is proposed to Marcus")
+            status = 'dropped'
         elif suite == 'test_findings_mutation.py':
             name = row['check'].strip('`')
             x = next(x for x in groups if x['suite'] == 'test_findings_mutation'

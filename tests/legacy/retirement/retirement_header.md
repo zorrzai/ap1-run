@@ -16,7 +16,8 @@ differs from `run_all_tests.py`'s `SUITES`.
 A legacy suite is retired (deleted, removed from `run_all_tests.py`, noted in the changelog) when:
 
 1. **Every check is mapped** to a new test, or dropped on purpose with a reason. *Status:* 410 of
-   410 checks accounted for; the 62 `verify_spec.py` checks wait for Steven's ruling (summary below).
+   410 checks accounted for: 347 mapped, 63 dropped on purpose (62 of them `verify_spec.py`'s
+   SPEC line-count checks, by Steven's ruling of 2026-10-20).
 2. **No coverage is lost**: the new tests execute every line and branch the suite did. *Status:* met
    for every suite, with no exception (section "Coverage" at the end).
 3. **Strength is not lost**: on the modules the suite covers, the new tests' mutation score is at
@@ -41,5 +42,4 @@ What still blocks deleting each suite is listed at the end ("Blockers").
   type; "test defect" marks a legacy check that passes for a reason other than the one it states (a
   test-infrastructure issue, not a runner defect); finding IDs (`T3-n`, `S3-…`) are pinned as
   today's behaviour, to be fixed in step 5.
-- **dropped**: no new test on purpose, with the reason. **pending ruling**: `verify_spec.py`,
-  deliberately not reproduced until Steven decides (options in the G7 report).
+- **dropped**: no new test on purpose, with the reason.

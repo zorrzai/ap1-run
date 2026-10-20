@@ -106,18 +106,18 @@ legacy numbers from being exact, both test-infrastructure issues, not runner def
   run cleanly but execute none of the mutated code (mutmut stops early: "could not find any test
   case for any mutant"). That is the `audit` / `verify_r41` case above; read it as 0.
 
-## Blockers to deleting the suites
+## Retirement
 
-- **All suites:** Marcus's approval (plan, decision 16: the gate before step 5).
-- **`verify_spec.py`:** Steven's ruling on the 62 SPEC §12.10 checks (drop; keep the ≤300-line
-  constraint as a test; or keep the table). Nothing else blocks it.
-- **`verify_hashes.py`:** `.github/workflows/hashes.yml` runs it; switch the workflow to
-  `pytest tests/unit/foundation/test_numeric.py -k verify_hashes_input` (or to the whole unit
-  suite) in the same change that deletes it.
-- **`run_all_tests.py` and the docs:** the registry, `.github/workflows/full_suite.yml` (runs
-  `run_all_tests.py`), and the docs that cite "14 offline suites" (README, SPEC, the paper's next
-  revision) change with the deletion, as plan §4 says.
-- **`verify_inspect.py`:** not a blocker, but note that its replacement tests in `tests/inspect/`
-  need inspect-ai and skip without it, as the legacy agreement test did. CI installs `.[dev]`
-  only, so in CI both skip; run them in an environment with inspect-ai (`ap1-run-inspect`).
-- None of the suites is blocked by a missing test, a coverage gap or a lower mutation score.
+The legacy suites were deleted on branch `sjl/step4/retire-legacy` (2026-10-20), with Marcus's
+approval of 2026-10-16 ("yes, once every old check is covered by a new test") and Steven's ruling
+on the `verify_spec.py` line-count checks. In the same change:
+
+- `run_all_tests.py` became a thin wrapper that runs pytest, so `python run_all_tests.py` still
+  works;
+- `.github/workflows/hashes.yml` runs the pinned-digest unit test instead of `verify_hashes.py`,
+  and `full_suite.yml` runs pytest;
+- the docs that described the suites (README, docs/REPRODUCING.md, docs/SPEC.md §12) point at
+  `tests/` instead.
+
+This file, the build script and the group maps that produced it are in git history before that
+commit (`tests/legacy/`); this copy is final and is no longer rebuilt.
