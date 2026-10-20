@@ -297,3 +297,26 @@ def test_compute_dpr_no_removed_observations_reports_full_drop():
     # UNDEFINED like the zero-base case. Today the removed rate is taken
     # as 0 and DPR is reported as 100.0 %, a full drop measured on no data.
     assert compute_dpr(10, 5, 10, 0) == (D(1), '100.0%')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('S3-G7-1', 'T3-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G7-1: unobservable records stay in n as '
+                          'non-failures')
+@pytest.mark.req('AP-1 D7.1', 'AP-1 D7.5', 'R2.3')
+def test_measure_invocation_unobservable_records_leave_the_denominator():
+    # AP-1 v1.3 D7.9 / SPEC R1.3.1: an unobservable invocation is neither
+    # a success nor a failure, so it is not in the rate's n. Two observed
+    # invocations and one unobservable give 0/2, not 0/3, and the bound is
+    # the k=0 bound for n=2.
+    from ap1_run.scoring.invocation import measure_invocation
+    result = measure_invocation([
+        {'invoked': True, 'evidence_class': EV_2},
+        {'invoked': True, 'evidence_class': EV_2},
+        {'invoked': None, 'evidence_class': EV_2},
+    ])
+    summary = result['per_class'][EV_2]
+    assert summary['n'] == 2, summary
+    assert summary['failure_rate'].startswith('0/2 '), summary
