@@ -476,3 +476,186 @@ def test_score_execution_transcript_left_byte_identical(fakes, tpath, capsys):
     with open(tpath, 'rb') as f:
         after = f.read()
     assert (len(after.splitlines()), after) == (1, before)
+
+
+HALF_UP_2 = {'quantisation': {'places': 2, 'rounding': 'ROUND_HALF_UP'}}
+GT_CALCULATOR = {'required_operation': 'calculator'}
+
+
+def tool(name, return_value):
+    """A call to a tool other than the calculator."""
+    return {'id': 'o1', 'type': 'function',
+            'function': {'name': name, 'arguments': '{}'},
+            'return_value': return_value}
+
+
+def real_score(tool_calls, content, expected, config=HALF_UP_2):
+    """Score one execution with the real scorers; the findings."""
+    import tempfile
+    import os
+    findings = Findings()
+    with tempfile.TemporaryDirectory() as d:
+        score(findings, {'response': response(content),
+                         'tool_calls': tool_calls,
+                         'ground_truth': GT_CALCULATOR,
+                         'evidence_class': 'EV-2',
+                         'invocation_outcome': 'INVOKED'},
+              os.path.join(d, 'run.jsonl'), expected=D(expected),
+              config=config)
+    return findings
+
+
+@pytest.mark.finding('T3-26')
+@pytest.mark.req('R2.5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-26: D7.3 compares only the last tool return; '
+                          'a release of an earlier return is ALTERED')
+def test_score_execution_release_of_earlier_calculator_return_is_exact(
+        capsys):
+    # SPEC R2.5: compare "the value the required operation returned" to
+    # the released figure; fix plan branch 8: compare against every return
+    # of the required operation. The Q04 pattern: the answer 430.75 is
+    # returned first, then the model checks it (430.75 + 1006.25 = 1437).
+    calls = [calc('1437.00 - 1006.25', '{"result": 430.75}'),
+             calc('430.75 + 1006.25', '{"result": 1437.0}')]
+    f = real_score(calls, 'The principal portion is $430.75.', '430.75')
+    assert f.all_results[0]['figure_outcome'] == 'AUTO-MATCH'
+    assert f.transcription_results[0]['outcome'] == 'TRANSCRIBED-EXACT'
+
+
+@pytest.mark.finding('T3-26')
+@pytest.mark.req('R2.5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-26: an errored last call hides an earlier '
+                          'matching return; D7.3 is UNOBSERVABLE')
+def test_score_execution_errored_last_call_keeps_earlier_return(capsys):
+    # T3-26: "if the last call errored, the execution is UNOBSERVABLE even
+    # when an earlier return matches". The calculator did return the
+    # released figure, so D7.3 is observable and EXACT (SPEC R2.5).
+    calls = [calc('1437.00 - 1006.25', '{"result": 430.75}'),
+             calc('430.75 / 0', '{"error": "division by zero"}')]
+    f = real_score(calls, 'The principal portion is $430.75.', '430.75')
+    assert f.transcription_results[0]['outcome'] == 'TRANSCRIBED-EXACT'
+
+
+@pytest.mark.finding('T3-26')
+@pytest.mark.req('R2.5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-26: the return of a tool other than the '
+                          'required operation decides D7.3')
+def test_score_execution_other_tools_return_does_not_govern_transcription(
+        capsys):
+    # SPEC R2.5 names the REQUIRED operation (ground truth
+    # required_operation: calculator). Here the calculator returned
+    # 1437.00 and another tool returned 430.75; the released 430.75 is not
+    # what the required operation returned, so ALTERED (today: EXACT,
+    # because the last return of any tool is taken).
+    calls = [calc('1437.00', '{"result": 1437.0}'),
+             tool('lookup', '{"result": "430.75"}')]
+    f = real_score(calls, 'The principal portion is $430.75.', '430.75')
+    assert f.all_results[0]['figure_outcome'] == 'AUTO-MATCH'
+    assert f.transcription_results[0]['outcome'] == 'TRANSCRIBED-ALTERED'
+
+
+@pytest.mark.finding('T3-27')
+@pytest.mark.req('R2.5', 'R0.4.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-27: the declared ROUND_HALF_UP is not passed '
+                          'to the transcription check')
+def test_score_execution_transcription_uses_declared_rounding(capsys):
+    # SPEC R0.4.1: the declared rounding mode. Under the declared
+    # ROUND_HALF_UP the tool's 430.745 is 430.75, so releasing 430.75 is
+    # EXACT (today ALTERED: HALF_EVEN gives 430.74). Release coverage,
+    # which does use the declared mode, already says GOVERNED-RELEASE.
+    f = real_score([calc('861.49 / 2', '{"result": 430.745}')],
+                   'The principal portion is $430.75.', '430.745')
+    assert f.release_coverage_results[0]['outcome'] == 'GOVERNED-RELEASE'
+    assert f.transcription_results[0]['outcome'] == 'TRANSCRIBED-EXACT'
+
+
+@pytest.mark.finding('T3-27')
+@pytest.mark.req('R2.1', 'R0.4.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-27: the declared ROUND_HALF_UP is not passed '
+                          'to D1 accuracy')
+def test_score_execution_accuracy_uses_declared_rounding(capsys):
+    # The T3 SCORE checker's boundary case: 2.005 vs 2.015, tolerance
+    # 0.01. Under the declared ROUND_HALF_UP they quantise to 2.01 and
+    # 2.02, within tolerance: CORRECT (today INCORRECT, 2.00 vs 2.02).
+    f = real_score([], 'The answer is 2.005.', '2.015')
+    assert f.all_results[0]['figure_outcome'] == 'AUTO-MATCH'
+    assert f.all_accuracy_results[0]['outcome'] == 'CORRECT'
+
+
+@pytest.mark.finding('V12-6')
+@pytest.mark.req('R2.5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='V12-6: the collected D7.3 result has no "rounded '
+                          'under declared policy" sub-flag')
+def test_score_execution_transcription_result_carries_rounded_flag(capsys):
+    # Fix plan §2a, V12-6: each D7.3 result carries the sub-flag, so the
+    # report can count it. Q07: tool 777.4125, released 777.41.
+    f = real_score([calc('42175 * (0.078 / 4) - (15 * 3)',
+                         '{"result": 777.4125}')],
+                   'The quarterly net growth is $777.41.', '777.4125')
+    tr = f.transcription_results[0]
+    assert tr['outcome'] == 'TRANSCRIBED-EXACT'
+    assert tr.get('rounded_under_declared_policy') is True
+
+
+EUROPEAN = {'quantisation': {'places': 2, 'rounding': 'ROUND_HALF_UP'},
+            'decimal_separator': ',', 'grouping_separator': '.'}
+
+
+@pytest.mark.finding('T3-41')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-41: the configured separators are not passed '
+                          'to figure identification')
+def test_score_execution_figure_parsed_with_configured_separators(capsys):
+    # SPEC R0.4.2: a token is grouped by the configured grouping_separator
+    # and has the configured decimal_separator. Under ',' decimal and '.'
+    # grouping, '1.006,25' is one figure, 1006.25 (Q04's monthly interest).
+    # Today the US defaults split it into 1.006 and 25: no match.
+    f = real_score([], 'Die Zinsen betragen 1.006,25 $.', '1006.25',
+                   config=EUROPEAN)
+    assert f.all_results[0]['figure_outcome'] == 'AUTO-MATCH'
+    assert f.all_results[0]['released_figure'] == '1006.25'
+
+
+@pytest.mark.finding('T3-41')
+@pytest.mark.req('R0.4.2', 'R2.5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-41: the configured separators are not passed '
+                          'to release-coverage extraction')
+def test_score_execution_coverage_candidates_parsed_with_configured_separators(
+        capsys):
+    # T3-41: under European separators coverage "silently becomes
+    # UNOBSERVABLE". Correct: '1.006,25' is the candidate 1006.25, which
+    # the calculator returned, so GOVERNED-RELEASE.
+    f = real_score([calc('287500 * 4.2 / 100 / 12', '{"result": 1006.25}')],
+                   'Die Zinsen betragen 1.006,25 $.', '1006.25',
+                   config=EUROPEAN)
+    assert f.release_coverage_results[0]['outcome'] == 'GOVERNED-RELEASE'
+
+
+@pytest.mark.finding('T3-41')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-41: a token ambiguous under the configured '
+                          'separators is read with the US defaults and '
+                          'auto-scored')
+def test_score_execution_locale_ambiguous_figure_routes_to_adjudication(
+        capsys):
+    # SPEC R0.4.2: where the configuration does not disambiguate (here '.'
+    # is both decimal and grouping separator), '1.780' admits two readings
+    # and "the item routes to adjudication". Today it is read as 1.780
+    # under the defaults and auto-matched.
+    config = {'quantisation': {'places': 2, 'rounding': 'ROUND_HALF_UP'},
+              'decimal_separator': '.', 'grouping_separator': '.'}
+    try:
+        f = real_score([], 'The answer is 1.780.', '1.78', config=config)
+        outcome = f.all_results[0]['figure_outcome']
+    except Exception as e:  # the fix must route, not raise
+        outcome = f'raised {type(e).__name__}: {e}'
+    assert outcome.startswith('ADJUDICATE')
