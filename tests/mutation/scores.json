@@ -41,16 +41,16 @@
     "score": 0.9281
   },
   "foundation/adapter": {
-    "killed": 160,
-    "mutants": 166,
-    "notes": "All 6 survivors are unobservable: they change the two request_record['attempts'] stores made just before raising (after the last transport failure, and the unreachable 'exhausted retries' path). That record is never returned or attached to the exception, so no caller can see it (finding S3-G1-18); the fix will make these mutants killable. The tests replace requests.post, time.sleep and time.time with fakes; the real HTTP path is covered by the regression scenarios against the mock endpoint.",
-    "score": 0.9639
+    "killed": 173,
+    "mutants": 176,
+    "notes": "All 3 survivors change the request_record['attempts'] store on the unreachable 'exhausted retries' path after the loop (every iteration returns or raises). Step 5 numeric-hardening (S3-G1-18): the record of a transport failure on every attempt is now attached to the AdapterError as request_record, so the mutants of that store, survivors before, are killed. The tests replace requests.post, time.sleep and time.time with fakes; the real HTTP path is covered by the regression scenarios against the mock endpoint.",
+    "score": 0.983
   },
   "foundation/config": {
-    "killed": 226,
-    "mutants": 234,
+    "killed": 234,
+    "mutants": 242,
     "notes": "All 8 survivors are equivalent. Four change how config.json is opened: 'UTF-8' is the same codec, no 'r' is the default mode, and encoding None or no encoding means the locale's, which is UTF-8 on macOS and Linux (the tests load a non-ASCII config; on Windows these would be killed). Four change the .get() default for 'sampling' and 'quantisation' ({} to None or no default): both are required fields, checked present just before, so the default is never used.",
-    "score": 0.9658
+    "score": 0.9669
   },
   "foundation/numeric": {
     "killed": 432,

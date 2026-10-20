@@ -14,6 +14,8 @@ import json
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
+from ap1_run.foundation.adapter import BODY_FIELDS
+
 
 class ConfigError(Exception):
     """Configuration validation failure. Names the field and reason."""
@@ -155,7 +157,9 @@ def _refuse_unknown_fields(raw):
 
 def _validate_sampling(sampling_dict):
     """Validate sampling parameters per R0.1. sampling is an object
-    (S3-G1-14).
+    (S3-G1-14). A key may not name a request body field (model,
+    messages, tools; S3-G1-21), and a numeric value must be finite
+    (S3-G1-19): the adapter would otherwise send NaN, which is not JSON.
 
     A sampling parameter may be:
     - A quoted numeric string (e.g. "0", "4096") — sent to the endpoint.
@@ -172,6 +176,12 @@ def _validate_sampling(sampling_dict):
             f'sampling must be an object, got '
             f'{type(sampling_dict).__name__}: {sampling_dict!r}')
     for k, v in sampling_dict.items():
+        if k in BODY_FIELDS:
+            raise ConfigError(
+                f'sampling.{k}: a request body field, not a sampling '
+                f'parameter')
+        if isinstance(v, str) and _non_finite(v):
+            raise ConfigError(f'sampling.{k}: must be a finite number: {v!r}')
         if isinstance(v, str) and v == 'omitted':
             raise ConfigError(
                 f'sampling.{k}: omitted without a reason. '
@@ -186,6 +196,14 @@ def _validate_sampling(sampling_dict):
             if reason in ('platform-rejected', 'platform-unsupported') and not v.get('detail'):
                 raise ConfigError(
                     f'sampling.{k}: detail is required when reason is {reason!r}')
+
+
+def _non_finite(text):
+    """True if text reads as a Decimal that is NaN or infinite."""
+    try:
+        return not Decimal(text).is_finite()
+    except InvalidOperation:
+        return False
 
 
 def _refuse_bare_numerics(obj, path=''):
