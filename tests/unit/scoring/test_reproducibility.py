@@ -144,10 +144,11 @@ def test_classify_mechanism_one_distinct_value_is_observed_only():
 
 @pytest.mark.finding('T3-4')
 def test_classify_mechanism_many_distinct_values_is_also_observed_only():
-    # Today: both branches return OBSERVED-ONLY, so 5 identical and 5
-    # different answers get the same class; only distinct_values differs.
-    # Correct (AP-1 D2 method): the result reports the distinct answers
-    # and their spread, and the class reflects them.
+    # Both branches return OBSERVED-ONLY, so 5 identical and 5 different
+    # answers get the same class; only distinct_values differs. This is
+    # correct (AP-1 D2.1; step-4 g7 report): from evidence the runner can
+    # only tell OBSERVED-ONLY from UNMEASURED. The distinct values per
+    # question and surface reach report §9 (T3-4, step 5).
     responses = [response(f'${v}') for v in ('1', '2', '3', '4', '5')]
     assert classify_mechanism(responses, surface='prose', minimum_runs=3) == {
         'mechanism': 'OBSERVED-ONLY',
@@ -156,18 +157,6 @@ def test_classify_mechanism_many_distinct_values_is_also_observed_only():
         'successful_runs': 5,
         'reason': '5 runs, 5 distinct values — OBSERVED-ONLY',
     }
-
-
-@pytest.mark.finding('T3-4')
-def test_classify_mechanism_figures_surface_is_the_whole_content():
-    # Today: without tool calls the "figures" surface is the whole
-    # message text, so two wordings of the same figure count as two
-    # distinct figures. Correct: the figures surface is the released
-    # figure (two values here: one).
-    responses = [response('The answer is $15.20.'), response('$15.20 a year.'),
-                 response('The answer is $15.20.')]
-    r = classify_mechanism(responses, surface='figures', minimum_runs=3)
-    assert r['distinct_values'] == 2
 
 
 def test_classify_mechanism_errored_runs_are_left_out_of_the_values():
@@ -204,36 +193,6 @@ def test_surface_values_prose_ignores_tool_calls():
 def test_surface_values_prose_message_without_content_is_empty():
     assert _extract_surface_values([{'choices': [{'message': {}}]},
                                     {'choices': [{}]}], 'prose') == ['', '']
-
-
-def test_surface_values_figures_without_tool_calls_is_the_content():
-    assert _extract_surface_values(
-        [response('$15.20'), response('$1', []), response('$2', None),
-         response(None), {'choices': []}, {}, {'choices': [{}]}],
-        'figures') == ['$15.20', '$1', '$2', '', '', '', '']
-
-
-@pytest.mark.finding('T3-4')
-def test_surface_values_figures_with_tool_calls_is_first_call_arguments():
-    # Today: when the response carries tool calls, the "figure" is the
-    # first call's arguments string, not a figure. Correct: the figure
-    # surface is the released figure.
-    calls = [tool_call('{"expression": "15200 * 0.012"}'),
-             tool_call('{"expression": "2"}')]
-    assert _extract_surface_values([response('$182.40', calls)],
-                                   'figures') == ['{"expression": "15200 * 0.012"}']
-
-
-def test_surface_values_figures_tool_call_without_arguments_is_empty():
-    assert _extract_surface_values(
-        [response('x', [{'function': {}}]), response('x', [{}])],
-        'figures') == ['', '']
-
-
-def test_surface_values_figures_arguments_are_stringified():
-    assert _extract_surface_values(
-        [response('x', [{'function': {'arguments': {'expression': '1'}}}])],
-        'figures') == ["{'expression': '1'}"]
 
 
 def test_surface_values_unknown_surface_is_empty():
@@ -324,9 +283,6 @@ def _answer(text):
 
 
 @pytest.mark.finding('T3-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-4: the "figures" surface is the whole prose, '
-                          'so one figure in two wordings is two values')
 def test_classify_mechanism_figures_surface_counts_numeric_answers():
     # SPEC R2.2: classes per surface, "separately for computed figures and
     # for surrounding prose"; AP-1 D2 Method: "the number of distinct
@@ -394,3 +350,51 @@ def test_parameter_echo_compares_numbers_as_decimals_else_text(
     r = check_parameter_echo({'p': requested}, {'p': echoed})
     assert r['status'] == status
     assert r['verified'] is (status == 'VERIFIED')
+
+
+# -- Step 5 (report-honesty): the figures surface (T3-4) ----------------------
+
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('R2.2', 'AP-1 D2')
+def test_surface_values_figures_are_the_stated_numbers():
+    # The set of numeric figures in the text, normalised, with their
+    # percent flag: order, repetition and wording don't matter; tool
+    # calls in the message are not figures; no text is no figures.
+    responses = [
+        response('$15.20 at 1.2%'),
+        response('At 1.2%, it is 15.2, so 15.20.'),
+        response('$182.40', [tool_call('{"expression": "15200 * 0.012"}')]),
+        response(None), {'choices': []}, {}, {'choices': [{}]},
+        response('1.2 and 1.2%'),
+    ]
+    assert _extract_surface_values(responses, 'figures') == [
+        (('1.2', True), ('15.2', False)),
+        (('1.2', True), ('15.2', False)),
+        (('182.4', False),),
+        (), (), (), (),
+        (('1.2', False), ('1.2', True)),
+    ]
+
+
+@pytest.mark.finding('T3-4')
+@pytest.mark.parametrize('error', ['AmbiguousLocaleError', 'ArithmeticError',
+                                   'ValueError'])
+def test_surface_values_figures_unreadable_text_is_its_own_value(
+        monkeypatch, error):
+    import builtins
+    from ap1_run.scoring import reproducibility
+    exc = getattr(reproducibility, error, None) or getattr(builtins, error)
+
+    def refuse(text):
+        raise exc(text)
+    monkeypatch.setattr(reproducibility, 'extract_numeric_tokens', refuse)
+    assert _extract_surface_values([response('1.780')], 'figures') == \
+        [('unreadable', '1.780')]
+
+
+@pytest.mark.finding('T3-4')
+def test_classify_mechanism_figures_distinct_values_count_answers():
+    responses = [response('It is $2600.00.'), response('$2,600 left.'),
+                 response('It is $2500.00.')]
+    r = classify_mechanism(responses, surface='figures', minimum_runs=3)
+    assert (r['distinct_values'], r['successful_runs']) == (2, 3)

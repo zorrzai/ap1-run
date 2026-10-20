@@ -323,19 +323,6 @@ def test_dimension_results_d1_rate_zero_is_printed():
                        '(auto-scored 0; 0 adjudicated not in rate) |')
 
 
-@pytest.mark.finding('T3-4')
-def test_dimension_results_d2_live_shape_is_measured_with_n_na():
-    # The live d2_results is keyed '<item>/<condition>' and has no 'n',
-    # so D2 is "Measured" with n N/A and a pointer to §9, which is empty
-    # (see the §9 test). Correct: D2 distinct answers and spread per
-    # question, with n, or D2 declared not measured.
-    d2 = {'Q01/base': {'figures': {'mechanism': 'OBSERVED-ONLY'}}}
-    rows = dim_rows(report._section_dimension_results(
-        {'d2_results': d2}, {'dimensions_claimed': ['D2']}))
-    assert rows[1] == ('| D2 | Measured | N/A | '
-                       'See \u00a79 D2 Mechanism Classes |')
-
-
 @pytest.mark.finding('T3-29')
 def test_dimension_results_d7_reported_per_sub_dimension():
     # Fixed (T3-29; AP-1 v1.3 D7 "Report all four"): D7.1-D7.4 each have
@@ -1089,38 +1076,60 @@ def test_d2_cap_reason_shown_before_note():
         '*No D2 results available.*\n')
 
 
-def test_d2_surfaces_table_sorted_with_basis():
-    text = report._section_d2_mechanisms({'d2_results': {'surfaces': {
-        'prose': {'mechanism': 'STRUCTURAL', 'operator_declared': True,
-                  'distinct_values': 1, 'successful_runs': 3,
-                  'parameter_echo_status': 'VERIFIED'},
-        'figures': {}}}})
-    assert text == md(
-        '## 9. D2 Reproducibility Mechanism Classes\n',
-        D2_NOTE,
-        '| Surface | Mechanism Class | Basis | Distinct Values | Runs | '
-        'Parameter Echo |',
-        '|---|---|---|---|---|---|',
-        '| figures | `unknown` | evidence | \u2014 | \u2014 | `UNVERIFIED` |',
-        '| prose | `STRUCTURAL` | operator-declared | 1 | 3 | `VERIFIED` |',
-        '')
-
-
-@pytest.mark.finding('T3-4', 'T3-75')
-def test_d2_live_shape_has_no_per_surface_data():
-    # build_summary passes d2_results keyed '<item>/<condition>'; this
-    # section reads d2['surfaces'], which the live shape never has, so
-    # §9 says there is no data while §3 says D2 was measured (T3-4).
-    # The note above uses UNMEASURED, a term SPEC also uses for other
-    # things (T3-75). Correct: D2 rendered from the live shape.
+@pytest.mark.finding('T3-4')
+def test_d2_live_shape_table_per_question_condition_and_surface():
+    # Fixed (T3-4): §9 reads the live shape, keyed '<item>/<condition>'.
     text = report._section_d2_mechanisms({'d2_results': {
-        'Q01/base': {'figures': {'mechanism': 'OBSERVED-ONLY'},
-                     'prose': {'mechanism': 'OBSERVED-ONLY'}}}})
+        'Q02/instruction_removed': {'figures': {
+            'mechanism': 'UNMEASURED', 'operator_declared': False,
+            'distinct_values': None, 'successful_runs': 1}},
+        'Q01/base': {
+            'prose': {'mechanism': 'STRUCTURAL', 'operator_declared': True,
+                      'distinct_values': 1, 'successful_runs': 3,
+                      'parameter_echo_status': 'VERIFIED'},
+            'figures': {'mechanism': 'OBSERVED-ONLY',
+                        'distinct_values': 2, 'successful_runs': 3}},
+        'Q03': {'figures': {}}}})
     assert text == md(
         '## 9. D2 Reproducibility Mechanism Classes\n',
         D2_NOTE,
-        '*No per-surface D2 data available.*\n',
+        'Classes per surface, over question-conditions: figures: '
+        'OBSERVED-ONLY 1, UNMEASURED 1, unknown 1; prose: STRUCTURAL 1.\n',
+        '| Question | Condition | Surface | Mechanism Class | Basis '
+        '| Distinct Values | Runs | Parameter Echo |',
+        '|---|---|---|---|---|---|---|---|',
+        '| Q01 | base | figures | `OBSERVED-ONLY` | evidence | 2 | 3 '
+        '| `UNVERIFIED` |',
+        '| Q01 | base | prose | `STRUCTURAL` | operator-declared | 1 | 3 '
+        '| `VERIFIED` |',
+        '| Q02 | instruction_removed | figures | `UNMEASURED` | evidence '
+        '| \u2014 | 1 | `UNVERIFIED` |',
+        '| Q03 | \u2014 | figures | `unknown` | evidence | \u2014 | \u2014 '
+        '| `UNVERIFIED` |',
         '')
+
+
+@pytest.mark.finding('T3-4')
+def test_dimension_results_d2_row_counts_questions_and_classes():
+    d2 = {'Q01/base': {'figures': {'mechanism': 'OBSERVED-ONLY'},
+                       'prose': {'mechanism': 'OBSERVED-ONLY'}},
+          'Q01/instruction_removed': {'figures': {'mechanism': 'UNMEASURED'},
+                                      'prose': {'mechanism': 'UNMEASURED'}},
+          'Q02/base': {'figures': {'mechanism': 'OBSERVED-ONLY'},
+                       'prose': {'mechanism': 'OBSERVED-ONLY'}},
+          'Q03/base': {'figures': {'mechanism': 'OBSERVED-ONLY'}}}
+    rows = dim_rows(report._section_dimension_results(
+        {'d2_results': d2}, {'dimensions_claimed': ['D2']}))
+    # n is the number of questions (3), not of question-conditions (4)
+    assert rows[1] == ('| D2 | Measured | 3 | figures: OBSERVED-ONLY 3, '
+                       'UNMEASURED 1; prose: OBSERVED-ONLY 2, UNMEASURED 1 '
+                       '(\u00a79) |')
+
+
+def test_dimension_results_other_dimension_without_n_reads_na():
+    rows = dim_rows(report._section_dimension_results(
+        {'d3_results': {'x': 1}}, {'dimensions_claimed': ['D3']}))
+    assert rows[2] == "| D3 | Measured | N/A | {'x': 1} |"
 
 
 # -- 10. Non-outcome cells ------------------------------------------------
@@ -1478,13 +1487,6 @@ def test_declared_limitations_text():
 
 # -- _format_dim_result ---------------------------------------------------
 
-def test_format_dim_result_d2_and_d7_point_to_sections():
-    assert report._format_dim_result('D2', {'x': 1}) == \
-        'See \u00a79 D2 Mechanism Classes'
-    assert report._format_dim_result('D7', {'x': 1}) == \
-        'See \u00a74-7 D7 Figures'
-
-
 def test_format_dim_result_d1_defaults_counts_to_zero():
     assert report._format_dim_result('D1', {'accuracy_rate': '0.5'}) == \
         'Accuracy: 0.5 (auto-scored 0; 0 adjudicated not in rate)'
@@ -1673,9 +1675,6 @@ def test_scoring_proportions_d1_pending_adjudication_prints_no_rate_of_one():
 
 
 @pytest.mark.finding('T3-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-4: §9 reads d2["surfaces"]; the live '
-                          '"<item>/<condition>" shape renders as no data')
 def test_d2_live_shape_renders_mechanism_per_surface():
     # build_summary passes D2 keyed '<item>/<condition>', one dict per
     # surface. Correct (SPEC R2.2, R3.3 "D2 mechanism classes per surface
@@ -1695,9 +1694,6 @@ def test_d2_live_shape_renders_mechanism_per_surface():
 
 
 @pytest.mark.finding('T3-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-4: §3 prints D2 "Measured" with n N/A for the '
-                          'live shape')
 def test_dimension_results_d2_live_shape_states_n():
     # Correct (AP-1 §6.1 "for each dimension, the result and the n"): the
     # D2 row gives its n (questions or runs), never N/A, when results exist.

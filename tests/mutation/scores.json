@@ -71,10 +71,10 @@
     "score": 0.9725
   },
   "reporting/report": {
-    "killed": 2140,
-    "mutants": 2181,
+    "killed": 2154,
+    "mutants": 2191,
     "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Integrator, step 5: re-recorded after merging the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after the merge.] [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
-    "score": 0.9812
+    "score": 0.9831
   },
   "run": {
     "killed": 581,
@@ -168,10 +168,10 @@
     "score": 0.9732
   },
   "scoring/reproducibility": {
-    "killed": 219,
-    "mutants": 227,
-    "notes": "All 8 survivors are equivalent. Each is in _extract_surface_values and replaces a .get() default with None or drops it (also None): r.get('choices', []) on the figures and the prose surface (4), and .get('content', '') on both surfaces (4). None is falsy like [] and '', and every use is guarded by 'if choices:' or followed by \"or ''\", so the value is the same.",
-    "score": 0.9648
+    "killed": 183,
+    "mutants": 187,
+    "notes": "All 4 survivors are equivalent: each replaces a .get() default in _extract_surface_values (r.get('choices', []) and .get('content', '')) with None or no default; None is falsy like [] and '', and every use is guarded by 'if choices:' or followed by \"or ''\". (Step 5 report-honesty, T3-4: the figures surface is now the set of stated numeric figures, sharing the prose surface's text extraction, so the 4 duplicated survivors of the old figures branch are gone.)",
+    "score": 0.9786
   },
   "scoring/transcription": {
     "killed": 124,

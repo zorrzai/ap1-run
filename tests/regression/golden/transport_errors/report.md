@@ -115,7 +115,7 @@ Model: mock-model
 | Dimension | Status | n | Result |
 |---|---|---|---|
 | D1 | Measured | 31 | No rate: 1 items await adjudication (auto-scored 30: 30 correct, 0 incorrect, 0 no figure) |
-| D2 | Measured | N/A | See §9 D2 Mechanism Classes |
+| D2 | Measured | 9 | figures: OBSERVED-ONLY 14, UNMEASURED 3; prose: OBSERVED-ONLY 14, UNMEASURED 3 (§9) |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
 | D5 | **NOT MEASURED** | — | — |
@@ -304,8 +304,44 @@ Total operands resolved: 129
 
 > D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
 
-*No per-surface D2 data available.*
+Classes per surface, over question-conditions: figures: OBSERVED-ONLY 14, UNMEASURED 3; prose: OBSERVED-ONLY 14, UNMEASURED 3.
 
+| Question | Condition | Surface | Mechanism Class | Basis | Distinct Values | Runs | Parameter Echo |
+|---|---|---|---|---|---|---|---|
+| Q01 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q01 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q01 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q01 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q02 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q02 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q02 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q02 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q03 | base | figures | `UNMEASURED` | evidence | — | 1 | `UNVERIFIED` |
+| Q03 | base | prose | `UNMEASURED` | evidence | — | 1 | `UNVERIFIED` |
+| Q03 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q03 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q04 | base | figures | `UNMEASURED` | evidence | — | 1 | `UNVERIFIED` |
+| Q04 | base | prose | `UNMEASURED` | evidence | — | 1 | `UNVERIFIED` |
+| Q04 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q04 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q05 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q05 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q06 | base | figures | `UNMEASURED` | evidence | — | 1 | `UNVERIFIED` |
+| Q06 | base | prose | `UNMEASURED` | evidence | — | 1 | `UNVERIFIED` |
+| Q06 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q06 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q07 | base | figures | `OBSERVED-ONLY` | evidence | 2 | 2 | `UNVERIFIED` |
+| Q07 | base | prose | `OBSERVED-ONLY` | evidence | 2 | 2 | `UNVERIFIED` |
+| Q07 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q07 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q09 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q09 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q09 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q09 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q10 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q10 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q10 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q10 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
 
 ## 10. Non-Outcome Cells
 

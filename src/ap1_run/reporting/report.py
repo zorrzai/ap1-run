@@ -181,6 +181,10 @@ def _section_dimension_results(summary, config):
             dim_data = summary.get(f'{dim.lower()}_results', {})
             if dim_data and dim == 'D7':
                 lines.extend(_d7_rows(summary, dim_data))
+            elif dim_data and dim == 'D2':
+                questions = {key.split('/')[0] for key in dim_data}
+                lines.append(f'| D2 | Measured | {len(questions)} | '
+                             f'{_d2_class_counts(dim_data)} (§9) |')
             elif dim_data:
                 n = dim_data.get('n', dim_data.get('auto_scored_n', 'N/A'))
                 result = _format_dim_result(dim, dim_data)
@@ -641,27 +645,42 @@ def _section_d2_mechanisms(summary):
         lines.append('*No D2 results available.*\n')
         return '\n'.join(lines)
 
-    surfaces = d2.get('surfaces', {})
-    if surfaces:
-        lines.append('| Surface | Mechanism Class | Basis | Distinct Values | '
-                     'Runs | Parameter Echo |')
-        lines.append('|---|---|---|---|---|---|')
-
+    # The live shape (T3-4): {'<item>/<condition>': {surface: class}},
+    # one class per surface per question and condition (SPEC R2.2)
+    lines.append(f'Classes per surface, over question-conditions: '
+                 f'{_d2_class_counts(d2)}.\n')
+    lines.append('| Question | Condition | Surface | Mechanism Class | Basis '
+                 '| Distinct Values | Runs | Parameter Echo |')
+    lines.append('|---|---|---|---|---|---|---|---|')
+    for key, surfaces in sorted(d2.items()):
+        item, _, condition = key.partition('/')
         for surface_name, data in sorted(surfaces.items()):
-            mechanism = data.get('mechanism', 'unknown')
-            is_op_decl = data.get('operator_declared', False)
-            basis = 'operator-declared' if is_op_decl else 'evidence'
-            distinct = data.get('distinct_values', '—')
-            runs = data.get('successful_runs', '—')
-            echo = data.get('parameter_echo_status', 'UNVERIFIED')
+            basis = ('operator-declared' if data.get('operator_declared')
+                     else 'evidence')
             lines.append(
-                f'| {surface_name} | `{mechanism}` | {basis} | '
-                f'{distinct} | {runs} | `{echo}` |')
-    else:
-        lines.append('*No per-surface D2 data available.*\n')
+                f'| {item} | {_cell(condition)} | {surface_name} '
+                f'| `{data.get("mechanism", "unknown")}` | {basis} '
+                f'| {_cell(data.get("distinct_values"))} '
+                f'| {_cell(data.get("successful_runs"))} '
+                f'| `{data.get("parameter_echo_status", "UNVERIFIED")}` |')
 
     lines.append('')
     return '\n'.join(lines)
+
+
+def _d2_class_counts(d2):
+    """'figures: OBSERVED-ONLY 9, UNMEASURED 1; prose: ...': how many
+    question-conditions have each class, per surface."""
+    counts = {}
+    for surfaces in d2.values():
+        for surface_name, data in surfaces.items():
+            per = counts.setdefault(surface_name, {})
+            mechanism = data.get('mechanism', 'unknown')
+            per[mechanism] = per.get(mechanism, 0) + 1
+    return '; '.join(
+        f'{surface_name}: ' + ', '.join(
+            f'{m} {c}' for m, c in sorted(per.items()))
+        for surface_name, per in sorted(counts.items()))
 
 
 def _section_unmeasured_cells(summary, transcript_records):
@@ -1024,10 +1043,6 @@ def _format_dim_result(dim, data):
             return (f'Accuracy: {rate} '
                     f'(auto-scored {auto}; {adj} adjudicated not in rate)')
         return 'No rate computed'
-    elif dim == 'D2':
-        return 'See §9 D2 Mechanism Classes'
-    elif dim == 'D7':
-        return 'See §4-7 D7 Figures'
     return str(data)
 
 

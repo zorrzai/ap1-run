@@ -198,9 +198,6 @@ def test_run_report_prints_no_accuracy_of_one_with_adjudication_pending(run):
 
 
 @pytest.mark.finding('T3-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-4: D2 "Measured" in §3 but §9 says no '
-                          'per-surface data')
 def test_run_report_shows_d2_classes_per_question_and_surface(run):
     # Correct (SPEC R2.2, R3.3; AP-1 D2 Method and D2.1): §9 gives each
     # question's mechanism class per surface (figures, prose) with the

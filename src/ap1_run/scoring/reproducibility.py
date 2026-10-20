@@ -17,6 +17,10 @@ diff requested vs applied. A silently ignored parameter is a platform finding.
 
 from decimal import Decimal
 
+from ap1_run.foundation.numeric import (
+    AmbiguousLocaleError, extract_numeric_tokens,
+)
+
 
 # -- Mechanism class constants ---------------------------------------------
 
@@ -201,30 +205,35 @@ def _is_error_or_limited(response):
 def _extract_surface_values(responses, surface):
     """Extract the surface-specific values from responses.
 
-    For 'figures': extract the numeric content (the released figure).
-    For 'prose': extract the full text content.
+    For 'prose': the full text content.
+    For 'figures': the numeric figures the text states (AP-1 D2 Method:
+    "distinct numeric answers per question"; SPEC R2.2 "separately for
+    computed figures and for surrounding prose"; T3-4): the set of its
+    numeric tokens (value and percent flag, R0.4.2), so the same figure
+    worded twice is one value. A text whose numbers cannot be read is
+    its own value.
     """
     values = []
     for r in responses:
+        choices = r.get('choices', [])
+        if choices:
+            text = choices[0].get('message', {}).get('content', '') or ''
+        else:
+            text = ''
         if surface == 'figures':
-            # The figure value, normalised to string for comparison
-            choices = r.get('choices', [])
-            if choices:
-                msg = choices[0].get('message', {})
-                tool_calls = msg.get('tool_calls') or []
-                if tool_calls:
-                    # Use tool call arguments as the figure surface
-                    val = str(tool_calls[0].get('function', {}).get('arguments', ''))
-                else:
-                    val = msg.get('content', '') or ''
-            else:
-                val = ''
-            values.append(val)
+            values.append(_figures(text))
         elif surface == 'prose':
-            choices = r.get('choices', [])
-            if choices:
-                val = choices[0].get('message', {}).get('content', '') or ''
-            else:
-                val = ''
-            values.append(val)
+            values.append(text)
     return values
+
+
+def _figures(text):
+    """The numeric figures a text states, as a sorted tuple of
+    (value, percent) pairs, each value normalised (15.2 and 15.20 are
+    one figure); ('unreadable', text) if extraction refuses the text."""
+    try:
+        tokens = extract_numeric_tokens(text)
+    except (AmbiguousLocaleError, ArithmeticError, ValueError):
+        return ('unreadable', text)
+    return tuple(sorted({(str(t.value.normalize()), t.percent)
+                         for t in tokens}))
