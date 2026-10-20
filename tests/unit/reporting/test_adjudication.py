@@ -153,26 +153,17 @@ def test_needs_adjudication_transport_failure_alone_is_false():
 
 
 @pytest.mark.finding('T3-9')
-def test_needs_adjudication_transport_failure_with_adjudicate_is_true():
-    # The ADJUDICATE check comes before the TRANSPORT_FAILURE guard, so a
-    # transport-failed record that the positional join gave another
-    # repeat's ADJUDICATE outcome is routed to a scorer. Correct: a record
-    # with no response is UNMEASURED and never gets a sheet.
-    assert adjudication._needs_adjudication(record(
+def test_needs_adjudication_transport_failure_with_adjudicate_is_false():
+    # The TRANSPORT_FAILURE guard comes first: a record with no response
+    # is UNMEASURED and never routed to a scorer, whatever figure outcome
+    # it holds. (The sheet-level check is
+    # test_sheets_transport_failure_record_never_gets_a_sheet below.)
+    assert not adjudication._needs_adjudication(record(
         figure_outcome='ADJUDICATE-DECLINE',
         error_state='TRANSPORT_FAILURE: HTTP 500'))
-
-
-@pytest.mark.finding('T3-9')
-def test_sheets_transport_failure_given_adjudicate_gets_empty_sheet():
-    # As above, end to end: the sheet shows "[no response received]" under
-    # another repeat's routing reason. Correct: no sheet for this record,
-    # and the repeat whose outcome it took gets its own.
-    text = sheets_for([record(error_state='TRANSPORT_FAILURE: HTTP 500',
-                              response_received=None)])
-    assert 'Total items requiring adjudication: 1' in text
-    assert '```\n[no response received]\n```' in text
-    assert ADJUDICATION_REASONS['ADJUDICATE-DECLINE'] in text
+    assert not adjudication._needs_adjudication(record(
+        figure_outcome='UNMEASURABLE',
+        error_state='TRANSPORT_FAILURE: HTTP 500'))
 
 
 def test_sheets_skip_void_records_even_when_adjudicated():
@@ -600,9 +591,6 @@ def sheets_list(text):
 
 @pytest.mark.finding('T3-9')
 @pytest.mark.req('R3.2', 'AP-1 §6.8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-9: a transport-failed record given an '
-                          'ADJUDICATE outcome gets a sheet')
 def test_sheets_transport_failure_record_never_gets_a_sheet():
     # A record with no response is UNMEASURED (AP-1 v1.3 §6.8 "Response
     # statuses, distinct from outcomes"), whatever figure outcome a join

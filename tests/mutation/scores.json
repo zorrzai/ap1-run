@@ -5,10 +5,10 @@
     "score": 1.0
   },
   "execution/engine": {
-    "killed": 490,
-    "mutants": 513,
+    "killed": 496,
+    "mutants": 519,
     "notes": "All 23 survivors are equivalent or unreachable. Two pass tool_calls=None instead of [] in the VOID and transport-failure records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Two drop the f'call_{turn}' default for a missing tool-call id and three change the '' default of tool_call_id in the tool message: a call without an id raises EngineError on the return-value lookup right after (S3-G2-2), so neither default is ever observed. Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). Two change the [] default of choices in _extract_tool_calls to None: both falsy, both give [].",
-    "score": 0.9552
+    "score": 0.9557
   },
   "execution/evidence": {
     "killed": 216,
@@ -65,10 +65,10 @@
     "score": 0.8933
   },
   "reporting/adjudication": {
-    "killed": 475,
+    "killed": 484,
     "mutants": 501,
-    "notes": "All 26 survivors are equivalent. Nine are in _needs_adjudication's TRANSPORT_FAILURE guard, which returns False where the fall-through also returns False, so it is dead code (T3-9: it comes after the ADJUDICATE check); one more there changes the figure_outcome default '' to 'XXXX', which is neither ADJUDICATE* nor UNMEASURABLE either. Two pass fixture=None and config=None to _generate_one_sheet, which never reads either parameter. Fourteen replace a .get() default ([] or {} or '') by None or no default, falsy alike: the release-coverage lookup, account_map, tool_calls, operation_correctness, ungoverned_figures, choices and message content.",
-    "score": 0.9481
+    "notes": "All 17 survivors are equivalent. One changes _needs_adjudication's figure_outcome default '' to 'XXXX', which is neither ADJUDICATE* nor UNMEASURABLE either. Two pass fixture=None and config=None to _generate_one_sheet, which never reads either parameter. Fourteen replace a .get() default ([] or {} or '') by None or no default, falsy alike: the release-coverage lookup, account_map, tool_calls, operation_correctness, ungoverned_figures, choices and message content.",
+    "score": 0.9661
   },
   "reporting/report": {
     "killed": 1518,
@@ -77,10 +77,10 @@
     "score": 0.9675
   },
   "run": {
-    "killed": 553,
-    "mutants": 568,
+    "killed": 555,
+    "mutants": 570,
     "notes": "All 15 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored.",
-    "score": 0.9736
+    "score": 0.9737
   },
   "runner/console": {
     "killed": 467,
@@ -101,10 +101,10 @@
     "score": 0.9926
   },
   "runner/outputs": {
-    "killed": 174,
-    "mutants": 189,
-    "notes": "All 15 survivors are equivalent here. Twelve drop or change encoding='utf-8' on the four files written: 'UTF-8' is the same codec, and None or no argument means the locale's encoding, which is UTF-8 on macOS and Linux (the CI's Windows runs would differ; the regression baseline is made on macOS). Two give fig_lookup.get() a None default, which is falsy like []. One passes ensure_ascii=None, falsy like False.",
-    "score": 0.9206
+    "killed": 170,
+    "mutants": 183,
+    "notes": "All 13 survivors are equivalent here. Twelve drop or change encoding='utf-8' on the four files written: 'UTF-8' is the same codec, and None or no argument means the locale's encoding, which is UTF-8 on macOS and Linux (the CI's Windows runs would differ; the regression baseline is made on macOS). One passes ensure_ascii=None, falsy like False.",
+    "score": 0.929
   },
   "runner/settings": {
     "killed": 248,

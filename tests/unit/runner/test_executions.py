@@ -139,8 +139,8 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
         'item_id': 'Q01', 'arm_id': 'base', 'condition': 'base',
         'request_sent': None, 'response_received': None, 'tool_calls': [],
         'evidence_class': 'EV-2', 'error_state': None, 'seal_hash': 'seal-1',
-        'record_type': 'figure_identification', 'figure_outcome': 'AUTO-MATCH',
-        'figure_reason': 'one figure', 'released_figure': '638.40',
+        'record_type': 'figure_identification', 'repeat': 2,
+        'figure_outcome': 'AUTO-MATCH', 'figure_reason': 'one figure', 'released_figure': '638.40',
         'expected': '638.40'}
 
     # D7.3 transcription

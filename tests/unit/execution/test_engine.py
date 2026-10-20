@@ -178,7 +178,7 @@ def test_execute_item_underivable_void_without_request(tmp_path):
         'condition': 'instruction_removed', 'request_sent': None,
         'response_received': None, 'tool_calls': [], 'evidence_class': None,
         'error_state': 'VOID', 'seal_hash': 'seal-1',
-        'void_reason': 'underivable'}]
+        'void_reason': 'underivable', 'repeat': None}]
 
 
 def test_execute_item_derivable_missing_treated_derivable(tmp_path):
@@ -258,7 +258,29 @@ def test_execute_item_first_send_fails_unmeasured(tmp_path, error):
         'item_id': 'Q01', 'arm_id': 'base', 'condition': 'base',
         'request_sent': {'messages': INITIAL}, 'response_received': None,
         'tool_calls': [], 'evidence_class': EV_0,
-        'error_state': f'TRANSPORT_FAILURE: {error}', 'seal_hash': 'seal-1'}]
+        'error_state': f'TRANSPORT_FAILURE: {error}', 'seal_hash': 'seal-1',
+        'repeat': None}]
+
+
+# -- the repeat index (T3-9) --------------------------------------------
+
+@pytest.mark.finding('T3-9')
+@pytest.mark.req('R0.3', 'R3.2')
+@pytest.mark.parametrize('gt, replies', [
+    (dict(GT, derivable=False), []),
+    (GT, [adapter.AdapterError('HTTP 500')]),
+    (GT, [answer()])], ids=['void', 'transport-failure', 'executed'])
+def test_execute_item_writes_its_repeat_on_the_record(tmp_path, gt, replies):
+    # Every record the engine writes carries the repeat it was given, so
+    # the outputs can join a record to its own execution.
+    path = tmp_path / 'run.jsonl'
+    execute_item(
+        ITEM, condition='base', config=CONFIG, fixture=FIXTURE,
+        ground_truth_compute=lambda item_id, ctx: dict(gt),
+        adapter_send=FakeAdapter(*replies), system_prompt='S',
+        tools=TOOLS, transcript_path=str(path), seal_hash='seal-1',
+        repeat=7)
+    assert [r['repeat'] for r in transcript.read_all(path)] == [7]
 
 
 # -- a plain answer ----------------------------------------------------
@@ -275,6 +297,7 @@ def test_execute_item_answer_without_tools_record_exact(tmp_path):
                          'request_record': {'request_no': 1}},
         'response_received': answer(), 'tool_calls': [],
         'evidence_class': EV_2, 'error_state': None, 'seal_hash': 'seal-1',
+        'repeat': None,
         'invocation_outcome': 'NOT-INVOKED', 'self_report': None,
         'attestation_reason': None, 'ground_truth_final': '15.20',
         'required_operation': 'calculator', 'operation_correctness': [],

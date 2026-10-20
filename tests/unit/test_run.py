@@ -277,7 +277,9 @@ def test_main_full_run_calls(r, capsys):
     assert set(kwargs) == {'condition', 'config', 'fixture',
                            'ground_truth_compute', 'adapter_send',
                            'system_prompt', 'tools', 'transcript_path',
-                           'seal_hash'}
+                           'seal_hash', 'repeat'}
+    # T3-9: each execution passes its repeat index to the engine
+    assert [kw['repeat'] for _, kw in executes] == [1, 2] * 4
     assert kwargs['config'] is config
     assert kwargs['fixture'] == FIXTURE
     assert kwargs['ground_truth_compute']('Q3', {}) == {'derivable': False}
