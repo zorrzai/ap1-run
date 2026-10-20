@@ -262,9 +262,6 @@ def test_run_report_states_invocation_headline_with_k_n_and_bound(full_run):
 # -- T3-65 / F4: round-0 transport errors fill the unmeasured cells -------
 
 @pytest.mark.finding('T3-65', 'F4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-65/F4: unmeasured-cells list empty after '
-                          'round-0 transport errors')
 def test_run_round0_transport_errors_listed_as_unmeasured_cells_with_cause(
         full_run):
     """Round 0 of Q03/base/r1 is rate limited (429), of Q04/base/r1 an
@@ -305,9 +302,6 @@ def test_run_round0_transport_errors_listed_as_unmeasured_cells_with_cause(
 # -- T3-38: a call to a tool not offered is a legitimate NOT-INVOKED ------
 
 @pytest.mark.finding('T3-38')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-38: call to an unoffered tool trips the FATAL '
-                          'consistency check after all requests')
 def test_run_call_to_unoffered_tool_recorded_not_invoked_run_completes(
         full_run):
     """Q06/base calls a tool named "python", which was not offered.
@@ -334,22 +328,17 @@ def test_run_call_to_unoffered_tool_recorded_not_invoked_run_completes(
 
 # -- T3-39, F6, S3-G2-4: model-controlled input never aborts the run ------
 
-_ABORTS = pytest.mark.xfail(
-    strict=True, raises=AssertionError,
-    reason='T3-39: model-controlled calculator input aborts the run')
-
-
 @pytest.mark.finding('T3-39', 'F6', 'S3-G2-4', 'S3-G4-5')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}',             # T3-39: not a string
     '{"expression": "True * 15.2"}',    # T3-39: boolean literal
     '{"expression": "True + 1"}',       # F6
-    pytest.param('{"expression": "1e308*10"}',   # T3-39: calculator inf
-                 marks=_ABORTS),
+    '{"expression": "1e308*10"}',       # T3-39: calculator inf
+    '{"expression": "1e308*10 - 1e308*10"}',  # T3-39: calculator nan
     '"15200 * 1.2 / 100 / 12"',         # S3-G2-4: JSON, not an object
     '["15200 * 1.2 / 100 / 12"]',       # S3-G2-4
-], ids=['number', 'true-times', 'true-plus', 'overflow', 'json-string',
-        'json-list'])
+], ids=['number', 'true-times', 'true-plus', 'overflow', 'nan',
+        'json-string', 'json-list'])
 def test_run_model_controlled_calculator_input_run_completes(full_run,
                                                              arguments):
     """Q01/base calls the calculator with arguments the model controls.
@@ -374,8 +363,6 @@ def test_run_model_controlled_calculator_input_run_completes(full_run,
 # -- S3-G2-1, S3-G2-2: platform-shaped surprises never abort the run ------
 
 @pytest.mark.finding('S3-G2-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-1: malformed response shape aborts the run')
 @pytest.mark.parametrize('body', [
     {'choices': [{'index': 0, 'message': None, 'finish_reason': 'stop'}]},
     {'choices': ['The monthly interest is $15.20.']},
@@ -395,9 +382,6 @@ def test_run_malformed_response_shape_ev0_run_completes(full_run, body):
 
 
 @pytest.mark.finding('S3-G2-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-2: a tool call without an id aborts the '
-                          'run')
 def test_run_tool_call_without_id_executed_and_scored(full_run):
     """Q01/base's calculator call has no "id" (some OpenAI-compatible
     servers omit it). Correct (S3-G2-2): the call is executed, its
@@ -417,3 +401,24 @@ def test_run_tool_call_without_id_executed_and_scored(full_run):
                 and t['condition'] == 'base'
                 and t.get('record_type') != 'figure_identification']
     assert 'result' in json.loads(record['tool_calls'][0]['return_value'])
+
+
+# Step 5 (run-robustness): tool-loop exhaustion is flagged end to end ------
+
+@pytest.mark.finding('T3-67')
+def test_run_tool_loop_exhausted_flagged_run_completes(full_run):
+    """Q01/base asks for the calculator eleven times in a row. The run
+    completes; the execution is flagged in the transcript, in
+    smoke_summary.json and on the console (under 3a)."""
+    call = {'calls': [{'name': 'calculator',
+                       'arguments': '{"expression": "15200 * 1.2 / 100 / 12"}'}]}
+    r = full_run({'Q01/base/*': [call] * 11})
+    assert_completed(r)
+    [q01] = r.results('Q01', 'base')
+    assert q01['error_state'].startswith('TOOL_LOOP_EXHAUSTED')
+    [record] = [t for t in r.transcript if t['item_id'] == 'Q01'
+                and t['condition'] == 'base'
+                and t.get('record_type') != 'figure_identification']
+    assert record['error_state'] == q01['error_state']
+    assert len(record['tool_calls']) == 10
+    assert f"Q01/base/r1: {q01['error_state']}" in r.console_section('3a')

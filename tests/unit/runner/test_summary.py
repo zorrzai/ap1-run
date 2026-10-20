@@ -46,13 +46,15 @@ def test_consistency_invoked_without_calls_is_fatal():
         ])
     assert str(exc.value) == (
         'FATAL: invocation consistency check failed. '
-        'Q07/instruction_removed/r3: INVOKED but tool_calls_count=0. '
+        'Q07/instruction_removed/r3: INVOKED but no call to the required '
+        'operation. '
         'A scoring outcome that contradicts its own evidence '
         'is a defect, not a finding.')
 
 
 def test_consistency_invoked_with_count_missing_is_fatal():
-    with pytest.raises(RuntimeError, match='INVOKED but tool_calls_count=0'):
+    with pytest.raises(RuntimeError,
+                       match='INVOKED but no call to the required operation'):
         verify_invocation_consistency([executed(invocation_outcome='INVOKED')])
 
 
@@ -63,9 +65,38 @@ def test_consistency_not_invoked_with_calls_is_fatal():
                      tool_calls_count=2)])
     assert str(exc.value) == (
         'FATAL: invocation consistency check failed. '
-        'Q02/base/r1: NOT-INVOKED but tool_calls_count=2. '
+        'Q02/base/r1: NOT-INVOKED but 2 call(s) to the required operation. '
         'A scoring outcome that contradicts its own evidence '
         'is a defect, not a finding.')
+
+
+@pytest.mark.finding('T3-38')
+def test_consistency_not_invoked_with_other_and_required_calls_is_fatal():
+    with pytest.raises(RuntimeError,
+                       match='NOT-INVOKED but 1 call\\(s\\) to the required'):
+        verify_invocation_consistency([
+            executed(invocation_outcome='NOT-INVOKED', tool_calls_count=3,
+                     other_tool_calls_count=2)])
+
+
+@pytest.mark.finding('T3-38')
+def test_consistency_invoked_with_only_other_tool_calls_is_fatal():
+    with pytest.raises(RuntimeError) as exc:
+        verify_invocation_consistency([
+            executed('Q03', 'base', 2, invocation_outcome='INVOKED',
+                     tool_calls_count=1, other_tool_calls_count=1)])
+    assert str(exc.value) == (
+        'FATAL: invocation consistency check failed. '
+        'Q03/base/r2: INVOKED but no call to the required operation. '
+        'A scoring outcome that contradicts its own evidence '
+        'is a defect, not a finding.')
+
+
+@pytest.mark.finding('T3-38')
+def test_consistency_invoked_beside_other_tool_calls_accepted():
+    verify_invocation_consistency([
+        executed(invocation_outcome='INVOKED', tool_calls_count=3,
+                 other_tool_calls_count=2)])
 
 
 def test_consistency_names_unknown_fields_with_question_marks():
@@ -664,9 +695,6 @@ def test_summary_wrong_operation_in_no_figure_execution_not_item_wrong():
 # Group g1-invocation (fix plan branch 1).
 
 @pytest.mark.finding('T3-38')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-38: NOT-INVOKED with a call to an unoffered '
-                          'tool is treated as FATAL')
 def test_consistency_not_invoked_with_call_to_other_tool_accepted():
     # Correct (SPEC R0.3: calls not matching the declared required
     # operation are recorded and reported but do not affect D7.1; R2.3:
@@ -677,6 +705,7 @@ def test_consistency_not_invoked_with_call_to_other_tool_accepted():
     try:
         verify_invocation_consistency([executed(
             invocation_outcome='NOT-INVOKED', tool_calls_count=1,
+            other_tool_calls_count=1,
             evidence_class='EV-2 PLATFORM-STRUCTURAL')])
     except RuntimeError as e:
         raise AssertionError(f'raised: {e}') from e

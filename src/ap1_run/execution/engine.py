@@ -14,7 +14,7 @@ Item selection (normative):
 
 import copy, json
 
-from ap1_run.foundation import transcript
+from ap1_run.foundation import adapter, transcript
 from ap1_run.execution.context import build_delivered_context, format_fixture_context
 from ap1_run.execution.evidence import (
     classify_invocation, classify_attestation,
@@ -34,6 +34,9 @@ class EngineError(Exception):
 CONDITION_BASE = 'base'
 CONDITION_INSTRUCTION_REMOVED = 'instruction_removed'
 VALID_CONDITIONS = {CONDITION_BASE, CONDITION_INSTRUCTION_REMOVED}
+
+# Tool turns driven per execution before the loop stops (T3-67)
+MAX_TOOL_TURNS = 10
 
 
 # -- Item execution --------------------------------------------------
@@ -94,9 +97,12 @@ def execute_item(item, *, condition, config, fixture,
             error_state=f'TRANSPORT_FAILURE: {e}',
             seal_hash=seal_hash, repeat=repeat,
         )
+        # F4/T3-65: the runner lists the cell with its cause
         return {
             'item_id': item_id, 'condition': condition,
             'status': 'UNMEASURED', 'error': str(e),
+            'cause': ('rate_limited' if isinstance(e, adapter.RateLimitError)
+                      else 'transport_error'),
             'ground_truth': gt,
         }
 
@@ -170,6 +176,10 @@ def execute_item(item, *, condition, config, fixture,
     # Session-level reclassification (forward-dependency rule)
     op_correctness_results = reclassify_session(op_correctness_results, exprs)
 
+    # T3-67: a loop stopped by the turn limit is flagged, not passed off
+    # as complete
+    error_state = _loop_exhaustion(final_response, round_shapes)
+
     # Write transcript
     transcript.append(
         transcript_path,
@@ -179,7 +189,7 @@ def execute_item(item, *, condition, config, fixture,
         response_received=final_response,
         tool_calls=tool_calls_record,
         evidence_class=ev_class,
-        error_state=None, seal_hash=seal_hash,
+        error_state=error_state, seal_hash=seal_hash,
         repeat=repeat,
         invocation_outcome=outcome,
         self_report=self_report,
@@ -190,7 +200,7 @@ def execute_item(item, *, condition, config, fixture,
         provenance_results=provenance_results,
     )
 
-    return {
+    result = {
         'item_id': item_id, 'condition': condition,
         'status': 'EXECUTED', 'evidence_class': ev_class,
         'invocation_outcome': outcome,
@@ -199,12 +209,15 @@ def execute_item(item, *, condition, config, fixture,
         'response': final_response, 'ground_truth': gt,
         'provenance_results': provenance_results,
     }
+    if error_state:
+        result['error_state'] = error_state
+    return result
 
 
 # -- Tool loop -------------------------------------------------------
 
 def _drive_tool_loop(*, response, messages, config, tools,
-                     adapter_send, sampling, max_turns=10):
+                     adapter_send, sampling, max_turns=MAX_TOOL_TURNS):
     """Drive the tool-call cycle.
 
     Returns (tool_calls, final_response, round_shapes).
@@ -222,34 +235,33 @@ def _drive_tool_loop(*, response, messages, config, tools,
         if not model_calls:
             break
 
+        turn_records = []
         for tc in model_calls:
-            all_tool_calls.append({
+            record = {
                 'turn': turn,
                 'id': tc.get('id', f'call_{turn}'),
                 'type': tc.get('type', 'function'),
                 'function': tc.get('function', {}),
-            })
+            }
+            all_tool_calls.append(record)
+            turn_records.append(record)
 
         messages.append(
             current.get('choices', [{}])[0].get('message', {}))
 
-        for tc in model_calls:
-            func = tc.get('function', {})
+        # D7.2(a)(iv): each return value is attached to its own call's
+        # record, so a call without an id (S3-G2-2) or a reused id
+        # (S3-G2-3) never loses or overwrites a return.
+        for tc, record in zip(model_calls, turn_records):
+            func = record['function']
             result = _execute_tool(
                 func.get('name', ''), func.get('arguments', '{}'))
             messages.append({
                 'role': 'tool',
-                'tool_call_id': tc.get('id', ''),
+                'tool_call_id': record['id'],
                 'content': str(result),
             })
-            # D7.2(a)(iv): attach return value by tool_call_id
-            tc_id = tc.get('id', '')
-            matched = [r for r in all_tool_calls if r['id'] == tc_id]
-            if not matched:
-                raise EngineError(
-                    f'tool_call_id {tc_id!r} not found in all_tool_calls; '
-                    f'cannot attach return_value')
-            matched[0]['return_value'] = result
+            record['return_value'] = result
 
         try:
             current, _ = adapter_send(
@@ -268,6 +280,23 @@ def _drive_tool_loop(*, response, messages, config, tools,
             break
 
     return all_tool_calls, current, round_shapes
+
+def _loop_exhaustion(final_response, round_shapes):
+    """The error state of a tool loop the turn limit stopped, else None.
+
+    The final response still asks for tool calls, and it was read (its
+    round's shape is recognised): the loop stopped at the limit, and those
+    calls were neither executed nor answered. (After a failed send the
+    last round is unrecognised and the final response is the last one
+    read; that is not exhaustion.)
+    """
+    pending = _extract_tool_calls(final_response)
+    if not pending or not round_shapes or not round_shapes[-1][0]:
+        return None
+    return (f'TOOL_LOOP_EXHAUSTED: the response after {MAX_TOOL_TURNS} '
+            f'tool turns still asked for {len(pending)} tool call(s), '
+            f'which were not executed')
+
 
 def _execute_tool(name, arguments_json):
     """Execute a tool call. Operators supply their own dispatch."""
@@ -335,10 +364,9 @@ def _is_empty_response(response):
 
 
 def _extract_tool_calls(response):
-    """Extract tool_calls from an OpenAI-compatible response."""
-    if not isinstance(response, dict):
-        return []
-    choices = response.get('choices', [])
-    if not choices:
-        return []
-    return choices[0].get('message', {}).get('tool_calls') or []
+    """Extract tool_calls from an OpenAI-compatible response: none from a
+    shape the evidence code does not recognise (S3-G2-1), which
+    _record_shape has already recorded as EV-0."""
+    from ap1_run.execution.evidence import _extract_model_tool_calls
+    tool_calls, _, _ = _extract_model_tool_calls(response)
+    return tool_calls

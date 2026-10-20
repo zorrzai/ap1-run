@@ -30,6 +30,12 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
     unmeasured = [r for r in all_results if r['status'] == 'UNMEASURED']
     void = [r for r in all_results if r['status'] == 'VOID']
     print(f'\n3a. COMPLETION: {len(executed)} executed, {len(unmeasured)} unmeasured, {len(void)} void')
+    # T3-67: executions flagged by the engine (a tool loop the turn limit
+    # stopped), named so they are not silent
+    for r in executed:
+        if r.get('error_state'):
+            print(f"  {r['item_id']}/{r['condition']}/r{r['repeat']}: "
+                  f"{r['error_state']}")
 
     # 3b. Figure identification
     print('\n3b. FIGURE IDENTIFICATION:')
@@ -74,6 +80,9 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
 
     # 3g. Unmeasured cells
     print(f'\n3g. UNMEASURED CELLS: {len(unmeasured_cells)}')
+    for c in unmeasured_cells:
+        print(f"  {c['item_id']}/{c['condition']}/r{c['repeat']}: "
+              f"{c['cause']}")
 
     # 3h. Invocation under both conditions. n counts computable questions
     # with an observed outcome; a question fails if any repeat is

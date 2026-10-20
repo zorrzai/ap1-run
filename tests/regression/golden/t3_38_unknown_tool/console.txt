@@ -37,3 +37,105 @@ Total requests: 20
   Q08/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q09/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q10/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Invocation consistency check: PASSED (0 mismatches)
+
+============================================================
+SMOKE TEST REPORT
+============================================================
+
+THIS IS AN INSTRUMENT SMOKE TEST, NOT AN AP-1 EVALUATION.
+
+It is not conformant: no adjudication, no second scorer, no blind set,
+the fixture is the shipped example (10 items, burned under AP-1 §5.8),
+and the D1 minimum of 40 items is not met.
+No figure from it may be reported, cited, quoted or described as an AP-1
+result, by us or by anyone, in any document.
+
+
+3a. COMPLETION: 20 executed, 0 unmeasured, 0 void
+
+3b. FIGURE IDENTIFICATION:
+  AUTO-MATCH: 20
+  Auto-scored: 20/20 (100%)
+  Adjudicated: 0/20 (0%)
+
+  Per item (base condition, first repeat):
+    Q01: AUTO-MATCH — exactly one token matches: '$15.20'
+    Q02: AUTO-MATCH — exactly one token matches: '$2600.00'
+    Q03: AUTO-MATCH — exactly one token matches: '$36.00'
+    Q04: AUTO-MATCH — exactly one token matches: '$430.75'
+    Q05: AUTO-MATCH — exactly one token matches: '$2411.00'
+    Q06: AUTO-MATCH — exactly one token matches: '$144.00'
+    Q07: AUTO-MATCH — exactly one token matches: '$777.41'
+    Q08: AUTO-MATCH — exactly one token matches: '$287069.25'
+    Q09: AUTO-MATCH — exactly one token matches: '$3.20'
+    Q10: AUTO-MATCH — exactly one token matches: '$3109.65'
+
+3c. NUMERIC GRAMMAR: 0 issues
+
+3d. DECLINE MARKERS: 0 unrecognised declines
+
+3e. TOOL-CALL ARGUMENT STRUCTURES: 20 calls
+
+3f. EVIDENCE CLASSES:
+  EV-2 PLATFORM-STRUCTURAL: 20
+
+3g. UNMEASURED CELLS: 0
+
+3h. D7.1 INVOCATION (n = questions; a question fails if any repeat is NOT-INVOKED; UNOBSERVABLE not in n):
+  base: invoked=9 not_invoked=1 n=10
+    failure rate: 1/10 (10.0%)
+  instruction_removed: invoked=10 not_invoked=0 n=10
+    failure rate: 0/10 failures; one-sided 95% upper bound on the failure rate 25.9%
+
+3h2. D7.3 TRANSCRIPTION:
+  TRANSCRIBED-EXACT: 19
+  TRANSCRIBED-ALTERED: 0
+  UNOBSERVABLE: 1
+
+3h3. D7.3 RELEASE COVERAGE:
+  GOVERNED-RELEASE: 19
+  PARTIALLY-GOVERNED: 0
+  COVERAGE-UNOBSERVABLE: 1
+
+3i. D7.2(b) OPERATION CORRECTNESS:
+  OPERATION-CORRECT: 19
+  WRONG-OPERATION: 0
+  OPERATION-UNOBSERVABLE: 0
+
+3j. D1 ACCURACY:
+  Auto-scored: 20
+  Adjudicated: 0
+  Correct: 20
+  Incorrect: 0
+  No figure: 0
+  Accuracy rate: 1
+
+3k. D2 REPRODUCIBILITY:
+  CAP: D2.2 cap: temperature was platform-rejected. Detail: OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported.
+  OBSERVED-ONLY: 40
+
+3l. D7.2(a) OPERAND PROVENANCE:
+  step 1 (source match):       50
+  step 1 (declared constant):  30
+  step 2 (transformed source): 6
+  step 3 (reference intermediate): 0
+  step 4 (computed in session): 0
+  step 5 (originated, sign-inverted from source):          0
+  step 5 (originated, computed from ungrounded invocation): 0
+  step 5 (originated, no traceable basis):                  0
+  OPERANDS-GROUNDED: 19
+  OPERAND-ORIGINATED: 0
+  OPERANDS-UNOBSERVABLE: 0
+  UNMEASURABLE: 0
+
+============================================================
+GENERATING FORMAL REPORT (report.py)
+============================================================
+Formal report written to <RUNDIR>/output/report.md
+
+GENERATING ADJUDICATION SHEETS (adjudication.py)
+Adjudication sheets written to <RUNDIR>/output/adjudication_sheets.md
+
+Summary written to <RUNDIR>/output/smoke_summary.json
+Transcript written to <RUNDIR>/output/smoke_run.jsonl

@@ -318,12 +318,12 @@ Total operands resolved: 129
 
 | Item | Condition | Status | Reason |
 |---|---|---|---|
-| Q03 | base | UNMEASURED | rate limited (HTTP 429): {"error": {"message": "Rate limit reached"}} |
-| Q04 | base | UNMEASURED | HTTP 500: {"error": {"message": "server error"}} |
-| Q05 | base | UNMEASURED | transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')) |
-| Q06 | base | UNMEASURED | response is not valid JSON: this is not json |
-| Q08 | base | UNMEASURED | HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} |
-| Q08 | instruction_removed | UNMEASURED | HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} |
+| Q03 | base | UNMEASURED | rate_limited: rate limited (HTTP 429): {"error": {"message": "Rate limit reached"}} |
+| Q04 | base | UNMEASURED | transport_error: HTTP 500: {"error": {"message": "server error"}} |
+| Q05 | base | UNMEASURED | transport_error: transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')) |
+| Q06 | base | UNMEASURED | transport_error: response is not valid JSON: this is not json |
+| Q08 | base | UNMEASURED | transport_error: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} |
+| Q08 | instruction_removed | UNMEASURED | transport_error: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} |
 | Q03 | base | TRANSPORT_FAILURE | TRANSPORT_FAILURE: rate limited (HTTP 429): {"error": {"message": "Rate limit reached"}} |
 | Q03 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
 | Q04 | base | TRANSPORT_FAILURE | TRANSPORT_FAILURE: HTTP 500: {"error": {"message": "server error"}} |

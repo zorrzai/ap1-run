@@ -46,26 +46,26 @@ def record_underivable(findings, item_id, condition):
     })
 
 
-def record_transport_failure(findings, item_id, condition, rep, cause):
-    """The request failed (rate limit or transport error): UNMEASURED."""
-    findings.unmeasured_cells.append({
-        'item_id': item_id, 'condition': condition,
-        'repeat': rep, 'cause': cause,
-    })
-    findings.all_results.append({
-        'item_id': item_id, 'condition': condition,
-        'repeat': rep, 'status': 'UNMEASURED',
-        'cause': cause,
-    })
-
-
 def record_not_scored(findings, item_id, condition, rep, status, result):
-    """The engine returned VOID or UNMEASURED: recorded, not scored."""
+    """The engine returned VOID or UNMEASURED: recorded, not scored.
+
+    An UNMEASURED cell (a failed request, rate limited or a transport
+    error, or an empty response) is also listed among the unmeasured
+    cells with its cause (F4, T3-65); it is in no denominator.
+    """
+    cause = result.get('error', result.get('reason', ''))
+    if result.get('cause'):
+        cause = f"{result['cause']}: {cause}"
     findings.all_results.append({
         'item_id': item_id, 'condition': condition,
         'repeat': rep, 'status': status,
-        'cause': result.get('error', result.get('reason', '')),
+        'cause': cause,
     })
+    if status == 'UNMEASURED':
+        findings.unmeasured_cells.append({
+            'item_id': item_id, 'condition': condition,
+            'repeat': rep, 'cause': cause,
+        })
 
 
 def echo_check(sampling, response):
@@ -280,7 +280,16 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         })
 
     outcome = fig_result['outcome']
-    print(f'{outcome} | {ev_class} | {inv_outcome}')
+    error_state = result.get('error_state')  # T3-67: loop exhaustion
+    # T3-38: calls to a tool other than the required operation (an
+    # unoffered or hallucinated one) are recorded, and do not count for
+    # D7.1 (with no operation named every call counts, as in
+    # execution/evidence.py)
+    other_calls = sum(
+        1 for tc in tool_calls if _required_op
+        and tc.get('function', {}).get('name') != _required_op)
+    print(f'{outcome} | {ev_class} | {inv_outcome}'
+          + (f' | {error_state}' if error_state else ''))
 
     # Collect operation_correctness from engine result
     op_correctness = []
@@ -314,4 +323,6 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'release_coverage_outcome': coverage_result['outcome'],
         'answer_outcome': section_6_8,
         'answer_outcome_reason': section_6_8_reason,
+        **({'other_tool_calls_count': other_calls} if other_calls else {}),
+        **({'error_state': error_state} if error_state else {}),
     })

@@ -745,3 +745,20 @@ def test_sheet_shows_d72a_operand_result():
         'quantisation_findings': []}])
     assert ('D7.2(a)' in text, 'OPERAND-ORIGINATED' in text,
             '10.5' in text and '7.3' in text) == (True, True, True)
+
+
+# Step 5 (run-robustness): a response shape the evidence code cannot read
+# is named on the sheet, never an exception (S3-G2-1).
+
+@pytest.mark.finding('S3-G2-1')
+@pytest.mark.parametrize('response, reason', [
+    ({'choices': ['x']}, 'choices[0] is not a dict'),
+    ({'choices': [{'message': None}]},
+     'choices[0].message is missing or not a dict'),
+    ({'choices': {'a': 1}}, 'choices is empty or not a list'),
+    ({'choices': [{'message': {'content': ['x']}}]},
+     'choices[0].message.content is not a string'),
+], ids=['str-choice', 'null-message', 'dict-choices', 'list-content'])
+def test_extract_response_unreadable_shape_named(response, reason):
+    assert adjudication._extract_response_content(response) == \
+        f'[unrecognised response shape: {reason}]'

@@ -16,8 +16,7 @@ import pytest
 from ap1_run.foundation import transcript
 from ap1_run.runner import executions
 from ap1_run.runner.executions import (
-    Findings, record_not_scored, record_transport_failure, record_underivable,
-    score_execution,
+    Findings, record_not_scored, record_underivable, score_execution,
 )
 
 D = Decimal
@@ -389,6 +388,39 @@ def test_score_execution_records_each_calls_raw_arguments(fakes, tpath):
     assert findings.all_results[0]['tool_calls_count'] == 3
 
 
+@pytest.mark.finding('T3-38')
+@pytest.mark.parametrize('gt, other', [
+    ({'required_operation': 'calculator'}, 2),
+    ({'required_operation': 'python'}, 3),
+    ({'required_operation': 'other'}, 4),
+], ids=['calculator', 'python', 'none-matching'])
+def test_score_execution_counts_calls_to_other_tools(fakes, tpath, gt, other):
+    # T3-38: the row counts the calls to tools other than the required
+    # operation, which do not affect D7.1, so the consistency check can
+    # leave them out.
+    calls = [calc('1 + 1', ''), calc('2 + 2', ''),
+             {'function': {'name': 'python'}}, {'id': 'x'}]
+    findings = Findings()
+    score(findings, {'tool_calls': calls, 'ground_truth': gt}, tpath)
+    row = findings.all_results[0]
+    assert (row['tool_calls_count'], row['other_tool_calls_count']) == (
+        4, other)
+
+
+@pytest.mark.finding('T3-38')
+@pytest.mark.parametrize('gt, calls', [
+    ({'required_operation': 'calculator'}, [calc('1 + 1', '')]),
+    ({'required_operation': None}, [calc('1 + 1', ''), {'id': 'x'}]),
+    (None, [{'function': {'name': 'python'}}]),
+], ids=['all-required', 'no-operation', 'no-gt'])
+def test_score_execution_no_other_tool_calls_no_key(fakes, tpath, gt, calls):
+    # With no operation named every call counts (execution/evidence.py);
+    # the key is only written when there are other calls.
+    findings = Findings()
+    score(findings, {'tool_calls': calls, 'ground_truth': gt}, tpath)
+    assert 'other_tool_calls_count' not in findings.all_results[0]
+
+
 # -- operation correctness, read back from the transcript ----------------
 
 def test_score_execution_takes_the_latest_engine_record_of_the_item(
@@ -442,15 +474,26 @@ def test_record_underivable():
     assert findings.unmeasured_cells == []
 
 
-def test_record_transport_failure():
+@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.parametrize('result, cause', [
+    ({'error': 'rate limited (HTTP 429): x', 'cause': 'rate_limited'},
+     'rate_limited: rate limited (HTTP 429): x'),
+    ({'error': 'HTTP 500: boom', 'cause': 'transport_error'},
+     'transport_error: HTTP 500: boom'),
+    ({'error': 'empty response'}, 'empty response'),
+], ids=['rate-limited', 'transport', 'empty'])
+def test_record_not_scored_unmeasured_cell_cause(result, cause):
+    # F4/T3-65 (Steven, choices-for-marcus #7): every UNMEASURED cell is
+    # listed with its cause, the engine's kind first where it gives one.
     findings = Findings()
-    record_transport_failure(findings, 'Q05', 'base', 3, 'rate_limited')
+    record_not_scored(findings, 'Q05', 'base', 3, 'UNMEASURED',
+                      dict(result, status='UNMEASURED'))
     assert findings.unmeasured_cells == [{'item_id': 'Q05',
                                           'condition': 'base', 'repeat': 3,
-                                          'cause': 'rate_limited'}]
+                                          'cause': cause}]
     assert findings.all_results == [{'item_id': 'Q05', 'condition': 'base',
                                      'repeat': 3, 'status': 'UNMEASURED',
-                                     'cause': 'rate_limited'}]
+                                     'cause': cause}]
 
 
 @pytest.mark.parametrize('result, cause', [
@@ -464,6 +507,7 @@ def test_record_not_scored(result, cause):
     assert findings.all_results == [{'item_id': 'Q06', 'condition': 'removed',
                                      'repeat': 1, 'status': 'VOID',
                                      'cause': cause}]
+    assert findings.unmeasured_cells == []
 
 
 def test_findings_start_empty_and_separate():
@@ -714,9 +758,6 @@ def test_score_execution_no_released_figure_recorded_as_null(fakes, tpath):
 # Group g1-invocation (fix plan branch 10).
 
 @pytest.mark.finding('T3-65', 'F4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-65/F4: engine UNMEASURED results never reach '
-                          'unmeasured_cells')
 @pytest.mark.parametrize('error, word', [
     ('rate limited (HTTP 429): {"error": "Rate limit"}', 'rate'),
     ('transport failure after 3 attempts: reset', 'transport'),
@@ -733,6 +774,28 @@ def test_record_not_scored_unmeasured_listed_with_cause(error, word):
             for c in findings.unmeasured_cells] == [('Q03', 'base', 1)]
     assert word in findings.unmeasured_cells[0]['cause'].lower()
     assert [r['status'] for r in findings.all_results] == ['UNMEASURED']
+
+
+# Step 5 (run-robustness): an execution the engine flagged is flagged in
+# the runner too (T3-67).
+
+@pytest.mark.finding('T3-67')
+def test_score_execution_engine_error_state_printed_and_kept(fakes, tpath,
+                                                             capsys):
+    flag = 'TOOL_LOOP_EXHAUSTED: the response after 10 tool turns ...'
+    findings = Findings()
+    score(findings, {'response': response(None), 'tool_calls': [],
+                     'evidence_class': 'EV-2', 'invocation_outcome': 'INVOKED',
+                     'error_state': flag}, tpath)
+    assert capsys.readouterr().out == f'AUTO-MATCH | EV-2 | INVOKED | {flag}\n'
+    assert findings.all_results[0]['error_state'] == flag
+
+
+@pytest.mark.finding('T3-67')
+def test_score_execution_no_error_state_no_key(fakes, tpath, capsys):
+    findings = Findings()
+    score(findings, {'response': response('x'), 'tool_calls': []}, tpath)
+    assert 'error_state' not in findings.all_results[0]
 
 
 # -- echo_check (D2.2 parameter echo) --------------------------------------

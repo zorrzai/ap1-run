@@ -2,7 +2,7 @@
 check, which compares the returns of the required operation to the
 released figure (R2.5)."""
 
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal
 
 import pytest
 
@@ -329,17 +329,6 @@ def test_transcription_unobservable_shows_the_last_return():
     assert r2['reason'] == 'released figure is None despite AUTO-MATCH'
 
 
-@pytest.mark.finding('T3-39')
-def test_transcription_quantisation_of_infinite_return_raises():
-    # Today: a tool return of 'inf' (the calculator gives it for
-    # 1e300*1e300) raises InvalidOperation out of the check, which aborts
-    # the run. Correct: an unquantisable return is UNOBSERVABLE (or
-    # ALTERED), never an exception.
-    with pytest.raises(InvalidOperation):
-        check_transcription(D('Infinity'), D('430.75'), figure_outcome=AUTO_MATCH,
-                            quantisation_digits=2)
-
-
 def test_transcription_infinite_return_without_policy_is_altered():
     r = check_transcription(D('Infinity'), D('430.75'), figure_outcome=AUTO_MATCH)
     assert r['outcome'] == TRANSCRIBED_ALTERED
@@ -394,9 +383,6 @@ def test_transcription_exact_match_is_flagged_not_rounded():
 # Group g1-invocation (fix plan branch 10).
 
 @pytest.mark.finding('T3-39')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39: quantising an infinite or huge return '
-                          'raises InvalidOperation')
 @pytest.mark.parametrize('value', ['Infinity', '1e+60'])
 def test_transcription_unquantisable_return_altered_or_unobservable(value):
     # Correct (T3 review T3-39, the step-3 pin's own comment): a tool
@@ -409,3 +395,40 @@ def test_transcription_unquantisable_return_altered_or_unobservable(value):
     except Exception as e:
         r = {'outcome': e}
     assert r['outcome'] in (UNOBSERVABLE_TRANSCRIPTION, TRANSCRIBED_ALTERED), r
+
+
+# Step 5 (run-robustness): values that cannot be quantised or ordered
+# (T3-39).
+
+@pytest.mark.finding('T3-39')
+def test_transcription_unquantisable_released_figure_matches_nothing():
+    r = check_transcription(D('430.75'), D('1e+60'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert r['outcome'] == TRANSCRIBED_ALTERED
+
+
+@pytest.mark.finding('T3-39')
+def test_transcription_nan_return_never_the_closest_beside_a_number():
+    # The calculator gives 'nan' for inf - inf; NaN does not order, so the
+    # closest return is the number.
+    r = check_transcription([D('NaN'), D('430'), D('NaN')], D('430.75'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert (r['outcome'], r['tool_return'], r['difference']) == (
+        TRANSCRIBED_ALTERED, D('430'), D('0.75'))
+
+
+@pytest.mark.finding('T3-39')
+def test_transcription_only_nan_returns_altered_by_nan():
+    r = check_transcription([D('NaN')], D('430.75'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert r['outcome'] == TRANSCRIBED_ALTERED
+    assert r['tool_return'].is_nan() and r['difference'].is_nan()
+
+
+@pytest.mark.finding('T3-39')
+def test_transcription_infinite_return_orders_before_nan():
+    # inf against -inf is an infinite distance, not NaN: it is reported.
+    r = check_transcription([D('NaN'), D('Infinity')], D('-Infinity'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert (r['outcome'], r['tool_return']) == (
+        TRANSCRIBED_ALTERED, D('Infinity'))

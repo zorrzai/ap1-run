@@ -389,3 +389,17 @@ def test_classify_mechanism_no_observations_is_unmeasured():
     # and one success is UNMEASURED) is the same rule with one run.
     r = classify_mechanism([], surface='prose', minimum_runs=0)
     assert r['mechanism'] == UNMEASURED
+
+
+# Step 5 (run-robustness): a response whose shape cannot be read has no
+# surface value, as one without choices; never an exception (S3-G2-1).
+
+@pytest.mark.finding('S3-G2-1')
+@pytest.mark.parametrize('surface', ['figures', 'prose'])
+def test_surface_values_unreadable_shape_is_empty(surface):
+    assert _extract_surface_values(
+        ['text', {'choices': ['x']}, {'choices': [{'message': None}]},
+         {'choices': {'a': 1}},
+         {'choices': [{'message': {'content': ['x']}}]},
+         {'choices': [{'message': {'tool_calls': ['x']}}]}],
+        surface) == [''] * 6

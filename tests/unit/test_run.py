@@ -19,7 +19,6 @@ import pytest
 from ap1_run import run
 from ap1_run.execution.perturbation_guard import HELD_CONSTANT
 from ap1_run.execution.seal import SealError
-from ap1_run.foundation import adapter
 
 D = Decimal
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(
@@ -228,8 +227,14 @@ RULE = '=' * 60
 
 def script_failures(r):
     # Each failure is on a first repeat, so the second still runs.
-    r.results[('Q1', 'base', 1)] = adapter.RateLimitError('slow down')
-    r.results[('Q2', 'base', 1)] = adapter.AdapterError('HTTP 500: boom')
+    # A failed request comes back from the engine UNMEASURED with its
+    # cause (F4, T3-65); nothing is raised.
+    r.results[('Q1', 'base', 1)] = {'status': 'UNMEASURED',
+                                    'error': 'slow down',
+                                    'cause': 'rate_limited'}
+    r.results[('Q2', 'base', 1)] = {'status': 'UNMEASURED',
+                                    'error': 'HTTP 500: boom',
+                                    'cause': 'transport_error'}
     r.results[('Q1', 'instruction_removed', 1)] = {'status': 'VOID',
                                                   'error': 'no figure'}
     r.results[('Q2', 'instruction_removed', 1)] = {'status': 'UNMEASURED',
@@ -258,9 +263,9 @@ def test_main_full_run_console(r, capsys):
         'Running 3 items x 2 conditions x 2 repeats\n'
         'Total requests: 12\n'
         f'{RULE}\n'
-        '  Q1/base/r1: RATE-LIMITED\n'
+        '  Q1/base/r1: UNMEASURED\n'
         '  Q1/base/r2:   Q3/base: VOID (underivable)\n'
-        '  Q2/base/r1: TRANSPORT_ERROR: HTTP 500: boom\n'
+        '  Q2/base/r1: UNMEASURED\n'
         '  Q2/base/r2:   Q1/instruction_removed/r1: VOID\n'
         '  Q1/instruction_removed/r2:   '
         'Q3/instruction_removed: VOID (underivable)\n'
@@ -378,12 +383,13 @@ def test_main_full_run_calls(r, capsys):
     # the collected results, in order
     expected_results = [
         {'item_id': 'Q1', 'condition': 'base', 'repeat': 1,
-         'status': 'UNMEASURED', 'cause': 'rate_limited'},
+         'status': 'UNMEASURED', 'cause': 'rate_limited: slow down'},
         {'status': 'EXECUTED'},
         {'item_id': 'Q3', 'condition': 'base', 'repeat': 0,
          'status': 'VOID'},
         {'item_id': 'Q2', 'condition': 'base', 'repeat': 1,
-         'status': 'UNMEASURED', 'cause': 'HTTP 500: boom'},
+         'status': 'UNMEASURED',
+         'cause': 'transport_error: HTTP 500: boom'},
         {'status': 'EXECUTED'},
         {'item_id': 'Q1', 'condition': 'instruction_removed', 'repeat': 1,
          'status': 'VOID', 'cause': 'no figure'},
@@ -402,9 +408,11 @@ def test_main_full_run_calls(r, capsys):
     assert kw['disclaimer'] == run.DISCLAIMER
     assert kw['unmeasured_cells'] == [
         {'item_id': 'Q1', 'condition': 'base', 'repeat': 1,
-         'cause': 'rate_limited'},
+         'cause': 'rate_limited: slow down'},
         {'item_id': 'Q2', 'condition': 'base', 'repeat': 1,
-         'cause': 'HTTP 500: boom'}]
+         'cause': 'transport_error: HTTP 500: boom'},
+        {'item_id': 'Q2', 'condition': 'instruction_removed', 'repeat': 1,
+         'cause': 'cut off'}]
     for name in ('grammar_issues', 'decline_findings', 'tool_call_structures',
                  'evidence_findings', 'transcription_results',
                  'release_coverage_results'):
@@ -437,7 +445,7 @@ def test_main_full_run_calls(r, capsys):
             'grammar_issues': [], 'decline_findings': [],
             'tool_call_structures': [], 'evidence_findings': [],
             'unmeasured_cells': kw['smoke_summary']['unmeasured_cells']}}
-    assert len(kw['smoke_summary']['unmeasured_cells']) == 2
+    assert len(kw['smoke_summary']['unmeasured_cells']) == 3
 
     # the order of the stages
     stages = [c[0] for c in r.calls if c[0] in (
@@ -799,3 +807,13 @@ def test_main_end_to_end_against_the_mock_endpoint(tmp_path, monkeypatch,
         'DISCLAIMER.txt', 'adjudication_sheets.md', 'report.md',
         'smoke_run.jsonl', 'smoke_summary.json']
     assert len(mock.log) == 8   # 2 items x 2 conditions x 2 rounds
+
+
+# Step 5 (run-robustness): removing the runner's dead transport handlers
+# (F4, T3-65) removed the code whose mutants they killed, so the ratchet
+# needs these mutants of main() killed instead.
+
+# (test_main_reads_fixture_and_questions_as_utf8_text was removed on the
+# merge with seal-verifier-hardening: main() no longer opens these files;
+# execution/sealed_inputs.py reads every input once, as UTF-8, and
+# tests/unit/execution/test_sealed_inputs.py covers that.)

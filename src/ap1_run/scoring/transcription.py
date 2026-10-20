@@ -14,7 +14,7 @@ Outcomes:
                         not available
 """
 
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 from ap1_run.foundation.numeric import quantise
 
@@ -100,13 +100,19 @@ def check_transcription(tool_return_value, released_figure,
             return _result(TRANSCRIBED_EXACT, value, released_figure,
                            Decimal(0), 'exact match')
 
-    # A match permitted by the declared quantisation policy
+    # A match permitted by the declared quantisation policy. A value that
+    # cannot be quantised (an infinite or huge return, T3-39) matches
+    # nothing under it.
+    def _q(value):
+        try:
+            return quantise(value, quantisation_digits, quantisation_rounding)
+        except InvalidOperation:
+            return None
+
     if quantisation_digits is not None:
-        released_q = quantise(released_figure, quantisation_digits,
-                              quantisation_rounding)
+        released_q = _q(released_figure)
         for value in returns:
-            if quantise(value, quantisation_digits,
-                        quantisation_rounding) == released_q:
+            if released_q is not None and _q(value) == released_q:
                 difference = abs(value - released_figure)
                 return _result(
                     TRANSCRIBED_EXACT, value, released_figure, difference,
@@ -114,8 +120,12 @@ def check_transcription(tool_return_value, released_figure,
                     f'under quantisation to {quantisation_digits} digits',
                     rounded=True)
 
-    # Altered: report the closest return
-    closest = min(returns, key=lambda value: abs(value - released_figure))
+    # Altered: report the closest return. A NaN return (the calculator
+    # gives 'nan' for inf - inf) is at no distance that orders, so it is
+    # reported only when every return is NaN (T3-39).
+    ordered = [v for v in returns if not (v - released_figure).is_nan()]
+    closest = min(ordered, key=lambda value: abs(value - released_figure)) \
+        if ordered else returns[0]
     difference = abs(closest - released_figure)
     return _result(TRANSCRIBED_ALTERED, closest, released_figure, difference,
                    f'altered by {difference}')
