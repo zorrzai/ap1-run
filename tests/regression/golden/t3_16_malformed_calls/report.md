@@ -17,20 +17,14 @@ Model: mock-model
 | `ap1_text_hash` | `48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56` |
 | `ap1_version` | `v1.3-draft-for-comment-20260730` |
 | `ap1_version_doi` | `10.5281/zenodo.21755443` |
-| `calculator_hash` | `ae8eae4c313079e401b4a12f7c2fc571cea695b5fe8f9eda5ca808d449303c7d` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
-| `expected_values_hash` | `81d9b435264ddbb032c5744342df577d691e9766fd566dc75632b34bc6dd46ca` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
-| `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
-| `package_versions` | `<ENVIRONMENT>` |
-| `platform` | `<ENVIRONMENT>` |
-| `python_version` | `<ENVIRONMENT>` |
+| `ground_truth_hash` | `080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812` |
 | `questions_hash` | `5f6aa97714e2b0f7e3039ae6018f6566e811354c4a904d210964beac54172af9` |
 | `runner_source_hash` | `<RUNNER_SOURCE_HASH>` |
 | `runner_version_commit` | `e0d9ec9` |
 | `runner_version_tag` | `v1.3.1` |
-| `seal_format` | `2` |
 | `seal_hash` | `<SEAL_HASH>` |
 | `timestamp` | `<TIMESTAMP>` |
 | `verification_keys` | `[]` |
@@ -57,6 +51,7 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 120 records.
     "I'm sorry, I cannot"
   ],
   "dimensions_claimed": [
+    "D1",
     "D2",
     "D7"
   ],
@@ -119,7 +114,7 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 120 records.
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | **NOT MEASURED** | — | — |
+| D1 | Measured | 40 | Accuracy: 1 (auto-scored 40; 0 adjudicated not in rate) |
 | D2 | Measured | N/A | See §9 D2 Mechanism Classes |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -129,7 +124,7 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 120 records.
 
 ## 4. D7 Figures by Evidence Class
 
-> Figures resting on different evidence classes are not comparable (AP-1 v1.3 §6.4).
+> Figures resting on different evidence classes are not comparable (AP-1 v1.3 D7.7).
 
 | Evidence Class | Count |
 |---|---|
@@ -195,7 +190,7 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 120 records.
 | `UNOBSERVABLE` | 12 | 30.0% |
 | **Total** | **40** | |
 
-Of the 28 `TRANSCRIBED-EXACT`, 4 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3). Of these: roundings of the tool's return to the declared places, 4; float artefacts of the tool (the return differs from the release only past a binary float's 15 significant digits, such as 15.200000000000001 for 15.20), 0. A strict v1.2 "match" count subtracts the roundings, or all 4 for the strictest reading.
+Of the 28 `TRANSCRIBED-EXACT`, 12 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3). Of these: roundings of the tool's return to the declared places, 4; float artefacts of the tool (the return differs from the release only past a binary float's 15 significant digits, such as 15.200000000000001 for 15.20), 8. A strict v1.2 "match" count subtracts the roundings, or all 12 for the strictest reading.
 
 ### B. Release Coverage
 
@@ -213,7 +208,7 @@ Of the 28 `TRANSCRIBED-EXACT`, 4 were rounded under the declared quantisation po
 
 > AP-1 v1.3 D7.5: any invocation figure, including 100%, shall be reported with the exact one-sided 95% upper confidence bound.
 
-> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED; beside k, each failing question with its NOT-INVOKED repeats out of its observed repeats (EV-0 repeats are in neither). UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
+> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
 
 | Metric | k (failures) | n | Rate | 95% Upper Bound | Evidence Class |
 |---|---|---|---|---|---|
@@ -273,12 +268,12 @@ Total operands resolved: 144
 
 > OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded. UNMEASURABLE: a call in a chained item whose ground truth declares no intermediates (SPEC R2.4); its operands are not counted in the step table.
 
-| Outcome | Count | Proportion |
+| Outcome | Count | % |
 |---|---|---|
-| OPERANDS-GROUNDED | 28 | 28/44 (63.6%) |
-| OPERAND-ORIGINATED | 0 | 0/44 (0.0%) |
-| OPERANDS-UNOBSERVABLE | 16 | 16/44 (36.4%) |
-| UNMEASURABLE | 0 | 0/44 (0.0%) |
+| OPERANDS-GROUNDED | 32 | 72.7% |
+| OPERAND-ORIGINATED | 0 | 0.0% |
+| OPERANDS-UNOBSERVABLE | 12 | 27.3% |
+| UNMEASURABLE | 0 | 0.0% |
 
 ## 8. Scoring Proportions
 
@@ -291,7 +286,7 @@ Total operands resolved: 144
 - Auto-scored proportion: 40/40 = 100.00%
 - Accuracy rate: 1 (computed from 40 auto-scored items only; 0 adjudicated items are not represented in this rate)
 
-### D7 Provenance
+### D7 Computation invocation
 
 - Auto-scored: 40
 - Adjudicated: 0
@@ -309,18 +304,6 @@ Total operands resolved: 144
 *No per-surface D2 data available.*
 
 
-## 9b. D2.2 Execution Conditions
-
-- Serving stack and version: as the responses report it, model mock-model (40); backend fingerprints (system_fingerprint) not reported; the runner observes nothing more.
-- Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
-- Concurrency: one request at a time, sequentially, from a single process.
-- Sampling parameters sent:
-  - `max_completion_tokens`: `4096`
-  - `reasoning_effort`: `none`
-  - `temperature`: not sent (platform-rejected)
-  - `top_p`: not sent (operator-declared)
-- Parameter echo: `UNVERIFIED` (80 responses checked)
-
 ## 10. Non-Outcome Cells
 
 > Every cell that is not a scoreable outcome is listed with its reason.
@@ -336,13 +319,12 @@ Total operands resolved: 144
 
 > A dimension not measured is declared, never omitted.
 
-The following dimensions were **not measured** in this evaluation and require human adjudication:
+The following dimensions were **not measured** in this evaluation:
 
-- **D1**: Accuracy — requires item-level scoring
-- **D3**: Completeness of explanation — requires human adjudication
-- **D4**: Appropriate caveats — requires human adjudication
-- **D5**: Source attribution — requires human adjudication
-- **D6**: Confidence calibration — requires human adjudication
+- **D3**: Provenance — requires human adjudication; the runner does not measure it
+- **D4**: Refusal integrity — requires human adjudication; the runner does not measure it
+- **D5**: Adversarial resistance — requires human adjudication; the runner does not measure it
+- **D6**: Conflicting input — requires human adjudication; the runner does not measure it
 
 ## 13. Declared Limitations
 
