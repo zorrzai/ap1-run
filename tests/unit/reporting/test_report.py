@@ -1126,6 +1126,55 @@ def test_dimension_results_d2_row_counts_questions_and_classes():
                        '(\u00a79) |')
 
 
+D1_CATEGORY_HEAD = (
+    '\n### D1 per Category\n',
+    '> AP-1 v1.3 D1: results per category, with 95% confidence intervals '
+    'and n stated; no category claim where n < 10. n counts questions; a '
+    'question is correct only if every execution of it is. Interval: '
+    'exact two-sided 95% Clopper-Pearson.\n',
+    '| Category | n (questions) | Executions | Correct | Incorrect '
+    '| No Figure | Awaiting Adjudication | Accuracy (95% CI) |',
+    '|---|---|---|---|---|---|---|---|')
+
+
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_dimension_results_d1_per_category_with_interval():
+    def cat(n, correct_questions, pending=0, interval=None):
+        return {'n': n, 'executions': 2 * n, 'correct': 2 * n - 1,
+                'incorrect': 1, 'no_figure': 0, 'pending': pending,
+                'correct_questions': correct_questions,
+                'rate': None, 'interval': interval}
+    d1 = {'n': 4, 'auto_scored_n': 4, 'accuracy_rate': Decimal('1'),
+          'by_category': {
+              'interest': cat(2, 1),
+              'growth': cat(10, 8, interval=(Decimal('0.44390'),
+                                             Decimal('0.97479'))),
+              'fees': cat(12, 12, pending=3),
+              'balance': cat(10, 10, pending=1)}}
+    text = report._section_dimension_results(
+        {'d1_results': d1}, {'dimensions_claimed': ['D1']})
+    assert text.endswith(md(
+        *D1_CATEGORY_HEAD,
+        '| interest | 2 | 4 | 3 | 1 | 0 | 0 | no category claim: n < 10 |',
+        '| growth | 10 | 20 | 19 | 1 | 0 | 0 | 8/10 (80.0%; 95% CI '
+        '44.3%-97.5%) |',
+        '| fees | 12 | 24 | 23 | 1 | 0 | 3 | no rate: 3 executions await '
+        'adjudication |',
+        '| balance | 10 | 20 | 19 | 1 | 0 | 1 | no rate: 1 executions await '
+        'adjudication |',
+        ''))
+
+
+def test_dimension_results_d1_categories_only_when_d1_claimed():
+    summary = {'d1_results': {'n': 1, 'by_category': {'x': {}}}}
+    assert 'D1 per Category' not in report._section_dimension_results(
+        summary, {'dimensions_claimed': ['D7']})
+    assert 'D1 per Category' not in report._section_dimension_results(
+        {'d1_results': {'n': 1, 'by_category': {}}},
+        {'dimensions_claimed': ['D1']})
+
+
 def test_dimension_results_other_dimension_without_n_reads_na():
     rows = dim_rows(report._section_dimension_results(
         {'d3_results': {'x': 1}}, {'dimensions_claimed': ['D3']}))

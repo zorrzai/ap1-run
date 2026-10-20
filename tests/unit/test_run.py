@@ -47,9 +47,11 @@ CONFIG = {
     'currency_symbols': ['$'],
 }
 # Q3, the underivable item, is in the middle: the items after it still run.
-QUESTIONS = {'items': [{'id': 'Q1', 'source_accounts': ['a']},
+QUESTIONS = {'items': [{'id': 'Q1', 'source_accounts': ['a'],
+                        'category': 'interest'},
                        {'id': 'Q3', 'source_accounts': []},
-                       {'id': 'Q2', 'source_accounts': ['b']}]}
+                       {'id': 'Q2', 'source_accounts': ['b'],
+                        'category': 'fees'}]}
 FIXTURE = {'accounts': [{'id': 'a'}, {'id': 'b'}]}
 
 
@@ -86,7 +88,8 @@ class Run:
                      'build_delivered_context', 'check_lookup_collision',
                      'execute_item', 'score_execution',
                      'verify_invocation_consistency', 'print_run_report',
-                     'summarise_accuracy', 'find_d2_cap',
+                     'summarise_accuracy', 'summarise_accuracy_by_category',
+                     'find_d2_cap',
                      'classify_reproducibility', 'build_summary',
                      'print_scoring_report', 'write_outputs'):
             monkeypatch.setattr(run, name, getattr(self, name))
@@ -187,6 +190,10 @@ class Run:
     def summarise_accuracy(self, results):
         self.calls.append(('summarise', list(results)))
         return {'d1': True}
+
+    def summarise_accuracy_by_category(self, results, categories):
+        self.calls.append(('by_category', list(results), categories))
+        return {'by': 'category'}
 
     def find_d2_cap(self, sampling):
         self.calls.append(('d2_cap', sampling))
@@ -379,18 +386,21 @@ def test_main_full_run_calls(r, capsys):
         assert kw[name] == [], name
 
     assert r.named('summarise') == [([],)]
+    # T3-32: D1 per category, from questions.json's categories
+    assert r.named('by_category') == [([], {'Q1': 'interest', 'Q2': 'fees'})]
     assert r.named('d2_cap') == [({'temperature': 0},)]
     d2_responses = {'d2': [res for res, _ in scores]}
     assert r.named('d2') == [(d2_responses, 2, 'CAP')]
     (results, evidence, kw), = r.named('summary')
     assert results == expected_results and evidence == []
-    assert kw == {'d1_summary': {'d1': True, 'n': 0},
+    d1 = {'d1': True, 'n': 0, 'by_category': {'by': 'category'}}
+    assert kw == {'d1_summary': d1,
                   'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
                   'transcription_results': [],
                   'release_coverage_results': [],
                   'held_constant': HELD_CONSTANT}
     assert r.named('scoring_report') == [(
-        {'d1': True, 'n': 0}, {'d2': 'results'}, 'CAP', {'summary': True})]
+        d1, {'d2': 'results'}, 'CAP', {'summary': True})]
 
     (output_dir, transcript_path, kw), = r.named('outputs')
     assert (output_dir, transcript_path) == (out, transcript)

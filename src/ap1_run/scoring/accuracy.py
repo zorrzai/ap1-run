@@ -17,6 +17,7 @@ from decimal import Decimal
 
 from ap1_run.foundation.numeric import quantise
 from ap1_run.scoring.figure_id import AUTO_MATCH, AUTO_NO_FIGURE, UNMEASURABLE
+from ap1_run.scoring.invocation import clopper_pearson_upper
 
 
 # -- Outcome constants -----------------------------------------------------
@@ -147,3 +148,76 @@ def summarise_accuracy(results):
         'no_figure': no_figure,
         'accuracy_rate': accuracy_rate,
     }
+
+# -- D1 per category (AP-1 D1; T3-32) --------------------------------------
+
+# AP-1 v1.3 D1: "No category claim may be made where n < 10."
+CATEGORY_MINIMUM_N = 10
+
+
+def summarise_accuracy_by_category(results, categories):
+    """D1 per category, with n and a 95% confidence interval (AP-1 v1.3
+    D1: "Results reported per category, with 95% confidence intervals,
+    and with n stated. No category claim may be made where n < 10.").
+
+    Args:
+        results: score_accuracy results, each with an 'item_id'
+        categories: dict of item_id -> category (questions.json)
+
+    The unit is the question, as for D7.1 (T3-11): n counts a category's
+    questions, and a question is correct only if every one of its
+    executions is CORRECT. A rate is given only where n >= 10 and no
+    execution awaits adjudication (adjudicated or UNMEASURABLE: every
+    wrong figure is among them, SPEC R2.0; T3-3), with the exact
+    two-sided 95% Clopper-Pearson interval.
+
+    Returns:
+        dict of category -> {n, executions, correct, incorrect,
+        no_figure, pending, correct_questions, rate, interval}; rate and
+        interval are None where no rate is given. Categories in order of
+        first appearance in `categories`.
+    """
+    summary = {}
+    questions = {}
+    for item_id, category in categories.items():
+        summary.setdefault(category, {
+            'n': 0, 'executions': 0, 'correct': 0, 'incorrect': 0,
+            'no_figure': 0, 'pending': 0, 'correct_questions': 0,
+            'rate': None, 'interval': None})
+    for r in results:
+        category = categories.get(r.get('item_id'))
+        if category is None:
+            continue
+        c = summary[category]
+        c['executions'] += 1
+        outcome = r['outcome']
+        if outcome == CORRECT:
+            c['correct'] += 1
+        elif outcome == INCORRECT:
+            c['incorrect'] += 1
+        elif outcome == NO_FIGURE:
+            c['no_figure'] += 1
+        else:
+            c['pending'] += 1
+        ok = questions.get(r.get('item_id'), True)
+        questions[r.get('item_id')] = ok and outcome == CORRECT
+    for item_id, ok in questions.items():
+        c = summary[categories[item_id]]
+        c['n'] += 1
+        c['correct_questions'] += ok
+    for c in summary.values():
+        if c['n'] >= CATEGORY_MINIMUM_N and not c['pending']:
+            c['rate'] = Decimal(c['correct_questions']) / c['n']
+            c['interval'] = clopper_pearson_interval(c['correct_questions'],
+                                                     c['n'])
+    return summary
+
+
+def clopper_pearson_interval(successes, n, alpha=Decimal('0.05')):
+    """The exact two-sided 1 - alpha Clopper-Pearson interval for a
+    proportion, (lower, upper), in Decimal: each end leaves alpha/2 in
+    its tail. Uses the one bound implementation (invocation.py)."""
+    half = alpha / 2
+    upper = clopper_pearson_upper(successes, n, half)
+    lower = 1 - clopper_pearson_upper(n - successes, n, half)
+    return lower, upper

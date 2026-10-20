@@ -305,3 +305,93 @@ def test_score_accuracy_declared_half_up_boundary_within_tolerance_is_correct():
                        quantisation_rounding='ROUND_HALF_UP')
     assert r['outcome'] == CORRECT
     assert r['difference'] == D('0.01')
+
+
+# -- D1 per category (T3-32) ----------------------------------------------------
+
+from ap1_run.scoring.accuracy import (  # noqa: E402
+    CATEGORY_MINIMUM_N, clopper_pearson_interval,
+    summarise_accuracy_by_category,
+)
+
+
+def scored(item_id, outcome):
+    return {'item_id': item_id, 'condition': 'base', 'outcome': outcome}
+
+
+def test_category_minimum_n_is_ap1s_ten():
+    assert CATEGORY_MINIMUM_N == 10
+
+
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_by_category_counts_questions_and_executions():
+    # A question is correct only if every execution is, whatever their
+    # order (Q1 and Q5 each have a wrong one).
+    results = [scored('Q9', 'CORRECT'),  # no category: left out
+               scored('Q1', 'CORRECT'), scored('Q1', 'INCORRECT'),
+               scored('Q5', 'INCORRECT'), scored('Q5', 'CORRECT'),
+               scored('Q2', 'CORRECT'), scored('Q3', 'NO-FIGURE'),
+               scored('Q3', 'NO-FIGURE'),
+               scored('Q3', 'ADJUDICATED'), scored('Q3', 'UNMEASURABLE')]
+    by = summarise_accuracy_by_category(
+        results, {'Q1': 'a', 'Q2': 'a', 'Q5': 'a', 'Q3': 'b', 'Q4': 'c'})
+    assert list(by) == ['a', 'b', 'c']
+    assert by['a'] == {'n': 3, 'executions': 5, 'correct': 3,
+                       'incorrect': 2, 'no_figure': 0, 'pending': 0,
+                       'correct_questions': 1, 'rate': None,
+                       'interval': None}
+    assert by['b'] == {'n': 1, 'executions': 4, 'correct': 0,
+                       'incorrect': 0, 'no_figure': 2, 'pending': 2,
+                       'correct_questions': 0, 'rate': None,
+                       'interval': None}
+    assert by['c']['n'] == by['c']['executions'] == 0
+
+
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_by_category_rate_and_interval_from_ten_questions():
+    # 10 questions, 8 correct (Q8 has one wrong repeat, Q9 no figure):
+    # 8/10 with the exact interval [0.4439, 0.9748].
+    results = [scored(f'Q{i}', 'CORRECT') for i in range(10)]
+    results += [scored('Q8', 'INCORRECT'), scored('Q0', 'CORRECT')]
+    results[9] = scored('Q9', 'NO-FIGURE')
+    by = summarise_accuracy_by_category(
+        results, {f'Q{i}': 'growth' for i in range(10)})['growth']
+    assert (by['n'], by['correct_questions']) == (10, 8)
+    assert by['rate'] == D('0.8')
+    assert by['interval'] == clopper_pearson_interval(8, 10)
+    lower, upper = by['interval']
+    assert (round(lower, 4), round(upper, 4)) == (D('0.4439'), D('0.9748'))
+
+
+@pytest.mark.finding('T3-32', 'T3-3')
+def test_by_category_no_rate_while_any_execution_awaits_adjudication():
+    results = [scored(f'Q{i}', 'CORRECT') for i in range(10)]
+    results.append(scored('Q3', 'ADJUDICATED'))
+    by = summarise_accuracy_by_category(
+        results, {f'Q{i}': 'x' for i in range(10)})['x']
+    assert (by['n'], by['pending'], by['rate'], by['interval']) == \
+        (10, 1, None, None)
+
+
+def test_by_category_below_ten_questions_has_no_rate():
+    results = [scored(f'Q{i}', 'CORRECT') for i in range(9)]
+    by = summarise_accuracy_by_category(
+        results, {f'Q{i}': 'x' for i in range(9)})['x']
+    assert (by['n'], by['correct_questions'], by['rate']) == (9, 9, None)
+
+
+@pytest.mark.parametrize('x, n, lower, upper', [
+    (10, 10, '0.6915', '1'), (0, 10, '0', '0.3085'),
+    (45, 50, '0.7819', '0.9667')])
+def test_clopper_pearson_interval_known_values(x, n, lower, upper):
+    lo, hi = clopper_pearson_interval(x, n)
+    assert (round(lo, 4), round(hi, 4)) == (D(lower), D(upper))
+
+
+def test_clopper_pearson_interval_alpha():
+    # 90%: each tail 0.05; at 1/2, 1 - p^2 = 0.95 ... upper sqrt(0.95)
+    lo, hi = clopper_pearson_interval(1, 2, D('0.1'))
+    assert abs(hi - D('0.95').sqrt()) < D('1e-39')
+    assert abs(lo - (1 - D('0.95').sqrt())) < D('1e-39')

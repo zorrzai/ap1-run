@@ -68,7 +68,9 @@ from ap1_run.runner.summary import (
     build_summary, classify_reproducibility, find_d2_cap,
     verify_invocation_consistency,
 )
-from ap1_run.scoring.accuracy import summarise_accuracy
+from ap1_run.scoring.accuracy import (
+    summarise_accuracy, summarise_accuracy_by_category,
+)
 
 # NOTE: This disclaimer is a hand correction (E4). It will be replaced
 # by a generated disclaimer once the conformance-declaration mechanism
@@ -315,6 +317,10 @@ def main(argv=None):
     # -- D1 aggregation --
     d1_summary = summarise_accuracy(findings.all_accuracy_results)
     d1_summary['n'] = len(findings.all_accuracy_results)
+    # AP-1 D1: per category, with n and a 95% interval (T3-32)
+    d1_summary['by_category'] = summarise_accuracy_by_category(
+        findings.all_accuracy_results,
+        {q['id']: q['category'] for q in items if q.get('category')})
 
     # -- D2 classification per (item, condition) per surface --
     d2_cap_reason = find_d2_cap(config.get('sampling', {}))

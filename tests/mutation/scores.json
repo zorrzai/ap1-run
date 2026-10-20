@@ -71,16 +71,16 @@
     "score": 0.9725
   },
   "reporting/report": {
-    "killed": 2154,
-    "mutants": 2191,
+    "killed": 2252,
+    "mutants": 2289,
     "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Integrator, step 5: re-recorded after merging the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after the merge.] [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
-    "score": 0.9831
+    "score": 0.9838
   },
   "run": {
-    "killed": 581,
-    "mutants": 596,
+    "killed": 595,
+    "mutants": 610,
     "notes": "All 15 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored.",
-    "score": 0.9748
+    "score": 0.9754
   },
   "runner/console": {
     "killed": 550,
@@ -95,10 +95,10 @@
     "score": 0.9915
   },
   "runner/executions": {
-    "killed": 594,
-    "mutants": 596,
+    "killed": 600,
+    "mutants": 602,
     "notes": "Both survivors are equivalent. tool_calls=None in the figure record: transcript.append writes None as []. 'and' to 'or' in _operation_returns' result check only lets values through that then raise inside the try (a dict without 'result' raises KeyError), which the except turns into the same skipped call.",
-    "score": 0.9966
+    "score": 0.9967
   },
   "runner/outputs": {
     "killed": 170,
@@ -118,8 +118,8 @@
     "score": 0.9874
   },
   "scoring/accuracy": {
-    "killed": 149,
-    "mutants": 149,
+    "killed": 291,
+    "mutants": 291,
     "score": 1.0
   },
   "scoring/answer_outcome": {

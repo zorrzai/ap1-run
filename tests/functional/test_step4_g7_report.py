@@ -224,9 +224,6 @@ def test_run_report_declares_d74_not_measured(run):
 
 
 @pytest.mark.finding('T3-32')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-32: D1 is one pooled rate, not per category '
-                          'with a 95 % CI')
 def test_run_report_d1_per_category_with_confidence_interval(run):
     # AP-1 v1.3 D1: "Results reported per category, with 95% confidence
     # intervals, and with n stated." The example has six categories.

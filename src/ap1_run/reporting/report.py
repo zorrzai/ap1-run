@@ -41,6 +41,7 @@ import math
 from datetime import datetime, timezone
 from decimal import ROUND_DOWN, Decimal
 
+from ap1_run.scoring.accuracy import CATEGORY_MINIMUM_N
 from ap1_run.scoring.invocation import (
     _exact_upper_bound, clopper_pearson_upper, round_up,
 )
@@ -194,8 +195,47 @@ def _section_dimension_results(summary, config):
         else:
             lines.append(f'| {dim} | **NOT MEASURED** | — | — |')
 
+    by_category = summary.get('d1_results', {}).get('by_category')
+    if 'D1' in dims_claimed and by_category:
+        lines.extend(_d1_category_rows(by_category))
+
     lines.append('')
     return '\n'.join(lines)
+
+
+def _d1_category_rows(by_category):
+    """D1 per category with n and a 95% interval (AP-1 v1.3 D1; T3-32).
+    n counts questions; a question is correct if all its executions are."""
+    lines = ['\n### D1 per Category\n',
+             '> AP-1 v1.3 D1: results per category, with 95% confidence '
+             'intervals and n stated; no category claim where n < 10. n '
+             'counts questions; a question is correct only if every '
+             'execution of it is. Interval: exact two-sided 95% '
+             'Clopper-Pearson.\n',
+             '| Category | n (questions) | Executions | Correct | Incorrect '
+             '| No Figure | Awaiting Adjudication | Accuracy (95% CI) |',
+             '|---|---|---|---|---|---|---|---|']
+    for category, c in by_category.items():
+        if c['interval'] is not None:
+            lower, upper = c['interval']
+            result = (f'{c["correct_questions"]}/{c["n"]} '
+                      f'({_percent(c["correct_questions"], c["n"])}%; 95% '
+                      f'CI {_round_down(lower * 100)}%-'
+                      f'{round_up(upper * 100, Decimal("0.1"))}%)')
+        elif c['n'] < CATEGORY_MINIMUM_N:
+            result = 'no category claim: n < 10'
+        else:
+            result = (f'no rate: {c["pending"]} executions await '
+                      f'adjudication')
+        lines.append(f'| {category} | {c["n"]} | {c["executions"]} '
+                     f'| {c["correct"]} | {c["incorrect"]} '
+                     f'| {c["no_figure"]} | {c["pending"]} | {result} |')
+    return lines
+
+
+def _round_down(value):
+    """A lower bound shown to 0.1, rounded down so it stays a bound."""
+    return value.quantize(Decimal('0.1'), rounding=ROUND_DOWN)
 
 
 def _d7_rows(summary, d7):

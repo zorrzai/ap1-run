@@ -126,6 +126,19 @@ Model: mock-model
 | D7.3 | Partly measured (202 of 1000 UNOBSERVABLE) | 1000 | Transcription fidelity: D7.3 section |
 | D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |
 
+### D1 per Category
+
+> AP-1 v1.3 D1: results per category, with 95% confidence intervals and n stated; no category claim where n < 10. n counts questions; a question is correct only if every execution of it is. Interval: exact two-sided 95% Clopper-Pearson.
+
+| Category | n (questions) | Executions | Correct | Incorrect | No Figure | Awaiting Adjudication | Accuracy (95% CI) |
+|---|---|---|---|---|---|---|---|
+| interest | 2 | 200 | 200 | 0 | 0 | 0 | no category claim: n < 10 |
+| balance | 2 | 200 | 169 | 0 | 0 | 31 | no category claim: n < 10 |
+| amortisation | 2 | 200 | 63 | 0 | 0 | 137 | no category claim: n < 10 |
+| fees | 1 | 100 | 89 | 0 | 0 | 11 | no category claim: n < 10 |
+| growth | 2 | 200 | 199 | 0 | 0 | 1 | no category claim: n < 10 |
+| net_income | 1 | 100 | 78 | 0 | 0 | 22 | no category claim: n < 10 |
+
 ## 4. D7 Figures by Evidence Class
 
 > Figures resting on different evidence classes are not comparable (AP-1 v1.3 D7.7).

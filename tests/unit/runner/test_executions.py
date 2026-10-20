@@ -166,7 +166,9 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
     assert fakes.calls['score_accuracy'] == [((fakes.figure,), {
         'expected_value': D('638.40'), 'answer_tolerance': D('0.01'),
         'quantisation_digits': 3, 'quantisation_rounding': 'ROUND_HALF_EVEN'})]
-    assert findings.all_accuracy_results == [{'scored': 'accuracy'}]
+    # T3-32: with its question, for D1 per category
+    assert findings.all_accuracy_results == [
+        {'scored': 'accuracy', 'item_id': 'Q01', 'condition': 'base'}]
     assert findings.d2_responses == {('Q01', 'base'): [response(content)]}
 
     # evidence, tool-call structures, grammar (both token extractions)

@@ -188,7 +188,9 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         quantisation_digits=int(_quant.get('places', 2)),
         quantisation_rounding=_quant.get('rounding', 'ROUND_HALF_UP'),
     )
-    findings.all_accuracy_results.append(acc_result)
+    # The question it belongs to, for D1 per category (T3-32)
+    findings.all_accuracy_results.append(
+        dict(acc_result, item_id=item_id, condition=condition))
 
     # -- D2: Collect response for reproducibility --
     d2_key = (item_id, condition)
