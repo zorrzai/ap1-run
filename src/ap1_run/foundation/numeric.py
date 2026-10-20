@@ -204,8 +204,8 @@ def _build_extraction_re(decimal_sep, grouping_sep, currency_symbols):
 
     pats = []
 
-    # 1: Parenthesised: ( [cur] num [cur] )
-    pats.append(r'\(\s*' + cur_lead + num + cur_trail + r'\s*\)')
+    # 1: Parenthesised: ( [cur] num [%] [cur] )
+    pats.append(r'\(\s*' + cur_lead + num + r'\s*%?' + cur_trail + r'\s*\)')
 
     # 2: Currency-led: cur [sign] num [%]
     if currency_symbols:
@@ -220,12 +220,26 @@ def _build_extraction_re(decimal_sep, grouping_sep, currency_symbols):
     return re.compile('|'.join(pats))
 
 
+_SIGNS = '+-\u2212'
+_WORD_CHAR = re.compile(r'\w')
+
+
 def extract_numeric_tokens(text, *, decimal_sep='.', grouping_sep=',',
                            currency_symbols=None):
     """Extract all numeric tokens from free text per R0.4.2.
 
     Returns list of NumericToken sorted by position.
     Raises AmbiguousLocaleError if any token is ambiguous.
+
+    Two readings of the free text, beyond the token grammar:
+    - A sign directly after a number (only whitespace between) is a
+      binary operator, not the sign of the next token: '1437.00 - 1006.25'
+      and '5-3' give 1006.25 and 3 (S3-G1-5).
+    - Digits inside a word are not a token: 'Q04', 'v2.0.1', 'item A1'
+      give nothing (S3-G1-6). A match is inside a word when a word
+      character touches its first or last character (both word
+      characters), or when it is joined to such a match by separator
+      characters only, or by nothing ('v2.0.1': '2.0' and '1'; 'Q4-5').
     """
     if currency_symbols is None:
         currency_symbols = []
@@ -245,9 +259,23 @@ def extract_numeric_tokens(text, *, decimal_sep='.', grouping_sep=',',
             deduped.append((start, end, txt))
             last_end = end
 
+    in_word = _matches_inside_words(text, deduped, decimal_sep, grouping_sep)
+
     tokens = []
-    for start, end, match_text in deduped:
+    prev_core_end = None
+    for i, (start, end, match_text) in enumerate(deduped):
+        core_end = start + len(match_text.rstrip())
+        follows_number = (prev_core_end is not None
+                          and not text[prev_core_end:start].strip())
+        prev_core_end = core_end
+        if in_word[i]:
+            continue
         stripped = match_text.strip()
+        if follows_number and stripped[0] in _SIGNS:
+            # An operator: the token is what follows it.
+            rest = stripped[1:].lstrip()
+            start = core_end - len(rest)
+            stripped = rest
         if not stripped or not any(c.isdigit() for c in stripped):
             continue
         try:
@@ -265,6 +293,35 @@ def extract_numeric_tokens(text, *, decimal_sep='.', grouping_sep=',',
             literal=stripped, start=start, end=end))
 
     return tokens
+
+
+def _matches_inside_words(text, matches, decimal_sep, grouping_sep):
+    """For each match, whether it is part of a word (see
+    extract_numeric_tokens). Consecutive matches with nothing but
+    separator characters between them are joined; a match touching a
+    word character puts every match joined to it inside the word."""
+    seps = {c for c in (decimal_sep, grouping_sep) if c and not c.isspace()}
+    spans = [(start, start + len(match_text.rstrip()))
+             for start, _end, match_text in matches]
+
+    def touches_word(start, core_end):
+        return bool((start > 0 and _WORD_CHAR.match(text[start - 1])
+                     and _WORD_CHAR.match(text[start]))
+                    or (core_end < len(text)
+                        and _WORD_CHAR.match(text[core_end])
+                        and _WORD_CHAR.match(text[core_end - 1])))
+
+    in_word = [touches_word(start, core_end) for start, core_end in spans]
+    # joined[i]: match i and match i + 1 are one run
+    joined = [set(text[spans[i][1]:spans[i + 1][0]]) <= seps
+              for i in range(len(spans) - 1)]
+    for i, link in enumerate(joined):
+        if link and in_word[i]:
+            in_word[i + 1] = True
+    for i, link in reversed(list(enumerate(joined))):
+        if link and in_word[i + 1]:
+            in_word[i] = True
+    return in_word
 
 
 # -- R0.4.1 Decimal context -------------------------------------------
