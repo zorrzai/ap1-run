@@ -410,6 +410,10 @@ _EPOCH = re.compile(r'("timestamp":\s*)\d{9,}(?:\.\d+)?')
 _MOCK = re.compile(r'http://127\.0\.0\.1:\d+')
 # Printed before the seal exists, so not covered by the seal's values.
 _SOURCE_HASH_LINE = re.compile(r'(Runner source hash: )[0-9a-f]+')
+# The environment fields of the seal (F2) in report.md section 1: they
+# depend on the machine, not on the code.
+_ENVIRONMENT_ROW = re.compile(
+    r'(\| `(?:python_version|platform|package_versions)` \| `)[^`]*(` \|)')
 
 
 _EXECUTION_ID = re.compile(r'(Execution id: `)([0-9a-f]{12})(`)')
@@ -430,6 +434,7 @@ def normalise(text, roots, seals):
         lambda m: m.group(1) + ids.setdefault(
             m.group(2), f'<EXECUTION_ID_{len(ids) + 1}>') + m.group(3),
         text)
+    text = _ENVIRONMENT_ROW.sub(r'\1<ENVIRONMENT>\2', text)
     for seal in seals:
         for field, label in (('seal_hash', '<SEAL_HASH>'),
                              ('config_hash', '<CONFIG_HASH>'),

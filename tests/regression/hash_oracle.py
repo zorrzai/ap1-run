@@ -16,11 +16,23 @@ writing):
   canonical JSON   json.dumps(sort_keys=True, separators=(',', ':'),
                    ensure_ascii=False), Decimal as its exact string,
                    no float anywhere, string keys only; UTF-8; SHA-256 hex
-  file hashes      SHA-256 of the raw bytes
+  text inputs      fixture, questions and ground-truth module: SHA-256 of
+                   the bytes with a leading UTF-8 byte-order mark dropped
+                   and CRLF and CR made LF (T3-50); the bytes the run
+                   passes to the seal as `loaded` must be the files' bytes
+  AP-1 text        SHA-256 of the raw bytes, required, and equal to the
+                   config's declared ap1_text_hash (T3-68)
   config_hash      canonical hash of the resolved config, as passed to the
                    seal function (captured by driver.py before the call)
-  seal_hash        canonical hash of the record without 'timestamp' (and
-                   without 'seal_hash' itself)
+  expected_values_hash
+                   canonical hash of the expected values passed to the
+                   seal ('' if none); the values themselves are pinned by
+                   the goldens, which print this hash (T3-48)
+  environment      python_version, platform and package_versions of this
+                   interpreter (the driver runs on the same one), outside
+                   runner_source_hash (T3-30, T3-70)
+  seal_hash        canonical hash of every field but 'seal_hash' itself,
+                   the timestamp included (seal_format 2; T3-47)
   runner_source_hash
                    SHA-256 over the runner's code: every .py file under
                    src/ap1_run/ outside a __pycache__ directory, and the
@@ -60,8 +72,10 @@ run_regression.collect() before normalisation.
 """
 
 import hashlib
+import importlib.metadata
 import json
 import os
+import platform
 import re
 import sys
 from datetime import datetime, timedelta
@@ -103,12 +117,22 @@ SEAL_PATHS = {
 # A scenario whose run stops early states its own in "sealed_outputs".
 SEALED_OUTPUTS = ('report.md', 'smoke_run.jsonl', 'smoke_summary.json')
 
-# The keys of a seal record, and nothing else.
+# The keys of a seal record, and nothing else (seal_format 2).
+SEAL_FORMAT = '2'
 SEAL_KEYS = frozenset({
-    'timestamp', 'fixture_hash', 'questions_hash', 'ground_truth_hash',
-    'config_hash', 'ap1_version', 'ap1_version_doi', 'runner_version_tag',
-    'runner_version_commit', 'runner_source_hash', 'ap1_text_hash',
-    'verification_keys', 'ev3_implemented', 'seal_hash'})
+    'seal_format', 'timestamp', 'fixture_hash', 'questions_hash',
+    'ground_truth_hash', 'expected_values_hash', 'config_hash',
+    'ap1_version', 'ap1_version_doi', 'ap1_text_hash', 'runner_version_tag',
+    'runner_version_commit', 'runner_source_hash', 'python_version',
+    'platform', 'package_versions', 'verification_keys', 'ev3_implemented',
+    'seal_hash'})
+
+# The packages whose versions a record names, in this order.
+RECORDED_PACKAGES = ('ap1-run', 'requests')
+
+# The text inputs a run may pass to the seal as bytes, by name.
+TEXT_INPUTS = {'fixture': 'fixture_path', 'questions': 'questions_path',
+               'ground_truth': 'ground_truth_path'}
 
 
 class HashCheckError(Exception):
@@ -185,6 +209,29 @@ def canonical_hash(obj):
 def file_hash(path):
     with open(path, 'rb') as f:
         return hashlib.sha256(f.read()).hexdigest()
+
+
+def text_hash(data):
+    if data[:3] == b'\xef\xbb\xbf':
+        data = data[3:]
+    return hashlib.sha256(
+        data.replace(b'\r\n', b'\n').replace(b'\r', b'\n')).hexdigest()
+
+
+def environment():
+    """The environment fields of a record made by this interpreter."""
+    packages = []
+    for name in RECORDED_PACKAGES:
+        try:
+            packages.append(f'{name} {importlib.metadata.version(name)}')
+        except importlib.metadata.PackageNotFoundError:
+            packages.append(f'{name} not installed')
+    return {
+        'python_version': (f'{platform.python_implementation()} '
+                           f'{platform.python_version()}'),
+        'platform': platform.platform(),
+        'package_versions': ', '.join(packages),
+    }
 
 
 def source_hash_covers(rel):
@@ -282,6 +329,8 @@ def from_snapshot(node):
         return node[1]
     if kind == 'decimal':
         return Decimal(node[1])
+    if kind == 'bytes':
+        return bytes.fromhex(node[1])
     if kind == 'float':
         return float(node[1])
     if kind == 'list':
@@ -343,9 +392,9 @@ _REFUSAL_ERRORS = {'float': 'TypeError', 'ap1': 'SealError'}
 def expected_outcome(inputs, tree):
     """What the contract says one seal call gives.
 
-    Returns (record_without_timestamp, None, None) for a call that seals,
-    or (None, reason, expected exception name or None) for a call that
-    must be refused."""
+    Returns (record without timestamp and seal_hash, None, None) for a call
+    that seals, or (None, reason, expected exception name or None) for a
+    call that must be refused."""
     kw = _kwargs(inputs)
     cwd = inputs['cwd']
     config = kw['config']
@@ -354,36 +403,64 @@ def expected_outcome(inputs, tree):
         kind = 'float' if refused.startswith('float') else None
         return None, f'resolved config: {refused}', _REFUSAL_ERRORS.get(kind)
 
+    declared = config.get('ap1_text_hash')
+    if not declared or declared == 'placeholder':
+        return (None, f'AP-1 text hash declared as {declared!r}',
+                _REFUSAL_ERRORS['ap1'])
     ap1_text_path = kw.get('ap1_text_path')
-    declared = config.get('ap1_text_hash', '')
-    if ap1_text_path:
-        p = _path(cwd, ap1_text_path)
-        if not os.path.exists(p):
-            return (None, f'AP-1 text file not found: {ap1_text_path}',
-                    _REFUSAL_ERRORS['ap1'])
-        ap1_text_hash = file_hash(p)
-        if declared and declared != 'placeholder' and declared != ap1_text_hash:
-            return None, 'AP-1 text hash mismatch', _REFUSAL_ERRORS['ap1']
-    else:
-        ap1_text_hash = declared
+    if not ap1_text_path:
+        return None, 'no AP-1 text given', _REFUSAL_ERRORS['ap1']
+    p = _path(cwd, ap1_text_path)
+    if not os.path.exists(p):
+        return (None, f'AP-1 text file not found: {ap1_text_path}',
+                _REFUSAL_ERRORS['ap1'])
+    ap1_text_hash = file_hash(p)
+    if declared != ap1_text_hash:
+        return None, 'AP-1 text hash mismatch', _REFUSAL_ERRORS['ap1']
 
+    hashes = {}
+    for name, key in TEXT_INPUTS.items():
+        with open(_path(cwd, kw[key]), 'rb') as f:
+            hashes[name] = text_hash(f.read())
+    expected_values = kw.get('expected_values')
     tag, commit = version_file_fields(tree)
     record = {
-        'fixture_hash': file_hash(_path(cwd, kw['fixture_path'])),
-        'questions_hash': file_hash(_path(cwd, kw['questions_path'])),
-        'ground_truth_hash': file_hash(_path(cwd, kw['ground_truth_path'])),
+        'seal_format': SEAL_FORMAT,
+        'fixture_hash': hashes['fixture'],
+        'questions_hash': hashes['questions'],
+        'ground_truth_hash': hashes['ground_truth'],
+        'expected_values_hash': ('' if expected_values is None
+                                 else canonical_hash(expected_values)),
         'config_hash': canonical_hash(config),
         'ap1_version': config.get('ap1_version', ''),
         'ap1_version_doi': config.get('ap1_version_doi', ''),
+        'ap1_text_hash': ap1_text_hash,
         'runner_version_tag': tag,
         'runner_version_commit': commit,
         'runner_source_hash': kw.get('runner_source_hash') or '',
-        'ap1_text_hash': ap1_text_hash,
+        **environment(),
         'verification_keys': kw.get('verification_keys') or [],
         'ev3_implemented': False,
     }
-    record['seal_hash'] = canonical_hash(record)
     return record, None, None
+
+
+def check_loaded(inputs):
+    """The bytes the run passed to the seal as `loaded` (what it executes,
+    T3-72) are the bytes of the files at the sealed paths."""
+    kw = _kwargs(inputs)
+    problems = []
+    for name, data in sorted((kw.get('loaded') or {}).items()):
+        key = TEXT_INPUTS.get(name)
+        if key is None:
+            problems.append(f'loaded: unexpected input {name!r}')
+            continue
+        with open(_path(inputs['cwd'], kw[key]), 'rb') as f:
+            on_disk = f.read()
+        if data != on_disk:
+            problems.append(f'loaded {name}: the bytes passed to the seal '
+                            f'differ from {kw[key]}')
+    return problems
 
 
 def _check_timestamp(value, window):
@@ -420,20 +497,30 @@ def _check_record(got, want, config, window):
         if key in got and not _strict_equal(got[key], want[key]):
             problems.append(f'{key}: sealed {got[key]!r}, '
                             f'recomputed {want[key]!r}')
-    # The composite, also from the record as returned: a field added to
-    # or dropped from both the record and the hash input shows here too.
-    rest = {k: v for k, v in got.items() if k not in ('timestamp', 'seal_hash')}
+    # seal_hash from the recomputed fields and the record's timestamp
+    # (checked against the run's window below), and from the record as
+    # returned: a field added to or dropped from both the record and the
+    # hash input shows in the second.
+    try:
+        recomputed = canonical_hash(dict(want, timestamp=got.get('timestamp')))
+    except HashCheckError as e:
+        recomputed = f'<{e}>'
+    rest = {k: v for k, v in got.items() if k != 'seal_hash'}
     try:
         own = canonical_hash(rest)
     except HashCheckError as e:
         own = f'<{e}>'
+    if got.get('seal_hash') != recomputed:
+        problems.append(f'seal_hash: sealed {got.get("seal_hash")!r}, '
+                        f'recomputed {recomputed!r}')
     if got.get('seal_hash') != own:
         problems.append(f'seal_hash: sealed {got.get("seal_hash")!r}, '
                         f'recomputed from the record as returned {own!r}')
     problems += _check_timestamp(got.get('timestamp'), window)
     for key in ('fixture_hash', 'questions_hash', 'ground_truth_hash',
                 'config_hash', 'runner_source_hash', 'ap1_text_hash',
-                'seal_hash'):
+                'seal_hash') + (('expected_values_hash',)
+                                if want.get('expected_values_hash') else ()):
         if not _HEX64.match(str(got.get(key, ''))):
             problems.append(f'{key}: not a SHA-256 hex digest: '
                             f'{got.get(key)!r}')
@@ -591,7 +678,8 @@ def check_seals(scenario, tree, result_dir, raw, frozen):
     window = (frozen['started'], frozen['finished'])
     for n, attempt in enumerate(attempts, 1):
         problems += [f'seal call {n}: {p}' for p in
-                     check_inputs(attempt, tree, scenario, source_hash)]
+                     check_inputs(attempt, tree, scenario, source_hash)
+                     + check_loaded(attempt)]
         want, refusal, error = expected_outcome(attempt, tree)
         if attempt['returned']:
             record = next(records)

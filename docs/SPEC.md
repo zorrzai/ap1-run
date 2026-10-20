@@ -1126,6 +1126,7 @@ and the example modules (`example/ground_truth_example.py`,
 | `src/ap1_run/reporting/adjudication.py` | Instrument module |
 | `src/ap1_run/execution/seal.py` | Instrument module |
 | `src/ap1_run/execution/seal_constants.py` | Instrument module |
+| `src/ap1_run/execution/sealed_inputs.py` | Instrument module |
 | `src/ap1_run/foundation/config.py` | Instrument module |
 | `src/ap1_run/scoring/reproducibility.py` | Instrument module |
 | `src/ap1_run/scoring/figure_id.py` | Instrument module |

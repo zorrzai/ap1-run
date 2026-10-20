@@ -69,10 +69,15 @@ def base(tmp_path, vrs, monkeypatch):
     return root
 
 
+# The hash of the AP-1 text the base tree holds: a sealed run declares it.
+AP1_TEXT_HASH = hashlib.sha256(b'# AP-1 text\n').hexdigest()
+
+
 def resolved_config(**extra):
     config = {'model': 'gpt-test', 'endpoint_url': 'https://example.test',
               'answer_tolerance': '0.01', 'repeat_count': 2,
               'ap1_version': 'v1.3-test', 'ap1_version_doi': '10.0/test',
+              'ap1_text_hash': AP1_TEXT_HASH,
               'runner_version_tag': 'v1.3.1',
               'runner_version_commit': 'e0d9ec9', 'runner_modified': False}
     config.update(extra)
@@ -91,10 +96,9 @@ def make_record(base, config):
 
 def reseal(record):
     """Recompute seal_hash over the record as seal() does: every field
-    but the timestamp and the hash itself."""
+    but the hash itself (T3-47: the timestamp included)."""
     record = dict(record)
-    hashable = {k: v for k, v in record.items()
-                if k not in ('timestamp', 'seal_hash')}
+    hashable = {k: v for k, v in record.items() if k != 'seal_hash'}
     record['seal_hash'] = canonical_hash(hashable)
     return record
 
@@ -134,7 +138,7 @@ def run(tmp_path, base):
 
 
 ALL_CHECKS = [
-    ('seal record parsed', '14 fields'),
+    ('seal record parsed', '19 fields'),
     ('resolved config parsed', "model='gpt-test'"),
     ('config_hash', 'MATCH'),
     ('fixture_hash', 'MATCH'),
@@ -383,9 +387,10 @@ def test_verify_run_config_hash_is_canonical_json_sha256(vrs, tmp_path,
                                                          base):
     # The verifier hashes the resolved config as canonical JSON: sorted
     # keys, no whitespace, UTF-8. A seal over another serialisation fails.
-    config = {'model': 'm', 'b': [1, 'é']}
+    config = {'model': 'm', 'b': [1, 'é'], 'ap1_text_hash': AP1_TEXT_HASH}
     expected = hashlib.sha256(
-        '{"b":[1,"é"],"model":"m"}'.encode('utf-8')).hexdigest()
+        ('{"ap1_text_hash":"%s","b":[1,"é"],"model":"m"}' % AP1_TEXT_HASH
+         ).encode('utf-8')).hexdigest()
     record = dict(make_record(base, config), config_hash=expected)
     run_dir = write_run(tmp_path / 'run', reseal(record), config)
     checks, failures = vrs.verify_run(str(run_dir))
@@ -407,11 +412,43 @@ def test_verify_run_changed_input_fails_its_hash(vrs, run, base, field,
     assert field not in names(checks)
 
 
-def test_verify_run_hashes_raw_bytes_line_endings_count(vrs, run, base):
-    run_dir, _, _ = run
+def legacy(record):
+    """The record as a runner before the seal_format field made it: no
+    seal_format, expected values or environment, and a seal_hash without
+    the timestamp."""
+    record = {k: v for k, v in record.items() if k not in (
+        'seal_format', 'expected_values_hash', 'python_version', 'platform',
+        'package_versions')}
+    record['seal_hash'] = canonical_hash(
+        {k: v for k, v in record.items()
+         if k not in ('timestamp', 'seal_hash')})
+    return record
+
+
+def test_verify_run_legacy_record_hashes_raw_bytes(vrs, tmp_path, base):
+    # A record without seal_format is checked under the rules it was made
+    # with: raw bytes, so line endings count.
+    config = resolved_config()
+    record = legacy(make_record(base, config))
+    run_dir = write_run(tmp_path / 'run', record, config)
+    assert vrs.verify_run(str(run_dir))[1] == []
     (base / 'example' / 'fixture.json').write_bytes(b'{"fixture": 1}\r\n')
     _, failures = vrs.verify_run(str(run_dir))
     assert names(failures) == ['fixture_hash']
+
+
+def test_verify_run_hashes_text_inputs_with_lf_and_no_bom(vrs, run, base):
+    run_dir, _, _ = run
+    (base / 'example' / 'fixture.json').write_bytes(
+        b'\xef\xbb\xbf{"fixture": 1}\r\n')
+    assert vrs.verify_run(str(run_dir))[1] == []
+
+
+def test_verify_run_ap1_text_hashed_as_raw_bytes(vrs, run, base):
+    run_dir, record, _ = run
+    (base / AP1_TEXT).write_bytes(b'# AP-1 text\r\n')
+    _, failures = vrs.verify_run(str(run_dir))
+    assert names(failures) == ['ap1_text_hash']
 
 
 GT_EXPECTED_NOTE = (
@@ -506,18 +543,6 @@ def test_verify_run_true_string_is_rebuilt_as_boolean(vrs, tmp_path, base):
 
 # -- verify_run: what is not compared (defects) ------------------------------
 
-@pytest.mark.finding('T3-47')
-def test_verify_run_changed_timestamp_still_passes(vrs, tmp_path, base):
-    # The timestamp is outside seal_hash, and nothing compares it with
-    # the transcript. Correct: a backdated timestamp is detected.
-    config = resolved_config()
-    record = dict(make_record(base, config),
-                  timestamp='2020-01-01T00:00:00+00:00')
-    run_dir = write_run(tmp_path / 'run', record, config)
-    _, failures = vrs.verify_run(str(run_dir))
-    assert failures == []
-
-
 @pytest.mark.finding('T3-19')
 def test_verify_run_runner_source_hash_is_never_compared(vrs, tmp_path,
                                                          base):
@@ -562,7 +587,7 @@ def test_verify_run_seal_hash_recomputed_from_record_itself(vrs, tmp_path,
     run_dir = write_run(tmp_path / 'run', record, config)
     checks, failures = vrs.verify_run(str(run_dir))
     assert failures == []
-    assert ('seal record parsed', '7 fields') in checks
+    assert ('seal record parsed', '12 fields') in checks
 
 
 @pytest.mark.finding('T3-18')
@@ -1080,6 +1105,11 @@ def test_verify_run_edited_timestamp_fails(vrs, tmp_path, base, moved):
     # hash binds the timestamp is the fix's choice, so any failure whose
     # name contains 'hash' is accepted, a 'timestamp'-only one is not.
     from datetime import datetime, timedelta
+
+
+def test_verify_run_edited_timestamp_fails(vrs, tmp_path, base):
+    # Correct (AP-1 v1.3 §5.3, SPEC R1.1): the timestamp is bound by
+    # seal_hash, so a timestamp edited in report.md fails verification.
     config = good_config(base)
     sealed = good_record(base, config)
     stamp = ('2020-01-01T00:00:00+00:00' if moved == 'six-years-earlier'
@@ -1213,6 +1243,12 @@ BOM_PROPOSAL = pytest.mark.proposal(
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-50: sealed file hashes depend on line endings '
                           'and a BOM')
+
+
+    ('questions_hash', os.path.join('example', 'questions.json'),
+     b'\xef\xbb\xbf{"items": []}\n'),
+    ('ground_truth_hash', os.path.join('example', 'ground_truth_example.py'),
+     b'\xef\xbb\xbfX = 1\r\n')], ids=['crlf', 'bom', 'bom-crlf'])
 def test_verify_run_same_text_other_line_endings_verifies(vrs, good_run, base,
                                                           field, relpath,
                                                           data):

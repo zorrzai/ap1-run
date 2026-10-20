@@ -7,6 +7,7 @@ src/ap1_run/execution/evidence.py
 src/ap1_run/execution/perturbation_guard.py
 src/ap1_run/execution/seal.py
 src/ap1_run/execution/seal_constants.py
+src/ap1_run/execution/sealed_inputs.py
 src/ap1_run/execution/version.py
 src/ap1_run/foundation/__init__.py
 src/ap1_run/foundation/adapter.py

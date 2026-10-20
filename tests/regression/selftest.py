@@ -74,6 +74,16 @@ class CanonicalHash(unittest.TestCase):
         self.assertEqual(pins, [
             '831709b2231846ed20fd63ff0bc0764d73cee50db271f733e6a2f1c377c7cff3'])
 
+    def test_text_hash_drops_a_bom_and_makes_line_endings_lf(self):
+        lf = hashlib.sha256(b'a\nb\n').hexdigest()
+        for data in (b'a\nb\n', b'a\r\nb\r\n', b'a\rb\r',
+                     b'\xef\xbb\xbfa\r\nb\n'):
+            self.assertEqual(hash_oracle.text_hash(data), lf, data)
+        # Only a leading BOM goes, and other bytes are kept.
+        self.assertNotEqual(hash_oracle.text_hash(b'a\xef\xbb\xbf\n'),
+                            hash_oracle.text_hash(b'a\n'))
+        self.assertNotEqual(hash_oracle.text_hash(b'a\n\n'), lf)
+
     def test_float_is_refused(self):
         with self.assertRaises(hash_oracle.HashCheckError):
             hash_oracle.canonical_hash({'a': [1.5]})
@@ -160,6 +170,12 @@ class Snapshot(unittest.TestCase):
         self.assertIs(type(back['d']), Decimal)
         self.assertIs(type(back['b']), bool)
         self.assertEqual(str(back['d']), '0.010')
+
+    def test_bytes_round_trip(self):
+        data = b'\xef\xbb\xbfa\r\nb\x00'
+        back = hash_oracle.from_snapshot(driver.snapshot({'x': data}))
+        self.assertEqual(back, {'x': data})
+        self.assertIs(type(back['x']), bytes)
 
     def test_a_tuple_is_a_sequence_not_text(self):
         self.assertEqual(driver.snapshot(()), ['list', []])

@@ -64,6 +64,8 @@ def snapshot(value):
         return ['int', value]
     if isinstance(value, Decimal):
         return ['decimal', str(value)]
+    if isinstance(value, bytes):
+        return ['bytes', value.hex()]
     if isinstance(value, float):
         return ['float', repr(value)]
     if isinstance(value, (list, tuple)):

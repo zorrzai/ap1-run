@@ -33,6 +33,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # installed or on PYTHONPATH (tests/regression/check_own_src.py).
 sys.path.insert(0, os.path.join(BASE_DIR, 'src'))
 
+from ap1_run.execution.seal import text_file_hash  # noqa: E402
 from ap1_run.foundation.numeric import canonical_hash, file_hash  # noqa: E402
 
 
@@ -137,6 +138,13 @@ def verify_run(output_dir):
                          'sealed=%s, recomputed=%s' % (
                              sealed_config_hash, computed_config_hash)))
 
+    # A record with a seal_format field binds its timestamp and hashes the
+    # text inputs with LF line endings and no BOM (T3-47, T3-50); an older
+    # record is checked under the rules it was made with: raw bytes, and a
+    # seal_hash without the timestamp.
+    current_format = 'seal_format' in seal_record
+    text_hash_of = text_file_hash if current_format else file_hash
+
     # 4. Recompute file hashes
     file_checks = [
         ('fixture_hash',
@@ -154,7 +162,9 @@ def verify_run(output_dir):
         if not os.path.exists(filepath):
             failures.append((field, 'file not found: %s' % filepath))
             continue
-        computed_val = file_hash(filepath)
+        # The AP-1 text is hashed as raw bytes (the publisher's deposit)
+        computed_val = (file_hash(filepath) if field == 'ap1_text_hash'
+                        else text_hash_of(filepath))
         if sealed_val == computed_val:
             checks.append((field, 'MATCH'))
         else:
@@ -174,11 +184,13 @@ def verify_run(output_dir):
 
     # 5. Reconstruct and verify seal_hash
     sealed_seal_hash = seal_record.get('seal_hash', '')
-    # Rebuild the hashable record exactly as seal.py does:
-    # all fields except 'timestamp' and 'seal_hash'
+    # Rebuild the hashable record exactly as seal.py does: all fields
+    # except 'seal_hash' (and, in an older record, 'timestamp')
+    unhashed = ('seal_hash',) if current_format else ('timestamp',
+                                                      'seal_hash')
     hashable = {}
     for k, v in seal_record.items():
-        if k in ('timestamp', 'seal_hash'):
+        if k in unhashed:
             continue
         # Parse stringified values back to their original types
         if v == 'False':
