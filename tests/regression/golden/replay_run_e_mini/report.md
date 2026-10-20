@@ -1259,8 +1259,9 @@ Total operations evaluated: 1778
 | Population | Count |
 |---|---|
 | Route divergence (item answer correct) | 80 |
-| Item answer incorrect | 1 |
-| Item answer undetermined (adjudicated) | 146 |
+| Item answer incorrect | 0 |
+| Item answer undetermined (adjudicated) | 147 |
+| No figure released (no item answer) | 0 |
 
 ## 7b. D7.2(a) Operand Provenance Step Counts
 

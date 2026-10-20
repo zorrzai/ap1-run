@@ -748,7 +748,7 @@ def test_d72b_wrong_operation_split_shown_when_non_zero():
     text = report._section_d72b_counts({
         'operation_correctness_counts': {'WRONG-OPERATION': 3},
         'wrong_operation_split': {'route_divergence': 1, 'item_wrong': 0,
-                                  'undetermined': 2}})
+                                  'undetermined': 2, 'no_figure': 4}})
     assert text.endswith(md(
         '| OPERATION-UNOBSERVABLE | 0 |',
         '',
@@ -758,6 +758,7 @@ def test_d72b_wrong_operation_split_shown_when_non_zero():
         '| Route divergence (item answer correct) | 1 |',
         '| Item answer incorrect | 0 |',
         '| Item answer undetermined (adjudicated) | 2 |',
+        '| No figure released (no item answer) | 4 |',
         ''))
 
 
@@ -768,6 +769,7 @@ def test_d72b_wrong_operation_split_missing_keys_read_zero():
         'wrong_operation_split': {'item_wrong': 1}})
     assert '| Route divergence (item answer correct) | 0 |' in text
     assert '| Item answer incorrect | 1 |' in text
+    assert '| No figure released (no item answer) | 0 |' in text
     assert '| Item answer undetermined (adjudicated) | 0 |' in text
 
 
