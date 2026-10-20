@@ -66,6 +66,7 @@ class Run:
         self.calls = []
         self.results = {}     # (item, condition, rep) -> result or exception
         self.refuse = set()   # R3.1 guards that raise SealError
+        self.verify_refusals = []  # verify_seal calls that raise, by index
         self.version = {'version_tag': 'v9.9.9',
                         'version_commit': '0123456789abcdef0123'}
         monkeypatch.setattr(sys, 'path', list(sys.path))
@@ -82,7 +83,7 @@ class Run:
                      'compute_runner_source_hash',
                      'perturbation_check', 'source_fields_check',
                      'declared_constants_check',
-                     'create_seal', 'check_condition_guard',
+                     'create_seal', 'verify_seal', 'check_condition_guard',
                      'build_delivered_context', 'check_lookup_collision',
                      'execute_item', 'score_execution',
                      'verify_invocation_consistency', 'print_run_report',
@@ -143,6 +144,12 @@ class Run:
     def create_seal(self, **kwargs):
         self.calls.append(('seal', kwargs))
         return {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}
+
+    def verify_seal(self, record, **kwargs):
+        self.calls.append(('verify_seal', record, kwargs))
+        if len(self.named('verify_seal')) in self.verify_refusals:
+            raise SealError('seal verification failed:\n  fixture: changed')
+        return True
 
     def check_condition_guard(self, *args):
         self.calls.append(('guard',) + args)
@@ -275,12 +282,33 @@ def test_main_full_run_calls(r, capsys):
                and g[2] == FIXTURE and g[3] == QUESTIONS for g in guards)
     (seal,), = r.named('seal')
     config = seal.pop('config')
+    # T3-48: the expected values of every item, computed before the seal;
+    # T3-72: the bytes read are the bytes sealed.
+    expected_values = {'Q1': {'final': D('10.00'), 'derivable': True},
+                       'Q3': {'derivable': False},
+                       'Q2': {'final': D('10.00')}}
     assert seal == {
         'fixture_path': os.path.join(fx, 'fixture.json'),
         'questions_path': os.path.join(fx, 'questions.json'),
         'ground_truth_path': os.path.join(fx, 'ground_truth_example.py'),
         'ap1_text_path': str(r.tmp / 'ap1.md'),
-        'runner_source_hash': 'feedfacecafebeef' + '0' * 48}
+        'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
+        'expected_values': expected_values,
+        'loaded': {'fixture': json.dumps(FIXTURE).encode(),
+                   'questions': json.dumps(QUESTIONS).encode(),
+                   'ground_truth': GROUND_TRUTH.encode()}}
+    # T3-17: the seal is verified, the whole record and every input,
+    # before the first request and again before anything is reported.
+    verified = {
+        'config': config,
+        'fixture_path': os.path.join(fx, 'fixture.json'),
+        'questions_path': os.path.join(fx, 'questions.json'),
+        'ground_truth_path': os.path.join(fx, 'ground_truth_example.py'),
+        'ap1_text_path': str(r.tmp / 'ap1.md'),
+        'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
+        'expected_values': expected_values}
+    assert r.named('verify_seal') == [
+        ({'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}, verified)] * 2
     assert config['endpoint_url'] == 'http://mock/v1'
     assert config['model'] == 'mock-model'
     assert (config['runner_version_tag'], config['runner_version_commit'],
@@ -408,13 +436,14 @@ def test_main_full_run_calls(r, capsys):
 
     # the order of the stages
     stages = [c[0] for c in r.calls if c[0] in (
-        'version', 'source_hash', 'gt_guard', 'seal', 'guard', 'consistency',
-        'run_report', 'summarise', 'd2_cap', 'd2', 'summary',
-        'scoring_report', 'outputs')]
+        'version', 'source_hash', 'gt_guard', 'seal', 'guard', 'verify_seal',
+        'execute', 'consistency', 'run_report', 'summarise', 'd2_cap', 'd2',
+        'summary', 'scoring_report', 'outputs')]
     assert stages == ['version', 'source_hash', 'gt_guard', 'gt_guard',
-                      'gt_guard', 'seal', 'guard',
-                      'consistency', 'run_report', 'summarise', 'd2_cap',
-                      'd2', 'summary', 'scoring_report', 'outputs']
+                      'gt_guard', 'seal', 'guard', 'verify_seal'] + [
+                      'execute'] * 8 + [
+                      'verify_seal', 'consistency', 'run_report', 'summarise',
+                      'd2_cap', 'd2', 'summary', 'scoring_report', 'outputs']
 
 
 @pytest.mark.finding('T3-7')
@@ -433,6 +462,54 @@ def test_main_ground_truth_guard_refusal_stops_before_seal_and_requests(
     assert [g[0] for g in r.named('gt_guard')] == ran
     assert r.named('seal') == [] and r.named('execute') == []
     assert 'Ground-truth guards' not in capsys.readouterr().out
+
+
+@pytest.mark.finding('T3-17')
+@pytest.mark.req('R1.1')
+def test_main_seal_verification_refused_before_any_request(r, capsys):
+    r.verify_refusals = [1]
+    with pytest.raises(SealError, match='fixture: changed'):
+        r.main()
+    assert r.named('execute') == [] and r.named('outputs') == []
+
+
+@pytest.mark.finding('T3-17')
+@pytest.mark.req('R1.1')
+def test_main_seal_verification_refused_before_anything_is_reported(r):
+    r.verify_refusals = [2]
+    with pytest.raises(SealError, match='fixture: changed'):
+        r.main()
+    assert len(r.named('execute')) == 8
+    assert r.named('consistency') == [] and r.named('outputs') == []
+
+
+@pytest.mark.finding('T3-48', 'T3-72')
+def test_main_scores_against_the_sealed_expected_values(r):
+    # The module is not called again after the seal: a module whose
+    # answer changes between calls cannot change the expected values.
+    real_seal = r.create_seal
+
+    def seal_then_change(**kwargs):
+        record = real_seal(**kwargs)
+        sys.modules['ground_truth_example'].compute = \
+            lambda item_id, ctx: {'final': D('99')}
+        return record
+    r.create_seal = seal_then_change
+    run.create_seal = seal_then_change
+    assert r.main() == 0
+    assert {k['expected'] for _, k in r.named('score')} == {D('10.00')}
+    compute = r.named('execute')[0][1]['ground_truth_compute']
+    assert compute('Q1', {}) == {'final': D('10.00'), 'derivable': True}
+
+
+@pytest.mark.finding('T3-72')
+def test_main_runs_the_ground_truth_file_not_a_shadowing_package(r):
+    package = r.fixture_dir / 'ground_truth_example'
+    package.mkdir()
+    (package / '__init__.py').write_text('raise ImportError("shadow")\n')
+    assert r.main() == 0
+    assert sys.modules['ground_truth_example'].__file__ == str(
+        r.fixture_dir / 'ground_truth_example.py')
 
 
 def test_main_adapter_send_binds_the_key(r, monkeypatch):

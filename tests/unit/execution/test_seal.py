@@ -29,6 +29,14 @@ def canon(obj):
     return sha(text.encode('utf-8'))
 
 
+def text_sha(data):
+    """A sealed text input's hash, written out independently (T3-50): LF
+    line endings, no UTF-8 byte-order mark."""
+    if data.startswith(b'\xef\xbb\xbf'):
+        data = data[3:]
+    return sha(data.replace(b'\r\n', b'\n').replace(b'\r', b'\n'))
+
+
 class FrozenDatetime:
     calls = []
 
@@ -38,14 +46,24 @@ class FrozenDatetime:
         return SimpleNamespace(isoformat=lambda: '2026-10-15T12:00:00+00:00')
 
 
+ENVIRONMENT = {'python_version': 'CPython 3.0.0', 'platform': 'TestOS-1',
+               'package_versions': 'ap1-run 0.0, requests 0.0'}
+
+
 @pytest.fixture
 def frozen(monkeypatch):
+    """A fixed clock and a fixed environment."""
     FrozenDatetime.calls = []
     monkeypatch.setattr(seal_mod, 'datetime', FrozenDatetime)
+    monkeypatch.setattr(seal_mod, 'runner_environment',
+                        lambda: dict(ENVIRONMENT))
     return FrozenDatetime
 
 
+AP1_TEXT = b'AP-1 \xe2\x80\x94 text\n'
+
 CONFIG = {'ap1_version': '1.3', 'ap1_version_doi': '10.5281/z.1',
+          'ap1_text_hash': sha(AP1_TEXT),
           'runner_version_tag': 'v1', 'runner_version_commit': 'abc',
           'n': 3}
 
@@ -54,52 +72,70 @@ CONFIG = {'ap1_version': '1.3', 'ap1_version_doi': '10.5281/z.1',
 def files(tmp_path):
     contents = {'fixture': b'{"accounts": []}\r\n', 'questions': b'{"items":[]}',
                 'ground_truth': b'def compute(i, c): pass\n',
-                'ap1_text': b'AP-1 \xe2\x80\x94 text\n'}
+                'ap1_text': AP1_TEXT}
     paths = {}
     for name, data in contents.items():
         paths[name] = tmp_path / f'{name}.bin'
         paths[name].write_bytes(data)
+    hashes = {k: text_sha(v) for k, v in contents.items()}
+    hashes['ap1_text'] = sha(AP1_TEXT)  # raw bytes
     return SimpleNamespace(
-        paths=paths, hashes={k: sha(v) for k, v in contents.items()},
+        paths=paths, hashes=hashes,
         kwargs={'fixture_path': paths['fixture'],
                 'questions_path': paths['questions'],
                 'ground_truth_path': paths['ground_truth']})
 
 
 def make_seal(files, config=CONFIG, **kwargs):
+    """seal() over the files, with the AP-1 text unless kwargs say."""
+    kwargs = {'ap1_text_path': files.paths['ap1_text'], **kwargs}
     return seal(config=config, **files.kwargs, **kwargs)
 
 
 # -- seal(): the record --------------------------------------------------
 
-def test_seal_record_without_ap1_text(files, frozen):
+def test_seal_record(files, frozen):
     record = make_seal(files, runner_source_hash='f' * 64)
     body = {
+        'seal_format': '2',
+        'timestamp': '2026-10-15T12:00:00+00:00',
         'fixture_hash': files.hashes['fixture'],
         'questions_hash': files.hashes['questions'],
         'ground_truth_hash': files.hashes['ground_truth'],
+        'expected_values_hash': '',
         'config_hash': canon(CONFIG),
         'ap1_version': '1.3',
         'ap1_version_doi': '10.5281/z.1',
+        'ap1_text_hash': sha(AP1_TEXT),
         'runner_version_tag': 'v1',
         'runner_version_commit': 'abc',
         'runner_source_hash': 'f' * 64,
-        'ap1_text_hash': '',
+        **ENVIRONMENT,
         'verification_keys': [],
         'ev3_implemented': False,
     }
-    assert record == {'timestamp': '2026-10-15T12:00:00+00:00', **body,
-                      'seal_hash': canon(body)}
+    # seal_hash covers every field, the timestamp included (T3-47).
+    assert record == {**body, 'seal_hash': canon(body)}
     assert frozen.calls == [timezone.utc]
+    assert sorted(record) == sorted(seal_mod.SEALED_FIELDS + ('seal_hash',))
 
 
-def test_seal_empty_config_gives_blank_fields(files, frozen):
-    record = make_seal(files, config={})
+def test_seal_records_the_real_environment(files, monkeypatch):
+    # Not frozen: the fields are runner_environment's (F2).
+    from ap1_run.execution.version import runner_environment
+    record = make_seal(files)
+    env = runner_environment()
+    assert {k: record[k] for k in env} == env
+
+
+def test_seal_config_without_optional_fields_gives_blank_fields(files,
+                                                                frozen):
+    config = {'ap1_text_hash': sha(AP1_TEXT)}
+    record = make_seal(files, config=config)
     for key in ('ap1_version', 'ap1_version_doi', 'runner_version_tag',
-                'runner_version_commit', 'runner_source_hash',
-                'ap1_text_hash'):
+                'runner_version_commit', 'runner_source_hash'):
         assert record[key] == ''
-    assert record['config_hash'] == canon({})
+    assert record['config_hash'] == canon(config)
 
 
 def test_seal_records_verification_keys(files, frozen):
@@ -118,8 +154,8 @@ def test_seal_accepts_string_paths(files, frozen):
 
 @pytest.mark.req('R1.1')
 @pytest.mark.parametrize('change', [
-    'fixture_path', 'questions_path', 'ground_truth_path', 'ap1_text_path',
-    'config', 'runner_source_hash', 'verification_keys'])
+    'fixture_path', 'questions_path', 'ground_truth_path', 'config',
+    'runner_source_hash', 'verification_keys', 'expected_values'])
 def test_seal_hash_binds_each_component(files, frozen, tmp_path, change):
     # T3-15 asks for this: seal_hash changes when any one component does.
     other = tmp_path / 'other.bin'
@@ -129,41 +165,100 @@ def test_seal_hash_binds_each_component(files, frozen, tmp_path, change):
     base = seal(**kwargs)
     kwargs[change] = {'config': {**CONFIG, 'n': 4},
                       'runner_source_hash': 'x',
-                      'verification_keys': ['k']}.get(change, other)
+                      'verification_keys': ['k'],
+                      'expected_values': {'Q01': {'final': Decimal('1')}},
+                      }.get(change, other)
     assert seal(**kwargs)['seal_hash'] != base['seal_hash']
 
 
-@pytest.mark.finding('T3-47')
-def test_seal_hash_excludes_timestamp(files, monkeypatch):
-    # Current behaviour: two seals at different times have the same
-    # seal_hash, so the timestamp can be backdated unseen. Correct: the
-    # timestamp is bound by the seal (AP-1 v1.3 §5.3).
-    stamps = iter(['2020-01-01T00:00:00+00:00', '2026-10-15T00:00:00+00:00'])
-
-    class Clock:
-        @staticmethod
-        def now(tz=None):
-            return SimpleNamespace(isoformat=lambda s=next(stamps): s)
-    monkeypatch.setattr(seal_mod, 'datetime', Clock)
-    first, second = make_seal(files), make_seal(files)
-    assert first['timestamp'] != second['timestamp']
-    assert first['seal_hash'] == second['seal_hash']
+@pytest.mark.parametrize('field', ['python_version', 'platform',
+                                   'package_versions'])
+def test_seal_hash_binds_the_environment(files, frozen, monkeypatch, field):
+    base = make_seal(files)
+    monkeypatch.setattr(seal_mod, 'runner_environment',
+                        lambda: {**ENVIRONMENT, field: 'other'})
+    assert make_seal(files)['seal_hash'] != base['seal_hash']
 
 
-@pytest.mark.finding('T3-48')
-def test_seal_has_no_expected_values_component(files, frozen):
-    # Current behaviour: no expected values are sealed; they are computed
-    # after the seal. Correct (R1.1): the expected values are hashed too.
-    assert not any('expected' in k for k in make_seal(files))
+@pytest.mark.req('R1.1')
+def test_seal_expected_values_hashed_canonically(files, frozen):
+    # T3-48: the ground-truth results, Decimals as their exact strings.
+    values = {'Q02': {'final': Decimal('1.50'), 'derivable': True},
+              'Q01': {'final': None, 'derivable': False}}
+    record = make_seal(files, expected_values=values)
+    assert record['expected_values_hash'] == canon(
+        {'Q01': {'derivable': False, 'final': None},
+         'Q02': {'derivable': True, 'final': '1.50'}})
+
+
+def test_seal_empty_expected_values_are_sealed_as_such(files, frozen):
+    assert make_seal(files, expected_values={})['expected_values_hash'] \
+        == canon({})
+
+
+@pytest.mark.parametrize('bad', [1.5, object()])
+def test_seal_unhashable_expected_values_refused(files, frozen, bad):
+    with pytest.raises(SealError) as exc:
+        make_seal(files, expected_values={'Q01': {'final': bad}})
+    assert str(exc.value).startswith('expected values cannot be sealed: ')
+
+
+def test_seal_hashes_the_loaded_bytes_not_the_files(files, frozen):
+    # T3-72: what the run read and executes is what is sealed; the files
+    # are not read again.
+    loaded = {'fixture': b'{"a": 1}\n', 'questions': b'q\r\n',
+              'ground_truth': b'\xef\xbb\xbfg\n'}
+    for path in files.paths.values():
+        if path != files.paths['ap1_text']:
+            path.write_bytes(b'changed on disk')
+    record = make_seal(files, loaded=loaded)
+    assert record['fixture_hash'] == sha(b'{"a": 1}\n')
+    assert record['questions_hash'] == sha(b'q\n')
+    assert record['ground_truth_hash'] == sha(b'g\n')
+
+
+def test_seal_reads_a_file_not_in_loaded(files, frozen):
+    record = make_seal(files, loaded={'fixture': b'x'})
+    assert record['fixture_hash'] == sha(b'x')
+    assert record['questions_hash'] == files.hashes['questions']
+
+
+# -- text_hash, record_hash --------------------------------------------------
+
+@pytest.mark.parametrize('data, same_as', [
+    (b'a\nb\n', b'a\nb\n'), (b'a\r\nb\r\n', b'a\nb\n'),
+    (b'a\rb\r', b'a\nb\n'), (b'a\r\r\nb', b'a\n\nb'),
+    (b'\xef\xbb\xbfa\n', b'a\n'), (b'a\xef\xbb\xbf', b'a\xef\xbb\xbf'),
+    (b'\xef\xbb\xbf\xef\xbb\xbfa', b'\xef\xbb\xbfa'), (b'', b'')])
+def test_text_hash_lf_and_no_leading_bom(data, same_as):
+    assert seal_mod.text_hash(data) == sha(same_as)
+
+
+def test_text_file_hash_reads_the_file(tmp_path):
+    path = tmp_path / 'f'
+    path.write_bytes(b'x\r\n')
+    assert seal_mod.text_file_hash(str(path)) == sha(b'x\n')
+
+
+def test_record_hash_is_every_field_but_seal_hash():
+    record = {'timestamp': 't', 'a': [1], 'seal_hash': 'anything'}
+    assert seal_mod.record_hash(record) == canon({'timestamp': 't',
+                                                  'a': [1]})
 
 
 # -- seal(): the AP-1 text hash -------------------------------------------
 
 def test_seal_ap1_text_matching_declared_hash_recorded(files, frozen):
-    config = {**CONFIG, 'ap1_text_hash': files.hashes['ap1_text']}
-    record = make_seal(files, config=config,
-                       ap1_text_path=files.paths['ap1_text'])
+    record = make_seal(files, ap1_text_path=files.paths['ap1_text'])
     assert record['ap1_text_hash'] == files.hashes['ap1_text']
+
+
+def test_seal_ap1_text_hashed_as_raw_bytes(files, frozen):
+    # The AP-1 text must equal the publisher's deposit: no normalisation.
+    crlf = b'AP-1\r\n'
+    files.paths['ap1_text'].write_bytes(crlf)
+    record = make_seal(files, config={**CONFIG, 'ap1_text_hash': sha(crlf)})
+    assert record['ap1_text_hash'] == sha(crlf) != text_sha(crlf)
 
 
 @pytest.mark.req('R1.1')
@@ -183,30 +278,23 @@ def test_seal_ap1_text_missing_file_raises(files, frozen, tmp_path):
     assert str(exc.value) == f'AP-1 text file not found: {missing}'
 
 
-@pytest.mark.finding('T3-68')
 @pytest.mark.parametrize('declared', ['placeholder', '', None])
-def test_seal_ap1_text_placeholder_or_blank_declared_hash_accepted(
-        files, frozen, declared):
-    # Current behaviour: a declared hash of 'placeholder', '' or none at
-    # all accepts any AP-1 text and records the file's hash. Correct: a
-    # sealed run requires a real declared hash that matches.
-    config = dict(CONFIG)
+def test_seal_no_declared_ap1_hash_message(files, frozen, declared):
+    config = {k: v for k, v in CONFIG.items() if k != 'ap1_text_hash'}
     if declared is not None:
         config['ap1_text_hash'] = declared
-    record = make_seal(files, config=config,
-                       ap1_text_path=files.paths['ap1_text'])
-    assert record['ap1_text_hash'] == files.hashes['ap1_text']
+    with pytest.raises(SealError) as exc:
+        make_seal(files, config=config)
+    assert str(exc.value) == (
+        f'AP-1 text hash: the config declares {declared!r}; a sealed run '
+        f'needs the SHA-256 of the AP-1 text it claims (R1.1)')
 
 
-@pytest.mark.finding('T3-68', 'T3-17')
-@pytest.mark.parametrize('path', [None, ''])
-def test_seal_no_ap1_text_path_records_declared_hash_unverified(
-        files, frozen, path):
-    # Current behaviour: with no text path the declared hash is copied
-    # into the record without any check. Correct: the text is required.
-    config = {**CONFIG, 'ap1_text_hash': 'anything'}
-    record = make_seal(files, config=config, ap1_text_path=path)
-    assert record['ap1_text_hash'] == 'anything'
+def test_seal_no_ap1_text_path_message(files, frozen):
+    with pytest.raises(SealError) as exc:
+        make_seal(files, ap1_text_path=None)
+    assert str(exc.value) == ('AP-1 text: no file given; a sealed run '
+                              'hashes the AP-1 text it claims (R1.1)')
 
 
 # -- verify_seal() ----------------------------------------------------------
@@ -218,6 +306,12 @@ def verify(record, files, config=CONFIG, **kwargs):
 def test_verify_seal_unchanged_inputs_returns_true(files, frozen):
     record = make_seal(files, ap1_text_path=files.paths['ap1_text'])
     assert verify(record, files, ap1_text_path=files.paths['ap1_text']) is True
+
+
+def test_verify_seal_same_text_other_line_endings_returns_true(files, frozen):
+    record = make_seal(files)
+    files.paths['fixture'].write_bytes(b'\xef\xbb\xbf{"accounts": []}\r')
+    assert verify(record, files) is True
 
 
 @pytest.mark.req('R1.1')
@@ -252,6 +346,17 @@ def test_verify_seal_changed_ap1_text_raises(files, frozen, tmp_path):
         f"sealed={files.hashes['ap1_text']!r}, current={sha(b'x')!r}")
 
 
+def test_verify_seal_ap1_text_compared_with_declared_hash(files, frozen):
+    # Without a path, the sealed text hash is still compared with the
+    # hash the config declares.
+    record = make_seal(files)
+    config = {**CONFIG, 'ap1_text_hash': 'e' * 64}
+    with pytest.raises(SealError) as exc:
+        verify(record, files, config=config)
+    assert f"  ap1_text: sealed={sha(AP1_TEXT)!r}, current={'e' * 64!r}" \
+        in str(exc.value).split('\n')
+
+
 def test_verify_seal_lists_every_mismatch_in_order(files, frozen):
     record = make_seal(files)
     files.paths['fixture'].write_bytes(b'1')
@@ -270,63 +375,66 @@ def test_verify_seal_missing_record_fields_are_mismatches(files):
     with pytest.raises(SealError) as exc:
         verify({}, files)
     msg = str(exc.value)
+    assert msg.split('\n')[1] == (
+        '  record: missing ' + ', '.join(seal_mod.SEALED_FIELDS))
+    assert msg.split('\n')[2] == (
+        f"  seal_hash: sealed=None, recomputed={canon({})!r}")
     for name in ('fixture', 'questions', 'ground_truth', 'config'):
         assert f'  {name}: sealed=None, current=' in msg
 
 
-@pytest.mark.finding('T3-17')
-def test_verify_seal_ap1_text_not_checked_without_path(files, frozen):
-    # Current behaviour: the AP-1 text is only compared if the caller
-    # passes its path. Correct: always verify the sealed text.
-    record = make_seal(files, ap1_text_path=files.paths['ap1_text'])
-    record['ap1_text_hash'] = 'tampered'
-    assert verify(record, files) is True
-
-
-@pytest.mark.finding('T3-17')
-@pytest.mark.parametrize('sealed, current', [('', 'doi'), ('doi', '')])
-def test_verify_seal_doi_skipped_when_either_side_blank(
-        files, frozen, sealed, current):
-    # Current behaviour: the DOI is compared only when both sides have
-    # one. Correct: a DOI present on one side only is a mismatch.
-    config = {**CONFIG, 'ap1_version_doi': sealed}
-    record = make_seal(files, config=config)
-    with pytest.raises(SealError) as exc:
-        verify(record, files, config={**config, 'ap1_version_doi': current})
-    # Only the config hash differs; no DOI line.
-    assert str(exc.value).count('\n') == 1
-    assert 'config: sealed=' in str(exc.value)
-
-
-@pytest.mark.finding('T3-17')
-def test_verify_seal_doi_skipped_when_record_has_no_doi_key(files, frozen):
+def test_verify_seal_rewritten_field_names_the_seal_hash(files, frozen):
     record = make_seal(files)
-    del record['ap1_version_doi']
-    assert verify(record, files) is True
+    record['ap1_version'] = '9.9'
+    with pytest.raises(SealError) as exc:
+        verify(record, files)
+    assert str(exc.value) == (
+        f"seal verification failed:\n  seal_hash: "
+        f"sealed={record['seal_hash']!r}, "
+        f"recomputed={seal_mod.record_hash(record)!r}")
 
 
-@pytest.mark.finding('T3-17')
-def test_verify_seal_doi_skipped_when_config_has_no_doi_key(files, frozen):
+def test_verify_seal_doi_missing_on_both_sides_matches(files, frozen):
     config = {k: v for k, v in CONFIG.items() if k != 'ap1_version_doi'}
     record = make_seal(files, config=config)
-    record['ap1_version_doi'] = 'doi'
     assert verify(record, files, config=config) is True
 
 
-@pytest.mark.finding('T3-17', 'T3-19')
-@pytest.mark.parametrize('field, value', [
-    ('seal_hash', '0' * 64), ('runner_source_hash', 'forged'),
-    ('verification_keys', ['k']), ('ev3_implemented', True),
-    ('ap1_version', '9.9'), ('runner_version_tag', 'v9'),
-    ('runner_version_commit', 'fff'), ('timestamp', '1970-01-01')])
-def test_verify_seal_ignores_fields_outside_its_checks(
-        files, frozen, field, value):
-    # Current behaviour: verify_seal never recomputes seal_hash and never
-    # looks at these fields, so any of them can be rewritten. Correct:
-    # recompute seal_hash over the record and compare every component.
-    record = make_seal(files)
-    record[field] = value
-    assert verify(record, files) is True
+def test_verify_seal_record_without_doi_named_once(files, frozen):
+    # The missing field is named; with no DOI in the config either, there
+    # is no DOI mismatch line besides.
+    config = {k: v for k, v in CONFIG.items() if k != 'ap1_version_doi'}
+    record = make_seal(files, config=config)
+    del record['ap1_version_doi']
+    with pytest.raises(SealError) as exc:
+        verify(record, files, config=config)
+    assert str(exc.value).split('\n')[1:] == [
+        '  record: missing ap1_version_doi',
+        f"  seal_hash: sealed={record['seal_hash']!r}, "
+        f"recomputed={seal_mod.record_hash(record)!r}"]
+
+
+def test_verify_seal_runner_source_hash_compared_when_given(files, frozen):
+    record = make_seal(files, runner_source_hash='a' * 64)
+    assert verify(record, files, runner_source_hash='a' * 64) is True
+    with pytest.raises(SealError) as exc:
+        verify(record, files, runner_source_hash='b' * 64)
+    assert str(exc.value) == (
+        "seal verification failed:\n  runner_source_hash: "
+        f"sealed={'a' * 64!r}, current={'b' * 64!r}")
+
+
+def test_verify_seal_expected_values_compared_when_given(files, frozen):
+    values = {'Q01': {'final': Decimal('2')}}
+    record = make_seal(files, expected_values=values)
+    assert verify(record, files, expected_values=values) is True
+    other = {'Q01': {'final': Decimal('3')}}
+    with pytest.raises(SealError) as exc:
+        verify(record, files, expected_values=other)
+    assert str(exc.value) == (
+        "seal verification failed:\n  expected_values: "
+        f"sealed={canon({'Q01': {'final': '2'}})!r}, "
+        f"current={canon({'Q01': {'final': '3'}})!r}")
 
 
 # -- perturbation_check -----------------------------------------------------
@@ -884,8 +992,6 @@ def _refused(fn):
 
 @pytest.mark.finding('T3-47')
 @pytest.mark.req('R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-47: seal_hash excludes the timestamp')
 def test_seal_hash_two_timestamps_give_two_hashes(files, monkeypatch):
     # Correct (AP-1 v1.3 §5.3 "hashed and timestamped before execution";
     # SPEC R1.1 "hash and timestamp"): the timestamp is bound by seal_hash,
@@ -904,16 +1010,13 @@ def test_seal_hash_two_timestamps_give_two_hashes(files, monkeypatch):
 @pytest.mark.finding('T3-68')
 @pytest.mark.req('R1.1')
 @pytest.mark.parametrize('declared', ['placeholder', '', None])
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-68: seal() accepts a 'placeholder', empty or "
-                          "missing declared AP-1 text hash")
 def test_seal_placeholder_or_blank_declared_ap1_hash_refused(
         files, frozen, declared):
     # Correct (SPEC R1.1 verification item 3: "A run claiming conformance
     # to an AP-1 text whose hash is absent from the record is refused"):
     # without a real declared hash there is nothing to check the text
     # against, so the seal is refused.
-    config = dict(CONFIG)
+    config = {k: v for k, v in CONFIG.items() if k != 'ap1_text_hash'}
     if declared is not None:
         config['ap1_text_hash'] = declared
     error = _refused(lambda: make_seal(
@@ -925,9 +1028,6 @@ def test_seal_placeholder_or_blank_declared_ap1_hash_refused(
 @pytest.mark.finding('T3-68')
 @pytest.mark.req('R1.1')
 @pytest.mark.parametrize('path', [None, ''])
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-68: seal() without an AP-1 text path records '
-                          'the declared hash unverified')
 def test_seal_without_ap1_text_path_refused(files, frozen, path):
     # Correct (SPEC R1.1 verification item 3): the AP-1 text is a required
     # sealed input; a declared hash that no file was hashed against is
@@ -951,9 +1051,6 @@ SEALED_FIELDS = [
 @pytest.mark.finding('T3-17', 'T3-19', 'T3-47')
 @pytest.mark.req('R1.1')
 @pytest.mark.parametrize('field, value', SEALED_FIELDS)
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-17: verify_seal ignores seal_hash and the '
-                          'fields outside its four file/config checks')
 def test_verify_seal_any_rewritten_field_refused_naming_it(
         files, frozen, field, value):
     # Correct (SPEC R1.1: "Modifying any sealed input causes the scorer to
@@ -972,9 +1069,6 @@ def test_verify_seal_any_rewritten_field_refused_naming_it(
 @pytest.mark.req('R1.1')
 @pytest.mark.parametrize('field', [k for k, _ in SEALED_FIELDS
                                    if k != 'seal_hash'] + ['ap1_version_doi'])
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-17: verify_seal accepts a record with a sealed '
-                          'field deleted')
 def test_verify_seal_deleted_field_refused(files, frozen, field):
     # Correct: a record missing a field the seal always writes is not a
     # valid record (SPEC R1.1 "A run that starts without a valid record is
@@ -988,9 +1082,6 @@ def test_verify_seal_deleted_field_refused(files, frozen, field):
 @pytest.mark.finding('T3-17')
 @pytest.mark.req('R1.1')
 @pytest.mark.parametrize('sealed, current', [('', 'doi'), ('doi', '')])
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-17: the DOI is compared only when both sides '
-                          'have one')
 def test_verify_seal_doi_on_one_side_only_named_as_mismatch(
         files, frozen, sealed, current):
     # Correct: a DOI present on one side only is a DOI mismatch, named as
@@ -1024,9 +1115,6 @@ VARIANTS = {'crlf': LF_TEXT.replace(b'\n', b'\r\n'),
 @pytest.mark.req('R0.4.3')
 @pytest.mark.parametrize('name', ['fixture', 'questions', 'ground_truth'])
 @pytest.mark.parametrize('variant', sorted(VARIANTS))
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-50: sealed file hashes depend on line endings '
-                          'and a BOM')
 def test_seal_text_input_hash_independent_of_line_endings_and_bom(
         files, frozen, name, variant):
     files.paths[name].write_bytes(LF_TEXT)

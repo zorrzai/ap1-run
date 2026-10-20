@@ -180,9 +180,6 @@ def report_seal_record(out):
 @pytest.mark.parametrize('name, word', [
     ('fixture.json', 'fixture'), ('questions.json', 'questions'),
     ('ground_truth_example.py', 'ground_truth')])
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-17: verify_seal is never called; a sealed input '
-                          'changed after sealing goes unnoticed')
 def test_run_sealed_input_changed_after_seal_refused_naming_it(
         runner, fixture_dir, name, word):
     # Correct (SPEC R1.1 verification item 1: "Modifying any sealed input
@@ -205,8 +202,6 @@ def test_run_sealed_input_changed_after_seal_refused_naming_it(
 
 @pytest.mark.finding('T3-48')
 @pytest.mark.req('R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-48: the seal has no expected-values component')
 def test_run_seal_record_binds_expected_values(runner, fixture_dir):
     # Correct (SPEC R1.1: "hash and timestamp the fixture, question set,
     # expected values, ground-truth module, ..."; AP-1 v1.3 §13.4): the
@@ -223,9 +218,6 @@ def test_run_seal_record_binds_expected_values(runner, fixture_dir):
 
 @pytest.mark.finding('T3-72')
 @pytest.mark.req('R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-72: the seal re-reads the fixture from disk '
-                          'after the run has loaded it')
 def test_run_fixture_changed_between_load_and_seal_sealed_as_executed(
         runner, fixture_dir):
     # Correct (SPEC R1.1, seal what is executed): the fixture hash in the
@@ -247,9 +239,6 @@ def test_run_fixture_changed_between_load_and_seal_sealed_as_executed(
 
 @pytest.mark.finding('T3-72')
 @pytest.mark.req('R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-72: gt_module.__file__ is never compared with '
-                          'the sealed ground-truth path')
 def test_run_ground_truth_executed_from_other_file_refused_or_sealed(
         runner, fixture_dir):
     # Correct (SPEC R1.1; T3-72): the ground-truth module the run executes
@@ -277,9 +266,6 @@ def test_run_ground_truth_executed_from_other_file_refused_or_sealed(
 
 @pytest.mark.finding('F2', 'T3-70')
 @pytest.mark.req('R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F2: the seal records no Python version, platform '
-                          'or package versions')
 def test_run_seal_record_carries_environment_fields(runner, fixture_dir):
     # Correct (Steven's ruling, choices-for-marcus.md entry 6): Python
     # version, platform and package versions are recorded in the seal as
@@ -317,9 +303,6 @@ def test_run_v12_config_seals_the_v12_text(runner, fixture_dir):
 @pytest.mark.finding('V12-4', 'T3-68')
 @pytest.mark.req('R1.1')
 @pytest.mark.parametrize('declared', ['placeholder', ''])
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-4: a v1.2 label is sealed over the v1.3 text '
-                          'when the declared hash is blank or placeholder')
 def test_run_v12_label_never_sealed_over_v13_text(runner, fixture_dir,
                                                   declared):
     # Correct (V12-4): the seal never says "v1.2" over the v1.3 text. The

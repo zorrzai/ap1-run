@@ -412,3 +412,47 @@ def test_resolve_version_short_commit_prefix_is_modified(tmp_path, git,
         warnings.simplefilter('ignore')
         result = resolve_runner_version(str(tmp_path))
     assert result['version_modified'] is True
+
+
+# -- runner_environment (F2) ----------------------------------------------
+
+def test_runner_environment_fields(monkeypatch):
+    monkeypatch.setattr(version.platform, 'python_implementation',
+                        lambda: 'PyPy')
+    monkeypatch.setattr(version.platform, 'python_version', lambda: '3.99.1')
+    monkeypatch.setattr(version.platform, 'platform', lambda: 'TestOS-7-x')
+    versions = {'ap1-run': '1.2.3', 'requests': '2.0'}
+    monkeypatch.setattr(version.importlib.metadata, 'version',
+                        versions.__getitem__)
+    assert version.runner_environment() == {
+        'python_version': 'PyPy 3.99.1', 'platform': 'TestOS-7-x',
+        'package_versions': 'ap1-run 1.2.3, requests 2.0'}
+
+
+def test_runner_environment_package_not_installed(monkeypatch):
+    def fake(name):
+        if name == 'ap1-run':
+            raise version.importlib.metadata.PackageNotFoundError(name)
+        return '2.1'
+    monkeypatch.setattr(version.importlib.metadata, 'version', fake)
+    assert version.runner_environment()['package_versions'] == \
+        'ap1-run not installed, requests 2.1'
+
+
+def test_runner_environment_real_values():
+    import platform
+    env = version.runner_environment()
+    assert env['python_version'] == (
+        f'{platform.python_implementation()} {platform.python_version()}')
+    assert env['platform'] == platform.platform()
+
+
+def test_recorded_packages_are_the_runner_and_its_dependencies():
+    # The runner's distribution and pyproject.toml's runtime dependencies.
+    import pathlib
+    import tomllib
+    pyproject = tomllib.loads((pathlib.Path(__file__).resolve().parents[3]
+                               / 'pyproject.toml').read_text('utf-8'))
+    project = pyproject['project']
+    assert version.RECORDED_PACKAGES == (
+        project['name'], *project['dependencies'])

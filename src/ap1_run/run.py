@@ -33,7 +33,6 @@ NOTE ON REASONING MODELS:
   suggests, but this runner targets /v1/chat/completions only.
 """
 
-import json
 import os
 import sys
 import time
@@ -46,6 +45,10 @@ from ap1_run.execution.engine import execute_item
 from ap1_run.execution.perturbation_guard import HELD_CONSTANT
 from ap1_run.execution.seal import (
     perturbation_check, seal as create_seal, source_fields_check,
+    verify_seal,
+)
+from ap1_run.execution.sealed_inputs import (
+    compute_expected_values, read_inputs, sealed_compute,
 )
 from ap1_run.execution.seal_constants import declared_constants_check
 from ap1_run.execution.version import (
@@ -120,15 +123,15 @@ def main(argv=None):
     # -- Sampling overrides: AP1_SMOKE_TEMPERATURE, AP1_SMOKE_REASONING_EFFORT --
     apply_sampling_overrides(config)
 
-    with open(os.path.join(fixture_dir, 'fixture.json'), 'r', encoding='utf-8') as f:
-        fixture = json.load(f)
-
-    with open(os.path.join(fixture_dir, 'questions.json'), 'r', encoding='utf-8') as f:
-        questions = json.load(f)
-
-    # -- Load ground-truth module --
+    # -- Load the inputs: each file is read once; the bytes read are the
+    # bytes sealed and executed (T3-72). The ground-truth module is loaded
+    # from ground_truth_example.py itself, not through the import path.
+    # The fixture directory stays on sys.path for calculator_tool.
     sys.path.insert(0, fixture_dir)
-    import ground_truth_example as gt_module
+    inputs = read_inputs(fixture_dir)
+    fixture = inputs.fixture
+    questions = inputs.questions
+    gt_module = inputs.ground_truth
 
     # -- Output directory --
     output_dir = args.output_dir
@@ -182,19 +185,32 @@ def main(argv=None):
           'declared constants)')
     print()
 
+    # -- Expected values: computed once, sealed, and scored against (T3-48)
+    expected_values = compute_expected_values(gt_module, fixture, questions)
+
     # -- SEAL: R1.1 pre-registration record --
     # The real seal, not a sentinel. A live run without a valid seal
     # is refused, exactly as R1.1 requires.
     ap1_text_path = args.ap1_text
-    seal_record = create_seal(
+    seal_inputs = dict(
         config=config,
-        fixture_path=os.path.join(fixture_dir, 'fixture.json'),
-        questions_path=os.path.join(fixture_dir, 'questions.json'),
-        ground_truth_path=os.path.join(fixture_dir, 'ground_truth_example.py'),
+        fixture_path=inputs.paths['fixture'],
+        questions_path=inputs.paths['questions'],
+        ground_truth_path=inputs.paths['ground_truth'],
         ap1_text_path=ap1_text_path,
-        runner_source_hash=runner_source_hash,
     )
+    seal_record = create_seal(
+        **seal_inputs, runner_source_hash=runner_source_hash,
+        expected_values=expected_values, loaded=inputs.data)
     seal_hash = seal_record['seal_hash']
+
+    def check_seal():
+        # R1.1: the sealed inputs are verified before the run sends any
+        # request and again before its results are reported; any change
+        # since the seal refuses the run, naming it (T3-17).
+        verify_seal(seal_record, **seal_inputs,
+                    runner_source_hash=runner_source_hash,
+                    expected_values=expected_values)
     print(f'Seal hash: {seal_hash}')
     print(f'AP-1 text hash: {seal_record["ap1_text_hash"]}')
     print()
@@ -225,6 +241,9 @@ def main(argv=None):
         config, os.path.join(fixture_dir, 'fixture.json'),
         system_prompt_base, system_prompt_removed, tools, sampling)
 
+    check_seal()
+    ground_truth_compute = sealed_compute(expected_values)
+
     # -- Collector for all findings --
     findings = Findings()
 
@@ -238,7 +257,7 @@ def main(argv=None):
         for item in items:
             item_id = item['id']
             ctx = build_delivered_context(fixture, item['source_accounts'])
-            gt = gt_module.compute(item_id, ctx)
+            gt = ground_truth_compute(item_id, ctx)
 
             # Check derivability
             if not gt.get('derivable', True):
@@ -259,7 +278,7 @@ def main(argv=None):
                         condition=condition,
                         config=config,
                         fixture=fixture,
-                        ground_truth_compute=gt_module.compute,
+                        ground_truth_compute=ground_truth_compute,
                         adapter_send=adapter_send,
                         system_prompt=arm['system_prompt'],
                         tools=arm['tools'],
@@ -296,6 +315,9 @@ def main(argv=None):
 
                 # Brief delay to avoid rate limiting
                 time.sleep(0.5)
+
+    # -- The seal again, before anything is reported (T3-17) --
+    check_seal()
 
     # -- Consistency check (FATAL on mismatch) --
     verify_invocation_consistency(findings.all_results)

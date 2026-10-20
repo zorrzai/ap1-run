@@ -373,8 +373,9 @@ src/ap1_run/
     numeric.py               Decimal arithmetic, token grammar, canonical hashing
   execution/                 SPEC Layer 1
     seal.py                  pre-registration: hash and timestamp before any request
+    sealed_inputs.py         reads each sealed input once; the expected values
     seal_constants.py        declared-constant checks on the ground-truth module
-    version.py               runner version and source hash
+    version.py               runner version, source hash and environment
     engine.py                execution loop
     context.py               delivered-context construction
     perturbation_guard.py    refuses a condition that varies more than one quantity
@@ -487,9 +488,24 @@ The correction was made for cause; the sealed state is not restored.
 The verifier reports this mismatch with the E3 reference and exits
 non-zero.
 
-**Line endings.** `file_hash()` hashes raw bytes. `.gitattributes` forces
-LF on all sealed files; the sealed hashes were computed against LF bytes
-and reproduce on any platform.
+**Line endings.** Since October 2026 the fixture, the questions and the
+ground-truth module are hashed with LF line endings and without a UTF-8
+byte-order mark, so the same text gives the same hash on every platform and
+in every editor (an LF file without a BOM hashes as its raw bytes). The AP-1
+text is hashed as raw bytes: it must equal the publisher's deposit, and
+`.gitattributes` checks `reference/` out unconverted. Seals made before then
+(the published runs) hashed raw bytes, and their ground-truth module was
+hashed with CRLF line endings (FINDINGS_ERRATA N2); the verifier checks such
+a record under those rules.
+
+**What a seal binds.** Since October 2026 a record (`seal_format` 2) also
+binds the run's timestamp, the expected values (what the ground-truth module
+returned for each item, computed before the seal and scored against), and
+the environment: `python_version`, `platform` and `package_versions`, which
+are outside `runner_source_hash`. A run refuses to seal without the AP-1 text
+and a declared hash for it. Before the first request, and again before it
+reports, the run verifies its seal against its inputs and refuses, naming the
+input, if any has changed.
 
 | Hash | Source | Proves |
 |------|--------|--------|
@@ -497,6 +513,7 @@ and reproduce on any platform.
 | `fixture_hash` | `example/fixture.json` | Financial data unchanged |
 | `questions_hash` | `example/questions.json` | Question set unchanged |
 | `ground_truth_hash` | `example/ground_truth_example.py` | Ground-truth module unchanged (see E3) |
+| `expected_values_hash` | the ground-truth module's results | Expected values as scored (records with `seal_format` only) |
 | `ap1_text_hash` | `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` | AP-1 standard text unchanged |
 | `seal_hash` | All of the above | Composite integrity |
 

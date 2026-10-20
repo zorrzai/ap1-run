@@ -4,7 +4,9 @@ Reads the VERSION file (authoritative, present in clones and tarballs).
 Cross-checks against git when available. Computes a hash over the code
 that runs (the .py files of the ap1_run package under src/, and VERSION)
 for seal inclusion. Tests, tools, examples and anything else in the clone
-(an in-tree venv, scratch files) are outside it (F2, T3-70).
+(an in-tree venv, scratch files) are outside it (F2, T3-70); the Python
+version, platform and package versions are recorded as separate seal
+fields (runner_environment).
 
 KNOWN LIMIT (scenario 3): a party who modifies the runner source and
 distributes it as a zip without .git, without editing the VERSION file,
@@ -15,7 +17,9 @@ requires out-of-band comparison against a published manifest.
 """
 
 import hashlib
+import importlib.metadata
 import os
+import platform
 import subprocess
 import warnings
 
@@ -26,6 +30,10 @@ MIN_COMMIT_PREFIX = 7
 # What runner_source_hash covers, relative to the repository root.
 SOURCE_PACKAGE = os.path.join('src', 'ap1_run')
 VERSION_FILE = 'VERSION'
+
+# The packages whose versions the seal records (F2): the runner's own
+# distribution and its runtime dependencies (pyproject.toml).
+RECORDED_PACKAGES = ('ap1-run', 'requests')
 
 
 def resolve_runner_version(base_dir):
@@ -131,3 +139,22 @@ def compute_runner_source_hash(base_dir):
             h.update(f.read())
         h.update(b'\x00')
     return h.hexdigest()
+
+
+def runner_environment():
+    """The environment a run executes in, recorded in the seal as fields
+    of their own, outside runner_source_hash (F2): the Python
+    implementation and version, the platform, and the installed versions
+    of RECORDED_PACKAGES ('<name> <version>', or '<name> not installed')."""
+    packages = []
+    for name in RECORDED_PACKAGES:
+        try:
+            packages.append(f'{name} {importlib.metadata.version(name)}')
+        except importlib.metadata.PackageNotFoundError:
+            packages.append(f'{name} not installed')
+    return {
+        'python_version': (f'{platform.python_implementation()} '
+                           f'{platform.python_version()}'),
+        'platform': platform.platform(),
+        'package_versions': ', '.join(packages),
+    }

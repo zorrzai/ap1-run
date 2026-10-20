@@ -65,10 +65,13 @@ run it at both commits and diff the two directories.
 - ISO and epoch timestamps;
 - this run's `seal_hash`, `config_hash` and `runner_source_hash`, read from
   the seal the run actually made. The config hash covers the mock's port. The
-  source hash covers the code, so it changes whenever files move.
+  source hash covers the code, so it changes whenever files move. The seal
+  hash covers the timestamp, so it changes on every run;
+- the seal's environment fields in `report.md` §1 (`python_version`,
+  `platform`, `package_versions`), which depend on the machine.
 
-The fixture, questions, ground-truth and AP-1 text hashes are kept, and so
-they are pinned.
+The fixture, questions, ground-truth, expected-values and AP-1 text hashes
+are kept, and so they are pinned.
 
 ## Running it
 

@@ -59,15 +59,15 @@ def test_seal_with_spec_hash_records_spec_as_the_ap1_text(loaded):
 
 
 @pytest.mark.finding('F7', 'T3-68')
-def test_seal_without_spec_md_seals_no_text(loaded, tmp_path, monkeypatch):
-    # With no docs/SPEC.md the task seals with ap1_text_path=None: the
-    # declared hash is recorded unverified. Correct: refuse without the
-    # AP-1 text.
+def test_seal_without_spec_md_refused(loaded, tmp_path, monkeypatch):
+    # With no docs/SPEC.md the task seals with ap1_text_path=None, which
+    # seal() refuses since T3-68: the AP-1 text is a required sealed input.
+    # (F7, the task hashing SPEC.md, is not fixed here.)
     config, fixture, questions, fp, qp, gp = loaded
     monkeypatch.setattr(task, '_RUNNER_DIR', str(tmp_path))
-    record = task._create_seal(dict(config, ap1_text_hash='not-a-hash'),
-                               fp, qp, gp)
-    assert record['ap1_text_hash'] == 'not-a-hash'
+    with pytest.raises(SealError, match='^AP-1 text: no file given'):
+        task._create_seal(dict(config, ap1_text_hash='not-a-hash'),
+                          fp, qp, gp)
 
 
 @pytest.mark.finding('T3-44')
