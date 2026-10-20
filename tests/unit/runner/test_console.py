@@ -268,3 +268,20 @@ def test_run_report_single_execution(capsys):
         '      route divergence (item answer correct):      0\n'
         '      item answer incorrect:                       0\n'
         '      item answer undetermined (adjudicated):      1\n')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+import pytest  # noqa: E402
+
+
+@pytest.mark.finding('F3', 'T3-80')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='F3: section 3h2 prints a literal backslash-n')
+def test_run_report_section_3h2_heading_starts_after_a_blank_line(capsys):
+    # Steven's ruling (choices-for-marcus entry 4): the literal "\n" is
+    # fixed; 3h2 is laid out like every other section heading.
+    out = run_report(capsys, [], conditions=['base'])
+    assert '\\n' not in out
+    assert '    failure rate: no observations\n\n3h2. D7.3 TRANSCRIPTION:\n' \
+        in out
