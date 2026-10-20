@@ -31,6 +31,12 @@ runner's context, precision 50, never through float; `0.1 + 0.2` returns
 "numeric overflow": `9**9**9**9` is refused at once rather than running
 until memory or time runs out.
 
+In the live runner no calculator exception escapes: the execution engine
+catches every exception from the calculator and records it as that call's
+error return. Since step 5 of the 2026-10 reorganization the scoring code
+also takes the calculator's infinite, huge or NaN results (`inf` for
+`1e308*10`, `nan` for `1e308*10 - 1e308*10`) without aborting the run.
+
 ---
 
 ## 2. Perturbation check: fail-open exception handling

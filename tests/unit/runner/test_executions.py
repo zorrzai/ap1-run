@@ -17,7 +17,7 @@ from ap1_run.foundation import transcript
 from ap1_run.runner import executions
 from ap1_run.runner.executions import (
     Findings, apply_question_measurability, record_not_scored,
-    record_transport_failure, record_underivable, score_execution,
+    record_underivable, score_execution,
 )
 from ap1_run.scoring.provenance.classify import UNMEASURABLE_REASON
 
@@ -504,15 +504,26 @@ def test_record_underivable():
     assert findings.unmeasured_cells == []
 
 
-def test_record_transport_failure():
+@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.parametrize('result, cause', [
+    ({'error': 'rate limited (HTTP 429): x', 'cause': 'rate_limited'},
+     'rate_limited: rate limited (HTTP 429): x'),
+    ({'error': 'HTTP 500: boom', 'cause': 'transport_error'},
+     'transport_error: HTTP 500: boom'),
+    ({'error': 'empty response'}, 'empty response'),
+], ids=['rate-limited', 'transport', 'empty'])
+def test_record_not_scored_unmeasured_cell_cause(result, cause):
+    # F4/T3-65 (Steven, choices-for-marcus #7): every UNMEASURED cell is
+    # listed with its cause, the engine's kind first where it gives one.
     findings = Findings()
-    record_transport_failure(findings, 'Q05', 'base', 3, 'rate_limited')
+    record_not_scored(findings, 'Q05', 'base', 3, 'UNMEASURED',
+                      dict(result, status='UNMEASURED'))
     assert findings.unmeasured_cells == [{'item_id': 'Q05',
                                           'condition': 'base', 'repeat': 3,
-                                          'cause': 'rate_limited'}]
+                                          'cause': cause}]
     assert findings.all_results == [{'item_id': 'Q05', 'condition': 'base',
                                      'repeat': 3, 'status': 'UNMEASURED',
-                                     'cause': 'rate_limited'}]
+                                     'cause': cause}]
 
 
 @pytest.mark.parametrize('result, cause', [
@@ -526,6 +537,7 @@ def test_record_not_scored(result, cause):
     assert findings.all_results == [{'item_id': 'Q06', 'condition': 'removed',
                                      'repeat': 1, 'status': 'VOID',
                                      'cause': cause}]
+    assert findings.unmeasured_cells == []
 
 
 def test_findings_start_empty_and_separate():
@@ -811,9 +823,6 @@ def test_score_execution_no_released_figure_recorded_as_null(fakes, tpath):
 
 
 @pytest.mark.finding('T3-65', 'F4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-65/F4: engine UNMEASURED results never reach '
-                          'unmeasured_cells')
 @pytest.mark.parametrize('error, word', [
     ('rate limited (HTTP 429): {"error": "Rate limit"}', 'rate'),
     ('transport failure after 3 attempts: reset', 'transport'),
