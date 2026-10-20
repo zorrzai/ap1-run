@@ -290,9 +290,6 @@ def test_run_report_says_demonstration_run_not_conformance_result(run):
 
 
 @pytest.mark.finding('T3-64')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-64: §6 shows '?' for Operation and Originated "
-                          'Operand')
 def test_run_report_originated_operand_audit_names_the_operand(run):
     # Q03's operand 81.0 is originated. Correct (SPEC R3.3, the D7.2
     # originated-operand listing): §6 names it, with no '?' column.

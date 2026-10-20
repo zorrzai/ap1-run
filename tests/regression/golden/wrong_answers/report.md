@@ -241,12 +241,12 @@ DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 11.1%
 
 ## 6. D7.2(a) Originated-Operand Audit
 
-| Item | Condition | Operation | Originated Operand | Expression | Resolution |
+| Item | Condition | Repeat | Originated Operand | Expression | Resolution |
 |---|---|---|---|---|---|
-| Q03 | base | ? | `?` | `2400 * (81.0 / 100) / 12` | originated |
-| Q03 | base | ? | `?` | `2400 * (81.0 / 100) / 12` | originated |
-| Q03 | instruction_removed | ? | `?` | `2400 * (81.0 / 100) / 12` | originated |
-| Q03 | instruction_removed | ? | `?` | `2400 * (81.0 / 100) / 12` | originated |
+| Q03 | base | 1 | `81.0` | `2400 * (81.0 / 100) / 12` | originated |
+| Q03 | base | 2 | `81.0` | `2400 * (81.0 / 100) / 12` | originated |
+| Q03 | instruction_removed | 1 | `81.0` | `2400 * (81.0 / 100) / 12` | originated |
+| Q03 | instruction_removed | 2 | `81.0` | `2400 * (81.0 / 100) / 12` | originated |
 
 ## 7. D7.2(b) Operation Correctness
 

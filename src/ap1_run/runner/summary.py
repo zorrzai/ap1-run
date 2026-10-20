@@ -308,6 +308,7 @@ def build_summary(all_results, evidence_findings, *,
                 originated_audit.append({
                     'item_id': r.get('item_id'),
                     'condition': r.get('condition'),
+                    'repeat': r.get('repeat'),
                     **orig,
                 })
         if reasons:

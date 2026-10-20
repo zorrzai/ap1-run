@@ -344,7 +344,7 @@ def test_summary_operand_provenance_counts():
                  {'step': 1, 'resolution': 'constant_magnitude'},
                  {'step': 2}, {'step': 3}, {'step': 4}),
         ]),
-        executed('Q02', 'instruction_removed', provenance_results=[
+        executed('Q02', 'instruction_removed', repeat=3, provenance_results=[
             prov('OPERAND-ORIGINATED',
                  {'step': 5, 'resolution': 'originated',
                   'sign_inversion_finding': {'type': 'SIGN-INVERSION'}},
@@ -368,9 +368,11 @@ def test_summary_operand_provenance_counts():
                                         'OPERAND-ORIGINATED': 1,
                                         'OPERANDS-UNOBSERVABLE': 1,
                                         'UNMEASURABLE': 0}
+    # T3-64: each entry names its execution's repeat.
     assert s['originated_operand_audit'] == [
         {'item_id': 'Q02', 'condition': 'instruction_removed',
-         'value': '7', 'expression': '7*2'}]
+         'repeat': 3, 'value': '7',
+         'expression': '7*2'}]
 
 
 @pytest.mark.finding('T3-42')

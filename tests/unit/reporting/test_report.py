@@ -736,36 +736,32 @@ def test_d72a_audit_without_entries_says_so():
         '*No originated operands detected.*\n')
 
 
-def test_d72a_audit_renders_operation_and_operand_fields():
+@pytest.mark.finding('T3-64')
+def test_d72a_audit_renders_the_live_entries():
+    # Fixed (T3-64): the columns are the fields build_summary writes; the
+    # operand is its literal, else its value.
     text = report._section_d72a_audit({'originated_operand_audit': [
-        {'item_id': 'Q03', 'condition': 'base', 'operation': 'mul',
-         'originated_operand': '81.0', 'expression': '2400 * 81.0',
+        {'item_id': 'Q03', 'condition': 'base', 'repeat': 2,
+         'value': '81.0', 'literal': '81.00', 'expression': '2400 * 81.00',
+         'resolution': 'originated'},
+        {'item_id': 'Q05', 'condition': 'instruction_removed', 'repeat': 1,
+         'value': '-25', 'expression': '2400 + -25',
          'resolution': 'originated'}]})
     assert text == md(
         '## 6. D7.2(a) Originated-Operand Audit\n',
-        '| Item | Condition | Operation | Originated Operand | '
+        '| Item | Condition | Repeat | Originated Operand | '
         'Expression | Resolution |',
         '|---|---|---|---|---|---|',
-        '| Q03 | base | mul | `81.0` | `2400 * 81.0` | originated |',
+        '| Q03 | base | 2 | `81.00` | `2400 * 81.00` | originated |',
+        '| Q05 | instruction_removed | 1 | `-25` | `2400 + -25` '
+        '| originated |',
         '')
 
 
-@pytest.mark.finding('T3-64')
-def test_d72a_audit_live_entries_render_question_marks():
-    # The live audit entries (runner/summary.build_summary) carry 'value'
-    # and 'literal', not 'operation' and 'originated_operand', so two
-    # columns read '?'. Correct: the operand shown, as §7b does.
-    text = report._section_d72a_audit({'originated_operand_audit': [
-        {'item_id': 'Q03', 'condition': 'base', 'value': '81.0',
-         'literal': '81.0', 'expression': '2400 * (81.0 / 100) / 12',
-         'resolution': 'originated', 'sign_inversion_finding': None}]})
-    assert ('| Q03 | base | ? | `?` | `2400 * (81.0 / 100) / 12` '
-            '| originated |') in text
-
-
-def test_d72a_audit_missing_fields_read_question_marks():
+def test_d72a_audit_missing_fields_read_dashes():
     text = report._section_d72a_audit({'originated_operand_audit': [{}]})
-    assert '| ? | ? | ? | `?` | `?` | ? |\n' in text
+    assert '| \u2014 | \u2014 | \u2014 | `\u2014` | `\u2014` | \u2014 |\n' \
+        in text
 
 
 # -- 7. D7.2(b) operation correctness -------------------------------------
@@ -1842,9 +1838,6 @@ def test_report_header_says_demonstration_run_not_conformance_result():
 
 
 @pytest.mark.finding('T3-64')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-64: §6 renders '?' for Operation and Operand "
-                          'with live audit entries')
 def test_d72a_audit_live_entries_show_the_operand():
     # The live entries (runner/summary.build_summary) carry 'value' and
     # 'literal'. Correct (SPEC R3.3 "the D7.2 originated-operand listing";

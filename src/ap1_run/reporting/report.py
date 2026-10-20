@@ -220,7 +220,7 @@ def _evidence_line(summary, figure):
     figure's own executions where the summary has them
     (d7_evidence[figure]), otherwise the run's evidence class counts."""
     classes = (summary.get('d7_evidence', {}).get(figure)
-               or summary.get('evidence_class_counts', {}))
+               or summary.get('evidence_class_counts'))
     if not classes:
         return None
     listed = ', '.join(f'`{ec}` ({c})' for ec, c in sorted(classes.items()))
@@ -497,17 +497,20 @@ def _section_d72a_audit(summary):
         lines.append('*No originated operands detected.*\n')
         return '\n'.join(lines)
 
-    lines.append('| Item | Condition | Operation | Originated Operand | '
+    # The entries are build_summary's (T3-64): the operand is its literal
+    # as written in the call (else its value); a missing field reads '—'
+    lines.append('| Item | Condition | Repeat | Originated Operand | '
                  'Expression | Resolution |')
     lines.append('|---|---|---|---|---|---|')
     for entry in audit:
+        operand = entry.get('literal') or entry.get('value') or '—'
         lines.append(
-            f'| {entry.get("item_id", "?")} '
-            f'| {entry.get("condition", "?")} '
-            f'| {entry.get("operation", "?")} '
-            f'| `{entry.get("originated_operand", "?")}` '
-            f'| `{entry.get("expression", "?")}` '
-            f'| {entry.get("resolution", "?")} |')
+            f'| {entry.get("item_id") or "—"} '
+            f'| {entry.get("condition") or "—"} '
+            f'| {entry.get("repeat") or "—"} '
+            f'| `{operand}` '
+            f'| `{entry.get("expression") or "—"}` '
+            f'| {entry.get("resolution") or "—"} |')
 
     lines.append('')
     return '\n'.join(lines)

@@ -241,32 +241,32 @@ DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 0.0%
 
 ## 6. D7.2(a) Originated-Operand Audit
 
-| Item | Condition | Operation | Originated Operand | Expression | Resolution |
+| Item | Condition | Repeat | Originated Operand | Expression | Resolution |
 |---|---|---|---|---|---|
-| Q01 | base | ? | `?` | ` 7777 * 3` | originated |
-| Q01 | base | ? | `?` | ` 7777 * 3` | originated |
-| Q01 | base | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
-| Q01 | base | ? | `?` | ` 7777 * 3` | originated |
-| Q01 | base | ? | `?` | ` 7777 * 3` | originated |
-| Q01 | base | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
-| Q09 | base | ? | `?` | `7777 * 3` | originated |
-| Q09 | base | ? | `?` | `7777 * 3` | originated |
-| Q09 | base | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
-| Q09 | base | ? | `?` | `7777 * 3` | originated |
-| Q09 | base | ? | `?` | `7777 * 3` | originated |
-| Q09 | base | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
-| Q01 | instruction_removed | ? | `?` | ` 7777 * 3` | originated |
-| Q01 | instruction_removed | ? | `?` | ` 7777 * 3` | originated |
-| Q01 | instruction_removed | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
-| Q01 | instruction_removed | ? | `?` | ` 7777 * 3` | originated |
-| Q01 | instruction_removed | ? | `?` | ` 7777 * 3` | originated |
-| Q01 | instruction_removed | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
-| Q09 | instruction_removed | ? | `?` | `7777 * 3` | originated |
-| Q09 | instruction_removed | ? | `?` | `7777 * 3` | originated |
-| Q09 | instruction_removed | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
-| Q09 | instruction_removed | ? | `?` | `7777 * 3` | originated |
-| Q09 | instruction_removed | ? | `?` | `7777 * 3` | originated |
-| Q09 | instruction_removed | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | base | 1 | `7777` | ` 7777 * 3` | originated |
+| Q01 | base | 1 | `3` | ` 7777 * 3` | originated |
+| Q01 | base | 1 | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | base | 2 | `7777` | ` 7777 * 3` | originated |
+| Q01 | base | 2 | `3` | ` 7777 * 3` | originated |
+| Q01 | base | 2 | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q09 | base | 1 | `7777` | `7777 * 3` | originated |
+| Q09 | base | 1 | `3` | `7777 * 3` | originated |
+| Q09 | base | 1 | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q09 | base | 2 | `7777` | `7777 * 3` | originated |
+| Q09 | base | 2 | `3` | `7777 * 3` | originated |
+| Q09 | base | 2 | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | instruction_removed | 1 | `7777` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | 1 | `3` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | 1 | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | instruction_removed | 2 | `7777` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | 2 | `3` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | 2 | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q09 | instruction_removed | 1 | `7777` | `7777 * 3` | originated |
+| Q09 | instruction_removed | 1 | `3` | `7777 * 3` | originated |
+| Q09 | instruction_removed | 1 | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q09 | instruction_removed | 2 | `7777` | `7777 * 3` | originated |
+| Q09 | instruction_removed | 2 | `3` | `7777 * 3` | originated |
+| Q09 | instruction_removed | 2 | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
 
 ## 7. D7.2(b) Operation Correctness
 

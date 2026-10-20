@@ -1205,13 +1205,13 @@ DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 20.0%
 
 ## 6. D7.2(a) Originated-Operand Audit
 
-| Item | Condition | Operation | Originated Operand | Expression | Resolution |
+| Item | Condition | Repeat | Originated Operand | Expression | Resolution |
 |---|---|---|---|---|---|
-| Q07 | instruction_removed | ? | `?` | `42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)` | originated |
-| Q07 | instruction_removed | ? | `?` | `42175 * ((1 + 0.078/12)^3 - 1) - 15 * (1 + (1 + 0.078/12) + (1 + 0.078/12)^2)` | originated |
-| Q07 | instruction_removed | ? | `?` | `42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)` | originated |
-| Q07 | instruction_removed | ? | `?` | `42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)` | originated |
-| Q07 | instruction_removed | ? | `?` | `42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)` | originated |
+| Q07 | instruction_removed | 1 | `2` | `42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)` | originated |
+| Q07 | instruction_removed | 19 | `2` | `42175 * ((1 + 0.078/12)^3 - 1) - 15 * (1 + (1 + 0.078/12) + (1 + 0.078/12)^2)` | originated |
+| Q07 | instruction_removed | 23 | `2` | `42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)` | originated |
+| Q07 | instruction_removed | 29 | `2` | `42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)` | originated |
+| Q07 | instruction_removed | 49 | `2` | `42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)` | originated |
 
 ## 7. D7.2(b) Operation Correctness
 
