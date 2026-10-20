@@ -415,3 +415,54 @@ def test_reproducibility_with_the_real_classifier_below_minimum():
 
 def test_reproducibility_of_nothing():
     assert classify_reproducibility({}, 3, None) == {}
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-34')
+@pytest.mark.req('R2.4', 'R3.3', 'AP-1 D7.2(a)(iii)')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-34: quantisation findings from provenance are '
+                          'dropped from the summary')
+def test_summary_collects_quantisation_findings():
+    # AP-1 v1.3 D7.2(a)(iii): "The quantised case is grounded and records a
+    # quantisation finding"; SPEC R3.3: the report contains "quantisation
+    # findings". report.py §11 reads summary['quantisation_findings']
+    # (item_id, operand, finding); build_summary never sets it.
+    summary = build_summary([executed('Q07', provenance_results=[{
+        'outcome': 'OPERANDS-GROUNDED',
+        'operand_resolutions': [{'operand_value': '274.14', 'step': 3,
+                                 'resolution': 'quantised_intermediate',
+                                 'quantisation_finding': True}],
+        'originated_operands': [],
+        'quantisation_findings': [{
+            'operand': '274.14', 'matched_intermediate': 'monthly_return',
+            'expression': '274.14 - 15'}]}])], [])
+    found = summary.get('quantisation_findings', [])
+    assert [(f.get('item_id'), f.get('operand')) for f in found] == [
+        ('Q07', '274.14')]
+
+
+@pytest.mark.finding('T3-34')
+@pytest.mark.req('R2.4', 'R3.3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-34: near-miss findings from provenance are '
+                          'dropped from the summary')
+def test_summary_collects_near_miss_findings():
+    # trace.py records a near_miss_finding on an operand equal to a prior
+    # return only after quantisation (ORIGINATED with a finding). report.py
+    # §11 lists summary['near_miss_findings']; build_summary never sets it.
+    summary = build_summary([executed('Q01', provenance_results=[{
+        'outcome': 'OPERAND-ORIGINATED',
+        'operand_resolutions': [{
+            'operand_value': '2.17', 'step': 5, 'resolution': 'originated',
+            'near_miss_finding': {'prior_return': '2.1714285714285713',
+                                  'quantised_to': '2.17', 'operand': '2.17',
+                                  'grounded': False}}],
+        'originated_operands': [{'value': '2.17', 'literal': '2.17',
+                                 'expression': '2.17 * 7',
+                                 'resolution': 'originated'}],
+        'quantisation_findings': []}])], [])
+    found = summary.get('near_miss_findings', [])
+    assert len(found) == 1 and '2.17' in str(found[0]) \
+        and 'Q01' in str(found[0])
