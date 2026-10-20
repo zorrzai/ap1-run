@@ -282,6 +282,8 @@ def build_summary(all_results, evidence_findings, *,
     originated_audit = []
     unmeasurable = []
     operands_unobservable = []
+    quantisation_findings = []
+    near_miss_findings = []
     for r in all_results:
         if r.get('status') != 'EXECUTED':
             continue
@@ -314,6 +316,18 @@ def build_summary(all_results, evidence_findings, *,
                         step_5_ungrounded_chain += 1
                     else:
                         step_5_untraceable += 1
+            # D7.2(a)(iii) quantisation findings and near misses, for
+            # report §11 (T3-34)
+            for qf in prov.get('quantisation_findings', []):
+                quantisation_findings.append(dict(
+                    _where(r), operand=qf.get('operand'),
+                    finding=f'grounded via intermediate '
+                            f'{qf.get("matched_intermediate")} only after '
+                            f'quantisation, in `{qf.get("expression")}`'))
+            for res in prov.get('operand_resolutions', []):
+                if res.get('near_miss_finding'):
+                    near_miss_findings.append(dict(
+                        _where(r), **res['near_miss_finding']))
             for orig in prov.get('originated_operands', []):
                 originated_audit.append({
                     'item_id': r.get('item_id'),
@@ -336,6 +350,8 @@ def build_summary(all_results, evidence_findings, *,
     summary['originated_operand_audit'] = originated_audit
     summary['provenance_unmeasurable'] = unmeasurable
     summary['operands_unobservable'] = operands_unobservable
+    summary['quantisation_findings'] = quantisation_findings
+    summary['near_miss_findings'] = near_miss_findings
 
     # Non-outcome cells
     non_outcome = []
@@ -353,8 +369,13 @@ def build_summary(all_results, evidence_findings, *,
     return summary
 
 
-def _cell(result, reason):
-    """A non-outcome cell of one execution: where it is, and why."""
+def _where(result):
+    """The execution a result belongs to."""
     return {'item_id': result.get('item_id'),
             'condition': result.get('condition'),
-            'repeat': result.get('repeat'), 'reason': reason}
+            'repeat': result.get('repeat')}
+
+
+def _cell(result, reason):
+    """A non-outcome cell of one execution: where it is, and why."""
+    return dict(_where(result), reason=reason)

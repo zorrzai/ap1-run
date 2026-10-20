@@ -1653,6 +1653,14 @@ Total operands resolved: 4860
 
 *No quantisation findings.*
 
+### Near-Miss Findings
+
+> Operand equal to an earlier return only after quantisation: ORIGINATED, with this finding.
+
+| Item | Condition | Repeat | Operand | Prior Return | Quantised To | Prior Call Grounded |
+|---|---|---|---|---|---|---|
+| Q05 | instruction_removed | 21 | `2436` | `2435.9999999999995` | `2436.00` | True |
+
 ## 12. Unmeasured Dimensions Declaration
 
 > A dimension not measured is declared, never omitted.

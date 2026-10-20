@@ -235,10 +235,6 @@ def test_run_auto_scored_responses_carry_one_section_6_8_outcome(
 @pytest.mark.finding('T3-34')
 @pytest.mark.req('R2.4', 'R3.3', 'AP-1 D7.2(a)(iii)')
 @pytest.mark.filterwarnings('ignore:VERSION file says')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-34: quantisation findings are computed and '
-                          'dropped; report §11 says "No quantisation '
-                          'findings"')
 def test_run_quantised_intermediate_operand_listed_in_report_section_11(
         tmp_path, monkeypatch):
     """Q07 chained through the 2-place quantised intermediates: 274.14
@@ -261,9 +257,6 @@ def test_run_quantised_intermediate_operand_listed_in_report_section_11(
 @pytest.mark.finding('T3-34')
 @pytest.mark.req('R2.4', 'R3.3')
 @pytest.mark.filterwarnings('ignore:VERSION file says')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-34: near-miss findings are computed and '
-                          'dropped; report §11 has no near-miss list')
 def test_run_near_miss_operand_listed_in_report_section_11(tmp_path,
                                                            monkeypatch):
     """Q01: the second call uses 2.17, the first call's return

@@ -121,6 +121,8 @@ EMPTY = {
     'provenance_unmeasurable': [],
     'operands_unobservable': [],
     'operation_unobservable': [],
+    'quantisation_findings': [],
+    'near_miss_findings': [],
     'non_outcome_cells': [],
 }
 
@@ -627,9 +629,6 @@ def test_reproducibility_of_nothing():
 
 @pytest.mark.finding('T3-34')
 @pytest.mark.req('R2.4', 'R3.3', 'AP-1 D7.2(a)(iii)')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-34: quantisation findings from provenance are '
-                          'dropped from the summary')
 def test_summary_collects_quantisation_findings():
     # AP-1 v1.3 D7.2(a)(iii): "The quantised case is grounded and records a
     # quantisation finding"; SPEC R3.3: the report contains "quantisation
@@ -651,9 +650,6 @@ def test_summary_collects_quantisation_findings():
 
 @pytest.mark.finding('T3-34')
 @pytest.mark.req('R2.4', 'R3.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-34: near-miss findings from provenance are '
-                          'dropped from the summary')
 def test_summary_collects_near_miss_findings():
     # trace.py records a near_miss_finding on an operand equal to a prior
     # return only after quantisation (ORIGINATED with a finding). report.py
@@ -776,3 +772,36 @@ def test_summary_d7_evidence_per_figure():
     ]
     assert build_summary(results, [])['d7_evidence'] == {
         'D7.2(b)': {EV2: 2}, 'D7.3': {EV2: 3, EV0: 1, '': 1}}
+
+
+@pytest.mark.finding('T3-34')
+def test_summary_findings_carry_the_execution_and_skip_unmeasurable():
+    near = {'prior_return': '2.17142', 'quantised_to': '2.17',
+            'operand': '2.17', 'grounded': False}
+    results = [
+        {'item_id': 'Q00', 'status': 'VOID', 'provenance_results': [
+            {'outcome': 'OPERANDS-GROUNDED', 'quantisation_findings': [
+                {'operand': '1'}]}]},
+        executed('Q07', 'instruction_removed', repeat=4, provenance_results=[
+            {'outcome': 'UNMEASURABLE', 'reason': 'chained',
+             'quantisation_findings': [{'operand': '9'}],
+             'operand_resolutions': [{'step': 5, 'near_miss_finding': near}]},
+            {'outcome': 'OPERANDS-GROUNDED', 'quantisation_findings': [
+                {'operand': '274.14', 'matched_intermediate': 'm',
+                 'expression': '274.14 - 15'},
+                {'operand': '259.14', 'matched_intermediate': 'n',
+                 'expression': '259.14 * 3'}],
+             'operand_resolutions': [{'step': 3}]},
+            {'outcome': 'OPERAND-ORIGINATED', 'operand_resolutions': [
+                {'step': 5, 'near_miss_finding': near},
+                {'step': 5, 'near_miss_finding': None}]}]),
+    ]
+    s = build_summary(results, [])
+    where = {'item_id': 'Q07', 'condition': 'instruction_removed',
+             'repeat': 4}
+    assert s['quantisation_findings'] == [
+        dict(where, operand='274.14', finding='grounded via intermediate m '
+             'only after quantisation, in `274.14 - 15`'),
+        dict(where, operand='259.14', finding='grounded via intermediate n '
+             'only after quantisation, in `259.14 * 3`')]
+    assert s['near_miss_findings'] == [dict(where, **near)]

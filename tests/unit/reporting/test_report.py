@@ -1336,27 +1336,38 @@ def test_quantisation_without_findings_says_so():
         '')
 
 
+@pytest.mark.finding('T3-34')
 def test_quantisation_findings_listed():
     text = report._section_quantisation({'quantisation_findings': [
-        {'item_id': 'Q04', 'operand': '0.0125', 'finding': 'rounded'}, {}]})
+        {'item_id': 'Q04', 'condition': 'base', 'repeat': 2,
+         'operand': '0.0125', 'finding': 'rounded'}, {}]})
     assert text == md(
         '## 11. Quantisation and Near-Miss Findings\n',
-        '| Item | Operand | Finding |',
-        '|---|---|---|',
-        '| Q04 | `0.0125` | rounded |',
-        '| ? | `?` | ? |',
+        '| Item | Condition | Repeat | Operand | Finding |',
+        '|---|---|---|---|---|',
+        '| Q04 | base | 2 | `0.0125` | rounded |',
+        '| \u2014 | \u2014 | \u2014 | `\u2014` | \u2014 |',
         '')
 
 
+@pytest.mark.finding('T3-34')
 def test_quantisation_near_miss_findings_listed():
     text = report._section_quantisation({'near_miss_findings': [
-        'Q07 near miss', 'Q08 near miss']})
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+         'operand': '2.17', 'prior_return': '2.1714', 'quantised_to': '2.17',
+         'grounded': True}, {}]})
     assert text == md(
         '## 11. Quantisation and Near-Miss Findings\n',
         '*No quantisation findings.*',
         '\n### Near-Miss Findings\n',
-        '- Q07 near miss',
-        '- Q08 near miss',
+        '> Operand equal to an earlier return only after quantisation: '
+        'ORIGINATED, with this finding.\n',
+        '| Item | Condition | Repeat | Operand | Prior Return | Quantised To '
+        '| Prior Call Grounded |',
+        '|---|---|---|---|---|---|---|',
+        '| Q01 | base | 1 | `2.17` | `2.1714` | `2.17` | True |',
+        '| \u2014 | \u2014 | \u2014 | `\u2014` | `\u2014` | `\u2014` | '
+        '\u2014 |',
         '')
 
 

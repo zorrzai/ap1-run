@@ -763,26 +763,47 @@ def _cell(value):
 
 
 def _section_quantisation(summary):
-    """Section 11: Quantisation and near-miss findings."""
+    """Section 11: Quantisation and near-miss findings (D7.2(a)(iii);
+    SPEC R2.4, R3.3; T3-34).
+
+    A quantisation finding is an operand grounded on a reference
+    intermediate only after the declared quantisation. A near miss is an
+    operand equal to an earlier call's return only after quantisation:
+    it stays ORIGINATED, with the finding recorded.
+    """
     lines = ['## 11. Quantisation and Near-Miss Findings\n']
 
     quant = summary.get('quantisation_findings', [])
     if quant:
-        lines.append('| Item | Operand | Finding |')
-        lines.append('|---|---|---|')
+        lines.append('| Item | Condition | Repeat | Operand | Finding |')
+        lines.append('|---|---|---|---|---|')
         for qf in quant:
             lines.append(
-                f'| {qf.get("item_id", "?")} '
-                f'| `{qf.get("operand", "?")}` '
-                f'| {qf.get("finding", "?")} |')
+                f'| {_cell(qf.get("item_id"))} '
+                f'| {_cell(qf.get("condition"))} '
+                f'| {_cell(qf.get("repeat"))} '
+                f'| `{_cell(qf.get("operand"))}` '
+                f'| {_cell(qf.get("finding"))} |')
     else:
         lines.append('*No quantisation findings.*')
 
     near_miss = summary.get('near_miss_findings', [])
     if near_miss:
         lines.append('\n### Near-Miss Findings\n')
+        lines.append('> Operand equal to an earlier return only after '
+                     'quantisation: ORIGINATED, with this finding.\n')
+        lines.append('| Item | Condition | Repeat | Operand | Prior Return '
+                     '| Quantised To | Prior Call Grounded |')
+        lines.append('|---|---|---|---|---|---|---|')
         for nm in near_miss:
-            lines.append(f'- {nm}')
+            lines.append(
+                f'| {_cell(nm.get("item_id"))} '
+                f'| {_cell(nm.get("condition"))} '
+                f'| {_cell(nm.get("repeat"))} '
+                f'| `{_cell(nm.get("operand"))}` '
+                f'| `{_cell(nm.get("prior_return"))}` '
+                f'| `{_cell(nm.get("quantised_to"))}` '
+                f'| {_cell(nm.get("grounded"))} |')
 
     lines.append('')
     return '\n'.join(lines)
