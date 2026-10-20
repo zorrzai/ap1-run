@@ -177,8 +177,9 @@ Model: mock-model
 
 ### A. Transcription Check
 
-> Compares the LAST tool return value to the single 
-> figure R2.0 identified as released (AUTO-MATCH items only).
+> Compares EVERY return of the required operation to the single 
+> figure R2.0 identified as released (AUTO-MATCH items only), 
+> under the declared quantisation policy (places and rounding mode).
 
 | Outcome | Count | % |
 |---|---|---|
@@ -186,6 +187,8 @@ Model: mock-model
 | `TRANSCRIBED-ALTERED` | 0 | 0.0% |
 | `UNOBSERVABLE` | 24 | 60.0% |
 | **Total** | **40** | |
+
+Of the 16 `TRANSCRIBED-EXACT`, 4 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
 
 ### B. Release Coverage
 

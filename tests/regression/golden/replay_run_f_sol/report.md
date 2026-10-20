@@ -1138,28 +1138,18 @@ Model: mock-model
 
 ### A. Transcription Check
 
-> Compares the LAST tool return value to the single 
-> figure R2.0 identified as released (AUTO-MATCH items only).
+> Compares EVERY return of the required operation to the single 
+> figure R2.0 identified as released (AUTO-MATCH items only), 
+> under the declared quantisation policy (places and rounding mode).
 
 | Outcome | Count | % |
 |---|---|---|
-| `TRANSCRIBED-EXACT` | 742 | 74.2% |
-| `TRANSCRIBED-ALTERED` | 8 | 0.8% |
+| `TRANSCRIBED-EXACT` | 750 | 75.0% |
+| `TRANSCRIBED-ALTERED` | 0 | 0.0% |
 | `UNOBSERVABLE` | 250 | 25.0% |
 | **Total** | **1000** | |
 
-#### Altered Transcriptions
-
-| Item | Condition | Rep | Difference | Reason |
-|---|---|---|---|---|
-| Q07 | base | 1 | 732.41 | altered by 732.41 |
-| Q07 | base | 17 | 5.3597635593698 | altered by 5.3597635593698 |
-| Q07 | base | 20 | 5.3597635593698 | altered by 5.3597635593698 |
-| Q07 | base | 32 | 732.41 | altered by 732.41 |
-| Q07 | base | 46 | 732.41 | altered by 732.41 |
-| Q05 | instruction_removed | 4 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 41 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 47 | 2375.00 | altered by 2375.00 |
+Of the 750 `TRANSCRIBED-EXACT`, 320 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
 
 ### B. Release Coverage
 

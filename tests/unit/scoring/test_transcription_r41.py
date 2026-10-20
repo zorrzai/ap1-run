@@ -17,4 +17,5 @@ def test_r41_b08_tool_returns_14979_response_releases_14980_is_altered():
         figure_outcome=AUTO_MATCH,
     ) == {'outcome': TRANSCRIBED_ALTERED, 'tool_return': Decimal('149.79'),
           'released_figure': Decimal('149.80'),
-          'difference': Decimal('0.01'), 'reason': 'altered by 0.01'}
+          'difference': Decimal('0.01'), 'reason': 'altered by 0.01',
+          'rounded_under_declared_policy': False}
