@@ -1137,41 +1137,31 @@ Model: mock-model
 
 ### A. Transcription Check
 
-> Compares the LAST tool return value to the single 
-> figure R2.0 identified as released (AUTO-MATCH items only).
+> Compares EVERY return of the required operation to the single 
+> figure R2.0 identified as released (AUTO-MATCH items only), 
+> under the declared quantisation policy (places and rounding mode).
 
 | Outcome | Count | % |
 |---|---|---|
-| `TRANSCRIBED-EXACT` | 796 | 79.6% |
-| `TRANSCRIBED-ALTERED` | 22 | 2.2% |
+| `TRANSCRIBED-EXACT` | 810 | 81.0% |
+| `TRANSCRIBED-ALTERED` | 8 | 0.8% |
 | `UNOBSERVABLE` | 182 | 18.2% |
 | **Total** | **1000** | |
+
+Of the 810 `TRANSCRIBED-EXACT`, 291 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
 
 #### Altered Transcriptions
 
 | Item | Condition | Rep | Difference | Reason |
 |---|---|---|---|---|
-| Q09 | base | 22 | 15.20 | altered by 15.20 |
+| Q09 | base | 22 | 12.000000000000001 | altered by 12.000000000000001 |
 | Q09 | base | 28 | 8.80 | altered by 8.80 |
-| Q05 | instruction_removed | 12 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 13 | 2410.985 | altered by 2410.985 |
-| Q05 | instruction_removed | 16 | 36 | altered by 36 |
-| Q05 | instruction_removed | 22 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 29 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 30 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 41 | 2400.0 | altered by 2400.0 |
-| Q05 | instruction_removed | 42 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 47 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 49 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 50 | 2175.00 | altered by 2175.00 |
-| Q06 | instruction_removed | 6 | 144.0 | altered by 144.0 |
-| Q06 | instruction_removed | 32 | 144 | altered by 144 |
-| Q06 | instruction_removed | 41 | 144 | altered by 144 |
-| Q06 | instruction_removed | 46 | 144.0 | altered by 144.0 |
-| Q08 | instruction_removed | 33 | 286063.00 | altered by 286063.00 |
-| Q09 | instruction_removed | 8 | 15.20 | altered by 15.20 |
+| Q05 | instruction_removed | 30 | 36.00 | altered by 36.00 |
+| Q08 | instruction_removed | 33 | 1006.25 | altered by 1006.25 |
+| Q09 | instruction_removed | 8 | 12.000000000000001 | altered by 12.000000000000001 |
 | Q09 | instruction_removed | 17 | 8.80 | altered by 8.80 |
-| ... | ... | ... | ... | (2 more) |
+| Q09 | instruction_removed | 35 | 12.000000000000001 | altered by 12.000000000000001 |
+| Q09 | instruction_removed | 42 | 8.80 | altered by 8.80 |
 
 ### B. Release Coverage
 
@@ -1215,10 +1205,33 @@ Model: mock-model
 
 > AP-1 v1.3 D7.5: any invocation figure, including 100%, shall be reported with the exact one-sided 95% upper confidence bound.
 
-| Metric | k (failures) | n | Rate | 95% Upper Bound |
-|---|---|---|---|---|
-| d7_invocation_base | 0 | 500 | 500/500 | 0.005974 (0.5974%) |
-| d7_invocation_instruction_removed | 0 | 500 | 500/500 | 0.005974 (0.5974%) |
+> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
+
+| Metric | k (failures) | n | Rate | 95% Upper Bound | Evidence Class |
+|---|---|---|---|---|---|
+| d7_invocation_base | 0 | 10 | 10/10 (100.0%) | 0.258866 (25.8866%) | `EV-2 PLATFORM-STRUCTURAL` |
+| d7_invocation_instruction_removed | 0 | 10 | 10/10 (100.0%) | 0.258866 (25.8866%) | `EV-2 PLATFORM-STRUCTURAL` |
+
+**Headline (AP-1 §6.2):**
+
+- Deterministic computation was invoked on 100.0% of computable questions (10/10; 0 not invoked; one-sided 95% upper bound on the failure rate 25.8866%), under base, on evidence class EV-2 PLATFORM-STRUCTURAL.
+- Deterministic computation was invoked on 100.0% of computable questions (10/10; 0 not invoked; one-sided 95% upper bound on the failure rate 25.8866%), under instruction_removed, on evidence class EV-2 PLATFORM-STRUCTURAL.
+
+**Executions by evidence class:**
+
+| Condition | Evidence Class | Executions | Questions | Questions in n | Unobservable Executions |
+|---|---|---|---|---|---|
+| base | `EV-0 UNOBSERVABLE` | 1 | 1 | 0 | 1 |
+| base | `EV-2 PLATFORM-STRUCTURAL` | 499 | 10 | 10 | 0 |
+| instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | 500 | 10 | 10 | 0 |
+
+> base: aggregate spans 2 evidence classes (EV-0 UNOBSERVABLE, EV-2 PLATFORM-STRUCTURAL); figures are not comparable across classes; only observed outcomes are in n.
+
+### 5a. Instruction-Removal Contrast (D7.8)
+
+Held constant between base and instruction_removed (compared before execution, R1.2): tool declarations, tool_choice, sampling parameters, fixture content, message structure template. Varied: the system prompt only.
+
+DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 0.0%
 
 ## 6. D7.2(a) Originated-Operand Audit
 
@@ -1245,8 +1258,9 @@ Total operations evaluated: 1778
 | Population | Count |
 |---|---|
 | Route divergence (item answer correct) | 80 |
-| Item answer incorrect | 1 |
-| Item answer undetermined (adjudicated) | 146 |
+| Item answer incorrect | 0 |
+| Item answer undetermined (adjudicated) | 147 |
+| No figure released (no item answer) | 0 |
 
 ## 7b. D7.2(a) Operand Provenance Step Counts
 
@@ -1267,10 +1281,14 @@ Total operands resolved: 4860
 
 ### Per-Invocation Outcomes
 
-| Outcome | Count |
-|---|---|
-| OPERANDS-GROUNDED | 1773 |
-| OPERAND-ORIGINATED | 5 |
+> OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded. UNMEASURABLE: a call in a chained item whose ground truth declares no intermediates (SPEC R2.4); its operands are not counted in the step table.
+
+| Outcome | Count | % |
+|---|---|---|
+| OPERANDS-GROUNDED | 1773 | 99.7% |
+| OPERAND-ORIGINATED | 5 | 0.3% |
+| OPERANDS-UNOBSERVABLE | 0 | 0.0% |
+| UNMEASURABLE | 0 | 0.0% |
 
 ### Originated Operand Audit
 

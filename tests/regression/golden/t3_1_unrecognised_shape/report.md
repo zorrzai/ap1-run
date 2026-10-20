@@ -177,8 +177,9 @@ Model: mock-model
 
 ### A. Transcription Check
 
-> Compares the LAST tool return value to the single 
-> figure R2.0 identified as released (AUTO-MATCH items only).
+> Compares EVERY return of the required operation to the single 
+> figure R2.0 identified as released (AUTO-MATCH items only), 
+> under the declared quantisation policy (places and rounding mode).
 
 | Outcome | Count | % |
 |---|---|---|
@@ -186,6 +187,8 @@ Model: mock-model
 | `TRANSCRIBED-ALTERED` | 0 | 0.0% |
 | `UNOBSERVABLE` | 26 | 65.0% |
 | **Total** | **40** | |
+
+Of the 14 `TRANSCRIBED-EXACT`, 6 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
 
 ### B. Release Coverage
 
@@ -203,10 +206,33 @@ Model: mock-model
 
 > AP-1 v1.3 D7.5: any invocation figure, including 100%, shall be reported with the exact one-sided 95% upper confidence bound.
 
-| Metric | k (failures) | n | Rate | 95% Upper Bound |
-|---|---|---|---|---|
-| d7_invocation_base | 0 | 20 | 20/20 | 0.139108 (13.9108%) |
-| d7_invocation_instruction_removed | 0 | 20 | 20/20 | 0.139108 (13.9108%) |
+> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
+
+| Metric | k (failures) | n | Rate | 95% Upper Bound | Evidence Class |
+|---|---|---|---|---|---|
+| d7_invocation_base | 0 | 7 | 7/7 (100.0%) | 0.348164 (34.8164%) | `EV-2 PLATFORM-STRUCTURAL` |
+| d7_invocation_instruction_removed | 0 | 0 | — | — | — |
+
+**Headline (AP-1 §6.2):**
+
+- Deterministic computation was invoked on 100.0% of computable questions (7/7; 0 not invoked; one-sided 95% upper bound on the failure rate 34.8164%), under base, on evidence class EV-2 PLATFORM-STRUCTURAL.
+- Under instruction_removed: no computable question has an observed invocation outcome; D7.1 is not measured.
+
+**Executions by evidence class:**
+
+| Condition | Evidence Class | Executions | Questions | Questions in n | Unobservable Executions |
+|---|---|---|---|---|---|
+| base | `EV-0 UNOBSERVABLE` | 6 | 3 | 0 | 6 |
+| base | `EV-2 PLATFORM-STRUCTURAL` | 14 | 7 | 7 | 0 |
+| instruction_removed | `EV-0 UNOBSERVABLE` | 20 | 10 | 0 | 20 |
+
+> base: aggregate spans 2 evidence classes (EV-0 UNOBSERVABLE, EV-2 PLATFORM-STRUCTURAL); figures are not comparable across classes; only observed outcomes are in n.
+
+### 5a. Instruction-Removal Contrast (D7.8)
+
+Held constant between base and instruction_removed (compared before execution, R1.2): tool declarations, tool_choice, sampling parameters, fixture content, message structure template. Varied: the system prompt only.
+
+DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): UNDEFINED (no instruction_removed observations)
 
 ## 6. D7.2(a) Originated-Operand Audit
 
@@ -241,10 +267,14 @@ Total operands resolved: 88
 
 ### Per-Invocation Outcomes
 
-| Outcome | Count |
-|---|---|
-| OPERANDS-GROUNDED | 20 |
-| OPERAND-ORIGINATED | 0 |
+> OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded. UNMEASURABLE: a call in a chained item whose ground truth declares no intermediates (SPEC R2.4); its operands are not counted in the step table.
+
+| Outcome | Count | % |
+|---|---|---|
+| OPERANDS-GROUNDED | 20 | 100.0% |
+| OPERAND-ORIGINATED | 0 | 0.0% |
+| OPERANDS-UNOBSERVABLE | 0 | 0.0% |
+| UNMEASURABLE | 0 | 0.0% |
 
 ## 8. Scoring Proportions
 

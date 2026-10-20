@@ -64,9 +64,9 @@ def test_classify_invocation_tools_not_offered_self_report_recorded():
 
 @pytest.mark.finding('T3-1')
 def test_classify_invocation_any_round_unrecognised_ev0_no_outcome():
-    # T3-1 (aggregation side): EV-0 gives outcome None, which the run's
-    # summary then counts as a success. The classification itself is
-    # what R1.3 asks for; the fix belongs in the aggregation.
+    # T3-1 (aggregation side): EV-0 gives outcome None. The
+    # classification itself is what R1.3 asks for; since the T3-1 fix
+    # the aggregation keeps it out of the D7.1 rate.
     result = classify_invocation(
         response(), tools_offered=True,
         accumulated_tool_calls=[call()],
@@ -209,9 +209,10 @@ def test_classify_invocation_tool_calls_field_absent_not_invoked():
 
 @pytest.mark.finding('T3-10')
 def test_classify_invocation_empty_response_not_invoked():
-    # T3-10: an empty response is a definite NOT-INVOKED. Correct (AP-1
-    # §13.2, SPEC R4.1 "Empty response -> UNMEASURED"): unmeasured, out
-    # of the D7.1 denominator.
+    # classify_invocation itself still calls an empty response a definite
+    # NOT-INVOKED. Since the T3-10 fix the engine never asks it: an empty
+    # response is UNMEASURED before classification (AP-1 §13.2, SPEC
+    # R4.1); see test_engine.py::test_execute_item_empty_response_unmeasured.
     assert classify_invocation(response(''), tools_offered=True,
                                accumulated_tool_calls=[],
                                round_shapes=[(True, None)],

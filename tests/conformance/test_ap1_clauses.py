@@ -190,14 +190,11 @@ def test_measure_invocation_reports_n_and_rate_per_evidence_class():
 
 @pytest.mark.finding('S3-G7-1', 'T3-1')
 @pytest.mark.req('AP-1 D7.1', 'AP-1 D7.5', 'R2.3')
-def test_measure_invocation_counts_unobservable_items_as_zero_failures():
+def test_measure_invocation_unobservable_items_have_no_rate():
     # Records with no 'invoked' field (here: the shape legacy
     # verify_conformance passed, keyed by 'invocation_outcome') are
-    # unobservable, yet they stay in n and the class reports
-    # "0/3 failures" with a zero-failure bound. Correct: unobservable
-    # items leave the denominator, and a class with no observations
-    # reports no rate. Same defect class as T3-1; measure_invocation
-    # itself has no live caller.
+    # unobservable. Since the T3-1 fix they leave the denominator, and a
+    # class with no observations reports no rate.
     from ap1_run.scoring.invocation import measure_invocation
     result = measure_invocation([
         {'invocation_outcome': 'INVOKED', 'evidence_class': 'EV-2'},
@@ -205,17 +202,17 @@ def test_measure_invocation_counts_unobservable_items_as_zero_failures():
         {'invocation_outcome': 'NOT-INVOKED', 'evidence_class': 'EV-2'},
     ])
     assert result['unobservable_n'] == 3
-    assert result['per_class']['EV-2']['failure_rate'] == (
-        '0/3 failures; one-sided 95% upper bound on the failure rate 63.2%')
+    assert result['per_class']['EV-2']['n'] == 0
+    assert result['per_class']['EV-2']['failure_rate'] == 'no observations'
 
 
 @pytest.mark.finding('T3-31')
 @pytest.mark.req('AP-1 D7.1')
-def test_measure_invocation_has_no_caller_in_the_runner():
-    # The D7.1 conformance check exercises a function the live path never
-    # calls (the runner aggregates in runner/summary.py). Correct: the
-    # conformance test exercises the code that produces the report.
-    assert callers_in_package('measure_invocation') == []
+def test_measure_invocation_is_called_by_the_runner_summary():
+    # T3-31 instance, closed by the T3-1 fix: the D7.1 conformance tests
+    # above exercise measure_invocation, and the runner's summary (which
+    # the report and console 3h read) now aggregates D7.1 through it.
+    assert callers_in_package('measure_invocation') == ['runner/summary.py']
 
 
 # =====================================================================
@@ -437,17 +434,18 @@ def test_rounding_licensed_by_quantisation_is_transcribed_exact():
 
 @pytest.mark.finding('T3-27')
 @pytest.mark.req('AP-1 D7.3', 'R2.5')
-def test_licensed_rounding_uses_half_even_not_the_declared_policy():
+def test_licensed_rounding_uses_the_declared_policy():
     # 15.205 rounds to 15.21 under the declared ROUND_HALF_UP, so 15.21 is
-    # licensed; transcription quantises with the context default
-    # (ROUND_HALF_EVEN, 15.20) and reports ALTERED. Correct: quantise with
-    # the declared rounding mode.
+    # licensed (EXACT) and 15.20 is not (ALTERED). Fixed (T3-27): this
+    # used the context default ROUND_HALF_EVEN and said the opposite.
     from ap1_run.scoring.figure_id import AUTO_MATCH
     from ap1_run.scoring.transcription import check_transcription
-    result = check_transcription(Decimal('15.205'), Decimal('15.21'),
-                                 figure_outcome=AUTO_MATCH,
-                                 quantisation_digits=2)
-    assert result['outcome'] == 'TRANSCRIBED-ALTERED'
+    outcomes = [check_transcription(Decimal('15.205'), Decimal(released),
+                                    figure_outcome=AUTO_MATCH,
+                                    quantisation_digits=2,
+                                    quantisation_rounding='ROUND_HALF_UP')
+                ['outcome'] for released in ('15.21', '15.20')]
+    assert outcomes == ['TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED']
 
 
 # =====================================================================
@@ -581,18 +579,6 @@ def test_perturbation_guard_refuses_a_change_of_model():
         check_single_variable_perturbation(PERTURBATION_BASE, changed)
 
 
-@pytest.mark.finding('T3-46')
-@pytest.mark.req('AP-1 D7.8', 'R1.2')
-def test_perturbation_guard_returns_identical_prompts_without_refusing():
-    # Identical prompts mean nothing was perturbed; the guard reports it
-    # in its return value but does not raise. Correct: refuse the run.
-    from ap1_run.execution.perturbation_guard import \
-        check_single_variable_perturbation
-    diffs = check_single_variable_perturbation(PERTURBATION_BASE,
-                                               dict(PERTURBATION_BASE))
-    assert [d['field'] for d in diffs] == ['system_prompt']
-
-
 # =====================================================================
 # §6.8 Outcome vocabulary
 # =====================================================================
@@ -630,10 +616,11 @@ def test_figure_identification_returns_a_routing_outcome():
 @pytest.mark.req('AP-1 §6.8', 'R2.0')
 def test_figure_identification_outcomes_are_not_the_six_outcome_vocabulary():
     # SPEC §10 maps §6.8 to figure_id.py as IMPLEMENTED, but figure_id's
-    # outcomes route to auto-scoring or adjudication; none of the six §6.8
-    # outcomes is ever assigned by the runner (they appear only as
-    # checkboxes on the adjudication sheets). Correct: each response ends
-    # with exactly one §6.8 outcome.
+    # outcomes only route to auto-scoring or adjudication; none is a §6.8
+    # outcome. Since the T3-13 fix, scoring/answer_outcome.py assigns the
+    # §6.8 outcome of an auto-scored response where the record decides it
+    # (COMPUTED, or ORIGINATED by the composition rule); the scorers
+    # assign the rest on the sheets. The SPEC §10 row is still to fix.
     from ap1_run.scoring import figure_id
     routing = {v for k, v in vars(figure_id).items()
                if k.isupper() and isinstance(v, str)}

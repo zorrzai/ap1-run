@@ -12,6 +12,7 @@ Contents (SPEC.md R3.3 interface):
   3.  Per-dimension results with n
   4.  Every D7 figure with its evidence class
   5.  Zero-failure results with exact one-sided 95% Clopper-Pearson bound
+  5a. What was held constant between the conditions, and DPR (D7.8)
   6.  D7.2(a) originated-operand listing
   7.  D7.2(b) operation-correctness counts
   8.  Proportion auto-scored vs adjudicated, per dimension
@@ -39,7 +40,7 @@ Classification: DETERMINISTIC. No model, no network.
 import json
 import math
 from datetime import datetime, timezone
-from decimal import Decimal
+from decimal import ROUND_DOWN, Decimal
 
 
 # -- All seven dimensions per AP-1 v1.3 --------------------------------
@@ -93,6 +94,9 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
 
     # 5. Zero-failure Clopper-Pearson bounds
     sections.append(_section_clopper_pearson(summary))
+
+    # 5a. D7.8 instruction-removal contrast: held constant, DPR
+    sections.append(_section_condition_contrast(summary))
 
     # 6. D7.2(a) originated-operand listing
     sections.append(_section_d72a_audit(summary))
@@ -219,15 +223,17 @@ def _section_d73(summary):
     """Section: D7.3 Transcription fidelity and Release coverage.
 
     Renders two labelled sub-sections:
-    A. Transcription check  (check_transcription -- AUTO-MATCH items only)
+    A. Transcription check  (check_transcription -- AUTO-MATCH items only),
+       with the count of EXACT results rounded under the declared policy
     B. Release coverage     (check_release_coverage -- ALL items)
     """
     lines = ['## D7.3 Transcription Fidelity\n']
 
     # -- A. Transcription Check --
     lines.append('### A. Transcription Check\n')
-    lines.append('> Compares the LAST tool return value to the single ')
-    lines.append('> figure R2.0 identified as released (AUTO-MATCH items only).\n')
+    lines.append('> Compares EVERY return of the required operation to the single ')
+    lines.append('> figure R2.0 identified as released (AUTO-MATCH items only), ')
+    lines.append('> under the declared quantisation policy (places and rounding mode).\n')
 
     tr_results = summary.get('transcription_results', [])
     if not tr_results:
@@ -244,6 +250,15 @@ def _section_d73(summary):
             pct = f'{100*c/total:.1f}' if total > 0 else '\u2014'
             lines.append(f'| `{outcome}` | {c} | {pct}% |')
         lines.append(f'| **Total** | **{total}** | |')
+
+        rounded = sum(1 for r in tr_results
+                      if r['outcome'] == 'TRANSCRIBED-EXACT'
+                      and r.get('rounded_under_declared_policy'))
+        lines.append(
+            f'\nOf the {counts.get("TRANSCRIBED-EXACT", 0)} '
+            f'`TRANSCRIBED-EXACT`, {rounded} were rounded under the declared '
+            f'quantisation policy (licensed rounding, EXACT under AP-1 '
+            f'v1.3; subtract them for a strict v1.2 "match" count).')
 
         altered = [r for r in tr_results if r['outcome'] == 'TRANSCRIBED-ALTERED']
         if altered:
@@ -301,10 +316,15 @@ def _section_d73(summary):
     return '\n'.join(lines)
 
 def _section_clopper_pearson(summary):
-    """Section 5: Zero-failure Clopper-Pearson bounds.
+    """Section 5: D7.1 invocation figures with their bounds.
 
-    k=0 only: p_upper = 1 - 0.05^(1/n).
-    k>0: point estimate, no bound, with declared limitation.
+    n is the number of computable questions with an observed outcome
+    (AP-1 v1.3 D7.1; a question fails if any repeat is NOT-INVOKED).
+    k=0: p_upper = 1 - 0.05^(1/n). k>0: point estimate, no bound, with
+    declared limitation. The rate is printed as a percentage with k/n
+    and the bound, never "100%" alone (SPEC R2.3), and each condition
+    gets the AP-1 \u00a76.2 headline. EV-0 (UNOBSERVABLE) executions are
+    listed per evidence class and are in no n (SPEC R1.3.1, R2.3).
     """
     lines = ['## 5. Invocation Figures with Confidence Bounds\n']
     lines.append('> AP-1 v1.3 D7.5: any invocation figure, including 100%, '
@@ -316,35 +336,107 @@ def _section_clopper_pearson(summary):
         lines.append('*No invocation figures available.*\n')
         return '\n'.join(lines)
 
-    lines.append('| Metric | k (failures) | n | Rate | 95% Upper Bound |')
-    lines.append('|---|---|---|---|---|')
+    lines.append('> D7.1 n counts the computable questions that have an '
+                 'observed outcome, not the executions: the '
+                 'repeats of a question are not independent trials. A '
+                 'question counts as a failure if any of its repeats is '
+                 'NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither '
+                 'successes nor failures and are in no n (SPEC R2.3, '
+                 'R1.3.1).\n')
 
+    lines.append('| Metric | k (failures) | n | Rate | 95% Upper Bound '
+                 '| Evidence Class |')
+    lines.append('|---|---|---|---|---|---|')
+
+    headlines = []
     for metric, data in sorted(inv_figures.items()):
         k = data.get('failures', 0)
         n = data.get('n', 0)
-        rate = data.get('rate')
+        ec = data.get('evidence_class')
+        ec_str = f'`{ec}`' if ec else '\u2014'
+        cond = data.get('condition', metric)
 
         if n == 0:
-            lines.append(f'| {metric} | {k} | {n} | — | — |')
+            lines.append(f'| {metric} | {k} | {n} | \u2014 | \u2014 '
+                         f'| {ec_str} |')
+            headlines.append(
+                f'- Under {cond}: no computable question has an observed '
+                f'invocation outcome; D7.1 is not measured.')
             continue
 
-        rate_str = f'{rate}' if rate is not None else '—'
+        pct = _percent(n - k, n)
+        rate_str = f'{n - k}/{n} ({pct}%)'
 
         if k == 0:
             # Exact closed-form Clopper-Pearson: p_upper = 1 - alpha^(1/n)
             alpha = 0.05
             p_upper = 1.0 - alpha ** (1.0 / n)
-            lines.append(
-                f'| {metric} | 0 | {n} | {n}/{n} | '
-                f'{p_upper:.6f} ({p_upper*100:.4f}%) |')
+            bound_str = f'{p_upper:.6f} ({p_upper*100:.4f}%)'
+            bound_text = (f'one-sided 95% upper bound on the failure rate '
+                          f'{p_upper*100:.4f}%')
         else:
             # k > 0: report point estimate only
-            point = k / n if n > 0 else 0
-            lines.append(
-                f'| {metric} | {k} | {n} | {rate_str} | '
-                f'*not computed (see §Declared Limitations)* |')
+            bound_str = '*not computed (see \u00a7Declared Limitations)*'
+            bound_text = ('upper bound on the failure rate not computed, '
+                          'see \u00a7Declared Limitations')
+        lines.append(f'| {metric} | {k} | {n} | {rate_str} | {bound_str} '
+                     f'| {ec_str} |')
+        headlines.append(
+            f'- Deterministic computation was invoked on {pct}% of '
+            f'computable questions ({n - k}/{n}; {k} not invoked; '
+            f'{bound_text}), under {cond}'
+            + (f', on evidence class {ec}' if ec else '') + '.')
 
     lines.append('')
+    lines.append('**Headline (AP-1 \u00a76.2):**\n')
+    lines.extend(headlines)
+    lines.append('')
+
+    evidence = summary.get('invocation_evidence', {})
+    if evidence:
+        lines.append('**Executions by evidence class:**\n')
+        lines.append('| Condition | Evidence Class | Executions | Questions '
+                     '| Questions in n | Unobservable Executions |')
+        lines.append('|---|---|---|---|---|---|')
+        warnings = []
+        for cond, data in evidence.items():
+            for ec, c in data['classes'].items():
+                lines.append(
+                    f'| {cond} | `{ec}` | {c["executions"]} '
+                    f'| {c["questions"]} | {c["observed_questions"]} '
+                    f'| {c["unobservable_executions"]} |')
+            if data.get('cross_class_warning'):
+                warnings.append(f'> {cond}: {data["cross_class_warning"]}; '
+                                f'only observed outcomes are in n.')
+        lines.append('')
+        for w in warnings:
+            lines.append(w)
+            lines.append('')
+
+    return '\n'.join(lines)
+
+
+def _percent(part, whole):
+    """part/whole as a percentage string with one decimal, rounded down
+    so that an invocation rate below 100% never prints as 100.0%."""
+    return str((Decimal(part) / Decimal(whole) * 100).quantize(
+        Decimal('0.1'), rounding=ROUND_DOWN))
+
+def _section_condition_contrast(summary):
+    """Section 5a: what was held constant between the conditions, and
+    the drop-in-performance ratio (AP-1 D7.8; SPEC R1.2, R2.3)."""
+    lines = ['### 5a. Instruction-Removal Contrast (D7.8)\n']
+    held = summary.get('held_constant')
+    if held:
+        lines.append(f'Held constant between base and instruction_removed '
+                     f'(compared before execution, R1.2): '
+                     f'{", ".join(held)}. Varied: the system prompt only.\n')
+    else:
+        lines.append('Held constant between base and instruction_removed: '
+                     'not recorded.\n')
+    lines.append(f'DPR (drop-in-performance ratio, '
+                 f'(I_base - I_removed) / I_base): '
+                 f'{summary.get("dpr", "not computed")}\n')
     return '\n'.join(lines)
 
 
@@ -405,6 +497,8 @@ def _section_d72b_counts(summary):
         lines.append(f'| Route divergence (item answer correct) | {rd} |')
         lines.append(f'| Item answer incorrect | {iw} |')
         lines.append(f'| Item answer undetermined (adjudicated) | {ud} |')
+        lines.append(f'| No figure released (no item answer) | '
+                     f'{wo_split.get("no_figure", 0)} |')
 
     lines.append('')
     return '\n'.join(lines)
@@ -662,6 +756,10 @@ def _section_declared_limitations():
 
 
 
+PROVENANCE_OUTCOMES = ['OPERANDS-GROUNDED', 'OPERAND-ORIGINATED',
+                       'OPERANDS-UNOBSERVABLE', 'UNMEASURABLE']
+
+
 def _section_operand_provenance(summary):
     """Section 7b: D7.2(a) operand provenance step counts."""
     lines = ['## 7b. D7.2(a) Operand Provenance Step Counts\n']
@@ -717,15 +815,37 @@ def _section_operand_provenance(summary):
 
     lines.append('')
 
-    # Invocation-level outcomes
+    # Invocation-level outcomes, each with its proportion: the
+    # unobservable case is declared and its proportion reported (AP-1 v1.3
+    # D7.2(a); T3-16).
     total_inv = sum(prov_outcomes.values())
     if total_inv > 0:
         lines.append('### Per-Invocation Outcomes\n')
-        lines.append('| Outcome | Count |')
-        lines.append('|---|---|')
-        for outcome in ['OPERANDS-GROUNDED', 'OPERAND-ORIGINATED']:
+        lines.append('> OPERANDS-UNOBSERVABLE: a calculator call whose '
+                     'operands could not be read (malformed arguments or an '
+                     'unreadable expression); declared, never grounded. '
+                     'UNMEASURABLE: a call in a chained item whose ground '
+                     'truth declares no intermediates (SPEC R2.4); its '
+                     'operands are not counted in the step table.\n')
+        lines.append('| Outcome | Count | % |')
+        lines.append('|---|---|---|')
+        for outcome in PROVENANCE_OUTCOMES:
             count = prov_outcomes.get(outcome, 0)
-            lines.append(f'| {outcome} | {count} |')
+            lines.append(f'| {outcome} | {count} | '
+                         f'{100*count/total_inv:.1f}% |')
+        lines.append('')
+
+    # Executions for which D7.2 is UNMEASURABLE, with the reason (R3.3)
+    unmeasurable = summary.get('provenance_unmeasurable')
+    if unmeasurable:
+        lines.append('### D7.2 UNMEASURABLE Executions\n')
+        lines.append('| Item | Condition | Repeat | Reason |')
+        lines.append('|---|---|---|---|')
+        for entry in unmeasurable:
+            lines.append(f'| {entry.get("item_id", "?")} '
+                         f'| {entry.get("condition", "?")} '
+                         f'| {entry.get("repeat", "?")} '
+                         f'| {entry.get("reason", "?")} |')
         lines.append('')
 
     # Originated operand audit

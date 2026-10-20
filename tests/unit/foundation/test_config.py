@@ -907,6 +907,30 @@ def test_load_config_quantisation_unknown_rounding_mode_refused(load):
     assert msg is not None and 'rounding' in msg, msg
 
 
+@pytest.mark.finding('T3-80', 'F1')
+def test_load_config_example_config_sol_is_the_sol_runs_config():
+    # Integrator decision (step 5): each published model has its own
+    # config file, now that nothing overrides model and endpoint. The
+    # values are those of output/run_f_sol/report.md section 2 (the
+    # resolved config as sealed), apart from dimensions_claimed (D2, D7:
+    # minimum n, T3-12).
+    cfg = load_config(REPO / 'example' / 'config_sol.json')
+    assert (cfg['model'], cfg['endpoint_url']) == (
+        'gpt-5.6-sol', 'https://api.openai.com/v1/chat/completions')
+    assert cfg['sampling'] == {
+        'temperature': {
+            'value': 'omitted', 'reason': 'platform-rejected',
+            'detail': "OpenAI reasoning-model endpoint returned HTTP 400: "
+                      "Unsupported value: 'temperature' does not support 0 "
+                      "with this model. Only the default (1) value is "
+                      "supported."},
+        'top_p': {'value': 'omitted', 'reason': 'operator-declared'},
+        'max_completion_tokens': '4096',
+        'reasoning_effort': 'none'}
+    assert cfg['repeat_count'] == 50
+    assert cfg['dimensions_claimed'] == ['D2', 'D7']
+
+
 @pytest.mark.finding('F1', 'T3-79')
 def test_load_config_example_config_mini_is_the_mini_runs_config():
     # Steven's ruling (choices-for-marcus entry 5): config_mini.json is a

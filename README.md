@@ -130,14 +130,27 @@ Then run the worked example against your own endpoint. Every setting comes
 from the config file, the endpoint and model included; the environment
 supplies only the API key. `example/config.json` points at
 `http://localhost:8080` with a placeholder model, so set its `endpoint_url`
-and `model` (or give your own config with `--config`).
-`example/config_mini.json` is the configuration of the published gpt-4.1-mini
-runs (temperature 1, no `reasoning_effort`):
+and `model` (or give your own config with `--config`). Each published model
+has its own config file:
+
+| config | model | published runs |
+|---|---|---|
+| `example/config.json` | placeholder (`example-model-v1` at `localhost:8080`) | none: the generic example |
+| `example/config_mini.json` | `gpt-4.1-mini`; temperature 1, no `reasoning_effort` | `run_e_mini` |
+| `example/config_sol.json` | `gpt-5.6-sol`; temperature omitted (platform-rejected), `reasoning_effort` none | `run_f_sol` |
+
+The September runs were made with `example/config.json` and environment
+overrides (see [`docs/REPRODUCING.md`](docs/REPRODUCING.md)); the two model
+files hold the settings those runs sealed (their `report.md` §2), except
+`dimensions_claimed`, which is now D2 and D7 (minimum n, above). The August
+runs `run_a_mini` and `run_b_sol` sealed different sampling settings, recorded
+in their own `report.md` §2; no file reproduces them.
 
 ```bash
 export AP1_SMOKE_API_KEY=<key>
 ap1-run                       # or: python smoke_test.py
 ap1-run --config example/config_mini.json
+ap1-run --config example/config_sol.json
 ```
 
 `python smoke_test.py` still works, even without the install step: it is a
@@ -272,7 +285,9 @@ intermediate, or a declared constant.
 
 > The runner refuses a module that returns literals it did not compute. At seal
 > time it perturbs each declared source field and re-executes; if the output
-> does not move, the module is returning constants and the run is refused.
+> does not move, the module is returning constants and the run is refused. The
+> run is also refused if the module reads a field it does not declare, or uses
+> a numeric literal it does not declare as a constant.
 
 **A config** — endpoint, model, sampling parameters (each with a value or an
 explicit declared omission and its reason), tolerance, quantisation policy,
@@ -307,6 +322,12 @@ bound at zero failures. Forty-nine items with no failures reads *"0/49; upper
 bound 5.9%"*, not *"100%"*. The familiar 3/n rule is its large-n approximation
 and is shown only for n ≥ 30; below that it overstates, and at n < 3 it returns
 a value above 1, which is not a rate.
+
+**For D7.1, n counts computable questions, not executions.** Repeats of a
+question are not independent trials, so ten questions run fifty times each are
+n = 10. A question counts as a failure if any of its repeats is NOT-INVOKED.
+An execution whose invocation is unobservable (EV-0) is neither a success nor
+a failure: it is in no n, and the report lists it under its evidence class.
 
 **There is no pass mark.** AP-1 has no threshold, no certificate, no seal and no
 registry, and the runner cannot output one. A supervisor reads the profile and
@@ -393,6 +414,7 @@ src/ap1_run/
     operation_correctness.py D7.2(b)
     transcription.py         D7.3
     release_coverage.py      D7.3 release coverage
+    answer_outcome.py        §6.8 outcome of an auto-scored response
     provenance/              D7.2(a)
       trace.py               the five-step resolution ladder
       classify.py            invocation, item and sequential classification

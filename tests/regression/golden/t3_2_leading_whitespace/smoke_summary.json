@@ -31,17 +31,59 @@
       ],
       "provenance_results": [
         {
-          "outcome": "OPERANDS-GROUNDED",
-          "operand_resolutions": [],
-          "originated_operands": [],
+          "outcome": "OPERAND-ORIGINATED",
+          "operand_resolutions": [
+            {
+              "step": 5,
+              "resolution": "originated",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "near_miss_finding": null,
+              "sign_inversion_finding": null,
+              "operand_value": "7777",
+              "operand_literal": "7777",
+              "expression": " 7777 * 3"
+            },
+            {
+              "step": 5,
+              "resolution": "originated",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "near_miss_finding": null,
+              "sign_inversion_finding": null,
+              "operand_value": "3",
+              "operand_literal": "3",
+              "expression": " 7777 * 3"
+            }
+          ],
+          "originated_operands": [
+            {
+              "value": "7777",
+              "literal": "7777",
+              "expression": " 7777 * 3",
+              "resolution": "originated",
+              "sign_inversion_finding": null
+            },
+            {
+              "value": "3",
+              "literal": "3",
+              "expression": " 7777 * 3",
+              "resolution": "originated",
+              "sign_inversion_finding": null
+            }
+          ],
           "quantisation_findings": []
         },
         {
-          "outcome": "OPERANDS-GROUNDED",
+          "outcome": "OPERAND-ORIGINATED",
           "operand_resolutions": [
             {
-              "step": 4,
-              "resolution": "computed_in_session",
+              "step": 5,
+              "resolution": "computed_in_session_ungrounded",
               "matched_field": null,
               "matched_intermediate": null,
               "quantisation_finding": false,
@@ -77,12 +119,22 @@
               "expression": "23331 * 1.2 / 12"
             }
           ],
-          "originated_operands": [],
+          "originated_operands": [
+            {
+              "value": "23331",
+              "literal": "23331",
+              "expression": "23331 * 1.2 / 12",
+              "resolution": "computed_in_session_ungrounded",
+              "sign_inversion_finding": null
+            }
+          ],
           "quantisation_findings": []
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q01",
@@ -113,17 +165,59 @@
       ],
       "provenance_results": [
         {
-          "outcome": "OPERANDS-GROUNDED",
-          "operand_resolutions": [],
-          "originated_operands": [],
+          "outcome": "OPERAND-ORIGINATED",
+          "operand_resolutions": [
+            {
+              "step": 5,
+              "resolution": "originated",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "near_miss_finding": null,
+              "sign_inversion_finding": null,
+              "operand_value": "7777",
+              "operand_literal": "7777",
+              "expression": " 7777 * 3"
+            },
+            {
+              "step": 5,
+              "resolution": "originated",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "near_miss_finding": null,
+              "sign_inversion_finding": null,
+              "operand_value": "3",
+              "operand_literal": "3",
+              "expression": " 7777 * 3"
+            }
+          ],
+          "originated_operands": [
+            {
+              "value": "7777",
+              "literal": "7777",
+              "expression": " 7777 * 3",
+              "resolution": "originated",
+              "sign_inversion_finding": null
+            },
+            {
+              "value": "3",
+              "literal": "3",
+              "expression": " 7777 * 3",
+              "resolution": "originated",
+              "sign_inversion_finding": null
+            }
+          ],
           "quantisation_findings": []
         },
         {
-          "outcome": "OPERANDS-GROUNDED",
+          "outcome": "OPERAND-ORIGINATED",
           "operand_resolutions": [
             {
-              "step": 4,
-              "resolution": "computed_in_session",
+              "step": 5,
+              "resolution": "computed_in_session_ungrounded",
               "matched_field": null,
               "matched_intermediate": null,
               "quantisation_finding": false,
@@ -159,12 +253,22 @@
               "expression": "23331 * 1.2 / 12"
             }
           ],
-          "originated_operands": [],
+          "originated_operands": [
+            {
+              "value": "23331",
+              "literal": "23331",
+              "expression": "23331 * 1.2 / 12",
+              "resolution": "computed_in_session_ungrounded",
+              "sign_inversion_finding": null
+            }
+          ],
           "quantisation_findings": []
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q02",
@@ -221,7 +325,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q02",
@@ -278,7 +384,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q03",
@@ -359,7 +467,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q03",
@@ -440,7 +550,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q04",
@@ -457,8 +569,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 430.7500 matches expected value 430.7500 (tolerance 0.01)",
-          "evaluated_result": "430.7500",
+          "detail": "result 430.75000 matches expected value 430.7500 (tolerance 0.01)",
+          "evaluated_result": "430.75000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -466,13 +578,76 @@
       "provenance_results": [
         {
           "outcome": "OPERANDS-GROUNDED",
-          "operand_resolutions": [],
+          "operand_resolutions": [
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "mortgage.min_payment",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "1437.00",
+              "operand_literal": "1437.00",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "mortgage.balance",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "287500.00",
+              "operand_literal": "287500.00",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "mortgage.annual_rate",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "4.20",
+              "operand_literal": "4.20",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "constant",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "100",
+              "operand_literal": "100",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "constant",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "12",
+              "operand_literal": "12",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            }
+          ],
           "originated_operands": [],
           "quantisation_findings": []
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q04",
@@ -489,8 +664,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 430.7500 matches expected value 430.7500 (tolerance 0.01)",
-          "evaluated_result": "430.7500",
+          "detail": "result 430.75000 matches expected value 430.7500 (tolerance 0.01)",
+          "evaluated_result": "430.75000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -498,13 +673,76 @@
       "provenance_results": [
         {
           "outcome": "OPERANDS-GROUNDED",
-          "operand_resolutions": [],
+          "operand_resolutions": [
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "mortgage.min_payment",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "1437.00",
+              "operand_literal": "1437.00",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "mortgage.balance",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "287500.00",
+              "operand_literal": "287500.00",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "mortgage.annual_rate",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "4.20",
+              "operand_literal": "4.20",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "constant",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "100",
+              "operand_literal": "100",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "constant",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "12",
+              "operand_literal": "12",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            }
+          ],
           "originated_operands": [],
           "quantisation_findings": []
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q05",
@@ -609,7 +847,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q05",
@@ -714,7 +954,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q06",
@@ -731,8 +973,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 144.0 matches expected value 144.00 (tolerance 0.01)",
-          "evaluated_result": "144.0",
+          "detail": "result 144.00 matches expected value 144.00 (tolerance 0.01)",
+          "evaluated_result": "144.00",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -740,13 +982,40 @@
       "provenance_results": [
         {
           "outcome": "OPERANDS-GROUNDED",
-          "operand_resolutions": [],
+          "operand_resolutions": [
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "checking.monthly_fee",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "12.00",
+              "operand_literal": "12.00",
+              "expression": "\t12.00 * 12"
+            },
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "checking.monthly_fee",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "12",
+              "operand_literal": "12",
+              "expression": "\t12.00 * 12"
+            }
+          ],
           "originated_operands": [],
           "quantisation_findings": []
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q06",
@@ -763,8 +1032,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 144.0 matches expected value 144.00 (tolerance 0.01)",
-          "evaluated_result": "144.0",
+          "detail": "result 144.00 matches expected value 144.00 (tolerance 0.01)",
+          "evaluated_result": "144.00",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -772,13 +1041,40 @@
       "provenance_results": [
         {
           "outcome": "OPERANDS-GROUNDED",
-          "operand_resolutions": [],
+          "operand_resolutions": [
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "checking.monthly_fee",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "12.00",
+              "operand_literal": "12.00",
+              "expression": "\t12.00 * 12"
+            },
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "checking.monthly_fee",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "12",
+              "operand_literal": "12",
+              "expression": "\t12.00 * 12"
+            }
+          ],
           "originated_operands": [],
           "quantisation_findings": []
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q07",
@@ -871,7 +1167,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q07",
@@ -964,7 +1262,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q08",
@@ -1069,7 +1369,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q08",
@@ -1174,7 +1476,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q09",
@@ -1306,7 +1610,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q09",
@@ -1438,7 +1744,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q10",
@@ -1455,8 +1763,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 3109.6500 matches expected value 3109.6500 (tolerance 0.01)",
-          "evaluated_result": "3109.6500",
+          "detail": "result 3109.65000 matches expected value 3109.6500 (tolerance 0.01)",
+          "evaluated_result": "3109.65000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -1473,8 +1781,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "42175.0",
-              "operand_literal": "42175.0",
+              "operand_value": "42175.00",
+              "operand_literal": "42175.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -1509,8 +1817,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "15.0",
-              "operand_literal": "15.0",
+              "operand_value": "15.00",
+              "operand_literal": "15.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -1531,7 +1839,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q10",
@@ -1548,8 +1858,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 3109.6500 matches expected value 3109.6500 (tolerance 0.01)",
-          "evaluated_result": "3109.6500",
+          "detail": "result 3109.65000 matches expected value 3109.6500 (tolerance 0.01)",
+          "evaluated_result": "3109.65000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -1566,8 +1876,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "42175.0",
-              "operand_literal": "42175.0",
+              "operand_value": "42175.00",
+              "operand_literal": "42175.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -1602,8 +1912,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "15.0",
-              "operand_literal": "15.0",
+              "operand_value": "15.00",
+              "operand_literal": "15.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -1624,7 +1934,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q01",
@@ -1655,17 +1967,59 @@
       ],
       "provenance_results": [
         {
-          "outcome": "OPERANDS-GROUNDED",
-          "operand_resolutions": [],
-          "originated_operands": [],
+          "outcome": "OPERAND-ORIGINATED",
+          "operand_resolutions": [
+            {
+              "step": 5,
+              "resolution": "originated",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "near_miss_finding": null,
+              "sign_inversion_finding": null,
+              "operand_value": "7777",
+              "operand_literal": "7777",
+              "expression": " 7777 * 3"
+            },
+            {
+              "step": 5,
+              "resolution": "originated",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "near_miss_finding": null,
+              "sign_inversion_finding": null,
+              "operand_value": "3",
+              "operand_literal": "3",
+              "expression": " 7777 * 3"
+            }
+          ],
+          "originated_operands": [
+            {
+              "value": "7777",
+              "literal": "7777",
+              "expression": " 7777 * 3",
+              "resolution": "originated",
+              "sign_inversion_finding": null
+            },
+            {
+              "value": "3",
+              "literal": "3",
+              "expression": " 7777 * 3",
+              "resolution": "originated",
+              "sign_inversion_finding": null
+            }
+          ],
           "quantisation_findings": []
         },
         {
-          "outcome": "OPERANDS-GROUNDED",
+          "outcome": "OPERAND-ORIGINATED",
           "operand_resolutions": [
             {
-              "step": 4,
-              "resolution": "computed_in_session",
+              "step": 5,
+              "resolution": "computed_in_session_ungrounded",
               "matched_field": null,
               "matched_intermediate": null,
               "quantisation_finding": false,
@@ -1701,12 +2055,22 @@
               "expression": "23331 * 1.2 / 12"
             }
           ],
-          "originated_operands": [],
+          "originated_operands": [
+            {
+              "value": "23331",
+              "literal": "23331",
+              "expression": "23331 * 1.2 / 12",
+              "resolution": "computed_in_session_ungrounded",
+              "sign_inversion_finding": null
+            }
+          ],
           "quantisation_findings": []
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q01",
@@ -1737,17 +2101,59 @@
       ],
       "provenance_results": [
         {
-          "outcome": "OPERANDS-GROUNDED",
-          "operand_resolutions": [],
-          "originated_operands": [],
+          "outcome": "OPERAND-ORIGINATED",
+          "operand_resolutions": [
+            {
+              "step": 5,
+              "resolution": "originated",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "near_miss_finding": null,
+              "sign_inversion_finding": null,
+              "operand_value": "7777",
+              "operand_literal": "7777",
+              "expression": " 7777 * 3"
+            },
+            {
+              "step": 5,
+              "resolution": "originated",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "near_miss_finding": null,
+              "sign_inversion_finding": null,
+              "operand_value": "3",
+              "operand_literal": "3",
+              "expression": " 7777 * 3"
+            }
+          ],
+          "originated_operands": [
+            {
+              "value": "7777",
+              "literal": "7777",
+              "expression": " 7777 * 3",
+              "resolution": "originated",
+              "sign_inversion_finding": null
+            },
+            {
+              "value": "3",
+              "literal": "3",
+              "expression": " 7777 * 3",
+              "resolution": "originated",
+              "sign_inversion_finding": null
+            }
+          ],
           "quantisation_findings": []
         },
         {
-          "outcome": "OPERANDS-GROUNDED",
+          "outcome": "OPERAND-ORIGINATED",
           "operand_resolutions": [
             {
-              "step": 4,
-              "resolution": "computed_in_session",
+              "step": 5,
+              "resolution": "computed_in_session_ungrounded",
               "matched_field": null,
               "matched_intermediate": null,
               "quantisation_finding": false,
@@ -1783,12 +2189,22 @@
               "expression": "23331 * 1.2 / 12"
             }
           ],
-          "originated_operands": [],
+          "originated_operands": [
+            {
+              "value": "23331",
+              "literal": "23331",
+              "expression": "23331 * 1.2 / 12",
+              "resolution": "computed_in_session_ungrounded",
+              "sign_inversion_finding": null
+            }
+          ],
           "quantisation_findings": []
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q02",
@@ -1845,7 +2261,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q02",
@@ -1902,7 +2320,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q03",
@@ -1983,7 +2403,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q03",
@@ -2064,7 +2486,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q04",
@@ -2081,8 +2505,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 430.7500 matches expected value 430.7500 (tolerance 0.01)",
-          "evaluated_result": "430.7500",
+          "detail": "result 430.75000 matches expected value 430.7500 (tolerance 0.01)",
+          "evaluated_result": "430.75000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -2090,13 +2514,76 @@
       "provenance_results": [
         {
           "outcome": "OPERANDS-GROUNDED",
-          "operand_resolutions": [],
+          "operand_resolutions": [
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "mortgage.min_payment",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "1437.00",
+              "operand_literal": "1437.00",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "mortgage.balance",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "287500.00",
+              "operand_literal": "287500.00",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "mortgage.annual_rate",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "4.20",
+              "operand_literal": "4.20",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "constant",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "100",
+              "operand_literal": "100",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "constant",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "12",
+              "operand_literal": "12",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            }
+          ],
           "originated_operands": [],
           "quantisation_findings": []
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q04",
@@ -2113,8 +2600,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 430.7500 matches expected value 430.7500 (tolerance 0.01)",
-          "evaluated_result": "430.7500",
+          "detail": "result 430.75000 matches expected value 430.7500 (tolerance 0.01)",
+          "evaluated_result": "430.75000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -2122,13 +2609,76 @@
       "provenance_results": [
         {
           "outcome": "OPERANDS-GROUNDED",
-          "operand_resolutions": [],
+          "operand_resolutions": [
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "mortgage.min_payment",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "1437.00",
+              "operand_literal": "1437.00",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "mortgage.balance",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "287500.00",
+              "operand_literal": "287500.00",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "mortgage.annual_rate",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "4.20",
+              "operand_literal": "4.20",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "constant",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "100",
+              "operand_literal": "100",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            },
+            {
+              "step": 1,
+              "resolution": "constant",
+              "matched_field": null,
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "12",
+              "operand_literal": "12",
+              "expression": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+            }
+          ],
           "originated_operands": [],
           "quantisation_findings": []
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q05",
@@ -2233,7 +2783,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q05",
@@ -2338,7 +2890,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q06",
@@ -2355,8 +2909,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 144.0 matches expected value 144.00 (tolerance 0.01)",
-          "evaluated_result": "144.0",
+          "detail": "result 144.00 matches expected value 144.00 (tolerance 0.01)",
+          "evaluated_result": "144.00",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -2364,13 +2918,40 @@
       "provenance_results": [
         {
           "outcome": "OPERANDS-GROUNDED",
-          "operand_resolutions": [],
+          "operand_resolutions": [
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "checking.monthly_fee",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "12.00",
+              "operand_literal": "12.00",
+              "expression": "\t12.00 * 12"
+            },
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "checking.monthly_fee",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "12",
+              "operand_literal": "12",
+              "expression": "\t12.00 * 12"
+            }
+          ],
           "originated_operands": [],
           "quantisation_findings": []
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q06",
@@ -2387,8 +2968,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 144.0 matches expected value 144.00 (tolerance 0.01)",
-          "evaluated_result": "144.0",
+          "detail": "result 144.00 matches expected value 144.00 (tolerance 0.01)",
+          "evaluated_result": "144.00",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -2396,13 +2977,40 @@
       "provenance_results": [
         {
           "outcome": "OPERANDS-GROUNDED",
-          "operand_resolutions": [],
+          "operand_resolutions": [
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "checking.monthly_fee",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "12.00",
+              "operand_literal": "12.00",
+              "expression": "\t12.00 * 12"
+            },
+            {
+              "step": 1,
+              "resolution": "source_match",
+              "matched_field": "checking.monthly_fee",
+              "matched_intermediate": null,
+              "quantisation_finding": false,
+              "transform_used": null,
+              "sign_inversion_finding": null,
+              "operand_value": "12",
+              "operand_literal": "12",
+              "expression": "\t12.00 * 12"
+            }
+          ],
           "originated_operands": [],
           "quantisation_findings": []
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q07",
@@ -2495,7 +3103,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q07",
@@ -2588,7 +3198,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q08",
@@ -2693,7 +3305,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q08",
@@ -2798,7 +3412,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q09",
@@ -2930,7 +3546,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q09",
@@ -3062,7 +3680,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q10",
@@ -3079,8 +3699,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 3109.6500 matches expected value 3109.6500 (tolerance 0.01)",
-          "evaluated_result": "3109.6500",
+          "detail": "result 3109.65000 matches expected value 3109.6500 (tolerance 0.01)",
+          "evaluated_result": "3109.65000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -3097,8 +3717,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "42175.0",
-              "operand_literal": "42175.0",
+              "operand_value": "42175.00",
+              "operand_literal": "42175.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -3133,8 +3753,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "15.0",
-              "operand_literal": "15.0",
+              "operand_value": "15.00",
+              "operand_literal": "15.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -3155,7 +3775,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q10",
@@ -3172,8 +3794,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 3109.6500 matches expected value 3109.6500 (tolerance 0.01)",
-          "evaluated_result": "3109.6500",
+          "detail": "result 3109.65000 matches expected value 3109.6500 (tolerance 0.01)",
+          "evaluated_result": "3109.65000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -3190,8 +3812,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "42175.0",
-              "operand_literal": "42175.0",
+              "operand_value": "42175.00",
+              "operand_literal": "42175.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -3226,8 +3848,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "15.0",
-              "operand_literal": "15.0",
+              "operand_value": "15.00",
+              "operand_literal": "15.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -3248,7 +3870,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     }
   ],
   "grammar_issues": [],

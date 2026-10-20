@@ -18,10 +18,13 @@ from ap1_run.foundation import transcript
 from ap1_run.execution.context import build_delivered_context, format_fixture_context
 from ap1_run.execution.evidence import (
     classify_invocation, classify_attestation,
-    extract_attestation, check_ev3_guard, EV_0,
+    extract_attestation, check_ev3_guard, EV_0, _extract_content,
 )
 from ap1_run.scoring.operation_correctness import classify_operation, reclassify_session
-from ap1_run.scoring.provenance.classify import classify_invocations_sequential
+from ap1_run.scoring.provenance.classify import (
+    classify_invocations_sequential, is_calculator_call,
+    mark_unmeasurable_item,
+)
 
 
 class EngineError(Exception):
@@ -38,8 +41,12 @@ VALID_CONDITIONS = {CONDITION_BASE, CONDITION_INSTRUCTION_REMOVED}
 def execute_item(item, *, condition, config, fixture,
                  ground_truth_compute, adapter_send,
                  system_prompt, tools, transcript_path,
-                 seal_hash):
-    """Execute one item under one condition. R1.2 loop: send, drive, capture."""
+                 seal_hash, repeat=None):
+    """Execute one item under one condition. R1.2 loop: send, drive, capture.
+
+    `repeat` (the runner's 1-based repeat index) is written on every
+    transcript record, so outputs join a record to its own execution.
+    """
     item_id = item['id']
     ctx = build_delivered_context(fixture, item['source_accounts'])
     gt = ground_truth_compute(item_id, ctx)
@@ -53,6 +60,7 @@ def execute_item(item, *, condition, config, fixture,
             response_received=None, tool_calls=[],
             evidence_class=None, error_state='VOID',
             seal_hash=seal_hash, void_reason='underivable',
+            repeat=repeat,
         )
         return {
             'item_id': item_id, 'condition': condition,
@@ -84,7 +92,7 @@ def execute_item(item, *, condition, config, fixture,
             response_received=None, tool_calls=[],
             evidence_class=EV_0,
             error_state=f'TRANSPORT_FAILURE: {e}',
-            seal_hash=seal_hash,
+            seal_hash=seal_hash, repeat=repeat,
         )
         return {
             'item_id': item_id, 'condition': condition,
@@ -98,6 +106,27 @@ def execute_item(item, *, condition, config, fixture,
         tools=tools, adapter_send=adapter_send,
         sampling=sampling,
     )
+
+    # Empty response -> UNMEASURED, excluded from every denominator
+    # (SPEC R4.1 "Empty response", R0.2; AP-1 v1.3 §13.2): a readable
+    # response with no text and no tool call in any round is not an
+    # answer and not a NOT-INVOKED.
+    if not tool_calls_record and _is_empty_response(final_response):
+        transcript.append(
+            transcript_path,
+            item_id=item_id, arm_id=condition,
+            condition=condition,
+            request_sent={'messages': initial_messages,
+                          'request_record': request_record},
+            response_received=final_response, tool_calls=[],
+            evidence_class=None, error_state='UNMEASURED: empty response',
+            seal_hash=seal_hash,
+        )
+        return {
+            'item_id': item_id, 'condition': condition,
+            'status': 'UNMEASURED', 'error': 'empty response',
+            'ground_truth': gt,
+        }
 
     # Classify evidence from ACCUMULATED records (R1.3 normative)
     ev_class, outcome, self_report = classify_invocation(
@@ -114,27 +143,31 @@ def execute_item(item, *, condition, config, fixture,
         _, att_reason = classify_attestation(
             attestation, {'ev3_implemented': False})
 
-    # D7.2(a): sequential operand provenance (D22 transitivity guard)
-    provenance_results = classify_invocations_sequential(
-        tool_calls_record, ctx, gt, config)
+    # D7.2(a): sequential operand provenance (D22 transitivity guard);
+    # a chained item without declared intermediates is UNMEASURABLE (T3-42)
+    provenance_results = mark_unmeasurable_item(
+        classify_invocations_sequential(tool_calls_record, ctx, gt, config),
+        gt)
 
-    # D7.2(b): evaluate operation correctness for each tool call
+    # D7.2(b): evaluate operation correctness for each calculator call.
+    # A call without a readable expression is OPERATION-UNOBSERVABLE,
+    # counted, not dropped (T3-16); one result per calculator call, so
+    # results and expressions stay aligned for the reclassification.
+    exprs = [_extract_calc_expression(tc)
+             for tc in tool_calls_record if is_calculator_call(tc)]
     op_correctness_results = []
-    for tc in tool_calls_record:
-        expr = _extract_calc_expression(tc)
-        if expr is not None:
-            try:
-                oc = classify_operation(expr, gt, config)
-                op_correctness_results.append(oc)
-            except Exception as e:
-                op_correctness_results.append({
-                    'outcome': 'OPERATION-UNOBSERVABLE',
-                    'reason': f'evaluation failed: '
-                              f'{type(e).__name__}: {e}',
-                })
+    for expr in exprs:
+        try:
+            oc = classify_operation(expr, gt, config)
+            op_correctness_results.append(oc)
+        except Exception as e:
+            op_correctness_results.append({
+                'outcome': 'OPERATION-UNOBSERVABLE',
+                'reason': f'evaluation failed: '
+                          f'{type(e).__name__}: {e}',
+            })
 
     # Session-level reclassification (forward-dependency rule)
-    exprs = [_extract_calc_expression(tc) or '' for tc in tool_calls_record]
     op_correctness_results = reclassify_session(op_correctness_results, exprs)
 
     # Write transcript
@@ -147,6 +180,7 @@ def execute_item(item, *, condition, config, fixture,
         tool_calls=tool_calls_record,
         evidence_class=ev_class,
         error_state=None, seal_hash=seal_hash,
+        repeat=repeat,
         invocation_outcome=outcome,
         self_report=self_report,
         attestation_reason=att_reason,
@@ -263,16 +297,19 @@ def _record_shape(response, round_shapes):
 def _extract_calc_expression(tool_call_record):
     """Extract calculator expression from a tool-call record.
 
-    Returns the expression string, or None if not a calculator call.
+    Returns the 'expression' argument, or None if not a calculator call
+    or the arguments are not a JSON object with that key.
     """
     func = tool_call_record.get('function', {})
     if func.get('name') != 'calculator':
         return None
     try:
         args = json.loads(func.get('arguments', '{}'))
-        return args.get('expression')
     except (json.JSONDecodeError, TypeError):
         return None
+    if not isinstance(args, dict):
+        return None
+    return args.get('expression')
 
 
 # -- Helpers ---------------------------------------------------------
@@ -288,6 +325,13 @@ def _build_messages(*, system_prompt, item, fixture, config):
         'content': f'{context_text}\n\nQuestion: {item["text"]}',
     })
     return messages
+
+
+def _is_empty_response(response):
+    """True for a recognised chat-completion response whose message has no
+    text content (empty or null). The caller checks for tool calls."""
+    content, recognised, _ = _extract_content(response)
+    return recognised and not content
 
 
 def _extract_tool_calls(response):

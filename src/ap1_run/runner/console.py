@@ -7,6 +7,7 @@ the summary is built. The text is pinned by the regression baseline.
 
 from collections import Counter
 
+from ap1_run.runner.summary import measure_invocation_by_condition
 from ap1_run.scoring.invocation import format_rate
 
 
@@ -74,19 +75,31 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
     # 3g. Unmeasured cells
     print(f'\n3g. UNMEASURED CELLS: {len(unmeasured_cells)}')
 
-    # 3h. Invocation under both conditions
-    print(f'\n3h. D7.1 INVOCATION:')
+    # 3h. Invocation under both conditions. n counts computable questions
+    # with an observed outcome; a question fails if any repeat is
+    # NOT-INVOKED; UNOBSERVABLE (EV-0) executions are in no n.
+    print(f'\n3h. D7.1 INVOCATION (n = questions; a question fails if any '
+          f'repeat is NOT-INVOKED; UNOBSERVABLE not in n):')
+    measured = measure_invocation_by_condition(all_results)
     for cond in conditions:
-        cond_results = [r for r in executed if r['condition'] == cond]
-        invoked = sum(1 for r in cond_results
-                      if r.get('invocation_outcome') == 'INVOKED')
-        not_invoked = sum(1 for r in cond_results
-                          if r.get('invocation_outcome') == 'NOT-INVOKED')
-        failures = not_invoked
-        n = len(cond_results)
-        rate_str = format_rate(failures, n) if n > 0 else 'no observations'
+        m = measured.get(cond, {'per_class': {}, 'cross_class_warning': None})
+        observed = {ec: c for ec, c in m['per_class'].items() if c['n'] > 0}
+        invoked = sum(c['invoked'] for c in observed.values())
+        not_invoked = sum(c['not_invoked'] for c in observed.values())
+        n = sum(c['n'] for c in observed.values())
         print(f'  {cond}: invoked={invoked} not_invoked={not_invoked} n={n}')
-        print(f'    failure rate: {rate_str}')
+        for ec, c in m['per_class'].items():
+            if c['unobservable']:
+                print(f'    {ec or "no evidence class"} executions: '
+                      f'{c["unobservable"]} UNOBSERVABLE, not in n')
+        if m['cross_class_warning']:
+            print(f'    {m["cross_class_warning"]}')
+        if len(observed) > 1:
+            for ec, c in observed.items():
+                print(f'    failure rate ({ec}): {c["failure_rate"]}')
+        else:
+            rate_str = format_rate(not_invoked, n)
+            print(f'    failure rate: {rate_str}')
 
     # 3h2. D7.3 Transcription
     print('\n3h2. D7.3 TRANSCRIPTION:')
@@ -111,7 +124,8 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
     print(f'\n3i. D7.2(b) OPERATION CORRECTNESS:')
     op_counts = {'OPERATION-CORRECT': 0, 'WRONG-OPERATION': 0,
                  'OPERATION-UNOBSERVABLE': 0}
-    wo_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0}
+    wo_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0,
+                'no_figure': 0}
     for r in executed:
         fig = r.get('figure_outcome', '')
         for oc in r.get('operation_correctness', []):
@@ -121,8 +135,14 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
             if outcome == 'WRONG-OPERATION':
                 if fig == 'AUTO-MATCH':
                     wo_split['route_divergence'] += 1
-                elif fig.startswith('ADJUDICATE'):
+                elif fig.startswith('ADJUDICATE') or fig == 'UNMEASURABLE':
+                    # UNMEASURABLE goes to adjudication and is never scored
+                    # incorrect (SPEC R2.0 step 0; T3-63)
                     wo_split['undetermined'] += 1
+                elif fig == 'AUTO-NO-FIGURE':
+                    # no figure released: D1 scores NO-FIGURE, not
+                    # INCORRECT, so there is no item answer (T3-63)
+                    wo_split['no_figure'] += 1
                 else:
                     wo_split['item_wrong'] += 1
     for outcome in ['OPERATION-CORRECT', 'WRONG-OPERATION', 'OPERATION-UNOBSERVABLE']:
@@ -133,6 +153,7 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
         print(f'      route divergence (item answer correct):      {wo_split["route_divergence"]}')
         print(f'      item answer incorrect:                       {wo_split["item_wrong"]}')
         print(f'      item answer undetermined (adjudicated):      {wo_split["undetermined"]}')
+        print(f'      no figure released (no item answer):         {wo_split["no_figure"]}')
 
 
 def print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary):
@@ -182,3 +203,6 @@ def print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary):
     prov_out = summary.get('provenance_outcomes', {})
     print(f'  OPERANDS-GROUNDED: {prov_out.get("OPERANDS-GROUNDED", 0)}')
     print(f'  OPERAND-ORIGINATED: {prov_out.get("OPERAND-ORIGINATED", 0)}')
+    print(f'  OPERANDS-UNOBSERVABLE: '
+          f'{prov_out.get("OPERANDS-UNOBSERVABLE", 0)}')
+    print(f'  UNMEASURABLE: {prov_out.get("UNMEASURABLE", 0)}')

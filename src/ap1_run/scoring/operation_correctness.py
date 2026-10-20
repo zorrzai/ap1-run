@@ -12,7 +12,9 @@ import operator
 from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 
 from ap1_run.foundation.numeric import quantise
-from ap1_run.scoring.provenance.trace import TRANSFORMATIONS
+from ap1_run.scoring.provenance.trace import (
+    TRANSFORMATIONS, is_number, literal_decimal, parse_expression,
+)
 
 # -- Outcome constants ------------------------------------------------
 
@@ -68,18 +70,19 @@ _ALLOWED_FUNCS = {
                                        rounding=ROUND_HALF_UP),
 }
 
-def _eval_decimal(node):
+def _eval_decimal(node, source):
     """Recursively evaluate an AST node using Decimal arithmetic.
 
     Only arithmetic operators and a minimal set of safe functions are
-    permitted. Everything else raises ValueError.
+    permitted. Everything else raises ValueError. Literals are read from
+    their text in `source`, never through float (T3-58, F5).
     """
     if isinstance(node, ast.Expression):
-        return _eval_decimal(node.body)
+        return _eval_decimal(node.body, source)
 
     if isinstance(node, ast.Constant):
-        if isinstance(node.value, (int, float)):
-            return Decimal(str(node.value))
+        if is_number(node.value):
+            return literal_decimal(node, source)[0]
         raise ValueError(
             f'unsupported constant type: {type(node.value).__name__}')
 
@@ -87,8 +90,8 @@ def _eval_decimal(node):
         op_type = type(node.op)
         if op_type not in _ALLOWED_BINOPS:
             raise ValueError(f'unsupported operator: {op_type.__name__}')
-        left = _eval_decimal(node.left)
-        right = _eval_decimal(node.right)
+        left = _eval_decimal(node.left, source)
+        right = _eval_decimal(node.right, source)
         return _ALLOWED_BINOPS[op_type](left, right)
 
     if isinstance(node, ast.UnaryOp):
@@ -96,7 +99,7 @@ def _eval_decimal(node):
         if op_type not in _ALLOWED_UNARYOPS:
             raise ValueError(
                 f'unsupported unary operator: {op_type.__name__}')
-        operand = _eval_decimal(node.operand)
+        operand = _eval_decimal(node.operand, source)
         return _ALLOWED_UNARYOPS[op_type](operand)
 
     if isinstance(node, ast.Name):
@@ -110,7 +113,7 @@ def _eval_decimal(node):
         fname = node.func.id
         if fname not in _ALLOWED_FUNCS:
             raise ValueError(f'unsupported function: {fname}')
-        args = [_eval_decimal(a) for a in node.args]
+        args = [_eval_decimal(a, source) for a in node.args]
         return _ALLOWED_FUNCS[fname](*args)
 
     raise ValueError(f'unsupported AST node: {type(node).__name__}')
@@ -130,7 +133,7 @@ def evaluate_expression(expression_str):
         # E6: translate ^ to ** for correct mathematical precedence
         expr_clean = expression_str.strip().replace('^', '**')
         tree = ast.parse(expr_clean, mode='eval')
-        result = _eval_decimal(tree)
+        result = _eval_decimal(tree, expr_clean)
         if not isinstance(result, Decimal):
             result = Decimal(str(result))
         return result
@@ -258,18 +261,17 @@ def reclassify_session(results, expressions):
         return list(results)
     n = len(results)
     out = list(results)
-    # Parse operand literals from each expression
+    # Operand literals of each expression, read exactly as D7.2(a) reads
+    # them (T3-58); an unreadable expression has none.
     op_sets = []
     for expr in expressions:
         lits = set()
-        if expr and isinstance(expr, str):
-            try:
-                tree = ast.parse(expr.strip(), mode='eval')
-                for nd in ast.walk(tree):
-                    if isinstance(nd, ast.Constant) and isinstance(nd.value, (int, float)):
-                        lits.add(Decimal(str(nd.value)))
-            except (SyntaxError, ValueError):
-                pass
+        parsed = parse_expression(expr)
+        if parsed is not None:
+            tree, source = parsed
+            for nd in ast.walk(tree):
+                if isinstance(nd, ast.Constant):
+                    lits.add(literal_decimal(nd, source)[0])
         op_sets.append(lits)
     # Evaluated results per call
     evals = []

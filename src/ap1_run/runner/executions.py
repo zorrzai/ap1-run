@@ -8,12 +8,14 @@ the result is appended to a Findings collector, which also records the
 executions that could not be scored.
 """
 
+import json
 from dataclasses import dataclass, field
 from decimal import Decimal
 
 from ap1_run.foundation import transcript
 from ap1_run.foundation.numeric import extract_numeric_tokens
 from ap1_run.scoring.accuracy import score_accuracy
+from ap1_run.scoring.answer_outcome import answer_outcome
 from ap1_run.scoring.figure_id import identify_figure
 from ap1_run.scoring.release_coverage import check_release_coverage
 from ap1_run.scoring.reproducibility import check_parameter_echo
@@ -88,6 +90,30 @@ def _figure_text(fig_result):
     return None if figure is None else str(figure)
 
 
+def _operation_returns(tool_calls, operation):
+    """The numeric returns of every call to the operation, in call order.
+
+    A return counts when its return_value is a JSON object (or dict) with a
+    'result' that reads as a Decimal; errored or unreadable calls are left
+    out. With no operation named (no ground truth), every tool's calls
+    count, as for invocation in execution/evidence.py.
+    """
+    returns = []
+    for tc in tool_calls:
+        if operation and tc.get('function', {}).get('name') != operation:
+            continue
+        rv = tc.get('return_value')
+        if not rv:
+            continue
+        try:
+            parsed = json.loads(rv) if isinstance(rv, str) else rv
+            if isinstance(parsed, dict) and 'result' in parsed:
+                returns.append(Decimal(str(parsed['result'])))
+        except Exception:
+            pass
+    return returns
+
+
 def score_execution(findings, result, *, item_id, condition, rep, expected,
                     ctx, collision, config, answer_tolerance,
                     decline_markers, currency_symbols, transcript_path,
@@ -116,34 +142,23 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         error_state=None,
         seal_hash=seal_hash,
         record_type='figure_identification',
+        repeat=rep,
         figure_outcome=fig_result['outcome'],
         figure_reason=fig_result.get('reason', ''),
         released_figure=_figure_text(fig_result),
         expected=str(expected),
     )
 
-    # -- D7.3: Transcription check (E7 fix) --
-    # Extract last calculator tool return value
-    _tool_return_val = None
-    _tc_list = result.get('tool_calls', [])
-    for _tc in reversed(_tc_list):
-        _rv = _tc.get('return_value', '')
-        if _rv:
-            import json as _json
-            try:
-                _parsed = _json.loads(_rv) if isinstance(_rv, str) else _rv
-                if isinstance(_parsed, dict) and 'result' in _parsed:
-                    _tool_return_val = Decimal(str(_parsed['result']))
-            except Exception:
-                pass
-            break
-
+    # -- D7.3: Transcription check (E7 fix; T3-26, T3-27, V12-6) --
+    # Every return of the required operation, under the declared policy
+    _quant = config.get('quantisation', {})
+    _required_op = (result.get('ground_truth') or {}).get('required_operation')
     transcription_result = check_transcription(
-        _tool_return_val,
+        _operation_returns(result.get('tool_calls', []), _required_op),
         fig_result.get('released_figure'),
         figure_outcome=fig_result['outcome'],
-        quantisation_digits=int(
-            config.get('quantisation', {}).get('places', 2)),
+        quantisation_digits=int(_quant.get('places', 2)),
+        quantisation_rounding=_quant.get('rounding', 'ROUND_HALF_UP'),
     )
     findings.transcription_results.append({
         'item_id': item_id,
@@ -152,6 +167,8 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'outcome': transcription_result['outcome'],
         'difference': str(transcription_result.get('difference', '')),
         'reason': transcription_result.get('reason', ''),
+        'rounded_under_declared_policy': transcription_result.get(
+            'rounded_under_declared_policy', False),
     })
 
     # -- D7.3: Release coverage check (E7 fix, all items) --
@@ -171,7 +188,6 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         except Exception:
             pass
     _rc_tool_calls = result.get('tool_calls', [])
-    _quant = config.get('quantisation', {})
     coverage_result = check_release_coverage(
         _rc_tool_calls, _rc_candidates, expected,
         quantisation_places=int(_quant.get('places', 2)),
@@ -193,8 +209,8 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         fig_result,
         expected_value=expected,
         answer_tolerance=answer_tolerance,
-        quantisation_digits=int(
-            config.get('quantisation', {}).get('places', 2)),
+        quantisation_digits=int(_quant.get('places', 2)),
+        quantisation_rounding=_quant.get('rounding', 'ROUND_HALF_UP'),
     )
     findings.all_accuracy_results.append(acc_result)
 
@@ -270,6 +286,10 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
             op_correctness = tr.get('operation_correctness', [])
             break
 
+    # AP-1 v1.3 section 6.8: the answer-level outcome, where it is decided
+    section_6_8, section_6_8_reason = answer_outcome(
+        outcome, inv_outcome, result.get('provenance_results', []))
+
     findings.all_results.append({
         'item_id': item_id, 'condition': condition,
         'repeat': rep, 'status': 'EXECUTED',
@@ -285,4 +305,6 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'provenance_results': result.get('provenance_results', []),
         'transcription_outcome': transcription_result['outcome'],
         'release_coverage_outcome': coverage_result['outcome'],
+        'answer_outcome': section_6_8,
+        'answer_outcome_reason': section_6_8_reason,
     })

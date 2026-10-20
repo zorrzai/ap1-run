@@ -1,13 +1,14 @@
 """Unit tests for scoring/provenance/trace.py: operand extraction and
 the five-step resolution of one operand (D7.2(a), R2.4)."""
 
-from decimal import Decimal, InvalidOperation
+import ast
+from decimal import Decimal
 
 import pytest
 
 from ap1_run.scoring.provenance.trace import (
     STRUCTURAL_CONSTANTS, TRANSFORMATIONS, _collect_constants,
-    extract_operands, resolve_operand,
+    extract_operands, is_number, parse_expression, resolve_operand,
 )
 
 D = Decimal
@@ -84,13 +85,58 @@ def test_extract_operands_unary_plus_keeps_literal_unsigned():
     assert extract_operands('+5') == [(D('5'), '5')]
 
 
-def test_extract_operands_skips_names_and_strings():
+def test_extract_operands_skips_names():
     assert extract_operands('pi * 2 + e') == [(D('2'), '2')]
-    assert extract_operands("'12' + 1") == [(D('1'), '1')]
 
 
-def test_extract_operands_skips_complex_literals():
-    assert extract_operands('2j + 1') == [(D('1'), '1')]
+@pytest.mark.parametrize('expression', ["'12' + 1", '2j + 1', 'None + 1',
+                                        'True + 1', 'False * 15.2'])
+def test_extract_operands_non_numeric_constant_makes_expression_unreadable(
+        expression):
+    # A string, complex, None or boolean constant is not a number the
+    # model wrote; the expression's operands can't be read, so none are
+    # returned (Steven's ruling on T3-39/F6: OPERANDS-UNOBSERVABLE).
+    assert extract_operands(expression) == []
+
+
+def test_extract_operands_integer_literal_in_another_base_is_exact():
+    assert extract_operands('0x1F + 0o17 + 0b101') == [
+        (D('31'), '0x1F'), (D('15'), '0o17'), (D('5'), '0b101')]
+
+
+def test_extract_operands_underscore_and_exponent_literals_kept_as_written():
+    assert extract_operands('1_000 * 1e3 + 2.') == [
+        (D('1000'), '1_000'), (D('1E+3'), '1e3'), (D('2'), '2.')]
+
+
+def test_extract_operands_negative_literal_text_from_the_literal():
+    # The sign comes from the negation, the digits from the literal.
+    assert extract_operands('- 53.20') == [(D('-53.20'), '-53.20')]
+
+
+def test_extract_operands_deep_nesting_does_not_raise():
+    # The walk is iterative: a nesting deeper than the recursion limit
+    # that still parses gives its one operand.
+    assert extract_operands('-' * 900 + '7') == [(D('-7'), '-7')]
+
+
+@pytest.mark.parametrize('expression', [None, 15.2, ['1'], '-' * 5000 + '1',
+                                        'a\x00 1'])
+def test_extract_operands_unreadable_input_gives_no_operands(expression):
+    assert extract_operands(expression) == []
+
+
+def test_parse_expression_returns_tree_and_stripped_source():
+    tree, source = parse_expression('  1 + 2\n')
+    assert source == '1 + 2'
+    assert isinstance(tree, ast.Expression)
+
+
+@pytest.mark.parametrize('value, expected', [
+    (1, True), (1.5, True), (True, False), (False, False), ('1', False),
+    (1j, False), (None, False)])
+def test_is_number(value, expected):
+    assert is_number(value) is expected
 
 
 def test_extract_operands_inside_function_calls():
@@ -107,34 +153,13 @@ def test_extract_operands_statements_are_not_expressions():
     assert extract_operands('x = 5') == []
 
 
-@pytest.mark.finding('T3-2')
-def test_extract_operands_leading_whitespace_gives_no_operands():
-    # Current behaviour: ' 1 + 2' does not parse in 'eval' mode, so no
-    # operands are found and the call counts as grounded (T3-2).
-    assert extract_operands(' 1 + 2') == []
-    assert extract_operands('\t1 + 2') == []
-
-
 def test_extract_operands_float_converted_through_its_text():
     # Decimal(str(0.1)), never Decimal(0.1)
     assert extract_operands('0.1') == [(D('0.1'), '0.1')]
 
 
-def test_extract_operands_reads_literals_through_float():
-    # Current behaviour: the literal is parsed by ast into a float first,
-    # so trailing zeros are lost and digits beyond float precision are
-    # rounded (the docstring says "NEVER through float").
-    assert extract_operands('53.20') == [(D('53.2'), '53.2')]
-    assert extract_operands('0.12345678901234567890') == [
-        (D('0.12345678901234568'), '0.12345678901234568')]
-    assert extract_operands('1e3') == [(D('1000.0'), '1000.0')]
-
-
-def test_extract_operands_boolean_literal_raises():
-    # Current behaviour: True is an int to isinstance, and Decimal('True')
-    # is invalid, so the extraction raises.
-    with pytest.raises(InvalidOperation):
-        extract_operands('True + 1')
+def test_extract_operands_huge_literal_is_exact_not_infinity():
+    assert extract_operands('1e400') == [(D('1E+400'), '1e400')]
 
 
 # -- resolve_operand: step 1 ----------------------------------------------
@@ -321,9 +346,10 @@ def test_resolve_step4_ungrounded_prior_return_is_originated():
         5, 'computed_in_session_ungrounded', near_miss_finding=None)
 
 
-def test_resolve_step4_first_matching_prior_return_decides():
-    prior = [{'value': D('7'), 'grounded': False},
-             {'value': D('7'), 'grounded': True}]
+def test_resolve_step4_grounded_non_matching_return_does_not_ground():
+    # T3-57: only grounded returns of the operand's own value count.
+    prior = [{'value': D('1000'), 'grounded': True},
+             {'value': D('7'), 'grounded': False}]
     assert resolve('7', ctx={}, prior=prior)['resolution'] == \
         'computed_in_session_ungrounded'
 
@@ -445,9 +471,6 @@ def test_collect_constants_returns_a_new_mutable_set():
 # --- Step 4: correct behaviour (failing until fixed) ---
 
 @pytest.mark.finding('T3-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-2: leading whitespace makes the expression '
-                          'unparseable, so no operands are extracted')
 @pytest.mark.parametrize('expression', [' 1520 * 0.01', '\t1520*0.01'])
 def test_extract_operands_leading_whitespace_is_stripped(expression):
     # Correct: the expression is normalised (stripped) before parsing, as
@@ -459,8 +482,6 @@ def test_extract_operands_leading_whitespace_is_stripped(expression):
 
 
 @pytest.mark.finding('T3-58', 'F5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-58/F5: operand literals are read through float')
 @pytest.mark.parametrize('literal', [
     '53.20',                    # trailing zero kept in the literal text
     '-53.20',
@@ -478,9 +499,6 @@ def test_extract_operands_reads_literal_text_exactly_as_decimal(literal):
 
 
 @pytest.mark.finding('T3-57')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-57: step 4 takes the first matching prior '
-                          'return, so the outcome depends on call order')
 def test_resolve_step4_grounded_matching_prior_return_grounds_in_any_order():
     # SPEC R2.4 step 4: an operand is computed in session when it "exactly
     # equals the return value of a prior invocation ... and that prior
@@ -511,8 +529,6 @@ def extract_without_raising(expression):
 
 
 @pytest.mark.finding('F6')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F6: a boolean literal in the expression raises')
 def test_extract_operands_boolean_literal_not_an_operand_no_raise():
     # Correct (Steven's ruling on F6, choices-for-marcus #9): "True + 1"
     # in a model's expression never raises; a boolean is not a numeric
@@ -523,8 +539,6 @@ def test_extract_operands_boolean_literal_not_an_operand_no_raise():
 
 
 @pytest.mark.finding('T3-39')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39: a non-string expression raises TypeError')
 def test_extract_operands_non_string_expression_no_raise():
     # Correct (T3 review T3-39): {"expression": 15.2} is model-controlled;
     # extracting operands from a value that is not a string never raises.

@@ -39,7 +39,8 @@ def test_run_report_with_no_results(capsys):
             '\n3e. TOOL-CALL ARGUMENT STRUCTURES: 0 calls\n'
             '\n3f. EVIDENCE CLASSES:\n'
             '\n3g. UNMEASURED CELLS: 0\n'
-            '\n3h. D7.1 INVOCATION:\n'
+            '\n3h. D7.1 INVOCATION (n = questions; a question fails if any '
+            'repeat is NOT-INVOKED; UNOBSERVABLE not in n):\n'
             '  base: invoked=0 not_invoked=0 n=0\n'
             '    failure rate: no observations\n'
             '  instruction_removed: invoked=0 not_invoked=0 n=0\n'
@@ -134,9 +135,13 @@ def test_run_report_with_results(capsys):
         '  EV-0: 1\n'
         '  EV-2: 2\n'
         '\n3g. UNMEASURED CELLS: 2\n'
-        '\n3h. D7.1 INVOCATION:\n'
-        '  base: invoked=2 not_invoked=2 n=6\n'
-        '    failure rate: 2/6 (33.3%)\n'
+        '\n3h. D7.1 INVOCATION (n = questions; a question fails if any '
+        'repeat is NOT-INVOKED; UNOBSERVABLE not in n):\n'
+        # T3-1, T3-11: n counts questions (Q01 twice is one); Q06 and Q09
+        # have no outcome and are not in n.
+        '  base: invoked=1 not_invoked=2 n=3\n'
+        '    no evidence class executions: 2 UNOBSERVABLE, not in n\n'
+        '    failure rate: 2/3 (66.7%)\n'
         '  instruction_removed: invoked=1 not_invoked=1 n=2\n'
         '    failure rate: 1/2 (50.0%)\n'
         '\n3h2. D7.3 TRANSCRIPTION:\n'
@@ -156,8 +161,9 @@ def test_run_report_with_results(capsys):
         '  OPERATION-UNOBSERVABLE: 1\n'
         '    of which:\n'
         '      route divergence (item answer correct):      3\n'
-        '      item answer incorrect:                       3\n'
-        '      item answer undetermined (adjudicated):      2\n')
+        '      item answer incorrect:                       1\n'
+        '      item answer undetermined (adjudicated):      2\n'
+        '      no figure released (no item answer):         2\n')
 
 
 def test_run_report_percentages_round_to_whole_numbers(capsys):
@@ -183,7 +189,9 @@ SUMMARY = {
     'step_5_sign_inverted': 1, 'step_5_ungrounded_chain': 2,
     'step_5_untraceable': 3,
     'provenance_outcomes': {'OPERANDS-GROUNDED': 11,
-                            'OPERAND-ORIGINATED': 4},
+                            'OPERAND-ORIGINATED': 4,
+                            'OPERANDS-UNOBSERVABLE': 6,
+                            'UNMEASURABLE': 2},
 }
 
 PROVENANCE = (
@@ -197,7 +205,9 @@ PROVENANCE = (
     '  step 5 (originated, computed from ungrounded invocation): 2\n'
     '  step 5 (originated, no traceable basis):                  3\n'
     '  OPERANDS-GROUNDED: 11\n'
-    '  OPERAND-ORIGINATED: 4\n')
+    '  OPERAND-ORIGINATED: 4\n'
+    '  OPERANDS-UNOBSERVABLE: 6\n'
+    '  UNMEASURABLE: 2\n')
 
 
 def test_scoring_report_full(capsys):
@@ -242,7 +252,9 @@ def test_scoring_report_defaults_when_values_are_missing(capsys):
         '  step 5 (originated, computed from ungrounded invocation): 0\n'
         '  step 5 (originated, no traceable basis):                  0\n'
         '  OPERANDS-GROUNDED: 0\n'
-        '  OPERAND-ORIGINATED: 0\n')
+        '  OPERAND-ORIGINATED: 0\n'
+        '  OPERANDS-UNOBSERVABLE: 0\n'
+        '  UNMEASURABLE: 0\n')
 
 
 def test_scoring_report_without_d1_summary(capsys):
@@ -268,16 +280,28 @@ def test_run_report_single_execution(capsys):
         '    of which:\n'
         '      route divergence (item answer correct):      0\n'
         '      item answer incorrect:                       0\n'
-        '      item answer undetermined (adjudicated):      1\n')
+        '      item answer undetermined (adjudicated):      1\n'
+        '      no figure released (no item answer):         0\n')
+
+
+def test_run_report_wrong_operation_split_counts_accumulate(capsys):
+    # Two executions in each population, so every count must add up.
+    out = run_report(capsys, [
+        executed('Q01', 'base', r, figure, operation_correctness=wrong_op())
+        for figure in ('AUTO-MATCH', 'ADJUDICATE-DECLINE', 'UNMEASURABLE',
+                       'AUTO-NO-FIGURE', '')
+        for r in (1, 2)])
+    assert out.endswith(
+        '    of which:\n'
+        '      route divergence (item answer correct):      2\n'
+        '      item answer incorrect:                       2\n'
+        '      item answer undetermined (adjudicated):      4\n'
+        '      no figure released (no item answer):         2\n')
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
 
 @pytest.mark.finding('T3-63')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-63: the console counts WRONG-OPERATION calls in '
-                          'UNMEASURABLE and AUTO-NO-FIGURE executions as '
-                          '"item answer incorrect"')
 def test_run_report_wrong_operation_in_unreadable_or_no_figure_not_item_wrong(
         capsys):
     # SPEC R2.0 step 0 (an UNMEASURABLE response is never scored incorrect)
@@ -315,8 +339,6 @@ def section(out, label):
 
 
 @pytest.mark.finding('T3-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-1: EV-0 executions counted in console 3h n')
 def test_run_report_3h_ev0_execution_not_in_rate(capsys):
     # Correct (SPEC R2.3, R1.3.1): the EV-0 execution (outcome None) is
     # not an observation of the rate; base is 0 failures in 1, not in 2.
@@ -331,8 +353,6 @@ def test_run_report_3h_ev0_execution_not_in_rate(capsys):
 
 
 @pytest.mark.finding('T3-11')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-11: console 3h pools repeats as n')
 def test_run_report_3h_rate_counts_questions_not_repeats(capsys):
     # Correct (AP-1 v1.3 D7.1, GH-5): three repeats of one question are
     # one question: "0/1 failures", not "0/3".
@@ -358,3 +378,44 @@ def test_run_report_3g_lists_each_unmeasured_cell_with_cause(capsys):
     assert 'UNMEASURED CELLS: 2' in text
     for cell in cells:
         assert cell['item_id'] in text and cell['cause'] in text, text
+
+
+# Step 5 (d71-invocation-aggregation): the 3h layout per evidence class.
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.req('R2.3', 'R1.3.1')
+def test_run_report_3h_lists_ev0_per_class_with_warning(capsys):
+    out = run_report(capsys, [
+        executed('Q01', 'base', 1, 'AUTO-MATCH', invocation_outcome='INVOKED',
+                 evidence_class='EV-2 PLATFORM-STRUCTURAL'),
+        executed('Q02', 'base', 1, 'AUTO-MATCH', invocation_outcome=None,
+                 evidence_class='EV-0 UNOBSERVABLE'),
+        executed('Q03', 'base', 1, 'AUTO-MATCH', invocation_outcome=None,
+                 evidence_class='EV-0 UNOBSERVABLE')])
+    assert (
+        '  base: invoked=1 not_invoked=0 n=1\n'
+        '    EV-0 UNOBSERVABLE executions: 2 UNOBSERVABLE, not in n\n'
+        '    aggregate spans 2 evidence classes (EV-0 UNOBSERVABLE, '
+        'EV-2 PLATFORM-STRUCTURAL); figures are not comparable across '
+        'classes\n'
+        '    failure rate: 0/1 failures; one-sided 95% upper bound on the '
+        'failure rate 95.0%\n') in out
+
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.req('R2.3')
+def test_run_report_3h_two_observed_classes_rate_per_class(capsys):
+    out = run_report(capsys, [
+        executed('Q01', 'base', 1, 'AUTO-MATCH', invocation_outcome='INVOKED',
+                 evidence_class='EV-2 PLATFORM-STRUCTURAL'),
+        executed('Q02', 'base', 1, 'AUTO-MATCH',
+                 invocation_outcome='NOT-INVOKED',
+                 evidence_class='EV-1 SELF-REPORTED')])
+    assert (
+        '  base: invoked=1 not_invoked=1 n=2\n'
+        '    aggregate spans 2 evidence classes (EV-1 SELF-REPORTED, '
+        'EV-2 PLATFORM-STRUCTURAL); figures are not comparable across '
+        'classes\n'
+        '    failure rate (EV-1 SELF-REPORTED): 1/1 (100.0%)\n'
+        '    failure rate (EV-2 PLATFORM-STRUCTURAL): 0/1 failures; '
+        'one-sided 95% upper bound on the failure rate 95.0%\n') in out

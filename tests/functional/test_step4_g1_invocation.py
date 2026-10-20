@@ -157,9 +157,6 @@ ALL_ITEMS = [f'Q{n:02d}' for n in range(1, 11)]
 # -- T3-1: EV-0 is UNOBSERVABLE, not a success, in D7.1 -------------------
 
 @pytest.mark.finding('T3-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-1: EV-0 executions counted as INVOKED in the '
-                          'D7.1 rate and bound')
 def test_run_unrecognised_endpoint_prints_no_rate_or_bound(full_run):
     """An endpoint whose every response has a shape the runner cannot read
     gives EV-0 UNOBSERVABLE for every execution. Correct (SPEC R1.3.1 and
@@ -179,9 +176,6 @@ def test_run_unrecognised_endpoint_prints_no_rate_or_bound(full_run):
 
 
 @pytest.mark.finding('T3-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-1: EV-0 executions counted as INVOKED in the '
-                          'D7.1 rate and bound; no evidence class in §5')
 def test_run_mixed_classes_d71_counts_only_observed_and_names_classes(
         full_run):
     """Three base questions end EV-0 (an Anthropic-shaped answer after a
@@ -214,8 +208,6 @@ def test_run_mixed_classes_d71_counts_only_observed_and_names_classes(
 # -- T3-10: an empty response is UNMEASURED -------------------------------
 
 @pytest.mark.finding('T3-10')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-10: empty response scored EXECUTED/NOT-INVOKED')
 def test_run_empty_response_unmeasured_outside_d71(full_run):
     """Q01 answers with empty content and no tool call, under both
     conditions. Correct (SPEC R4.1 "Empty response -> UNMEASURED", R0.2,
@@ -234,8 +226,6 @@ def test_run_empty_response_unmeasured_outside_d71(full_run):
 # -- T3-11: the unit of D7.1 is the question ------------------------------
 
 @pytest.mark.finding('T3-11')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-11: D7.1 bound pools repeats as n')
 def test_run_d71_bound_counts_questions_not_repeats(full_run):
     """10 questions, 3 repeats each, every one invoked. Correct (AP-1
     v1.3 D7.1 "proportion of computable questions", the D7.5 example
@@ -254,9 +244,6 @@ def test_run_d71_bound_counts_questions_not_repeats(full_run):
 # -- V12-5: the §6.2 headline ---------------------------------------------
 
 @pytest.mark.finding('V12-5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-5: no "invoked on X% of computable '
-                          'questions" headline')
 def test_run_report_states_invocation_headline_with_k_n_and_bound(full_run):
     """Correct (AP-1 v1.2/v1.3 §6.2 template "Deterministic computation
     was invoked on [X]% of computable questions, under [conditions]";
@@ -347,15 +334,18 @@ def test_run_call_to_unoffered_tool_recorded_not_invoked_run_completes(
 
 # -- T3-39, F6, S3-G2-4: model-controlled input never aborts the run ------
 
+_ABORTS = pytest.mark.xfail(
+    strict=True, raises=AssertionError,
+    reason='T3-39: model-controlled calculator input aborts the run')
+
+
 @pytest.mark.finding('T3-39', 'F6', 'S3-G2-4', 'S3-G4-5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39/F6/S3-G2-4/S3-G4-5: model-controlled '
-                          'calculator input aborts the run')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}',             # T3-39: not a string
     '{"expression": "True * 15.2"}',    # T3-39: boolean literal
     '{"expression": "True + 1"}',       # F6
-    '{"expression": "1e308*10"}',       # T3-39: the calculator returns inf
+    pytest.param('{"expression": "1e308*10"}',   # T3-39: calculator inf
+                 marks=_ABORTS),
     '"15200 * 1.2 / 100 / 12"',         # S3-G2-4: JSON, not an object
     '["15200 * 1.2 / 100 / 12"]',       # S3-G2-4
 ], ids=['number', 'true-times', 'true-plus', 'overflow', 'json-string',

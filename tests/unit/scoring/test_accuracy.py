@@ -148,22 +148,49 @@ def test_score_accuracy_quantisation_zero_digits_rounds_to_integer():
 
 
 @pytest.mark.finding('T3-27')
-def test_score_accuracy_quantisation_rounds_half_even_at_boundary():
-    # 2.005 and 2.015 differ by 0.01, within tolerance, but half-even
-    # quantisation gives 2.00 and 2.02. Correct: use the declared HALF_UP
-    # policy (2.01 and 2.02, CORRECT).
+def test_score_accuracy_quantisation_default_rounding_is_half_up():
+    # Fixed (T3-27): quantisation used the Decimal default HALF_EVEN
+    # (2.005 -> 2.00, INCORRECT against 2.015). The default of
+    # quantisation_rounding is ROUND_HALF_UP: 2.01 vs 2.02, within 0.01.
     r = score(figure(AUTO_MATCH, D('2.005')), expected='2.015', digits=2)
-    assert r['outcome'] == INCORRECT
-    assert r['difference'] == D('0.02')
+    assert r['outcome'] == CORRECT
+    assert r['difference'] == D('0.01')
 
 
 @pytest.mark.finding('T3-27')
-def test_score_accuracy_quantisation_zero_digits_rounds_half_even():
-    # 2.5 -> 2 under half-even (3 under HALF_UP), so 2.5 vs 2.9 differs by 1.
+def test_score_accuracy_quantisation_zero_digits_rounds_half_up():
+    # 2.5 -> 3 under HALF_UP, so 2.5 vs 2.9 (-> 3) differs by 0.
     r = score(figure(AUTO_MATCH, D('2.5')), expected='2.9', tol=D('0'),
               digits=0)
-    assert r['outcome'] == INCORRECT
-    assert r['difference'] == D('1')
+    assert r['outcome'] == CORRECT
+    assert r['difference'] == D('0')
+
+
+@pytest.mark.finding('T3-27')
+def test_score_accuracy_declared_half_even_rounding_is_used():
+    r = score_accuracy(figure(AUTO_MATCH, D('2.5')), expected_value=D('2.9'),
+                       answer_tolerance=D('0'), quantisation_digits=0,
+                       quantisation_rounding='ROUND_HALF_EVEN')
+    assert (r['outcome'], r['difference']) == (INCORRECT, D('1'))
+
+
+@pytest.mark.parametrize('mode, outcome', [
+    ('ROUND_HALF_EVEN', INCORRECT),   # expected 2.5 -> 2, released 3
+    ('ROUND_HALF_UP', CORRECT),       # expected 2.5 -> 3, released 3
+])
+def test_score_accuracy_declared_rounding_applies_to_the_expected_value(
+        mode, outcome):
+    r = score_accuracy(figure(AUTO_MATCH, D('2.9')), expected_value=D('2.5'),
+                       answer_tolerance=D('0'), quantisation_digits=0,
+                       quantisation_rounding=mode)
+    assert r['outcome'] == outcome
+
+
+def test_score_accuracy_unsupported_rounding_mode_raises():
+    with pytest.raises(ValueError, match='unsupported rounding mode'):
+        score_accuracy(figure(AUTO_MATCH, D('2.5')), expected_value=D('2.9'),
+                       answer_tolerance=D('0'), quantisation_digits=0,
+                       quantisation_rounding='ROUND_SIDEWAYS')
 
 
 # -- score_accuracy with identify_figure (the live chain) ---------------------
@@ -264,10 +291,6 @@ def test_summarise_accuracy_missing_auto_scored_raises_key_error():
 
 @pytest.mark.finding('T3-27')
 @pytest.mark.req('R2.1', 'R0.4.1')
-@pytest.mark.xfail(strict=True, raises=(TypeError, AssertionError),
-                   reason='T3-27: score_accuracy quantises with the Decimal '
-                          'default HALF_EVEN; the fix must add a '
-                          'quantisation_rounding= keyword and use it')
 def test_score_accuracy_declared_half_up_boundary_within_tolerance_is_correct():
     # SPEC R0.4.1: quantise once "using the declared rounding mode". Under
     # the shipped ROUND_HALF_UP, 2.005 -> 2.01 and 2.015 -> 2.02: they

@@ -17,6 +17,8 @@ from decimal import Decimal
 import pytest
 
 from ap1_run import run
+from ap1_run.execution.perturbation_guard import HELD_CONSTANT
+from ap1_run.execution.seal import SealError
 from ap1_run.foundation import adapter
 
 D = Decimal
@@ -65,6 +67,7 @@ class Run:
         self.write_inputs()
         self.calls = []
         self.results = {}     # (item, condition, rep) -> result or exception
+        self.refuse = set()   # R3.1 guards that raise SealError
         self.version = {'version_tag': 'v9.9.9',
                         'version_commit': '0123456789abcdef0123'}
         monkeypatch.setattr(sys, 'path', list(sys.path))
@@ -77,6 +80,8 @@ class Run:
                             lambda s: self.calls.append(('sleep', s)))
         for name in ('load_config', 'resolve_runner_version',
                      'compute_runner_source_hash',
+                     'perturbation_check', 'source_fields_check',
+                     'declared_constants_check',
                      'create_seal', 'check_condition_guard',
                      'build_delivered_context', 'check_lookup_collision',
                      'execute_item', 'score_execution',
@@ -124,12 +129,34 @@ class Run:
         self.calls.append(('source_hash', base_dir))
         return 'feedfacecafebeef' + '0' * 48
 
+    def _gt_guard(self, name, module, fixture, questions):
+        self.calls.append(('gt_guard', name, module, fixture, questions))
+        if name in self.refuse:
+            raise SealError(f'{name} refused')
+        return []
+
+    def perturbation_check(self, *args):
+        return self._gt_guard('perturbation', *args)
+
+    def source_fields_check(self, *args):
+        return self._gt_guard('source_fields', *args)
+
+    def declared_constants_check(self, *args):
+        return self._gt_guard('declared_constants', *args)
+
     def create_seal(self, **kwargs):
         self.calls.append(('seal', kwargs))
         return {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}
 
     def check_condition_guard(self, *args):
         self.calls.append(('guard',) + args)
+        # Each condition's checked request; marked, so that the test sees
+        # the engine is given these and not the config's own values.
+        base, removed, tools = args[2], args[3], args[4]
+        return {'base': {'system_prompt': base + ' (checked)',
+                         'tools': ['base'] + tools},
+                'instruction_removed': {'system_prompt': removed + ' (checked)',
+                                        'tools': ['removed'] + tools}}
 
     def build_delivered_context(self, fixture, accounts):
         self.calls.append(('context', fixture, accounts))
@@ -215,6 +242,9 @@ def test_main_full_run_console(r, capsys):
         'Runner version: v9.9.9 (0123456789ab)\n'
         'Runner source hash: feedfacecafebeef...\n'
         '\n'
+        'Ground-truth guards (R3.1): PASSED (perturbation, source fields, '
+        'declared constants)\n'
+        '\n'
         'Seal hash: SEAL\n'
         'AP-1 text hash: TEXTHASH\n'
         '\n'
@@ -242,6 +272,11 @@ def test_main_full_run_calls(r, capsys):
     assert r.config_path == os.path.join(fx, 'config.json')
     assert r.named('version') == [(run.BASE_DIR,)]
     assert r.named('source_hash') == [(run.BASE_DIR,)]
+    guards = r.named('gt_guard')
+    assert [g[0] for g in guards] == [
+        'perturbation', 'source_fields', 'declared_constants']
+    assert all(g[1] is sys.modules['ground_truth_example']
+               and g[2] == FIXTURE and g[3] == QUESTIONS for g in guards)
     (seal,), = r.named('seal')
     config = seal.pop('config')
     assert seal == {
@@ -270,22 +305,28 @@ def test_main_full_run_calls(r, capsys):
     executes = r.named('execute')
     assert [(i['id'], k['condition'], k['system_prompt'])
             for i, k in executes] == [
-        ('Q1', 'base', 'BASE PROMPT'), ('Q1', 'base', 'BASE PROMPT'),
-        ('Q2', 'base', 'BASE PROMPT'), ('Q2', 'base', 'BASE PROMPT'),
-        ('Q1', 'instruction_removed', 'REMOVED PROMPT'),
-        ('Q1', 'instruction_removed', 'REMOVED PROMPT'),
-        ('Q2', 'instruction_removed', 'REMOVED PROMPT'),
-        ('Q2', 'instruction_removed', 'REMOVED PROMPT')]
+        ('Q1', 'base', 'BASE PROMPT (checked)'),
+        ('Q1', 'base', 'BASE PROMPT (checked)'),
+        ('Q2', 'base', 'BASE PROMPT (checked)'),
+        ('Q2', 'base', 'BASE PROMPT (checked)'),
+        ('Q1', 'instruction_removed', 'REMOVED PROMPT (checked)'),
+        ('Q1', 'instruction_removed', 'REMOVED PROMPT (checked)'),
+        ('Q2', 'instruction_removed', 'REMOVED PROMPT (checked)'),
+        ('Q2', 'instruction_removed', 'REMOVED PROMPT (checked)')]
+    assert [k['tools'][0] for _, k in executes] == ['base'] * 4 + [
+        'removed'] * 4
     item, kwargs = executes[0]
     assert item == QUESTIONS['items'][0]
     assert set(kwargs) == {'condition', 'config', 'fixture',
                            'ground_truth_compute', 'adapter_send',
                            'system_prompt', 'tools', 'transcript_path',
-                           'seal_hash'}
+                           'seal_hash', 'repeat'}
+    # T3-9: each execution passes its repeat index to the engine
+    assert [kw['repeat'] for _, kw in executes] == [1, 2] * 4
     assert kwargs['config'] is config
     assert kwargs['fixture'] == FIXTURE
     assert kwargs['ground_truth_compute']('Q3', {}) == {'derivable': False}
-    assert kwargs['tools'] == CONFIG['tools']
+    assert kwargs['tools'] == ['base'] + CONFIG['tools']
     assert kwargs['transcript_path'] == transcript
     assert kwargs['seal_hash'] == 'SEAL'
 
@@ -351,7 +392,8 @@ def test_main_full_run_calls(r, capsys):
                   'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
                   'transcription_results': [],
                   'release_coverage_results': [],
-                  'parameter_echo': []}
+                  'parameter_echo': [],
+                  'held_constant': HELD_CONSTANT}
     assert r.named('scoring_report') == [(
         {'d1': True, 'n': 0}, {'d2': 'results'}, 'CAP', {'summary': True})]
 
@@ -371,12 +413,31 @@ def test_main_full_run_calls(r, capsys):
 
     # the order of the stages
     stages = [c[0] for c in r.calls if c[0] in (
-        'version', 'source_hash', 'seal', 'guard', 'consistency',
+        'version', 'source_hash', 'gt_guard', 'seal', 'guard', 'consistency',
         'run_report', 'summarise', 'd2_cap', 'd2', 'summary',
         'scoring_report', 'outputs')]
-    assert stages == ['version', 'source_hash', 'seal', 'guard',
+    assert stages == ['version', 'source_hash', 'gt_guard', 'gt_guard',
+                      'gt_guard', 'seal', 'guard',
                       'consistency', 'run_report', 'summarise', 'd2_cap',
                       'd2', 'summary', 'scoring_report', 'outputs']
+
+
+@pytest.mark.finding('T3-7')
+@pytest.mark.req('R3.1', 'R1.1')
+@pytest.mark.parametrize('guard, ran', [
+    ('perturbation', ['perturbation']),
+    ('source_fields', ['perturbation', 'source_fields']),
+    ('declared_constants',
+     ['perturbation', 'source_fields', 'declared_constants']),
+])
+def test_main_ground_truth_guard_refusal_stops_before_seal_and_requests(
+        r, capsys, guard, ran):
+    r.refuse.add(guard)
+    with pytest.raises(SealError, match=f'^{guard} refused$'):
+        r.main()
+    assert [g[0] for g in r.named('gt_guard')] == ran
+    assert r.named('seal') == [] and r.named('execute') == []
+    assert 'Ground-truth guards' not in capsys.readouterr().out
 
 
 def test_main_adapter_send_binds_the_key(r, monkeypatch):

@@ -33,18 +33,28 @@ class InvocationError(Exception):
 def measure_invocation(items_results):
     """Measure invocation rates across items.
 
+    The unit of D7.1 is the computable question (AP-1 v1.3 D7.1 "on what
+    proportion of computable questions", the D7.5 "49 items" example,
+    DISPOSITION_RECORD GH-5): the repeats of a question are not
+    independent trials, so n counts questions, not executions. A question
+    is a failure if any of its observed repeats is NOT-INVOKED.
+
+    Only INVOKED (invoked is True) and NOT-INVOKED (invoked is False) are
+    observations. Anything else (None: UNOBSERVABLE, EV-0) is neither a
+    success nor a failure and stays out of n (SPEC R2.3, R1.3.1).
+
     Args:
-        items_results: list of dicts, each with:
-            item_id: str
-            condition: str ('base' or 'removed')
+        items_results: list of dicts, one per execution, each with:
+            item_id: str (a record without one is its own question)
+            condition: str (not read: call once per condition)
             invoked: bool or None (None = unobservable)
             evidence_class: str (EV_0, EV_1, EV_2, EV_3)
 
     Returns:
         dict with keys:
             per_class: dict of evidence_class -> class_summary
-            total_n: int
-            unobservable_n: int
+            total_n: int -- executions
+            unobservable_n: int -- executions with no observed outcome
             cross_class_warning: str or None
     """
     # Group by evidence class
@@ -57,42 +67,55 @@ def measure_invocation(items_results):
     for ec, items in sorted(by_class.items()):
         per_class[ec] = _summarise_class(items, ec)
 
-    # Cross-class warning
-    classes_with_findings = [ec for ec in per_class
-                            if per_class[ec]['n'] > 0]
+    # Cross-class warning: the executions span more than one class
+    # (an EV-0 class included: it is reported beside the others, and
+    # is not comparable with them).
     warning = None
-    if len(classes_with_findings) > 1:
+    if len(per_class) > 1:
         warning = (
-            f'aggregate spans {len(classes_with_findings)} evidence classes '
-            f'({", ".join(classes_with_findings)}); '
+            f'aggregate spans {len(per_class)} evidence classes '
+            f'({", ".join(per_class)}); '
             f'figures are not comparable across classes')
 
     return {
         'per_class': per_class,
         'total_n': len(items_results),
         'unobservable_n': sum(1 for r in items_results
-                              if r.get('invoked') is None),
+                              if not _observed(r)),
         'cross_class_warning': warning,
     }
 
 
-def _summarise_class(items, evidence_class):
-    """Summarise invocation for items of a single evidence class."""
-    n = len(items)
-    invoked = sum(1 for r in items if r.get('invoked') is True)
-    not_invoked = sum(1 for r in items if r.get('invoked') is False)
-    unobservable = sum(1 for r in items if r.get('invoked') is None)
+def _observed(record):
+    """True if the execution has an observed outcome (INVOKED or
+    NOT-INVOKED)."""
+    return record.get('invoked') is True or record.get('invoked') is False
 
-    failures = not_invoked
-    summary = format_rate(failures, n)
+
+def _summarise_class(items, evidence_class):
+    """Summarise invocation for the executions of one evidence class.
+
+    n, invoked and not_invoked count questions with at least one observed
+    repeat; a question is not_invoked if any observed repeat is.
+    unobservable counts executions with no observed outcome.
+    """
+    questions = {}
+    for i, r in enumerate(items):
+        if not _observed(r):
+            continue
+        key = r['item_id'] if r.get('item_id') is not None else ('#', i)
+        questions[key] = questions.get(key, True) and r['invoked']
+    n = len(questions)
+    not_invoked = sum(1 for ok in questions.values() if not ok)
+    unobservable = sum(1 for r in items if not _observed(r))
 
     return {
         'evidence_class': evidence_class,
         'n': n,
-        'invoked': invoked,
+        'invoked': n - not_invoked,
         'not_invoked': not_invoked,
         'unobservable': unobservable,
-        'failure_rate': summary,
+        'failure_rate': format_rate(not_invoked, n),
     }
 
 
@@ -142,7 +165,8 @@ def compute_dpr(invoked_base, invoked_removed, n_base, n_removed):
 
     DPR = (I_base - I_removed) / I_base
 
-    Where I_base is zero, DPR is UNDEFINED, never 1.0.
+    Where I_base is zero, DPR is UNDEFINED, never 1.0. Where either
+    condition has no observations, DPR is UNDEFINED too (S3-G4-1).
 
     Args:
         invoked_base: int -- invocations in base condition
@@ -163,8 +187,9 @@ def compute_dpr(invoked_base, invoked_removed, n_base, n_removed):
     if rate_base == 0:
         return None, 'UNDEFINED (zero base invocation rate)'
 
-    rate_removed = Decimal(invoked_removed) / Decimal(n_removed) \
-        if n_removed > 0 else Decimal(0)
+    if n_removed == 0:
+        return None, 'UNDEFINED (no instruction_removed observations)'
+    rate_removed = Decimal(invoked_removed) / Decimal(n_removed)
 
     dpr = (rate_base - rate_removed) / rate_base
     pct = (dpr * 100).quantize(Decimal('0.1'))

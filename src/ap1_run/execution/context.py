@@ -109,13 +109,67 @@ class TrackingContext(dict):
 
 
 class TrackingAccount(dict):
-    """Account dict that records field accesses."""
+    """Account dict that records field accesses.
+
+    Every method that hands out a field's value records the field (T3-8):
+    a subscript, get(), pop() and setdefault() record the field named;
+    items(), values(), copy(), popitem() and repr() hand out every value,
+    so they record every field. Iteration and keys() give names only and
+    record nothing, but overriding __iter__ also takes dict(acct) and
+    {**acct} off CPython's dict-merge fast path, so that they read each
+    value through __getitem__ and are recorded.
+    """
 
     def __init__(self, acct_id, base_dict, access_set):
         super().__init__(base_dict)
         self._acct_id = acct_id
         self._access_set = access_set
 
-    def __getitem__(self, key):
+    def _record(self, key):
         self._access_set.add(f'{self._acct_id}.{key}')
+
+    def _record_all(self):
+        for key in super().keys():
+            self._record(key)
+
+    def __getitem__(self, key):
+        self._record(key)
         return super().__getitem__(key)
+
+    def get(self, key, default=None):
+        self._record(key)
+        return super().get(key, default)
+
+    def pop(self, key, *default):
+        self._record(key)
+        return super().pop(key, *default)
+
+    def setdefault(self, key, default=None):
+        self._record(key)
+        return super().setdefault(key, default)
+
+    def popitem(self):
+        self._record_all()
+        return super().popitem()
+
+    def items(self):
+        self._record_all()
+        return super().items()
+
+    def values(self):
+        self._record_all()
+        return super().values()
+
+    def copy(self):
+        self._record_all()
+        return dict(super().items())
+
+    def __repr__(self):
+        self._record_all()
+        return super().__repr__()
+
+    def __iter__(self):
+        return super().__iter__()
+
+    def keys(self):
+        return super().keys()

@@ -105,10 +105,21 @@ def test_sheets_two_copies_per_item_with_shared_item_number():
     text = sheets_for([record(), record('Q02', 'instruction_removed')])
     headings = re.findall(r'\n## (.*)\n', text)
     assert headings == [
-        'Item 1: Q01 (Condition: base) \u2014 Scorer 1',
-        'Item 1: Q01 (Condition: base) \u2014 Scorer 2',
-        'Item 2: Q02 (Condition: instruction_removed) \u2014 Scorer 1',
-        'Item 2: Q02 (Condition: instruction_removed) \u2014 Scorer 2',
+        'Item 1: Q01 \u2014 Scorer 1',
+        'Item 1: Q01 \u2014 Scorer 2',
+        'Item 2: Q02 \u2014 Scorer 1',
+        'Item 2: Q02 \u2014 Scorer 2',
+    ]
+
+
+@pytest.mark.finding('T3-37')
+def test_sheets_heading_names_the_repeat():
+    text = sheets_for([record(repeat=3), record(repeat=0)])
+    assert re.findall(r'\n## (.*)\n', text) == [
+        'Item 1: Q01, repeat 3 \u2014 Scorer 1',
+        'Item 1: Q01, repeat 3 \u2014 Scorer 2',
+        'Item 2: Q01, repeat 0 \u2014 Scorer 1',
+        'Item 2: Q01, repeat 0 \u2014 Scorer 2',
     ]
 
 
@@ -195,26 +206,17 @@ def test_needs_adjudication_transport_failure_alone_is_false():
 
 
 @pytest.mark.finding('T3-9')
-def test_needs_adjudication_transport_failure_with_adjudicate_is_true():
-    # The ADJUDICATE check comes before the TRANSPORT_FAILURE guard, so a
-    # transport-failed record that the positional join gave another
-    # repeat's ADJUDICATE outcome is routed to a scorer. Correct: a record
-    # with no response is UNMEASURED and never gets a sheet.
-    assert adjudication._needs_adjudication(record(
+def test_needs_adjudication_transport_failure_with_adjudicate_is_false():
+    # The TRANSPORT_FAILURE guard comes first: a record with no response
+    # is UNMEASURED and never routed to a scorer, whatever figure outcome
+    # it holds. (The sheet-level check is
+    # test_sheets_transport_failure_record_never_gets_a_sheet below.)
+    assert not adjudication._needs_adjudication(record(
         figure_outcome='ADJUDICATE-DECLINE',
         error_state='TRANSPORT_FAILURE: HTTP 500'))
-
-
-@pytest.mark.finding('T3-9')
-def test_sheets_transport_failure_given_adjudicate_gets_empty_sheet():
-    # As above, end to end: the sheet shows "[no response received]" under
-    # another repeat's routing reason. Correct: no sheet for this record,
-    # and the repeat whose outcome it took gets its own.
-    text = sheets_for([record(error_state='TRANSPORT_FAILURE: HTTP 500',
-                              response_received=None)])
-    assert 'Total items requiring adjudication: 1' in text
-    assert '```\n[no response received]\n```' in text
-    assert ADJUDICATION_REASONS['ADJUDICATE-DECLINE'] in text
+    assert not adjudication._needs_adjudication(record(
+        figure_outcome='UNMEASURABLE',
+        error_state='TRANSPORT_FAILURE: HTTP 500'))
 
 
 def test_sheets_skip_void_records_even_when_adjudicated():
@@ -225,13 +227,13 @@ def test_sheets_skip_void_records_even_when_adjudicated():
 def test_sheets_void_record_does_not_stop_later_records():
     text = sheets_for([record(error_state='VOID: x'), record('Q02')])
     assert 'Total items requiring adjudication: 1' in text
-    assert '## Item 1: Q02 (Condition: base)' in text
+    assert '## Item 1: Q02 \u2014' in text
 
 
 def test_sheets_auto_scored_record_does_not_stop_later_records():
     text = sheets_for([record(figure_outcome='AUTO-MATCH'), record('Q02')])
     assert 'Total items requiring adjudication: 1' in text
-    assert '## Item 1: Q02 (Condition: base)' in text
+    assert '## Item 1: Q02 \u2014' in text
 
 
 def test_sheets_skip_only_error_states_starting_with_void():
@@ -253,18 +255,19 @@ def test_sheets_falsy_error_state_does_not_skip():
     assert 'Total items requiring adjudication: 1' in text
 
 
-def test_sheets_record_without_condition_reads_unknown():
+def test_sheets_record_without_condition_still_gets_its_sheets():
     rec = record()
     del rec['condition']
     text = sheets_for([rec])
-    assert '## Item 1: Q01 (Condition: unknown) \u2014 Scorer 1' in text
+    assert '## Item 1: Q01 \u2014 Scorer 1' in text
+    assert 'Total items requiring adjudication: 1' in text
 
 
 def test_sheets_record_without_item_id_reads_unknown():
     rec = record()
     del rec['item_id']
     text = sheets_for([rec])
-    assert '## Item 1: unknown (Condition: base)' in text
+    assert '## Item 1: unknown \u2014 Scorer 1' in text
     assert '> [question not found]' in text
 
 
@@ -419,6 +422,32 @@ def test_sheet_operation_correctness_listed():
         '\n### Reason for Adjudication') in text
 
 
+@pytest.mark.finding('T3-13')
+def test_sheet_operand_provenance_listed_after_operation_correctness():
+    text = one_sheet(
+        operation_correctness=[{'outcome': 'OPERATION-CORRECT', 'reason': 'r'}],
+        provenance_results=[
+            {'outcome': 'OPERANDS-GROUNDED', 'originated_operands': []},
+            {'outcome': 'OPERAND-ORIGINATED', 'originated_operands': [
+                {'value': '10.5', 'literal': '10.50', 'expression': 'a - b'},
+                {'value': '7.3', 'expression': '7.3 + 1'}]},
+            {}])
+    assert (
+        '\n- `OPERATION-CORRECT`: r\n'
+        '\n**Operand provenance (D7.2(a)):**\n'
+        '\n- `OPERANDS-GROUNDED`\n'
+        '\n- `OPERAND-ORIGINATED`: originated `10.50` in `a - b`, '
+        '`7.3` in `7.3 + 1`\n'
+        '\n- `unknown`\n'
+        '\n### Reason for Adjudication') in text
+
+
+@pytest.mark.finding('T3-13')
+def test_sheet_without_provenance_results_has_no_provenance_list():
+    assert 'Operand provenance' not in one_sheet()
+    assert 'Operand provenance' not in one_sheet(provenance_results=[])
+
+
 # -- One sheet: routing reason --------------------------------------------
 
 @pytest.mark.parametrize('outcome', sorted(ADJUDICATION_REASONS))
@@ -563,40 +592,36 @@ def test_sheet_without_coverage_has_no_finding():
     assert 'Release Coverage Finding' not in one_sheet(coverage_records=[])
 
 
-def test_sheets_coverage_joined_on_item_and_condition():
+def test_sheets_coverage_joined_on_item_condition_and_repeat():
     text = sheets_for(
-        [record()],
+        [record(repeat=1)],
         release_coverage_results=[
             coverage(1, finding='mine'),
             coverage(1, finding='other item', item_id='Q02'),
             coverage(1, finding='other condition',
-                     condition='instruction_removed')])
+                     condition='instruction_removed'),
+            coverage(2, finding='other repeat')])
     assert 'mine' in text
     assert 'other item' not in text
     assert 'other condition' not in text
+    assert 'other repeat' not in text
+
+
+@pytest.mark.finding('T3-37')
+def test_sheets_record_without_repeat_gets_no_coverage_finding():
+    # Every runner record carries its repeat; one without (an older
+    # transcript) cannot be joined to its own execution's coverage.
+    text = sheets_for([record()], release_coverage_results=[
+        coverage(1, finding='mine')])
+    assert 'Release Coverage Finding' not in text
 
 
 def test_sheets_coverage_on_record_without_condition_joins_unknown():
-    rec = record()
+    rec = record(repeat=1)
     del rec['condition']
     text = sheets_for([rec], release_coverage_results=[
         coverage(1, condition='unknown', finding='joined')])
     assert text.count('- Repeat 1: joined') == 2
-
-
-@pytest.mark.finding('T3-37')
-def test_sheets_coverage_lists_every_repeat_of_the_item():
-    # The join is on (item_id, condition) only, so the sheet of repeat 1
-    # (which was GOVERNED-RELEASE) shows repeat 2's PARTIALLY-GOVERNED
-    # finding, and the sheet does not say which repeat it is for.
-    # Correct: join on the repeat too and name the repeat on the sheet.
-    text = sheets_for(
-        [record(), record()],
-        release_coverage_results=[
-            coverage(1, 'GOVERNED-RELEASE'),
-            coverage(2, finding='rep 2 ungoverned')])
-    assert text.count('- Repeat 2: rep 2 ungoverned') == 4
-    assert 'Repeat 1' not in text
 
 
 # -- One sheet: reference values ------------------------------------------
@@ -622,7 +647,7 @@ def test_sheet_reference_values_default_unknown():
 def test_sheet_sections_in_order():
     text = one_sheet(coverage_records=[coverage(1)])
     order = [text.index(h) for h in (
-        '\n## Item 1: Q01 (Condition: base) \u2014 Scorer 1\n',
+        '\n## Item 1: Q01 \u2014 Scorer 1\n',
         '### Question\n', '### Response (verbatim)\n',
         '### Fixture Excerpt\n', '### Structural Tool-Call Record\n',
         '### Reason for Adjudication\n',
@@ -630,7 +655,7 @@ def test_sheet_sections_in_order():
         '### Release Coverage Finding\n', '### Reference Values\n')]
     assert order == sorted(order)
     assert text.startswith(
-        '\n## Item 1: Q01 (Condition: base) \u2014 Scorer 1\n\n### Question')
+        '\n## Item 1: Q01 \u2014 Scorer 1\n\n### Question')
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
@@ -642,9 +667,6 @@ def sheets_list(text):
 
 @pytest.mark.finding('T3-9')
 @pytest.mark.req('R3.2', 'AP-1 §6.8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-9: a transport-failed record given an '
-                          'ADJUDICATE outcome gets a sheet')
 def test_sheets_transport_failure_record_never_gets_a_sheet():
     # A record with no response is UNMEASURED (AP-1 v1.3 §6.8 "Response
     # statuses, distinct from outcomes"), whatever figure outcome a join
@@ -658,9 +680,6 @@ def test_sheets_transport_failure_record_never_gets_a_sheet():
 
 @pytest.mark.finding('T3-37')
 @pytest.mark.req('R3.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-37: a sheet's coverage finding lists every "
-                          'repeat of the item and condition')
 def test_sheets_coverage_finding_is_the_sheets_own_repeat():
     # Correct (SPEC R3.2; fix plan §2 branch 6): coverage joins on the
     # repeat too. Repeat 1 was GOVERNED-RELEASE, so its two sheets carry
@@ -677,8 +696,6 @@ def test_sheets_coverage_finding_is_the_sheets_own_repeat():
 
 @pytest.mark.finding('T3-37')
 @pytest.mark.req('R3.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-37: a sheet does not say which repeat it is')
 def test_sheets_each_sheet_names_its_repeat():
     # Correct: a sheet is for one execution and says which repeat it is,
     # so a scorer's mark can be joined back to it. Today the header names
@@ -691,14 +708,12 @@ def test_sheets_each_sheet_names_its_repeat():
 
 @pytest.mark.finding('T3-36')
 @pytest.mark.req('AP-1 §13.8', 'R3.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-36: every sheet header prints the arm '
-                          '(condition)')
 def test_sheets_do_not_name_the_arm():
     # AP-1 v1.3 §13.8: "Two scorers, blind to arm identity where the
     # response text permits". The arm (instructed or instruction-removed)
     # is the D7.1b contrast being measured; the sheet must not print it.
-    # Today: "## Item 1: Q01 (Condition: instruction_removed) — Scorer 1".
+    # Before the fix: "## Item 1: Q01 (Condition: instruction_removed) —
+    # Scorer 1".
     text = sheets_for([record(condition='instruction_removed', arm_id=
                               'instruction_removed'),
                        record(condition='base', arm_id='base')])
@@ -710,9 +725,6 @@ def test_sheets_do_not_name_the_arm():
 
 @pytest.mark.finding('T3-13')
 @pytest.mark.req('AP-1 §6.8', 'R3.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-13: the sheet omits the D7.2(a) result the '
-                          '§6.8 composition rule needs')
 def test_sheet_shows_d72a_operand_result():
     # AP-1 v1.3 §6.8 Composition: "Where a computed answer rests on an
     # originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level

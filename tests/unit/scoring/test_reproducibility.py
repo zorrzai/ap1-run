@@ -75,17 +75,22 @@ def test_classify_mechanism_below_minimum_ignores_operator_declaration():
 
 
 @pytest.mark.finding('S3-G5-3')
-def test_classify_mechanism_no_responses_with_zero_minimum_is_observed():
-    # Today: with minimum_runs=0 an empty pool passes the minimum and is
-    # classified OBSERVED-ONLY from 0 runs and 0 distinct values.
-    # Correct: no observations is UNMEASURED whatever the minimum.
+def test_classify_mechanism_no_responses_with_zero_minimum_is_unmeasured():
+    # Fixed (S3-G5-3): with minimum_runs=0 an empty pool used to be
+    # OBSERVED-ONLY from 0 runs; no observations is UNMEASURED.
     assert classify_mechanism([], surface='prose', minimum_runs=0) == {
-        'mechanism': 'OBSERVED-ONLY',
+        'mechanism': 'UNMEASURED',
         'operator_declared': False,
-        'distinct_values': 0,
+        'distinct_values': None,
         'successful_runs': 0,
-        'reason': '0 runs, 0 distinct values — OBSERVED-ONLY',
+        'reason': '0 successful runs — UNMEASURED',
     }
+
+
+def test_classify_mechanism_only_errored_runs_with_zero_minimum_is_unmeasured():
+    r = classify_mechanism([{'error': 'boom'}], surface='figures',
+                           minimum_runs=0)
+    assert (r['mechanism'], r['successful_runs']) == (UNMEASURED, 0)
 
 
 def test_classify_mechanism_arguments_are_keyword_only():
@@ -173,16 +178,13 @@ def test_classify_mechanism_errored_runs_are_left_out_of_the_values():
 
 
 @pytest.mark.finding('S3-G5-3')
-def test_classify_mechanism_unknown_surface_has_no_values():
-    # Today: a surface other than 'figures' or 'prose' is not refused;
-    # it yields no values and is classified OBSERVED-ONLY with 0 distinct
-    # values. Correct: refuse an unknown surface (ReproducibilityError,
-    # which exists but is never raised).
-    r = classify_mechanism([response('a')] * 3, surface='Figures',
-                           minimum_runs=3)
-    assert r['mechanism'] == OBSERVED_ONLY
-    assert r['distinct_values'] == 0
-    assert r['reason'] == '3 runs, 0 distinct values — OBSERVED-ONLY'
+def test_classify_mechanism_unknown_surface_message_names_it():
+    # Fixed (S3-G5-3): an unknown surface used to be OBSERVED-ONLY with 0
+    # distinct values; it is refused, before any response is looked at.
+    with pytest.raises(ReproducibilityError,
+                       match=r"unknown surface 'Figures'; expected one of "
+                             r"\('figures', 'prose'\)"):
+        classify_mechanism([], surface='Figures', minimum_runs=3)
 
 
 # -- _extract_surface_values -------------------------------------------------
@@ -365,9 +367,6 @@ def test_parameter_echo_numerically_equal_values_verified():
 
 @pytest.mark.finding('S3-G5-3')
 @pytest.mark.req('R2.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G5-3: an unknown surface is classified '
-                          'OBSERVED-ONLY from no values')
 def test_classify_mechanism_unknown_surface_is_refused():
     # The surfaces are 'figures' and 'prose' (docstring). Any other name
     # is a caller error: refuse it with ReproducibilityError (defined for
@@ -383,9 +382,6 @@ def test_classify_mechanism_unknown_surface_is_refused():
 
 @pytest.mark.finding('S3-G5-3')
 @pytest.mark.req('R2.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G5-3: no observations with minimum_runs=0 are '
-                          'OBSERVED-ONLY')
 def test_classify_mechanism_no_observations_is_unmeasured():
     # Zero successful runs say nothing about the mechanism: UNMEASURED,
     # whatever the minimum. SPEC R2.2: the runner tells OBSERVED-ONLY from

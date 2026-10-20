@@ -8,7 +8,7 @@ import pytest
 from ap1_run.execution.perturbation_guard import PerturbationRefusal
 from ap1_run.runner import settings
 from ap1_run.runner.settings import (
-    check_condition_guard, parse_args, print_sampling,
+    check_condition_guard, condition_request, parse_args, print_sampling,
 )
 
 
@@ -105,20 +105,39 @@ def test_guard_passes_when_only_the_prompt_differs(fixture_file, capsys,
         return []
     monkeypatch.setattr(settings, 'check_single_variable_perturbation', check)
     config = {'tool_choice': 'auto', 'message_template': 'T'}
-    check_condition_guard(config, fixture_file, 'BASE', 'REMOVED',
-                          ['tool'], {'temperature': 0})
+    arms = check_condition_guard(config, fixture_file, 'BASE', 'REMOVED',
+                                 ['tool'], {'temperature': 0})
     fixture_hash = hashlib.sha256(b'{"accounts": []}\n').hexdigest()
     base = {'system_prompt': 'BASE', 'tools': ['tool'], 'tool_choice': 'auto',
             'sampling': {'temperature': 0}, 'fixture_hash': fixture_hash,
             'message_template': 'T'}
     assert seen == [(base, dict(base, system_prompt='REMOVED'))]
+    # The run gives the engine each condition's own checked request.
+    assert arms == {'base': base,
+                    'instruction_removed': dict(base, system_prompt='REMOVED')}
+    assert seen[0][0] is arms['base']
+    assert seen[0][1] is arms['instruction_removed']
     assert capsys.readouterr().out == (
         'Perturbation guard: PASSED (single-variable: system_prompt only)\n\n')
 
 
 def test_guard_with_the_real_check(fixture_file, capsys):
-    check_condition_guard({}, fixture_file, 'A', 'B', [], {})
+    arms = check_condition_guard({}, fixture_file, 'A', 'B', [], {})
     assert 'PASSED' in capsys.readouterr().out
+    assert [arms[c]['system_prompt'] for c in arms] == ['A', 'B']
+
+
+@pytest.mark.finding('T3-46')
+def test_condition_request_is_what_one_condition_sends():
+    config = {'tool_choice': 'none', 'message_template': {'role': 'user'},
+              'model': 'm', 'sampling': {'ignored': True}}
+    assert condition_request(config, 'HASH', 'P', ['t'], {'s': 1}) == {
+        'system_prompt': 'P', 'tools': ['t'], 'tool_choice': 'none',
+        'sampling': {'s': 1}, 'fixture_hash': 'HASH',
+        'message_template': {'role': 'user'}}
+    assert condition_request({}, 'H', 'P', None, {}) == {
+        'system_prompt': 'P', 'tools': None, 'tool_choice': None,
+        'sampling': {}, 'fixture_hash': 'H', 'message_template': None}
 
 
 def test_guard_refusal_propagates_and_prints_nothing(fixture_file, capsys,
@@ -210,9 +229,6 @@ def test_parse_args_help_text(capsys, monkeypatch):
 
 @pytest.mark.finding('T3-46')
 @pytest.mark.req('R1.2', 'AP-1 D7.8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-46: the live condition guard passes identical '
-                          'prompts and prints PASSED')
 def test_guard_identical_prompts_refused(fixture_file, capsys):
     # Correct (AP-1 v1.3 D7.8; SPEC R1.2 l.316-321): identical prompts
     # mean there is no contrast; the run is refused before execution and

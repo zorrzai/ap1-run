@@ -9,347 +9,7 @@ Version DOI: 10.5281/zenodo.21755443
 ---
 
 
-## Item 1: Q01 (Condition: base) — Scorer 1
-
-### Question
-
-> What is the monthly interest earned on the savings account?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Savings Account** (`savings`):
-
-- balance: `15200.00`
-
-- direction: `asset`
-
-- annual_rate: `1.2`
-
-- monthly_fee: `0.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `15.200`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 1: Q01 (Condition: base) — Scorer 2
-
-### Question
-
-> What is the monthly interest earned on the savings account?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Savings Account** (`savings`):
-
-- balance: `15200.00`
-
-- direction: `asset`
-
-- annual_rate: `1.2`
-
-- monthly_fee: `0.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `15.200`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 2: Q01 (Condition: base) — Scorer 1
-
-### Question
-
-> What is the monthly interest earned on the savings account?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Savings Account** (`savings`):
-
-- balance: `15200.00`
-
-- direction: `asset`
-
-- annual_rate: `1.2`
-
-- monthly_fee: `0.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `15.200`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 2: Q01 (Condition: base) — Scorer 2
-
-### Question
-
-> What is the monthly interest earned on the savings account?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Savings Account** (`savings`):
-
-- balance: `15200.00`
-
-- direction: `asset`
-
-- annual_rate: `1.2`
-
-- monthly_fee: `0.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `15.200`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 3: Q02 (Condition: base) — Scorer 1
+## Item 1: Q02, repeat 1 — Scorer 1
 
 ### Question
 
@@ -440,7 +100,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 3: Q02 (Condition: base) — Scorer 2
+## Item 1: Q02, repeat 1 — Scorer 2
 
 ### Question
 
@@ -531,7 +191,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 4: Q02 (Condition: base) — Scorer 1
+## Item 2: Q02, repeat 2 — Scorer 1
 
 ### Question
 
@@ -622,7 +282,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 4: Q02 (Condition: base) — Scorer 2
+## Item 2: Q02, repeat 2 — Scorer 2
 
 ### Question
 
@@ -713,7 +373,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 5: Q03 (Condition: base) — Scorer 1
+## Item 3: Q03, repeat 1 — Scorer 1
 
 ### Question
 
@@ -804,7 +464,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 5: Q03 (Condition: base) — Scorer 2
+## Item 3: Q03, repeat 1 — Scorer 2
 
 ### Question
 
@@ -895,7 +555,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 6: Q03 (Condition: base) — Scorer 1
+## Item 4: Q03, repeat 2 — Scorer 1
 
 ### Question
 
@@ -986,7 +646,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 6: Q03 (Condition: base) — Scorer 2
+## Item 4: Q03, repeat 2 — Scorer 2
 
 ### Question
 
@@ -1077,371 +737,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 7: Q05 (Condition: base) — Scorer 1
-
-### Question
-
-> What is the credit card balance after one month if only the minimum payment is made?
-
-Category: balance
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `2411.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 7: Q05 (Condition: base) — Scorer 2
-
-### Question
-
-> What is the credit card balance after one month if only the minimum payment is made?
-
-Category: balance
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `2411.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 8: Q05 (Condition: base) — Scorer 1
-
-### Question
-
-> What is the credit card balance after one month if only the minimum payment is made?
-
-Category: balance
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `2411.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 8: Q05 (Condition: base) — Scorer 2
-
-### Question
-
-> What is the credit card balance after one month if only the minimum payment is made?
-
-Category: balance
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `2411.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 9: Q07 (Condition: base) — Scorer 1
+## Item 5: Q07, repeat 1 — Scorer 1
 
 ### Question
 
@@ -1481,6 +777,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1531,7 +831,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 9: Q07 (Condition: base) — Scorer 2
+## Item 5: Q07, repeat 1 — Scorer 2
 
 ### Question
 
@@ -1571,6 +871,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1621,7 +925,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 10: Q07 (Condition: base) — Scorer 1
+## Item 6: Q07, repeat 2 — Scorer 1
 
 ### Question
 
@@ -1661,6 +965,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1711,7 +1019,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 10: Q07 (Condition: base) — Scorer 2
+## Item 6: Q07, repeat 2 — Scorer 2
 
 ### Question
 
@@ -1751,6 +1059,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1801,347 +1113,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 11: Q01 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest earned on the savings account?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Savings Account** (`savings`):
-
-- balance: `15200.00`
-
-- direction: `asset`
-
-- annual_rate: `1.2`
-
-- monthly_fee: `0.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `15.200`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 11: Q01 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest earned on the savings account?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Savings Account** (`savings`):
-
-- balance: `15200.00`
-
-- direction: `asset`
-
-- annual_rate: `1.2`
-
-- monthly_fee: `0.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `15.200`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 12: Q01 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest earned on the savings account?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Savings Account** (`savings`):
-
-- balance: `15200.00`
-
-- direction: `asset`
-
-- annual_rate: `1.2`
-
-- monthly_fee: `0.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `15.200`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 12: Q01 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest earned on the savings account?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Savings Account** (`savings`):
-
-- balance: `15200.00`
-
-- direction: `asset`
-
-- annual_rate: `1.2`
-
-- monthly_fee: `0.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `15.200`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 13: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 7: Q02, repeat 1 — Scorer 1
 
 ### Question
 
@@ -2232,7 +1204,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 13: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 7: Q02, repeat 1 — Scorer 2
 
 ### Question
 
@@ -2323,7 +1295,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 14: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 8: Q02, repeat 2 — Scorer 1
 
 ### Question
 
@@ -2414,7 +1386,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 14: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 8: Q02, repeat 2 — Scorer 2
 
 ### Question
 
@@ -2505,7 +1477,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 15: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 9: Q03, repeat 1 — Scorer 1
 
 ### Question
 
@@ -2596,7 +1568,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 15: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 9: Q03, repeat 1 — Scorer 2
 
 ### Question
 
@@ -2687,7 +1659,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 16: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 10: Q03, repeat 2 — Scorer 1
 
 ### Question
 
@@ -2778,7 +1750,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 16: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 10: Q03, repeat 2 — Scorer 2
 
 ### Question
 
@@ -2869,371 +1841,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 17: Q05 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the credit card balance after one month if only the minimum payment is made?
-
-Category: balance
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `2411.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 17: Q05 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the credit card balance after one month if only the minimum payment is made?
-
-Category: balance
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `2411.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 18: Q05 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the credit card balance after one month if only the minimum payment is made?
-
-Category: balance
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `2411.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 18: Q05 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the credit card balance after one month if only the minimum payment is made?
-
-Category: balance
-
-### Response (verbatim)
-
-```
-[no text content]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Response shape unrecognised. Cannot extract a figure for comparison.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `2411.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 19: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 11: Q07, repeat 1 — Scorer 1
 
 ### Question
 
@@ -3273,6 +1881,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3323,7 +1935,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 19: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 11: Q07, repeat 1 — Scorer 2
 
 ### Question
 
@@ -3363,6 +1975,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3413,7 +2029,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 20: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 12: Q07, repeat 2 — Scorer 1
 
 ### Question
 
@@ -3453,6 +2069,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3503,7 +2123,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 20: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 12: Q07, repeat 2 — Scorer 2
 
 ### Question
 
@@ -3543,6 +2163,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3595,6 +2219,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ---
 
-Total items requiring adjudication: 20
+Total items requiring adjudication: 12
 
-Total sheets: 40 (2 per item, for 2 scorers)
+Total sheets: 24 (2 per item, for 2 scorers)

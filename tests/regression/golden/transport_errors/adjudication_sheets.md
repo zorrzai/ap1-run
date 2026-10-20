@@ -9,7 +9,7 @@ Version DOI: 10.5281/zenodo.21755443
 ---
 
 
-## Item 1: Q07 (Condition: base) — Scorer 1
+## Item 1: Q07, repeat 1 — Scorer 1
 
 ### Question
 
@@ -49,6 +49,10 @@ Category: growth
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -99,7 +103,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 1: Q07 (Condition: base) — Scorer 2
+## Item 1: Q07, repeat 1 — Scorer 2
 
 ### Question
 
@@ -139,6 +143,10 @@ Category: growth
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 

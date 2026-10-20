@@ -162,9 +162,6 @@ def compute(item_id, delivered_context):
 
 @pytest.mark.finding('T3-7')
 @pytest.mark.req('R3.1', 'R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-7: the R3.1 guards are never called on a live '
-                          'run; a constant-returning module is sealed and run')
 def test_run_constant_ground_truth_module_refused_before_any_request(
         fx, tmp_path, monkeypatch, capsys):
     # Correct (SPEC R3.1 l.686-694, "A constant-returning module is
@@ -181,9 +178,6 @@ def test_run_constant_ground_truth_module_refused_before_any_request(
 
 @pytest.mark.finding('T3-8', 'T3-7')
 @pytest.mark.req('R3.1', 'R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-8/T3-7: an undeclared read through .get() is '
-                          'not seen, and the guard is not called live')
 def test_run_undeclared_field_read_through_get_refused_before_any_request(
         fx, tmp_path, monkeypatch, capsys):
     # Correct (R3.1 via source_fields_check: "A module reading a field NOT
@@ -214,9 +208,6 @@ def compute(item_id, delivered_context):
 
 @pytest.mark.finding('T3-7')
 @pytest.mark.req('R3.1', 'R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-7: declared_constants_check is never called on '
-                          'a live run; an undeclared constant is sealed')
 def test_run_undeclared_constant_refused_before_any_request(
         fx, tmp_path, monkeypatch, capsys):
     # Correct (R3.1, the declared-constants check, the E3 defect class):
@@ -236,9 +227,6 @@ def test_run_undeclared_constant_refused_before_any_request(
 
 @pytest.mark.finding('T3-46')
 @pytest.mark.req('R1.2', 'AP-1 D7.8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-46: identical prompts pass the live guard and '
-                          'both arms run as a contrast')
 def test_run_identical_prompts_refused_before_any_request(
         fx, tmp_path, monkeypatch, capsys):
     # Correct (AP-1 v1.3 D7.8, "vary the instruction and nothing else";
@@ -257,9 +245,6 @@ def test_run_identical_prompts_refused_before_any_request(
 
 @pytest.mark.finding('T3-46')
 @pytest.mark.req('R1.2', 'AP-1 D7.8', 'AP-1 §13.9')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-46: the report never states what was held '
-                          'constant between the conditions')
 def test_run_report_states_what_was_held_constant(fx, tmp_path, monkeypatch,
                                                   capsys):
     # Correct (AP-1 v1.3 D7.8: "what is held constant shall be reported";
@@ -282,9 +267,6 @@ def dpr_lines(text):
 
 @pytest.mark.finding('T3-46')
 @pytest.mark.req('R2.3', 'AP-1 D7.8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-46: DPR is never computed on a live run '
-                          '(compute_dpr has no caller)')
 def test_run_report_gives_dpr(fx, tmp_path, monkeypatch, capsys):
     # Correct (SPEC R2.3 l.546-547; AP-1 v1.3 D7.8): the report gives the
     # drop-in-performance ratio DPR = (I_base - I_removed) / I_base. Here
@@ -299,9 +281,6 @@ def test_run_report_gives_dpr(fx, tmp_path, monkeypatch, capsys):
 
 @pytest.mark.finding('T3-46')
 @pytest.mark.req('R2.3', 'AP-1 D7.8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-46: DPR is never computed on a live run, so a '
-                          'zero base rate is never reported UNDEFINED')
 def test_run_report_dpr_undefined_when_base_rate_zero(fx, tmp_path,
                                                       monkeypatch, capsys):
     # Correct (SPEC R2.3: "Where I_base is zero the ratio is UNDEFINED,

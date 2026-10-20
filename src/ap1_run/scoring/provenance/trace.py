@@ -19,8 +19,8 @@ The five-step resolution (D7.2(a), AP-1 v1.3):
            policy (with a quantisation finding recorded).
   4. (iv)  Computed in session -- equals the return value of a prior
            invocation in the same session, AND that prior invocation was
-           itself operands-grounded. If not grounded, the operand is
-           originated.
+           itself operands-grounded. If no grounded prior invocation
+           returned it (only ungrounded ones), the operand is originated.
   5. (v)   Otherwise -- no basis found (ORIGINATED).
 
 Operand extraction uses Python's ast module (same parser as
@@ -44,49 +44,93 @@ TRANSFORMATIONS = {
 
 # -- Operand extraction from expression text ---------------------------
 
+def parse_expression(expression_str):
+    """Parse a calculator expression, or return None if it can't be read.
+
+    The text is stripped first, as the calculator and D7.2(b) strip it
+    (T3-2). Returns (tree, source), source being the stripped text the
+    tree's positions refer to. None for anything that is not a string,
+    does not parse as one Python expression, or contains a constant that
+    is not a number (True, a string, 1j): the operands of such an
+    expression can't be read (T3-39, F6).
+    """
+    if not isinstance(expression_str, str):
+        return None
+    source = expression_str.strip()
+    try:
+        tree = ast.parse(source, mode='eval')
+    except (SyntaxError, ValueError, RecursionError, MemoryError):
+        return None
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Constant) and not is_number(node.value):
+            return None
+    return tree, source
+
+
+def is_number(value):
+    """True for an int or float constant; bool is not a number here."""
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
+def literal_decimal(node, source):
+    """(Decimal, text) for a numeric literal node, read from its text.
+
+    The Decimal comes from the literal as the model wrote it, never
+    through float (SPEC R0.4.1, R0.4.2; T3-58, F5): '53.20' stays 53.20
+    and '15200.0000000000000001' keeps every digit. An integer literal
+    Decimal can't read ('0x1F') is exact as an int.
+    """
+    text = ast.get_source_segment(source, node)
+    try:
+        return Decimal(text), text
+    except InvalidOperation:
+        return Decimal(node.value), text
+
+
 def extract_operands(expression_str):
     """Extract numeric operands from an arithmetic expression string.
 
     Uses Python's AST parser (same as calculator_tool.py) to find all
-    numeric literal nodes. Each is converted to Decimal from its source
-    text representation, NEVER through float.
+    numeric literal nodes, after stripping the expression. Each is read
+    as a Decimal from its literal text, NEVER through float.
 
     Handles:
       - Bare numbers: 15200, 1.2, 0.042
       - Unary negation: -2400 (ast.UnaryOp(USub, Constant))
       - Named constants: pi, e (skipped -- not numeric literals)
 
+    An expression that can't be read (see parse_expression) has no
+    operands.
+
     Returns: list of (Decimal value, str literal_text) tuples, in AST
-    walk order.
+    walk order (depth first, left to right).
     """
-    try:
-        tree = ast.parse(expression_str, mode='eval')
-    except SyntaxError:
+    parsed = parse_expression(expression_str)
+    if parsed is None:
         return []
+    tree, source = parsed
+    return _walk_for_operands(tree, source)
 
-    operands = []
-    _walk_for_operands(tree, operands)
-    return operands
-
-def _walk_for_operands(node, operands):
-    """Recursive AST walk collecting numeric literals.
+def _walk_for_operands(tree, source):
+    """Walk the tree depth first, collecting numeric literals.
 
     UnaryOp(USub, Constant) is collected as the negated value, and the
     inner Constant is NOT collected separately (to avoid double-counting).
+    Iterative, so a deeply nested expression can't exhaust the stack.
     """
-    if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.USub):
-        if isinstance(node.operand, ast.Constant) and \
-                isinstance(node.operand.value, (int, float)):
-            val = -Decimal(str(node.operand.value))
-            operands.append((val, '-' + str(node.operand.value)))
-            return  # do NOT recurse into the Constant child
-
-    if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
-        operands.append((Decimal(str(node.value)), str(node.value)))
-        return
-
-    for child in ast.iter_child_nodes(node):
-        _walk_for_operands(child, operands)
+    operands = []
+    stack = [tree]
+    while stack:
+        node = stack.pop()
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.USub) \
+                and isinstance(node.operand, ast.Constant):
+            value, text = literal_decimal(node.operand, source)
+            operands.append((-value, '-' + text))
+        elif isinstance(node, ast.Constant):
+            operands.append(literal_decimal(node, source))
+        else:
+            stack.extend(reversed(list(ast.iter_child_nodes(node))))
+    return operands
 
 # -- Operand resolution ------------------------------------------------
 
@@ -243,33 +287,35 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                     'sign_inversion_finding': None,
                 }
 
-    # Step 4: computed in session (D7.2(a)(iv))
+    # Step 4: computed in session (D7.2(a)(iv)). Grounded if any prior
+    # invocation that returned this value was grounded, whatever the order
+    # of the calls (T3-57); originated if only ungrounded ones did.
     if prior_returns:
-        for pr in prior_returns:
-            if operand_value == pr['value']:
-                if pr['grounded']:
-                    return {
-                        'step': 4,
-                        'resolution': 'computed_in_session',
-                        'matched_field': None,
-                        'matched_intermediate': None,
-                        'quantisation_finding': False,
-                        'transform_used': None,
-                        'near_miss_finding': None,
-                        'sign_inversion_finding': None,
-                    }
-                else:
-                    # Prior invocation was not grounded -> force originated
-                    return {
-                        'step': 5,
-                        'resolution': 'computed_in_session_ungrounded',
-                        'matched_field': None,
-                        'matched_intermediate': None,
-                        'quantisation_finding': False,
-                        'transform_used': None,
-                        'near_miss_finding': None,
-                        'sign_inversion_finding': None,
-                    }
+        matched = [pr['grounded'] for pr in prior_returns
+                   if operand_value == pr['value']]
+        if any(matched):
+            return {
+                'step': 4,
+                'resolution': 'computed_in_session',
+                'matched_field': None,
+                'matched_intermediate': None,
+                'quantisation_finding': False,
+                'transform_used': None,
+                'near_miss_finding': None,
+                'sign_inversion_finding': None,
+            }
+        if matched:
+            # Prior invocation was not grounded -> force originated
+            return {
+                'step': 5,
+                'resolution': 'computed_in_session_ungrounded',
+                'matched_field': None,
+                'matched_intermediate': None,
+                'quantisation_finding': False,
+                'transform_used': None,
+                'near_miss_finding': None,
+                'sign_inversion_finding': None,
+            }
 
         # Near-miss detection: prior return matches only after quantisation.
         # Record a finding but still classify as ORIGINATED.

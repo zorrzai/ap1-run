@@ -7,3 +7,5 @@ API key: present (33 chars)
 Runner version: v1.3.1 (e0d9ec9)
 Runner source hash: <RUNNER_SOURCE_HASH>...
 
+Ground-truth guards (R3.1): PASSED (perturbation, source fields, declared constants)
+

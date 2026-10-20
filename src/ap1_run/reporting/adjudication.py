@@ -91,10 +91,11 @@ def generate_sheets(transcript_records, questions, fixture, config,
     question_map = {q['id']: q for q in questions.get('items', [])}
     account_map = {a['id']: a for a in fixture.get('accounts', [])}
 
-    # Build release coverage lookup: (item_id, condition) -> list of results
+    # Build release coverage lookup: (item_id, condition, repeat) -> results.
+    # A sheet is for one execution and carries that execution's coverage.
     _rc_lookup = {}
     for rc in (release_coverage_results or []):
-        _rc_key = (rc.get('item_id'), rc.get('condition'))
+        _rc_key = (rc.get('item_id'), rc.get('condition'), rc.get('repeat'))
         _rc_lookup.setdefault(_rc_key, []).append(rc)
 
     sheets = []
@@ -126,8 +127,8 @@ def generate_sheets(transcript_records, questions, fixture, config,
 
         # Generate TWO sheets for this item (two scorers per section 13.8)
         for scorer_num in (1, 2):
-            _rc_key = (item_id, condition)
-            _rc_for_item = _rc_lookup.get(_rc_key, [])
+            _rc_key = (item_id, condition, record.get('repeat'))
+            _rc_for_item = _rc_lookup.get(_rc_key)
             sheet = _generate_one_sheet(
                 record=record,
                 question=question,
@@ -156,8 +157,15 @@ def _needs_adjudication(record):
 
     An item needs adjudication if its figure identification outcome
     routes to human review (ADJUDICATE-* or UNMEASURABLE), or if it is a
-    RETRIEVED candidate: AUTO-MATCH without invoking the computation.
+    RETRIEVED candidate: AUTO-MATCH without invoking the computation. A
+    record of a transport failure has no response: it is UNMEASURED (AP-1
+    v1.3 §6.8, response statuses) and never gets a sheet, whatever outcome
+    it holds.
     """
+    error_state = record.get('error_state')
+    if error_state and 'TRANSPORT_FAILURE' in str(error_state):
+        return False  # UNMEASURED, not adjudicated
+
     figure_outcome = record.get('figure_outcome', '')
     if figure_outcome.startswith('ADJUDICATE'):
         return True
@@ -165,11 +173,6 @@ def _needs_adjudication(record):
         return True
     if _retrieved_candidate(record):
         return True
-
-    # Also check error_state for transport failures
-    error_state = record.get('error_state')
-    if error_state and 'TRANSPORT_FAILURE' in str(error_state):
-        return False  # UNMEASURED, not adjudicated
 
     return False
 
@@ -179,11 +182,15 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
                         coverage_records=None):
     """Generate a single adjudication sheet for one scorer."""
     item_id = record.get('item_id', 'unknown')
-    condition = record.get('condition', 'unknown')
+    repeat = record.get('repeat')
+    # The sheet names its execution's repeat, so a mark joins back to it,
+    # and not its arm (condition): AP-1 v1.3 section 13.8, scorers are
+    # blind to arm identity where the response text permits.
+    execution = item_id if repeat is None else f'{item_id}, repeat {repeat}'
 
     lines = []
-    lines.append(f'\n## Item {item_num}: {item_id} '
-                 f'(Condition: {condition}) \u2014 Scorer {scorer_num}\n')
+    lines.append(f'\n## Item {item_num}: {execution} '
+                 f'\u2014 Scorer {scorer_num}\n')
 
     # 1. Question
     lines.append('### Question\n')
@@ -239,6 +246,20 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
         for opr in op_results:
             lines.append(f'- `{opr.get("outcome", "unknown")}`: '
                          f'{opr.get("reason", "")}\n')
+
+    # D7.2(a) operand provenance: the section 6.8 composition rule needs it
+    # (an answer resting on an originated operand is ORIGINATED)
+    prov_results = record.get('provenance_results')
+    if prov_results:
+        lines.append('**Operand provenance (D7.2(a)):**\n')
+        for prov in prov_results:
+            originated = ', '.join(
+                f'`{op.get("literal", op.get("value"))}` in '
+                f'`{op.get("expression")}`'
+                for op in prov.get('originated_operands') or [])
+            lines.append(f'- `{prov.get("outcome", "unknown")}`'
+                         + (f': originated {originated}' if originated
+                            else '') + '\n')
 
     # 5. Reason adjudication is required
     lines.append('### Reason for Adjudication\n')

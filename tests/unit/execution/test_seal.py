@@ -374,6 +374,11 @@ def constant(fields, final=Decimal('42')):
     return compute
 
 
+PERTURBATION_REFUSED = ("perturbation check failed: the module's output "
+                        "does not follow its declared source fields. ")
+UNCHANGED = 'output unchanged when {} multiplied by 1.1'
+
+
 def test_perturbation_check_honest_module_returns_empty_list():
     mod = module(honest(['acct.balance']))
     assert perturbation_check(mod, FIXTURE, questions('Q01')) == []
@@ -385,16 +390,18 @@ def test_perturbation_check_constant_module_raises_naming_field():
     with pytest.raises(SealError) as exc:
         perturbation_check(mod, FIXTURE, questions('Q01'))
     assert str(exc.value) == (
-        'perturbation check failed: constant-returning module detected. '
-        'Fields that had no effect: acct.balance')
+        PERTURBATION_REFUSED + 'Q01: ' + UNCHANGED.format('acct.balance'))
 
 
 def test_perturbation_check_names_every_field_across_items():
     mod = module(constant(['acct.balance', 'acct.rate']))
     with pytest.raises(SealError) as exc:
         perturbation_check(mod, FIXTURE, questions('Q01', 'Q02'))
-    assert str(exc.value).endswith(
-        'no effect: acct.balance, acct.rate, acct.balance, acct.rate')
+    assert str(exc.value) == PERTURBATION_REFUSED + (
+        'Q01: output unchanged when acct.balance multiplied by 1.1; '
+        'Q01: output unchanged when acct.rate set from 0 to 1; '
+        'Q02: output unchanged when acct.balance multiplied by 1.1; '
+        'Q02: output unchanged when acct.rate set from 0 to 1')
 
 
 def test_perturbation_check_default_factor_is_1_1():
@@ -418,7 +425,8 @@ def test_perturbation_check_zero_field_set_to_one():
 
 
 def test_perturbation_check_zero_field_with_constant_module_raises():
-    with pytest.raises(SealError, match='no effect: acct.rate$'):
+    with pytest.raises(SealError, match='Q01: output unchanged when '
+                                        'acct.rate set from 0 to 1$'):
         perturbation_check(module(constant(['acct.rate'])), FIXTURE,
                            questions('Q01'))
 
@@ -449,7 +457,8 @@ def test_perturbation_check_field_spec_split_at_first_dot():
 
 def test_perturbation_check_item_without_source_accounts_gets_empty_ctx():
     mod = recording(constant([], final=Decimal('1')))
-    perturbation_check(mod, FIXTURE, {'items': [{'id': 'Q01'}]})
+    with pytest.raises(SealError):  # it declares nothing to perturb (T3-7)
+        perturbation_check(mod, FIXTURE, {'items': [{'id': 'Q01'}]})
     assert mod.seen == [('Q01', {})]
 
 
@@ -462,8 +471,11 @@ def test_perturbation_check_no_items_returns_empty_list():
 def test_perturbation_check_baseline_raising_is_a_failure():
     def compute(item_id, ctx):
         raise KeyError('x')
-    with pytest.raises(SealError, match=r'no effect: \(baseline\)$'):
+    with pytest.raises(SealError) as exc:
         perturbation_check(module(compute), FIXTURE, questions('Q01'))
+    assert str(exc.value) == (
+        PERTURBATION_REFUSED
+        + "Q01: baseline computation raised KeyError: 'x'")
 
 
 def test_perturbation_check_baseline_failure_does_not_stop_later_items():
@@ -471,8 +483,11 @@ def test_perturbation_check_baseline_failure_does_not_stop_later_items():
         if item_id == 'Q01':
             raise KeyError('x')
         return constant(['acct.balance'])(item_id, ctx)
-    with pytest.raises(SealError, match=r'no effect: \(baseline\), acct.balance$'):
+    with pytest.raises(SealError) as exc:
         perturbation_check(module(compute), FIXTURE, questions('Q01', 'Q02'))
+    assert str(exc.value).endswith(
+        "Q01: baseline computation raised KeyError: 'x'; "
+        'Q02: ' + UNCHANGED.format('acct.balance'))
 
 
 def test_perturbation_check_perturbed_raising_is_a_failure():
@@ -482,14 +497,18 @@ def test_perturbation_check_perturbed_raising_is_a_failure():
         return {'final': Decimal('1'),
                 'source_fields_consumed': ['acct.balance', 'acct.rate']}
     # balance: perturbed run raises; rate: unchanged output. Both named.
-    with pytest.raises(SealError, match='no effect: acct.balance, acct.rate$'):
+    with pytest.raises(SealError) as exc:
         perturbation_check(module(compute), FIXTURE, questions('Q01'))
+    assert str(exc.value) == PERTURBATION_REFUSED + (
+        'Q01: perturbed computation (acct.balance multiplied by 1.1) raised '
+        'ValueError: no; '
+        'Q01: output unchanged when acct.rate set from 0 to 1')
 
 
-# The skips below are the vacuous paths of T3-7. Each is followed by a
-# failing item Q09, so that a skip which ended the loop would be noticed.
+# The vacuous paths of T3-7 are failures now. Each is followed by a
+# failing item Q09, so that a failure which ended the loop would be noticed.
 
-def assert_only_q09_fails(compute_q01, *ids):
+def assert_q01_refused_and_q09_checked(compute_q01, *ids):
     def compute(item_id, ctx):
         if item_id == 'Q09':
             return constant(['other.balance'])(item_id, ctx)
@@ -497,19 +516,45 @@ def assert_only_q09_fails(compute_q01, *ids):
     qs = questions(*ids, 'Q09', accounts=['acct', 'other'])
     with pytest.raises(SealError) as exc:
         perturbation_check(module(compute), FIXTURE, qs)
-    assert str(exc.value).endswith('no effect: other.balance')
+    assert str(exc.value).startswith(PERTURBATION_REFUSED + 'Q01: ')
+    assert str(exc.value).endswith(
+        '; Q09: ' + UNCHANGED.format('other.balance'))
+    return str(exc.value)
 
 
 @pytest.mark.finding('T3-7')
-@pytest.mark.parametrize('declared', [
-    [], ['nope.balance'], ['acct.nope'], ['balance'], ['acct.kind']],
-    ids=['none', 'unknown-account', 'unknown-field', 'no-dot', 'non-numeric'])
-def test_perturbation_check_constant_module_passes_with_vacuous_declaration(
-        declared):
-    # Current behaviour: a constant module passes if it declares no
-    # fields, a nonexistent account or field, a field with no dot, or a
-    # non-numeric field. Correct: refuse each, naming the declaration.
-    assert_only_q09_fails(constant(declared), 'Q01')
+@pytest.mark.parametrize('declared, reason', [
+    (None, 'declares no source fields to perturb '
+           '(source_fields_consumed is None)'),
+    ([], 'declares no source fields to perturb '
+         '(source_fields_consumed is [])'),
+    (['nope.balance'], "declared source field 'nope.balance': account "
+                       "'nope' is not in the delivered context"),
+    (['acct.nope'], "declared source field 'acct.nope': account 'acct' "
+                    "has no field 'nope'"),
+    (['balance'], "declared source field 'balance' is not of the form "
+                  "account.field"),
+    (['acct.kind'], 'no declared source field could be perturbed: '
+                    'acct.kind not numeric'),
+], ids=['missing-key', 'none', 'unknown-account', 'unknown-field', 'no-dot',
+        'non-numeric'])
+def test_perturbation_check_vacuous_declaration_refused_with_reason(
+        declared, reason):
+    def compute(item_id, ctx):
+        out = {'final': Decimal('42')}
+        if declared is not None:
+            out['source_fields_consumed'] = list(declared)
+        return out
+    msg = assert_q01_refused_and_q09_checked(compute, 'Q01')
+    assert msg == PERTURBATION_REFUSED + f'Q01: {reason}; Q09: ' + \
+        UNCHANGED.format('other.balance')
+
+
+@pytest.mark.finding('T3-7')
+def test_perturbation_check_final_none_refused_with_reason():
+    msg = assert_q01_refused_and_q09_checked(
+        constant(['acct.balance'], final=None), 'Q01')
+    assert 'Q01: final is None on an item declared derivable; Q09' in msg
 
 
 @pytest.mark.parametrize('vacuous', [
@@ -518,25 +563,49 @@ def test_perturbation_check_vacuous_field_does_not_stop_later_fields(vacuous):
     with pytest.raises(SealError) as exc:
         perturbation_check(module(constant([vacuous, 'acct.balance'])),
                            FIXTURE, questions('Q01'))
-    assert str(exc.value).endswith('no effect: acct.balance')
+    assert str(exc.value).endswith(
+        'Q01: ' + UNCHANGED.format('acct.balance'))
 
 
-def test_perturbation_check_no_declared_fields_key_checks_nothing():
-    mod = module(lambda i, ctx: {'final': Decimal('42')})
+def test_perturbation_check_non_numeric_field_beside_a_numeric_one_passes():
+    # acct.kind cannot be perturbed, but acct.balance was, and moved the
+    # output: the item passes.
+    mod = module(lambda i, ctx: {
+        'final': Decimal(ctx['acct']['balance']),
+        'source_fields_consumed': ['acct.kind', 'acct.balance']})
     assert perturbation_check(mod, FIXTURE, questions('Q01')) == []
 
 
 @pytest.mark.finding('T3-7')
-def test_perturbation_check_final_none_skips_item():
-    # Current behaviour: an item whose final is None is not checked.
-    # Correct: only items declared non-derivable may be skipped.
-    assert_only_q09_fails(constant(['acct.balance'], final=None), 'Q01')
+@pytest.mark.parametrize('value', ['NaN', 'Infinity', '-inf', 'sNaN'])
+def test_perturbation_check_non_finite_fields_are_not_numeric(value):
+    # Decimal parses these, but no perturbation of them is meaningful.
+    fixture = {'accounts': [{'id': 'acct', 'x': value, 'y': 'text'}]}
+    mod = module(constant(['acct.x', 'acct.y']))
+    with pytest.raises(SealError) as exc:
+        perturbation_check(mod, fixture, questions('Q01'))
+    assert str(exc.value) == PERTURBATION_REFUSED + (
+        'Q01: no declared source field could be perturbed: '
+        'acct.x, acct.y not numeric')
 
 
-def test_perturbation_check_returns_empty_list_when_nothing_fails():
-    # The failures list is only ever returned empty: any failure raises.
-    mod = module(constant(['acct.kind']))
-    assert perturbation_check(mod, FIXTURE, questions('Q01')) == []
+@pytest.mark.finding('T3-7')
+@pytest.mark.parametrize('result', [
+    {'derivable': False},
+    {'derivable': False, 'final': Decimal('42'),
+     'source_fields_consumed': ['acct.balance']},
+])
+def test_perturbation_check_non_derivable_item_exempt(result):
+    # Only an item declared non-derivable is exempt; it is computed once
+    # and not perturbed. Q09 is still checked.
+    mod = recording(lambda i, ctx: dict(result) if i == 'Q01'
+                    else constant(['other.balance'])(i, ctx))
+    qs = questions('Q01', 'Q09', accounts=['acct', 'other'])
+    with pytest.raises(SealError) as exc:
+        perturbation_check(mod, FIXTURE, qs)
+    assert str(exc.value) == PERTURBATION_REFUSED + \
+        'Q09: ' + UNCHANGED.format('other.balance')
+    assert [i for i, _ in mod.seen].count('Q01') == 1
 
 
 # -- source_fields_check ----------------------------------------------------
@@ -568,13 +637,13 @@ def test_source_fields_check_undeclared_read_raises_naming_fields():
     with pytest.raises(SealError) as exc:
         source_fields_check(mod, FIXTURE, questions('Q01'))
     assert str(exc.value) == (
-        'source fields check failed: module reads undeclared fields. '
-        "Q01: accessed ['acct.kind', 'acct.rate']")
+        "source fields check failed: Q01: reads undeclared fields "
+        "['acct.kind', 'acct.rate']")
 
 
 def test_source_fields_check_no_declaration_means_every_read_undeclared():
     mod = module(reads('acct.balance'))
-    with pytest.raises(SealError, match=r"Q01: accessed \['acct.balance'\]$"):
+    with pytest.raises(SealError, match=r"Q01: reads undeclared fields \['acct.balance'\]$"):
         source_fields_check(mod, FIXTURE, questions('Q01'))
 
 
@@ -582,9 +651,10 @@ def test_source_fields_check_items_joined():
     mod = module(reads('acct.balance', declared=[]))
     with pytest.raises(SealError) as exc:
         source_fields_check(mod, FIXTURE, questions('Q01', 'Q02'))
-    assert str(exc.value).endswith(
-        "fields. Q01: accessed ['acct.balance']; "
-        "Q02: accessed ['acct.balance']")
+    assert str(exc.value) == (
+        "source fields check failed: "
+        "Q01: reads undeclared fields ['acct.balance']; "
+        "Q02: reads undeclared fields ['acct.balance']")
 
 
 def test_source_fields_check_compute_gets_tracking_context_of_sources():
@@ -614,20 +684,6 @@ def test_source_fields_check_no_items_returns_empty_list():
     assert source_fields_check(module(reads('acct.balance')), FIXTURE, {}) == []
 
 
-@pytest.mark.finding('S3-G3-3')
-def test_source_fields_check_compute_raising_reported_as_empty_access():
-    # Current behaviour: a compute that raises is refused (fail closed),
-    # but the message says it "reads undeclared fields" and shows
-    # "accessed []"; the exception is dropped. Correct: name the error.
-    def compute(item_id, ctx):
-        raise ZeroDivisionError('boom')
-    with pytest.raises(SealError) as exc:
-        source_fields_check(module(compute), FIXTURE, questions('Q01'))
-    assert str(exc.value) == (
-        'source fields check failed: module reads undeclared fields. '
-        'Q01: accessed []')
-
-
 def test_source_fields_check_raising_item_does_not_stop_later_items():
     def compute(item_id, ctx):
         if item_id == 'Q01':
@@ -635,23 +691,15 @@ def test_source_fields_check_raising_item_does_not_stop_later_items():
         return reads('acct.rate', declared=[])(item_id, ctx)
     with pytest.raises(SealError) as exc:
         source_fields_check(module(compute), FIXTURE, questions('Q01', 'Q02'))
-    assert str(exc.value).endswith(
-        "Q01: accessed []; Q02: accessed ['acct.rate']")
-
-
-@pytest.mark.finding('T3-8')
-def test_source_fields_check_misses_reads_through_get():
-    # Current behaviour: only subscript reads are tracked, so a field read
-    # with .get() (or .items(), .values(), dict(), {**a}) goes unseen.
-    # Correct: every read path is tracked, and this module is refused.
-    mod = module(reads('acct.balance', declared=['acct.balance'],
-                       via_get=['acct.rate']))
-    assert source_fields_check(mod, FIXTURE, questions('Q01')) == []
+    assert str(exc.value) == (
+        "source fields check failed: "
+        "Q01: compute raised ZeroDivisionError: boom; "
+        "Q02: reads undeclared fields ['acct.rate']")
 
 
 # -- the shipped example module --------------------------------------------
-# The guards are never called on a live run (T3-7), so these are the only
-# checks that the example ground-truth module satisfies them. Read only.
+# The live run calls the guards before sealing (T3-7); these check the
+# example ground-truth module directly. Read only.
 
 EXAMPLE = Path(__file__).resolve().parents[3] / 'example'
 
@@ -692,9 +740,6 @@ def refusal_of(check, *args, **kwargs):
 
 @pytest.mark.finding('T3-7')
 @pytest.mark.req('R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-7: perturbation_check passes a constant module '
-                          'whose declaration perturbs nothing')
 @pytest.mark.parametrize('declared', [
     None, [], ['nope.balance'], ['acct.nope'], ['balance'], ['acct.kind']],
     ids=['missing-key', 'none', 'unknown-account', 'unknown-field', 'no-dot',
@@ -722,9 +767,6 @@ def test_perturbation_check_vacuous_declaration_refused(declared):
 
 @pytest.mark.finding('T3-7')
 @pytest.mark.req('R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-7: an item whose final is None is skipped '
-                          'although it is declared derivable')
 def test_perturbation_check_final_none_on_derivable_item_refused():
     # Correct: only an item declared non-derivable may be exempt (SPEC
     # R1.2 "item selection"; R3.1). A derivable item with no final value
@@ -741,9 +783,6 @@ def test_perturbation_check_final_none_on_derivable_item_refused():
 
 @pytest.mark.finding('T3-8')
 @pytest.mark.req('R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-8: source_fields_check tracks subscript reads '
-                          'only')
 @pytest.mark.parametrize('read', [
     lambda acct: acct.get('rate'),
     lambda acct: [v for k, v in acct.items() if k == 'rate'],
@@ -774,9 +813,6 @@ def test_source_fields_check_undeclared_read_by_any_path_refused_naming_field(
 
 @pytest.mark.finding('S3-G3-3')
 @pytest.mark.req('R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G3-3: source_fields_check drops the exception '
-                          'and reports "accessed []"')
 def test_source_fields_check_compute_raising_refused_naming_the_error():
     # Correct: the refusal says what went wrong. A compute that raises is
     # refused (fail closed, as today) with the exception named, not as a
@@ -793,9 +829,6 @@ def test_source_fields_check_compute_raising_refused_naming_the_error():
 
 @pytest.mark.finding('S3-G3-3')
 @pytest.mark.req('R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G3-3: perturbation_check drops the exception '
-                          'and calls the module constant-returning')
 @pytest.mark.parametrize('when', ['baseline', 'perturbed'])
 def test_perturbation_check_compute_raising_refused_naming_the_error(when):
     # Correct: a compute that raises (on the baseline or on the perturbed
@@ -815,9 +848,6 @@ def test_perturbation_check_compute_raising_refused_naming_the_error(when):
 
 @pytest.mark.finding('S3-G3-3')
 @pytest.mark.req('R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G3-3: the refusal names the field but not the '
-                          'perturbation applied or the item')
 def test_perturbation_check_constant_module_refusal_names_the_perturbation():
     # Correct (SPEC R3.1, l.688-694: refused "with the perturbation
     # named"): the refusal says which item, which field and what was done

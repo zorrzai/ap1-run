@@ -141,7 +141,7 @@ def test_live_path_result_feeds_every_scorer(run_item, turns, example):
     assert [(r['operand_value'], r['step'], r['resolution'])
             for p in result['provenance_results']
             for r in p['operand_resolutions']] == \
-        [('15.2', 3, 'intermediate'), ('1', 1, 'constant')]
+        [('15.200', 3, 'intermediate'), ('1', 1, 'constant')]
     # D7.2(b): written to the transcript
     assert [o['outcome'] for o in transcript[0]['operation_correctness']] == \
         ['OPERATION-CORRECT']

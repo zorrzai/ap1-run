@@ -7,6 +7,8 @@ API key: present (33 chars)
 Runner version: v1.3.1 (e0d9ec9)
 Runner source hash: <RUNNER_SOURCE_HASH>...
 
+Ground-truth guards (R3.1): PASSED (perturbation, source fields, declared constants)
+
 Seal hash: <SEAL_HASH>
 AP-1 text hash: 48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56
 
@@ -101,11 +103,11 @@ result, by us or by anyone, in any document.
 
 3g. UNMEASURED CELLS: 0
 
-3h. D7.1 INVOCATION:
-  base: invoked=20 not_invoked=0 n=20
-    failure rate: 0/20 failures; one-sided 95% upper bound on the failure rate 13.9%
-  instruction_removed: invoked=20 not_invoked=0 n=20
-    failure rate: 0/20 failures; one-sided 95% upper bound on the failure rate 13.9%
+3h. D7.1 INVOCATION (n = questions; a question fails if any repeat is NOT-INVOKED; UNOBSERVABLE not in n):
+  base: invoked=10 not_invoked=0 n=10
+    failure rate: 0/10 failures; one-sided 95% upper bound on the failure rate 25.9%
+  instruction_removed: invoked=10 not_invoked=0 n=10
+    failure rate: 0/10 failures; one-sided 95% upper bound on the failure rate 25.9%
 
 3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 32
@@ -125,6 +127,7 @@ result, by us or by anyone, in any document.
       route divergence (item answer correct):      0
       item answer incorrect:                       0
       item answer undetermined (adjudicated):      16
+      no figure released (no item answer):         0
 
 3j. D1 ACCURACY:
   Auto-scored: 32
@@ -139,16 +142,18 @@ result, by us or by anyone, in any document.
   OBSERVED-ONLY: 40
 
 3l. D7.2(a) OPERAND PROVENANCE:
-  step 1 (source match):       72
-  step 1 (declared constant):  44
+  step 1 (source match):       92
+  step 1 (declared constant):  52
   step 2 (transformed source): 12
   step 3 (reference intermediate): 0
-  step 4 (computed in session): 4
+  step 4 (computed in session): 0
   step 5 (originated, sign-inverted from source):          0
-  step 5 (originated, computed from ungrounded invocation): 4
-  step 5 (originated, no traceable basis):                  8
-  OPERANDS-GROUNDED: 40
-  OPERAND-ORIGINATED: 8
+  step 5 (originated, computed from ungrounded invocation): 8
+  step 5 (originated, no traceable basis):                  16
+  OPERANDS-GROUNDED: 32
+  OPERAND-ORIGINATED: 16
+  OPERANDS-UNOBSERVABLE: 0
+  UNMEASURABLE: 0
 
 ============================================================
 GENERATING FORMAL REPORT (report.py)

@@ -7,6 +7,8 @@ API key: present (33 chars)
 Runner version: v1.3.1 (e0d9ec9)
 Runner source hash: <RUNNER_SOURCE_HASH>...
 
+Ground-truth guards (R3.1): PASSED (perturbation, source fields, declared constants)
+
 Seal hash: <SEAL_HASH>
 AP-1 text hash: 48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56
 
@@ -101,11 +103,11 @@ result, by us or by anyone, in any document.
 
 3g. UNMEASURED CELLS: 0
 
-3h. D7.1 INVOCATION:
-  base: invoked=18 not_invoked=2 n=20
-    failure rate: 2/20 (10.0%)
-  instruction_removed: invoked=16 not_invoked=4 n=20
-    failure rate: 4/20 (20.0%)
+3h. D7.1 INVOCATION (n = questions; a question fails if any repeat is NOT-INVOKED; UNOBSERVABLE not in n):
+  base: invoked=9 not_invoked=1 n=10
+    failure rate: 1/10 (10.0%)
+  instruction_removed: invoked=8 not_invoked=2 n=10
+    failure rate: 2/10 (20.0%)
 
 3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 18
@@ -125,6 +127,7 @@ result, by us or by anyone, in any document.
       route divergence (item answer correct):      0
       item answer incorrect:                       0
       item answer undetermined (adjudicated):      8
+      no figure released (no item answer):         0
 
 3j. D1 ACCURACY:
   Auto-scored: 22
@@ -149,6 +152,8 @@ result, by us or by anyone, in any document.
   step 5 (originated, no traceable basis):                  4
   OPERANDS-GROUNDED: 30
   OPERAND-ORIGINATED: 4
+  OPERANDS-UNOBSERVABLE: 0
+  UNMEASURABLE: 0
 
 ============================================================
 GENERATING FORMAL REPORT (report.py)

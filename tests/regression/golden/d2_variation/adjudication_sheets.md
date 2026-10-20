@@ -9,7 +9,7 @@ Version DOI: 10.5281/zenodo.21755443
 ---
 
 
-## Item 1: Q01 (Condition: base) — Scorer 1
+## Item 1: Q01, repeat 3 — Scorer 1
 
 ### Question
 
@@ -94,7 +94,7 @@ The released figure matches the expected value, but the required computation was
 ---
 
 
-## Item 1: Q01 (Condition: base) — Scorer 2
+## Item 1: Q01, repeat 3 — Scorer 2
 
 ### Question
 
@@ -179,7 +179,7 @@ The released figure matches the expected value, but the required computation was
 ---
 
 
-## Item 2: Q02 (Condition: base) — Scorer 1
+## Item 2: Q02, repeat 3 — Scorer 1
 
 ### Question
 
@@ -225,6 +225,10 @@ You have $2500.00 of credit left.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -275,7 +279,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 2: Q02 (Condition: base) — Scorer 2
+## Item 2: Q02, repeat 3 — Scorer 2
 
 ### Question
 
@@ -321,6 +325,10 @@ You have $2500.00 of credit left.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -371,7 +379,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 3: Q01 (Condition: instruction_removed) — Scorer 1
+## Item 3: Q01, repeat 3 — Scorer 1
 
 ### Question
 
@@ -456,7 +464,7 @@ The released figure matches the expected value, but the required computation was
 ---
 
 
-## Item 3: Q01 (Condition: instruction_removed) — Scorer 2
+## Item 3: Q01, repeat 3 — Scorer 2
 
 ### Question
 
@@ -541,7 +549,7 @@ The released figure matches the expected value, but the required computation was
 ---
 
 
-## Item 4: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 4: Q02, repeat 3 — Scorer 1
 
 ### Question
 
@@ -587,6 +595,10 @@ You have $2500.00 of credit left.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -637,7 +649,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 4: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 4: Q02, repeat 3 — Scorer 2
 
 ### Question
 
@@ -683,6 +695,10 @@ You have $2500.00 of credit left.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 

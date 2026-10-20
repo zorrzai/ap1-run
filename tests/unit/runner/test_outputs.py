@@ -41,6 +41,14 @@ def test_attach_matches_repeats_in_order_per_item_and_condition():
         (1, 'B1'), (2, 'R1'), (3, 'B2')]
 
 
+def test_attach_matches_on_the_item_whatever_the_order():
+    records = [engine('Q01', 'base', n=1), engine('Q02', 'base', n=2),
+               figure('Q02', 'base', 'B'), figure('Q01', 'base', 'A')]
+    result = attach_figure_outcomes(records)
+    assert [(r['n'], r['figure_outcome']) for r in result] == [
+        (1, 'A'), (2, 'B')]
+
+
 def test_attach_leaves_engine_records_without_a_figure_alone():
     records = [engine('Q01', 'base'), engine('Q01', 'base'),
                figure('Q01', 'base', 'B1')]
@@ -146,9 +154,6 @@ def test_write_outputs_writes_four_files_and_says_where(
 
 @pytest.mark.finding('T3-9')
 @pytest.mark.req('R3.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-9: figure outcomes are joined to engine '
-                          'records by position, not by repeat')
 def test_attach_joins_figure_outcomes_on_the_repeat_index():
     # Repeat 1 failed in transport: an engine record, no figure record.
     # Correct (fix plan §2 branch 6): every record carries its repeat and
