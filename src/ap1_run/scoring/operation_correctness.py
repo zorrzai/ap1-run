@@ -9,7 +9,7 @@ Outcomes: OPERATION-CORRECT, WRONG-OPERATION, OPERATION-UNOBSERVABLE.
 import ast
 import operator
 import math
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, DecimalException, InvalidOperation
 
 from ap1_run.foundation.numeric import quantise
 from ap1_run.scoring.provenance.trace import (
@@ -24,13 +24,28 @@ OPERATION_UNOBSERVABLE = 'OPERATION-UNOBSERVABLE'
 
 # -- Safe AST evaluator (Decimal-only) --------------------------------
 
+def _floordiv(a, b):
+    """a // b rounded toward minus infinity, as the calculator (Python
+    numbers) computes it; Decimal's // truncates toward zero (S3-G4-3)."""
+    q = a // b
+    if a % b and (a < 0) != (b < 0):
+        q -= 1
+    return q
+
+
+def _mod(a, b):
+    """a % b with the sign of b, as the calculator computes it; Decimal's
+    % takes the sign of a (S3-G4-3)."""
+    return a - b * _floordiv(a, b)
+
+
 _ALLOWED_BINOPS = {
     ast.Add: operator.add,
     ast.Sub: operator.sub,
     ast.Mult: operator.mul,
     ast.Div: operator.truediv,
-    ast.FloorDiv: operator.floordiv,
-    ast.Mod: operator.mod,
+    ast.FloorDiv: _floordiv,
+    ast.Mod: _mod,
     ast.Pow: operator.pow,
     ast.BitXor: operator.pow,  # ^ = exponentiation in math notation
 }
@@ -105,7 +120,9 @@ def evaluate_expression(expression_str):
 
     Returns:
         Decimal result, or None if the expression is unparseable
-        or produces a non-numeric result.
+        or produces a non-numeric result. A result too large for the
+        Decimal context (decimal.Overflow) or an expression nested too
+        deep to walk (RecursionError) also gives None (S3-G4-4).
     """
     if not isinstance(expression_str, str) or not expression_str.strip():
         return None
@@ -113,12 +130,11 @@ def evaluate_expression(expression_str):
         # E6: translate ^ to ** for correct mathematical precedence
         expr_clean = expression_str.strip().replace('^', '**')
         tree = ast.parse(expr_clean, mode='eval')
-        result = _eval_decimal(tree, expr_clean)
-        if not isinstance(result, Decimal):
-            result = Decimal(str(result))
-        return result
-    except (SyntaxError, ValueError, InvalidOperation,
-            ZeroDivisionError, OverflowError, TypeError):
+        # Every node evaluates to a Decimal (literals, names, operators
+        # and the two functions all give one), so the result is one.
+        return _eval_decimal(tree, expr_clean)
+    except (SyntaxError, ValueError, DecimalException, ZeroDivisionError,
+            OverflowError, TypeError, RecursionError, MemoryError):
         return None
 
 # -- Resolution --------------------------------------------------------
