@@ -142,9 +142,9 @@ def test_run_report_with_results(capsys):
         # have no outcome and are not in n.
         '  base: invoked=1 not_invoked=2 n=3\n'
         '    no evidence class executions: 2 UNOBSERVABLE, not in n\n'
-        '    failure rate: 2/3 (66.7%)\n'
+        '    failure rate: 2/3 (66.7%); one-sided 95% upper bound on the failure rate 98.4%\n'
         '  instruction_removed: invoked=1 not_invoked=1 n=2\n'
-        '    failure rate: 1/2 (50.0%)\n'
+        '    failure rate: 1/2 (50.0%); one-sided 95% upper bound on the failure rate 97.5%\n'
         '\\n3h2. D7.3 TRANSCRIPTION:\n'
         '  TRANSCRIBED-EXACT: 2\n'
         '  TRANSCRIBED-ALTERED: 0\n'
@@ -274,7 +274,8 @@ def test_run_report_single_execution(capsys):
     out = run_report(capsys, results)
     assert '  Auto-scored: 0/1 (0%)\n  Adjudicated: 1/1 (100%)\n' in out
     assert ('  base: invoked=0 not_invoked=1 n=1\n'
-            '    failure rate: 1/1 (100.0%)\n') in out
+            '    failure rate: 1/1 (100.0%); one-sided 95% upper bound on the failure rate '
+            '100.0%\n') in out
     assert out.endswith(
         '  WRONG-OPERATION: 1\n'
         '  OPERATION-UNOBSERVABLE: 0\n'
@@ -419,6 +420,7 @@ def test_run_report_3h_two_observed_classes_rate_per_class(capsys):
         '    aggregate spans 2 evidence classes (EV-1 SELF-REPORTED, '
         'EV-2 PLATFORM-STRUCTURAL); figures are not comparable across '
         'classes\n'
-        '    failure rate (EV-1 SELF-REPORTED): 1/1 (100.0%)\n'
+        '    failure rate (EV-1 SELF-REPORTED): 1/1 (100.0%); one-sided 95% upper bound on the failure rate '
+        '100.0%\n'
         '    failure rate (EV-2 PLATFORM-STRUCTURAL): 0/1 failures; '
         'one-sided 95% upper bound on the failure rate 95.0%\n') in out

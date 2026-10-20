@@ -307,6 +307,4 @@ The following dimensions were **not measured** in this evaluation and require hu
 
 ### Clopper-Pearson Bound (k > 0)
 
-An exact confidence bound for non-zero failure counts is not computed; AP-1 v1.3 D7.5 specifies the zero-failure form only. This is an author-identified defect in the standard, noted for resolution in the adopted version.
-
-For non-zero failure counts, the point estimate is reported with n. The full Beta quantile would require an external dependency or a specification extension.
+AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for any invocation figure but states its formula for zero failures only. For k > 0 failures the report gives the exact Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the general form DISPOSITION C-1 adopts for the next version. It is computed in Decimal (bisection on the binomial distribution) and every bound is shown rounded up.

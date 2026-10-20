@@ -8,6 +8,7 @@ live caller; format_rate is used by runner/console.
 
 import decimal
 import importlib
+import math
 import re
 from decimal import Decimal
 
@@ -16,8 +17,9 @@ import pytest
 from ap1_run.execution.evidence import EV_0, EV_1, EV_2, EV_3
 from ap1_run.scoring import invocation
 from ap1_run.scoring.invocation import (
-    InvocationError, _exact_upper_bound, _summarise_class, compute_dpr,
-    format_rate, measure_invocation,
+    InvocationError, _exact_upper_bound, _summarise_class,
+    clopper_pearson_upper, compute_dpr, format_rate, measure_invocation,
+    round_up,
 )
 
 D = Decimal
@@ -59,7 +61,8 @@ def test_measure_invocation_one_class_counts_invoked_and_not_invoked():
                             item(False, item_id='Q03')])
     assert r['per_class'] == {EV_2: {
         'evidence_class': EV_2, 'n': 3, 'invoked': 2, 'not_invoked': 1,
-        'unobservable': 0, 'failure_rate': '1/3 (33.3%)'}}
+        'unobservable': 0,
+        'failure_rate': '1/3 (33.3%); one-sided 95% upper bound on the failure rate 86.5%'}}
     assert r['total_n'] == 3
     assert r['unobservable_n'] == 0
     assert r['cross_class_warning'] is None
@@ -118,7 +121,8 @@ def test_measure_invocation_question_with_any_failed_repeat_fails(first):
                             item(True, item_id='Q02')])
     assert r['per_class'][EV_2] == {
         'evidence_class': EV_2, 'n': 2, 'invoked': 1, 'not_invoked': 1,
-        'unobservable': 0, 'failure_rate': '1/2 (50.0%)'}
+        'unobservable': 0,
+        'failure_rate': '1/2 (50.0%); one-sided 95% upper bound on the failure rate 97.5%'}
 
 
 @pytest.mark.finding('T3-1', 'T3-11')
@@ -148,7 +152,7 @@ def test_summarise_class_all_not_invoked_reports_full_failure_rate():
     s = _summarise_class([{'invoked': False}] * 4, EV_1)
     assert s == {'evidence_class': EV_1, 'n': 4, 'invoked': 0,
                  'not_invoked': 4, 'unobservable': 0,
-                 'failure_rate': '4/4 (100.0%)'}
+                 'failure_rate': '4/4 (100.0%); one-sided 95% upper bound on the failure rate 100.0%'}
 
 
 # -- format_rate -------------------------------------------------------------
@@ -169,14 +173,15 @@ def test_format_rate_zero_failures_n1_states_95_percent_bound():
 
 @pytest.mark.req('R2.3')
 def test_format_rate_zero_failures_below_30_omits_rule_of_three():
+    # Exact bound 9.82 %, rounded up (T3-61).
     assert format_rate(0, 29) == (
-        '0/29 failures; one-sided 95% upper bound on the failure rate 9.8%')
+        '0/29 failures; one-sided 95% upper bound on the failure rate 9.9%')
 
 
 @pytest.mark.req('R2.3')
 def test_format_rate_zero_failures_at_30_adds_rule_of_three():
     assert format_rate(0, 30) == (
-        '0/30 failures; one-sided 95% upper bound on the failure rate 9.5%'
+        '0/30 failures; one-sided 95% upper bound on the failure rate 9.6%'
         ' (≈3/30=10.0%)')
 
 
@@ -195,25 +200,6 @@ def test_format_rate_zero_failures_n100_states_3_percent_bound():
         ' (≈3/100=3.0%)')
 
 
-@pytest.mark.finding('T3-61')
-def test_format_rate_bound_rounds_half_even_down_at_n49():
-    # The exact bound at n = 49 is 5.93 %. Correct: an upper bound is
-    # rounded up (6.0 %); today it is rounded to nearest, 5.9 %.
-    assert format_rate(0, 49) == (
-        '0/49 failures; one-sided 95% upper bound on the failure rate 5.9%'
-        ' (≈3/49=6.1%)')
-
-
-@pytest.mark.finding('T3-61')
-def test_format_rate_bound_for_large_n_prints_zero_percent():
-    # The exact bound at n = 6000 is about 0.0499 %. Rounded to nearest
-    # it prints as 0.0 %, i.e. a zero failure rate, which the bound is
-    # there to prevent. Correct: round up, or show more digits.
-    assert format_rate(0, 6000) == (
-        '0/6000 failures; one-sided 95% upper bound on the failure rate 0.0%'
-        ' (≈3/6000=0.0%)')
-
-
 @pytest.mark.finding('T3-11')
 def test_format_rate_treats_n_as_independent_trials():
     # The published D7.1 figures pooled 50 repeats of 10 questions as
@@ -225,17 +211,21 @@ def test_format_rate_treats_n_as_independent_trials():
     assert format_rate(0, 10).endswith('failure rate 25.9%')
 
 
-def test_format_rate_nonzero_failures_prints_count_and_percent():
-    assert format_rate(3, 50) == '3/50 (6.0%)'
+@pytest.mark.finding('T3-81')
+def test_format_rate_nonzero_failures_prints_count_percent_and_bound():
+    # AP-1 v1.3 D7.5: any invocation figure is reported with its bound;
+    # for k > 0 the exact Clopper-Pearson one (14.71 % here), rounded up.
+    assert format_rate(3, 50) == '3/50 (6.0%); one-sided 95% upper bound on the failure rate 14.8%'
 
 
 def test_format_rate_nonzero_percent_rounds_half_even():
     # 1/16 = 6.25 %; the context rounding (half-even) gives 6.2 %.
-    assert format_rate(1, 16) == '1/16 (6.2%)'
+    assert format_rate(1, 16) == '1/16 (6.2%); one-sided 95% upper bound on the failure rate 26.4%'
 
 
 def test_format_rate_failures_above_n_are_not_refused():
-    assert format_rate(5, 3) == '5/3 (166.7%)'
+    assert format_rate(5, 3) == (
+        '5/3 (166.7%); one-sided 95% upper bound on the failure rate 100.0%')
 
 
 # -- _exact_upper_bound ------------------------------------------------------
@@ -312,9 +302,6 @@ def test_compute_dpr_removed_above_base_is_negative():
 @pytest.mark.finding('T3-61')
 @pytest.mark.req('AP-1 D7.5', 'R2.3', 'R0.4.1')
 @pytest.mark.parametrize('n', [49, 6000])
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-61: the displayed upper bound is rounded to '
-                          'nearest (half-even), not up')
 def test_format_rate_displayed_bound_is_never_below_the_exact_bound(n):
     # An upper bound rounded down is no longer an upper bound. Exact at
     # n = 49: 5.9306 %, shown 5.9 %; at n = 6000: 0.0499 %, shown 0.0 %.
@@ -431,7 +418,8 @@ def test_measure_invocation_unobservable_left_out_of_class_rate():
     # unobservable one beside it is not a success.
     r = measure_invocation([item(False, EV_2),
                             item(None, EV_2, item_id='Q02')])
-    assert r['per_class'][EV_2]['failure_rate'] == '1/1 (100.0%)'
+    assert r['per_class'][EV_2]['failure_rate'] == (
+        '1/1 (100.0%); one-sided 95% upper bound on the failure rate 100.0%')
 
 
 @pytest.mark.finding('T3-11')
@@ -445,3 +433,92 @@ def test_measure_invocation_n_counts_questions_not_repeats():
                             item(True, item_id='Q02')])
     assert r['per_class'][EV_2]['n'] == 2
     assert r['per_class'][EV_2]['failure_rate'].startswith('0/2 failures')
+
+
+# -- clopper_pearson_upper and round_up (T3-61, T3-81) -----------------------
+
+def binomial_cdf_reference(k, n, p):
+    """P(X <= k) from math.comb, in Decimal, for checking the bound."""
+    with decimal.localcontext() as ctx:
+        ctx.prec = 60
+        return sum(math.comb(n, i) * p ** i * (1 - p) ** (n - i)
+                   for i in range(k + 1))
+
+
+@pytest.mark.finding('T3-81')
+@pytest.mark.req('AP-1 D7.5')
+@pytest.mark.parametrize('k, n', [(1, 2), (1, 3), (3, 50), (92, 500),
+                                  (5, 6), (1, 1000)])
+def test_clopper_pearson_upper_solves_the_binomial_tail(k, n):
+    # The bound p solves P(X <= k; n, p) = 0.05: just below it the tail
+    # is above 0.05, at it (rounded up) it is at most 0.05.
+    p = clopper_pearson_upper(k, n)
+    assert isinstance(p, D) and D(0) < p < D(1)
+    assert binomial_cdf_reference(k, n, p) <= D('0.05')
+    assert binomial_cdf_reference(k, n, p - D('1e-30')) > D('0.05')
+
+
+@pytest.mark.finding('T3-81')
+def test_clopper_pearson_upper_closed_forms():
+    # k = 1, n = 2: (1 - p)^2 + 2p(1 - p) = 1 - p^2 = 0.05, p = sqrt(0.95).
+    assert abs(clopper_pearson_upper(1, 2) - D('0.95').sqrt()) < D('1e-39')
+    assert clopper_pearson_upper(1, 2) >= D('0.95').sqrt()
+    # k = n - 1: 1 - p^n = alpha, p = (1 - alpha)^(1/n).
+    assert abs(clopper_pearson_upper(2, 3) - D('0.95') ** (D(1) / 3)) \
+        < D('1e-39')
+
+
+def test_clopper_pearson_upper_is_the_last_bracket_at_precision_60():
+    # Pins the arithmetic: 135 halvings of [0, 1] at precision 60, the
+    # upper end returned (sqrt(0.95) =
+    # 0.97467943448089639068384131998996002992525839003...).
+    assert str(clopper_pearson_upper(1, 2)) == \
+        '0.97467943448089639068384131998996002992527257878319943894844'
+
+
+def test_clopper_pearson_upper_k0_is_the_closed_form():
+    assert clopper_pearson_upper(0, 49) == _exact_upper_bound(49)
+    assert clopper_pearson_upper(0, 2, D('0.01')) == D('0.9')
+
+
+def test_clopper_pearson_upper_exact_dyadic_root_is_returned_exactly():
+    # k = 1, n = 2, alpha 0.75: 1 - p^2 = 0.75 at p = 0.5, the first
+    # midpoint. The tail there is exactly alpha, so p = 0.5 is the bound
+    # (not above it) and the bisection keeps it as the upper end.
+    assert clopper_pearson_upper(1, 2, D('0.75')) == D('0.5')
+
+
+def test_clopper_pearson_upper_uses_given_alpha():
+    # k = 1, n = 2 at alpha 0.19: 1 - p^2 = 0.19, p = 0.9.
+    assert abs(clopper_pearson_upper(1, 2, D('0.19')) - D('0.9')) < \
+        D('1e-39')
+
+
+@pytest.mark.parametrize('k, n', [(1, 1), (4, 4), (5, 3), (30000, 30000)])
+def test_clopper_pearson_upper_all_failed_is_one(k, n):
+    # Every trial failed: the bound is 1, without bisecting (at n = 30000
+    # the bisection's (1 - p)^n would underflow to 0 near p = 1).
+    assert clopper_pearson_upper(k, n) == D(1)
+
+
+@pytest.mark.parametrize('k, n', [(0, 0), (1, 0), (0, -1), (-1, 5)])
+def test_clopper_pearson_upper_refuses_no_trials_or_negative_failures(k, n):
+    # invocation.InvocationError: the module is reloaded by an earlier test.
+    with pytest.raises(invocation.InvocationError,
+                       match=rf'no bound for {k} failures in n = {n}'):
+        clopper_pearson_upper(k, n)
+
+
+def test_clopper_pearson_upper_does_not_change_the_context():
+    with decimal.localcontext() as ctx:
+        ctx.prec = 12
+        clopper_pearson_upper(3, 50)
+        assert decimal.getcontext().prec == 12
+
+
+@pytest.mark.parametrize('value, quantum, shown', [
+    ('5.9306', '0.1', '6.0'), ('5.9000', '0.1', '5.9'),
+    ('0.0499', '0.1', '0.1'), ('0.05930601', '0.000001', '0.059307'),
+    ('-0.05', '0.1', '-0.0')])
+def test_round_up_is_toward_plus_infinity(value, quantum, shown):
+    assert str(round_up(D(value), D(quantum))) == shown

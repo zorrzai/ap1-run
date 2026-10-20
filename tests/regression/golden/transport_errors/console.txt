@@ -103,9 +103,9 @@ result, by us or by anyone, in any document.
   base: invoked=8 not_invoked=0 n=8
     EV-0 UNOBSERVABLE executions: 1 UNOBSERVABLE, not in n
     aggregate spans 2 evidence classes (EV-0 UNOBSERVABLE, EV-2 PLATFORM-STRUCTURAL); figures are not comparable across classes
-    failure rate: 0/8 failures; one-sided 95% upper bound on the failure rate 31.2%
+    failure rate: 0/8 failures; one-sided 95% upper bound on the failure rate 31.3%
   instruction_removed: invoked=9 not_invoked=0 n=9
-    failure rate: 0/9 failures; one-sided 95% upper bound on the failure rate 28.3%
+    failure rate: 0/9 failures; one-sided 95% upper bound on the failure rate 28.4%
 \n3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 30
   TRANSCRIBED-ALTERED: 0

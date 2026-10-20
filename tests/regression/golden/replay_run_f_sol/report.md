@@ -1172,12 +1172,12 @@ Of the 750 `TRANSCRIBED-EXACT`, 320 were rounded under the declared quantisation
 | Metric | k (failures) | n | Rate | 95% Upper Bound | Evidence Class |
 |---|---|---|---|---|---|
 | d7_invocation_base | 0 | 10 | 10/10 (100.0%) | 0.258866 (25.8866%) | `EV-2 PLATFORM-STRUCTURAL` |
-| d7_invocation_instruction_removed | 2 | 10 | 8/10 (80.0%) | *not computed (see §Declared Limitations)* | `EV-2 PLATFORM-STRUCTURAL` |
+| d7_invocation_instruction_removed | 2 | 10 | 8/10 (80.0%) | 0.506902 (50.6902%) | `EV-2 PLATFORM-STRUCTURAL` |
 
 **Headline (AP-1 §6.2):**
 
 - Deterministic computation was invoked on 100.0% of computable questions (10/10; 0 not invoked; one-sided 95% upper bound on the failure rate 25.8866%), under base, on evidence class EV-2 PLATFORM-STRUCTURAL.
-- Deterministic computation was invoked on 80.0% of computable questions (8/10; 2 not invoked; upper bound on the failure rate not computed, see §Declared Limitations), under instruction_removed, on evidence class EV-2 PLATFORM-STRUCTURAL.
+- Deterministic computation was invoked on 80.0% of computable questions (8/10; 2 not invoked; one-sided 95% upper bound on the failure rate 50.6902%), under instruction_removed, on evidence class EV-2 PLATFORM-STRUCTURAL.
 
 **Executions by evidence class:**
 
@@ -1317,6 +1317,4 @@ The following dimensions were **not measured** in this evaluation and require hu
 
 ### Clopper-Pearson Bound (k > 0)
 
-An exact confidence bound for non-zero failure counts is not computed; AP-1 v1.3 D7.5 specifies the zero-failure form only. This is an author-identified defect in the standard, noted for resolution in the adopted version.
-
-For non-zero failure counts, the point estimate is reported with n. The full Beta quantile would require an external dependency or a specification extension.
+AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for any invocation figure but states its formula for zero failures only. For k > 0 failures the report gives the exact Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the general form DISPOSITION C-1 adopts for the next version. It is computed in Decimal (bisection on the binomial distribution) and every bound is shown rounded up.

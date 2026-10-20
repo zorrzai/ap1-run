@@ -35,9 +35,12 @@ def test_all_dimensions_are_d1_to_d7_in_order():
 # -- clopper_pearson_upper_k0 ---------------------------------------------
 
 def test_clopper_pearson_k0_is_one_minus_alpha_to_one_over_n():
-    assert clopper_pearson_upper_k0(10, 0.05) == 1.0 - 0.05 ** (1.0 / 10)
-    assert clopper_pearson_upper_k0(10, 0.05) == pytest.approx(0.25887,
-                                                              abs=1e-5)
+    # T3-61: in Decimal (SPEC R0.4.1), the one implementation in
+    # invocation.py.
+    assert clopper_pearson_upper_k0(10, 0.05) == \
+        1 - Decimal('0.05') ** (Decimal(1) / 10)
+    assert abs(clopper_pearson_upper_k0(10, 0.05) - Decimal('0.25887')) < \
+        Decimal('1e-5')
 
 
 def test_clopper_pearson_k0_default_alpha_is_five_percent():
@@ -45,7 +48,9 @@ def test_clopper_pearson_k0_default_alpha_is_five_percent():
 
 
 def test_clopper_pearson_k0_n1_is_one_minus_alpha():
-    assert clopper_pearson_upper_k0(1, 0.1) == pytest.approx(0.9)
+    # A float alpha is read from its text, never used as a binary float.
+    assert clopper_pearson_upper_k0(1, 0.1) == Decimal('0.9')
+    assert clopper_pearson_upper_k0(1, Decimal('0.1')) == Decimal('0.9')
 
 
 @pytest.mark.parametrize('n', [0, -1])
@@ -569,10 +574,8 @@ def test_clopper_pearson_section_without_figures_says_so():
 
 @pytest.mark.finding('T3-61')
 def test_clopper_pearson_section_zero_failures_shows_bound():
-    # The bound is computed in float and shown rounded to 6 places (and
-    # 4 as a percentage) by float formatting. T3-61: it duplicates
-    # invocation.py and does not round the upper bound up. Correct: one
-    # computation, rounded up.
+    # T3-61 (fixed): the bound is invocation.py's Decimal one, shown
+    # rounded up to 6 places (and 4 as a percentage).
     # T3-1, T3-11, V12-5 (fixed): n is questions, the rate is a
     # percentage beside k/n and the bound, with its evidence class, the
     # AP-1 §6.2 headline and the executions per class.
@@ -620,8 +623,9 @@ def test_clopper_pearson_section_zero_failures_ignores_given_rate():
 
 
 @pytest.mark.finding('T3-81')
-def test_clopper_pearson_section_failures_show_rate_without_bound():
-    # k > 0: the given rate and no bound (a declared limitation).
+def test_clopper_pearson_section_failures_show_rate_and_bound():
+    # k > 0 (fixed, T3-81): the rate and the exact Clopper-Pearson bound,
+    # rounded up (1/5: 0.6574084...; 2/20: 0.2826185...).
     text = report._section_clopper_pearson({'invocation_figures': {
         'b': {'failures': 2, 'n': 20, 'rate': '18/20'},
         'a': {'failures': 1, 'n': 5}}})
@@ -629,14 +633,12 @@ def test_clopper_pearson_section_failures_show_rate_without_bound():
     # percentage, rounded down (4/5 is 80.0 %).
     assert md(
         '|---|---|---|---|---|---|',
-        '| a | 1 | 5 | 4/5 (80.0%) | *not computed (see \u00a7Declared '
-        'Limitations)* | \u2014 |',
-        '| b | 2 | 20 | 18/20 (90.0%) | *not computed (see \u00a7Declared '
-        'Limitations)* | \u2014 |',
+        '| a | 1 | 5 | 4/5 (80.0%) | 0.657409 (65.7409%) | \u2014 |',
+        '| b | 2 | 20 | 18/20 (90.0%) | 0.282619 (28.2619%) | \u2014 |',
         '') in text
     assert ('- Deterministic computation was invoked on 80.0% of computable '
-            'questions (4/5; 1 not invoked; upper bound on the failure rate '
-            'not computed, see \u00a7Declared Limitations), under a.') in text
+            'questions (4/5; 1 not invoked; one-sided 95% upper bound on the '
+            'failure rate 65.7409%), under a.') in text
     assert '**Executions by evidence class:**' not in text
 
 
@@ -1317,16 +1319,18 @@ def test_unmeasured_reason_unknown_dimension():
 
 @pytest.mark.finding('T3-81')
 def test_declared_limitations_text():
+    # T3-81 (fixed): the k > 0 bound is computed; the section declares
+    # which form it is and where that form comes from.
     assert report._section_declared_limitations() == md(
         '## 13. Declared Limitations\n',
         '### Clopper-Pearson Bound (k > 0)\n',
-        'An exact confidence bound for non-zero failure counts is not '
-        'computed; AP-1 v1.3 D7.5 specifies the zero-failure form only. '
-        'This is an author-identified defect in the standard, noted for '
-        'resolution in the adopted version.\n',
-        'For non-zero failure counts, the point estimate is reported with '
-        'n. The full Beta quantile would require an external dependency '
-        'or a specification extension.\n')
+        'AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for '
+        'any invocation figure but states its formula for zero failures '
+        'only. For k > 0 failures the report gives the exact '
+        'Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the '
+        'general form DISPOSITION C-1 adopts for the next version. It is '
+        'computed in Decimal (bisection on the binomial distribution) and '
+        'every bound is shown rounded up.\n')
 
 
 # -- _format_dim_result ---------------------------------------------------
@@ -1451,9 +1455,6 @@ def bound_cell_values(text, metric):
 
 @pytest.mark.finding('T3-61')
 @pytest.mark.req('AP-1 D7.5', 'R0.4.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-61: report.py computes the D7.5 bound in '
-                          'float, apart from invocation.py')
 def test_clopper_pearson_upper_k0_is_the_decimal_bound_of_invocation():
     # SPEC R0.4.1: binary floating point is prohibited anywhere a value is
     # reported. Correct: one Decimal implementation of the D7.5 bound
@@ -1467,9 +1468,6 @@ def test_clopper_pearson_upper_k0_is_the_decimal_bound_of_invocation():
 
 @pytest.mark.finding('T3-61')
 @pytest.mark.req('AP-1 D7.5', 'R3.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-61: report §5 rounds the upper bound to '
-                          'nearest, not up')
 def test_clopper_pearson_section_bound_is_rounded_up():
     # Exact at n = 49: 0.05930601...; today shown "0.059306 (5.9306%)",
     # both below it. Correct: every displayed form is >= the exact bound.
@@ -1482,8 +1480,6 @@ def test_clopper_pearson_section_bound_is_rounded_up():
 
 @pytest.mark.finding('T3-81')
 @pytest.mark.req('AP-1 D7.5', 'R3.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-81: no D7.5 bound for k > 0 ("not computed")')
 def test_clopper_pearson_section_bounds_nonzero_failures():
     # AP-1 v1.3 D7.5: "Any invocation figure ... shall be reported with n
     # and with the exact one-sided 95% upper confidence bound on the

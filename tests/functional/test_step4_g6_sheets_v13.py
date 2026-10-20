@@ -283,13 +283,12 @@ def test_run_near_miss_operand_listed_in_report_section_11(tmp_path,
 @pytest.mark.finding('T3-81')
 @pytest.mark.req('AP-1 D7.5', 'R3.3')
 @pytest.mark.filterwarnings('ignore:VERSION file says')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-81: the D7.5 bound for k > 0 failures is '
-                          '"not computed"')
 def test_run_report_prints_upper_bound_for_nonzero_failures(tmp_path,
                                                              monkeypatch):
-    """Instruction-removed arm: repeat 1 answers without the calculator
-    (NOT-INVOKED), repeat 2 calls it: k = 1 failure in n = 2. AP-1 v1.3
+    """Instruction-removed arm: Q01 answers without the calculator
+    (NOT-INVOKED), Q03 calls it: k = 1 failure in n = 2 questions. (Step
+    5: written as two repeats of Q01 before the T3-11 fix made n count
+    questions, which turned that run into k = 1, n = 1.) AP-1 v1.3
     D7.5: "Any invocation figure ... shall be reported with n and with the
     exact one-sided 95% upper confidence bound on the failure rate";
     disposition C-1 adopts the general Clopper-Pearson form, the 0.95
@@ -297,15 +296,14 @@ def test_run_report_prints_upper_bound_for_nonzero_failures(tmp_path,
     0.974679... . Correct: report §5 prints it (in any rounding at or
     above the exact value). Today: "not computed"."""
     out = run_example(
-        tmp_path, monkeypatch, items={'Q01'}, repeat_count=2,
+        tmp_path, monkeypatch, items={'Q01', 'Q03'}, repeat_count=1,
         responses={
             'Q01/base/*': [{'call': '15200.00 * 1.2 / 100 / 12'},
                            {'say': 'The monthly interest is ${result}.'}],
-            'Q01/instruction_removed/r1': [
+            'Q01/instruction_removed/*': [
                 {'say': 'The monthly interest is $15.20.'}],
-            'Q01/instruction_removed/r2': [
-                {'call': '15200.00 * 1.2 / 100 / 12'},
-                {'say': 'The monthly interest is ${result}.'}]})
+            'Q03/*/*': [{'call': '2400 * (18 / 100) / 12'},
+                        {'say': 'The monthly interest is ${result}.'}]})
     row = next(line for line in report_section(out, '5').splitlines()
                if line.startswith('| d7_invocation_instruction_removed '))
     assert row.split('|')[2:4] == [' 1 ', ' 2 ']

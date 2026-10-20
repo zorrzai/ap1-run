@@ -108,7 +108,7 @@ result, by us or by anyone, in any document.
   base: invoked=7 not_invoked=0 n=7
     EV-0 UNOBSERVABLE executions: 6 UNOBSERVABLE, not in n
     aggregate spans 2 evidence classes (EV-0 UNOBSERVABLE, EV-2 PLATFORM-STRUCTURAL); figures are not comparable across classes
-    failure rate: 0/7 failures; one-sided 95% upper bound on the failure rate 34.8%
+    failure rate: 0/7 failures; one-sided 95% upper bound on the failure rate 34.9%
   instruction_removed: invoked=0 not_invoked=0 n=0
     EV-0 UNOBSERVABLE executions: 20 UNOBSERVABLE, not in n
     failure rate: no observations
