@@ -622,6 +622,10 @@ def _section_declared_limitations():
 
 
 
+PROVENANCE_OUTCOMES = ['OPERANDS-GROUNDED', 'OPERAND-ORIGINATED',
+                       'OPERANDS-UNOBSERVABLE']
+
+
 def _section_operand_provenance(summary):
     """Section 7b: D7.2(a) operand provenance step counts."""
     lines = ['## 7b. D7.2(a) Operand Provenance Step Counts\n']
@@ -677,15 +681,21 @@ def _section_operand_provenance(summary):
 
     lines.append('')
 
-    # Invocation-level outcomes
+    # Invocation-level outcomes, each with its proportion: the
+    # unobservable case is declared and its proportion reported (AP-1 v1.3
+    # D7.2(a); T3-16).
     total_inv = sum(prov_outcomes.values())
     if total_inv > 0:
         lines.append('### Per-Invocation Outcomes\n')
-        lines.append('| Outcome | Count |')
-        lines.append('|---|---|')
-        for outcome in ['OPERANDS-GROUNDED', 'OPERAND-ORIGINATED']:
+        lines.append('> OPERANDS-UNOBSERVABLE: a calculator call whose '
+                     'operands could not be read (malformed arguments or an '
+                     'unreadable expression); declared, never grounded.\n')
+        lines.append('| Outcome | Count | % |')
+        lines.append('|---|---|---|')
+        for outcome in PROVENANCE_OUTCOMES:
             count = prov_outcomes.get(outcome, 0)
-            lines.append(f'| {outcome} | {count} |')
+            lines.append(f'| {outcome} | {count} | '
+                         f'{100*count/total_inv:.1f}% |')
         lines.append('')
 
     # Originated operand audit

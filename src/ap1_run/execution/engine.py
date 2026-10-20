@@ -21,7 +21,9 @@ from ap1_run.execution.evidence import (
     extract_attestation, check_ev3_guard, EV_0,
 )
 from ap1_run.scoring.operation_correctness import classify_operation, reclassify_session
-from ap1_run.scoring.provenance.classify import classify_invocations_sequential
+from ap1_run.scoring.provenance.classify import (
+    classify_invocations_sequential, is_calculator_call,
+)
 
 
 class EngineError(Exception):
@@ -118,23 +120,25 @@ def execute_item(item, *, condition, config, fixture,
     provenance_results = classify_invocations_sequential(
         tool_calls_record, ctx, gt, config)
 
-    # D7.2(b): evaluate operation correctness for each tool call
+    # D7.2(b): evaluate operation correctness for each calculator call.
+    # A call without a readable expression is OPERATION-UNOBSERVABLE,
+    # counted, not dropped (T3-16); one result per calculator call, so
+    # results and expressions stay aligned for the reclassification.
+    exprs = [_extract_calc_expression(tc)
+             for tc in tool_calls_record if is_calculator_call(tc)]
     op_correctness_results = []
-    for tc in tool_calls_record:
-        expr = _extract_calc_expression(tc)
-        if expr is not None:
-            try:
-                oc = classify_operation(expr, gt, config)
-                op_correctness_results.append(oc)
-            except Exception as e:
-                op_correctness_results.append({
-                    'outcome': 'OPERATION-UNOBSERVABLE',
-                    'reason': f'evaluation failed: '
-                              f'{type(e).__name__}: {e}',
-                })
+    for expr in exprs:
+        try:
+            oc = classify_operation(expr, gt, config)
+            op_correctness_results.append(oc)
+        except Exception as e:
+            op_correctness_results.append({
+                'outcome': 'OPERATION-UNOBSERVABLE',
+                'reason': f'evaluation failed: '
+                          f'{type(e).__name__}: {e}',
+            })
 
     # Session-level reclassification (forward-dependency rule)
-    exprs = [_extract_calc_expression(tc) or '' for tc in tool_calls_record]
     op_correctness_results = reclassify_session(op_correctness_results, exprs)
 
     # Write transcript
@@ -263,16 +267,19 @@ def _record_shape(response, round_shapes):
 def _extract_calc_expression(tool_call_record):
     """Extract calculator expression from a tool-call record.
 
-    Returns the expression string, or None if not a calculator call.
+    Returns the 'expression' argument, or None if not a calculator call
+    or the arguments are not a JSON object with that key.
     """
     func = tool_call_record.get('function', {})
     if func.get('name') != 'calculator':
         return None
     try:
         args = json.loads(func.get('arguments', '{}'))
-        return args.get('expression')
     except (json.JSONDecodeError, TypeError):
         return None
+    if not isinstance(args, dict):
+        return None
+    return args.get('expression')
 
 
 # -- Helpers ---------------------------------------------------------

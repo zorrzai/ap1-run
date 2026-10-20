@@ -110,7 +110,8 @@ EMPTY = {
     'step_5_sign_inverted': 0,
     'step_5_ungrounded_chain': 0,
     'step_5_untraceable': 0,
-    'provenance_outcomes': {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0},
+    'provenance_outcomes': {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0,
+                            'OPERANDS-UNOBSERVABLE': 0},
     'originated_operand_audit': [],
     'non_outcome_cells': [],
 }
@@ -238,8 +239,10 @@ def test_summary_operand_provenance_counts():
     assert (s['step_1_source'], s['step_1_constant']) == (2, 1)
     assert (s['step_5_sign_inverted'], s['step_5_ungrounded_chain'],
             s['step_5_untraceable']) == (1, 1, 1)
+    # T3-16: the unobservable invocation is counted.
     assert s['provenance_outcomes'] == {'OPERANDS-GROUNDED': 1,
-                                        'OPERAND-ORIGINATED': 1}
+                                        'OPERAND-ORIGINATED': 1,
+                                        'OPERANDS-UNOBSERVABLE': 1}
     assert s['originated_operand_audit'] == [
         {'item_id': 'Q02', 'condition': 'instruction_removed',
          'value': '7', 'expression': '7*2'}]
@@ -316,7 +319,8 @@ def test_summary_counts_accumulate_after_non_executed_rows():
     assert s['wrong_operation_split'] == {
         'route_divergence': 2, 'item_wrong': 2, 'undetermined': 2}
     assert s['provenance_outcomes'] == {'OPERANDS-GROUNDED': 0,
-                                        'OPERAND-ORIGINATED': 2}
+                                        'OPERAND-ORIGINATED': 2,
+                                        'OPERANDS-UNOBSERVABLE': 0}
     assert s['step_1_constant'] == 2
     assert (s['step_5_sign_inverted'], s['step_5_ungrounded_chain'],
             s['step_5_untraceable']) == (2, 3, 2)

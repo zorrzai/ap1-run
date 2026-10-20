@@ -274,10 +274,13 @@ Total operands resolved: 180
 
 ### Per-Invocation Outcomes
 
-| Outcome | Count |
-|---|---|
-| OPERANDS-GROUNDED | 32 |
-| OPERAND-ORIGINATED | 16 |
+> OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded.
+
+| Outcome | Count | % |
+|---|---|---|
+| OPERANDS-GROUNDED | 32 | 66.7% |
+| OPERAND-ORIGINATED | 16 | 33.3% |
+| OPERANDS-UNOBSERVABLE | 0 | 0.0% |
 
 ### Originated Operand Audit
 

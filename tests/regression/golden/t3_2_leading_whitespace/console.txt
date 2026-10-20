@@ -148,6 +148,7 @@ result, by us or by anyone, in any document.
   step 5 (originated, no traceable basis):                  16
   OPERANDS-GROUNDED: 32
   OPERAND-ORIGINATED: 16
+  OPERANDS-UNOBSERVABLE: 0
 
 ============================================================
 GENERATING FORMAL REPORT (report.py)

@@ -187,7 +187,8 @@ def build_summary(all_results, evidence_findings, *,
     step_5_sign_inverted = 0
     step_5_ungrounded_chain = 0
     step_5_untraceable = 0
-    prov_outcomes = {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0}
+    prov_outcomes = {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0,
+                     'OPERANDS-UNOBSERVABLE': 0}
     originated_audit = []
     for r in all_results:
         if r.get('status') != 'EXECUTED':

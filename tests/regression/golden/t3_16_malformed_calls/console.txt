@@ -118,7 +118,7 @@ result, by us or by anyone, in any document.
 3i. D7.2(b) OPERATION CORRECTNESS:
   OPERATION-CORRECT: 28
   WRONG-OPERATION: 0
-  OPERATION-UNOBSERVABLE: 4
+  OPERATION-UNOBSERVABLE: 16
 
 3j. D1 ACCURACY:
   Auto-scored: 40
@@ -143,6 +143,7 @@ result, by us or by anyone, in any document.
   step 5 (originated, no traceable basis):                  0
   OPERANDS-GROUNDED: 32
   OPERAND-ORIGINATED: 0
+  OPERANDS-UNOBSERVABLE: 12
 
 ============================================================
 GENERATING FORMAL REPORT (report.py)

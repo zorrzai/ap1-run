@@ -8,7 +8,7 @@ import pytest
 
 from ap1_run.scoring.provenance.classify import (
     _extract_expression, _parse_return_value, classify_invocation,
-    classify_invocations_sequential, classify_item,
+    classify_invocations_sequential, classify_item, is_calculator_call,
 )
 
 D = Decimal
@@ -30,6 +30,10 @@ def call(expression, return_value=None, name='calculator', call_id='c1'):
 
 def result_json(value):
     return json.dumps({'result': value})
+
+
+def outcomes(results):
+    return [r['outcome'] for r in results]
 
 
 # -- classify_invocation --------------------------------------------------
@@ -97,12 +101,16 @@ def test_classify_invocation_passes_prior_returns_to_step4():
 
 
 @pytest.mark.finding('T3-2', 'T3-16')
-def test_classify_invocation_no_operands_is_grounded():
-    # Current behaviour: an expression with no operands found
-    # (unparseable) is OPERANDS-GROUNDED, vacuously.
+def test_classify_invocation_no_operands_is_unobservable_with_reason():
     r = classify_invocation('99999 *', CTX, GT, CONFIG)
-    assert r == {'outcome': 'OPERANDS-GROUNDED', 'operand_resolutions': [],
-                 'originated_operands': [], 'quantisation_findings': []}
+    assert r == {'outcome': 'OPERANDS-UNOBSERVABLE', 'operand_resolutions': [],
+                 'originated_operands': [], 'quantisation_findings': [],
+                 'reason': "no operand could be read from the expression "
+                           "'99999 *'"}
+
+
+def test_classify_invocation_with_operands_has_no_reason():
+    assert 'reason' not in classify_invocation('15200', CTX, GT, CONFIG)
 
 
 # -- classify_item --------------------------------------------------------
@@ -224,13 +232,20 @@ def test_sequential_originated_return_originates_the_next_call():
         'computed_in_session_ungrounded'
 
 
-def test_sequential_skips_other_tools_and_malformed_calls():
+@pytest.mark.finding('T3-16')
+def test_sequential_skips_other_tools_declares_malformed_calls():
     calls = [call('1', name='lookup'),
              {'function': {'name': 'calculator', 'arguments': '{'}},
              call('15200')]
     results = classify_invocations_sequential(calls, CTX, GT, CONFIG)
-    assert len(results) == 1
-    assert results[0]['operand_resolutions'][0]['operand_value'] == '15200'
+    assert outcomes(results) == ['OPERANDS-UNOBSERVABLE', 'OPERANDS-GROUNDED']
+    assert results[1]['operand_resolutions'][0]['operand_value'] == '15200'
+
+
+def test_is_calculator_call():
+    assert is_calculator_call(call('1'))
+    assert not is_calculator_call(call('1', name='lookup'))
+    assert not is_calculator_call({})
 
 
 def test_sequential_call_without_numeric_return_adds_no_prior():
@@ -253,10 +268,6 @@ def test_sequential_no_calls_gives_no_results():
 
 # --- Step 4: correct behaviour (failing until fixed) ---
 
-def outcomes(results):
-    return [r['outcome'] for r in results]
-
-
 @pytest.mark.finding('T3-2')
 def test_classify_invocation_leading_whitespace_operands_still_resolved():
     # Correct: the expression is stripped before its operands are read, so
@@ -268,9 +279,6 @@ def test_classify_invocation_leading_whitespace_operands_still_resolved():
 
 
 @pytest.mark.finding('T3-2', 'T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-2/T3-16: an expression with no extractable '
-                          'operands is scored OPERANDS-GROUNDED')
 @pytest.mark.parametrize('expression', ['15200 *', 'x = 5', 'pi * e', ''])
 def test_classify_invocation_no_extractable_operands_is_unobservable(
         expression):
@@ -345,9 +353,6 @@ def test_sequential_leading_whitespace_chain_fails_closed():
 
 
 @pytest.mark.finding('T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-16: malformed and wrongly keyed calculator '
-                          'calls vanish from D7.2(a)')
 def test_sequential_unreadable_calculator_calls_are_unobservable():
     # Correct: every calculator invocation has a D7.2(a) outcome. One whose
     # arguments can't be read (not JSON, or no 'expression' key) is
@@ -373,9 +378,6 @@ def test_sequential_unreadable_calculator_calls_are_unobservable():
 
 
 @pytest.mark.finding('T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-16: an unobservable call is dropped, so a value '
-                          'it returned is not recorded as ungrounded')
 def test_sequential_return_of_unobservable_call_originates_dependent_operand():
     # AP-1 v1.3 D7.2(a)(iv): "Where the prior invocation was
     # operand-originated or operands-unobservable, the dependent operand is
@@ -398,9 +400,6 @@ def raw_call(arguments):
 
 
 @pytest.mark.finding('T3-39', 'F6')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39/F6: model-controlled expression raises out '
-                          'of provenance')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}', '{"expression": "True * 15.2"}',
     '{"expression": "True + 1"}',
@@ -420,9 +419,6 @@ def test_sequential_unreadable_expression_operands_unobservable(arguments):
 
 
 @pytest.mark.finding('S3-G2-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-4: non-object JSON arguments raise '
-                          'AttributeError')
 @pytest.mark.parametrize('arguments', ['["1+1"]', '"1+1"', '15.2'])
 def test_extract_expression_non_object_json_none(arguments):
     # Correct (S3-G2-4, provenance's copy of engine._extract_calc_

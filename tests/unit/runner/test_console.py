@@ -184,7 +184,8 @@ SUMMARY = {
     'step_5_sign_inverted': 1, 'step_5_ungrounded_chain': 2,
     'step_5_untraceable': 3,
     'provenance_outcomes': {'OPERANDS-GROUNDED': 11,
-                            'OPERAND-ORIGINATED': 4},
+                            'OPERAND-ORIGINATED': 4,
+                            'OPERANDS-UNOBSERVABLE': 6},
 }
 
 PROVENANCE = (
@@ -198,7 +199,8 @@ PROVENANCE = (
     '  step 5 (originated, computed from ungrounded invocation): 2\n'
     '  step 5 (originated, no traceable basis):                  3\n'
     '  OPERANDS-GROUNDED: 11\n'
-    '  OPERAND-ORIGINATED: 4\n')
+    '  OPERAND-ORIGINATED: 4\n'
+    '  OPERANDS-UNOBSERVABLE: 6\n')
 
 
 def test_scoring_report_full(capsys):
@@ -243,7 +245,8 @@ def test_scoring_report_defaults_when_values_are_missing(capsys):
         '  step 5 (originated, computed from ungrounded invocation): 0\n'
         '  step 5 (originated, no traceable basis):                  0\n'
         '  OPERANDS-GROUNDED: 0\n'
-        '  OPERAND-ORIGINATED: 0\n')
+        '  OPERAND-ORIGINATED: 0\n'
+        '  OPERANDS-UNOBSERVABLE: 0\n')
 
 
 def test_scoring_report_without_d1_summary(capsys):

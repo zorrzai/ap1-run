@@ -1,5 +1,5 @@
 {
-  "description": "T3-16: malformed or wrongly keyed calculator calls count as INVOKED but vanish from D7.2(a) and D7.2(b); a calculator error with the figure stated anyway; a malformed call before a valid one.",
+  "description": "T3-16: malformed or wrongly keyed calculator calls count as INVOKED; until step 5 (d72a-fail-closed) they vanished from D7.2(a) and D7.2(b), now they are OPERANDS-/OPERATION-UNOBSERVABLE; a calculator error with the figure stated anyway; a malformed call before a valid one.",
   "exercises": ["T3-16", "calculator error return", "OPERANDS-/OPERATION-UNOBSERVABLE never emitted", "reclassify_session alignment"],
   "extends": "clean",
   "config": {"repeat_count": "2"},

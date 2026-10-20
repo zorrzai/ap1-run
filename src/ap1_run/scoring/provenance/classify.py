@@ -28,8 +28,14 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
             'intermediates' list with typed inputs)
         config: runner config dict
 
+    An expression with no operand that can be read (unparseable, not a
+    string, a boolean or string constant, or only named constants) is
+    OPERANDS-UNOBSERVABLE, never vacuously grounded (T3-2; AP-1 v1.3
+    D7.2(a): the unobservable case is declared, never silently skipped).
+
     Returns: dict with:
-        outcome: 'OPERANDS-GROUNDED' | 'OPERAND-ORIGINATED'
+        outcome: 'OPERANDS-GROUNDED' | 'OPERAND-ORIGINATED' |
+            'OPERANDS-UNOBSERVABLE'
         operand_resolutions: list of per-operand resolution dicts
         originated_operands: list of originated operand audit entries
         quantisation_findings: list of quantisation findings
@@ -73,17 +79,23 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
                 'expression': expression_str,
             })
 
-    if originated:
+    if not operands:
+        outcome = 'OPERANDS-UNOBSERVABLE'
+    elif originated:
         outcome = 'OPERAND-ORIGINATED'
     else:
         outcome = 'OPERANDS-GROUNDED'
 
-    return {
+    result = {
         'outcome': outcome,
         'operand_resolutions': resolutions,
         'originated_operands': originated,
         'quantisation_findings': quant_findings,
     }
+    if not operands:
+        result['reason'] = (f'no operand could be read from the expression '
+                            f'{expression_str!r}')
+    return result
 
 
 # -- Classify an item (multi-invocation rollup) ------------------------
@@ -156,20 +168,27 @@ def classify_item(invocation_results, ground_truth):
 
 # -- Sequential classification (D7.2(a)(iv)) --------------------------
 
+def is_calculator_call(tool_call_record):
+    """True if the tool-call record is a call to the calculator."""
+    return tool_call_record.get('function', {}).get('name') == 'calculator'
+
+
 def _extract_expression(tool_call_record):
     """Extract calculator expression from a tool-call record.
 
-    Returns the expression string, or None if this is not a calculator
-    call or the arguments are malformed.
+    Returns the 'expression' argument, or None if this is not a calculator
+    call or the arguments are malformed (not JSON, not a JSON object, or
+    without an 'expression' key).
     """
-    func = tool_call_record.get('function', {})
-    if func.get('name') != 'calculator':
+    if not is_calculator_call(tool_call_record):
         return None
     try:
-        args = json.loads(func.get('arguments', '{}'))
-        return args.get('expression')
+        args = json.loads(tool_call_record['function'].get('arguments', '{}'))
     except (json.JSONDecodeError, TypeError):
         return None
+    if not isinstance(args, dict):
+        return None
+    return args.get('expression')
 
 
 def _parse_return_value(return_value_str):
@@ -204,6 +223,11 @@ def classify_invocations_sequential(tool_calls, delivered_context,
         ground_truth: dict from ground-truth module.
         config: runner config dict.
 
+    Every calculator call gets a result, in order. One whose arguments
+    carry no readable expression (malformed or wrongly keyed) is
+    OPERANDS-UNOBSERVABLE, declared and counted, never skipped, and the
+    calls after it are still classified (T3-16; AP-1 v1.3 D7.2(a)).
+
     Returns: list of classify_invocation() return dicts, one per
         calculator invocation found in tool_calls.
     """
@@ -211,9 +235,9 @@ def classify_invocations_sequential(tool_calls, delivered_context,
     results = []
 
     for tc in tool_calls:
-        expr = _extract_expression(tc)
-        if expr is None:
+        if not is_calculator_call(tc):
             continue
+        expr = _extract_expression(tc)
         result = classify_invocation(
             expr, delivered_context, ground_truth, config,
             prior_returns=prior_returns)

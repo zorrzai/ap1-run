@@ -728,10 +728,14 @@ def test_provenance_outcomes_only_shows_dashes_for_percentages():
         '| 5 | Originated, no traceable basis | 0 | \u2014% |',
         '',
         '### Per-Invocation Outcomes\n',
-        '| Outcome | Count |',
-        '|---|---|',
-        '| OPERANDS-GROUNDED | 2 |',
-        '| OPERAND-ORIGINATED | 0 |',
+        '> OPERANDS-UNOBSERVABLE: a calculator call whose operands could not '
+        'be read (malformed arguments or an unreadable expression); '
+        'declared, never grounded.\n',
+        '| Outcome | Count | % |',
+        '|---|---|---|',
+        '| OPERANDS-GROUNDED | 2 | 100.0% |',
+        '| OPERAND-ORIGINATED | 0 | 0.0% |',
+        '| OPERANDS-UNOBSERVABLE | 0 | 0.0% |',
         '')
 
 
@@ -745,7 +749,9 @@ def test_provenance_outcomes_other_than_grounded_or_originated_not_shown():
         'provenance_outcomes': {'UNMEASURABLE': 3}})
     assert '### Per-Invocation Outcomes' in text
     assert 'UNMEASURABLE' not in text
-    assert '| OPERANDS-GROUNDED | 0 |\n| OPERAND-ORIGINATED | 0 |' in text
+    assert ('| OPERANDS-GROUNDED | 0 | 0.0% |\n'
+            '| OPERAND-ORIGINATED | 0 | 0.0% |\n'
+            '| OPERANDS-UNOBSERVABLE | 0 | 0.0% |\n') in text
 
 
 def test_provenance_outcomes_all_zero_are_omitted():

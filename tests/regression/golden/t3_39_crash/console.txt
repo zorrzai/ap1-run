@@ -121,8 +121,9 @@ result, by us or by anyone, in any document.
   step 5 (originated, sign-inverted from source):          0
   step 5 (originated, computed from ungrounded invocation): 0
   step 5 (originated, no traceable basis):                  0
-  OPERANDS-GROUNDED: 20
+  OPERANDS-GROUNDED: 19
   OPERAND-ORIGINATED: 0
+  OPERANDS-UNOBSERVABLE: 1
 
 ============================================================
 GENERATING FORMAL REPORT (report.py)

@@ -183,3 +183,5 @@ def print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary):
     prov_out = summary.get('provenance_outcomes', {})
     print(f'  OPERANDS-GROUNDED: {prov_out.get("OPERANDS-GROUNDED", 0)}')
     print(f'  OPERAND-ORIGINATED: {prov_out.get("OPERAND-ORIGINATED", 0)}')
+    print(f'  OPERANDS-UNOBSERVABLE: '
+          f'{prov_out.get("OPERANDS-UNOBSERVABLE", 0)}')

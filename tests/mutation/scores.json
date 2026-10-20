@@ -5,10 +5,10 @@
     "score": 1.0
   },
   "execution/engine": {
-    "killed": 490,
-    "mutants": 513,
-    "notes": "All 23 survivors are equivalent or unreachable. Two pass tool_calls=None instead of [] in the VOID and transport-failure records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Two drop the f'call_{turn}' default for a missing tool-call id and three change the '' default of tool_call_id in the tool message: a call without an id raises EngineError on the return-value lookup right after (S3-G2-2), so neither default is ever observed. Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). Two change the [] default of choices in _extract_tool_calls to None: both falsy, both give [].",
-    "score": 0.9552
+    "killed": 487,
+    "mutants": 510,
+    "notes": "All 23 survivors are equivalent or unreachable. Two pass tool_calls=None instead of [] in the VOID and transport-failure records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Two drop the f'call_{turn}' default for a missing tool-call id and three change the '' default of tool_call_id in the tool message: a call without an id raises EngineError on the return-value lookup right after (S3-G2-2), so neither default is ever observed. Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). Two change the [] default of choices in _extract_tool_calls to None: both falsy, both give []. Step 5 (d72a-fail-closed, T3-16) rewrote the D7.2(b) loop with 3 fewer mutants, all killed, so the score moved from 0.9552 to 0.9549 with the same 23 survivors.",
+    "score": 0.9549
   },
   "execution/evidence": {
     "killed": 216,
@@ -71,10 +71,10 @@
     "score": 0.9481
   },
   "reporting/report": {
-    "killed": 1518,
-    "mutants": 1569,
+    "killed": 1525,
+    "mutants": 1576,
     "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan').",
-    "score": 0.9675
+    "score": 0.9676
   },
   "run": {
     "killed": 553,
@@ -83,10 +83,10 @@
     "score": 0.9736
   },
   "runner/console": {
-    "killed": 467,
-    "mutants": 470,
+    "killed": 475,
+    "mutants": 478,
     "notes": "All 3 survivors are equivalent. Two let n = 0 reach format_rate, which itself returns 'no observations' for n = 0. One changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
-    "score": 0.9936
+    "score": 0.9937
   },
   "runner/credentials": {
     "killed": 116,
@@ -112,10 +112,10 @@
     "score": 1.0
   },
   "runner/summary": {
-    "killed": 542,
-    "mutants": 554,
+    "killed": 545,
+    "mutants": 557,
     "notes": "All 12 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One changes n > 0 to n >= 0 where n is always at least 1. One drops operator_declared=None, which is classify_mechanism's default.",
-    "score": 0.9783
+    "score": 0.9785
   },
   "scoring/accuracy": {
     "killed": 145,
@@ -146,10 +146,10 @@
     "score": 1.0
   },
   "scoring/provenance/classify": {
-    "killed": 226,
-    "mutants": 253,
+    "killed": 240,
+    "mutants": 267,
     "notes": "All 27 survivors are equivalent mutants. 23 are in classify_item's dead code: is_chained is computed but never used, and the 'if not intermediates and derivable: pass' block does nothing; any_originated=None behaves as False. The other 4 change a default that behaves the same: quantisation {} vs None (both skip quantisation), and arguments '{}' vs None or an invalid string (all give no expression).",
-    "score": 0.8933
+    "score": 0.8989
   },
   "scoring/provenance/trace": {
     "killed": 438,

@@ -581,9 +581,11 @@ def test_execute_item_scoring_wired(tmp_path, calculator, recorders):
     assert recorders.calls['provenance'] == [(tcs, ctx, GT, CONFIG)]
     assert recorders.calls['operation'] == [('1+1', GT, CONFIG),
                                             ('2*3', GT, CONFIG)]
+    # One expression per calculator call, aligned with the results; the
+    # python call is not a calculator call (T3-16).
     assert recorders.calls['reclassify'] == [
         ([{'outcome': 'OC 1+1'}, {'outcome': 'OC 2*3'}],
-         ['1+1', '', '2*3'])]
+         ['1+1', '2*3'])]
     assert records[0]['operation_correctness'] == [
         {'outcome': 'OC 1+1', 'reclassified': True},
         {'outcome': 'OC 2*3', 'reclassified': True}]
@@ -603,18 +605,34 @@ def test_execute_item_operation_error_unobservable(tmp_path, calculator,
 
 
 @pytest.mark.finding('T3-16')
-def test_execute_item_malformed_arguments_invoked_but_not_scored(
+def test_execute_item_malformed_arguments_invoked_and_scored(
         tmp_path, calculator, recorders):
-    # T3-16: non-JSON arguments count as INVOKED but give no D7.2(b)
-    # result, and reclassify_session gets one expression per call ('' for
-    # this one) beside fewer results. Correct: OPERATION-UNOBSERVABLE
-    # declared for the call, lists aligned.
+    # T3-16: non-JSON arguments count as INVOKED (D7.7) and are scored:
+    # classify_operation gets no expression (None, so its outcome is
+    # OPERATION-UNOBSERVABLE), and reclassify_session gets one result and
+    # one expression for the call, aligned.
     bad = tool_call(arguments='15200*1.2/100/12')
     result, records = run(tmp_path, FakeAdapter(calls(bad), answer()))
     assert result['invocation_outcome'] == 'INVOKED'
-    assert 'operation' not in recorders.calls
-    assert recorders.calls['reclassify'] == [([], [''])]
-    assert records[0]['operation_correctness'] == []
+    assert recorders.calls['operation'] == [(None, GT, CONFIG)]
+    assert recorders.calls['reclassify'] == [([{'outcome': 'OC None'}],
+                                              [None])]
+    assert records[0]['operation_correctness'] == [
+        {'outcome': 'OC None', 'reclassified': True}]
+
+
+@pytest.mark.finding('T3-16')
+def test_execute_item_malformed_call_real_scoring_unobservable(
+        tmp_path, calculator):
+    # With the real scorers, the malformed call is OPERANDS-UNOBSERVABLE
+    # and OPERATION-UNOBSERVABLE, and the valid call after it is scored.
+    bad = tool_call(arguments='15200*1.2/100/12', id='a')
+    send = FakeAdapter(calls(bad, tool_call('15200*1.2', id='b')), answer())
+    result, records = run(tmp_path, send)
+    assert [p['outcome'] for p in result['provenance_results']] == [
+        'OPERANDS-UNOBSERVABLE', 'OPERANDS-GROUNDED']
+    assert [o['outcome'] for o in records[0]['operation_correctness']] == [
+        'OPERATION-UNOBSERVABLE', 'WRONG-OPERATION']
 
 
 @pytest.mark.finding('T3-21')
@@ -632,19 +650,6 @@ def test_execute_item_scoring_error_nothing_written(tmp_path, calculator,
         run(tmp_path, send)
     assert len(send.calls) == 2
     assert transcript.read_all(tmp_path / 'run.jsonl') == []
-
-
-@pytest.mark.finding('T3-39', 'T3-2', 'T3-16')
-def test_execute_item_numeric_expression_no_operands_still_grounded(
-        tmp_path, calculator):
-    # Model-controlled {"expression": 15.2} no longer raises (its operands
-    # can't be read: none). Current behaviour: a call without operands is
-    # vacuously OPERANDS-GROUNDED (T3-2/T3-16; correct: unobservable).
-    bad = tool_call(arguments='{"expression": 15.2}')
-    result, records = run(tmp_path, FakeAdapter(calls(bad), answer()))
-    assert len(records) == 1
-    assert [p['outcome'] for p in result['provenance_results']] == [
-        'OPERANDS-GROUNDED']
 
 
 def test_execute_item_real_scoring_correct_call(tmp_path, calculator):
@@ -705,17 +710,6 @@ def test_execute_tool_calculator_not_importable_error(monkeypatch):
         'null-arguments', 'no-arguments', 'numeric'])
 def test_extract_calc_expression(record, expected):
     assert engine._extract_calc_expression(record) == expected
-
-
-@pytest.mark.finding('S3-G2-4')
-@pytest.mark.parametrize('arguments', ['["1+1"]', '"1+1"', '15.2'])
-def test_extract_calc_expression_non_object_json_raises(arguments):
-    # S3-G2-4: arguments that are valid JSON but not an object raise
-    # AttributeError (only JSONDecodeError and TypeError are caught).
-    # In execute_item the same input reaches provenance's copy of this
-    # function first (T3-39 class); both are uncaught. Correct: None.
-    with pytest.raises(AttributeError):
-        engine._extract_calc_expression(tool_call(arguments=arguments))
 
 
 # -- _extract_tool_calls, _record_shape, _build_messages ---------------
@@ -946,9 +940,6 @@ def test_execute_item_repeated_call_id_return_on_own_record(tmp_path,
 
 
 @pytest.mark.finding('S3-G2-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-4: non-object JSON arguments raise '
-                          'AttributeError')
 @pytest.mark.parametrize('arguments', ['["1+1"]', '"1+1"', '15.2'])
 def test_extract_calc_expression_non_object_json_none(arguments):
     # Correct (S3-G2-4): arguments that are valid JSON but not an object
@@ -961,9 +952,6 @@ def test_extract_calc_expression_non_object_json_none(arguments):
 
 
 @pytest.mark.finding('T3-39', 'F6', 'S3-G2-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39/F6/S3-G2-4: model-controlled calculator '
-                          'input raises out of execute_item')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}', '{"expression": "True * 15.2"}',
     '{"expression": "True + 1"}', '"1+1"', '["1+1"]',
