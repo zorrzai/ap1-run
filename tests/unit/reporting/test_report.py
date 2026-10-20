@@ -1693,3 +1693,26 @@ def test_scoring_proportions_d1_total_is_n_with_unmeasurable_shown():
     text = report._section_scoring_proportions(summary)
     assert '- Total: 10' in text, text
     assert re.search(r'nmeasurable: 1\b', text), text
+
+@pytest.mark.finding('V12-6')
+@pytest.mark.req('R2.5', 'R3.3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='V12-6: the D7.3 section does not report how many '
+                          'EXACT results were rounded under the declared '
+                          'policy')
+def test_d73_reports_count_of_exact_rounded_under_declared_policy():
+    # Fix plan §2a, V12-6 (in scope, Steven 2026-10-19): keep v1.3's
+    # TRANSCRIBED-EXACT and report the count of EXACT results that were
+    # rounded under the declared policy, so a v1.2 reader can subtract
+    # them. Wording is the fix's; this asserts a line naming "rounded
+    # under (the) declared (quantisation) policy" that carries the count.
+    rows = [dict(tr('TRANSCRIBED-EXACT'), rounded_under_declared_policy=True),
+            dict(tr('TRANSCRIBED-EXACT'), rounded_under_declared_policy=True),
+            dict(tr('TRANSCRIBED-EXACT'), rounded_under_declared_policy=False),
+            dict(tr('TRANSCRIBED-ALTERED'),
+                 rounded_under_declared_policy=False)]
+    text = report._section_d73({'transcription_results': rows})
+    lines = [ln for ln in text.splitlines()
+             if re.search(r'rounded under (the )?declared '
+                          r'(quantisation )?policy', ln, re.I)]
+    assert any(re.search(r'\b2\b', ln) for ln in lines), lines

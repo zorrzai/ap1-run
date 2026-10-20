@@ -198,3 +198,41 @@ def test_read_all_interrupted_last_line_raises(tmp_path):
     p.write_text('{"a": 1}\n{"a": 2', encoding='utf-8')
     with pytest.raises(TranscriptError, match='^invalid JSON at line 2'):
         read_all(p)
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('S3-G1-16')
+@pytest.mark.req('R0.3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-16: an extra timestamp= replaces the '
+                          "store's own clock")
+def test_append_store_owns_the_timestamp(tmp_path, fixed_time):
+    # The transcript store stamps each record (R0.3); a caller cannot
+    # backdate it. A colliding extra is refused, or the store's time wins.
+    p = tmp_path / 'run.jsonl'
+    try:
+        append(p, **FIELDS, timestamp='1999-01-01')
+        written = json.loads(lines(p)[0])['timestamp']
+    except (TranscriptError, TypeError, ValueError):
+        written = 'refused'
+    assert written in ('refused', '2026-10-15T12:00:00+00:00')
+
+
+@pytest.mark.finding('S3-G1-17')
+@pytest.mark.req('R0.3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-17: a torn last line makes read_all refuse '
+                          'the whole transcript')
+def test_read_all_interrupted_last_line_keeps_complete_records(tmp_path):
+    # read_all's docstring: "An interrupted run leaves a valid partial
+    # transcript; unreached items are not-run, never failures." A run
+    # killed mid-write leaves a torn final line; the complete records
+    # before it are returned (the torn line reported, not parsed).
+    p = tmp_path / 'run.jsonl'
+    p.write_text('{"a": 1}\n{"a": 2', encoding='utf-8')
+    try:
+        records = read_all(p)
+    except TranscriptError as e:
+        records = f'raised TranscriptError: {e}'
+    assert records[:1] == [{'a': 1}], records

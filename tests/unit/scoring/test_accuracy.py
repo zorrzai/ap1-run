@@ -258,3 +258,24 @@ def test_summarise_accuracy_adjudicated_needs_not_auto_scored():
 def test_summarise_accuracy_missing_auto_scored_raises_key_error():
     with pytest.raises(KeyError):
         summarise_accuracy([{'outcome': CORRECT}])
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-27')
+@pytest.mark.req('R2.1', 'R0.4.1')
+@pytest.mark.xfail(strict=True, raises=(TypeError, AssertionError),
+                   reason='T3-27: score_accuracy quantises with the Decimal '
+                          'default HALF_EVEN; the fix must add a '
+                          'quantisation_rounding= keyword and use it')
+def test_score_accuracy_declared_half_up_boundary_within_tolerance_is_correct():
+    # SPEC R0.4.1: quantise once "using the declared rounding mode". Under
+    # the shipped ROUND_HALF_UP, 2.005 -> 2.01 and 2.015 -> 2.02: they
+    # differ by 0.01, within the 0.01 tolerance, so CORRECT. (Today:
+    # 2.00 vs 2.02, INCORRECT; found by the T3 SCORE checker.)
+    r = score_accuracy(figure(AUTO_MATCH, D('2.005')),
+                       expected_value=D('2.015'), answer_tolerance=TOL,
+                       quantisation_digits=2,
+                       quantisation_rounding='ROUND_HALF_UP')
+    assert r['outcome'] == CORRECT
+    assert r['difference'] == D('0.01')

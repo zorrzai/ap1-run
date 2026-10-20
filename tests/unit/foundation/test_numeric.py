@@ -831,3 +831,151 @@ def test_file_hash_no_newline_translation(tmp_path):
 def test_file_hash_missing_file_raises(tmp_path):
     with pytest.raises(FileNotFoundError):
         file_hash(tmp_path / 'nope')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+def parse_outcome(text, **kw):
+    """parse_decimal's result as (value, percent, currency) strings, or
+    'refused' when it raises NumericParseError."""
+    try:
+        value, pct, cur = parse_decimal(text, **kw)
+    except NumericParseError:
+        return 'refused'
+    return (str(value), pct, cur)
+
+
+@pytest.mark.finding('S3-G1-1')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-1: parse_decimal accepts NaN, Infinity, '
+                          'exponents and underscores')
+@pytest.mark.parametrize('text', ['NaN', 'Infinity', 'inf', '1e3', '1_000'])
+def test_parse_decimal_value_outside_grammar_is_refused(text):
+    # SPEC R0.4.2: a token is digits, optionally grouped, with an optional
+    # decimal part; nothing else. Decimal() accepts more, and step 6
+    # ("digits + separators only") checks only for emptiness. Reachable
+    # through figure_id's structured-answer path, where a NaN figure then
+    # breaks every comparison.
+    assert parse_outcome(text) == 'refused'
+
+
+@pytest.mark.finding('S3-G1-2')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-2: doubled signs parse (--5 -> 5, +-5 -> -5, '
+                          '(-5) -> 5)')
+@pytest.mark.parametrize('text', ['--5', '+-5', '(-5)'])
+def test_parse_decimal_doubled_sign_is_refused(text):
+    # SPEC R0.4.2 item 2: "an optional sign -- a leading +/-, OR an
+    # enclosing pair of parentheses": one sign at most.
+    assert parse_outcome(text) == 'refused'
+
+
+@pytest.mark.finding('S3-G1-3')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-3: grouping separators are removed wherever '
+                          'they are (1,23 -> 123)')
+@pytest.mark.parametrize('text', ['1,23', '1,2,3'])
+def test_parse_decimal_misplaced_grouping_separator_is_refused(text):
+    # SPEC R0.4.2 item 3: digits "optionally grouped by the configured
+    # grouping_separator", i.e. in groups of three, as extraction's own
+    # pattern requires. A separator elsewhere is not grouping. (Lakh
+    # grouping, 12,34,567, is left out: SPEC does not say.)
+    assert parse_outcome(text) == 'refused'
+
+
+@pytest.mark.finding('S3-G1-4')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-4: percent is stripped before a trailing '
+                          'currency, so 5%$ fails to parse')
+def test_parse_decimal_percent_then_trailing_currency_parses():
+    # SPEC R0.4.2: currency "leading or trailing" and an optional trailing
+    # '%'; '5%$' is 5, percent, '$', as '$5%' is.
+    assert parse_outcome('5%$', currency_symbols=['$']) == ('5', True, '$')
+
+
+@pytest.mark.finding('S3-G1-4')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-4: 10%USD is silently dropped from '
+                          'extraction')
+def test_extract_percent_then_currency_token_kept():
+    assert tokens('10%USD and 5', currency_symbols=['USD']) == [
+        ('10', True, 'USD', '10%USD'), ('5', False, '', '5')]
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-5: the minus of a subtraction is read as the '
+                          'sign of the next token')
+@pytest.mark.parametrize('text, expected', [
+    ('Principal portion = 1437.00 - 1006.25 = 430.75',
+     ['1437.00', '1006.25', '430.75']),
+    ('5-3', ['5', '3']),
+], ids=['spaced', 'unspaced'])
+def test_extract_minus_between_operands_is_an_operator(text, expected):
+    # A '-' that follows a number is a binary operator, not the sign of
+    # the next token (G1 report, S3-g1-5). Reading it as a sign negates an
+    # operand quoted in the prose, which changes R2.0's match count (see
+    # the end-to-end test in tests/functional/test_step4_g8_numeric_d73.py).
+    # A leading sign elsewhere ('was -5') stays a sign. Note: the step-3
+    # test test_extract_adjacent_tokens_both_kept pins '5-3' -> [5, -3]
+    # (written for T3-55, before this finding); the fix updates it.
+    assert values(text) == expected
+
+
+@pytest.mark.finding('S3-G1-6')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-6: digits inside identifiers are numeric '
+                          'tokens (Q04 -> 4)')
+@pytest.mark.parametrize('text', ['Q04', 'v2.0.1', 'item A1'])
+def test_extract_digits_inside_a_word_are_not_tokens(text):
+    # SPEC R0.4.2 defines a token as currency/sign/digits/decimal/percent;
+    # a run of digits glued to letters is part of a word (an item ID or a
+    # version), not a figure. Q04 yielding 4 can create or spoil a match.
+    assert values(text) == []
+
+
+@pytest.mark.finding('S3-G1-8')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-8: (12.5%) is extracted as +12.5 %')
+def test_extract_parenthesised_percent_is_negative():
+    # SPEC R0.4.2: parentheses denote negative; a trailing '%' is allowed.
+    # '(12.5%)' is -12.5, percent.
+    assert tokens('(12.5%)') == [('-12.5', True, '', '(12.5%)')]
+
+
+@pytest.mark.finding('S3-G1-9')
+@pytest.mark.req('R0.4.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-9: quantise(x, -2) rounds to units')
+def test_quantise_negative_places_refused_or_rounds_to_hundreds():
+    # Either refuse negative places (ValueError), or honour them:
+    # 1234.5 to -2 places is 1.2E+3. Today: 1235.
+    try:
+        q = quantise(D('1234.5'), -2)
+    except ValueError:
+        q = 'refused'
+    assert q == 'refused' or (q == D('1200') and q.as_tuple().exponent == 2), q
+
+
+@pytest.mark.finding('T3-71')
+@pytest.mark.req('R0.4.1', 'R0.4.3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-71: _check_no_float looks only at values; a '
+                          'float dict key is hashed')
+def test_canonical_json_float_key_is_refused():
+    # SPEC R0.4.1: no float anywhere a value is compared or hashed;
+    # canonical_json refuses float values (TypeError), so a float key must
+    # be refused the same way.
+    try:
+        result = canonical_json({0.1: 'x'})
+    except TypeError:
+        result = 'refused'
+    assert result == 'refused'

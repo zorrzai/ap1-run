@@ -293,3 +293,20 @@ def test_release_coverage_unquantisable_return_raises(result):
     # without an exception.
     with pytest.raises(InvalidOperation):
         check_release_coverage([call(result)], [D('430.75')], D('430.75'))
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('S3-G5-1')
+@pytest.mark.req('R2.5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G5-1: an unobservable result (no tool returns) '
+                          'lists every candidate as ungoverned')
+def test_release_coverage_no_tool_returns_names_no_ungoverned_figures():
+    # COVERAGE-UNOBSERVABLE means coverage could not be assessed, so it
+    # names no ungoverned figure, as the no-candidates branch already does
+    # (G5 report, S3-g5-scoring-b-1). runner/executions.py records the
+    # list per execution.
+    r = check_release_coverage([], [D('430.75'), D('430.75')], D('430.75'))
+    assert r['outcome'] == COVERAGE_UNOBSERVABLE
+    assert r['ungoverned_figures'] == []

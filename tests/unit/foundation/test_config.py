@@ -625,3 +625,103 @@ def test_minimum_n_d5_counts_every_question():
     validate_minimum_n({'dimensions_claimed': ['D5', 'D6']},
                        questions(20, 'ordinary'))
 
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+def load_outcome(load, **overrides):
+    """'refused: <message>' on ConfigError; otherwise what happened, as a
+    string, so a test can assert on it (a loaded config's relevant field,
+    or another exception's type and message)."""
+    try:
+        cfg = load(**overrides)
+    except ConfigError as e:
+        return f'refused: {e}'
+    except Exception as e:
+        return f'raised {type(e).__name__}: {e}'
+    return 'loaded: ' + repr({k: cfg[k] for k in overrides})
+
+
+@pytest.mark.finding('S3-G1-10')
+@pytest.mark.req('R0.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-10: quantisation.places "abc" escapes as '
+                          'ValueError; true and "-2" load')
+@pytest.mark.parametrize('places', ['abc', True, '-2', '1.5'])
+def test_load_config_quantisation_places_invalid_is_refused_by_name(load,
+                                                                    places):
+    # SPEC R0.1: "a value that cannot be so parsed is refused", with a
+    # named error. places is a quoted non-negative integer; anything else
+    # is a ConfigError naming quantisation.places.
+    outcome = load_outcome(load, quantisation={'places': places,
+                                               'rounding': 'ROUND_HALF_UP'})
+    assert outcome.startswith('refused: ') and 'places' in outcome, outcome
+
+
+@pytest.mark.finding('S3-G1-11')
+@pytest.mark.req('R0.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-11: answer_tolerance NaN, Infinity and '
+                          'negative values load')
+@pytest.mark.parametrize('tolerance', ['NaN', 'Infinity', '-1', '-0.01'])
+def test_load_config_tolerance_not_finite_nonnegative_is_refused(load,
+                                                                 tolerance):
+    # A tolerance is a finite, non-negative bound: NaN makes every
+    # comparison False, a negative one makes every answer INCORRECT.
+    outcome = load_outcome(load, answer_tolerance=tolerance)
+    assert outcome.startswith('refused: answer_tolerance'), outcome
+
+
+@pytest.mark.finding('S3-G1-12')
+@pytest.mark.req('R0.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-12: repeat_count 0 and negative load')
+@pytest.mark.parametrize('count', ['0', '-3'])
+def test_load_config_repeat_count_below_one_is_refused(load, count):
+    # A run of zero (or fewer) repeats measures nothing; refuse at load.
+    outcome = load_outcome(load, repeat_count=count)
+    assert outcome.startswith('refused: repeat_count'), outcome
+
+
+@pytest.mark.finding('S3-G1-13')
+@pytest.mark.req('R0.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-13: an omission-shaped object anywhere skips '
+                          'the bare-numeric check')
+@pytest.mark.parametrize('overrides', [
+    {'tools': [{'value': 'omitted', 'reason': 'any', 'n': 5}]},
+    {'sampling': {'top_p': {'value': 'omitted',
+                            'reason': 'operator-declared', 'detail': 5}}},
+], ids=['outside-sampling', 'detail-in-sampling'])
+def test_load_config_bare_numeric_inside_omission_object_is_refused(
+        load, overrides):
+    # SPEC R0.1 / config docstring: every numeric value is a quoted
+    # string; a bare numeric literal is refused at load. Only validated
+    # sampling omissions get the omission treatment, and they too may not
+    # carry bare numerics.
+    outcome = load_outcome(load, **overrides)
+    assert outcome.startswith('refused: bare numeric literal'), outcome
+
+
+@pytest.mark.finding('S3-G1-14')
+@pytest.mark.req('R0.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-14: a non-object sampling loads')
+@pytest.mark.parametrize('sampling', ['x', ['0'], None])
+def test_load_config_sampling_not_an_object_is_refused(load, sampling):
+    # SPEC R0.1: sampling lists each parameter with a value or an explicit
+    # omission, so it is an object; refused otherwise, as quantisation is.
+    outcome = load_outcome(load, sampling=sampling)
+    assert outcome.startswith('refused: sampling'), outcome
+
+
+@pytest.mark.finding('S3-G1-15')
+@pytest.mark.req('R0.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-15: the unknown-field message lists only the '
+                          'required fields')
+def test_load_config_unknown_field_message_lists_optional_fields(load):
+    # The message names the permitted fields; the optional ones (tools,
+    # system_prompt_base, ...) are permitted too, so it lists them.
+    outcome = load_outcome(load, foo='x')
+    assert all(f"'{name}'" in outcome for name in OPTIONAL_FIELDS), outcome

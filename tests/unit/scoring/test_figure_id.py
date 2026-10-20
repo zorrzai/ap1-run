@@ -379,3 +379,29 @@ def test_identify_figure_percentage_token_does_not_match_money_value():
     # value (step-3 report g4, item 2).
     r = identify(response('The rate is 15.20%.'))
     assert r['outcome'] != AUTO_MATCH, r['reason']
+
+
+@pytest.mark.finding('T3-41')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-41: a locale-ambiguous token raises out of '
+                          'identify_figure instead of routing to '
+                          'adjudication')
+def test_identify_figure_locale_ambiguous_token_routes_to_adjudication():
+    # SPEC R0.4.2 "Locale ambiguity": where a token admits more than one
+    # reading under the configured separators, "the item routes to
+    # adjudication. The runner does not choose a locale." The extractor
+    # signals it with AmbiguousLocaleError; identify_figure must turn it
+    # into an ADJUDICATE-* outcome, not let it escape (which aborts the
+    # run once the callers pass the configured separators).
+    from ap1_run.foundation.numeric import AmbiguousLocaleError
+
+    def ambiguous(content, **kwargs):
+        raise AmbiguousLocaleError("'1.780': separator '.' is configured "
+                                   "as both decimal and grouping")
+    try:
+        outcome = identify(response('The answer is 1.780.'), '1.78',
+                           extract_tokens_fn=ambiguous)['outcome']
+    except AmbiguousLocaleError as e:
+        outcome = f'raised AmbiguousLocaleError: {e}'
+    assert outcome.startswith('ADJUDICATE')

@@ -254,3 +254,59 @@ def test_transcription_infinite_return_without_policy_is_altered():
     r = check_transcription(D('Infinity'), D('430.75'), figure_outcome=AUTO_MATCH)
     assert r['outcome'] == TRANSCRIBED_ALTERED
     assert r['difference'] == D('Infinity')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-27')
+@pytest.mark.req('R2.5', 'R0.4.1')
+@pytest.mark.xfail(strict=True, raises=(TypeError, AssertionError),
+                   reason='T3-27: check_transcription quantises with the '
+                          'Decimal default HALF_EVEN; the fix must add a '
+                          'quantisation_rounding= keyword and use it')
+@pytest.mark.parametrize('released, expected_outcome', [
+    ('430.75', TRANSCRIBED_EXACT),     # the HALF_UP rounding of 430.745
+    ('430.74', TRANSCRIBED_ALTERED),   # not licensed by HALF_UP
+], ids=['licensed-rounding-exact', 'unlicensed-rounding-altered'])
+def test_transcription_declared_half_up_policy_decides_the_tie(
+        released, expected_outcome):
+    # SPEC R0.4.1: quantisation uses "the declared rounding mode"; R2.5:
+    # "an alteration permitted by the declared quantisation policy is
+    # EXACT"; AP-1 v1.3 D7.3 (l.388): rounding not licensed by the
+    # declared policy is ALTERED. The shipped config declares
+    # ROUND_HALF_UP, under which the tool's 430.745 is 430.75.
+    r = check_transcription(D('430.745'), D(released),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2,
+                            quantisation_rounding='ROUND_HALF_UP')
+    assert r['outcome'] == expected_outcome
+
+
+@pytest.mark.finding('V12-6')
+@pytest.mark.req('R2.5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='V12-6: a D7.3 result has no "rounded under '
+                          'declared policy" sub-flag')
+def test_transcription_licensed_rounding_is_exact_and_flagged_rounded():
+    # Fix plan §2a, V12-6 (Steven, 2026-10-19: in scope): keep v1.3's
+    # TRANSCRIBED-EXACT for rounding the declared policy licenses (Q07:
+    # the tool returned 777.4125, the model released 777.41), and add a
+    # sub-flag so a v1.2 reader can count the strict "match" cases. The
+    # key name is this test's proposal: 'rounded_under_declared_policy'.
+    r = check_transcription(D('777.4125'), D('777.41'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert r['outcome'] == TRANSCRIBED_EXACT
+    assert r.get('rounded_under_declared_policy') is True
+
+
+@pytest.mark.finding('V12-6')
+@pytest.mark.req('R2.5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='V12-6: a D7.3 result has no "rounded under '
+                          'declared policy" sub-flag')
+def test_transcription_exact_match_is_flagged_not_rounded():
+    # The sub-flag is False when the released figure equals the return
+    # with no rounding (fix plan §2a, V12-6).
+    r = check_transcription(D('430.75'), D('430.75'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert r['outcome'] == TRANSCRIBED_EXACT
+    assert r.get('rounded_under_declared_policy') is False

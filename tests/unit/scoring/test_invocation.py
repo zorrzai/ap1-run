@@ -331,3 +331,59 @@ def test_compute_dpr_no_removed_observations_undefined():
     value, text = compute_dpr(10, 5, 10, 0)
     assert value is None
     assert text.startswith('UNDEFINED')
+
+def _fresh_python(code):
+    """Run code in a fresh interpreter importing this ap1_run; its stdout."""
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+    import ap1_run
+    env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1',
+               PYTHONPATH=str(Path(ap1_run.__file__).resolve().parents[1]))
+    done = subprocess.run([sys.executable, '-c', code], env=env,
+                          capture_output=True, text=True, timeout=60)
+    assert done.returncode == 0, done.stderr
+    return done.stdout.strip()
+
+
+@pytest.mark.finding('T3-60')
+@pytest.mark.req('R0.4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-60: importing invocation.py sets the global '
+                          'Decimal precision to 50')
+def test_invocation_import_leaves_global_decimal_context_unchanged():
+    # SPEC R0.4: DETERMINISTIC; no result may depend on hidden state. A
+    # module that needs more precision uses a local context, and leaves
+    # the global one as it found it.
+    out = _fresh_python(
+        'import decimal\n'
+        'before = decimal.getcontext().prec\n'
+        'import ap1_run.scoring.invocation\n'
+        'print(before, decimal.getcontext().prec)')
+    before, after = out.split()
+    assert after == before
+
+
+@pytest.mark.finding('T3-60')
+@pytest.mark.req('R0.4', 'R0.4.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-60: quantise gives a different result once '
+                          'invocation.py has been imported')
+def test_quantise_result_does_not_depend_on_importing_invocation():
+    # T3-60: "the live path runs at precision 50 and offline suites at
+    # 28"; the quantise overflow threshold moves with it. The same call
+    # must give the same result whatever was imported first.
+    probe = ('import sys\n'
+             'from decimal import Decimal\n'
+             'from ap1_run.foundation.numeric import quantise\n'
+             'try:\n'
+             '    r = str(quantise(Decimal("1E30"), 2))\n'
+             'except Exception as e:\n'
+             '    r = type(e).__name__\n'
+             'print("ap1_run.scoring.invocation" in sys.modules, r)\n')
+    without = _fresh_python(probe)
+    with_invocation = _fresh_python('import ap1_run.scoring.invocation\n'
+                                    + probe)
+    assert without.split()[0] == 'False'     # the probe is clean
+    assert with_invocation.split()[1] == without.split()[1]
