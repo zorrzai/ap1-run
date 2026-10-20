@@ -14102,10 +14102,7 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000.00 − $2,400.00 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -14138,7 +14135,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14196,10 +14193,7 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000.00 − $2,400.00 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -14232,7 +14226,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14290,9 +14284,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-**Available credit:** **$2,600.00**
+**Available credit = Credit limit − Balance**
 
-Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+$5,000.00 − $2,400.00 = **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -14325,7 +14319,7 @@ Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14383,9 +14377,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-**Available credit:** **$2,600.00**
+**Available credit = Credit limit − Balance**
 
-Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+$5,000.00 − $2,400.00 = **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -14418,7 +14412,7 @@ Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14477,7 +14471,7 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600.00**
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -14571,7 +14565,7 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600.00**
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -14665,9 +14659,8 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-**$5,000.00 − $2,400.00 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -14700,7 +14693,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14759,9 +14752,8 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-**$5,000.00 − $2,400.00 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -14794,7 +14786,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14852,10 +14844,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000.00 − $2,400.00 = $2,600.00**
+**Available credit:** **$2,600.00**
 
-**Available credit remaining: $2,600.00**
+Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 ```
 
 ### Fixture Excerpt
@@ -14946,10 +14937,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000.00 − $2,400.00 = $2,600.00**
+**Available credit:** **$2,600.00**
 
-**Available credit remaining: $2,600.00**
+Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 ```
 
 ### Fixture Excerpt
@@ -15040,11 +15030,7 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is:
-
-**$5,000.00 − $2,400.00 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
 ```
 
 ### Fixture Excerpt
@@ -15077,7 +15063,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15135,11 +15121,7 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is:
-
-**$5,000.00 − $2,400.00 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
 ```
 
 ### Fixture Excerpt
@@ -15172,7 +15154,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15231,7 +15213,7 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-**$5,000.00 − $2,400.00 = $2,600.00**
+**$5,000 − $2,400 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -15325,7 +15307,7 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-**$5,000.00 − $2,400.00 = $2,600.00**
+**$5,000 − $2,400 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -15418,9 +15400,10 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is **$2,600.00**.
+Available credit = Credit limit − Balance  
+**$5,000.00 − $2,400.00 = $2,600.00**
 
-**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+**Available credit remaining: $2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -15511,9 +15494,10 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is **$2,600.00**.
+Available credit = Credit limit − Balance  
+**$5,000.00 − $2,400.00 = $2,600.00**
 
-**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+**Available credit remaining: $2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -15605,7 +15589,7 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600**
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -15699,7 +15683,7 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600**
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -15983,7 +15967,7 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-= **$5,000.00 − $2,400.00 = $2,600.00**
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -16077,7 +16061,7 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-= **$5,000.00 − $2,400.00 = $2,600.00**
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -16170,11 +16154,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is:
+The available credit is **$2,600.00**.
 
-**$5,000.00 − $2,400.00 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
+**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 ```
 
 ### Fixture Excerpt
@@ -16265,11 +16247,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is:
+The available credit is **$2,600.00**.
 
-**$5,000.00 − $2,400.00 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
+**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 ```
 
 ### Fixture Excerpt
@@ -16360,11 +16340,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is:
-
-**$5,000.00 − $2,400.00 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -16397,7 +16375,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16455,11 +16433,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is:
-
-**$5,000.00 − $2,400.00 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -16492,7 +16468,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16551,7 +16527,7 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-**$5,000.00 − $2,400.00 = $2,600.00**
+**$5,000 − $2,400 = $2,600**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -16645,7 +16621,7 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-**$5,000.00 − $2,400.00 = $2,600.00**
+**$5,000 − $2,400 = $2,600**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -16738,8 +16714,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600.00**
+The available credit is:
+
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -16832,8 +16809,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600.00**
+The available credit is:
+
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -16926,9 +16904,7 @@ Category: balance
 ### Response (verbatim)
 
 ```
-**Available credit:** **$2,600.00**
-
-Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
 ```
 
 ### Fixture Excerpt
@@ -16961,7 +16937,7 @@ Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17019,9 +16995,7 @@ Category: balance
 ### Response (verbatim)
 
 ```
-**Available credit:** **$2,600.00**
-
-Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
 ```
 
 ### Fixture Excerpt
@@ -17054,7 +17028,7 @@ Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17300,8 +17274,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600**
+The available credit is:
+
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -17394,8 +17369,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600**
+The available credit is:
+
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -17488,9 +17464,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is **$2,600.00**.
-
-**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -17523,7 +17499,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17581,9 +17557,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is **$2,600.00**.
-
-**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -17616,7 +17592,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17674,9 +17650,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is **$2,600.00**.
-
-**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -17709,7 +17685,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17767,9 +17743,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is **$2,600.00**.
-
-**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -17802,7 +17778,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17860,9 +17836,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is **$2,600.00**.
-
-**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -17895,7 +17871,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17953,9 +17929,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is **$2,600.00**.
-
-**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -17988,7 +17964,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18046,10 +18022,7 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600**
-
-**Available credit remaining: $2,600.00**
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -18082,7 +18055,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18140,10 +18113,7 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600**
-
-**Available credit remaining: $2,600.00**
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -18176,7 +18146,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18234,8 +18204,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600**
+The available credit is:
+
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -18328,8 +18299,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600**
+The available credit is:
+
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -18423,7 +18395,7 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600**
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -18517,7 +18489,7 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600**
+**$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -18610,10 +18582,7 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600**
-
-**Available credit remaining: $2,600.00**
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
 ```
 
 ### Fixture Excerpt
@@ -18646,7 +18615,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18704,10 +18673,7 @@ Category: balance
 ### Response (verbatim)
 
 ```
-Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600**
-
-**Available credit remaining: $2,600.00**
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
 ```
 
 ### Fixture Excerpt
@@ -18740,7 +18706,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18798,9 +18764,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is **$2,600.00**.
-
-**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -18833,7 +18799,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18891,9 +18857,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is **$2,600.00**.
-
-**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -18926,7 +18892,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18984,11 +18950,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is:
-
-**$5,000.00 − $2,400.00 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -19021,7 +18985,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19079,11 +19043,9 @@ Category: balance
 ### Response (verbatim)
 
 ```
-The available credit is:
-
-**$5,000.00 − $2,400.00 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -19116,7 +19078,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19175,7 +19137,7 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
-**$5,000.00 − $2,400.00 = $2,600.00**
+**$5,000 − $2,400 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
 ```
@@ -19269,6 +19231,3085 @@ Category: balance
 
 ```
 Available credit = Credit limit − Balance  
+**$5,000 − $2,400 = $2,600.00**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 99: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** **$2,600.00**
+
+Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 99: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** **$2,600.00**
+
+Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 100: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= **$5,000.00 − $2,400.00 = $2,600.00**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 100: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= **$5,000.00 − $2,400.00 = $2,600.00**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 101: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 101: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 102: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+**$5,000 − $2,400 = $2,600**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 102: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+**$5,000 − $2,400 = $2,600**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 103: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The available credit is **$2,600.00**.
+
+**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 103: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The available credit is **$2,600.00**.
+
+**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 104: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 104: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 105: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The available credit is **$2,600.00**.
+
+**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 105: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The available credit is **$2,600.00**.
+
+**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 106: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The available credit is **$2,600.00**.
+
+**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 106: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The available credit is **$2,600.00**.
+
+**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 107: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+**$5,000 − $2,400 = $2,600**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 107: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+**$5,000 − $2,400 = $2,600**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 108: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 108: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 109: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+**$5,000 − $2,400 = $2,600**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 109: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+**$5,000 − $2,400 = $2,600**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 110: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 110: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 111: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+**$5,000 − $2,400 = $2,600**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 111: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+**$5,000 − $2,400 = $2,600**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 112: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+**$5,000 − $2,400 = $2,600**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 112: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+**$5,000 − $2,400 = $2,600**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 113: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The available credit is **$2,600.00**.
+
+**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 113: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The available credit is **$2,600.00**.
+
+**Calculation:** $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 114: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 114: Q02 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 115: Q02 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The available credit is:
+
 **$5,000.00 − $2,400.00 = $2,600.00**
 
 **Available credit remaining: $2,600.00**
@@ -19351,22 +22392,22 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 99: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 115: Q02 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
-> What is the monthly interest charge on the credit card?
+> What is the available credit remaining on the credit card?
 
-Category: interest
+Category: balance
 
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, calculated as:
+The available credit is:
 
-\[
-\$2,400 \times \frac{18\%}{12} = \$36.00
-\]
+**$5,000.00 − $2,400.00 = $2,600.00**
+
+**Available credit remaining: $2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -19392,15 +22433,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
+*No tool calls recorded.*
 
 
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
+**Invocation outcome:** `NOT-INVOKED`
 
 ### Reason for Adjudication
 
@@ -19443,7 +22479,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ### Reference Values
 
-- Expected value: `36.000`
+- Expected value: `2600.00`
 
 - Required operation: `calculator`
 
@@ -19451,22 +22487,21 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 99: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 116: Q02 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
-> What is the monthly interest charge on the credit card?
+> What is the available credit remaining on the credit card?
 
-Category: interest
+Category: balance
 
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, calculated as:
+Available credit = Credit limit − Balance  
+**$5,000.00 − $2,400.00 = $2,600.00**
 
-\[
-\$2,400 \times \frac{18\%}{12} = \$36.00
-\]
+**Available credit remaining: $2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -19492,15 +22527,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
+*No tool calls recorded.*
 
 
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
+**Invocation outcome:** `NOT-INVOKED`
 
 ### Reason for Adjudication
 
@@ -19543,7 +22573,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ### Reference Values
 
-- Expected value: `36.000`
+- Expected value: `2600.00`
 
 - Required operation: `calculator`
 
@@ -19551,20 +22581,21 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 100: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 116: Q02 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
-> What is the monthly interest charge on the credit card?
+> What is the available credit remaining on the credit card?
 
-Category: interest
+Category: balance
 
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, calculated as:
+Available credit = Credit limit − Balance  
+**$5,000.00 − $2,400.00 = $2,600.00**
 
-**$2,400 × (18% ÷ 12) = $36.00**
+**Available credit remaining: $2,600.00**
 ```
 
 ### Fixture Excerpt
@@ -19590,15 +22621,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
-  → `{"result": "36.0"}`
+*No tool calls recorded.*
 
 
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
+**Invocation outcome:** `NOT-INVOKED`
 
 ### Reason for Adjudication
 
@@ -19641,3281 +22667,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ### Reference Values
 
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 100: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × (18% ÷ 12) = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 101: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 101: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 102: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming interest is calculated as:
-
-\[
-\$2,400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 102: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming interest is calculated as:
-
-\[
-\$2,400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 103: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × 18% ÷ 12 = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 103: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × 18% ÷ 12 = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 104: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × 18% ÷ 12 = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 104: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × 18% ÷ 12 = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 105: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 105: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 106: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 106: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 107: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 107: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 108: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × 18% ÷ 12 = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 108: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × 18% ÷ 12 = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 109: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 109: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 110: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × 18% ÷ 12 = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 110: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × 18% ÷ 12 = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 111: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 111: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 112: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × (18% ÷ 12) = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 112: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × (18% ÷ 12) = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 113: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming an 18% APR applied to the full $2,400 balance:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 113: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming an 18% APR applied to the full $2,400 balance:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 114: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 114: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 115: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 115: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 116: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × (18% ÷ 12) = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 116: Q03 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × (18% ÷ 12) = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
+- Expected value: `2600.00`
 
 - Required operation: `calculator`
 
@@ -22934,10 +22686,10 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
+The monthly interest charge is **$36.00**, calculated as:
 
 \[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\$2,400 \times \frac{18\%}{12} = \$36.00
 \]
 ```
 
@@ -23034,10 +22786,10 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
+The monthly interest charge is **$36.00**, calculated as:
 
 \[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\$2,400 \times \frac{18\%}{12} = \$36.00
 \]
 ```
 
@@ -23136,9 +22888,7 @@ Category: interest
 ```
 The monthly interest charge is **$36.00**, calculated as:
 
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
+**$2,400 × (18% ÷ 12) = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -23164,7 +22914,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
   → `{"result": "36.0"}`
 
 
@@ -23236,9 +22986,7 @@ Category: interest
 ```
 The monthly interest charge is **$36.00**, calculated as:
 
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
+**$2,400 × (18% ÷ 12) = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -23264,7 +23012,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
   → `{"result": "36.0"}`
 
 
@@ -23334,9 +23082,11 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, calculated as:
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
 
-**$2,400 × (18% ÷ 12) = $36.00**
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
 ```
 
 ### Fixture Excerpt
@@ -23362,7 +23112,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
   → `{"result": "36.0"}`
 
 
@@ -23432,9 +23182,11 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, calculated as:
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
 
-**$2,400 × (18% ÷ 12) = $36.00**
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
 ```
 
 ### Fixture Excerpt
@@ -23460,7 +23212,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
   → `{"result": "36.0"}`
 
 
@@ -23530,10 +23282,10 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 \[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\$2,400 \times \frac{18\%}{12} = \$36.00
 \]
 ```
 
@@ -23630,10 +23382,10 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 \[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\$2,400 \times \frac{18\%}{12} = \$36.00
 \]
 ```
 
@@ -23730,11 +23482,9 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming interest is calculated as:
+The monthly interest charge is **$36.00**, calculated as:
 
-\[
-\$2,400 \times \frac{18\%}{12} = \$36.00
-\]
+**$2,400 × 18% ÷ 12 = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -23830,11 +23580,9 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming interest is calculated as:
+The monthly interest charge is **$36.00**, calculated as:
 
-\[
-\$2,400 \times \frac{18\%}{12} = \$36.00
-\]
+**$2,400 × 18% ÷ 12 = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -24128,7 +23876,9 @@ Category: interest
 ```
 The monthly interest charge is **$36.00**, calculated as:
 
-**$2,400 × 18% ÷ 12 = $36.00**
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
 ```
 
 ### Fixture Excerpt
@@ -24154,7 +23904,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
   → `{"result": "36.0"}`
 
 
@@ -24226,7 +23976,9 @@ Category: interest
 ```
 The monthly interest charge is **$36.00**, calculated as:
 
-**$2,400 × 18% ÷ 12 = $36.00**
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
 ```
 
 ### Fixture Excerpt
@@ -24252,7 +24004,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
   → `{"result": "36.0"}`
 
 
@@ -24322,7 +24074,7 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
 
 \[
 \$2{,}400 \times \frac{18\%}{12} = \$36.00
@@ -24352,7 +24104,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
   → `{"result": "36.0"}`
 
 
@@ -24422,7 +24174,7 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
 
 \[
 \$2{,}400 \times \frac{18\%}{12} = \$36.00
@@ -24452,7 +24204,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
   → `{"result": "36.0"}`
 
 
@@ -24522,7 +24274,7 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
 
 \[
 \$2{,}400 \times \frac{18\%}{12} = \$36.00
@@ -24622,7 +24374,7 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
 
 \[
 \$2{,}400 \times \frac{18\%}{12} = \$36.00
@@ -24724,7 +24476,7 @@ Category: interest
 ```
 The monthly interest charge is **$36.00**, calculated as:
 
-**$2,400 × (18% ÷ 12) = $36.00**
+**$2,400 × 18% ÷ 12 = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -24750,7 +24502,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
   → `{"result": "36.0"}`
 
 
@@ -24822,7 +24574,7 @@ Category: interest
 ```
 The monthly interest charge is **$36.00**, calculated as:
 
-**$2,400 × (18% ÷ 12) = $36.00**
+**$2,400 × 18% ÷ 12 = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -24848,7 +24600,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
   → `{"result": "36.0"}`
 
 
@@ -24918,7 +24670,7 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
 
 \[
 \$2{,}400 \times \frac{18\%}{12} = \$36.00
@@ -25018,7 +24770,7 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
 
 \[
 \$2{,}400 \times \frac{18\%}{12} = \$36.00
@@ -25118,11 +24870,9 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming interest is calculated as:
+The monthly interest charge is **$36.00**, calculated as:
 
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
+**$2,400 × 18% ÷ 12 = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -25218,11 +24968,9 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming interest is calculated as:
+The monthly interest charge is **$36.00**, calculated as:
 
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
+**$2,400 × 18% ÷ 12 = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -25318,10 +25066,10 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly over 12 months:
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
 
 \[
-\$2,400 \times \frac{18\%}{12} = \$36.00
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
 \]
 ```
 
@@ -25348,7 +25096,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
   → `{"result": "36.0"}`
 
 
@@ -25418,10 +25166,10 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly over 12 months:
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
 
 \[
-\$2,400 \times \frac{18\%}{12} = \$36.00
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
 \]
 ```
 
@@ -25448,7 +25196,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
   → `{"result": "36.0"}`
 
 
@@ -25714,10 +25462,10 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly over 12 months:
+The monthly interest charge is **$36.00**, assuming an 18% APR applied to the full $2,400 balance:
 
 \[
-\$2,400 \times \frac{18\%}{12} = \$36.00
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
 \]
 ```
 
@@ -25814,10 +25562,10 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly over 12 months:
+The monthly interest charge is **$36.00**, assuming an 18% APR applied to the full $2,400 balance:
 
 \[
-\$2,400 \times \frac{18\%}{12} = \$36.00
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
 \]
 ```
 
@@ -25914,10 +25662,10 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming a constant $2,400 balance and an 18% APR:
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
 
 \[
-\$2,400 \times \frac{18\%}{12} = \$36.00
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
 \]
 ```
 
@@ -26014,10 +25762,10 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming a constant $2,400 balance and an 18% APR:
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
 
 \[
-\$2,400 \times \frac{18\%}{12} = \$36.00
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
 \]
 ```
 
@@ -26116,7 +25864,9 @@ Category: interest
 ```
 The monthly interest charge is **$36.00**, calculated as:
 
-**$2,400 × (18% ÷ 12) = $36.00**
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
 ```
 
 ### Fixture Excerpt
@@ -26142,7 +25892,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
   → `{"result": "36.0"}`
 
 
@@ -26202,6 +25952,106 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 133: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, calculated as:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 134: Q03 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -26299,106 +26149,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 134: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
 ## Item 134: Q03 (Condition: instruction_removed) — Scorer 2
 
 ### Question
@@ -26410,11 +26160,9 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, calculated as:
 
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
+**$2,400 × (18% ÷ 12) = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -26440,7 +26188,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
   → `{"result": "36.0"}`
 
 
@@ -26510,7 +26258,7 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly across 12 months:
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
 
 \[
 \$2{,}400 \times \frac{18\%}{12} = \$36.00
@@ -26610,7 +26358,7 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly across 12 months:
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
 
 \[
 \$2{,}400 \times \frac{18\%}{12} = \$36.00
@@ -26710,7 +26458,7 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, calculated as:
 
 \[
 \$2{,}400 \times \frac{18\%}{12} = \$36.00
@@ -26740,7 +26488,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
   → `{"result": "36.0"}`
 
 
@@ -26810,7 +26558,7 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, calculated as:
 
 \[
 \$2{,}400 \times \frac{18\%}{12} = \$36.00
@@ -26840,7 +26588,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
   → `{"result": "36.0"}`
 
 
@@ -26910,11 +26658,9 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, calculated as:
 
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
+**$2,400 × (18% ÷ 12) = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -26940,7 +26686,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
   → `{"result": "36.0"}`
 
 
@@ -27010,11 +26756,9 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, calculated as:
 
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
+**$2,400 × (18% ÷ 12) = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -27040,7 +26784,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
   → `{"result": "36.0"}`
 
 
@@ -27110,7 +26854,7 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
 
 \[
 \$2{,}400 \times \frac{18\%}{12} = \$36.00
@@ -27210,7 +26954,7 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
 
 \[
 \$2{,}400 \times \frac{18\%}{12} = \$36.00
@@ -27310,9 +27054,11 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, calculated as:
+The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
-**$2,400 × 18% ÷ 12 = $36.00**
+\[
+\$2,400 \times \frac{18\%}{12} = \$36.00
+\]
 ```
 
 ### Fixture Excerpt
@@ -27338,7 +27084,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
   → `{"result": "36.0"}`
 
 
@@ -27408,9 +27154,11 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, calculated as:
+The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
-**$2,400 × 18% ÷ 12 = $36.00**
+\[
+\$2,400 \times \frac{18\%}{12} = \$36.00
+\]
 ```
 
 ### Fixture Excerpt
@@ -27436,7 +27184,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
   → `{"result": "36.0"}`
 
 
@@ -27506,11 +27254,9 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, calculated as:
 
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
+**$2,400 × 18% ÷ 12 = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -27606,11 +27352,9 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+The monthly interest charge is **$36.00**, calculated as:
 
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
+**$2,400 × 18% ÷ 12 = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -27706,11 +27450,9 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
+The monthly interest charge is **$36.00**, calculated as:
 
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
+**$2,400 × 18% ÷ 12 = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -27806,11 +27548,9 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
+The monthly interest charge is **$36.00**, calculated as:
 
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
+**$2,400 × 18% ÷ 12 = $36.00**
 ```
 
 ### Fixture Excerpt
@@ -27906,9 +27646,11 @@ Category: interest
 ### Response (verbatim)
 
 ```
-The monthly interest charge is **$36.00**, calculated as:
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
 
-**$2,400 × 18% ÷ 12 = $36.00**
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
 ```
 
 ### Fixture Excerpt
@@ -27994,6 +27736,3490 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 142: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 143: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 143: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 144: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, calculated as:
+
+**$2,400 × (18% ÷ 12) = $36.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 144: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, calculated as:
+
+**$2,400 × (18% ÷ 12) = $36.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 145: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 145: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 146: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming interest is calculated as:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 146: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming interest is calculated as:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 147: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly over 12 months:
+
+\[
+\$2,400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 147: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly over 12 months:
+
+\[
+\$2,400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 148: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, calculated as:
+
+**$2,400 × (18% ÷ 12) = $36.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 148: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, calculated as:
+
+**$2,400 × (18% ÷ 12) = $36.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 149: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly over 12 months:
+
+\[
+\$2,400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 149: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly over 12 months:
+
+\[
+\$2,400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 150: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming a constant $2,400 balance and an 18% APR:
+
+\[
+\$2,400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 150: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming a constant $2,400 balance and an 18% APR:
+
+\[
+\$2,400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 151: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, calculated as:
+
+**$2,400 × (18% ÷ 12) = $36.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 151: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, calculated as:
+
+**$2,400 × (18% ÷ 12) = $36.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 152: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 152: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 153: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 153: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 154: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 154: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 155: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 155: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 156: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 156: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 157: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, calculated as:
+
+**$2,400 × 18% ÷ 12 = $36.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 157: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, calculated as:
+
+**$2,400 × 18% ÷ 12 = $36.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 158: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 158: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenly across 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 159: Q03 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 159: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming the 18% annual rate is divided evenly over 12 months:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 160: Q03 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -28091,7 +31317,105 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 143: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 160: Q03 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, calculated as:
+
+**$2,400 × 18% ÷ 12 = $36.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 161: Q04 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -28188,7 +31512,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 143: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 161: Q04 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -28285,7 +31609,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 144: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 162: Q04 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -28387,7 +31711,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 144: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 162: Q04 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -28489,7 +31813,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 145: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 163: Q04 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -28591,7 +31915,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 145: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 163: Q04 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -28693,7 +32017,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 146: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 164: Q04 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -28794,7 +32118,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 146: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 164: Q04 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -28895,7 +32219,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 147: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 165: Q04 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -28992,7 +32316,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 147: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 165: Q04 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -29089,7 +32413,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 148: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 166: Q04 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -29186,7 +32510,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 148: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 166: Q04 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -29283,7 +32607,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 149: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 167: Q04 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -29388,7 +32712,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 149: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 167: Q04 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -29493,7 +32817,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 150: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 168: Q04 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -29598,7 +32922,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 150: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 168: Q04 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -29703,7 +33027,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 151: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 169: Q04 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -29800,7 +33124,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 151: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 169: Q04 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -29897,7 +33221,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 152: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 170: Q05 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -30010,7 +33334,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 152: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 170: Q05 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -30123,7 +33447,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 153: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 171: Q05 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -30225,7 +33549,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 153: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 171: Q05 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -30327,7 +33651,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 154: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 172: Q05 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -30429,7 +33753,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 154: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 172: Q05 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -30531,7 +33855,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 155: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 173: Q05 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -30633,7 +33957,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 155: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 173: Q05 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -30735,7 +34059,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 156: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 174: Q05 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -30837,7 +34161,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 156: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 174: Q05 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -30939,7 +34263,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 157: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 175: Q05 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -31041,7 +34365,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 157: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 175: Q05 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -31143,7 +34467,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 158: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 176: Q05 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -31256,7 +34580,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 158: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 176: Q05 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -31369,7 +34693,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 159: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 177: Q05 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -31471,7 +34795,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 159: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 177: Q05 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -31573,7 +34897,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 160: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 178: Q05 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -31675,7 +34999,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 160: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 178: Q05 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -31777,7 +35101,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 161: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 179: Q05 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -31879,7 +35203,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 161: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 179: Q05 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -31981,7 +35305,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 162: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 180: Q05 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -32083,7 +35407,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 162: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 180: Q05 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -32185,7 +35509,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 163: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 181: Q06 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -32274,7 +35598,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 163: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 181: Q06 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -32363,7 +35687,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 164: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 182: Q06 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -32455,7 +35779,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 164: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 182: Q06 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -32547,7 +35871,1051 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 165: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 183: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 183: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 184: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 184: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 185: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 185: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 186: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 186: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 187: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 187: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 188: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 188: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 189: Q06 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -32634,7 +37002,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 165: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 189: Q06 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -32721,7 +37089,707 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 166: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 190: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**
+
+Since the account earns 0% interest, there is no interest income to offset the fees.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 190: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**
+
+Since the account earns 0% interest, there is no interest income to offset the fees.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 191: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 191: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 192: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 192: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 193: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 193: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 194: Q06 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -32813,7 +37881,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 166: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 194: Q06 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -32905,7 +37973,181 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 167: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 195: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12.00 × 12 = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 195: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12.00 × 12 = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 196: Q06 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -32997,7 +38239,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 167: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 196: Q06 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -33089,7 +38331,181 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 168: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 197: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12.00 × 12 = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 197: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12.00 × 12 = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 198: Q06 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -33181,7 +38597,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 168: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 198: Q06 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -33273,7 +38689,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 169: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 199: Q06 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -33365,7 +38781,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 169: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 199: Q06 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -33457,7 +38873,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 170: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 200: Q06 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -33546,7 +38962,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 170: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 200: Q06 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -33635,7 +39051,181 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 171: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 201: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 201: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 202: Q06 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -33722,7 +39312,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 171: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 202: Q06 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -33809,7 +39399,181 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 172: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 203: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 203: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 204: Q06 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -33901,7 +39665,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 172: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 204: Q06 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -33993,7 +39757,181 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 173: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 205: Q06 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 205: Q06 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 206: Q06 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -34082,7 +40020,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 173: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 206: Q06 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -34171,6164 +40109,47 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 174: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 207: Q06 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
-> What is the quarterly net growth of the investment account after fees?
+> What is the total annual cost of maintaining the checking account?
 
-Category: growth
+Category: fees
 
 ### Response (verbatim)
 
 ```
-Assuming monthly compounding and a **$15 fee charged each month**, the quarterly net growth is:
+The monthly fee is **$12.00**.
 
-- Gross investment growth: **$827.77**
-- Fees and lost growth from monthly deductions: **$45.29**
-- **Quarterly net growth: $782.48**
-
-Ending balance after three months: **$42,957.48**.
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)"}`)
-  → `{"result": "782.4766298093698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 174: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a **$15 fee charged each month**, the quarterly net growth is:
-
-- Gross investment growth: **$827.77**
-- Fees and lost growth from monthly deductions: **$45.29**
-- **Quarterly net growth: $782.48**
-
-Ending balance after three months: **$42,957.48**.
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)"}`)
-  → `{"result": "782.4766298093698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 175: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-The **quarterly net growth after fees** is **$782.77**, assuming monthly compounding.
-
-Calculation:
-
-\[
-\$42{,}175\left[\left(1+\frac{7.8\%}{12}\right)^3-1\right] - (3 \times \$15)
-= \$782.77
-\]
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 175: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-The **quarterly net growth after fees** is **$782.77**, assuming monthly compounding.
-
-Calculation:
-
-\[
-\$42{,}175\left[\left(1+\frac{7.8\%}{12}\right)^3-1\right] - (3 \times \$15)
-= \$782.77
-\]
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 176: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 176: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 177: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is **$782.77**.
-
-Ending balance after three months: **$42,957.77**.
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 177: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is **$782.77**.
-
-Ending balance after three months: **$42,957.77**.
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 178: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee charged each month:
-
-- Quarterly growth before fees: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
-  → `{"result": "782.7697635593722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 178: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee charged each month:
-
-- Quarterly growth before fees: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
-  → `{"result": "782.7697635593722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 179: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee each month:
-
-- Quarterly growth before fees: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * 3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 179: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee each month:
-
-- Quarterly growth before fees: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * 3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 180: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 180: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 181: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee charged each month:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
-  → `{"result": "782.7697635593722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 181: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee charged each month:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
-  → `{"result": "782.7697635593722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 182: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-The investment account’s **quarterly net growth after fees is approximately $782.77**, assuming monthly compounding and a $15 fee each month.
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 182: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-The investment account’s **quarterly net growth after fees is approximately $782.77**, assuming monthly compounding and a $15 fee each month.
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 183: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- Quarterly growth before fees: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 183: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- Quarterly growth before fees: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 184: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee each month:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
-  → `{"result": "782.7697635593722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 184: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee each month:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
-  → `{"result": "782.7697635593722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 185: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee deducted over three months:
-
-- **Quarterly growth before fees:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 185: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee deducted over three months:
-
-- **Quarterly growth before fees:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 186: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 186: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 187: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Quarterly growth before fees:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 187: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Quarterly growth before fees:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 188: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 188: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 189: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee each month:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
-  → `{"result": "782.7697635593722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 189: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee each month:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
-  → `{"result": "782.7697635593722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 190: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 190: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 191: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee charged monthly:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees, including lost growth:** $45.29  
-- **Quarterly net growth:** **$782.48**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * (1 + (1 + 0.078/12) + (1 + 0.078/12)^2)"}`)
-  → `{"result": "782.4766298093698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 191: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee charged monthly:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees, including lost growth:** $45.29  
-- **Quarterly net growth:** **$782.48**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * (1 + (1 + 0.078/12) + (1 + 0.078/12)^2)"}`)
-  → `{"result": "782.4766298093698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 192: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee each month:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 192: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee each month:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 193: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Gross quarterly growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 193: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Gross quarterly growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 194: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and the $15 fee is deducted monthly, the **quarterly net growth is approximately $782.48**.
-
-**Balance after 3 months:** **$42,957.48**.
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)"}`)
-  → `{"result": "782.4766298093722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 194: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and the $15 fee is deducted monthly, the **quarterly net growth is approximately $782.48**.
-
-**Balance after 3 months:** **$42,957.48**.
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)"}`)
-  → `{"result": "782.4766298093722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 195: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee charged each month:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 195: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee charged each month:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 196: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175 * (1 + 0.078/12)^3 - 42175 - 3*15"}`)
-  → `{"result": "782.7697635593722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 196: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175 * (1 + 0.078/12)^3 - 42175 - 3*15"}`)
-  → `{"result": "782.7697635593722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 197: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
-  → `{"result": "782.7697635593722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 197: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
-  → `{"result": "782.7697635593722"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 198: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * 3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 198: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * 3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 199: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 199: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 200: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and the $15 fee is charged monthly:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees, including lost growth: **$45.29**
-- **Quarterly net growth: $782.48**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)"}`)
-  → `{"result": "782.4766298093698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 200: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and the $15 fee is charged monthly:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees, including lost growth: **$45.29**
-- **Quarterly net growth: $782.48**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)"}`)
-  → `{"result": "782.4766298093698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 201: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 201: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 202: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 202: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 203: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee deducted separately:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 203: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee deducted separately:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 204: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee each month:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 204: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 fee each month:
-
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 205: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is **$782.77**.
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 205: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is **$782.77**.
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 206: Q07 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming the 7.8% annual rate compounds monthly:
-
-- Quarterly interest: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-
-The projected balance after three months is **$42,957.77**.
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression": "42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-- **calculator**(`{"expression": "42175*(0.078/12)*3-15*3"}`)
-  → `{"result": "777.4124999999999"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-- `OPERATION-CORRECT`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 206: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Assuming the 7.8% annual rate compounds monthly:
-
-- Quarterly interest: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
-
-The projected balance after three months is **$42,957.77**.
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
 ```
 
 ### Fixture Excerpt
 
-**Investment Account** (`investment`):
+**Checking Account** (`checking`):
 
-- balance: `42175.00`
+- balance: `4850.00`
 
 - direction: `asset`
 
-- annual_rate: `7.8`
+- annual_rate: `0.0`
 
-- monthly_fee: `15.00`
+- monthly_fee: `12.00`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression": "42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-- **calculator**(`{"expression": "42175*(0.078/12)*3-15*3"}`)
-  → `{"result": "777.4124999999999"}`
-
 
-**Invocation outcome:** `INVOKED`
+*No tool calls recorded.*
 
-**Operation correctness:**
 
-- `WRONG-OPERATION`: 
+**Invocation outcome:** `NOT-INVOKED`
 
-- `OPERATION-CORRECT`: 
-
 ### Reason for Adjudication
 
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40367,7 +40188,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `777.4125`
+- Expected value: `144.00`
 
 - Required operation: `calculator`
 
@@ -40375,148 +40196,47 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 207: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 207: Q06 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
-> What is the quarterly net growth of the investment account after fees?
+> What is the total annual cost of maintaining the checking account?
 
-Category: growth
+Category: fees
 
 ### Response (verbatim)
-
-```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
 
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
 ```
-
-### Reference Values
+The monthly fee is **$12.00**.
 
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 207: Q07 (Condition: instruction_removed) — Scorer 2
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
 ```
-Assuming monthly compounding and a $15 monthly fee:
-
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
-```
 
 ### Fixture Excerpt
 
-**Investment Account** (`investment`):
+**Checking Account** (`checking`):
 
-- balance: `42175.00`
+- balance: `4850.00`
 
 - direction: `asset`
 
-- annual_rate: `7.8`
+- annual_rate: `0.0`
 
-- monthly_fee: `15.00`
+- monthly_fee: `12.00`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
-
 
-**Invocation outcome:** `INVOKED`
+*No tool calls recorded.*
 
-**Operation correctness:**
 
-- `WRONG-OPERATION`: 
+**Invocation outcome:** `NOT-INVOKED`
 
 ### Reason for Adjudication
 
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40555,7 +40275,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `777.4125`
+- Expected value: `144.00`
 
 - Required operation: `calculator`
 
@@ -40574,11 +40294,13 @@ Category: growth
 ### Response (verbatim)
 
 ```
-Assuming monthly compounding and a $15 monthly fee:
+Assuming monthly compounding and a **$15 fee charged each month**, the quarterly net growth is:
 
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
+- Gross investment growth: **$827.77**
+- Fees and lost growth from monthly deductions: **$45.29**
+- **Quarterly net growth: $782.48**
+
+Ending balance after three months: **$42,957.48**.
 ```
 
 ### Fixture Excerpt
@@ -40598,8 +40320,8 @@ Assuming monthly compounding and a $15 monthly fee:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
+- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)"}`)
+  → `{"result": "782.4766298093698"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -40668,11 +40390,13 @@ Category: growth
 ### Response (verbatim)
 
 ```
-Assuming monthly compounding and a $15 monthly fee:
+Assuming monthly compounding and a **$15 fee charged each month**, the quarterly net growth is:
 
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
+- Gross investment growth: **$827.77**
+- Fees and lost growth from monthly deductions: **$45.29**
+- **Quarterly net growth: $782.48**
+
+Ending balance after three months: **$42,957.48**.
 ```
 
 ### Fixture Excerpt
@@ -40692,8 +40416,8 @@ Assuming monthly compounding and a $15 monthly fee:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
+- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)"}`)
+  → `{"result": "782.4766298093698"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -40762,11 +40486,14 @@ Category: growth
 ### Response (verbatim)
 
 ```
-Assuming **monthly compounding** and a **$15 monthly fee**:
+The **quarterly net growth after fees** is **$782.77**, assuming monthly compounding.
 
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
+Calculation:
+
+\[
+\$42{,}175\left[\left(1+\frac{7.8\%}{12}\right)^3-1\right] - (3 \times \$15)
+= \$782.77
+\]
 ```
 
 ### Fixture Excerpt
@@ -40856,11 +40583,14 @@ Category: growth
 ### Response (verbatim)
 
 ```
-Assuming **monthly compounding** and a **$15 monthly fee**:
+The **quarterly net growth after fees** is **$782.77**, assuming monthly compounding.
 
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
+Calculation:
+
+\[
+\$42{,}175\left[\left(1+\frac{7.8\%}{12}\right)^3-1\right] - (3 \times \$15)
+= \$782.77
+\]
 ```
 
 ### Fixture Excerpt
@@ -40950,7 +40680,7 @@ Category: growth
 ### Response (verbatim)
 
 ```
-Assuming monthly compounding and a $15 fee charged each month:
+Assuming monthly compounding and a $15 monthly fee:
 
 - Quarterly investment growth: **$827.77**
 - Quarterly fees: **$45.00**
@@ -40974,7 +40704,7 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15*3"}`)
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
   → `{"result": "782.7697635593698"}`
 
 
@@ -41044,7 +40774,7 @@ Category: growth
 ### Response (verbatim)
 
 ```
-Assuming monthly compounding and a $15 fee charged each month:
+Assuming monthly compounding and a $15 monthly fee:
 
 - Quarterly investment growth: **$827.77**
 - Quarterly fees: **$45.00**
@@ -41068,7 +40798,7 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15*3"}`)
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
   → `{"result": "782.7697635593698"}`
 
 
@@ -41138,11 +40868,9 @@ Category: growth
 ### Response (verbatim)
 
 ```
-Assuming monthly compounding and a $15 monthly fee:
+The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is **$782.77**.
 
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
+Ending balance after three months: **$42,957.77**.
 ```
 
 ### Fixture Excerpt
@@ -41232,11 +40960,9 @@ Category: growth
 ### Response (verbatim)
 
 ```
-Assuming monthly compounding and a $15 monthly fee:
+The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is **$782.77**.
 
-- **Quarterly investment growth:** $827.77  
-- **Quarterly fees:** $45.00  
-- **Quarterly net growth:** **$782.77**
+Ending balance after three months: **$42,957.77**.
 ```
 
 ### Fixture Excerpt
@@ -41326,13 +41052,11 @@ Category: growth
 ### Response (verbatim)
 
 ```
-The quarterly net growth is **$782.77**, assuming monthly compounding and a **$15 fee charged each month**.
+Assuming monthly compounding and a $15 fee charged each month:
 
-Calculation:  
-\[
-\$42,175\left[\left(1+\frac{7.8\%}{12}\right)^3-1\right] - (3 \times \$15)
-= \$782.77
-\]
+- Quarterly growth before fees: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
 ```
 
 ### Fixture Excerpt
@@ -41352,8 +41076,8 @@ Calculation:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
+  → `{"result": "782.7697635593722"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -41422,13 +41146,11 @@ Category: growth
 ### Response (verbatim)
 
 ```
-The quarterly net growth is **$782.77**, assuming monthly compounding and a **$15 fee charged each month**.
+Assuming monthly compounding and a $15 fee charged each month:
 
-Calculation:  
-\[
-\$42,175\left[\left(1+\frac{7.8\%}{12}\right)^3-1\right] - (3 \times \$15)
-= \$782.77
-\]
+- Quarterly growth before fees: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
 ```
 
 ### Fixture Excerpt
@@ -41448,8 +41170,8 @@ Calculation:
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
-  → `{"result": "782.7697635593698"}`
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
+  → `{"result": "782.7697635593722"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -41518,13 +41240,11 @@ Category: growth
 ### Response (verbatim)
 
 ```
-Assuming monthly compounding and the $15 fee is deducted monthly:
+Assuming monthly compounding and a $15 fee each month:
 
-- **Quarterly growth before fees:** $827.77  
-- **Fees and lost growth:** $45.30  
-- **Quarterly net growth:** **$782.48**
-
-Ending balance after three months: **$42,957.48**.
+- Quarterly growth before fees: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
 ```
 
 ### Fixture Excerpt
@@ -41544,8 +41264,8 @@ Ending balance after three months: **$42,957.48**.
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)"}`)
-  → `{"result": "782.4766298093722"}`
+- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * 3"}`)
+  → `{"result": "782.7697635593698"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -41614,13 +41334,11 @@ Category: growth
 ### Response (verbatim)
 
 ```
-Assuming monthly compounding and the $15 fee is deducted monthly:
+Assuming monthly compounding and a $15 fee each month:
 
-- **Quarterly growth before fees:** $827.77  
-- **Fees and lost growth:** $45.30  
-- **Quarterly net growth:** **$782.48**
-
-Ending balance after three months: **$42,957.48**.
+- Quarterly growth before fees: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
 ```
 
 ### Fixture Excerpt
@@ -41640,8 +41358,8 @@ Ending balance after three months: **$42,957.48**.
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)"}`)
-  → `{"result": "782.4766298093722"}`
+- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * 3"}`)
+  → `{"result": "782.7697635593698"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -41712,9 +41430,9 @@ Category: growth
 ```
 Assuming monthly compounding and a $15 monthly fee:
 
-- Quarterly investment growth: **$827.77**
-- Quarterly fees: **$45.00**
-- **Quarterly net growth: $782.77**
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
 ```
 
 ### Fixture Excerpt
@@ -41806,6 +41524,1408 @@ Category: growth
 ```
 Assuming monthly compounding and a $15 monthly fee:
 
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 215: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee charged each month:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
+  → `{"result": "782.7697635593722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 215: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee charged each month:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
+  → `{"result": "782.7697635593722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 216: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+The investment account’s **quarterly net growth after fees is approximately $782.77**, assuming monthly compounding and a $15 fee each month.
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 216: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+The investment account’s **quarterly net growth after fees is approximately $782.77**, assuming monthly compounding and a $15 fee each month.
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 217: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- Quarterly growth before fees: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 217: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- Quarterly growth before fees: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 218: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee each month:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
+  → `{"result": "782.7697635593722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 218: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee each month:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
+  → `{"result": "782.7697635593722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 219: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee deducted over three months:
+
+- **Quarterly growth before fees:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 219: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee deducted over three months:
+
+- **Quarterly growth before fees:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 220: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 220: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 221: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly growth before fees:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 221: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly growth before fees:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 222: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding:
+
 - Quarterly investment growth: **$827.77**
 - Quarterly fees: **$45.00**
 - **Quarterly net growth: $782.77**
@@ -41887,7 +43007,4999 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 215: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 222: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 223: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee each month:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
+  → `{"result": "782.7697635593722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 223: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee each month:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
+  → `{"result": "782.7697635593722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 224: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 224: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 225: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee charged monthly:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees, including lost growth:** $45.29  
+- **Quarterly net growth:** **$782.48**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * (1 + (1 + 0.078/12) + (1 + 0.078/12)^2)"}`)
+  → `{"result": "782.4766298093698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 225: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee charged monthly:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees, including lost growth:** $45.29  
+- **Quarterly net growth:** **$782.48**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * (1 + (1 + 0.078/12) + (1 + 0.078/12)^2)"}`)
+  → `{"result": "782.4766298093698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 226: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee each month:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 226: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee each month:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 227: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Gross quarterly growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 227: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Gross quarterly growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 228: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and the $15 fee is deducted monthly, the **quarterly net growth is approximately $782.48**.
+
+**Balance after 3 months:** **$42,957.48**.
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)"}`)
+  → `{"result": "782.4766298093722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 228: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and the $15 fee is deducted monthly, the **quarterly net growth is approximately $782.48**.
+
+**Balance after 3 months:** **$42,957.48**.
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)"}`)
+  → `{"result": "782.4766298093722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 229: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee charged each month:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 229: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee charged each month:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 230: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175 * (1 + 0.078/12)^3 - 42175 - 3*15"}`)
+  → `{"result": "782.7697635593722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 230: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175 * (1 + 0.078/12)^3 - 42175 - 3*15"}`)
+  → `{"result": "782.7697635593722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 231: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
+  → `{"result": "782.7697635593722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 231: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*3"}`)
+  → `{"result": "782.7697635593722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 232: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * 3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 232: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * 3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 233: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 233: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 234: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and the $15 fee is charged monthly:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees, including lost growth: **$45.29**
+- **Quarterly net growth: $782.48**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)"}`)
+  → `{"result": "782.4766298093698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 234: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and the $15 fee is charged monthly:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees, including lost growth: **$45.29**
+- **Quarterly net growth: $782.48**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)"}`)
+  → `{"result": "782.4766298093698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 235: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 235: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 236: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 236: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 237: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee deducted separately:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 237: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee deducted separately:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 238: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee each month:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 238: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee each month:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 239: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is **$782.77**.
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 239: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is **$782.77**.
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 240: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming the 7.8% annual rate compounds monthly:
+
+- Quarterly interest: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+
+The projected balance after three months is **$42,957.77**.
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+- **calculator**(`{"expression": "42175*(0.078/12)*3-15*3"}`)
+  → `{"result": "777.4124999999999"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 240: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming the 7.8% annual rate compounds monthly:
+
+- Quarterly interest: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+
+The projected balance after three months is **$42,957.77**.
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+- **calculator**(`{"expression": "42175*(0.078/12)*3-15*3"}`)
+  → `{"result": "777.4124999999999"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+- `OPERATION-CORRECT`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 241: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 241: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 242: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 242: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 243: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming **monthly compounding** and a **$15 monthly fee**:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 243: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming **monthly compounding** and a **$15 monthly fee**:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 244: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee charged each month:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 244: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 fee charged each month:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175 * ((1 + 0.078/12)^3 - 1) - 15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 245: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 245: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- **Quarterly investment growth:** $827.77  
+- **Quarterly fees:** $45.00  
+- **Quarterly net growth:** **$782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 246: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+The quarterly net growth is **$782.77**, assuming monthly compounding and a **$15 fee charged each month**.
+
+Calculation:  
+\[
+\$42,175\left[\left(1+\frac{7.8\%}{12}\right)^3-1\right] - (3 \times \$15)
+= \$782.77
+\]
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 246: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+The quarterly net growth is **$782.77**, assuming monthly compounding and a **$15 fee charged each month**.
+
+Calculation:  
+\[
+\$42,175\left[\left(1+\frac{7.8\%}{12}\right)^3-1\right] - (3 \times \$15)
+= \$782.77
+\]
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 247: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and the $15 fee is deducted monthly:
+
+- **Quarterly growth before fees:** $827.77  
+- **Fees and lost growth:** $45.30  
+- **Quarterly net growth:** **$782.48**
+
+Ending balance after three months: **$42,957.48**.
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)"}`)
+  → `{"result": "782.4766298093722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 247: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and the $15 fee is deducted monthly:
+
+- **Quarterly growth before fees:** $827.77  
+- **Fees and lost growth:** $45.30  
+- **Quarterly net growth:** **$782.48**
+
+Ending balance after three months: **$42,957.48**.
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)"}`)
+  → `{"result": "782.4766298093722"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 248: Q07 (Condition: instruction_removed) — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 248: Q07 (Condition: instruction_removed) — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Assuming monthly compounding and a $15 monthly fee:
+
+- Quarterly investment growth: **$827.77**
+- Quarterly fees: **$45.00**
+- **Quarterly net growth: $782.77**
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175*((1+0.078/12)^3-1)-15*3"}`)
+  → `{"result": "782.7697635593698"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 249: Q08 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -41983,7 +48095,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 215: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 249: Q08 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -42079,7 +48191,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 216: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 250: Q08 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -42175,7 +48287,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 216: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 250: Q08 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -42273,6 +48385,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ---
 
-Total items requiring adjudication: 216
+Total items requiring adjudication: 250
 
-Total sheets: 432 (2 per item, for 2 scorers)
+Total sheets: 500 (2 per item, for 2 scorers)

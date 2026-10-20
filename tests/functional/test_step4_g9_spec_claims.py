@@ -350,10 +350,6 @@ def test_run_sampling_environment_variable_changes_nothing(ap1_run, tmp_path,
 # (T3-34). The EV-3 row is blocked: SPEC §10 declares EV-3 not implemented.
 
 @pytest.mark.finding('T3-22')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-22: a correct answer with no tool call is '
-                          'auto-scored AUTO-MATCH, with no sheet offering '
-                          'RETRIEVED')
 @pytest.mark.req('R4.1', 'R2.3')
 def test_r41_correct_answer_without_tool_call_is_not_invoked_retrieved_candidate(
         ap1_run):

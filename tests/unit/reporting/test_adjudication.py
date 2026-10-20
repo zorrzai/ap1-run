@@ -143,6 +143,48 @@ def test_needs_adjudication_other_outcomes_are_false(outcome):
         record(figure_outcome=outcome))
 
 
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1')
+def test_needs_adjudication_correct_without_invocation_is_true():
+    # SPEC R4.1: "Correct answer, no tool call | D7.1 NOT-INVOKED;
+    # adjudication candidate RETRIEVED".
+    assert adjudication._needs_adjudication(record(
+        figure_outcome='AUTO-MATCH', invocation_outcome='NOT-INVOKED'))
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.parametrize('figure, invocation', [
+    ('AUTO-MATCH', 'INVOKED'), ('AUTO-MATCH', None),
+    ('AUTO-MATCH', 'not-invoked'), ('AUTO-NO-FIGURE', 'NOT-INVOKED'),
+    ('auto-match', 'NOT-INVOKED')])
+def test_needs_adjudication_not_a_retrieved_candidate_is_false(figure,
+                                                               invocation):
+    assert not adjudication._needs_adjudication(record(
+        figure_outcome=figure, invocation_outcome=invocation))
+
+
+@pytest.mark.finding('T3-22')
+def test_sheet_reason_for_a_retrieved_candidate():
+    text = one_sheet(figure_outcome='AUTO-MATCH',
+                     invocation_outcome='NOT-INVOKED')
+    assert section(text, 'Reason for Adjudication') == (
+        '\n' + adjudication.RETRIEVED_CANDIDATE_REASON + '\n')
+    assert adjudication.RETRIEVED_CANDIDATE_REASON == (
+        'The released figure matches the expected value, but the required '
+        'computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED '
+        'candidate. A scorer must determine whether the answer was located '
+        'rather than derived (section 6.8: RETRIEVED).')
+
+
+@pytest.mark.finding('T3-22')
+def test_sheet_reason_auto_match_invoked_is_the_outcome_fallback():
+    # Not a candidate (never routed); the sheet falls back to naming the
+    # outcome, as for any outcome without a listed reason.
+    text = one_sheet(figure_outcome='AUTO-MATCH', invocation_outcome='INVOKED')
+    assert section(text, 'Reason for Adjudication') == (
+        '\nFigure identification outcome: AUTO-MATCH\n')
+
+
 def test_needs_adjudication_without_figure_outcome_is_false():
     assert not adjudication._needs_adjudication({'item_id': 'Q01'})
 

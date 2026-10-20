@@ -65,10 +65,10 @@
     "score": 0.8933
   },
   "reporting/adjudication": {
-    "killed": 475,
-    "mutants": 501,
+    "killed": 492,
+    "mutants": 518,
     "notes": "All 26 survivors are equivalent. Nine are in _needs_adjudication's TRANSPORT_FAILURE guard, which returns False where the fall-through also returns False, so it is dead code (T3-9: it comes after the ADJUDICATE check); one more there changes the figure_outcome default '' to 'XXXX', which is neither ADJUDICATE* nor UNMEASURABLE either. Two pass fixture=None and config=None to _generate_one_sheet, which never reads either parameter. Fourteen replace a .get() default ([] or {} or '') by None or no default, falsy alike: the release-coverage lookup, account_map, tool_calls, operation_correctness, ungoverned_figures, choices and message content.",
-    "score": 0.9481
+    "score": 0.9498
   },
   "reporting/report": {
     "killed": 1518,
