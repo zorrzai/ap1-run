@@ -348,10 +348,10 @@ def test_run_call_to_unoffered_tool_recorded_not_invoked_run_completes(
 
 # -- T3-39, F6, S3-G2-4: model-controlled input never aborts the run ------
 
-@pytest.mark.finding('T3-39', 'F6', 'S3-G2-4')
+@pytest.mark.finding('T3-39', 'F6', 'S3-G2-4', 'S3-G4-5')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39/F6/S3-G2-4: model-controlled calculator '
-                          'input aborts the run')
+                   reason='T3-39/F6/S3-G2-4/S3-G4-5: model-controlled '
+                          'calculator input aborts the run')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}',             # T3-39: not a string
     '{"expression": "True * 15.2"}',    # T3-39: boolean literal
@@ -368,7 +368,10 @@ def test_run_model_controlled_calculator_input_run_completes(full_run,
     #9; S3-G2-4): no exception escapes, the run completes with its
     report, the call is recorded, and every other execution is scored.
     (The call's operands being unreadable/unobservable is asserted at
-    unit level.) Today the run aborts after its paid requests."""
+    unit level.) Today the run aborts after its paid requests. The
+    boolean cases also cover S3-G4-5: with provenance fixed, the same
+    run aborts next in operation_correctness.reclassify_session (called
+    without a try at engine.py:138), checked on a scratch copy."""
     r = full_run({'Q01/base/*': [
         {'calls': [{'name': 'calculator', 'arguments': arguments}]},
         {'say': 'The monthly interest is $15.20.'}]})
