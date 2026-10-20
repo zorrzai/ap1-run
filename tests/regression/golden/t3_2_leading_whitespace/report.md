@@ -254,6 +254,7 @@ Total operations evaluated: 48
 | Route divergence (item answer correct) | 0 |
 | Item answer incorrect | 0 |
 | Item answer undetermined (adjudicated) | 16 |
+| No figure released (no item answer) | 0 |
 
 ## 7b. D7.2(a) Operand Provenance Step Counts
 

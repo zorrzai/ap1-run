@@ -102,7 +102,7 @@ EMPTY = {
                                      'WRONG-OPERATION': 0,
                                      'OPERATION-UNOBSERVABLE': 0},
     'wrong_operation_split': {'route_divergence': 0, 'item_wrong': 0,
-                              'undetermined': 0},
+                              'undetermined': 0, 'no_figure': 0},
     'd7_results': {'n': 0, 'auto_scored_n': 0, 'adjudicated_n': 0},
     'operand_step_counts': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
     'step_1_source': 0,
@@ -190,8 +190,10 @@ def test_summary_operation_correctness_and_wrong_operation_split():
     assert s['operation_correctness_counts'] == {
         'OPERATION-CORRECT': 1, 'WRONG-OPERATION': 3,
         'OPERATION-UNOBSERVABLE': 2}
+    # T3-63: the AUTO-NO-FIGURE execution has no item answer.
     assert s['wrong_operation_split'] == {
-        'route_divergence': 1, 'item_wrong': 1, 'undetermined': 1}
+        'route_divergence': 1, 'item_wrong': 0, 'undetermined': 1,
+        'no_figure': 1}
 
 
 def test_summary_d7_scoring_proportions():
@@ -330,6 +332,9 @@ def test_summary_counts_accumulate_after_non_executed_rows():
                  operation_correctness=oc('WRONG-OPERATION')),
         # no figure outcome at all: the answer counts as wrong
         executed(operation_correctness=oc('WRONG-OPERATION')),
+        executed(operation_correctness=oc('WRONG-OPERATION')),
+        executed(figure_outcome='AUTO-NO-FIGURE',
+                 operation_correctness=oc('WRONG-OPERATION')),
         executed(figure_outcome='AUTO-NO-FIGURE',
                  operation_correctness=oc('WRONG-OPERATION')),
         executed(provenance_results=[
@@ -348,9 +353,10 @@ def test_summary_counts_accumulate_after_non_executed_rows():
     ]
     s = build_summary(results, [])
     assert s['invocation_figures']['d7_invocation_base'] == {
-        'failures': 2, 'n': 9, 'rate': '7/9'}
+        'failures': 2, 'n': 11, 'rate': '9/11'}
     assert s['wrong_operation_split'] == {
-        'route_divergence': 2, 'item_wrong': 2, 'undetermined': 2}
+        'route_divergence': 2, 'item_wrong': 2, 'undetermined': 2,
+        'no_figure': 2}
     assert s['provenance_outcomes'] == {'OPERANDS-GROUNDED': 0,
                                         'OPERAND-ORIGINATED': 2,
                                         'OPERANDS-UNOBSERVABLE': 0,
@@ -358,7 +364,7 @@ def test_summary_counts_accumulate_after_non_executed_rows():
     assert s['step_1_constant'] == 2
     assert (s['step_5_sign_inverted'], s['step_5_ungrounded_chain'],
             s['step_5_untraceable']) == (2, 3, 2)
-    assert s['d7_results'] == {'n': 9, 'auto_scored_n': 3,
+    assert s['d7_results'] == {'n': 11, 'auto_scored_n': 4,
                                'adjudicated_n': 2}
 
 
@@ -506,9 +512,6 @@ def test_summary_collects_near_miss_findings():
         and 'Q01' in str(found[0])
 
 @pytest.mark.finding('T3-63')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-63: a WRONG-OPERATION call in an UNMEASURABLE '
-                          'execution is counted as "item answer incorrect"')
 def test_summary_wrong_operation_in_unmeasurable_execution_not_item_wrong():
     # SPEC R2.0 step 0: an unreadable response is UNMEASURABLE, "never
     # scored as incorrect. The runner does not conclude anything about a
@@ -521,9 +524,6 @@ def test_summary_wrong_operation_in_unmeasurable_execution_not_item_wrong():
 
 
 @pytest.mark.finding('T3-63')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-63: a WRONG-OPERATION call in an AUTO-NO-FIGURE '
-                          'execution is counted as "item answer incorrect"')
 def test_summary_wrong_operation_in_no_figure_execution_not_item_wrong():
     # An AUTO-NO-FIGURE execution released no figure: D1 scores it
     # NO-FIGURE, not INCORRECT (scoring/accuracy.py; SPEC R2.0 step 4 keeps

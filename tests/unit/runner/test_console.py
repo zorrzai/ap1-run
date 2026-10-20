@@ -157,8 +157,9 @@ def test_run_report_with_results(capsys):
         '  OPERATION-UNOBSERVABLE: 1\n'
         '    of which:\n'
         '      route divergence (item answer correct):      3\n'
-        '      item answer incorrect:                       3\n'
-        '      item answer undetermined (adjudicated):      2\n')
+        '      item answer incorrect:                       1\n'
+        '      item answer undetermined (adjudicated):      2\n'
+        '      no figure released (no item answer):         2\n')
 
 
 def test_run_report_percentages_round_to_whole_numbers(capsys):
@@ -275,16 +276,28 @@ def test_run_report_single_execution(capsys):
         '    of which:\n'
         '      route divergence (item answer correct):      0\n'
         '      item answer incorrect:                       0\n'
-        '      item answer undetermined (adjudicated):      1\n')
+        '      item answer undetermined (adjudicated):      1\n'
+        '      no figure released (no item answer):         0\n')
+
+
+def test_run_report_wrong_operation_split_counts_accumulate(capsys):
+    # Two executions in each population, so every count must add up.
+    out = run_report(capsys, [
+        executed('Q01', 'base', r, figure, operation_correctness=wrong_op())
+        for figure in ('AUTO-MATCH', 'ADJUDICATE-DECLINE', 'UNMEASURABLE',
+                       'AUTO-NO-FIGURE', '')
+        for r in (1, 2)])
+    assert out.endswith(
+        '    of which:\n'
+        '      route divergence (item answer correct):      2\n'
+        '      item answer incorrect:                       2\n'
+        '      item answer undetermined (adjudicated):      4\n'
+        '      no figure released (no item answer):         2\n')
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
 
 @pytest.mark.finding('T3-63')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-63: the console counts WRONG-OPERATION calls in '
-                          'UNMEASURABLE and AUTO-NO-FIGURE executions as '
-                          '"item answer incorrect"')
 def test_run_report_wrong_operation_in_unreadable_or_no_figure_not_item_wrong(
         capsys):
     # SPEC R2.0 step 0 (an UNMEASURABLE response is never scored incorrect)

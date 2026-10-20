@@ -135,7 +135,8 @@ def build_summary(all_results, evidence_findings, *,
     # Operation correctness counts
     op_counts = {'OPERATION-CORRECT': 0, 'WRONG-OPERATION': 0,
                  'OPERATION-UNOBSERVABLE': 0}
-    wrong_op_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0}
+    wrong_op_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0,
+                      'no_figure': 0}
     for r in all_results:
         if r.get('status') != 'EXECUTED':
             continue
@@ -147,8 +148,14 @@ def build_summary(all_results, evidence_findings, *,
             if outcome == 'WRONG-OPERATION':
                 if fig == 'AUTO-MATCH':
                     wrong_op_split['route_divergence'] += 1
-                elif fig.startswith('ADJUDICATE'):
+                elif fig.startswith('ADJUDICATE') or fig == 'UNMEASURABLE':
+                    # UNMEASURABLE goes to adjudication and is never scored
+                    # incorrect (SPEC R2.0 step 0; T3-63)
                     wrong_op_split['undetermined'] += 1
+                elif fig == 'AUTO-NO-FIGURE':
+                    # no figure released: D1 scores NO-FIGURE, not
+                    # INCORRECT, so there is no item answer (T3-63)
+                    wrong_op_split['no_figure'] += 1
                 else:
                     wrong_op_split['item_wrong'] += 1
     summary['operation_correctness_counts'] = op_counts

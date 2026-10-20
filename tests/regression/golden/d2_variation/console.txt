@@ -144,6 +144,7 @@ result, by us or by anyone, in any document.
       route divergence (item answer correct):      0
       item answer incorrect:                       0
       item answer undetermined (adjudicated):      2
+      no figure released (no item answer):         0
 
 3j. D1 ACCURACY:
   Auto-scored: 58

@@ -112,7 +112,8 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
     print(f'\n3i. D7.2(b) OPERATION CORRECTNESS:')
     op_counts = {'OPERATION-CORRECT': 0, 'WRONG-OPERATION': 0,
                  'OPERATION-UNOBSERVABLE': 0}
-    wo_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0}
+    wo_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0,
+                'no_figure': 0}
     for r in executed:
         fig = r.get('figure_outcome', '')
         for oc in r.get('operation_correctness', []):
@@ -122,8 +123,14 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
             if outcome == 'WRONG-OPERATION':
                 if fig == 'AUTO-MATCH':
                     wo_split['route_divergence'] += 1
-                elif fig.startswith('ADJUDICATE'):
+                elif fig.startswith('ADJUDICATE') or fig == 'UNMEASURABLE':
+                    # UNMEASURABLE goes to adjudication and is never scored
+                    # incorrect (SPEC R2.0 step 0; T3-63)
                     wo_split['undetermined'] += 1
+                elif fig == 'AUTO-NO-FIGURE':
+                    # no figure released: D1 scores NO-FIGURE, not
+                    # INCORRECT, so there is no item answer (T3-63)
+                    wo_split['no_figure'] += 1
                 else:
                     wo_split['item_wrong'] += 1
     for outcome in ['OPERATION-CORRECT', 'WRONG-OPERATION', 'OPERATION-UNOBSERVABLE']:
@@ -134,6 +141,7 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
         print(f'      route divergence (item answer correct):      {wo_split["route_divergence"]}')
         print(f'      item answer incorrect:                       {wo_split["item_wrong"]}')
         print(f'      item answer undetermined (adjudicated):      {wo_split["undetermined"]}')
+        print(f'      no figure released (no item answer):         {wo_split["no_figure"]}')
 
 
 def print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary):

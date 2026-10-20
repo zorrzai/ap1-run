@@ -401,6 +401,8 @@ def _section_d72b_counts(summary):
         lines.append(f'| Route divergence (item answer correct) | {rd} |')
         lines.append(f'| Item answer incorrect | {iw} |')
         lines.append(f'| Item answer undetermined (adjudicated) | {ud} |')
+        lines.append(f'| No figure released (no item answer) | '
+                     f'{wo_split.get("no_figure", 0)} |')
 
     lines.append('')
     return '\n'.join(lines)
