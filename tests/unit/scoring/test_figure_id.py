@@ -346,3 +346,36 @@ def test_identify_figure_default_extractor_receives_currency_symbols():
 def test_identify_figure_extractor_returning_nothing_is_auto_no_figure():
     r = identify(response('15.20'), extract_tokens_fn=lambda t, **k: [])
     assert r['outcome'] == AUTO_NO_FIGURE
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# Group g7-report (fix branch 7). xfail(strict=True) until the fix.
+
+@pytest.mark.finding('T3-3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-3: a matching non-final token is taken as the '
+                          'released figure (AUTO-MATCH 15.20; the response '
+                          'concludes 182.40)')
+def test_identify_figure_matching_non_final_token_is_not_auto_matched():
+    # The response mentions 15.20 on the way and concludes $182.40. SPEC
+    # R2.0: the module identifies "which numeric value ... is the released
+    # answer", never guesses, and "does not guess which of several figures
+    # was the answer". Correct: not AUTO-MATCH on 15.20 (with two figures
+    # and one matching, route to adjudication, or release 182.40).
+    r = identify(response('Rate 1.2% on 15200 gives 15.20 a year? '
+                          'No: answer is $182.40.'))
+    assert r['outcome'] != AUTO_MATCH, r['reason']
+    assert r['released_figure'] != D('15.20')
+
+
+@pytest.mark.finding('S3-G4-2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G4-2: "15.20%" AUTO-MATCHes an expected money '
+                          'value of 15.20')
+def test_identify_figure_percentage_token_does_not_match_money_value():
+    # SPEC R0.4.2: percentages are recorded with a percent flag; 15.20%
+    # is not the money figure 15.20. Correct: compare like with like, so a
+    # percent-flagged token is not AUTO-MATCH for a non-percent expected
+    # value (step-3 report g4, item 2).
+    r = identify(response('The rate is 15.20%.'))
+    assert r['outcome'] != AUTO_MATCH, r['reason']
