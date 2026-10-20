@@ -234,3 +234,25 @@ def test_parse_args_help_text(capsys, monkeypatch):
         '  --ap1-text AP1_TEXT   the AP-1 text to seal; its hash must match '
         'the one the runner expects '
         '(default: reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md)\n')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# Group g3-seal-guards; see inbox/2026-10-20_step4-g3-seal-guards-report.md.
+
+@pytest.mark.finding('T3-46')
+@pytest.mark.req('R1.2', 'AP-1 D7.8')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-46: the live condition guard passes identical '
+                          'prompts and prints PASSED')
+def test_guard_identical_prompts_refused(fixture_file, capsys):
+    # Correct (AP-1 v1.3 D7.8; SPEC R1.2 l.316-321): identical prompts
+    # mean there is no contrast; the run is refused before execution and
+    # PASSED is not printed. Today the guard builds the removed condition
+    # from the base one, so it can never refuse, and prints PASSED.
+    refused = None
+    try:
+        check_condition_guard({}, fixture_file, 'SAME', 'SAME', [], {})
+    except PerturbationRefusal as exc:
+        refused = str(exc)
+    assert refused is not None, 'identical prompts passed the guard'
+    assert 'PASSED' not in capsys.readouterr().out

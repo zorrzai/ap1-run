@@ -185,3 +185,49 @@ def test_summarise_long_value_truncated_to_200_plus_ellipsis():
 
 def test_summarise_uses_str_for_non_json_values():
     assert _summarise([Decimal('1.5')]) == '["1.5"]'
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# Group g3-seal-guards; see inbox/2026-10-20_step4-g3-seal-guards-report.md.
+
+def refusal_or_none(base, other):
+    """The PerturbationRefusal message, or None if the guard passed. (Not
+    pytest.raises, whose DID NOT RAISE is not an AssertionError.)"""
+    try:
+        check_single_variable_perturbation(base, other)
+    except PerturbationRefusal as exc:
+        return str(exc)
+    return None
+
+
+@pytest.mark.finding('T3-46')
+@pytest.mark.req('R1.2', 'AP-1 D7.8')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-46: identical prompts are returned as a diff, '
+                          'not refused')
+def test_guard_identical_prompts_refused():
+    # Correct (AP-1 v1.3 D7.8: the instruction-removal condition "shall
+    # vary the instruction"; SPEC R1.2 l.316-321): if the two system
+    # prompts are identical nothing was perturbed, both arms are the same
+    # condition, and the run is refused rather than reported as a
+    # contrast. The refusal names the system prompt.
+    msg = refusal_or_none(BASE, dict(BASE))
+    assert msg is not None, 'identical prompts passed the guard'
+    assert 'system_prompt' in msg
+
+
+@pytest.mark.finding('T3-46')
+@pytest.mark.req('R1.2', 'AP-1 D7.8')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-46: with identical prompts and a forbidden '
+                          'change the refusal calls the prompt changed')
+def test_guard_identical_prompts_plus_violation_refusal_says_prompt_unchanged():
+    # Correct: the refusal emits the true diff (SPEC R1.2: "refused, not
+    # reported, with the diff emitted"). Here the prompt did not change
+    # and tool_choice did; the message must not call the prompt "the one
+    # allowed change", and must say the prompts are identical.
+    msg = refusal_or_none(BASE, {**BASE, 'tool_choice': 'none'})
+    assert msg is not None
+    assert 'tool_choice' in msg
+    assert 'the one allowed change' not in msg
+    assert 'identical' in msg.lower()
