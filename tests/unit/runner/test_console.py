@@ -54,8 +54,7 @@ def test_run_report_with_no_results(capsys):
             '    failure rate: no observations\n'
             '  instruction_removed: invoked=0 not_invoked=0 n=0\n'
             '    failure rate: no observations\n'
-            # T3-80: a literal backslash-n, pinned as it is today
-            '\\n3h2. D7.3 TRANSCRIPTION:\n'
+            '\n3h2. D7.3 TRANSCRIPTION:\n'
             '  TRANSCRIBED-EXACT: 0\n'
             '  TRANSCRIBED-ALTERED: 0\n'
             '  UNOBSERVABLE: 0\n'
@@ -157,7 +156,7 @@ def test_run_report_with_results(capsys):
         '    failure rate: 2/3 (66.7%)\n'
         '  instruction_removed: invoked=1 not_invoked=1 (Q05 1/1) n=2\n'
         '    failure rate: 1/2 (50.0%)\n'
-        '\\n3h2. D7.3 TRANSCRIPTION:\n'
+        '\n3h2. D7.3 TRANSCRIPTION:\n'
         '  TRANSCRIBED-EXACT: 2\n'
         '  TRANSCRIBED-ALTERED: 0\n'
         '  UNOBSERVABLE: 1\n'
@@ -343,6 +342,9 @@ def test_run_report_wrong_operation_in_unreadable_or_no_figure_not_item_wrong(
 @pytest.mark.finding('T3-80')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-80: section 3h2 prints a literal backslash-n')
+
+
+@pytest.mark.finding('F3', 'T3-80')
 def test_run_report_section_3h2_heading_starts_after_a_blank_line(capsys):
     # Correct (T3-80): the literal "\n" is fixed; 3h2 is laid out like
     # every other section heading.
