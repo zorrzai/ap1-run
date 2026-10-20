@@ -979,3 +979,42 @@ def test_canonical_json_float_key_is_refused():
     except TypeError:
         result = 'refused'
     assert result == 'refused'
+
+# The digest committed in hash_digest.txt from 5522598 (2026-08-03) until
+# step 1e stopped tracking the file (5f2a9ae); it never changed. Recover
+# it with: git show 5f2a9ae^:hash_digest.txt
+VERIFY_HASHES_DIGEST = \
+    '831709b2231846ed20fd63ff0bc0764d73cee50db271f733e6a2f1c377c7cff3'
+
+
+@pytest.mark.finding('T3-20', 'F8')
+@pytest.mark.req('R0.4.3')
+def test_canonical_hash_pinned_digest_same_on_every_platform():
+    # Not an xfail: passes today and must pass on every OS CI runs.
+    # T3-20/F8 (Steven's ruling and Marcus's request, 2026-10-16): the CI
+    # job wrote this digest on three platforms and compared nothing; the
+    # expected value is now pinned in the test, so a platform that hashes
+    # differently fails here (SPEC R0.4.3 verification item 1). Inputs are
+    # those of tests/legacy/verify_hashes.py, key order varied as there.
+    # (test_canonical_hash_known_digest_of_verify_hashes_input, step 3,
+    # pins the same digest and the canonical text.)
+    obj = {
+        'z_last': 'should sort last',
+        'a_first': 'should sort first',
+        'decimal_value': D('274.1375'),
+        'nested': {'inner_b': D('777.4125'),
+                   'inner_a': [D('15.20'), D('3109.65')]},
+        'empty_list': [],
+        'unicode': '−',
+    }
+    reordered = {
+        'unicode': '−',
+        'nested': {'inner_a': [D('15.20'), D('3109.65')],
+                   'inner_b': D('777.4125')},
+        'z_last': 'should sort last',
+        'empty_list': [],
+        'decimal_value': D('274.1375'),
+        'a_first': 'should sort first',
+    }
+    assert canonical_hash(obj) == VERIFY_HASHES_DIGEST
+    assert canonical_hash(reordered) == VERIFY_HASHES_DIGEST

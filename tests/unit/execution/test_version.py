@@ -315,3 +315,114 @@ def test_source_hash_includes_venv_tests_and_scratch_files(tmp_path):
              'tests/unit/test_a.py': b'3', 'scratch.py': b'4'}
     assert compute_runner_source_hash(make_tree(tmp_path, files)) == \
         expected_hash(files)
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+# F2 / T3-70, Steven's ruling (choices-for-marcus.md entry 6, step-4
+# decisions "F2"): runner_source_hash covers src/ap1_run/ and VERSION only,
+# not tests, tools/ or an in-tree venv. A test never runs during a
+# measurement, so adding one must not make a run look like it used
+# different code.
+
+CLONE = {'src/ap1_run/__init__.py': b'',
+         'src/ap1_run/run.py': b'def main(): pass\n',
+         'src/ap1_run/scoring/accuracy.py': b'X = 1\n',
+         'VERSION': b'v1.3.1 e0d9ec9\n',
+         'smoke_test.py': b'from ap1_run.run import main\n',
+         'tests/unit/test_run.py': b'def test_x(): pass\n',
+         'tools/verify_run_seal.py': b'print(1)\n'}
+
+
+def hash_after(tmp_path, change, files=CLONE):
+    """The source hash of a clone, before and after `change` (a dict of
+    relative path to new bytes) is written into it."""
+    root = tmp_path / 'clone'
+    make_tree(root, files)
+    before = compute_runner_source_hash(str(root))
+    make_tree(root, change)
+    return before, compute_runner_source_hash(str(root))
+
+
+@pytest.mark.finding('F2', 'T3-70')
+@pytest.mark.parametrize('change', [
+    {'tests/unit/test_run.py': b'def test_x(): assert 1\n'},
+    {'tests/unit/test_new.py': b'def test_y(): pass\n'},
+    {'tests/functional/conftest.py': b'X = 2\n'}],
+    ids=['edit', 'add', 'other-dir'])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='F2/T3-70: runner_source_hash covers the tests')
+def test_source_hash_editing_tests_leaves_it_unchanged(tmp_path, change):
+    before, after = hash_after(tmp_path, change)
+    assert after == before
+
+
+@pytest.mark.finding('F2', 'T3-70')
+@pytest.mark.parametrize('change', [
+    {'tools/verify_run_seal.py': b'print(2)\n'},
+    {'tools/new_tool.py': b'print(3)\n'}], ids=['edit', 'add'])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='F2/T3-70: runner_source_hash covers tools/')
+def test_source_hash_editing_tools_leaves_it_unchanged(tmp_path, change):
+    before, after = hash_after(tmp_path, change)
+    assert after == before
+
+
+@pytest.mark.finding('F2', 'T3-70')
+@pytest.mark.parametrize('venv', ['.venv', 'venv'])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='F2/T3-70: an in-tree venv changes '
+                          'runner_source_hash')
+def test_source_hash_venv_inside_clone_leaves_it_unchanged(tmp_path, venv):
+    before, after = hash_after(tmp_path, {
+        f'{venv}/lib/python3.12/site-packages/requests/api.py': b'x = 1\n',
+        f'{venv}/bin/activate_this.py': b'pass\n'})
+    assert after == before
+
+
+@pytest.mark.finding('T3-70')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-70: untracked scratch files outside src/ap1_run '
+                          'change runner_source_hash')
+def test_source_hash_scratch_file_outside_package_leaves_it_unchanged(
+        tmp_path):
+    before, after = hash_after(tmp_path, {'scratch.py': b'print(1)\n',
+                                          'output_helpers.py': b'x = 1\n'})
+    assert after == before
+
+
+@pytest.mark.finding('F2', 'T3-70')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-70: VERSION is not part of runner_source_hash')
+def test_source_hash_editing_version_file_changes_it(tmp_path):
+    before, after = hash_after(tmp_path, {'VERSION': b'v1.3.2 abcdef0\n'})
+    assert after != before
+
+
+@pytest.mark.finding('F2')
+@pytest.mark.parametrize('change', [
+    {'src/ap1_run/scoring/accuracy.py': b'X = 2\n'},
+    {'src/ap1_run/scoring/new_module.py': b'Y = 1\n'}], ids=['edit', 'add'])
+def test_source_hash_editing_package_module_changes_it(tmp_path, change):
+    # Passes today and must keep passing after F2: the scope narrows to
+    # src/ap1_run/ and VERSION, it does not drop the package.
+    before, after = hash_after(tmp_path, change)
+    assert after != before
+
+
+@pytest.mark.finding('S3-G3-2')
+@pytest.mark.parametrize('commit', ['a', 'a1', 'a1b2c3'])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G3-2: a VERSION commit of fewer than 7 '
+                          'characters matches any HEAD that starts with it')
+def test_resolve_version_short_commit_prefix_is_modified(tmp_path, git,
+                                                         commit):
+    # Correct: the VERSION commit is a real abbreviated SHA (git's default
+    # short form is 7 characters); a shorter one cannot identify HEAD, so
+    # the runner is not taken to be the released version.
+    git(head=commit + 'f' * (40 - len(commit)) + '\n')
+    write_version(tmp_path, f'v1 {commit}\n')
+    with warnings.catch_warnings():
+        warnings.simplefilter('ignore')
+        result = resolve_runner_version(str(tmp_path))
+    assert result['version_modified'] is True

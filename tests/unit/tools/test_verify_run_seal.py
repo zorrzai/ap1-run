@@ -13,6 +13,9 @@ import hashlib
 import importlib.util
 import json
 import os
+import re
+import shutil
+import subprocess
 import sys
 
 import pytest
@@ -800,3 +803,390 @@ def test_main_relative_path_under_base_dir_is_found(vrs, base, monkeypatch,
 
 def test_base_dir_is_the_repository_root(vrs):
     assert vrs.BASE_DIR == os.path.dirname(os.path.dirname(TOOL))
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+#
+# Fixing one finding adds comparisons (timestamp, runner_source_hash) that
+# the small tree here may not satisfy, so these tests assert on the named
+# check they are about, not on "no failures at all".
+
+def good_config(base, **extra):
+    """The resolved config of a run that seals after every fix: the AP-1
+    text hash is declared (T3-68 makes it required)."""
+    return resolved_config(ap1_text_hash=file_hash(str(base / AP1_TEXT)),
+                           **extra)
+
+
+def good_record(base, config, **kwargs):
+    return seal(config=config,
+                fixture_path=base / 'example' / 'fixture.json',
+                questions_path=base / 'example' / 'questions.json',
+                ground_truth_path=base / 'example' / 'ground_truth_example.py',
+                ap1_text_path=base / AP1_TEXT,
+                runner_source_hash=SOURCE_HASH, **kwargs)
+
+
+@pytest.fixture
+def good_run(tmp_path, base):
+    config = good_config(base)
+    record = good_record(base, config)
+    return write_run(tmp_path / 'run', record, config), record, config
+
+
+def outcome(vrs, run_dir):
+    """verify_run's (checks, failures), or the exception it raised."""
+    try:
+        checks, failures = vrs.verify_run(str(run_dir))
+    except Exception as e:  # a crash is the defect some tests look for
+        return None, None, e
+    return checks, failures, None
+
+
+def reseal_all(record):
+    """seal_hash over every field but seal_hash itself: the record as a
+    seal that binds its timestamp (T3-47) computes it."""
+    record = dict(record)
+    record['seal_hash'] = canonical_hash(
+        {k: v for k, v in record.items() if k != 'seal_hash'})
+    return record
+
+
+def named(entries, word):
+    return [name for name, _ in entries if word in name]
+
+
+@pytest.mark.finding('T3-18')
+@pytest.mark.req('R1.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-18: a missing transcript is reported as a pass')
+def test_verify_run_missing_transcript_fails(vrs, tmp_path, base):
+    # Correct (SPEC R1.1 "The record's hash appears on every transcript
+    # line"; T3-18): a run without its transcript cannot show that, so
+    # the check fails.
+    config = good_config(base)
+    run_dir = write_run(tmp_path / 'run', good_record(base, config), config,
+                        transcript=None)
+    checks, failures, _ = outcome(vrs, run_dir)
+    assert named(failures, 'transcript'), checks[-1]
+
+
+@pytest.mark.finding('T3-18')
+@pytest.mark.req('R1.1')
+@pytest.mark.parametrize('bad_line', [2, 3])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-18: only transcript line 1 is compared')
+def test_verify_run_any_transcript_line_with_other_seal_hash_fails(
+        vrs, tmp_path, base, bad_line):
+    # Correct (SPEC R1.1): every line's seal_hash is checked; a spliced or
+    # misfiled line anywhere fails. (Line 1 is checked today:
+    # test_verify_run_transcript_line_1_mismatch_fails.)
+    config = good_config(base)
+    record = good_record(base, config)
+    lines = [{'seal_hash': record['seal_hash'], 'n': n} for n in (1, 2, 3)]
+    lines[bad_line - 1]['seal_hash'] = 'spliced'
+    run_dir = write_run(tmp_path / 'run', record, config, transcript=lines)
+    _, failures, _ = outcome(vrs, run_dir)
+    assert named(failures, 'transcript'), 'line %d spliced, no failure' \
+        % bad_line
+
+
+@pytest.mark.finding('T3-18')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-18: parse steps and on-disk notices are counted '
+                          'as passed checks')
+def test_verify_run_passes_count_only_real_comparisons(vrs, good_run):
+    # Correct (T3-18; Steven's F1 ruling, choices-for-marcus.md entry 5:
+    # "verify_run_seal.py drops its two non-checks against on-disk
+    # configs"): the passes are hash comparisons only. Parsing the report
+    # is a precondition, not a check, and the on-disk configs are not
+    # compared at all.
+    run_dir, _, _ = good_run
+    checks, _, _ = outcome(vrs, run_dir)
+    not_comparisons = [name for name in names(checks)
+                       if 'parsed' in name or name.startswith('on-disk')]
+    assert not_comparisons == []
+
+
+@pytest.mark.finding('T3-18')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-18: RESULT counts 11 checks, 4 of them not '
+                          'comparisons')
+def test_main_result_line_counts_only_real_comparisons(vrs, good_run, monkeypatch,
+                                                       capsys):
+    # The same at the command line: no PASS line for a parse step or an
+    # on-disk notice, and the "N passed" count equals the PASS lines left.
+    run_dir, _, _ = good_run
+    code, out = run_main(vrs, [str(run_dir)], monkeypatch, capsys)
+    passes = [line for line in out.splitlines() if line.startswith('  PASS')]
+    assert not [p for p in passes if 'parsed' in p or 'on-disk' in p]
+    assert int(re.search(r'(\d+) passed', out).group(1)) == len(passes)
+
+
+@pytest.mark.finding('S3-G8-2', 'T3-18')
+@pytest.mark.parametrize('text', ['', '\n', '\n{"seal_hash": "other"}\n'],
+                         ids=['empty', 'blank', 'blank-then-other'])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G8-2: an empty transcript or blank first line '
+                          'makes the transcript check disappear')
+def test_verify_run_empty_or_blank_transcript_fails(vrs, tmp_path, base,
+                                                    text):
+    config = good_config(base)
+    run_dir = write_run(tmp_path / 'run', good_record(base, config), config,
+                        transcript=None)
+    (run_dir / 'smoke_run.jsonl').write_text(text)
+    _, failures, _ = outcome(vrs, run_dir)
+    assert named(failures, 'transcript')
+
+
+@pytest.mark.finding('S3-G8-3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G8-3: an unparseable transcript line crashes '
+                          'the verifier')
+def test_verify_run_unparseable_transcript_line_fails_without_crash(
+        vrs, tmp_path, base):
+    # Correct: a damaged transcript is a FAIL with a reason, not a
+    # traceback.
+    config = good_config(base)
+    run_dir = write_run(tmp_path / 'run', good_record(base, config), config,
+                        transcript=None)
+    (run_dir / 'smoke_run.jsonl').write_text('not json\n')
+    _, failures, crash = outcome(vrs, run_dir)
+    assert crash is None, repr(crash)
+    assert named(failures, 'transcript')
+
+
+@pytest.mark.finding('S3-G8-3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G8-3: a fractional number in section 2 crashes '
+                          'the verifier')
+def test_verify_run_fractional_number_in_resolved_config_fails_without_crash(
+        vrs, tmp_path, base):
+    # Correct: no traceback. Section 2 here differs from the sealed config
+    # (temperature added), so config_hash fails, whether the number is
+    # read as Decimal or refused with a reason.
+    config = good_config(base)
+    run_dir = write_run(tmp_path / 'run', good_record(base, config),
+                        good_config(base, temperature=0.5))
+    _, failures, crash = outcome(vrs, run_dir)
+    assert crash is None, repr(crash)
+    assert named(failures, 'config')
+
+
+@pytest.mark.finding('S3-G8-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G8-1: section 2 does not stop at the next '
+                          'heading')
+def test_parse_resolved_config_json_block_of_later_section_ignored(vrs):
+    text = ('## 2. Resolved Configuration\n\nnone here\n\n'
+            '## 7. Something else\n```json\n{"other": true}\n```\n')
+    assert vrs.parse_resolved_config(text) is None
+
+
+@pytest.mark.finding('S3-G8-4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G8-4: no way to name the inputs of a run made '
+                          'with --fixture-dir/--ap1-text; the fix provides '
+                          'the runner\'s option names on the verifier')
+def test_main_fixture_dir_and_ap1_text_options_name_the_inputs(
+        vrs, tmp_path, base, monkeypatch, capsys):
+    # Correct: a run made with the runner's --fixture-dir and --ap1-text
+    # can be verified, by passing the same options to the verifier.
+    other = tmp_path / 'my_fixture'
+    other.mkdir()
+    for name in ('fixture.json', 'questions.json', 'ground_truth_example.py'):
+        (other / name).write_text('mine: %s\n' % name)
+    text = tmp_path / 'my_ap1.md'
+    text.write_text('# my AP-1 text\n')
+    config = resolved_config(ap1_text_hash=file_hash(str(text)))
+    record = seal(config=config, fixture_path=other / 'fixture.json',
+                  questions_path=other / 'questions.json',
+                  ground_truth_path=other / 'ground_truth_example.py',
+                  ap1_text_path=text, runner_source_hash=SOURCE_HASH)
+    run_dir = write_run(tmp_path / 'run', record, config)
+    code, out = run_main(vrs, ['--fixture-dir', str(other), '--ap1-text',
+                               str(text), str(run_dir)], monkeypatch, capsys)
+    for field in ('fixture_hash', 'questions_hash', 'ground_truth_hash',
+                  'ap1_text_hash'):
+        assert '  PASS  %s: MATCH' % field in out, out
+
+
+@pytest.mark.finding('S3-G8-5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G8-5: a relative run path is joined to the '
+                          'repository root, not the working directory')
+def test_main_relative_path_resolved_against_working_directory(
+        vrs, good_run, tmp_path, monkeypatch, capsys):
+    run_dir, _, _ = good_run
+    monkeypatch.chdir(tmp_path)
+    code, out = run_main(vrs, ['run'], monkeypatch, capsys)
+    assert '=== Verifying: %s ===' % run_dir in out
+    assert 'report.md not found' not in out
+
+
+@pytest.mark.finding('T3-19')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-19: runner_source_hash is never compared')
+def test_main_reports_runner_source_hash_mismatch(vrs, tmp_path, base,
+                                                  monkeypatch, capsys):
+    # Correct (version.py: the hash is sealed "so that a modified
+    # instrument is detectable"; T3-19): the verifier recomputes the
+    # runner source hash (or compares with a published value) and a
+    # mismatch is reported, not passed in silence. 'f' * 64 matches no
+    # source tree.
+    config = good_config(base)
+    record = reseal(dict(good_record(base, config),
+                         runner_source_hash='f' * 64))
+    run_dir = write_run(tmp_path / 'run', record, config)
+    _, out = run_main(vrs, [str(run_dir)], monkeypatch, capsys)
+    lines = [line for line in out.splitlines()
+             if 'runner_source_hash' in line]
+    assert lines, 'runner_source_hash not mentioned:\n' + out
+    assert not any(line.startswith('  PASS') for line in lines)
+
+
+@pytest.mark.finding('T3-19')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-19: the verifier is silent about '
+                          'runner_modified: true')
+def test_main_reports_runner_modified(vrs, tmp_path, base, monkeypatch,
+                                      capsys):
+    # Correct (T3-19): a run whose sealed config says the runner was
+    # modified gets at least a warning; it is not a clean PASS.
+    config = good_config(base, runner_modified=True)
+    run_dir = write_run(tmp_path / 'run', good_record(base, config), config)
+    _, out = run_main(vrs, [str(run_dir)], monkeypatch, capsys)
+    lines = [line for line in out.splitlines() if 'modified' in line]
+    assert lines, 'runner_modified not mentioned:\n' + out
+    assert not any(line.startswith('  PASS') for line in lines)
+
+
+@pytest.mark.finding('T3-47')
+@pytest.mark.req('R1.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-47: an edited timestamp still verifies')
+def test_verify_run_edited_timestamp_fails(vrs, tmp_path, base):
+    # Correct (AP-1 v1.3 §5.3, SPEC R1.1): the timestamp is bound by
+    # seal_hash, so a timestamp edited in report.md fails verification.
+    config = good_config(base)
+    record = dict(good_record(base, config),
+                  timestamp='2020-01-01T00:00:00+00:00')
+    run_dir = write_run(tmp_path / 'run', record, config)
+    _, failures, _ = outcome(vrs, run_dir)
+    assert failures
+
+
+@pytest.mark.finding('T3-47')
+@pytest.mark.req('R1.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-47: the seal timestamp is never compared with '
+                          'the transcript')
+def test_verify_run_seal_timestamp_after_first_transcript_record_fails(
+        vrs, tmp_path, base):
+    # Correct (AP-1 v1.3 §5.3 "hashed and timestamped before execution";
+    # the brief for step 4): the verifier compares the seal timestamp with
+    # the first transcript record's. A seal dated after the first request
+    # was not made before execution. seal_hash is consistent here (it
+    # binds the timestamp), so the failure has to come from that
+    # comparison.
+    config = good_config(base)
+    record = reseal_all(dict(good_record(base, config),
+                             timestamp='2026-10-15T13:00:00+00:00'))
+    lines = [{'seal_hash': record['seal_hash'],
+              'timestamp': '2026-10-15T12:00:05+00:00'},
+             {'seal_hash': record['seal_hash'],
+              'timestamp': '2026-10-15T12:00:09+00:00'}]
+    run_dir = write_run(tmp_path / 'run', record, config, transcript=lines)
+    _, failures, _ = outcome(vrs, run_dir)
+    assert named(failures, 'timestamp'), failures
+
+
+@pytest.mark.finding('T3-49')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-49: any ground_truth_hash mismatch is called '
+                          '"expected" and blamed on E3/F10')
+def test_verify_run_unknown_ground_truth_mismatch_not_called_expected(
+        vrs, good_run, base):
+    # Correct: only a sealed hash listed in the errata map gets the errata
+    # note; an unknown change to the ground-truth module is a plain
+    # failure, with no "expected" wording.
+    run_dir, _, _ = good_run
+    (base / 'example' / 'ground_truth_example.py').write_text('X = 2\n')
+    _, failures, _ = outcome(vrs, run_dir)
+    detail = dict(failures)['ground_truth_hash']
+    assert 'expected' not in detail.lower(), detail
+
+
+@pytest.mark.finding('T3-49')
+@pytest.mark.skipif(shutil.which('git') is None, reason='needs git')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-49: the errata note cites commits that are not '
+                          'in the history')
+def test_errata_map_cites_only_commits_in_the_history(vrs):
+    # Correct: every commit the errata note cites exists in the
+    # repository (eadd862 and 8089923 do not).
+    root = os.path.dirname(os.path.dirname(TOOL))
+    cited = sorted({c for note in vrs.GROUND_TRUTH_ERRATA.values()
+                    for c in re.findall(r'commit ([0-9a-f]{7,40})', note)})
+    missing = [c for c in cited if subprocess.call(
+        ['git', 'cat-file', '-e', c + '^{commit}'], cwd=root,
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) != 0]
+    assert missing == []
+
+
+@pytest.mark.finding('T3-69')
+@pytest.mark.parametrize('keys', [['key-1'], ['k1', 'k2']])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-69: only True, False and [] are rebuilt from '
+                          'the report')
+def test_verify_run_seal_with_verification_keys_verifies(vrs, tmp_path, base,
+                                                         keys):
+    # Correct: a genuine seal with non-empty verification_keys verifies;
+    # every sealed type is rebuilt (or the rendered form is sealed).
+    config = good_config(base)
+    record = good_record(base, config, verification_keys=keys)
+    run_dir = write_run(tmp_path / 'run', record, config)
+    _, failures, _ = outcome(vrs, run_dir)
+    assert 'seal_hash' not in names(failures)
+
+
+@pytest.mark.finding('T3-15')
+@pytest.mark.req('R1.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-15: seal_hash is recomputed from whatever '
+                          'fields the report shows')
+def test_verify_run_record_missing_sealed_fields_fails(vrs, tmp_path, base):
+    # Correct: the verifier knows which fields a seal binds; a record with
+    # sealed fields deleted (and seal_hash recomputed over the rest) fails.
+    config = good_config(base)
+    record = good_record(base, config)
+    for dropped in ('ap1_version', 'runner_source_hash', 'verification_keys',
+                    'ev3_implemented'):
+        del record[dropped]
+    run_dir = write_run(tmp_path / 'run', reseal(record), config)
+    _, failures, _ = outcome(vrs, run_dir)
+    assert failures
+
+
+@pytest.mark.finding('T3-50')
+@pytest.mark.req('R0.4.3')
+@pytest.mark.parametrize('field, relpath, data', [
+    ('fixture_hash', os.path.join('example', 'fixture.json'),
+     b'{"fixture": 1}\r\n'),
+    ('questions_hash', os.path.join('example', 'questions.json'),
+     b'\xef\xbb\xbf{"items": []}\n'),
+    ('ground_truth_hash', os.path.join('example', 'ground_truth_example.py'),
+     b'\xef\xbb\xbfX = 1\r\n')], ids=['crlf', 'bom', 'bom-crlf'])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-50: sealed file hashes depend on line endings '
+                          'and a BOM')
+def test_verify_run_same_text_other_line_endings_verifies(vrs, good_run, base,
+                                                          field, relpath,
+                                                          data):
+    # Correct (SPEC R0.4.3 item 1; decision in test_seal.py's step-4
+    # section): a checkout or editor that changes only line endings or
+    # adds a BOM does not break verification of the sealed text inputs.
+    run_dir, _, _ = good_run
+    (base / relpath).write_bytes(data)
+    checks, failures, _ = outcome(vrs, run_dir)
+    assert (field, 'MATCH') in checks, failures
