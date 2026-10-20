@@ -660,3 +660,44 @@ def test_reclassify_session_pairs_results_and_expressions_by_position():
     out = reclassify_session([wo('822.4125'), oc('777.4125')],
                              ['', '42175 * 7.8 / 100 / 4', '822.4125 - 45'])
     assert out[0]['outcome'] == WO
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# Group g7-report (assigned S3-G4-3/4 in the step-4 brief). xfail(strict=True)
+# until the fix.
+
+def _evaluated(expression):
+    """evaluate_expression's result, or the exception it raised (so a
+    raise shows as the assertion's failing value)."""
+    try:
+        return evaluate_expression(expression)
+    except Exception as e:  # noqa: BLE001 -- today's defect, shown
+        return e
+
+
+@pytest.mark.finding('S3-G4-3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G4-3: // and % truncate toward zero (Decimal); '
+                          'the calculator floors')
+@pytest.mark.parametrize('expression, expected', [('-7 // 2', D('-4')),
+                                                  ('-7 % 3', D('2'))])
+def test_evaluate_expression_floor_division_and_mod_floor_like_calculator(
+        expression, expected):
+    # AP-1 D7.2(b): the assessor evaluates the submitted computation and
+    # judges its result; that must be the value the calculator returned
+    # (Python semantics: -7 // 2 == -4, -7 % 3 == 2), not Decimal's
+    # truncation (-3, -1). Step-3 report g4, item 3.
+    assert _evaluated(expression) == expected
+
+
+@pytest.mark.finding('S3-G4-4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G4-4: decimal.Overflow / RecursionError escape '
+                          'instead of None')
+@pytest.mark.parametrize('expression', ['10 ** 10 ** 10', '-' * 5000 + '1'],
+                         ids=['overflow', 'deep-nesting'])
+def test_evaluate_expression_overflow_or_deep_nesting_is_none(expression):
+    # The docstring: an expression that cannot be evaluated gives None, so
+    # the call is OPERATION-UNOBSERVABLE with its detail. Correct: None,
+    # no exception (step-3 report g4, item 4).
+    assert _evaluated(expression) is None
