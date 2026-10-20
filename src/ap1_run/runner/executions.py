@@ -294,7 +294,9 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         })
 
     outcome = fig_result['outcome']
-    print(f'{outcome} | {ev_class} | {inv_outcome}')
+    error_state = result.get('error_state')  # T3-67: loop exhaustion
+    print(f'{outcome} | {ev_class} | {inv_outcome}'
+          + (f' | {error_state}' if error_state else ''))
 
     # Collect operation_correctness from engine result
     op_correctness = []
@@ -336,6 +338,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'answer_outcome': section_6_8,
         'answer_outcome_reason': section_6_8_reason,
         **refusal_entry,
+        **({'error_state': error_state} if error_state else {}),
     })
 
 

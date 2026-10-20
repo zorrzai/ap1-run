@@ -35,6 +35,9 @@ CONDITION_BASE = 'base'
 CONDITION_INSTRUCTION_REMOVED = 'instruction_removed'
 VALID_CONDITIONS = {CONDITION_BASE, CONDITION_INSTRUCTION_REMOVED}
 
+# Tool turns driven per execution before the loop stops (T3-67)
+MAX_TOOL_TURNS = 10
+
 
 # -- Item execution --------------------------------------------------
 
@@ -182,6 +185,10 @@ def execute_item(item, *, condition, config, fixture,
     # Only a refusal's record carries the field, so others are unchanged
     refusal_record = {} if refusal is None else {'refusal': refusal}
 
+    # T3-67: a loop stopped by the turn limit is flagged, not passed off
+    # as complete
+    error_state = _loop_exhaustion(final_response, round_shapes)
+
     # Write transcript
     transcript.append(
         transcript_path,
@@ -191,7 +198,7 @@ def execute_item(item, *, condition, config, fixture,
         response_received=final_response,
         tool_calls=tool_calls_record,
         evidence_class=ev_class,
-        error_state=None, seal_hash=seal_hash,
+        error_state=error_state, seal_hash=seal_hash,
         repeat=repeat,
         invocation_outcome=outcome,
         self_report=self_report,
@@ -203,7 +210,7 @@ def execute_item(item, *, condition, config, fixture,
         **refusal_record,
     )
 
-    return {
+    result = {
         'item_id': item_id, 'condition': condition,
         'status': 'EXECUTED', 'evidence_class': ev_class,
         'invocation_outcome': outcome,
@@ -213,6 +220,9 @@ def execute_item(item, *, condition, config, fixture,
         'provenance_results': provenance_results,
         **refusal_record,
     }
+    if error_state:
+        result['error_state'] = error_state
+    return result
 
 
 # -- Refusals --------------------------------------------------------
@@ -255,7 +265,7 @@ def refusal_of(response):
 # -- Tool loop -------------------------------------------------------
 
 def _drive_tool_loop(*, response, messages, config, tools,
-                     adapter_send, sampling, max_turns=10):
+                     adapter_send, sampling, max_turns=MAX_TOOL_TURNS):
     """Drive the tool-call cycle.
 
     Returns (tool_calls, final_response, round_shapes).
@@ -318,6 +328,23 @@ def _drive_tool_loop(*, response, messages, config, tools,
             break
 
     return all_tool_calls, current, round_shapes
+
+def _loop_exhaustion(final_response, round_shapes):
+    """The error state of a tool loop the turn limit stopped, else None.
+
+    The final response still asks for tool calls, and it was read (its
+    round's shape is recognised): the loop stopped at the limit, and those
+    calls were neither executed nor answered. (After a failed send the
+    last round is unrecognised and the final response is the last one
+    read; that is not exhaustion.)
+    """
+    pending = _extract_tool_calls(final_response)
+    if not pending or not round_shapes or not round_shapes[-1][0]:
+        return None
+    return (f'TOOL_LOOP_EXHAUSTED: the response after {MAX_TOOL_TURNS} '
+            f'tool turns still asked for {len(pending)} tool call(s), '
+            f'which were not executed')
+
 
 def _execute_tool(name, arguments_json):
     """Execute a tool call. Operators supply their own dispatch."""

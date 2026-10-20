@@ -458,3 +458,17 @@ def test_run_report_3h_lists_failing_questions_with_counts(capsys):
     text = section(out, '3h')
     assert ('  base: invoked=1 not_invoked=2 (Q02 2/3, Q06 1/3) n=3\n'
             '    failure rate: 2/3 (66.7%)') in text, text
+
+
+# Step 5 (run-robustness): executions the engine flagged are named under 3a
+# (T3-67).
+
+@pytest.mark.finding('T3-67')
+def test_run_report_3a_names_flagged_executions(capsys):
+    out = run_report(capsys, [
+        executed('Q01', 'base', 1, 'AUTO-MATCH'),
+        executed('Q02', 'base', 3, 'AUTO-NO-FIGURE',
+                 error_state='TOOL_LOOP_EXHAUSTED: x')])
+    assert ('\n3a. COMPLETION: 2 executed, 0 unmeasured, 0 void\n'
+            '  Q02/base/r3: TOOL_LOOP_EXHAUSTED: x\n'
+            '\n3b. ') in out

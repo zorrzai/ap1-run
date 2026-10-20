@@ -777,9 +777,9 @@ def test_score_execution_no_released_figure_recorded_as_null(fakes, tpath):
                for r in transcript.read_all(tpath) if 'released_figure' in r)
 
 
-@pytest.mark.finding('T3-65')
+@pytest.mark.finding('T3-65', 'F4')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-65: engine UNMEASURED results never reach '
+                   reason='T3-65/F4: engine UNMEASURED results never reach '
                           'unmeasured_cells')
 @pytest.mark.parametrize('error, word', [
     ('rate limited (HTTP 429): {"error": "Rate limit"}', 'rate'),
@@ -905,6 +905,28 @@ def test_apply_question_measurability_without_a_chain_changes_nothing():
                              'answer_outcome': 'COMPUTED'}]
     assert apply_question_measurability(findings) == 0
     assert findings.all_results[0]['answer_outcome'] == 'COMPUTED'
+
+
+# Step 5 (run-robustness): an execution the engine flagged is flagged in
+# the runner too (T3-67).
+
+@pytest.mark.finding('T3-67')
+def test_score_execution_engine_error_state_printed_and_kept(fakes, tpath,
+                                                             capsys):
+    flag = 'TOOL_LOOP_EXHAUSTED: the response after 10 tool turns ...'
+    findings = Findings()
+    score(findings, {'response': response(None), 'tool_calls': [],
+                     'evidence_class': 'EV-2', 'invocation_outcome': 'INVOKED',
+                     'error_state': flag}, tpath)
+    assert capsys.readouterr().out == f'AUTO-MATCH | EV-2 | INVOKED | {flag}\n'
+    assert findings.all_results[0]['error_state'] == flag
+
+
+@pytest.mark.finding('T3-67')
+def test_score_execution_no_error_state_no_key(fakes, tpath, capsys):
+    findings = Findings()
+    score(findings, {'response': response('x'), 'tool_calls': []}, tpath)
+    assert 'error_state' not in findings.all_results[0]
 
 
 # -- echo_check (D2.2 parameter echo) --------------------------------------
