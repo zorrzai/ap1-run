@@ -81,7 +81,7 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
     sections.append('---\n')
 
     # 1. Pre-registration record
-    sections.append(_section_preregistration(seal_record, config))
+    sections.append(_section_preregistration(seal_record))
 
     # 2. Resolved configuration
     sections.append(_section_configuration(config))
@@ -133,7 +133,7 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
 
 # -- Section generators ------------------------------------------------
 
-def _section_preregistration(seal_record, config):
+def _section_preregistration(seal_record):
     """Section 1: Pre-registration record."""
     lines = ['## 1. Pre-Registration Record\n']
     if seal_record:
@@ -186,11 +186,11 @@ def _section_d7_figures(summary):
     """Section 4: Every D7 figure with its evidence class.
 
     Figures resting on different evidence classes are not comparable
-    (AP-1 v1.3 section 6.4).
+    (AP-1 v1.3 D7.7).
     """
     lines = ['## 4. D7 Figures by Evidence Class\n']
     lines.append('> Figures resting on different evidence classes are not '
-                 'comparable (AP-1 v1.3 §6.4).\n')
+                 'comparable (AP-1 v1.3 D7.7).\n')
 
     ev_counts = summary.get('evidence_class_counts', {})
     if ev_counts:
@@ -539,7 +539,7 @@ def _section_scoring_proportions(summary):
 
     d7 = summary.get('d7_results', {})
     if d7:
-        lines.append('### D7 Provenance\n')
+        lines.append('### D7 Computation invocation\n')
         auto = d7.get('auto_scored_n', 0)
         adj = d7.get('adjudicated_n', 0)
         total = auto + adj
@@ -701,7 +701,7 @@ def _section_unmeasured_dimensions(config):
 
     if unmeasured:
         lines.append('The following dimensions were **not measured** in this '
-                     'evaluation and require human adjudication:\n')
+                     'evaluation:\n')
         for dim in unmeasured:
             reason = _unmeasured_reason(dim)
             lines.append(f'- **{dim}**: {reason}')
@@ -888,15 +888,25 @@ def _format_dim_result(dim, data):
 
 
 def _unmeasured_reason(dim):
-    """Return the reason a dimension is not measured."""
+    """Return the reason a dimension is not measured.
+
+    Names are AP-1 v1.3 §4's (T3-33), except D2, which SPEC and this
+    runner call Reproducibility (AP-1 v1.3: Determinism). D1, D2 and D7
+    are measured by the runner when claimed; only D3-D6 need human
+    adjudication (SPEC §1.1, §1.2; S3-G6-2).
+    """
+    not_claimed = 'not claimed in this configuration'
+    adjudicated = 'requires human adjudication; the runner does not measure it'
     reasons = {
-        'D1': 'Accuracy — requires item-level scoring',
-        'D2': 'Reproducibility — requires repeated runs',
-        'D3': 'Completeness of explanation — requires human adjudication',
-        'D4': 'Appropriate caveats — requires human adjudication',
-        'D5': 'Source attribution — requires human adjudication',
-        'D6': 'Confidence calibration — requires human adjudication',
-        'D7': 'Provenance — requires tool-call observation',
+        'D1': f'Accuracy — {not_claimed} (the runner auto-scores it)',
+        'D2': f'Reproducibility — {not_claimed} (the runner measures it '
+              f'from repeated runs)',
+        'D3': f'Provenance — {adjudicated}',
+        'D4': f'Refusal integrity — {adjudicated}',
+        'D5': f'Adversarial resistance — {adjudicated}',
+        'D6': f'Conflicting input — {adjudicated}',
+        'D7': f'Computation invocation — {not_claimed} (the runner '
+              f'measures D7.1-D7.3 from tool-call evidence)',
     }
     return reasons.get(dim, 'Reason not specified')
 

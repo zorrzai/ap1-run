@@ -122,7 +122,7 @@ def test_report_is_header_and_sections_joined_by_newlines():
                                 'error_state': 'VOID: x'}])
     body = text[text.index('---\n') + len('---\n') + 1:]
     assert body == md(
-        report._section_preregistration(seal, CONFIG),
+        report._section_preregistration(seal),
         report._section_configuration(CONFIG),
         report._section_dimension_results(summary, CONFIG),
         report._section_d7_figures(summary),
@@ -185,7 +185,7 @@ def test_report_without_transcript_records_lists_summary_cells_only():
 
 def test_preregistration_lists_seal_fields_sorted():
     assert report._section_preregistration(
-        {'seal_hash': 'abc', 'ap1_version': '1.3', 'keys': []}, {}) == md(
+        {'seal_hash': 'abc', 'ap1_version': '1.3', 'keys': []}) == md(
         '## 1. Pre-Registration Record\n',
         '| Field | Value |',
         '|---|---|',
@@ -196,12 +196,12 @@ def test_preregistration_lists_seal_fields_sorted():
 
 
 def test_preregistration_without_seal_says_so():
-    assert report._section_preregistration({}, CONFIG) == md(
+    assert report._section_preregistration({}) == md(
         '## 1. Pre-Registration Record\n',
         '*No seal record available.*',
         '')
-    assert report._section_preregistration(None, CONFIG) == \
-        report._section_preregistration({}, CONFIG)
+    assert report._section_preregistration(None) == \
+        report._section_preregistration({})
 
 
 # -- 2. Configuration -----------------------------------------------------
@@ -355,14 +355,13 @@ def test_dimension_results_other_claimed_dimension_prints_its_data():
 
 @pytest.mark.finding('T3-33')
 def test_d7_figures_counts_sorted_by_class():
-    # The note cites "§6.4" for non-comparability; T3-33: the clause meant
-    # is D7.7. Correct: cite D7.7.
+    # T3-33 (fixed): the non-comparability clause is D7.7, not §6.4.
     text = report._section_d7_figures({'evidence_class_counts': {
         'EV-2 PLATFORM-STRUCTURAL': 30, 'EV-0 UNOBSERVABLE': 1}})
     assert text == md(
         '## 4. D7 Figures by Evidence Class\n',
         '> Figures resting on different evidence classes are not '
-        'comparable (AP-1 v1.3 \u00a76.4).\n',
+        'comparable (AP-1 v1.3 D7.7).\n',
         '| Evidence Class | Count |',
         '|---|---|',
         '| `EV-0 UNOBSERVABLE` | 1 |',
@@ -970,14 +969,14 @@ def test_scoring_proportions_d1_without_counts_or_rate():
 
 
 @pytest.mark.finding('T3-33')
-def test_scoring_proportions_d7_split_labelled_provenance():
-    # T3-33: D7 is "Computation invocation" in AP-1 v1.3, not
-    # "Provenance" (D3). Correct: the AP-1 name.
+def test_scoring_proportions_d7_split_labelled_computation_invocation():
+    # T3-33 (fixed): D7 is "Computation invocation" in AP-1 v1.3, not
+    # "Provenance" (D3).
     text = report._section_scoring_proportions({'d7_results': {
         'n': 41, 'auto_scored_n': 30, 'adjudicated_n': 10}})
     assert text == md(
         '## 8. Scoring Proportions\n',
-        '### D7 Provenance\n',
+        '### D7 Computation invocation\n',
         '- Auto-scored: 30',
         '- Adjudicated: 10',
         '- Total: 40',
@@ -1001,7 +1000,8 @@ def test_scoring_proportions_d1_then_d7():
     text = report._section_scoring_proportions({
         'd1_results': {'auto_scored_n': 1},
         'd7_results': {'auto_scored_n': 1}})
-    assert text.index('### D1 Accuracy') < text.index('### D7 Provenance')
+    assert text.index('### D1 Accuracy') < \
+        text.index('### D7 Computation invocation')
     assert 'No scoring proportion data' not in text
 
 
@@ -1260,22 +1260,23 @@ DIMS_HEAD = (
 )
 
 
+ADJ = 'requires human adjudication; the runner does not measure it'
+NOT_CLAIMED = 'not claimed in this configuration'
+
+
 @pytest.mark.finding('T3-33')
-def test_unmeasured_dimensions_names_d3_to_d6_wrongly():
-    # D3-D6 are given dimensions AP-1 does not define. AP-1 v1.3 §4:
-    # D3 Provenance, D4 Refusal integrity, D5 Adversarial resistance,
-    # D6 Conflicting input. Correct: the AP-1 names.
+def test_unmeasured_dimensions_names_d3_to_d6_as_ap1():
+    # T3-33 (fixed): AP-1 v1.3 §4 names D3 Provenance, D4 Refusal
+    # integrity, D5 Adversarial resistance, D6 Conflicting input.
     text = report._section_unmeasured_dimensions(CONFIG)
     assert text == md(
         *DIMS_HEAD,
         'The following dimensions were **not measured** in this '
-        'evaluation and require human adjudication:\n',
-        '- **D3**: Completeness of explanation \u2014 requires human '
-        'adjudication',
-        '- **D4**: Appropriate caveats \u2014 requires human adjudication',
-        '- **D5**: Source attribution \u2014 requires human adjudication',
-        '- **D6**: Confidence calibration \u2014 requires human '
-        'adjudication',
+        'evaluation:\n',
+        f'- **D3**: Provenance \u2014 {ADJ}',
+        f'- **D4**: Refusal integrity \u2014 {ADJ}',
+        f'- **D5**: Adversarial resistance \u2014 {ADJ}',
+        f'- **D6**: Conflicting input \u2014 {ADJ}',
         '')
 
 
@@ -1289,23 +1290,22 @@ def test_unmeasured_dimensions_does_not_declare_d7_parts():
 
 @pytest.mark.finding('T3-33', 'S3-G6-2')
 def test_unmeasured_dimensions_all_unclaimed():
-    # Every unclaimed dimension is said to "require human adjudication",
-    # D1, D2 and D7 included, which the runner measures automatically
-    # (S3-G6-2). D7 is called "Provenance" (T3-33). Correct: the AP-1
-    # names, and the reason each one was not measured.
+    # Fixed: the AP-1 names (T3-33), and D1, D2 and D7, which the runner
+    # measures, are "not claimed", not "require human adjudication"
+    # (S3-G6-2).
     text = report._section_unmeasured_dimensions({})
     assert text.endswith(md(
-        '- **D1**: Accuracy \u2014 requires item-level scoring',
-        '- **D2**: Reproducibility \u2014 requires repeated runs',
-        '- **D3**: Completeness of explanation \u2014 requires human '
-        'adjudication',
-        '- **D4**: Appropriate caveats \u2014 requires human adjudication',
-        '- **D5**: Source attribution \u2014 requires human adjudication',
-        '- **D6**: Confidence calibration \u2014 requires human '
-        'adjudication',
-        '- **D7**: Provenance \u2014 requires tool-call observation',
+        f'- **D1**: Accuracy \u2014 {NOT_CLAIMED} (the runner auto-scores '
+        'it)',
+        f'- **D2**: Reproducibility \u2014 {NOT_CLAIMED} (the runner '
+        'measures it from repeated runs)',
+        f'- **D3**: Provenance \u2014 {ADJ}',
+        f'- **D4**: Refusal integrity \u2014 {ADJ}',
+        f'- **D5**: Adversarial resistance \u2014 {ADJ}',
+        f'- **D6**: Conflicting input \u2014 {ADJ}',
+        f'- **D7**: Computation invocation \u2014 {NOT_CLAIMED} (the '
+        'runner measures D7.1-D7.3 from tool-call evidence)',
         ''))
-    assert 'evaluation and require human adjudication:' in text
 
 
 def test_unmeasured_dimensions_all_claimed():
@@ -1624,9 +1624,6 @@ AP1_NAMES = {'D3': 'Provenance', 'D4': 'Refusal integrity', 'D5': 'Adversarial r
 
 
 @pytest.mark.finding('T3-33')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-33: §12 names D3-D6 and D7 with dimensions '
-                          'AP-1 does not define')
 def test_unmeasured_dimensions_use_ap1_names():
     # AP-1 v1.3 §4: D3 Provenance, D4 Refusal integrity, D5 Adversarial
     # resistance, D6 Conflicting input, D7 Computation invocation. Correct:
@@ -1638,8 +1635,6 @@ def test_unmeasured_dimensions_use_ap1_names():
 
 
 @pytest.mark.finding('T3-33')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-33: §8 labels D7 "Provenance"')
 def test_scoring_proportions_d7_labelled_computation_invocation():
     # D7 is "Computation invocation" (AP-1 v1.3 §4); "Provenance" is D3.
     text = report._section_scoring_proportions({'d7_results': {
@@ -1649,9 +1644,6 @@ def test_scoring_proportions_d7_labelled_computation_invocation():
 
 
 @pytest.mark.finding('T3-33')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-33: §4 cites §6.4 for non-comparability; the '
-                          'clause is D7.7')
 def test_d7_figures_cite_d77_for_non_comparability():
     # AP-1 v1.3 D7.7: "Figures resting on different classes are not
     # comparable". §6.4 is about discretionary correctness.
@@ -1662,9 +1654,6 @@ def test_d7_figures_cite_d77_for_non_comparability():
 
 
 @pytest.mark.finding('S3-G6-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G6-2: §12 says unclaimed D1, D2 and D7 require '
-                          'human adjudication')
 def test_unmeasured_dimensions_auto_dimensions_not_said_to_need_adjudication():
     # The runner measures D1 (partly), D2 and D7 automatically (SPEC §1.1);
     # only D3-D6 need human adjudication (SPEC §1.2). Correct: §12 does

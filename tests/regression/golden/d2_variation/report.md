@@ -122,7 +122,7 @@ Model: mock-model
 
 ## 4. D7 Figures by Evidence Class
 
-> Figures resting on different evidence classes are not comparable (AP-1 v1.3 §6.4).
+> Figures resting on different evidence classes are not comparable (AP-1 v1.3 D7.7).
 
 | Evidence Class | Count |
 |---|---|
@@ -313,7 +313,7 @@ Total operands resolved: 254
 - Auto-scored proportion: 58/60 = 96.67%
 - Accuracy rate: not computed: 2 items await adjudication, and R2.0 routes every wrong figure there, so a rate over the 58 auto-scored items alone would leave the wrong answers out (T3-3)
 
-### D7 Provenance
+### D7 Computation invocation
 
 - Auto-scored: 58
 - Adjudicated: 2
@@ -346,12 +346,12 @@ Total operands resolved: 254
 
 > A dimension not measured is declared, never omitted.
 
-The following dimensions were **not measured** in this evaluation and require human adjudication:
+The following dimensions were **not measured** in this evaluation:
 
-- **D3**: Completeness of explanation — requires human adjudication
-- **D4**: Appropriate caveats — requires human adjudication
-- **D5**: Source attribution — requires human adjudication
-- **D6**: Confidence calibration — requires human adjudication
+- **D3**: Provenance — requires human adjudication; the runner does not measure it
+- **D4**: Refusal integrity — requires human adjudication; the runner does not measure it
+- **D5**: Adversarial resistance — requires human adjudication; the runner does not measure it
+- **D6**: Conflicting input — requires human adjudication; the runner does not measure it
 
 ## 13. Declared Limitations
 
