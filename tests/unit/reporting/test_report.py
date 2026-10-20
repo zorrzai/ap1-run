@@ -524,6 +524,18 @@ CP_HEAD = (
 )
 
 
+CP_UNIT = (
+    '> D7.1 n counts the computable questions that have an observed '
+    'outcome, not the executions: the repeats of a question are not '
+    'independent trials. A question counts as a failure if any of its '
+    'repeats is NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither '
+    'successes nor failures and are in no n (SPEC R2.3, R1.3.1).\n')
+CP_TABLE = ('| Metric | k (failures) | n | Rate | 95% Upper Bound '
+            '| Evidence Class |',
+            '|---|---|---|---|---|---|')
+EV2 = 'EV-2 PLATFORM-STRUCTURAL'
+
+
 def test_clopper_pearson_section_without_figures_says_so():
     assert report._section_clopper_pearson({}) == md(
         *CP_HEAD, '*No invocation figures available.*\n')
@@ -535,20 +547,50 @@ def test_clopper_pearson_section_zero_failures_shows_bound():
     # 4 as a percentage) by float formatting. T3-61: it duplicates
     # invocation.py and does not round the upper bound up. Correct: one
     # computation, rounded up.
-    text = report._section_clopper_pearson({'invocation_figures': {
-        'd7_invocation_base': {'failures': 0, 'n': 10, 'rate': '10/10'}}})
+    # T3-1, T3-11, V12-5 (fixed): n is questions, the rate is a
+    # percentage beside k/n and the bound, with its evidence class, the
+    # AP-1 §6.2 headline and the executions per class.
+    text = report._section_clopper_pearson({
+        'invocation_figures': {'d7_invocation_base': {
+            'failures': 0, 'n': 10, 'rate': '10/10', 'condition': 'base',
+            'evidence_class': EV2, 'unobservable': 1}},
+        'invocation_evidence': {'base': {
+            'classes': {
+                'EV-0 UNOBSERVABLE': {
+                    'executions': 1, 'questions': 1,
+                    'observed_questions': 0, 'unobservable_executions': 1},
+                EV2: {'executions': 30, 'questions': 10,
+                      'observed_questions': 10,
+                      'unobservable_executions': 0}},
+            'cross_class_warning': 'aggregate spans 2 evidence classes'}}})
     assert text == md(
-        *CP_HEAD,
-        '| Metric | k (failures) | n | Rate | 95% Upper Bound |',
-        '|---|---|---|---|---|',
-        '| d7_invocation_base | 0 | 10 | 10/10 | 0.258866 (25.8866%) |',
+        *CP_HEAD, CP_UNIT, *CP_TABLE,
+        f'| d7_invocation_base | 0 | 10 | 10/10 (100.0%) | '
+        f'0.258866 (25.8866%) | `{EV2}` |',
+        '',
+        '**Headline (AP-1 \u00a76.2):**\n',
+        '- Deterministic computation was invoked on 100.0% of computable '
+        'questions (10/10; 0 not invoked; one-sided 95% upper bound on the '
+        f'failure rate 25.8866%), under base, on evidence class {EV2}.',
+        '',
+        '**Executions by evidence class:**\n',
+        '| Condition | Evidence Class | Executions | Questions '
+        '| Questions in n | Unobservable Executions |',
+        '|---|---|---|---|---|---|',
+        '| base | `EV-0 UNOBSERVABLE` | 1 | 1 | 0 | 1 |',
+        f'| base | `{EV2}` | 30 | 10 | 10 | 0 |',
+        '',
+        '> base: aggregate spans 2 evidence classes; only observed '
+        'outcomes are in n.',
         '')
 
 
 def test_clopper_pearson_section_zero_failures_ignores_given_rate():
     text = report._section_clopper_pearson({'invocation_figures': {
         'm': {'n': 500, 'rate': 'whatever'}}})
-    assert '| m | 0 | 500 | 500/500 | 0.005974 (0.5974%) |' in text
+    assert '| m | 0 | 500 | 500/500 (100.0%) | 0.005974 (0.5974%) | \u2014 |' \
+        in text
+    assert 'under m.' in text
 
 
 @pytest.mark.finding('T3-81')
@@ -557,20 +599,37 @@ def test_clopper_pearson_section_failures_show_rate_without_bound():
     text = report._section_clopper_pearson({'invocation_figures': {
         'b': {'failures': 2, 'n': 20, 'rate': '18/20'},
         'a': {'failures': 1, 'n': 5}}})
-    assert text.endswith(md(
-        '|---|---|---|---|---|',
-        '| a | 1 | 5 | \u2014 | *not computed (see \u00a7Declared '
-        'Limitations)* |',
-        '| b | 2 | 20 | 18/20 | *not computed (see \u00a7Declared '
-        'Limitations)* |',
-        ''))
+    # V12-5: the rate is always computed from k and n and shown as a
+    # percentage, rounded down (4/5 is 80.0 %).
+    assert md(
+        '|---|---|---|---|---|---|',
+        '| a | 1 | 5 | 4/5 (80.0%) | *not computed (see \u00a7Declared '
+        'Limitations)* | \u2014 |',
+        '| b | 2 | 20 | 18/20 (90.0%) | *not computed (see \u00a7Declared '
+        'Limitations)* | \u2014 |',
+        '') in text
+    assert ('- Deterministic computation was invoked on 80.0% of computable '
+            'questions (4/5; 1 not invoked; upper bound on the failure rate '
+            'not computed, see \u00a7Declared Limitations), under a.') in text
+    assert '**Executions by evidence class:**' not in text
 
 
 def test_clopper_pearson_section_n_zero_shows_dashes():
     text = report._section_clopper_pearson({'invocation_figures': {
         'z': {'failures': 3, 'n': 0, 'rate': '0/0'}, 'y': {}}})
-    assert md('| y | 0 | 0 | \u2014 | \u2014 |',
-              '| z | 3 | 0 | \u2014 | \u2014 |', '') in text
+    assert md('| y | 0 | 0 | \u2014 | \u2014 | \u2014 |',
+              '| z | 3 | 0 | \u2014 | \u2014 | \u2014 |', '') in text
+    assert ('- Under z: no computable question has an observed invocation '
+            'outcome; D7.1 is not measured.') in text
+    assert not re.search(r'\b(\d+)/\1\b', text)
+
+
+@pytest.mark.finding('V12-5')
+def test_clopper_pearson_section_rate_below_100_never_rounds_up_to_100():
+    # 1999/2000 is 99.95 %: rounded down to 99.9 %, never 100.0 %.
+    text = report._section_clopper_pearson({'invocation_figures': {
+        'm': {'failures': 1, 'n': 2000, 'condition': 'base'}}})
+    assert '1999/2000 (99.9%)' in text and '100.0%' not in text
 
 
 # -- 6. D7.2(a) originated-operand audit ----------------------------------
@@ -1741,8 +1800,6 @@ def test_d73_reports_count_of_exact_rounded_under_declared_policy():
 # Group g1-invocation (fix plan branch 1).
 
 @pytest.mark.finding('V12-5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-5: §5 prints no invocation percentage')
 def test_clopper_pearson_section_rate_as_percentage_with_k_n_and_bound():
     # Correct (AP-1 §6.2 "invoked on [X]% of computable questions"; fix
     # plan row 1): the figure is printed as a percentage, with k/n and

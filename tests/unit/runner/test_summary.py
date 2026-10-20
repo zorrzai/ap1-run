@@ -98,6 +98,7 @@ EMPTY = {
     'evidence_class_counts': {},
     'item_evidence': [],
     'invocation_figures': {},
+    'invocation_evidence': {},
     'operation_correctness_counts': {'OPERATION-CORRECT': 0,
                                      'WRONG-OPERATION': 0,
                                      'OPERATION-UNOBSERVABLE': 0},
@@ -146,27 +147,112 @@ def test_summary_evidence_class_counts_and_detail():
     assert s['item_evidence'] is findings
 
 
+EV2 = 'EV-2 PLATFORM-STRUCTURAL'
+EV0 = 'EV-0 UNOBSERVABLE'
+
+
 def test_summary_invocation_figures_per_condition():
     results = [
-        executed(condition='base', invocation_outcome='INVOKED'),
-        executed(condition='base', invocation_outcome='NOT-INVOKED'),
-        executed(condition='base', invocation_outcome='INVOKED'),
-        executed(condition='instruction_removed',
-                 invocation_outcome='NOT-INVOKED'),
+        executed('Q01', 'base', invocation_outcome='INVOKED',
+                 evidence_class=EV2),
+        executed('Q02', 'base', invocation_outcome='NOT-INVOKED',
+                 evidence_class=EV2),
+        executed('Q03', 'base', invocation_outcome='INVOKED',
+                 evidence_class=EV2),
+        executed('Q01', 'instruction_removed',
+                 invocation_outcome='NOT-INVOKED', evidence_class=EV2),
         {'status': 'UNMEASURED', 'condition': 'base', 'cause': 'x'},
     ]
     s = build_summary(results, [])
     assert s['invocation_figures'] == {
-        'd7_invocation_base': {'failures': 1, 'n': 3, 'rate': '2/3'},
-        'd7_invocation_instruction_removed': {'failures': 1, 'n': 1,
-                                              'rate': '0/1'},
+        'd7_invocation_base': {
+            'failures': 1, 'n': 3, 'rate': '2/3', 'condition': 'base',
+            'evidence_class': EV2, 'unobservable': 0},
+        'd7_invocation_instruction_removed': {
+            'failures': 1, 'n': 1, 'rate': '0/1',
+            'condition': 'instruction_removed', 'evidence_class': EV2,
+            'unobservable': 0},
+    }
+    assert s['invocation_evidence'] == {
+        'base': {'classes': {EV2: {
+            'executions': 3, 'questions': 3, 'observed_questions': 3,
+            'unobservable_executions': 0}}, 'cross_class_warning': None},
+        'instruction_removed': {'classes': {EV2: {
+            'executions': 1, 'questions': 1, 'observed_questions': 1,
+            'unobservable_executions': 0}}, 'cross_class_warning': None},
     }
 
 
 def test_summary_invocation_figures_without_condition():
+    # No condition, no class and no outcome: one unobservable execution.
     s = build_summary([{'status': 'EXECUTED'}], [])
     assert s['invocation_figures'] == {
-        'd7_invocation_': {'failures': 0, 'n': 1, 'rate': '1/1'}}
+        'd7_invocation_': {'failures': 0, 'n': 0, 'rate': None,
+                           'condition': '', 'evidence_class': None,
+                           'unobservable': 1}}
+
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.req('R2.3', 'R1.3.1')
+def test_summary_mixed_classes_listed_per_class_with_warning():
+    # SPEC R1.3.1 "Normative reporting", R2.3: the EV-0 executions are
+    # reported per class beside the figure, which rests on EV-2 only,
+    # with the statement that the classes are not comparable.
+    s = build_summary([
+        executed('Q01', evidence_class=EV2, invocation_outcome='INVOKED'),
+        executed('Q01', repeat=2, evidence_class=EV0,
+                 invocation_outcome=None),
+        executed('Q02', evidence_class=EV0, invocation_outcome=None),
+        executed('Q02', repeat=2, evidence_class=EV0,
+                 invocation_outcome=None),
+        executed('Q03', evidence_class=EV0, invocation_outcome=None),
+    ], [])
+    assert s['invocation_figures']['d7_invocation_base'] == {
+        'failures': 0, 'n': 1, 'rate': '1/1', 'condition': 'base',
+        'evidence_class': EV2, 'unobservable': 4}
+    evidence = s['invocation_evidence']['base']
+    assert evidence['classes'] == {
+        EV0: {'executions': 4, 'questions': 3, 'observed_questions': 0,
+              'unobservable_executions': 4},
+        EV2: {'executions': 1, 'questions': 1, 'observed_questions': 1,
+              'unobservable_executions': 0}}
+    assert evidence['cross_class_warning'] == (
+        f'aggregate spans 2 evidence classes ({EV0}, {EV2}); '
+        f'figures are not comparable across classes')
+
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.req('R2.3')
+def test_summary_two_observed_classes_give_one_figure_each():
+    # Outcomes on two classes are never pooled: one figure per class,
+    # each named by its class.
+    ev1 = 'EV-1 SELF-REPORTED'
+    s = build_summary([
+        executed('Q01', evidence_class=EV2, invocation_outcome='INVOKED'),
+        executed('Q02', evidence_class=ev1, invocation_outcome='NOT-INVOKED'),
+    ], [])
+    assert s['invocation_figures'] == {
+        f'd7_invocation_base ({ev1})': {
+            'failures': 1, 'n': 1, 'rate': '0/1', 'condition': 'base',
+            'evidence_class': ev1, 'unobservable': 0},
+        f'd7_invocation_base ({EV2})': {
+            'failures': 0, 'n': 1, 'rate': '1/1', 'condition': 'base',
+            'evidence_class': EV2, 'unobservable': 0}}
+
+
+@pytest.mark.finding('T3-11')
+def test_summary_d71_question_fails_if_any_repeat_not_invoked():
+    # Steven's integrator decision: a question whose repeats disagree
+    # counts as a failure.
+    s = build_summary([
+        executed('Q01', repeat=1, evidence_class=EV2,
+                 invocation_outcome='INVOKED'),
+        executed('Q01', repeat=2, evidence_class=EV2,
+                 invocation_outcome='NOT-INVOKED'),
+        executed('Q02', repeat=1, evidence_class=EV2,
+                 invocation_outcome='INVOKED')], [])
+    base = s['invocation_figures']['d7_invocation_base']
+    assert (base['failures'], base['n'], base['rate']) == (1, 2, '1/2')
 
 
 def test_summary_operation_correctness_and_wrong_operation_split():
@@ -311,8 +397,11 @@ def test_summary_counts_accumulate_after_non_executed_rows():
         ]),
     ]
     s = build_summary(results, [])
+    # Nine executions of one question, two NOT-INVOKED, the rest with no
+    # outcome: one question, failed (T3-1, T3-11).
     assert s['invocation_figures']['d7_invocation_base'] == {
-        'failures': 2, 'n': 9, 'rate': '7/9'}
+        'failures': 1, 'n': 1, 'rate': '0/1', 'condition': 'base',
+        'evidence_class': '', 'unobservable': 7}
     assert s['wrong_operation_split'] == {
         'route_divergence': 2, 'item_wrong': 2, 'undetermined': 2}
     assert s['provenance_outcomes'] == {'OPERANDS-GROUNDED': 0,
@@ -519,8 +608,6 @@ def test_consistency_not_invoked_with_call_to_other_tool_accepted():
 
 
 @pytest.mark.finding('T3-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-1: EV-0 executions counted as INVOKED in D7.1')
 def test_summary_d71_ev0_execution_not_counted():
     # Correct (SPEC R2.3, R1.3.1; AP-1 v1.3 D7.7): an EV-0 execution
     # (outcome None, UNOBSERVABLE) is neither a success nor a failure, so
@@ -536,8 +623,6 @@ def test_summary_d71_ev0_execution_not_counted():
 
 
 @pytest.mark.finding('T3-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-1: an all-EV-0 condition prints n/n')
 def test_summary_d71_all_ev0_has_no_observations():
     # Correct: a condition with only EV-0 executions has no D7.1
     # observations, so no figure with n > 0 (which §5 would print as
@@ -550,8 +635,6 @@ def test_summary_d71_all_ev0_has_no_observations():
 
 
 @pytest.mark.finding('T3-11')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-11: D7.1 n pools repeats')
 def test_summary_d71_n_counts_questions_not_repeats():
     # Correct (AP-1 v1.3 D7.1 "proportion of computable questions",
     # DISPOSITION_RECORD GH-5 ACCEPTED, T3 review T3-11): three repeats

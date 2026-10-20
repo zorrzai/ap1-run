@@ -99,9 +99,9 @@ October 2026; `tests/RETIREMENT.md` records where each of their checks went.
 | `wrong_answers` | wrong final figure, wrong operation, transposed operand, no tool call |
 | `multi_round` | chained intermediates over several rounds, several calls per round, intermediate assistant text (V12-3: not kept) |
 | `d2_variation` | answers that vary across repeats (D2) |
-| `non_answers` | empty, declined, unrecognised decline, refusal reciting balances, two candidates, null content, no figure |
+| `non_answers` | empty and null content (UNMEASURED, T3-10), declined, unrecognised decline, refusal reciting balances, two candidates, no figure |
 | `transport_errors` | 429, 500 and 401 in round 0 and mid-loop, a dropped connection with retries, a non-JSON body |
-| `t3_1_unrecognised_shape` | **T3-1**: EV-0 (Anthropic- and Responses-shaped bodies, mid-loop failure) counted as invoked; an all-EV-0 arm prints 0/20 failures |
+| `t3_1_unrecognised_shape` | **T3-1** (fixed): EV-0 (Anthropic- and Responses-shaped bodies, mid-loop failure) is UNOBSERVABLE, out of the D7.1 n and listed per evidence class; an all-EV-0 arm has no D7.1 figure |
 | `t3_2_leading_whitespace` | **T3-2**: a leading space or tab makes the call OPERANDS-GROUNDED; a chained launder, with the no-space contrast |
 | `t3_16_malformed_calls` | **T3-16**: malformed or wrongly keyed calls are INVOKED but vanish from D7.2(a)/(b); a calculator error |
 | `t3_5_constant_magnitude` | **T3-5**: `-12` and `-1` grounded by `constant_magnitude`; a sign-inverted source field for contrast |
@@ -126,8 +126,12 @@ one is wrapped in a standard envelope. A recorded loop that ended mid-way
 (EV-0) is replayed as a failure of the next request.
 
 The replayed `report.md` files agree with the published `output/run_e_mini`
-and `output/run_f_sol` reports in every scored figure. Only run metadata
-differs: model name, endpoint, hashes, timestamps and runner commit.
+and `output/run_f_sol` reports in every scored figure except the D7.1
+figures of §5 (and console 3h), which step 5 corrected (T3-1, T3-11, V12-5):
+n is now the 10 computable questions, not the 500 executions, and the one
+EV-0 execution per run is out of n and listed per evidence class. Otherwise
+only run metadata differs: model name, endpoint, hashes, timestamps and
+runner commit.
 
 ## Coverage (at `77514b4`, Python 3.11, with inspect-ai installed)
 

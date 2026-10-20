@@ -102,11 +102,14 @@ result, by us or by anyone, in any document.
 
 3g. UNMEASURED CELLS: 0
 
-3h. D7.1 INVOCATION:
-  base: invoked=14 not_invoked=0 n=20
-    failure rate: 0/20 failures; one-sided 95% upper bound on the failure rate 13.9%
-  instruction_removed: invoked=0 not_invoked=0 n=20
-    failure rate: 0/20 failures; one-sided 95% upper bound on the failure rate 13.9%
+3h. D7.1 INVOCATION (n = questions; a question fails if any repeat is NOT-INVOKED; UNOBSERVABLE not in n):
+  base: invoked=7 not_invoked=0 n=7
+    EV-0 UNOBSERVABLE executions: 6 UNOBSERVABLE, not in n
+    aggregate spans 2 evidence classes (EV-0 UNOBSERVABLE, EV-2 PLATFORM-STRUCTURAL); figures are not comparable across classes
+    failure rate: 0/7 failures; one-sided 95% upper bound on the failure rate 34.8%
+  instruction_removed: invoked=0 not_invoked=0 n=0
+    EV-0 UNOBSERVABLE executions: 20 UNOBSERVABLE, not in n
+    failure rate: no observations
 \n3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 14
   TRANSCRIBED-ALTERED: 0
