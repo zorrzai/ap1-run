@@ -12,7 +12,10 @@ runner will use: --config and --fixture-dir in the scenario's args, or the
 defaults under <code_dir>/example/.
 
 The runner's console output is this process's stdout. Driver messages go
-to stderr. The result directory receives:
+to stderr. The runner gets a copy of that config, in the result directory, with its
+endpoint_url and model pointed at the mock (the runner reads both from the
+config alone). The result directory receives:
+    config.json     that copy
     exit.json       exit code, or the exception type and message
     seal.json       the seal record(s) the run created
     seal_inputs.json  what each call to the seal function was given
@@ -26,6 +29,7 @@ to stderr. The result directory receives:
 import argparse
 import json
 import os
+import shutil
 import sys
 import time
 from decimal import Decimal
@@ -96,6 +100,22 @@ def recorded_model(records):
     return None
 
 
+def with_config(args, config_path):
+    """args with --config replaced by (or, if absent, given as)
+    config_path."""
+    out, i = [], 0
+    while i < len(args):
+        if args[i] == '--config':
+            i += 2
+            continue
+        if args[i].startswith('--config='):
+            i += 1
+            continue
+        out.append(args[i])
+        i += 1
+    return ['--config', config_path] + out
+
+
 def main():
     code_dir, scenario_path, result_dir, repo_dir = sys.argv[1:5]
     with open(scenario_path, encoding='utf-8') as f:
@@ -130,13 +150,19 @@ def main():
         if name.startswith('AP1_SMOKE_'):
             del os.environ[name]
     os.environ['AP1_SMOKE_API_KEY'] = API_KEY
-    os.environ['AP1_SMOKE_ENDPOINT'] = mock.url
-    # A replay is configured with the model the published run was; any
-    # other scenario with the mock's.
-    os.environ['AP1_SMOKE_MODEL'] = (
-        replay_records is not None and recorded_model(replay_records)
-        or 'mock-model')
     os.environ.update(scenario.get('env', {}))
+
+    # The runner takes the endpoint and model from the config alone
+    # (T3-80): run it on a copy of the scenario's config, in the result
+    # directory, pointed at the mock. A replay is configured with the
+    # model the published run was; any other scenario with 'mock-model'.
+    run_config = os.path.join(result_dir, 'config.json')
+    shutil.copyfile(paths.config, run_config)
+    mock.point_config(
+        run_config,
+        model=(replay_records is not None and recorded_model(replay_records)
+               or 'mock-model'))
+    args = with_config(scenario.get('args', []), run_config)
 
     # The runner sleeps 0.5 s per execution, and the adapter 1 s between
     # transport retries. Neither changes behaviour; skip them.
@@ -181,7 +207,7 @@ def main():
 
         # The runner reads its options from sys.argv; give it the
         # scenario's, not this driver's.
-        sys.argv = ['ap1-run'] + scenario.get('args', [])
+        sys.argv = ['ap1-run'] + args
         outcome['exit_code'] = smoke_test.main()
     except SystemExit as e:
         outcome['exit_code'] = e.code
