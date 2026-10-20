@@ -14,10 +14,16 @@ _OUTCOME_OBSERVED = {'INVOKED': True, 'NOT-INVOKED': False}
 
 
 def verify_invocation_consistency(results):
-    """INVARIANT: INVOKED implies tool_calls present; NOT-INVOKED implies none.
+    """INVARIANT: INVOKED implies a call to the required operation;
+    NOT-INVOKED implies none.
 
     A scoring outcome that contradicts its own evidence is not a finding,
     it is a defect. The instrument must refuse to report it.
+
+    Calls to other tools (unoffered or hallucinated ones) are recorded and
+    reported but do not affect D7.1 (SPEC R0.3, R2.3; T3-38): the row
+    counts them in other_tool_calls_count (absent when there are none),
+    and they are left out of the count checked here.
 
     Raises RuntimeError (FATAL) on the first mismatch, naming the item.
     """
@@ -25,7 +31,8 @@ def verify_invocation_consistency(results):
         if r.get('status') != 'EXECUTED':
             continue
         outcome = r.get('invocation_outcome', '')
-        tc_count = r.get('tool_calls_count', 0)
+        tc_count = r.get('tool_calls_count', 0) - \
+            r.get('other_tool_calls_count', 0)
         item_id = r.get('item_id', '?')
         condition = r.get('condition', '?')
         repeat = r.get('repeat', '?')
@@ -34,7 +41,7 @@ def verify_invocation_consistency(results):
             raise RuntimeError(
                 f'FATAL: invocation consistency check failed. '
                 f'{item_id}/{condition}/r{repeat}: '
-                f'INVOKED but tool_calls_count=0. '
+                f'INVOKED but no call to the required operation. '
                 f'A scoring outcome that contradicts its own evidence '
                 f'is a defect, not a finding.')
 
@@ -42,7 +49,8 @@ def verify_invocation_consistency(results):
             raise RuntimeError(
                 f'FATAL: invocation consistency check failed. '
                 f'{item_id}/{condition}/r{repeat}: '
-                f'NOT-INVOKED but tool_calls_count={tc_count}. '
+                f'NOT-INVOKED but {tc_count} call(s) to the required '
+                f'operation. '
                 f'A scoring outcome that contradicts its own evidence '
                 f'is a defect, not a finding.')
 
