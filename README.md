@@ -207,6 +207,48 @@ runner does, so a run made with other inputs is verified against those
 (S3-G8-4). A fixture copy inside the clone does not change
 `runner_source_hash`, which covers only `src/ap1_run/` and `VERSION` (T3-70).
 
+### Two passes: running, then scoring
+
+A run has two passes, as the build specification requires (docs/SPEC.md §2).
+The **execution pass** sends every request and writes the transcript,
+`smoke_run.jsonl`: one record per execution, with every round's request as sent
+and raw response, the tool calls and their returns, the evidence class and the
+execution's status. Nothing in it is a score. Before the first request it also
+writes `pre_registration.json`: the seal record and the resolved configuration
+it sealed. The **scoring pass** then reads the transcript, never writing to it,
+and writes `report.md`, `adjudication_sheets.md`, `smoke_summary.json` and
+`DISCLAIMER.txt`. `ap1-run` runs both.
+
+### Scoring a transcript again
+
+The scoring pass can run alone on a run's transcript, with no endpoint and no
+API key:
+
+```bash
+ap1-run --rescore runs/today/smoke_run.jsonl \
+        --config my/config.json \
+        --fixture-dir my/fixture/ \
+        --output-dir runs/today-rescored/
+```
+
+Give the run's own config and fixture directory; `pre_registration.json` must
+be beside the transcript. Before scoring, the re-scorer verifies the run's seal
+against the inputs given (the config, the fixture, questions and ground-truth
+files, and the expected values, computed again), and refuses any mismatch,
+naming it, as well as a transcript of another run. It scores against the
+sealed expected values, as the run does. It writes the four scoring outputs to `--output-dir`, which must not be
+the transcript's directory. Re-scoring a finished run gives back its
+`smoke_summary.json`, `report.md` and adjudication sheets. Re-scoring the
+partial transcript of an interrupted run reports the executions it never
+reached as NOT-RUN, never as failures. From Python:
+`ap1_run.scoring.rescore.rescore_transcript(transcript_path, config_path=...,
+fixture_dir=..., output_dir=...)` returns the summary.
+
+The published runs in `output/` were written before the two passes were
+separated: their transcripts hold scoring records and lack the intermediate
+rounds, and they have no `pre_registration.json`, so they cannot be re-scored
+this way.
+
 ---
 
 ## What it deliberately does not do
@@ -465,10 +507,11 @@ pyproject.toml               package metadata; `pip install -e .`; the `ap1-run`
 smoke_test.py                shim: `python smoke_test.py` runs ap1_run.run
 
 src/ap1_run/
-  run.py                     drives a live endpoint (was smoke_test.py)
+  run.py                     drives a live endpoint (was smoke_test.py): the execution pass, then the scoring pass
   runner/                    the parts run.py drives
     console.py               the console report, sections 3a to 3l
     credentials.py           the API key: environment, or Windows Credential Manager
+    scoring_pass.py          the scoring pass: scores a run from its transcript, read-only
     executions.py            scores each execution and collects the findings
     outputs.py               writes report.md, the adjudication sheets and the summary
     settings.py              endpoint, model, the sampling printout; the R1.2 guard
@@ -484,7 +527,7 @@ src/ap1_run/
     ap1_texts.py             the AP-1 text of each version
     seal_constants.py        declared-constant checks on the ground-truth module
     version.py               runner version, source hash and environment
-    engine.py                execution loop
+    engine.py                execution loop; writes every round to the transcript, scores nothing
     context.py               delivered-context construction
     perturbation_guard.py    refuses a condition that varies more than one quantity
     evidence.py              invocation evidence classification
@@ -497,6 +540,7 @@ src/ap1_run/
     transcription.py         D7.3
     release_coverage.py      D7.3 release coverage
     answer_outcome.py        §6.8 outcome of an auto-scored response
+    rescore.py               the scoring pass alone on a run's transcript (`ap1-run --rescore`)
     provenance/              D7.2(a)
       trace.py               the five-step resolution ladder
       classify.py            invocation, item and sequential classification

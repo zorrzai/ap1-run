@@ -5,6 +5,13 @@ Spec: AP-1 Runner Build Spec v0.3, section 4 R1.2.
 Iterate items and conditions; call R0.2; drive the tool loop;
 write to R0.3. PERFORM NO SCORING.
 
+This is the execution pass (SPEC §2): execute_item writes one transcript
+record per execution, with every round's request and raw response, the
+structural tool-call record, the evidence class (R1.3) and the execution's
+status (EXECUTED, UNMEASURED or VOID). Scoring (figure identification, D1,
+D2, D7.2, D7.3) is a separate pass over the transcript
+(runner/scoring_pass.py), which never writes to it.
+
 Conditions in v1.0: 'base' and 'instruction_removed' (D7.1b).
 
 Item selection (normative):
@@ -19,11 +26,6 @@ from ap1_run.execution.context import build_delivered_context, format_fixture_co
 from ap1_run.execution.evidence import (
     classify_invocation, classify_attestation,
     extract_attestation, check_ev3_guard, EV_0, _extract_content,
-)
-from ap1_run.scoring.operation_correctness import classify_operation, reclassify_session
-from ap1_run.scoring.provenance.classify import (
-    classify_invocations_sequential, is_calculator_call,
-    mark_unmeasurable_item,
 )
 
 
@@ -63,7 +65,7 @@ def execute_item(item, *, condition, config, fixture,
             response_received=None, tool_calls=[],
             evidence_class=None, error_state='VOID',
             seal_hash=seal_hash, void_reason='underivable',
-            repeat=repeat,
+            repeat=repeat, status='VOID',
         )
         return {
             'item_id': item_id, 'condition': condition,
@@ -93,6 +95,8 @@ def execute_item(item, *, condition, config, fixture,
         )
     except Exception as e:
         rounds.append(_failed_round(0, messages, e))
+        cause = ('rate_limited' if isinstance(e, adapter.RateLimitError)
+                 else 'transport_error')
         transcript.append(
             transcript_path,
             item_id=item_id, arm_id=condition,
@@ -102,15 +106,14 @@ def execute_item(item, *, condition, config, fixture,
             evidence_class=EV_0,
             error_state=f'TRANSPORT_FAILURE: {e}',
             seal_hash=seal_hash, repeat=repeat,
-            rounds=rounds,
+            rounds=rounds, status='UNMEASURED', cause=cause,
         )
-        # F4/T3-65: the runner lists the cell with its cause
+        # F4/T3-65: the runner lists the cell with its cause (recorded,
+        # so the scoring pass reads it from the transcript)
         return {
             'item_id': item_id, 'condition': condition,
             'status': 'UNMEASURED', 'error': str(e),
-            'cause': ('rate_limited' if isinstance(e, adapter.RateLimitError)
-                      else 'transport_error'),
-            'ground_truth': gt,
+            'cause': cause, 'ground_truth': gt,
         }
 
     rounds.append({'round': 0, 'request': request_record,
@@ -144,6 +147,7 @@ def execute_item(item, *, condition, config, fixture,
             response_received=final_response, tool_calls=[],
             evidence_class=None, error_state='UNMEASURED: empty response',
             seal_hash=seal_hash, repeat=repeat, rounds=rounds,
+            status='UNMEASURED',
         )
         return {
             'item_id': item_id, 'condition': condition,
@@ -169,41 +173,14 @@ def execute_item(item, *, condition, config, fixture,
         _, att_reason = classify_attestation(
             attestation, {'ev3_implemented': False})
 
-    # D7.2(a): sequential operand provenance (D22 transitivity guard);
-    # a chained item without declared intermediates is UNMEASURABLE (T3-42);
-    # the runner then extends it to every execution of the question
-    # (runner/executions.py apply_question_measurability)
-    provenance_results = mark_unmeasurable_item(
-        classify_invocations_sequential(tool_calls_record, ctx, gt, config),
-        gt)
-
-    # D7.2(b): evaluate operation correctness for each calculator call.
-    # A call without a readable expression is OPERATION-UNOBSERVABLE,
-    # counted, not dropped (T3-16); one result per calculator call, so
-    # results and expressions stay aligned for the reclassification.
-    exprs = [_extract_calc_expression(tc)
-             for tc in tool_calls_record if is_calculator_call(tc)]
-    op_correctness_results = []
-    for expr in exprs:
-        try:
-            oc = classify_operation(expr, gt, config)
-            op_correctness_results.append(oc)
-        except Exception as e:
-            op_correctness_results.append({
-                'outcome': 'OPERATION-UNOBSERVABLE',
-                'reason': f'evaluation failed: '
-                          f'{type(e).__name__}: {e}',
-            })
-
-    # Session-level reclassification (forward-dependency rule)
-    op_correctness_results = reclassify_session(op_correctness_results, exprs)
-
     # Only a refusal's record carries the field, so others are unchanged
     refusal_record = {} if refusal is None else {'refusal': refusal}
 
     # T3-67: a loop stopped by the turn limit is flagged, not passed off
-    # as complete
-    error_state = _loop_exhaustion(final_response, round_shapes)
+    # as complete (an EV-0 execution keeps its own cause)
+    exhausted = _loop_exhaustion(final_response, round_shapes)
+    if error_state is None:
+        error_state = exhausted
 
     # Write transcript
     transcript.append(
@@ -221,10 +198,8 @@ def execute_item(item, *, condition, config, fixture,
         attestation_reason=att_reason,
         ground_truth_final=str(gt['final']),
         required_operation=gt['required_operation'],
-        operation_correctness=op_correctness_results,
-        provenance_results=provenance_results,
         **refusal_record,
-        rounds=rounds,
+        rounds=rounds, status='EXECUTED',
     )
 
     result = {
@@ -234,11 +209,10 @@ def execute_item(item, *, condition, config, fixture,
         'self_report': self_report,
         'tool_calls': tool_calls_record,
         'response': final_response, 'ground_truth': gt,
-        'provenance_results': provenance_results,
         **refusal_record,
     }
-    if error_state:
-        result['error_state'] = error_state
+    if exhausted and error_state == exhausted:
+        result['error_state'] = exhausted
     return result
 
 
@@ -354,23 +328,6 @@ def _drive_tool_loop(*, response, messages, config, tools,
 
     return all_tool_calls, current, round_shapes
 
-def _loop_exhaustion(final_response, round_shapes):
-    """The error state of a tool loop the turn limit stopped, else None.
-
-    The final response still asks for tool calls, and it was read (its
-    round's shape is recognised): the loop stopped at the limit, and those
-    calls were neither executed nor answered. (After a failed send the
-    last round is unrecognised and the final response is the last one
-    read; that is not exhaustion.)
-    """
-    pending = _extract_tool_calls(final_response)
-    if not pending or not round_shapes or not round_shapes[-1][0]:
-        return None
-    return (f'TOOL_LOOP_EXHAUSTED: the response after {MAX_TOOL_TURNS} '
-            f'tool turns still asked for {len(pending)} tool call(s), '
-            f'which were not executed')
-
-
 def _unobservable_cause(round_shapes, rounds, tools_offered):
     """The error state of an EV-0 execution: why the invocation could not
     be observed, and in which round (round 0 is the first request).
@@ -392,10 +349,31 @@ def _unobservable_cause(round_shapes, rounds, tools_offered):
 
 
 def _failed_round(number, messages, error):
-    """The transcript entry of a round whose request failed: the messages
-    it sent (a copy) and the error, in place of a response."""
-    return {'round': number, 'request': {'messages': copy.deepcopy(messages)},
-            'error': str(error)}
+    """The transcript entry of a round whose request failed, with the error
+    in place of a response: the adapter's request record with its attempt
+    log where the error carries one (S3-G1-18), else the messages it sent
+    (a copy)."""
+    request = getattr(error, 'request_record', None)
+    if not isinstance(request, dict):
+        request = {'messages': copy.deepcopy(messages)}
+    return {'round': number, 'request': request, 'error': str(error)}
+
+
+def _loop_exhaustion(final_response, round_shapes):
+    """The error state of a tool loop the turn limit stopped, else None.
+
+    The final response still asks for tool calls, and it was read (its
+    round's shape is recognised): the loop stopped at the limit, and those
+    calls were neither executed nor answered. (After a failed send the
+    last round is unrecognised and the final response is the last one
+    read; that is not exhaustion.)
+    """
+    pending = _extract_tool_calls(final_response)
+    if not pending or not round_shapes or not round_shapes[-1][0]:
+        return None
+    return (f'TOOL_LOOP_EXHAUSTED: the response after {MAX_TOOL_TURNS} '
+            f'tool turns still asked for {len(pending)} tool call(s), '
+            f'which were not executed')
 
 
 def _execute_tool(name, arguments_json):
@@ -424,7 +402,8 @@ def _record_shape(response, round_shapes):
 # -- Expression extraction -------------------------------------------
 
 def _extract_calc_expression(tool_call_record):
-    """Extract calculator expression from a tool-call record.
+    """Extract calculator expression from a tool-call record (used by the
+    scoring pass, runner/executions.py, for D7.2(b)).
 
     Returns the 'expression' argument, or None if not a calculator call
     or the arguments are not a JSON object with that key.

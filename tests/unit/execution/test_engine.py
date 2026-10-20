@@ -1,11 +1,12 @@
 """Unit tests for the execution engine (execution/engine.py).
 
 execute_item builds the request, sends it through the adapter, drives the
-tool loop, classifies the evidence, runs D7.2(a)/(b) and writes one
-transcript record. The adapter is a recording fake that returns scripted
-responses; the calculator is a fake module put in sys.modules. The
-transcript is real, in a temporary directory. The scoring modules are
-real unless a test replaces them with recorders to check the wiring.
+tool loop, classifies the evidence and writes one transcript record, with
+every round's request and response; it scores nothing (T3-21: D7.2 is
+scored by the scoring pass, tests/unit/runner/test_executions.py). The
+adapter is a recording fake that returns scripted responses; the
+calculator is a fake module put in sys.modules. The transcript is real, in
+a temporary directory.
 """
 
 import copy
@@ -119,41 +120,6 @@ def without_timestamp(record):
     return record
 
 
-class Recorders:
-    """Recording stand-ins for the scoring functions execute_item calls."""
-
-    def __init__(self, monkeypatch):
-        self.calls = {}
-        self.operation = {}      # expression -> result dict or exception
-        monkeypatch.setattr(engine, 'classify_invocations_sequential',
-                            self.classify_invocations_sequential)
-        monkeypatch.setattr(engine, 'classify_operation',
-                            self.classify_operation)
-        monkeypatch.setattr(engine, 'reclassify_session',
-                            self.reclassify_session)
-
-    def classify_invocations_sequential(self, *args):
-        self.calls.setdefault('provenance', []).append(copy.deepcopy(args))
-        return [{'provenance': 'P'}]
-
-    def classify_operation(self, *args):
-        self.calls.setdefault('operation', []).append(args)
-        found = self.operation.get(args[0], {'outcome': f'OC {args[0]}'})
-        if isinstance(found, Exception):
-            raise found
-        return found
-
-    def reclassify_session(self, results, exprs):
-        self.calls.setdefault('reclassify', []).append(
-            (list(results), list(exprs)))
-        return [dict(r, reclassified=True) for r in results]
-
-
-@pytest.fixture
-def recorders(monkeypatch):
-    return Recorders(monkeypatch)
-
-
 # -- constants ---------------------------------------------------------
 
 def test_conditions_base_and_instruction_removed():
@@ -179,7 +145,7 @@ def test_execute_item_underivable_void_without_request(tmp_path):
         'condition': 'instruction_removed', 'request_sent': None,
         'response_received': None, 'tool_calls': [], 'evidence_class': None,
         'error_state': 'VOID', 'seal_hash': 'seal-1',
-        'void_reason': 'underivable', 'repeat': None}]
+        'void_reason': 'underivable', 'repeat': None, 'status': 'VOID'}]
 
 
 def test_execute_item_derivable_missing_treated_derivable(tmp_path):
@@ -263,7 +229,22 @@ def test_execute_item_first_send_fails_unmeasured(tmp_path, error, cause):
         'repeat': None,
         # V12-3: the failed round, with the messages it sent
         'rounds': [{'round': 0, 'request': {'messages': INITIAL},
-                    'error': str(error)}]}]
+                    'error': str(error)}],
+        # the cause is recorded, so the scoring pass reads it (T3-21)
+        'status': 'UNMEASURED', 'cause': cause}]
+
+
+@pytest.mark.finding('V12-3', 'S3-G1-18')
+def test_execute_item_failed_round_keeps_the_adapter_attempt_log(tmp_path):
+    # A failed round records the adapter's request record with its
+    # attempt log where the error carries one (numeric-hardening,
+    # S3-G1-18), not just the messages.
+    error = adapter.AdapterError('transport failure after 3 attempts: x')
+    error.request_record = {'messages': INITIAL, 'attempts': [1, 2, 3]}
+    _, records = run(tmp_path, FakeAdapter(error))
+    assert records[0]['rounds'] == [{
+        'round': 0, 'error': str(error),
+        'request': {'messages': INITIAL, 'attempts': [1, 2, 3]}}]
 
 
 # -- the repeat index (T3-9) --------------------------------------------
@@ -273,12 +254,13 @@ def test_execute_item_first_send_fails_unmeasured(tmp_path, error, cause):
 @pytest.mark.parametrize('gt, replies', [
     (dict(GT, derivable=False), []),
     (GT, [adapter.AdapterError('HTTP 500')]),
-    (GT, [answer()]),
-    (GT, [answer('')])],
-    ids=['void', 'transport-failure', 'executed', 'empty-response'])
+    (GT, [answer('')]),
+    (GT, [answer()])],
+    ids=['void', 'transport-failure', 'empty-response', 'executed'])
 def test_execute_item_writes_its_repeat_on_the_record(tmp_path, gt, replies):
     # Every record the engine writes carries the repeat it was given, so
-    # the outputs can join a record to its own execution.
+    # the outputs can join a record to its own execution (the scoring pass
+    # finds each execution's record by it, T3-21).
     path = tmp_path / 'run.jsonl'
     execute_item(
         ITEM, condition='base', config=CONFIG, fixture=FIXTURE,
@@ -293,9 +275,8 @@ def test_execute_item_writes_its_repeat_on_the_record(tmp_path, gt, replies):
 
 @pytest.mark.finding('T3-21')
 def test_execute_item_answer_without_tools_record_exact(tmp_path):
-    # T3-21: the record carries the D7.2 scoring (operation_correctness,
-    # provenance_results) computed before the write. Correct (SPEC §2):
-    # the engine writes what happened; scoring is a separate pass.
+    # T3-21 (fixed): the record holds what happened, with no scoring in
+    # it (SPEC §2); the scoring pass scores it.
     result, records = run(tmp_path, FakeAdapter(answer()))
     assert [without_timestamp(r) for r in records] == [{
         'item_id': 'Q01', 'arm_id': 'base', 'condition': 'base',
@@ -306,15 +287,15 @@ def test_execute_item_answer_without_tools_record_exact(tmp_path):
         'repeat': None,
         'invocation_outcome': 'NOT-INVOKED', 'self_report': None,
         'attestation_reason': None, 'ground_truth_final': '15.20',
-        'required_operation': 'calculator', 'operation_correctness': [],
-        'provenance_results': [],
+        'required_operation': 'calculator',
         'rounds': [{'round': 0, 'request': {'request_no': 1},
-                    'response': answer()}]}]
+                    'response': answer()}],
+        'status': 'EXECUTED'}]
     assert result == {
         'item_id': 'Q01', 'condition': 'base', 'status': 'EXECUTED',
         'evidence_class': EV_2, 'invocation_outcome': 'NOT-INVOKED',
         'self_report': None, 'tool_calls': [], 'response': answer(),
-        'ground_truth': GT, 'provenance_results': []}
+        'ground_truth': GT}
 
 
 def test_execute_item_self_report_recorded(tmp_path):
@@ -341,6 +322,8 @@ def test_execute_item_empty_response_recorded_as_empty_without_outcome(
     assert records[0]['rounds'] == [{'round': 0,
                                      'request': {'request_no': 1},
                                      'response': answer('')}]
+    assert (records[0]['status'], records[0]['repeat']) == (
+        'UNMEASURED', None)
     assert (records[0]['seal_hash'], records[0]['item_id'],
             records[0]['arm_id'], records[0]['condition']) == (
         'seal-1', 'Q01', 'base', 'base')
@@ -688,100 +671,34 @@ def test_drive_tool_loop_round_shapes_one_per_response(calculator):
     assert shapes == [(True, None)] * 3
 
 
-# -- D7.2 wiring -------------------------------------------------------
+# -- no scoring (T3-21) -------------------------------------------------
 
-@pytest.mark.finding('S3-G2-5')
-def test_execute_item_scoring_wired(tmp_path, calculator, recorders):
-    # S3-G2-5: two results (the python call has no expression) but three
-    # expressions, '' for the python call, so reclassify_session gets
-    # lists that are out of step from that call on. Correct: one
-    # expression per result, in the same order.
-    send = FakeAdapter(calls(tool_call('1+1', id='a'),
-                             tool_call(name='python', id='b'),
-                             tool_call('2*3', id='c')), answer())
-    result, records = run(tmp_path, send)
-    tcs = result['tool_calls']
-    ctx = {'savings': {'balance': '15200.00', 'annual_rate': '1.2'}}
-    assert recorders.calls['provenance'] == [(tcs, ctx, GT, CONFIG)]
-    assert recorders.calls['operation'] == [('1+1', GT, CONFIG),
-                                            ('2*3', GT, CONFIG)]
-    # One expression per calculator call, aligned with the results; the
-    # python call is not a calculator call (T3-16).
-    assert recorders.calls['reclassify'] == [
-        ([{'outcome': 'OC 1+1'}, {'outcome': 'OC 2*3'}],
-         ['1+1', '2*3'])]
-    assert records[0]['operation_correctness'] == [
-        {'outcome': 'OC 1+1', 'reclassified': True},
-        {'outcome': 'OC 2*3', 'reclassified': True}]
-    assert records[0]['provenance_results'] == [{'provenance': 'P'}]
-    assert result['provenance_results'] == [{'provenance': 'P'}]
-
-
-def test_execute_item_operation_error_unobservable(tmp_path, calculator,
-                                                   recorders):
-    recorders.operation['1+1'] = ZeroDivisionError('division by zero')
-    _, records = run(tmp_path, FakeAdapter(calls(tool_call('1+1')),
-                                           answer()))
-    assert records[0]['operation_correctness'] == [{
-        'outcome': 'OPERATION-UNOBSERVABLE',
-        'reason': 'evaluation failed: ZeroDivisionError: division by zero',
-        'reclassified': True}]
+@pytest.mark.finding('T3-21')
+@pytest.mark.req('R1.2')
+def test_execute_item_scores_no_d72(tmp_path, calculator):
+    # SPEC R1.2 "Perform no scoring": D7.2 (provenance, operation
+    # correctness) is scored by the scoring pass from this record
+    # (runner/executions.py score_d72), not here.
+    result, records = run(tmp_path, FakeAdapter(calls(tool_call('1+1')),
+                                                answer()))
+    assert not {'provenance_results', 'operation_correctness'} & (
+        set(result) | set(records[0]))
+    assert (records[0]['status'], records[0]['tool_calls'][0]['id']) == (
+        'EXECUTED', 'call_1')
+    for name in ('classify_invocations_sequential', 'classify_operation',
+                 'reclassify_session'):
+        assert not hasattr(engine, name), name
 
 
 @pytest.mark.finding('T3-16')
-def test_execute_item_malformed_arguments_invoked_and_scored(
-        tmp_path, calculator, recorders):
-    # T3-16: non-JSON arguments count as INVOKED (D7.7) and are scored:
-    # classify_operation gets no expression (None, so its outcome is
-    # OPERATION-UNOBSERVABLE), and reclassify_session gets one result and
-    # one expression for the call, aligned.
+def test_execute_item_malformed_arguments_invoked(tmp_path, calculator):
+    # T3-16: non-JSON arguments count as INVOKED (D7.7); the call is
+    # recorded with its raw arguments for the scoring pass.
     bad = tool_call(arguments='15200*1.2/100/12')
     result, records = run(tmp_path, FakeAdapter(calls(bad), answer()))
     assert result['invocation_outcome'] == 'INVOKED'
-    assert recorders.calls['operation'] == [(None, GT, CONFIG)]
-    assert recorders.calls['reclassify'] == [([{'outcome': 'OC None'}],
-                                              [None])]
-    assert records[0]['operation_correctness'] == [
-        {'outcome': 'OC None', 'reclassified': True}]
-
-
-@pytest.mark.finding('T3-16')
-def test_execute_item_malformed_call_real_scoring_unobservable(
-        tmp_path, calculator):
-    # With the real scorers, the malformed call is OPERANDS-UNOBSERVABLE
-    # and OPERATION-UNOBSERVABLE, and the valid call after it is scored.
-    bad = tool_call(arguments='15200*1.2/100/12', id='a')
-    send = FakeAdapter(calls(bad, tool_call('15200*1.2', id='b')), answer())
-    result, records = run(tmp_path, send)
-    assert [p['outcome'] for p in result['provenance_results']] == [
-        'OPERANDS-UNOBSERVABLE', 'OPERANDS-GROUNDED']
-    assert [o['outcome'] for o in records[0]['operation_correctness']] == [
-        'OPERATION-UNOBSERVABLE', 'WRONG-OPERATION']
-
-
-@pytest.mark.finding('T3-21')
-def test_execute_item_scoring_error_nothing_written(tmp_path, calculator,
-                                                    monkeypatch):
-    # T3-21: scoring runs before the transcript write, so a scoring
-    # failure loses the spent request and its response. Correct: the
-    # record is written first.
-    def broken(*args):
-        raise RuntimeError('scorer bug')
-
-    monkeypatch.setattr(engine, 'classify_invocations_sequential', broken)
-    send = FakeAdapter(calls(tool_call()), answer())
-    with pytest.raises(RuntimeError, match='scorer bug'):
-        run(tmp_path, send)
-    assert len(send.calls) == 2
-    assert transcript.read_all(tmp_path / 'run.jsonl') == []
-
-
-def test_execute_item_real_scoring_correct_call(tmp_path, calculator):
-    result, records = run(tmp_path, FakeAdapter(calls(tool_call('15200*1.2')),
-                                                answer()))
-    assert [p['outcome'] for p in result['provenance_results']] == [
-        'OPERANDS-GROUNDED']
-    assert len(records[0]['operation_correctness']) == 1
+    assert records[0]['tool_calls'][0]['function']['arguments'] == \
+        '15200*1.2/100/12'
 
 
 # -- _execute_tool -----------------------------------------------------
@@ -884,10 +801,6 @@ def _contains(tree, target):
 
 @pytest.mark.finding('T3-21')
 @pytest.mark.req('R1.2', 'R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-21: the engine writes D7.2(a)/(b) scoring '
-                          '(provenance_results, operation_correctness) into '
-                          'the transcript record')
 def test_execute_item_record_has_no_scoring_fields(tmp_path, calculator):
     # Correct (SPEC §2 "R1 EXECUTE: no scoring occurs here"; R1.2 "Perform
     # no scoring"; the maintainer's decision DEC-6, T3-21): the
@@ -1152,58 +1065,18 @@ def test_execute_item_model_controlled_arguments_recorded_no_raise(
     # Correct (T3-39; S3-G2-4): input the model controls never raises out
     # of the engine; the call is recorded and the execution written to the
     # transcript, with that call's operands unobservable.
+    # Since T3-21, D7.2 is scored by the scoring pass (score_d72), from
+    # the record; it must not raise either.
+    from ap1_run.runner.executions import score_d72
     send = FakeAdapter(calls(tool_call(arguments=arguments)), answer())
     result, records, error = run_without_raising(tmp_path, send)
     assert error is None, f'{type(error).__name__}: {error}'
     assert len(records) == 1 and len(result['tool_calls']) == 1
+    ctx = {'savings': {'balance': '15200.00', 'annual_rate': '1.2'}}
+    provenance_results, _ = score_d72(records[0]['tool_calls'], ctx, GT,
+                                      CONFIG)
     assert all(p['outcome'] != 'OPERANDS-GROUNDED'
-               for p in result['provenance_results'])
-
-
-# S3-G2-5: execute_item hands reclassify_session one result per calculator
-# call with an expression but one expression per tool call ('' for a call
-# without one). The fix may align the lists here or in reclassify_session;
-# these tests hold for either. The reference is what the same calls give
-# with no skipped call (test_execute_item_real_scoring_* and the aligned
-# reclassify_session tests in tests/unit/scoring/).
-
-def outcome_of(records, value):
-    """The D7.2(b) outcome of the call that evaluated to `value`."""
-    [r] = [r for r in records[0]['operation_correctness']
-           if r.get('evaluated_result') is not None
-           and D(r['evaluated_result']) == D(value)]
-    return r['outcome']
-
-
-@pytest.mark.finding('S3-G2-5')
-@pytest.mark.req('AP-1 D7.2(b)')
-def test_execute_item_skipped_call_value_fed_forward_is_operation_correct(
-        tmp_path, calculator):
-    # 15200*0.012 = 182.4 is wrong on its own and feeds 182.4/12 = 15.2.
-    # Without the python call first it is reclassified OPERATION-CORRECT,
-    # as an operand of the later call; a python call before it must not
-    # change that. Before the S3-G2-5 fix it stayed WRONG-OPERATION.
-    send = FakeAdapter(calls(tool_call(name='python', id='a'),
-                             tool_call('15200*0.012', id='b'),
-                             tool_call('182.4/12', id='c')), answer())
-    _, records = run(tmp_path, send)
-    assert outcome_of(records, '182.4') == 'OPERATION-CORRECT'
-
-
-@pytest.mark.finding('S3-G2-5')
-@pytest.mark.req('AP-1 D7.2(b)')
-def test_execute_item_skipped_call_value_feeding_nothing_stays_wrong(
-        tmp_path, calculator):
-    # 15*1 = 15 is wrong and feeds nothing (15.2*1 has operands 15.2 and
-    # 1). Without the python call first it stays WRONG-OPERATION. Today,
-    # after the python call, 15 is looked up in the operands of '15*1'
-    # itself and becomes OPERATION-CORRECT.
-    send = FakeAdapter(calls(tool_call(name='python', id='a'),
-                             tool_call('15*1', id='b'),
-                             tool_call('15.2*1', id='c')), answer())
-    _, records = run(tmp_path, send)
-    assert outcome_of(records, '15') == 'WRONG-OPERATION'
-
+               for p in provenance_results)
 
 
 # -- T3-10: a refusal or content-filter stop is executed --------------------

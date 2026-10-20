@@ -29,7 +29,10 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
     executed = [r for r in all_results if r['status'] == 'EXECUTED']
     unmeasured = [r for r in all_results if r['status'] == 'UNMEASURED']
     void = [r for r in all_results if r['status'] == 'VOID']
-    print(f'\n3a. COMPLETION: {len(executed)} executed, {len(unmeasured)} unmeasured, {len(void)} void')
+    not_run = [r for r in all_results if r['status'] == 'NOT-RUN']
+    print(f'\n3a. COMPLETION: {len(executed)} executed, {len(unmeasured)} unmeasured, {len(void)} void'
+          + (f', {len(not_run)} not run (the transcript ends before them)'
+             if not_run else ''))
     # T3-67: executions flagged by the engine (a tool loop the turn limit
     # stopped), named so they are not silent
     for r in executed:

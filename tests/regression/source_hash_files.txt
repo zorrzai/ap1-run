@@ -24,6 +24,7 @@ src/ap1_run/runner/console.py
 src/ap1_run/runner/credentials.py
 src/ap1_run/runner/executions.py
 src/ap1_run/runner/outputs.py
+src/ap1_run/runner/scoring_pass.py
 src/ap1_run/runner/settings.py
 src/ap1_run/runner/summary.py
 src/ap1_run/scoring/__init__.py
@@ -38,4 +39,5 @@ src/ap1_run/scoring/provenance/classify.py
 src/ap1_run/scoring/provenance/trace.py
 src/ap1_run/scoring/release_coverage.py
 src/ap1_run/scoring/reproducibility.py
+src/ap1_run/scoring/rescore.py
 src/ap1_run/scoring/transcription.py

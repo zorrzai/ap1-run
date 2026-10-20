@@ -1157,6 +1157,7 @@ and the example modules (`example/ground_truth_example.py`,
 | `src/ap1_run/scoring/transcription.py` | Instrument module |
 | `src/ap1_run/scoring/release_coverage.py` | Instrument module |
 | `src/ap1_run/scoring/answer_outcome.py` | Instrument module |
+| `src/ap1_run/scoring/rescore.py` | Instrument module |
 | `src/ap1_run/foundation/transcript.py` | Instrument module |
 | `src/ap1_run/run.py` | Demonstration tooling |
 | `src/ap1_run/runner/console.py` | Demonstration tooling |
@@ -1164,6 +1165,7 @@ and the example modules (`example/ground_truth_example.py`,
 | `src/ap1_run/runner/executions.py` | Demonstration tooling |
 | `src/ap1_run/runner/outputs.py` | Demonstration tooling |
 | `src/ap1_run/runner/settings.py` | Demonstration tooling |
+| `src/ap1_run/runner/scoring_pass.py` | Demonstration tooling |
 | `src/ap1_run/runner/summary.py` | Demonstration tooling |
 | `example/ground_truth_example.py` | Example / demonstration |
 | `example/calculator_tool.py` | Example / demonstration |
