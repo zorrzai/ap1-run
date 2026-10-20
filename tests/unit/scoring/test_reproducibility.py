@@ -428,3 +428,22 @@ def test_surface_values_unreadable_shape_is_empty(surface):
          {'choices': [{'message': {'content': ['x']}}]},
          {'choices': [{'message': {'tool_calls': ['x']}}]}],
         surface) == [''] * 6
+
+
+@pytest.mark.finding('S3-G5-4')
+@pytest.mark.parametrize('requested, echoed, status', [
+    ('0.70', 0.7, 'VERIFIED'),          # equal as numbers
+    (1, '1.0', 'VERIFIED'),
+    ('auto', 'auto', 'VERIFIED'),       # equal as text
+    ('auto', 'none', 'MISMATCH'),       # text, not numbers
+    (True, 1, 'MISMATCH'),              # a bool is not the number 1
+    (0.5, 'high', 'MISMATCH'),          # one side not a number
+    ('sNaN', 'sNaN', 'VERIFIED'),       # same text, never compared as numbers
+    ('sNaN', '0', 'MISMATCH'),          # a signalling NaN never raises out
+    (0.7, 0.70001, 'MISMATCH'),
+])
+def test_parameter_echo_compares_numbers_as_decimals_else_text(
+        requested, echoed, status):
+    r = check_parameter_echo({'p': requested}, {'p': echoed})
+    assert r['status'] == status
+    assert r['verified'] is (status == 'VERIFIED')
