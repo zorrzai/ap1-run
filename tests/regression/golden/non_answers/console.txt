@@ -23,8 +23,8 @@ Total requests: 40
   Q02/base/r2: ADJUDICATE-DECLINE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
   Q03/base/r1: ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
   Q03/base/r2: ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
-  Q04/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
-  Q04/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q04/base/r1: ADJUDICATE-AMBIGUOUS | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q04/base/r2: ADJUDICATE-AMBIGUOUS | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q05/base/r1: UNMEASURED
   Q05/base/r2: UNMEASURED
   Q06/base/r1: AUTO-NO-FIGURE | EV-2 PLATFORM-STRUCTURAL | INVOKED
@@ -43,8 +43,8 @@ Total requests: 40
   Q02/instruction_removed/r2: ADJUDICATE-DECLINE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
   Q03/instruction_removed/r1: ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
   Q03/instruction_removed/r2: ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
-  Q04/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
-  Q04/instruction_removed/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q04/instruction_removed/r1: ADJUDICATE-AMBIGUOUS | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q04/instruction_removed/r2: ADJUDICATE-AMBIGUOUS | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q05/instruction_removed/r1: UNMEASURED
   Q05/instruction_removed/r2: UNMEASURED
   Q06/instruction_removed/r1: AUTO-NO-FIGURE | EV-2 PLATFORM-STRUCTURAL | INVOKED
@@ -75,18 +75,18 @@ result, by us or by anyone, in any document.
 3a. COMPLETION: 32 executed, 8 unmeasured, 0 void
 
 3b. FIGURE IDENTIFICATION:
-  ADJUDICATE-AMBIGUOUS: 4
+  ADJUDICATE-AMBIGUOUS: 8
   ADJUDICATE-DECLINE: 4
   ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING: 4
-  AUTO-MATCH: 16
+  AUTO-MATCH: 12
   AUTO-NO-FIGURE: 4
-  Auto-scored: 20/32 (62%)
-  Adjudicated: 12/32 (38%)
+  Auto-scored: 16/32 (50%)
+  Adjudicated: 16/32 (50%)
 
   Per item (base condition, first repeat):
     Q02: ADJUDICATE-DECLINE — decline marker matched: 'I cannot'
     Q03: ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING — 2 numeric tokens found, none matching expected
-    Q04: AUTO-MATCH — exactly one token matches: '$430.75'
+    Q04: ADJUDICATE-AMBIGUOUS — the one matching token '$430.75' is followed by 1 other figure(s) of the same kind, first '$1,006.25'; which figure is the released answer is undetermined
     Q06: AUTO-NO-FIGURE — no numeric tokens found in response
     Q07: ADJUDICATE-AMBIGUOUS — 2 tokens match expected value — ambiguous
     Q08: AUTO-MATCH — exactly one token matches: '$287069.25'
@@ -110,9 +110,9 @@ result, by us or by anyone, in any document.
   instruction_removed: invoked=6 not_invoked=2 n=8
     failure rate: 2/8 (25.0%); one-sided 95% upper bound on the failure rate 60.0%
 \n3h2. D7.3 TRANSCRIPTION:
-  TRANSCRIBED-EXACT: 16
+  TRANSCRIBED-EXACT: 12
   TRANSCRIBED-ALTERED: 0
-  UNOBSERVABLE: 16
+  UNOBSERVABLE: 20
 
 3h3. D7.3 RELEASE COVERAGE:
   GOVERNED-RELEASE: 20
@@ -125,12 +125,13 @@ result, by us or by anyone, in any document.
   OPERATION-UNOBSERVABLE: 0
 
 3j. D1 ACCURACY:
-  Auto-scored: 20
-  Adjudicated: 12
-  Correct: 16
+  Auto-scored: 16
+  Adjudicated: 16
+  Correct: 12
   Incorrect: 0
   No figure: 4
-  Accuracy rate: 1
+  Unmeasurable: 0
+  Accuracy rate: not computed (16 items await adjudication)
 
 3k. D2 REPRODUCIBILITY:
   CAP: D2.2 cap: temperature was platform-rejected. Detail: OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported.

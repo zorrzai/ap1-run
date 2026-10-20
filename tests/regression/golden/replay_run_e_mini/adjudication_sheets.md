@@ -66,7 +66,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -177,7 +177,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -288,7 +288,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -399,7 +399,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -509,7 +509,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -619,7 +619,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -728,7 +728,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -837,7 +837,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -950,7 +950,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1063,7 +1063,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1174,7 +1174,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1285,7 +1285,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1394,7 +1394,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1503,7 +1503,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1616,7 +1616,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1729,7 +1729,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1841,7 +1841,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1953,7 +1953,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2064,7 +2064,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2175,7 +2175,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2284,7 +2284,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2393,7 +2393,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2506,7 +2506,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2619,7 +2619,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2730,7 +2730,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2841,7 +2841,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2950,7 +2950,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3059,7 +3059,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3170,7 +3170,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3281,7 +3281,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3393,7 +3393,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3505,7 +3505,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3615,7 +3615,7 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3725,7 +3725,7 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3835,7 +3835,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3945,7 +3945,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4056,7 +4056,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4167,7 +4167,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4278,7 +4278,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4389,7 +4389,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4499,7 +4499,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4609,7 +4609,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4722,7 +4722,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4835,7 +4835,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4945,7 +4945,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5055,7 +5055,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5168,7 +5168,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5281,7 +5281,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5392,7 +5392,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5503,7 +5503,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5557,7 +5557,235 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 26: Q05, repeat 15 — Scorer 1
+## Item 26: Q05, repeat 4 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The credit card balance after one month, if only the minimum payment of $25.00 is made, would be $2,411.00. This is because interest of $36.00 is added to the remaining balance after the minimum payment is deducted.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400.00 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400.00 - 25.00"}`)
+  → `{"result": "2375.0"}`
+
+- **calculator**(`{"expression":"2375.0 + 36.0"}`)
+  → `{"result": "2411.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 26: Q05, repeat 4 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The credit card balance after one month, if only the minimum payment of $25.00 is made, would be $2,411.00. This is because interest of $36.00 is added to the remaining balance after the minimum payment is deducted.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400.00 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400.00 - 25.00"}`)
+  → `{"result": "2375.0"}`
+
+- **calculator**(`{"expression":"2375.0 + 36.0"}`)
+  → `{"result": "2411.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 27: Q05, repeat 15 — Scorer 1
 
 Execution id: `<EXECUTION_ID_26>`
 
@@ -5673,7 +5901,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 26: Q05, repeat 15 — Scorer 2
+## Item 27: Q05, repeat 15 — Scorer 2
 
 Execution id: `<EXECUTION_ID_26>`
 
@@ -5789,7 +6017,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 27: Q05, repeat 22 — Scorer 1
+## Item 28: Q05, repeat 22 — Scorer 1
 
 Execution id: `<EXECUTION_ID_27>`
 
@@ -5891,7 +6119,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 27: Q05, repeat 22 — Scorer 2
+## Item 28: Q05, repeat 22 — Scorer 2
 
 Execution id: `<EXECUTION_ID_27>`
 
@@ -5993,7 +6221,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 28: Q05, repeat 28 — Scorer 1
+## Item 29: Q05, repeat 28 — Scorer 1
 
 Execution id: `<EXECUTION_ID_28>`
 
@@ -6109,7 +6337,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 28: Q05, repeat 28 — Scorer 2
+## Item 29: Q05, repeat 28 — Scorer 2
 
 Execution id: `<EXECUTION_ID_28>`
 
@@ -6225,7 +6453,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 29: Q05, repeat 30 — Scorer 1
+## Item 30: Q05, repeat 30 — Scorer 1
 
 Execution id: `<EXECUTION_ID_29>`
 
@@ -6341,7 +6569,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 29: Q05, repeat 30 — Scorer 2
+## Item 30: Q05, repeat 30 — Scorer 2
 
 Execution id: `<EXECUTION_ID_29>`
 
@@ -6457,7 +6685,235 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 30: Q05, repeat 36 — Scorer 1
+## Item 31: Q05, repeat 34 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+After one month, if only the minimum payment of $25.00 is made, the credit card balance will be $2411.00. This is because the interest for the month ($36.00) is added to the balance after subtracting the minimum payment.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400.00 * (18.0 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400.00 - 25.00"}`)
+  → `{"result": "2375.0"}`
+
+- **calculator**(`{"expression":"2375.0 + 36.0"}`)
+  → `{"result": "2411.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 31: Q05, repeat 34 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+After one month, if only the minimum payment of $25.00 is made, the credit card balance will be $2411.00. This is because the interest for the month ($36.00) is added to the balance after subtracting the minimum payment.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400.00 * (18.0 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400.00 - 25.00"}`)
+  → `{"result": "2375.0"}`
+
+- **calculator**(`{"expression":"2375.0 + 36.0"}`)
+  → `{"result": "2411.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 32: Q05, repeat 36 — Scorer 1
 
 Execution id: `<EXECUTION_ID_30>`
 
@@ -6526,7 +6982,7 @@ If only the minimum payment of $25.00 is made after one month, the credit card b
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6573,7 +7029,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 30: Q05, repeat 36 — Scorer 2
+## Item 32: Q05, repeat 36 — Scorer 2
 
 Execution id: `<EXECUTION_ID_30>`
 
@@ -6642,7 +7098,7 @@ If only the minimum payment of $25.00 is made after one month, the credit card b
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6689,7 +7145,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 31: Q05, repeat 41 — Scorer 1
+## Item 33: Q05, repeat 41 — Scorer 1
 
 Execution id: `<EXECUTION_ID_31>`
 
@@ -6791,7 +7247,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 31: Q05, repeat 41 — Scorer 2
+## Item 33: Q05, repeat 41 — Scorer 2
 
 Execution id: `<EXECUTION_ID_31>`
 
@@ -6893,7 +7349,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 32: Q05, repeat 46 — Scorer 1
+## Item 34: Q05, repeat 46 — Scorer 1
 
 Execution id: `<EXECUTION_ID_32>`
 
@@ -6995,7 +7451,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 32: Q05, repeat 46 — Scorer 2
+## Item 34: Q05, repeat 46 — Scorer 2
 
 Execution id: `<EXECUTION_ID_32>`
 
@@ -7097,7 +7553,235 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 33: Q07, repeat 44 — Scorer 1
+## Item 35: Q05, repeat 49 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25.00 is made, the credit card balance after one month will be $2411.00. This is because the interest for one month at an 18.0% annual rate on a $2400.00 balance is $36.00, which is added to the reduced balance after the payment.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400.00 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400.00 - 25.00"}`)
+  → `{"result": "2375.0"}`
+
+- **calculator**(`{"expression":"2375.0 + 36.0"}`)
+  → `{"result": "2411.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 35: Q05, repeat 49 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25.00 is made, the credit card balance after one month will be $2411.00. This is because the interest for one month at an 18.0% annual rate on a $2400.00 balance is $36.00, which is added to the reduced balance after the payment.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400.00 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400.00 - 25.00"}`)
+  → `{"result": "2375.0"}`
+
+- **calculator**(`{"expression":"2375.0 + 36.0"}`)
+  → `{"result": "2411.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 36: Q07, repeat 44 — Scorer 1
 
 Execution id: `<EXECUTION_ID_33>`
 
@@ -7214,7 +7898,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 33: Q07, repeat 44 — Scorer 2
+## Item 36: Q07, repeat 44 — Scorer 2
 
 Execution id: `<EXECUTION_ID_33>`
 
@@ -7331,7 +8015,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 34: Q08, repeat 1 — Scorer 1
+## Item 37: Q08, repeat 1 — Scorer 1
 
 Execution id: `<EXECUTION_ID_34>`
 
@@ -7429,7 +8113,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 34: Q08, repeat 1 — Scorer 2
+## Item 37: Q08, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_34>`
 
@@ -7527,7 +8211,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 35: Q08, repeat 2 — Scorer 1
+## Item 38: Q08, repeat 2 — Scorer 1
 
 Execution id: `<EXECUTION_ID_35>`
 
@@ -7625,7 +8309,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 35: Q08, repeat 2 — Scorer 2
+## Item 38: Q08, repeat 2 — Scorer 2
 
 Execution id: `<EXECUTION_ID_35>`
 
@@ -7723,7 +8407,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 36: Q08, repeat 3 — Scorer 1
+## Item 39: Q08, repeat 3 — Scorer 1
 
 Execution id: `<EXECUTION_ID_36>`
 
@@ -7821,7 +8505,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 36: Q08, repeat 3 — Scorer 2
+## Item 39: Q08, repeat 3 — Scorer 2
 
 Execution id: `<EXECUTION_ID_36>`
 
@@ -7919,7 +8603,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 37: Q08, repeat 4 — Scorer 1
+## Item 40: Q08, repeat 4 — Scorer 1
 
 Execution id: `<EXECUTION_ID_37>`
 
@@ -8017,7 +8701,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 37: Q08, repeat 4 — Scorer 2
+## Item 40: Q08, repeat 4 — Scorer 2
 
 Execution id: `<EXECUTION_ID_37>`
 
@@ -8115,7 +8799,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 38: Q08, repeat 5 — Scorer 1
+## Item 41: Q08, repeat 5 — Scorer 1
 
 Execution id: `<EXECUTION_ID_38>`
 
@@ -8213,7 +8897,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 38: Q08, repeat 5 — Scorer 2
+## Item 41: Q08, repeat 5 — Scorer 2
 
 Execution id: `<EXECUTION_ID_38>`
 
@@ -8311,7 +8995,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 39: Q08, repeat 6 — Scorer 1
+## Item 42: Q08, repeat 6 — Scorer 1
 
 Execution id: `<EXECUTION_ID_39>`
 
@@ -8409,7 +9093,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 39: Q08, repeat 6 — Scorer 2
+## Item 42: Q08, repeat 6 — Scorer 2
 
 Execution id: `<EXECUTION_ID_39>`
 
@@ -8507,7 +9191,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 40: Q08, repeat 7 — Scorer 1
+## Item 43: Q08, repeat 7 — Scorer 1
 
 Execution id: `<EXECUTION_ID_40>`
 
@@ -8605,7 +9289,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 40: Q08, repeat 7 — Scorer 2
+## Item 43: Q08, repeat 7 — Scorer 2
 
 Execution id: `<EXECUTION_ID_40>`
 
@@ -8703,7 +9387,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 41: Q08, repeat 8 — Scorer 1
+## Item 44: Q08, repeat 8 — Scorer 1
 
 Execution id: `<EXECUTION_ID_41>`
 
@@ -8801,7 +9485,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 41: Q08, repeat 8 — Scorer 2
+## Item 44: Q08, repeat 8 — Scorer 2
 
 Execution id: `<EXECUTION_ID_41>`
 
@@ -8899,7 +9583,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 42: Q08, repeat 9 — Scorer 1
+## Item 45: Q08, repeat 9 — Scorer 1
 
 Execution id: `<EXECUTION_ID_42>`
 
@@ -8997,7 +9681,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 42: Q08, repeat 9 — Scorer 2
+## Item 45: Q08, repeat 9 — Scorer 2
 
 Execution id: `<EXECUTION_ID_42>`
 
@@ -9095,7 +9779,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 43: Q08, repeat 10 — Scorer 1
+## Item 46: Q08, repeat 10 — Scorer 1
 
 Execution id: `<EXECUTION_ID_43>`
 
@@ -9193,7 +9877,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 43: Q08, repeat 10 — Scorer 2
+## Item 46: Q08, repeat 10 — Scorer 2
 
 Execution id: `<EXECUTION_ID_43>`
 
@@ -9291,7 +9975,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 44: Q08, repeat 11 — Scorer 1
+## Item 47: Q08, repeat 11 — Scorer 1
 
 Execution id: `<EXECUTION_ID_44>`
 
@@ -9389,7 +10073,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 44: Q08, repeat 11 — Scorer 2
+## Item 47: Q08, repeat 11 — Scorer 2
 
 Execution id: `<EXECUTION_ID_44>`
 
@@ -9487,7 +10171,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 45: Q08, repeat 12 — Scorer 1
+## Item 48: Q08, repeat 12 — Scorer 1
 
 Execution id: `<EXECUTION_ID_45>`
 
@@ -9585,7 +10269,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 45: Q08, repeat 12 — Scorer 2
+## Item 48: Q08, repeat 12 — Scorer 2
 
 Execution id: `<EXECUTION_ID_45>`
 
@@ -9683,7 +10367,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 46: Q08, repeat 13 — Scorer 1
+## Item 49: Q08, repeat 13 — Scorer 1
 
 Execution id: `<EXECUTION_ID_46>`
 
@@ -9781,7 +10465,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 46: Q08, repeat 13 — Scorer 2
+## Item 49: Q08, repeat 13 — Scorer 2
 
 Execution id: `<EXECUTION_ID_46>`
 
@@ -9879,7 +10563,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 47: Q08, repeat 14 — Scorer 1
+## Item 50: Q08, repeat 14 — Scorer 1
 
 Execution id: `<EXECUTION_ID_47>`
 
@@ -9977,7 +10661,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 47: Q08, repeat 14 — Scorer 2
+## Item 50: Q08, repeat 14 — Scorer 2
 
 Execution id: `<EXECUTION_ID_47>`
 
@@ -10075,7 +10759,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 48: Q08, repeat 15 — Scorer 1
+## Item 51: Q08, repeat 15 — Scorer 1
 
 Execution id: `<EXECUTION_ID_48>`
 
@@ -10173,7 +10857,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 48: Q08, repeat 15 — Scorer 2
+## Item 51: Q08, repeat 15 — Scorer 2
 
 Execution id: `<EXECUTION_ID_48>`
 
@@ -10271,7 +10955,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 49: Q08, repeat 16 — Scorer 1
+## Item 52: Q08, repeat 16 — Scorer 1
 
 Execution id: `<EXECUTION_ID_49>`
 
@@ -10369,7 +11053,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 49: Q08, repeat 16 — Scorer 2
+## Item 52: Q08, repeat 16 — Scorer 2
 
 Execution id: `<EXECUTION_ID_49>`
 
@@ -10467,7 +11151,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 50: Q08, repeat 17 — Scorer 1
+## Item 53: Q08, repeat 17 — Scorer 1
 
 Execution id: `<EXECUTION_ID_50>`
 
@@ -10565,7 +11249,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 50: Q08, repeat 17 — Scorer 2
+## Item 53: Q08, repeat 17 — Scorer 2
 
 Execution id: `<EXECUTION_ID_50>`
 
@@ -10663,7 +11347,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 51: Q08, repeat 18 — Scorer 1
+## Item 54: Q08, repeat 18 — Scorer 1
 
 Execution id: `<EXECUTION_ID_51>`
 
@@ -10761,7 +11445,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 51: Q08, repeat 18 — Scorer 2
+## Item 54: Q08, repeat 18 — Scorer 2
 
 Execution id: `<EXECUTION_ID_51>`
 
@@ -10859,7 +11543,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 52: Q08, repeat 19 — Scorer 1
+## Item 55: Q08, repeat 19 — Scorer 1
 
 Execution id: `<EXECUTION_ID_52>`
 
@@ -10957,7 +11641,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 52: Q08, repeat 19 — Scorer 2
+## Item 55: Q08, repeat 19 — Scorer 2
 
 Execution id: `<EXECUTION_ID_52>`
 
@@ -11055,7 +11739,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 53: Q08, repeat 20 — Scorer 1
+## Item 56: Q08, repeat 20 — Scorer 1
 
 Execution id: `<EXECUTION_ID_53>`
 
@@ -11153,7 +11837,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 53: Q08, repeat 20 — Scorer 2
+## Item 56: Q08, repeat 20 — Scorer 2
 
 Execution id: `<EXECUTION_ID_53>`
 
@@ -11251,7 +11935,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 54: Q08, repeat 21 — Scorer 1
+## Item 57: Q08, repeat 21 — Scorer 1
 
 Execution id: `<EXECUTION_ID_54>`
 
@@ -11349,7 +12033,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 54: Q08, repeat 21 — Scorer 2
+## Item 57: Q08, repeat 21 — Scorer 2
 
 Execution id: `<EXECUTION_ID_54>`
 
@@ -11447,7 +12131,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 55: Q08, repeat 22 — Scorer 1
+## Item 58: Q08, repeat 22 — Scorer 1
 
 Execution id: `<EXECUTION_ID_55>`
 
@@ -11545,7 +12229,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 55: Q08, repeat 22 — Scorer 2
+## Item 58: Q08, repeat 22 — Scorer 2
 
 Execution id: `<EXECUTION_ID_55>`
 
@@ -11643,7 +12327,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 56: Q08, repeat 23 — Scorer 1
+## Item 59: Q08, repeat 23 — Scorer 1
 
 Execution id: `<EXECUTION_ID_56>`
 
@@ -11741,7 +12425,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 56: Q08, repeat 23 — Scorer 2
+## Item 59: Q08, repeat 23 — Scorer 2
 
 Execution id: `<EXECUTION_ID_56>`
 
@@ -11839,7 +12523,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 57: Q08, repeat 24 — Scorer 1
+## Item 60: Q08, repeat 24 — Scorer 1
 
 Execution id: `<EXECUTION_ID_57>`
 
@@ -11937,7 +12621,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 57: Q08, repeat 24 — Scorer 2
+## Item 60: Q08, repeat 24 — Scorer 2
 
 Execution id: `<EXECUTION_ID_57>`
 
@@ -12035,7 +12719,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 58: Q08, repeat 25 — Scorer 1
+## Item 61: Q08, repeat 25 — Scorer 1
 
 Execution id: `<EXECUTION_ID_58>`
 
@@ -12133,7 +12817,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 58: Q08, repeat 25 — Scorer 2
+## Item 61: Q08, repeat 25 — Scorer 2
 
 Execution id: `<EXECUTION_ID_58>`
 
@@ -12231,7 +12915,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 59: Q08, repeat 26 — Scorer 1
+## Item 62: Q08, repeat 26 — Scorer 1
 
 Execution id: `<EXECUTION_ID_59>`
 
@@ -12329,7 +13013,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 59: Q08, repeat 26 — Scorer 2
+## Item 62: Q08, repeat 26 — Scorer 2
 
 Execution id: `<EXECUTION_ID_59>`
 
@@ -12427,7 +13111,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 60: Q08, repeat 27 — Scorer 1
+## Item 63: Q08, repeat 27 — Scorer 1
 
 Execution id: `<EXECUTION_ID_60>`
 
@@ -12525,7 +13209,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 60: Q08, repeat 27 — Scorer 2
+## Item 63: Q08, repeat 27 — Scorer 2
 
 Execution id: `<EXECUTION_ID_60>`
 
@@ -12623,7 +13307,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 61: Q08, repeat 28 — Scorer 1
+## Item 64: Q08, repeat 28 — Scorer 1
 
 Execution id: `<EXECUTION_ID_61>`
 
@@ -12721,7 +13405,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 61: Q08, repeat 28 — Scorer 2
+## Item 64: Q08, repeat 28 — Scorer 2
 
 Execution id: `<EXECUTION_ID_61>`
 
@@ -12819,7 +13503,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 62: Q08, repeat 29 — Scorer 1
+## Item 65: Q08, repeat 29 — Scorer 1
 
 Execution id: `<EXECUTION_ID_62>`
 
@@ -12917,7 +13601,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 62: Q08, repeat 29 — Scorer 2
+## Item 65: Q08, repeat 29 — Scorer 2
 
 Execution id: `<EXECUTION_ID_62>`
 
@@ -13015,7 +13699,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 63: Q08, repeat 30 — Scorer 1
+## Item 66: Q08, repeat 30 — Scorer 1
 
 Execution id: `<EXECUTION_ID_63>`
 
@@ -13113,7 +13797,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 63: Q08, repeat 30 — Scorer 2
+## Item 66: Q08, repeat 30 — Scorer 2
 
 Execution id: `<EXECUTION_ID_63>`
 
@@ -13211,7 +13895,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 64: Q08, repeat 31 — Scorer 1
+## Item 67: Q08, repeat 31 — Scorer 1
 
 Execution id: `<EXECUTION_ID_64>`
 
@@ -13309,7 +13993,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 64: Q08, repeat 31 — Scorer 2
+## Item 67: Q08, repeat 31 — Scorer 2
 
 Execution id: `<EXECUTION_ID_64>`
 
@@ -13407,7 +14091,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 65: Q08, repeat 32 — Scorer 1
+## Item 68: Q08, repeat 32 — Scorer 1
 
 Execution id: `<EXECUTION_ID_65>`
 
@@ -13505,7 +14189,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 65: Q08, repeat 32 — Scorer 2
+## Item 68: Q08, repeat 32 — Scorer 2
 
 Execution id: `<EXECUTION_ID_65>`
 
@@ -13603,7 +14287,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 66: Q08, repeat 33 — Scorer 1
+## Item 69: Q08, repeat 33 — Scorer 1
 
 Execution id: `<EXECUTION_ID_66>`
 
@@ -13701,7 +14385,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 66: Q08, repeat 33 — Scorer 2
+## Item 69: Q08, repeat 33 — Scorer 2
 
 Execution id: `<EXECUTION_ID_66>`
 
@@ -13799,7 +14483,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 67: Q08, repeat 34 — Scorer 1
+## Item 70: Q08, repeat 34 — Scorer 1
 
 Execution id: `<EXECUTION_ID_67>`
 
@@ -13897,7 +14581,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 67: Q08, repeat 34 — Scorer 2
+## Item 70: Q08, repeat 34 — Scorer 2
 
 Execution id: `<EXECUTION_ID_67>`
 
@@ -13995,7 +14679,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 68: Q08, repeat 35 — Scorer 1
+## Item 71: Q08, repeat 35 — Scorer 1
 
 Execution id: `<EXECUTION_ID_68>`
 
@@ -14093,7 +14777,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 68: Q08, repeat 35 — Scorer 2
+## Item 71: Q08, repeat 35 — Scorer 2
 
 Execution id: `<EXECUTION_ID_68>`
 
@@ -14191,7 +14875,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 69: Q08, repeat 36 — Scorer 1
+## Item 72: Q08, repeat 36 — Scorer 1
 
 Execution id: `<EXECUTION_ID_69>`
 
@@ -14289,7 +14973,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 69: Q08, repeat 36 — Scorer 2
+## Item 72: Q08, repeat 36 — Scorer 2
 
 Execution id: `<EXECUTION_ID_69>`
 
@@ -14387,7 +15071,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 70: Q08, repeat 37 — Scorer 1
+## Item 73: Q08, repeat 37 — Scorer 1
 
 Execution id: `<EXECUTION_ID_70>`
 
@@ -14485,7 +15169,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 70: Q08, repeat 37 — Scorer 2
+## Item 73: Q08, repeat 37 — Scorer 2
 
 Execution id: `<EXECUTION_ID_70>`
 
@@ -14583,7 +15267,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 71: Q08, repeat 38 — Scorer 1
+## Item 74: Q08, repeat 38 — Scorer 1
 
 Execution id: `<EXECUTION_ID_71>`
 
@@ -14681,7 +15365,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 71: Q08, repeat 38 — Scorer 2
+## Item 74: Q08, repeat 38 — Scorer 2
 
 Execution id: `<EXECUTION_ID_71>`
 
@@ -14779,7 +15463,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 72: Q08, repeat 39 — Scorer 1
+## Item 75: Q08, repeat 39 — Scorer 1
 
 Execution id: `<EXECUTION_ID_72>`
 
@@ -14877,7 +15561,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 72: Q08, repeat 39 — Scorer 2
+## Item 75: Q08, repeat 39 — Scorer 2
 
 Execution id: `<EXECUTION_ID_72>`
 
@@ -14975,7 +15659,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 73: Q08, repeat 40 — Scorer 1
+## Item 76: Q08, repeat 40 — Scorer 1
 
 Execution id: `<EXECUTION_ID_73>`
 
@@ -15073,7 +15757,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 73: Q08, repeat 40 — Scorer 2
+## Item 76: Q08, repeat 40 — Scorer 2
 
 Execution id: `<EXECUTION_ID_73>`
 
@@ -15171,7 +15855,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 74: Q08, repeat 41 — Scorer 1
+## Item 77: Q08, repeat 41 — Scorer 1
 
 Execution id: `<EXECUTION_ID_74>`
 
@@ -15269,7 +15953,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 74: Q08, repeat 41 — Scorer 2
+## Item 77: Q08, repeat 41 — Scorer 2
 
 Execution id: `<EXECUTION_ID_74>`
 
@@ -15367,7 +16051,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 75: Q08, repeat 42 — Scorer 1
+## Item 78: Q08, repeat 42 — Scorer 1
 
 Execution id: `<EXECUTION_ID_75>`
 
@@ -15465,7 +16149,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 75: Q08, repeat 42 — Scorer 2
+## Item 78: Q08, repeat 42 — Scorer 2
 
 Execution id: `<EXECUTION_ID_75>`
 
@@ -15563,7 +16247,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 76: Q08, repeat 43 — Scorer 1
+## Item 79: Q08, repeat 43 — Scorer 1
 
 Execution id: `<EXECUTION_ID_76>`
 
@@ -15661,7 +16345,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 76: Q08, repeat 43 — Scorer 2
+## Item 79: Q08, repeat 43 — Scorer 2
 
 Execution id: `<EXECUTION_ID_76>`
 
@@ -15759,7 +16443,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 77: Q08, repeat 44 — Scorer 1
+## Item 80: Q08, repeat 44 — Scorer 1
 
 Execution id: `<EXECUTION_ID_77>`
 
@@ -15857,7 +16541,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 77: Q08, repeat 44 — Scorer 2
+## Item 80: Q08, repeat 44 — Scorer 2
 
 Execution id: `<EXECUTION_ID_77>`
 
@@ -15955,7 +16639,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 78: Q08, repeat 45 — Scorer 1
+## Item 81: Q08, repeat 45 — Scorer 1
 
 Execution id: `<EXECUTION_ID_78>`
 
@@ -16053,7 +16737,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 78: Q08, repeat 45 — Scorer 2
+## Item 81: Q08, repeat 45 — Scorer 2
 
 Execution id: `<EXECUTION_ID_78>`
 
@@ -16151,7 +16835,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 79: Q08, repeat 46 — Scorer 1
+## Item 82: Q08, repeat 46 — Scorer 1
 
 Execution id: `<EXECUTION_ID_79>`
 
@@ -16249,7 +16933,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 79: Q08, repeat 46 — Scorer 2
+## Item 82: Q08, repeat 46 — Scorer 2
 
 Execution id: `<EXECUTION_ID_79>`
 
@@ -16347,7 +17031,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 80: Q08, repeat 47 — Scorer 1
+## Item 83: Q08, repeat 47 — Scorer 1
 
 Execution id: `<EXECUTION_ID_80>`
 
@@ -16445,7 +17129,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 80: Q08, repeat 47 — Scorer 2
+## Item 83: Q08, repeat 47 — Scorer 2
 
 Execution id: `<EXECUTION_ID_80>`
 
@@ -16543,7 +17227,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 81: Q08, repeat 48 — Scorer 1
+## Item 84: Q08, repeat 48 — Scorer 1
 
 Execution id: `<EXECUTION_ID_81>`
 
@@ -16641,7 +17325,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 81: Q08, repeat 48 — Scorer 2
+## Item 84: Q08, repeat 48 — Scorer 2
 
 Execution id: `<EXECUTION_ID_81>`
 
@@ -16739,7 +17423,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 82: Q08, repeat 49 — Scorer 1
+## Item 85: Q08, repeat 49 — Scorer 1
 
 Execution id: `<EXECUTION_ID_82>`
 
@@ -16837,7 +17521,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 82: Q08, repeat 49 — Scorer 2
+## Item 85: Q08, repeat 49 — Scorer 2
 
 Execution id: `<EXECUTION_ID_82>`
 
@@ -16935,7 +17619,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 83: Q08, repeat 50 — Scorer 1
+## Item 86: Q08, repeat 50 — Scorer 1
 
 Execution id: `<EXECUTION_ID_83>`
 
@@ -17033,7 +17717,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 83: Q08, repeat 50 — Scorer 2
+## Item 86: Q08, repeat 50 — Scorer 2
 
 Execution id: `<EXECUTION_ID_83>`
 
@@ -17131,7 +17815,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 84: Q09, repeat 4 — Scorer 1
+## Item 87: Q09, repeat 4 — Scorer 1
 
 Execution id: `<EXECUTION_ID_84>`
 
@@ -17206,7 +17890,7 @@ The net monthly income from the savings account after deducting checking account
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17260,7 +17944,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 84: Q09, repeat 4 — Scorer 2
+## Item 87: Q09, repeat 4 — Scorer 2
 
 Execution id: `<EXECUTION_ID_84>`
 
@@ -17335,7 +18019,7 @@ The net monthly income from the savings account after deducting checking account
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17389,7 +18073,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 85: Q09, repeat 5 — Scorer 1
+## Item 88: Q09, repeat 5 — Scorer 1
 
 Execution id: `<EXECUTION_ID_85>`
 
@@ -17462,7 +18146,7 @@ So, the net monthly income is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17516,7 +18200,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 85: Q09, repeat 5 — Scorer 2
+## Item 88: Q09, repeat 5 — Scorer 2
 
 Execution id: `<EXECUTION_ID_85>`
 
@@ -17589,7 +18273,7 @@ So, the net monthly income is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17643,7 +18327,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 86: Q09, repeat 23 — Scorer 1
+## Item 89: Q09, repeat 23 — Scorer 1
 
 Execution id: `<EXECUTION_ID_86>`
 
@@ -17712,7 +18396,7 @@ The net monthly income from the savings account after deducting checking account
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17766,7 +18450,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 86: Q09, repeat 23 — Scorer 2
+## Item 89: Q09, repeat 23 — Scorer 2
 
 Execution id: `<EXECUTION_ID_86>`
 
@@ -17835,7 +18519,7 @@ The net monthly income from the savings account after deducting checking account
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17889,7 +18573,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 87: Q09, repeat 24 — Scorer 1
+## Item 90: Q09, repeat 24 — Scorer 1
 
 Execution id: `<EXECUTION_ID_87>`
 
@@ -17962,7 +18646,7 @@ So, the net monthly income is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18016,7 +18700,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 87: Q09, repeat 24 — Scorer 2
+## Item 90: Q09, repeat 24 — Scorer 2
 
 Execution id: `<EXECUTION_ID_87>`
 
@@ -18089,7 +18773,7 @@ So, the net monthly income is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18143,7 +18827,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 88: Q09, repeat 29 — Scorer 1
+## Item 91: Q09, repeat 29 — Scorer 1
 
 Execution id: `<EXECUTION_ID_88>`
 
@@ -18216,7 +18900,7 @@ So, the net monthly income is 3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18270,7 +18954,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 88: Q09, repeat 29 — Scorer 2
+## Item 91: Q09, repeat 29 — Scorer 2
 
 Execution id: `<EXECUTION_ID_88>`
 
@@ -18343,7 +19027,7 @@ So, the net monthly income is 3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18397,7 +19081,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 89: Q09, repeat 31 — Scorer 1
+## Item 92: Q09, repeat 31 — Scorer 1
 
 Execution id: `<EXECUTION_ID_89>`
 
@@ -18470,7 +19154,7 @@ So, the net monthly income is 3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18524,7 +19208,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 89: Q09, repeat 31 — Scorer 2
+## Item 92: Q09, repeat 31 — Scorer 2
 
 Execution id: `<EXECUTION_ID_89>`
 
@@ -18597,7 +19281,7 @@ So, the net monthly income is 3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18651,7 +19335,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 90: Q09, repeat 32 — Scorer 1
+## Item 93: Q09, repeat 32 — Scorer 1
 
 Execution id: `<EXECUTION_ID_90>`
 
@@ -18724,7 +19408,7 @@ The net monthly income from the savings account after deducting checking account
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18778,7 +19462,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 90: Q09, repeat 32 — Scorer 2
+## Item 93: Q09, repeat 32 — Scorer 2
 
 Execution id: `<EXECUTION_ID_90>`
 
@@ -18851,7 +19535,7 @@ The net monthly income from the savings account after deducting checking account
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18905,7 +19589,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 91: Q09, repeat 39 — Scorer 1
+## Item 94: Q09, repeat 39 — Scorer 1
 
 Execution id: `<EXECUTION_ID_91>`
 
@@ -18978,7 +19662,7 @@ So, the net monthly income is 3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19032,7 +19716,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 91: Q09, repeat 39 — Scorer 2
+## Item 94: Q09, repeat 39 — Scorer 2
 
 Execution id: `<EXECUTION_ID_91>`
 
@@ -19105,7 +19789,7 @@ So, the net monthly income is 3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19159,7 +19843,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 92: Q04, repeat 4 — Scorer 1
+## Item 95: Q04, repeat 4 — Scorer 1
 
 Execution id: `<EXECUTION_ID_92>`
 
@@ -19221,7 +19905,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19268,7 +19952,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 92: Q04, repeat 4 — Scorer 2
+## Item 95: Q04, repeat 4 — Scorer 2
 
 Execution id: `<EXECUTION_ID_92>`
 
@@ -19330,7 +20014,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19377,7 +20061,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 93: Q04, repeat 10 — Scorer 1
+## Item 96: Q04, repeat 10 — Scorer 1
 
 Execution id: `<EXECUTION_ID_93>`
 
@@ -19435,7 +20119,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19489,7 +20173,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 93: Q04, repeat 10 — Scorer 2
+## Item 96: Q04, repeat 10 — Scorer 2
 
 Execution id: `<EXECUTION_ID_93>`
 
@@ -19547,7 +20231,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19601,7 +20285,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 94: Q04, repeat 11 — Scorer 1
+## Item 97: Q04, repeat 11 — Scorer 1
 
 Execution id: `<EXECUTION_ID_94>`
 
@@ -19659,7 +20343,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19713,7 +20397,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 94: Q04, repeat 11 — Scorer 2
+## Item 97: Q04, repeat 11 — Scorer 2
 
 Execution id: `<EXECUTION_ID_94>`
 
@@ -19771,7 +20455,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19825,7 +20509,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 95: Q04, repeat 12 — Scorer 1
+## Item 98: Q04, repeat 12 — Scorer 1
 
 Execution id: `<EXECUTION_ID_95>`
 
@@ -19883,7 +20567,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19937,7 +20621,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 95: Q04, repeat 12 — Scorer 2
+## Item 98: Q04, repeat 12 — Scorer 2
 
 Execution id: `<EXECUTION_ID_95>`
 
@@ -19995,7 +20679,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20049,7 +20733,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 96: Q04, repeat 13 — Scorer 1
+## Item 99: Q04, repeat 13 — Scorer 1
 
 Execution id: `<EXECUTION_ID_96>`
 
@@ -20104,7 +20788,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20158,7 +20842,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 96: Q04, repeat 13 — Scorer 2
+## Item 99: Q04, repeat 13 — Scorer 2
 
 Execution id: `<EXECUTION_ID_96>`
 
@@ -20213,7 +20897,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20267,7 +20951,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 97: Q04, repeat 14 — Scorer 1
+## Item 100: Q04, repeat 14 — Scorer 1
 
 Execution id: `<EXECUTION_ID_97>`
 
@@ -20325,7 +21009,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20379,7 +21063,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 97: Q04, repeat 14 — Scorer 2
+## Item 100: Q04, repeat 14 — Scorer 2
 
 Execution id: `<EXECUTION_ID_97>`
 
@@ -20437,7 +21121,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20491,7 +21175,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 98: Q04, repeat 15 — Scorer 1
+## Item 101: Q04, repeat 15 — Scorer 1
 
 Execution id: `<EXECUTION_ID_98>`
 
@@ -20548,7 +21232,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20602,7 +21286,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 98: Q04, repeat 15 — Scorer 2
+## Item 101: Q04, repeat 15 — Scorer 2
 
 Execution id: `<EXECUTION_ID_98>`
 
@@ -20659,7 +21343,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20713,7 +21397,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 99: Q04, repeat 16 — Scorer 1
+## Item 102: Q04, repeat 16 — Scorer 1
 
 Execution id: `<EXECUTION_ID_99>`
 
@@ -20777,7 +21461,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20831,7 +21515,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 99: Q04, repeat 16 — Scorer 2
+## Item 102: Q04, repeat 16 — Scorer 2
 
 Execution id: `<EXECUTION_ID_99>`
 
@@ -20895,7 +21579,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20949,7 +21633,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 100: Q04, repeat 17 — Scorer 1
+## Item 103: Q04, repeat 17 — Scorer 1
 
 Execution id: `<EXECUTION_ID_100>`
 
@@ -21007,7 +21691,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21061,7 +21745,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 100: Q04, repeat 17 — Scorer 2
+## Item 103: Q04, repeat 17 — Scorer 2
 
 Execution id: `<EXECUTION_ID_100>`
 
@@ -21119,7 +21803,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21173,7 +21857,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 101: Q04, repeat 18 — Scorer 1
+## Item 104: Q04, repeat 18 — Scorer 1
 
 Execution id: `<EXECUTION_ID_101>`
 
@@ -21228,7 +21912,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21282,7 +21966,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 101: Q04, repeat 18 — Scorer 2
+## Item 104: Q04, repeat 18 — Scorer 2
 
 Execution id: `<EXECUTION_ID_101>`
 
@@ -21337,7 +22021,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21391,7 +22075,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 102: Q04, repeat 19 — Scorer 1
+## Item 105: Q04, repeat 19 — Scorer 1
 
 Execution id: `<EXECUTION_ID_102>`
 
@@ -21449,7 +22133,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21503,7 +22187,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 102: Q04, repeat 19 — Scorer 2
+## Item 105: Q04, repeat 19 — Scorer 2
 
 Execution id: `<EXECUTION_ID_102>`
 
@@ -21561,7 +22245,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21615,7 +22299,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 103: Q04, repeat 20 — Scorer 1
+## Item 106: Q04, repeat 20 — Scorer 1
 
 Execution id: `<EXECUTION_ID_103>`
 
@@ -21670,7 +22354,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21724,7 +22408,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 103: Q04, repeat 20 — Scorer 2
+## Item 106: Q04, repeat 20 — Scorer 2
 
 Execution id: `<EXECUTION_ID_103>`
 
@@ -21779,7 +22463,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21833,7 +22517,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 104: Q04, repeat 25 — Scorer 1
+## Item 107: Q04, repeat 25 — Scorer 1
 
 Execution id: `<EXECUTION_ID_104>`
 
@@ -21890,7 +22574,7 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21944,7 +22628,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 104: Q04, repeat 25 — Scorer 2
+## Item 107: Q04, repeat 25 — Scorer 2
 
 Execution id: `<EXECUTION_ID_104>`
 
@@ -22001,7 +22685,7 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22055,7 +22739,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 105: Q04, repeat 26 — Scorer 1
+## Item 108: Q04, repeat 26 — Scorer 1
 
 Execution id: `<EXECUTION_ID_105>`
 
@@ -22110,7 +22794,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22164,7 +22848,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 105: Q04, repeat 26 — Scorer 2
+## Item 108: Q04, repeat 26 — Scorer 2
 
 Execution id: `<EXECUTION_ID_105>`
 
@@ -22219,7 +22903,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22273,7 +22957,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 106: Q04, repeat 28 — Scorer 1
+## Item 109: Q04, repeat 28 — Scorer 1
 
 Execution id: `<EXECUTION_ID_106>`
 
@@ -22328,7 +23012,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22382,7 +23066,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 106: Q04, repeat 28 — Scorer 2
+## Item 109: Q04, repeat 28 — Scorer 2
 
 Execution id: `<EXECUTION_ID_106>`
 
@@ -22437,7 +23121,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22491,7 +23175,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 107: Q04, repeat 33 — Scorer 1
+## Item 110: Q04, repeat 33 — Scorer 1
 
 Execution id: `<EXECUTION_ID_107>`
 
@@ -22548,7 +23232,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22602,7 +23286,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 107: Q04, repeat 33 — Scorer 2
+## Item 110: Q04, repeat 33 — Scorer 2
 
 Execution id: `<EXECUTION_ID_107>`
 
@@ -22659,7 +23343,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22713,7 +23397,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 108: Q04, repeat 38 — Scorer 1
+## Item 111: Q04, repeat 38 — Scorer 1
 
 Execution id: `<EXECUTION_ID_108>`
 
@@ -22768,7 +23452,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22822,7 +23506,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 108: Q04, repeat 38 — Scorer 2
+## Item 111: Q04, repeat 38 — Scorer 2
 
 Execution id: `<EXECUTION_ID_108>`
 
@@ -22877,7 +23561,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22931,7 +23615,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 109: Q04, repeat 41 — Scorer 1
+## Item 112: Q04, repeat 41 — Scorer 1
 
 Execution id: `<EXECUTION_ID_109>`
 
@@ -22989,7 +23673,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23043,7 +23727,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 109: Q04, repeat 41 — Scorer 2
+## Item 112: Q04, repeat 41 — Scorer 2
 
 Execution id: `<EXECUTION_ID_109>`
 
@@ -23101,7 +23785,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23155,7 +23839,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 110: Q04, repeat 46 — Scorer 1
+## Item 113: Q04, repeat 46 — Scorer 1
 
 Execution id: `<EXECUTION_ID_110>`
 
@@ -23213,7 +23897,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23267,7 +23951,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 110: Q04, repeat 46 — Scorer 2
+## Item 113: Q04, repeat 46 — Scorer 2
 
 Execution id: `<EXECUTION_ID_110>`
 
@@ -23325,7 +24009,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23379,7 +24063,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 111: Q05, repeat 3 — Scorer 1
+## Item 114: Q05, repeat 3 — Scorer 1
 
 Execution id: `<EXECUTION_ID_111>`
 
@@ -23451,7 +24135,7 @@ So the correct credit card balance after one month is $2411.00.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23505,7 +24189,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 111: Q05, repeat 3 — Scorer 2
+## Item 114: Q05, repeat 3 — Scorer 2
 
 Execution id: `<EXECUTION_ID_111>`
 
@@ -23577,7 +24261,7 @@ So the correct credit card balance after one month is $2411.00.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23631,7 +24315,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 112: Q05, repeat 5 — Scorer 1
+## Item 115: Q05, repeat 5 — Scorer 1
 
 Execution id: `<EXECUTION_ID_112>`
 
@@ -23700,7 +24384,7 @@ If only the minimum payment of $25 is made after one month, the credit card bala
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23747,7 +24431,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 112: Q05, repeat 5 — Scorer 2
+## Item 115: Q05, repeat 5 — Scorer 2
 
 Execution id: `<EXECUTION_ID_112>`
 
@@ -23816,7 +24500,7 @@ If only the minimum payment of $25 is made after one month, the credit card bala
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23863,7 +24547,667 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 113: Q05, repeat 17 — Scorer 1
+## Item 116: Q05, repeat 8 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25.00 is made, the credit card balance after one month will be $2411.00. This is because the interest of $36.00 (18% annual rate divided monthly applied to the $2400 balance) is added to the remaining balance after the payment.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400 - 25"}`)
+  → `{"result": "2375"}`
+
+- **calculator**(`{"expression":"2375 + 36"}`)
+  → `{"result": "2411"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 116: Q05, repeat 8 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25.00 is made, the credit card balance after one month will be $2411.00. This is because the interest of $36.00 (18% annual rate divided monthly applied to the $2400 balance) is added to the remaining balance after the payment.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400 - 25"}`)
+  → `{"result": "2375"}`
+
+- **calculator**(`{"expression":"2375 + 36"}`)
+  → `{"result": "2411"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 117: Q05, repeat 12 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25 is made, the credit card balance after one month would be approximately $2411.00. 
+
+Note that the balance increased due to the monthly interest applied at an annual rate of 18%. The reward earned for the month based on a 1.5% reward rate on the $2400 balance is $36.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18/12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.015"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 117: Q05, repeat 12 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25 is made, the credit card balance after one month would be approximately $2411.00. 
+
+Note that the balance increased due to the monthly interest applied at an annual rate of 18%. The reward earned for the month based on a 1.5% reward rate on the $2400 balance is $36.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18/12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.015"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 118: Q05, repeat 16 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The credit card balance after one month, if only the minimum payment of $25 is made, will be approximately $2411. This is because interest is added before the payment is deducted. Without considering interest, the balance after payment would be $2375.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 18/100/12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 - 25"}`)
+  → `{"result": "2375"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 118: Q05, repeat 16 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The credit card balance after one month, if only the minimum payment of $25 is made, will be approximately $2411. This is because interest is added before the payment is deducted. Without considering interest, the balance after payment would be $2375.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 18/100/12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 - 25"}`)
+  → `{"result": "2375"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 119: Q05, repeat 17 — Scorer 1
 
 Execution id: `<EXECUTION_ID_113>`
 
@@ -23929,7 +25273,7 @@ The key figure for your question is the balance after interest and payment, whic
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23976,7 +25320,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 113: Q05, repeat 17 — Scorer 2
+## Item 119: Q05, repeat 17 — Scorer 2
 
 Execution id: `<EXECUTION_ID_113>`
 
@@ -24042,7 +25386,7 @@ The key figure for your question is the balance after interest and payment, whic
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24089,7 +25433,905 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 114: Q05, repeat 28 — Scorer 1
+## Item 120: Q05, repeat 19 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+After one month, if only the minimum payment is made, the credit card balance would be $2411.00. This includes adding the monthly interest of $36.00 to the reduced balance of $2375.00 after the $25.00 minimum payment.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400.00 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400.00 - 25.00"}`)
+  → `{"result": "2375.0"}`
+
+- **calculator**(`{"expression":"2375.0 + 36.0"}`)
+  → `{"result": "2411.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 120: Q05, repeat 19 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+After one month, if only the minimum payment is made, the credit card balance would be $2411.00. This includes adding the monthly interest of $36.00 to the reduced balance of $2375.00 after the $25.00 minimum payment.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400.00 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400.00 - 25.00"}`)
+  → `{"result": "2375.0"}`
+
+- **calculator**(`{"expression":"2375.0 + 36.0"}`)
+  → `{"result": "2411.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 121: Q05, repeat 20 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25.00 is made, the credit card balance after one month would be $2411.00. This takes into account the interest charged for the month, which is $36.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400 - 25"}`)
+  → `{"result": "2375"}`
+
+- **calculator**(`{"expression":"2375 + 36"}`)
+  → `{"result": "2411"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 121: Q05, repeat 20 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25.00 is made, the credit card balance after one month would be $2411.00. This takes into account the interest charged for the month, which is $36.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400 - 25"}`)
+  → `{"result": "2375"}`
+
+- **calculator**(`{"expression":"2375 + 36"}`)
+  → `{"result": "2411"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 122: Q05, repeat 22 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25.00 is made after one month, the credit card balance will be approximately $2411.00. The interest accrued in one month on the balance of $2400 at an annual rate of 18% is $36.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18/12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 122: Q05, repeat 22 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25.00 is made after one month, the credit card balance will be approximately $2411.00. The interest accrued in one month on the balance of $2400 at an annual rate of 18% is $36.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18/12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 123: Q05, repeat 25 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The credit card balance after one month, if only the minimum payment of $25.00 is made, will be $2411.00. This is because the interest of $36.00 (calculated at an 18% annual rate) is added to the remaining balance after the minimum payment.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400.00 * 18.0 / 100 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400.00 - 25.00"}`)
+  → `{"result": "2375.0"}`
+
+- **calculator**(`{"expression":"2375.0 + 36.0"}`)
+  → `{"result": "2411.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 123: Q05, repeat 25 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The credit card balance after one month, if only the minimum payment of $25.00 is made, will be $2411.00. This is because the interest of $36.00 (calculated at an 18% annual rate) is added to the remaining balance after the minimum payment.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400.00 * 18.0 / 100 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400.00 - 25.00"}`)
+  → `{"result": "2375.0"}`
+
+- **calculator**(`{"expression":"2375.0 + 36.0"}`)
+  → `{"result": "2411.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 124: Q05, repeat 28 — Scorer 1
 
 Execution id: `<EXECUTION_ID_114>`
 
@@ -24156,7 +26398,7 @@ The credit card balance after one month would be $2411.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24210,7 +26452,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 114: Q05, repeat 28 — Scorer 2
+## Item 124: Q05, repeat 28 — Scorer 2
 
 Execution id: `<EXECUTION_ID_114>`
 
@@ -24277,7 +26519,7 @@ The credit card balance after one month would be $2411.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24331,7 +26573,225 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 115: Q05, repeat 31 — Scorer 1
+## Item 125: Q05, repeat 29 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+After one month, if only the minimum payment is made, the credit card balance will be approximately $2411.00.
+
+Additionally, the rewards earned on the balance for that month would be $36.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18 / 12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.015"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 125: Q05, repeat 29 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+After one month, if only the minimum payment is made, the credit card balance will be approximately $2411.00.
+
+Additionally, the rewards earned on the balance for that month would be $36.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18 / 12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.015"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 126: Q05, repeat 31 — Scorer 1
 
 Execution id: `<EXECUTION_ID_115>`
 
@@ -24450,7 +26910,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 115: Q05, repeat 31 — Scorer 2
+## Item 126: Q05, repeat 31 — Scorer 2
 
 Execution id: `<EXECUTION_ID_115>`
 
@@ -24569,7 +27029,891 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 116: Q05, repeat 44 — Scorer 1
+## Item 127: Q05, repeat 35 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment is made, the credit card balance after one month will be $2411.00. This is because the payment of $25 is made, but interest of $36 is added due to the 18% annual rate.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400 - 25"}`)
+  → `{"result": "2375"}`
+
+- **calculator**(`{"expression":"2375 + 36"}`)
+  → `{"result": "2411"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 127: Q05, repeat 35 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment is made, the credit card balance after one month will be $2411.00. This is because the payment of $25 is made, but interest of $36 is added due to the 18% annual rate.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * 0.18 / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression": "2400 - 25"}`)
+  → `{"result": "2375"}`
+
+- **calculator**(`{"expression":"2375 + 36"}`)
+  → `{"result": "2411"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 128: Q05, repeat 36 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25 is made after one month, the credit card balance will be $2411. This includes the remaining balance after payment ($2375) plus the interest accrued for one month ($36).
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 - 25"}`)
+  → `{"result": "2375"}`
+
+- **calculator**(`{"expression": "2400 * (18/100) / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression":"2375 + 36"}`)
+  → `{"result": "2411"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 128: Q05, repeat 36 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25 is made after one month, the credit card balance will be $2411. This includes the remaining balance after payment ($2375) plus the interest accrued for one month ($36).
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 - 25"}`)
+  → `{"result": "2375"}`
+
+- **calculator**(`{"expression": "2400 * (18/100) / 12"}`)
+  → `{"result": "36.0"}`
+
+- **calculator**(`{"expression":"2375 + 36"}`)
+  → `{"result": "2411"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 129: Q05, repeat 41 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25 is made, the credit card balance after one month will be approximately $2411. The interest accrued for the month is $11.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18 / 12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.18 / 12 - 25"}`)
+  → `{"result": "11.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 129: Q05, repeat 41 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25 is made, the credit card balance after one month will be approximately $2411. The interest accrued for the month is $11.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18 / 12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.18 / 12 - 25"}`)
+  → `{"result": "11.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 130: Q05, repeat 42 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25.00 is made after one month, the credit card balance will be approximately $2411.00. Additionally, the reward earned on the balance for that month would be $36.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18/12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.015"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 130: Q05, repeat 42 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25.00 is made after one month, the credit card balance will be approximately $2411.00. Additionally, the reward earned on the balance for that month would be $36.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18/12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.015"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 131: Q05, repeat 44 — Scorer 1
 
 Execution id: `<EXECUTION_ID_116>`
 
@@ -24635,7 +27979,7 @@ The correct balance after one month with the minimum payment considering the ann
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24682,7 +28026,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 116: Q05, repeat 44 — Scorer 2
+## Item 131: Q05, repeat 44 — Scorer 2
 
 Execution id: `<EXECUTION_ID_116>`
 
@@ -24748,7 +28092,7 @@ The correct balance after one month with the minimum payment considering the ann
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24795,7 +28139,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 117: Q05, repeat 45 — Scorer 1
+## Item 132: Q05, repeat 45 — Scorer 1
 
 Execution id: `<EXECUTION_ID_117>`
 
@@ -24911,7 +28255,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 117: Q05, repeat 45 — Scorer 2
+## Item 132: Q05, repeat 45 — Scorer 2
 
 Execution id: `<EXECUTION_ID_117>`
 
@@ -25027,7 +28371,439 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 118: Q06, repeat 3 — Scorer 1
+## Item 133: Q05, repeat 47 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25.00 is made, the credit card balance after one month will be approximately $2411.00. Additionally, the reward earned from the current balance at a 1.5% rate would be $36.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18/12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.015"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 133: Q05, repeat 47 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25.00 is made, the credit card balance after one month will be approximately $2411.00. Additionally, the reward earned from the current balance at a 1.5% rate would be $36.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18/12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.015"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 134: Q05, repeat 49 — Scorer 1
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25 is made after one month, the credit card balance will be approximately $2411.00.
+
+Additionally, the reward earned from the balance at a reward rate of 1.5% would be $36.00 for that month.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18/12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.015"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 134: Q05, repeat 49 — Scorer 2
+
+### Question
+
+> What is the credit card balance after one month if only the minimum payment is made?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+If only the minimum payment of $25 is made after one month, the credit card balance will be approximately $2411.00.
+
+Additionally, the reward earned from the balance at a reward rate of 1.5% would be $36.00 for that month.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (1 + 0.18/12) - 25"}`)
+  → `{"result": "2410.9999999999995"}`
+
+- **calculator**(`{"expression": "2400 * 0.015"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2411.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 135: Q06, repeat 3 — Scorer 1
 
 Execution id: `<EXECUTION_ID_118>`
 
@@ -25085,7 +28861,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25132,7 +28908,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 118: Q06, repeat 3 — Scorer 2
+## Item 135: Q06, repeat 3 — Scorer 2
 
 Execution id: `<EXECUTION_ID_118>`
 
@@ -25190,7 +28966,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25237,7 +29013,209 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 119: Q06, repeat 7 — Scorer 1
+## Item 136: Q06, repeat 6 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144. This cost comes from the monthly fee of $12 multiplied by 12 months. There is no additional cost from interest since the annual rate is 0.0%.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "12 * 12"}`)
+  → `{"result": "144"}`
+
+- **calculator**(`{"expression": "4850 * 0.0"}`)
+  → `{"result": "0.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 136: Q06, repeat 6 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144. This cost comes from the monthly fee of $12 multiplied by 12 months. There is no additional cost from interest since the annual rate is 0.0%.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "12 * 12"}`)
+  → `{"result": "144"}`
+
+- **calculator**(`{"expression": "4850 * 0.0"}`)
+  → `{"result": "0.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 137: Q06, repeat 7 — Scorer 1
 
 Execution id: `<EXECUTION_ID_119>`
 
@@ -25298,7 +29276,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25345,7 +29323,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 119: Q06, repeat 7 — Scorer 2
+## Item 137: Q06, repeat 7 — Scorer 2
 
 Execution id: `<EXECUTION_ID_119>`
 
@@ -25406,7 +29384,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25453,7 +29431,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 120: Q06, repeat 12 — Scorer 1
+## Item 138: Q06, repeat 12 — Scorer 1
 
 Execution id: `<EXECUTION_ID_120>`
 
@@ -25511,7 +29489,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25558,7 +29536,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 120: Q06, repeat 12 — Scorer 2
+## Item 138: Q06, repeat 12 — Scorer 2
 
 Execution id: `<EXECUTION_ID_120>`
 
@@ -25616,7 +29594,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25663,7 +29641,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 121: Q06, repeat 14 — Scorer 1
+## Item 139: Q06, repeat 14 — Scorer 1
 
 Execution id: `<EXECUTION_ID_121>`
 
@@ -25724,7 +29702,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25771,7 +29749,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 121: Q06, repeat 14 — Scorer 2
+## Item 139: Q06, repeat 14 — Scorer 2
 
 Execution id: `<EXECUTION_ID_121>`
 
@@ -25832,7 +29810,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25879,7 +29857,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 122: Q06, repeat 23 — Scorer 1
+## Item 140: Q06, repeat 23 — Scorer 1
 
 Execution id: `<EXECUTION_ID_122>`
 
@@ -25940,7 +29918,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25987,7 +29965,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 122: Q06, repeat 23 — Scorer 2
+## Item 140: Q06, repeat 23 — Scorer 2
 
 Execution id: `<EXECUTION_ID_122>`
 
@@ -26048,7 +30026,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26095,7 +30073,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 123: Q06, repeat 36 — Scorer 1
+## Item 141: Q06, repeat 36 — Scorer 1
 
 Execution id: `<EXECUTION_ID_123>`
 
@@ -26156,7 +30134,7 @@ So, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26203,7 +30181,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 123: Q06, repeat 36 — Scorer 2
+## Item 141: Q06, repeat 36 — Scorer 2
 
 Execution id: `<EXECUTION_ID_123>`
 
@@ -26264,7 +30242,7 @@ So, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26311,7 +30289,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 124: Q06, repeat 38 — Scorer 1
+## Item 142: Q06, repeat 38 — Scorer 1
 
 Execution id: `<EXECUTION_ID_124>`
 
@@ -26367,7 +30345,7 @@ The total annual cost of maintaining the checking account is $144. This amount c
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26414,7 +30392,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 124: Q06, repeat 38 — Scorer 2
+## Item 142: Q06, repeat 38 — Scorer 2
 
 Execution id: `<EXECUTION_ID_124>`
 
@@ -26470,7 +30448,7 @@ The total annual cost of maintaining the checking account is $144. This amount c
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26517,7 +30495,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 125: Q06, repeat 39 — Scorer 1
+## Item 143: Q06, repeat 39 — Scorer 1
 
 Execution id: `<EXECUTION_ID_125>`
 
@@ -26578,7 +30556,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26625,7 +30603,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 125: Q06, repeat 39 — Scorer 2
+## Item 143: Q06, repeat 39 — Scorer 2
 
 Execution id: `<EXECUTION_ID_125>`
 
@@ -26686,7 +30664,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26733,7 +30711,411 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 126: Q08, repeat 1 — Scorer 1
+## Item 144: Q06, repeat 41 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144. This includes the monthly fees of $12 multiplied by 12 months. There is no interest earned on the balance since the annual rate is 0%.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "12 * 12"}`)
+  → `{"result": "144"}`
+
+- **calculator**(`{"expression": "4850 * 0"}`)
+  → `{"result": "0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 144: Q06, repeat 41 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144. This includes the monthly fees of $12 multiplied by 12 months. There is no interest earned on the balance since the annual rate is 0%.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "12 * 12"}`)
+  → `{"result": "144"}`
+
+- **calculator**(`{"expression": "4850 * 0"}`)
+  → `{"result": "0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 145: Q06, repeat 46 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144. This cost comes from the monthly fees of $12 multiplied by 12 months. The account balance does not generate any interest, so there is no additional cost or income from the balance itself.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "12 * 12"}`)
+  → `{"result": "144"}`
+
+- **calculator**(`{"expression": "4850 * 0.0"}`)
+  → `{"result": "0.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 145: Q06, repeat 46 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144. This cost comes from the monthly fees of $12 multiplied by 12 months. The account balance does not generate any interest, so there is no additional cost or income from the balance itself.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "12 * 12"}`)
+  → `{"result": "144"}`
+
+- **calculator**(`{"expression": "4850 * 0.0"}`)
+  → `{"result": "0.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 146: Q08, repeat 1 — Scorer 1
 
 Execution id: `<EXECUTION_ID_126>`
 
@@ -26831,7 +31213,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 126: Q08, repeat 1 — Scorer 2
+## Item 146: Q08, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_126>`
 
@@ -26929,7 +31311,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 127: Q08, repeat 2 — Scorer 1
+## Item 147: Q08, repeat 2 — Scorer 1
 
 Execution id: `<EXECUTION_ID_127>`
 
@@ -27027,7 +31409,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 127: Q08, repeat 2 — Scorer 2
+## Item 147: Q08, repeat 2 — Scorer 2
 
 Execution id: `<EXECUTION_ID_127>`
 
@@ -27125,7 +31507,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 128: Q08, repeat 3 — Scorer 1
+## Item 148: Q08, repeat 3 — Scorer 1
 
 Execution id: `<EXECUTION_ID_128>`
 
@@ -27223,7 +31605,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 128: Q08, repeat 3 — Scorer 2
+## Item 148: Q08, repeat 3 — Scorer 2
 
 Execution id: `<EXECUTION_ID_128>`
 
@@ -27321,7 +31703,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 129: Q08, repeat 4 — Scorer 1
+## Item 149: Q08, repeat 4 — Scorer 1
 
 Execution id: `<EXECUTION_ID_129>`
 
@@ -27389,7 +31771,7 @@ So, the remaining mortgage balance after the first monthly payment is $287,069.2
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27443,7 +31825,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 129: Q08, repeat 4 — Scorer 2
+## Item 149: Q08, repeat 4 — Scorer 2
 
 Execution id: `<EXECUTION_ID_129>`
 
@@ -27511,7 +31893,7 @@ So, the remaining mortgage balance after the first monthly payment is $287,069.2
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27565,7 +31947,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 130: Q08, repeat 5 — Scorer 1
+## Item 150: Q08, repeat 5 — Scorer 1
 
 Execution id: `<EXECUTION_ID_130>`
 
@@ -27663,7 +32045,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 130: Q08, repeat 5 — Scorer 2
+## Item 150: Q08, repeat 5 — Scorer 2
 
 Execution id: `<EXECUTION_ID_130>`
 
@@ -27761,7 +32143,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 131: Q08, repeat 6 — Scorer 1
+## Item 151: Q08, repeat 6 — Scorer 1
 
 Execution id: `<EXECUTION_ID_131>`
 
@@ -27859,7 +32241,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 131: Q08, repeat 6 — Scorer 2
+## Item 151: Q08, repeat 6 — Scorer 2
 
 Execution id: `<EXECUTION_ID_131>`
 
@@ -27957,7 +32339,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 132: Q08, repeat 7 — Scorer 1
+## Item 152: Q08, repeat 7 — Scorer 1
 
 Execution id: `<EXECUTION_ID_132>`
 
@@ -28055,7 +32437,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 132: Q08, repeat 7 — Scorer 2
+## Item 152: Q08, repeat 7 — Scorer 2
 
 Execution id: `<EXECUTION_ID_132>`
 
@@ -28153,7 +32535,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 133: Q08, repeat 8 — Scorer 1
+## Item 153: Q08, repeat 8 — Scorer 1
 
 Execution id: `<EXECUTION_ID_133>`
 
@@ -28251,7 +32633,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 133: Q08, repeat 8 — Scorer 2
+## Item 153: Q08, repeat 8 — Scorer 2
 
 Execution id: `<EXECUTION_ID_133>`
 
@@ -28349,7 +32731,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 134: Q08, repeat 9 — Scorer 1
+## Item 154: Q08, repeat 9 — Scorer 1
 
 Execution id: `<EXECUTION_ID_134>`
 
@@ -28447,7 +32829,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 134: Q08, repeat 9 — Scorer 2
+## Item 154: Q08, repeat 9 — Scorer 2
 
 Execution id: `<EXECUTION_ID_134>`
 
@@ -28545,7 +32927,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 135: Q08, repeat 10 — Scorer 1
+## Item 155: Q08, repeat 10 — Scorer 1
 
 Execution id: `<EXECUTION_ID_135>`
 
@@ -28643,7 +33025,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 135: Q08, repeat 10 — Scorer 2
+## Item 155: Q08, repeat 10 — Scorer 2
 
 Execution id: `<EXECUTION_ID_135>`
 
@@ -28741,7 +33123,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 136: Q08, repeat 11 — Scorer 1
+## Item 156: Q08, repeat 11 — Scorer 1
 
 Execution id: `<EXECUTION_ID_136>`
 
@@ -28839,7 +33221,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 136: Q08, repeat 11 — Scorer 2
+## Item 156: Q08, repeat 11 — Scorer 2
 
 Execution id: `<EXECUTION_ID_136>`
 
@@ -28937,7 +33319,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 137: Q08, repeat 12 — Scorer 1
+## Item 157: Q08, repeat 12 — Scorer 1
 
 Execution id: `<EXECUTION_ID_137>`
 
@@ -29035,7 +33417,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 137: Q08, repeat 12 — Scorer 2
+## Item 157: Q08, repeat 12 — Scorer 2
 
 Execution id: `<EXECUTION_ID_137>`
 
@@ -29133,7 +33515,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 138: Q08, repeat 13 — Scorer 1
+## Item 158: Q08, repeat 13 — Scorer 1
 
 Execution id: `<EXECUTION_ID_138>`
 
@@ -29231,7 +33613,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 138: Q08, repeat 13 — Scorer 2
+## Item 158: Q08, repeat 13 — Scorer 2
 
 Execution id: `<EXECUTION_ID_138>`
 
@@ -29329,7 +33711,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 139: Q08, repeat 15 — Scorer 1
+## Item 159: Q08, repeat 15 — Scorer 1
 
 Execution id: `<EXECUTION_ID_139>`
 
@@ -29427,7 +33809,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 139: Q08, repeat 15 — Scorer 2
+## Item 159: Q08, repeat 15 — Scorer 2
 
 Execution id: `<EXECUTION_ID_139>`
 
@@ -29525,7 +33907,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 140: Q08, repeat 17 — Scorer 1
+## Item 160: Q08, repeat 17 — Scorer 1
 
 Execution id: `<EXECUTION_ID_140>`
 
@@ -29591,7 +33973,7 @@ The remaining mortgage balance after the first monthly payment is $287,069.25.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29645,7 +34027,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 140: Q08, repeat 17 — Scorer 2
+## Item 160: Q08, repeat 17 — Scorer 2
 
 Execution id: `<EXECUTION_ID_140>`
 
@@ -29711,7 +34093,7 @@ The remaining mortgage balance after the first monthly payment is $287,069.25.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29765,7 +34147,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 141: Q08, repeat 18 — Scorer 1
+## Item 161: Q08, repeat 18 — Scorer 1
 
 Execution id: `<EXECUTION_ID_141>`
 
@@ -29863,7 +34245,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 141: Q08, repeat 18 — Scorer 2
+## Item 161: Q08, repeat 18 — Scorer 2
 
 Execution id: `<EXECUTION_ID_141>`
 
@@ -29961,7 +34343,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 142: Q08, repeat 19 — Scorer 1
+## Item 162: Q08, repeat 19 — Scorer 1
 
 Execution id: `<EXECUTION_ID_142>`
 
@@ -30074,7 +34456,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 142: Q08, repeat 19 — Scorer 2
+## Item 162: Q08, repeat 19 — Scorer 2
 
 Execution id: `<EXECUTION_ID_142>`
 
@@ -30187,7 +34569,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 143: Q08, repeat 20 — Scorer 1
+## Item 163: Q08, repeat 20 — Scorer 1
 
 Execution id: `<EXECUTION_ID_143>`
 
@@ -30285,7 +34667,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 143: Q08, repeat 20 — Scorer 2
+## Item 163: Q08, repeat 20 — Scorer 2
 
 Execution id: `<EXECUTION_ID_143>`
 
@@ -30383,7 +34765,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 144: Q08, repeat 21 — Scorer 1
+## Item 164: Q08, repeat 21 — Scorer 1
 
 Execution id: `<EXECUTION_ID_144>`
 
@@ -30496,7 +34878,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 144: Q08, repeat 21 — Scorer 2
+## Item 164: Q08, repeat 21 — Scorer 2
 
 Execution id: `<EXECUTION_ID_144>`
 
@@ -30609,7 +34991,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 145: Q08, repeat 22 — Scorer 1
+## Item 165: Q08, repeat 22 — Scorer 1
 
 Execution id: `<EXECUTION_ID_145>`
 
@@ -30707,7 +35089,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 145: Q08, repeat 22 — Scorer 2
+## Item 165: Q08, repeat 22 — Scorer 2
 
 Execution id: `<EXECUTION_ID_145>`
 
@@ -30805,7 +35187,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 146: Q08, repeat 23 — Scorer 1
+## Item 166: Q08, repeat 23 — Scorer 1
 
 Execution id: `<EXECUTION_ID_146>`
 
@@ -30903,7 +35285,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 146: Q08, repeat 23 — Scorer 2
+## Item 166: Q08, repeat 23 — Scorer 2
 
 Execution id: `<EXECUTION_ID_146>`
 
@@ -31001,7 +35383,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 147: Q08, repeat 24 — Scorer 1
+## Item 167: Q08, repeat 24 — Scorer 1
 
 Execution id: `<EXECUTION_ID_147>`
 
@@ -31108,7 +35490,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 147: Q08, repeat 24 — Scorer 2
+## Item 167: Q08, repeat 24 — Scorer 2
 
 Execution id: `<EXECUTION_ID_147>`
 
@@ -31215,7 +35597,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 148: Q08, repeat 25 — Scorer 1
+## Item 168: Q08, repeat 25 — Scorer 1
 
 Execution id: `<EXECUTION_ID_148>`
 
@@ -31313,7 +35695,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 148: Q08, repeat 25 — Scorer 2
+## Item 168: Q08, repeat 25 — Scorer 2
 
 Execution id: `<EXECUTION_ID_148>`
 
@@ -31411,7 +35793,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 149: Q08, repeat 27 — Scorer 1
+## Item 169: Q08, repeat 27 — Scorer 1
 
 Execution id: `<EXECUTION_ID_149>`
 
@@ -31509,7 +35891,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 149: Q08, repeat 27 — Scorer 2
+## Item 169: Q08, repeat 27 — Scorer 2
 
 Execution id: `<EXECUTION_ID_149>`
 
@@ -31607,7 +35989,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 150: Q08, repeat 28 — Scorer 1
+## Item 170: Q08, repeat 28 — Scorer 1
 
 Execution id: `<EXECUTION_ID_150>`
 
@@ -31705,7 +36087,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 150: Q08, repeat 28 — Scorer 2
+## Item 170: Q08, repeat 28 — Scorer 2
 
 Execution id: `<EXECUTION_ID_150>`
 
@@ -31803,7 +36185,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 151: Q08, repeat 29 — Scorer 1
+## Item 171: Q08, repeat 29 — Scorer 1
 
 Execution id: `<EXECUTION_ID_151>`
 
@@ -31910,7 +36292,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 151: Q08, repeat 29 — Scorer 2
+## Item 171: Q08, repeat 29 — Scorer 2
 
 Execution id: `<EXECUTION_ID_151>`
 
@@ -32017,7 +36399,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 152: Q08, repeat 30 — Scorer 1
+## Item 172: Q08, repeat 30 — Scorer 1
 
 Execution id: `<EXECUTION_ID_152>`
 
@@ -32115,7 +36497,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 152: Q08, repeat 30 — Scorer 2
+## Item 172: Q08, repeat 30 — Scorer 2
 
 Execution id: `<EXECUTION_ID_152>`
 
@@ -32213,7 +36595,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 153: Q08, repeat 32 — Scorer 1
+## Item 173: Q08, repeat 32 — Scorer 1
 
 Execution id: `<EXECUTION_ID_153>`
 
@@ -32311,7 +36693,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 153: Q08, repeat 32 — Scorer 2
+## Item 173: Q08, repeat 32 — Scorer 2
 
 Execution id: `<EXECUTION_ID_153>`
 
@@ -32409,7 +36791,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 154: Q08, repeat 34 — Scorer 1
+## Item 174: Q08, repeat 34 — Scorer 1
 
 Execution id: `<EXECUTION_ID_154>`
 
@@ -32507,7 +36889,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 154: Q08, repeat 34 — Scorer 2
+## Item 174: Q08, repeat 34 — Scorer 2
 
 Execution id: `<EXECUTION_ID_154>`
 
@@ -32605,7 +36987,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 155: Q08, repeat 35 — Scorer 1
+## Item 175: Q08, repeat 35 — Scorer 1
 
 Execution id: `<EXECUTION_ID_155>`
 
@@ -32703,7 +37085,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 155: Q08, repeat 35 — Scorer 2
+## Item 175: Q08, repeat 35 — Scorer 2
 
 Execution id: `<EXECUTION_ID_155>`
 
@@ -32801,7 +37183,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 156: Q08, repeat 36 — Scorer 1
+## Item 176: Q08, repeat 36 — Scorer 1
 
 Execution id: `<EXECUTION_ID_156>`
 
@@ -32899,7 +37281,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 156: Q08, repeat 36 — Scorer 2
+## Item 176: Q08, repeat 36 — Scorer 2
 
 Execution id: `<EXECUTION_ID_156>`
 
@@ -32997,7 +37379,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 157: Q08, repeat 37 — Scorer 1
+## Item 177: Q08, repeat 37 — Scorer 1
 
 Execution id: `<EXECUTION_ID_157>`
 
@@ -33095,7 +37477,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 157: Q08, repeat 37 — Scorer 2
+## Item 177: Q08, repeat 37 — Scorer 2
 
 Execution id: `<EXECUTION_ID_157>`
 
@@ -33193,7 +37575,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 158: Q08, repeat 38 — Scorer 1
+## Item 178: Q08, repeat 38 — Scorer 1
 
 Execution id: `<EXECUTION_ID_158>`
 
@@ -33291,7 +37673,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 158: Q08, repeat 38 — Scorer 2
+## Item 178: Q08, repeat 38 — Scorer 2
 
 Execution id: `<EXECUTION_ID_158>`
 
@@ -33389,7 +37771,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 159: Q08, repeat 40 — Scorer 1
+## Item 179: Q08, repeat 40 — Scorer 1
 
 Execution id: `<EXECUTION_ID_159>`
 
@@ -33487,7 +37869,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 159: Q08, repeat 40 — Scorer 2
+## Item 179: Q08, repeat 40 — Scorer 2
 
 Execution id: `<EXECUTION_ID_159>`
 
@@ -33585,7 +37967,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 160: Q08, repeat 41 — Scorer 1
+## Item 180: Q08, repeat 41 — Scorer 1
 
 Execution id: `<EXECUTION_ID_160>`
 
@@ -33683,7 +38065,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 160: Q08, repeat 41 — Scorer 2
+## Item 180: Q08, repeat 41 — Scorer 2
 
 Execution id: `<EXECUTION_ID_160>`
 
@@ -33781,7 +38163,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 161: Q08, repeat 42 — Scorer 1
+## Item 181: Q08, repeat 42 — Scorer 1
 
 Execution id: `<EXECUTION_ID_161>`
 
@@ -33879,7 +38261,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 161: Q08, repeat 42 — Scorer 2
+## Item 181: Q08, repeat 42 — Scorer 2
 
 Execution id: `<EXECUTION_ID_161>`
 
@@ -33977,7 +38359,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 162: Q08, repeat 43 — Scorer 1
+## Item 182: Q08, repeat 43 — Scorer 1
 
 Execution id: `<EXECUTION_ID_162>`
 
@@ -34075,7 +38457,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 162: Q08, repeat 43 — Scorer 2
+## Item 182: Q08, repeat 43 — Scorer 2
 
 Execution id: `<EXECUTION_ID_162>`
 
@@ -34173,7 +38555,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 163: Q08, repeat 44 — Scorer 1
+## Item 183: Q08, repeat 44 — Scorer 1
 
 Execution id: `<EXECUTION_ID_163>`
 
@@ -34271,7 +38653,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 163: Q08, repeat 44 — Scorer 2
+## Item 183: Q08, repeat 44 — Scorer 2
 
 Execution id: `<EXECUTION_ID_163>`
 
@@ -34369,7 +38751,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 164: Q08, repeat 45 — Scorer 1
+## Item 184: Q08, repeat 45 — Scorer 1
 
 Execution id: `<EXECUTION_ID_164>`
 
@@ -34467,7 +38849,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 164: Q08, repeat 45 — Scorer 2
+## Item 184: Q08, repeat 45 — Scorer 2
 
 Execution id: `<EXECUTION_ID_164>`
 
@@ -34565,7 +38947,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 165: Q08, repeat 46 — Scorer 1
+## Item 185: Q08, repeat 46 — Scorer 1
 
 Execution id: `<EXECUTION_ID_165>`
 
@@ -34663,7 +39045,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 165: Q08, repeat 46 — Scorer 2
+## Item 185: Q08, repeat 46 — Scorer 2
 
 Execution id: `<EXECUTION_ID_165>`
 
@@ -34761,7 +39143,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 166: Q08, repeat 48 — Scorer 1
+## Item 186: Q08, repeat 48 — Scorer 1
 
 Execution id: `<EXECUTION_ID_166>`
 
@@ -34859,7 +39241,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 166: Q08, repeat 48 — Scorer 2
+## Item 186: Q08, repeat 48 — Scorer 2
 
 Execution id: `<EXECUTION_ID_166>`
 
@@ -34957,7 +39339,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 167: Q08, repeat 49 — Scorer 1
+## Item 187: Q08, repeat 49 — Scorer 1
 
 Execution id: `<EXECUTION_ID_167>`
 
@@ -35055,7 +39437,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 167: Q08, repeat 49 — Scorer 2
+## Item 187: Q08, repeat 49 — Scorer 2
 
 Execution id: `<EXECUTION_ID_167>`
 
@@ -35153,7 +39535,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 168: Q08, repeat 50 — Scorer 1
+## Item 188: Q08, repeat 50 — Scorer 1
 
 Execution id: `<EXECUTION_ID_168>`
 
@@ -35251,7 +39633,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 168: Q08, repeat 50 — Scorer 2
+## Item 188: Q08, repeat 50 — Scorer 2
 
 Execution id: `<EXECUTION_ID_168>`
 
@@ -35349,7 +39731,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 169: Q09, repeat 1 — Scorer 1
+## Item 189: Q09, repeat 1 — Scorer 1
 
 Execution id: `<EXECUTION_ID_169>`
 
@@ -35422,7 +39804,7 @@ So, the net monthly income is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35476,7 +39858,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 169: Q09, repeat 1 — Scorer 2
+## Item 189: Q09, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_169>`
 
@@ -35549,7 +39931,7 @@ So, the net monthly income is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35603,7 +39985,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 170: Q09, repeat 7 — Scorer 1
+## Item 190: Q09, repeat 7 — Scorer 1
 
 Execution id: `<EXECUTION_ID_170>`
 
@@ -35672,7 +40054,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35726,7 +40108,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 170: Q09, repeat 7 — Scorer 2
+## Item 190: Q09, repeat 7 — Scorer 2
 
 Execution id: `<EXECUTION_ID_170>`
 
@@ -35795,7 +40177,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35849,7 +40231,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 171: Q09, repeat 10 — Scorer 1
+## Item 191: Q09, repeat 10 — Scorer 1
 
 Execution id: `<EXECUTION_ID_171>`
 
@@ -35920,7 +40302,7 @@ So, the net monthly income after fees is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35974,7 +40356,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 171: Q09, repeat 10 — Scorer 2
+## Item 191: Q09, repeat 10 — Scorer 2
 
 Execution id: `<EXECUTION_ID_171>`
 
@@ -36045,7 +40427,7 @@ So, the net monthly income after fees is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36099,7 +40481,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 172: Q09, repeat 13 — Scorer 1
+## Item 192: Q09, repeat 13 — Scorer 1
 
 Execution id: `<EXECUTION_ID_172>`
 
@@ -36170,7 +40552,7 @@ So, the net monthly income after deducting the checking account fees is 3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36224,7 +40606,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 172: Q09, repeat 13 — Scorer 2
+## Item 192: Q09, repeat 13 — Scorer 2
 
 Execution id: `<EXECUTION_ID_172>`
 
@@ -36295,7 +40677,7 @@ So, the net monthly income after deducting the checking account fees is 3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36349,7 +40731,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 173: Q09, repeat 15 — Scorer 1
+## Item 193: Q09, repeat 15 — Scorer 1
 
 Execution id: `<EXECUTION_ID_173>`
 
@@ -36420,7 +40802,7 @@ So, the net monthly income after deducting the checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36474,7 +40856,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 173: Q09, repeat 15 — Scorer 2
+## Item 193: Q09, repeat 15 — Scorer 2
 
 Execution id: `<EXECUTION_ID_173>`
 
@@ -36545,7 +40927,7 @@ So, the net monthly income after deducting the checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36599,7 +40981,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 174: Q09, repeat 23 — Scorer 1
+## Item 194: Q09, repeat 23 — Scorer 1
 
 Execution id: `<EXECUTION_ID_174>`
 
@@ -36671,7 +41053,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36725,7 +41107,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 174: Q09, repeat 23 — Scorer 2
+## Item 194: Q09, repeat 23 — Scorer 2
 
 Execution id: `<EXECUTION_ID_174>`
 
@@ -36797,7 +41179,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36851,7 +41233,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 175: Q09, repeat 24 — Scorer 1
+## Item 195: Q09, repeat 24 — Scorer 1
 
 Execution id: `<EXECUTION_ID_175>`
 
@@ -36922,7 +41304,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36976,7 +41358,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 175: Q09, repeat 24 — Scorer 2
+## Item 195: Q09, repeat 24 — Scorer 2
 
 Execution id: `<EXECUTION_ID_175>`
 
@@ -37047,7 +41429,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37101,7 +41483,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 176: Q09, repeat 28 — Scorer 1
+## Item 196: Q09, repeat 28 — Scorer 1
 
 Execution id: `<EXECUTION_ID_176>`
 
@@ -37172,7 +41554,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37226,7 +41608,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 176: Q09, repeat 28 — Scorer 2
+## Item 196: Q09, repeat 28 — Scorer 2
 
 Execution id: `<EXECUTION_ID_176>`
 
@@ -37297,7 +41679,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37351,7 +41733,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 177: Q09, repeat 33 — Scorer 1
+## Item 197: Q09, repeat 33 — Scorer 1
 
 Execution id: `<EXECUTION_ID_177>`
 
@@ -37424,7 +41806,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37478,7 +41860,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 177: Q09, repeat 33 — Scorer 2
+## Item 197: Q09, repeat 33 — Scorer 2
 
 Execution id: `<EXECUTION_ID_177>`
 
@@ -37551,7 +41933,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37605,7 +41987,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 178: Q09, repeat 34 — Scorer 1
+## Item 198: Q09, repeat 34 — Scorer 1
 
 Execution id: `<EXECUTION_ID_178>`
 
@@ -37676,7 +42058,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37730,7 +42112,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 178: Q09, repeat 34 — Scorer 2
+## Item 198: Q09, repeat 34 — Scorer 2
 
 Execution id: `<EXECUTION_ID_178>`
 
@@ -37801,7 +42183,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37855,7 +42237,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 179: Q09, repeat 41 — Scorer 1
+## Item 199: Q09, repeat 41 — Scorer 1
 
 Execution id: `<EXECUTION_ID_179>`
 
@@ -37929,7 +42311,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37983,7 +42365,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 179: Q09, repeat 41 — Scorer 2
+## Item 199: Q09, repeat 41 — Scorer 2
 
 Execution id: `<EXECUTION_ID_179>`
 
@@ -38057,7 +42439,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38111,7 +42493,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 180: Q09, repeat 43 — Scorer 1
+## Item 200: Q09, repeat 43 — Scorer 1
 
 Execution id: `<EXECUTION_ID_180>`
 
@@ -38182,7 +42564,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38236,7 +42618,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 180: Q09, repeat 43 — Scorer 2
+## Item 200: Q09, repeat 43 — Scorer 2
 
 Execution id: `<EXECUTION_ID_180>`
 
@@ -38307,7 +42689,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38361,7 +42743,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 181: Q09, repeat 47 — Scorer 1
+## Item 201: Q09, repeat 47 — Scorer 1
 
 Execution id: `<EXECUTION_ID_181>`
 
@@ -38434,7 +42816,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38488,7 +42870,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 181: Q09, repeat 47 — Scorer 2
+## Item 201: Q09, repeat 47 — Scorer 2
 
 Execution id: `<EXECUTION_ID_181>`
 
@@ -38561,7 +42943,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38615,7 +42997,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 182: Q09, repeat 48 — Scorer 1
+## Item 202: Q09, repeat 48 — Scorer 1
 
 Execution id: `<EXECUTION_ID_182>`
 
@@ -38686,7 +43068,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38740,7 +43122,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 182: Q09, repeat 48 — Scorer 2
+## Item 202: Q09, repeat 48 — Scorer 2
 
 Execution id: `<EXECUTION_ID_182>`
 
@@ -38811,7 +43193,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38867,6 +43249,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ---
 
-Total items requiring adjudication: 182
+Total items requiring adjudication: 202
 
-Total sheets: 364 (2 per item, for 2 scorers)
+Total sheets: 404 (2 per item, for 2 scorers)

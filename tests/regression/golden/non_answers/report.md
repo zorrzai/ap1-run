@@ -17,20 +17,14 @@ Model: mock-model
 | `ap1_text_hash` | `48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56` |
 | `ap1_version` | `v1.3-draft-for-comment-20260730` |
 | `ap1_version_doi` | `10.5281/zenodo.21755443` |
-| `calculator_hash` | `43c836b56e0ccf93dad7f6e7eba7b7e74cdf5c90a78ffcc2942ba11bc4dfb0bc` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
-| `expected_values_hash` | `81d9b435264ddbb032c5744342df577d691e9766fd566dc75632b34bc6dd46ca` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
-| `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
-| `package_versions` | `<ENVIRONMENT>` |
-| `platform` | `<ENVIRONMENT>` |
-| `python_version` | `<ENVIRONMENT>` |
+| `ground_truth_hash` | `080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812` |
 | `questions_hash` | `5f6aa97714e2b0f7e3039ae6018f6566e811354c4a904d210964beac54172af9` |
 | `runner_source_hash` | `<RUNNER_SOURCE_HASH>` |
 | `runner_version_commit` | `e0d9ec9` |
 | `runner_version_tag` | `v1.3.1` |
-| `seal_format` | `2` |
 | `seal_hash` | `<SEAL_HASH>` |
 | `timestamp` | `<TIMESTAMP>` |
 | `verification_keys` | `[]` |
@@ -57,6 +51,7 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 104 records.
     "I'm sorry, I cannot"
   ],
   "dimensions_claimed": [
+    "D1",
     "D2",
     "D7"
   ],
@@ -119,7 +114,7 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 104 records.
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | **NOT MEASURED** | — | — |
+| D1 | Measured | 32 | No rate: 16 items await adjudication (auto-scored 16: 12 correct, 0 incorrect, 4 no figure) |
 | D2 | Measured | N/A | See §9 D2 Mechanism Classes |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -182,12 +177,12 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 104 records.
 
 | Outcome | Count | % |
 |---|---|---|
-| `TRANSCRIBED-EXACT` | 16 | 50.0% |
+| `TRANSCRIBED-EXACT` | 12 | 37.5% |
 | `TRANSCRIBED-ALTERED` | 0 | 0.0% |
-| `UNOBSERVABLE` | 16 | 50.0% |
+| `UNOBSERVABLE` | 20 | 62.5% |
 | **Total** | **32** | |
 
-Of the 16 `TRANSCRIBED-EXACT`, 4 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3). Of these: roundings of the tool's return to the declared places, 0; float artefacts of the tool (the return differs from the release only past a binary float's 15 significant digits, such as 15.200000000000001 for 15.20), 4. A strict v1.2 "match" count subtracts the roundings, or all 4 for the strictest reading.
+Of the 12 `TRANSCRIBED-EXACT`, 4 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
 
 ### B. Release Coverage
 
@@ -265,29 +260,30 @@ Total operands resolved: 112
 
 > OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded. UNMEASURABLE: a call in a chained item whose ground truth declares no intermediates (SPEC R2.4); its operands are not counted in the step table.
 
-| Outcome | Count | Proportion |
+| Outcome | Count | % |
 |---|---|---|
-| OPERANDS-GROUNDED | 24 | 24/24 (100.0%) |
-| OPERAND-ORIGINATED | 0 | 0/24 (0.0%) |
-| OPERANDS-UNOBSERVABLE | 0 | 0/24 (0.0%) |
-| UNMEASURABLE | 0 | 0/24 (0.0%) |
+| OPERANDS-GROUNDED | 24 | 100.0% |
+| OPERAND-ORIGINATED | 0 | 0.0% |
+| OPERANDS-UNOBSERVABLE | 0 | 0.0% |
+| UNMEASURABLE | 0 | 0.0% |
 
 ## 8. Scoring Proportions
 
 ### D1 Accuracy
 
-- Auto-scored: 20
-- Adjudicated: 12
+- Auto-scored: 16
+- Adjudicated: 16
+- Unmeasurable: 0 (response unreadable, routed to adjudication)
 - Total: 32
-- Auto-scored proportion: 20/32 = 62.50%
-- Accuracy rate: 1 (computed from 20 auto-scored items only; 12 adjudicated items are not represented in this rate)
+- Auto-scored proportion: 16/32 = 50.00%
+- Accuracy rate: not computed: 16 items await adjudication, and R2.0 routes every wrong figure there, so a rate over the 16 auto-scored items alone would leave the wrong answers out (T3-3)
 
 ### D7 Provenance
 
-- Auto-scored: 20
-- Adjudicated: 12
+- Auto-scored: 16
+- Adjudicated: 16
 - Total: 32
-- Auto-scored proportion: 20/32 = 62.50%
+- Auto-scored proportion: 16/32 = 50.00%
 
 ## 9. D2 Reproducibility Mechanism Classes
 
@@ -299,18 +295,6 @@ Total operands resolved: 112
 
 *No per-surface D2 data available.*
 
-
-## 9b. D2.2 Execution Conditions
-
-- Serving stack and version: as the responses report it, model mock-model (40); backend fingerprints (system_fingerprint) not reported; the runner observes nothing more.
-- Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
-- Concurrency: one request at a time, sequentially, from a single process.
-- Sampling parameters sent:
-  - `max_completion_tokens`: `4096`
-  - `reasoning_effort`: `none`
-  - `temperature`: not sent (platform-rejected)
-  - `top_p`: not sent (operator-declared)
-- Parameter echo: `UNVERIFIED` (56 responses checked)
 
 ## 10. Non-Outcome Cells
 
@@ -333,7 +317,6 @@ Total operands resolved: 112
 
 The following dimensions were **not measured** in this evaluation and require human adjudication:
 
-- **D1**: Accuracy — requires item-level scoring
 - **D3**: Completeness of explanation — requires human adjudication
 - **D4**: Appropriate caveats — requires human adjudication
 - **D5**: Source attribution — requires human adjudication

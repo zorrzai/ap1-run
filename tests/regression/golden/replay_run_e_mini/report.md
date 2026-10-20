@@ -6,7 +6,7 @@ AP-1 Version: v1.3-draft-for-comment-20260730
 
 Version DOI: 10.5281/zenodo.21755443
 
-Model: gpt-4.1-mini
+Model: mock-model
 
 ---
 
@@ -17,20 +17,14 @@ Model: gpt-4.1-mini
 | `ap1_text_hash` | `48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56` |
 | `ap1_version` | `v1.3-draft-for-comment-20260730` |
 | `ap1_version_doi` | `10.5281/zenodo.21755443` |
-| `calculator_hash` | `ae8eae4c313079e401b4a12f7c2fc571cea695b5fe8f9eda5ca808d449303c7d` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
-| `expected_values_hash` | `81d9b435264ddbb032c5744342df577d691e9766fd566dc75632b34bc6dd46ca` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
-| `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
-| `package_versions` | `<ENVIRONMENT>` |
-| `platform` | `<ENVIRONMENT>` |
-| `python_version` | `<ENVIRONMENT>` |
+| `ground_truth_hash` | `080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812` |
 | `questions_hash` | `5f6aa97714e2b0f7e3039ae6018f6566e811354c4a904d210964beac54172af9` |
 | `runner_source_hash` | `<RUNNER_SOURCE_HASH>` |
 | `runner_version_commit` | `e0d9ec9` |
 | `runner_version_tag` | `v1.3.1` |
-| `seal_format` | `2` |
 | `seal_hash` | `<SEAL_HASH>` |
 | `timestamp` | `<TIMESTAMP>` |
 | `verification_keys` | `[]` |
@@ -57,12 +51,13 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 3416 records.
     "I'm sorry, I cannot"
   ],
   "dimensions_claimed": [
+    "D1",
     "D2",
     "D7"
   ],
   "endpoint_url": "<MOCK>/v1/chat/completions",
   "grouping_separator": ",",
-  "model": "gpt-4.1-mini",
+  "model": "mock-model",
   "permitted_transformations": [
     "percent_to_fraction",
     "fraction_to_percent"
@@ -78,8 +73,8 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 3416 records.
   "sampling": {
     "max_completion_tokens": "4096",
     "reasoning_effort": {
-      "detail": "gpt-4.1-mini returned HTTP 400: Unrecognized request argument supplied: reasoning_effort",
-      "reason": "platform-unsupported",
+      "detail": "gpt-4.1-mini does not recognize reasoning_effort",
+      "reason": "not-supported",
       "value": "omitted"
     },
     "temperature": "1",
@@ -119,7 +114,7 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 3416 records.
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | **NOT MEASURED** | — | — |
+| D1 | Measured | 1000 | No rate: 202 items await adjudication (auto-scored 798: 798 correct, 0 incorrect, 0 no figure) |
 | D2 | Measured | N/A | See §9 D2 Mechanism Classes |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -1151,12 +1146,12 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 3416 records.
 
 | Outcome | Count | % |
 |---|---|---|
-| `TRANSCRIBED-EXACT` | 810 | 81.0% |
+| `TRANSCRIBED-EXACT` | 790 | 79.0% |
 | `TRANSCRIBED-ALTERED` | 8 | 0.8% |
-| `UNOBSERVABLE` | 182 | 18.2% |
+| `UNOBSERVABLE` | 202 | 20.2% |
 | **Total** | **1000** | |
 
-Of the 810 `TRANSCRIBED-EXACT`, 291 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3). Of these: roundings of the tool's return to the declared places, 99; float artefacts of the tool (the return differs from the release only past a binary float's 15 significant digits, such as 15.200000000000001 for 15.20), 192. A strict v1.2 "match" count subtracts the roundings, or all 291 for the strictest reading.
+Of the 790 `TRANSCRIBED-EXACT`, 283 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
 
 #### Altered Transcriptions
 
@@ -1213,7 +1208,7 @@ Of the 810 `TRANSCRIBED-EXACT`, 291 were rounded under the declared quantisation
 
 > AP-1 v1.3 D7.5: any invocation figure, including 100%, shall be reported with the exact one-sided 95% upper confidence bound.
 
-> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED; beside k, each failing question with its NOT-INVOKED repeats out of its observed repeats (EV-0 repeats are in neither). UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
+> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
 
 | Metric | k (failures) | n | Rate | 95% Upper Bound | Evidence Class |
 |---|---|---|---|---|---|
@@ -1265,9 +1260,9 @@ Total operations evaluated: 1778
 
 | Population | Count |
 |---|---|
-| Route divergence (item answer correct) | 80 |
+| Route divergence (item answer correct) | 75 |
 | Item answer incorrect | 0 |
-| Item answer undetermined (adjudicated) | 147 |
+| Item answer undetermined (adjudicated) | 152 |
 | No figure released (no item answer) | 0 |
 
 ## 7b. D7.2(a) Operand Provenance Step Counts
@@ -1291,12 +1286,12 @@ Total operands resolved: 4860
 
 > OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded. UNMEASURABLE: a call in a chained item whose ground truth declares no intermediates (SPEC R2.4); its operands are not counted in the step table.
 
-| Outcome | Count | Proportion |
+| Outcome | Count | % |
 |---|---|---|
-| OPERANDS-GROUNDED | 1773 | 1773/1778 (99.7%) |
-| OPERAND-ORIGINATED | 5 | 5/1778 (0.3%) |
-| OPERANDS-UNOBSERVABLE | 0 | 0/1778 (0.0%) |
-| UNMEASURABLE | 0 | 0/1778 (0.0%) |
+| OPERANDS-GROUNDED | 1773 | 99.7% |
+| OPERAND-ORIGINATED | 5 | 0.3% |
+| OPERANDS-UNOBSERVABLE | 0 | 0.0% |
+| UNMEASURABLE | 0 | 0.0% |
 
 ### Originated Operand Audit
 
@@ -1312,41 +1307,26 @@ Total operands resolved: 4860
 
 ### D1 Accuracy
 
-- Auto-scored: 818
-- Adjudicated: 181
-- Total: 999
-- Auto-scored proportion: 818/999 = 81.88%
-- Accuracy rate: 1 (computed from 818 auto-scored items only; 181 adjudicated items are not represented in this rate)
+- Auto-scored: 798
+- Adjudicated: 201
+- Unmeasurable: 1 (response unreadable, routed to adjudication)
+- Total: 1000
+- Auto-scored proportion: 798/1000 = 79.80%
+- Accuracy rate: not computed: 202 items await adjudication, and R2.0 routes every wrong figure there, so a rate over the 798 auto-scored items alone would leave the wrong answers out (T3-3)
 
 ### D7 Provenance
 
-- Auto-scored: 818
-- Adjudicated: 182
+- Auto-scored: 798
+- Adjudicated: 202
 - Total: 1000
-- Auto-scored proportion: 818/1000 = 81.80%
+- Auto-scored proportion: 798/1000 = 79.80%
 
 ## 9. D2 Reproducibility Mechanism Classes
-
-> **D2.2 cap: reasoning_effort was platform-unsupported. Detail: gpt-4.1-mini returned HTTP 400: Unrecognized request argument supplied: reasoning_effort**
-
-> *The platform-rejection detail above is the verbatim error recorded during config setup. The rejection is model-independent: it applies to any model run under this config.*
 
 > D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
 
 *No per-surface D2 data available.*
 
-
-## 9b. D2.2 Execution Conditions
-
-- Serving stack and version: as the responses report it, model gpt-4.1-mini-2025-04-14 (1000); backend fingerprints (system_fingerprint) fp_50915ebef8 (41), fp_5eb9ee8319 (1), fp_6d15e4ed70 (454), fp_a035767cd3 (16), fp_a8d92733a0 (442), fp_dfe5abd468 (41), fp_ee38530f4a (5); the runner observes nothing more.
-- Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
-- Concurrency: one request at a time, sequentially, from a single process.
-- Sampling parameters sent:
-  - `max_completion_tokens`: `4096`
-  - `reasoning_effort`: not sent (platform-unsupported)
-  - `temperature`: `1`
-  - `top_p`: not sent (operator-declared)
-- Parameter echo: `UNVERIFIED` (2415 responses checked)
 
 ## 10. Non-Outcome Cells
 
@@ -1354,7 +1334,7 @@ Total operands resolved: 4860
 
 | Item | Condition | Status | Reason |
 |---|---|---|---|
-| Q07 | base | UNOBSERVABLE | UNOBSERVABLE: round 2: request failed: HTTP 502: replayed mid-loop failure: the recorded loop ended here without a response |
+| Q07 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
 
 ## 11. Quantisation and Near-Miss Findings
 
@@ -1366,7 +1346,6 @@ Total operands resolved: 4860
 
 The following dimensions were **not measured** in this evaluation and require human adjudication:
 
-- **D1**: Accuracy — requires item-level scoring
 - **D3**: Completeness of explanation — requires human adjudication
 - **D4**: Appropriate caveats — requires human adjudication
 - **D5**: Source attribution — requires human adjudication
