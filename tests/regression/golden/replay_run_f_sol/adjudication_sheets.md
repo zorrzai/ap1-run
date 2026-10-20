@@ -58,6 +58,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -155,6 +159,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -256,6 +264,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -356,6 +368,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -453,6 +469,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -552,6 +572,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -649,6 +673,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -748,6 +776,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -845,6 +877,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -944,6 +980,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1041,6 +1081,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1140,6 +1184,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1237,6 +1285,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1336,6 +1388,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1433,6 +1489,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1532,6 +1592,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1629,6 +1693,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1728,6 +1796,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1825,6 +1897,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1924,6 +2000,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2021,6 +2101,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2120,6 +2204,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2217,6 +2305,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2316,6 +2408,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2413,6 +2509,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2512,6 +2612,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2609,6 +2713,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2708,6 +2816,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2805,6 +2917,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2904,6 +3020,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3001,6 +3121,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3100,6 +3224,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3197,6 +3325,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3296,6 +3428,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3393,6 +3529,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3492,6 +3632,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3589,6 +3733,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3688,6 +3836,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3785,6 +3937,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3884,6 +4040,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3981,6 +4141,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -4080,6 +4244,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4177,6 +4345,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -4276,6 +4448,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4373,6 +4549,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -4472,6 +4652,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4569,6 +4753,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -4668,6 +4856,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4766,6 +4958,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4863,6 +5059,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -4969,6 +5169,12 @@ Therefore, the principal portion of the $1,437 payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5074,6 +5280,12 @@ Therefore, the principal portion of the $1,437 payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5175,6 +5387,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5275,6 +5493,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -5381,6 +5605,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5485,6 +5715,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -5591,6 +5827,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5696,6 +5938,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5792,6 +6040,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5887,6 +6139,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -5988,6 +6244,10 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6088,6 +6348,10 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6184,6 +6448,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6279,6 +6547,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -6381,6 +6653,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6482,6 +6760,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6578,6 +6862,10 @@ The first month’s interest is:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -6676,6 +6964,10 @@ The first month’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6772,6 +7064,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6867,6 +7163,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -6969,6 +7269,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7069,6 +7375,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -7175,6 +7487,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7280,6 +7598,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7380,6 +7704,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -7482,6 +7812,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7582,6 +7918,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -7684,6 +8026,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7784,6 +8132,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -7886,6 +8240,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7981,6 +8341,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -8078,6 +8442,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8173,6 +8541,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -8270,6 +8642,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8366,6 +8742,10 @@ The first month’s interest is **$1,006.25**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8461,6 +8841,10 @@ The first month’s interest is **$1,006.25**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -8567,6 +8951,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8672,6 +9062,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8774,6 +9170,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8875,6 +9275,10 @@ After one month:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -8982,6 +9386,12 @@ Assuming interest is charged before the payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9087,6 +9497,12 @@ Assuming interest is charged before the payment:
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -9194,6 +9610,12 @@ Assuming interest is charged before the payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9299,6 +9721,12 @@ Assuming interest is charged before the payment:
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -9413,6 +9841,12 @@ The balance after one month is **$2,411.00**, assuming interest is added before 
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9525,6 +9959,12 @@ The balance after one month is **$2,411.00**, assuming interest is added before 
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -9639,6 +10079,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9752,6 +10198,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9858,6 +10310,12 @@ Assuming interest is charged before the minimum payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9963,6 +10421,12 @@ Assuming interest is charged before the minimum payment:
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -10077,6 +10541,12 @@ The credit card balance after one month is **$2,411.00**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10190,6 +10660,12 @@ The credit card balance after one month is **$2,411.00**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10298,6 +10774,12 @@ After adding interest and making the $25 minimum payment:
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -10408,6 +10890,12 @@ After adding interest and making the $25 minimum payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10514,6 +11002,12 @@ Assuming interest is applied before the payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10619,6 +11113,12 @@ Assuming interest is applied before the payment:
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -10733,6 +11233,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10846,6 +11352,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10948,6 +11460,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -11049,6 +11565,10 @@ After one month:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -11163,6 +11683,12 @@ The credit card balance after one month is **$2,411.00**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -11276,6 +11802,12 @@ The credit card balance after one month is **$2,411.00**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -11379,6 +11911,14 @@ Assuming monthly compounding:
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -11484,6 +12024,14 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11587,6 +12135,14 @@ Assuming monthly compounding:
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -11692,6 +12248,14 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11782,6 +12346,10 @@ The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11871,6 +12439,10 @@ The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -11973,6 +12545,12 @@ Ending balance after the quarter: **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12074,6 +12652,12 @@ Ending balance after the quarter: **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12174,6 +12758,12 @@ Assuming monthly compounding:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12273,6 +12863,12 @@ Assuming monthly compounding:
 - `WRONG-OPERATION`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -12375,6 +12971,12 @@ The ending balance after the quarter would be **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12476,6 +13078,12 @@ The ending balance after the quarter would be **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12576,6 +13184,12 @@ Assuming monthly compounding:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12675,6 +13289,12 @@ Assuming monthly compounding:
 - `WRONG-OPERATION`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -12780,6 +13400,14 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12884,6 +13512,14 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12985,6 +13621,12 @@ The projected balance after three months would be **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13085,6 +13727,12 @@ The projected balance after three months would be **$42,957.77**.
 - `WRONG-OPERATION`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -13190,6 +13838,14 @@ Assuming the 7.8% annual rate compounds monthly:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13294,6 +13950,14 @@ Assuming the 7.8% annual rate compounds monthly:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13386,6 +14050,10 @@ Category: amortisation
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Response shape unrecognised. Cannot extract a figure for comparison.
@@ -13477,6 +14145,10 @@ Category: amortisation
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -13572,6 +14244,10 @@ The annual net growth after fees is **$3,109.65**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -13665,6 +14341,10 @@ The annual net growth after fees is **$3,109.65**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -19402,6 +20082,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19502,6 +20186,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19600,6 +20288,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19697,6 +20389,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -19798,6 +20494,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19897,6 +20597,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -19998,6 +20702,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20098,6 +20806,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20195,6 +20907,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -20294,6 +21010,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20392,6 +21112,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20489,6 +21213,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -20590,6 +21318,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20689,6 +21421,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -20790,6 +21526,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20889,6 +21629,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -20990,6 +21734,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21090,6 +21838,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21188,6 +21940,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21285,6 +22041,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -21386,6 +22146,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21486,6 +22250,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21584,6 +22352,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21681,6 +22453,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -21782,6 +22558,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21882,6 +22662,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21980,6 +22764,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22077,6 +22865,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -22178,6 +22970,10 @@ The monthly interest charge is **$36.00**, assuming an 18% APR applied to the fu
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22277,6 +23073,10 @@ The monthly interest charge is **$36.00**, assuming an 18% APR applied to the fu
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -22378,6 +23178,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22477,6 +23281,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -22578,6 +23386,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22678,6 +23490,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22776,6 +23592,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22873,6 +23693,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -22974,6 +23798,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23073,6 +23901,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -23174,6 +24006,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23274,6 +24110,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23372,6 +24212,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23469,6 +24313,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -23570,6 +24418,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23669,6 +24521,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -23770,6 +24626,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23870,6 +24730,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23967,6 +24831,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -24066,6 +24934,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24164,6 +25036,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24261,6 +25137,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -24362,6 +25242,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24461,6 +25345,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -24562,6 +25450,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24662,6 +25554,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24760,6 +25656,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24857,6 +25757,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -24958,6 +25862,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25057,6 +25965,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -25158,6 +26070,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25257,6 +26173,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -25358,6 +26278,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25458,6 +26382,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25556,6 +26484,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25653,6 +26585,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -25754,6 +26690,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25853,6 +26793,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -25954,6 +26898,10 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26054,6 +27002,10 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26152,6 +27104,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26249,6 +27205,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -26350,6 +27310,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26449,6 +27413,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -26550,6 +27518,10 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ac
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26649,6 +27621,10 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ac
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -26750,6 +27726,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26849,6 +27829,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -26950,6 +27934,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27049,6 +28037,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -27150,6 +28142,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27250,6 +28246,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27348,6 +28348,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27445,6 +28449,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -27546,6 +28554,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27645,6 +28657,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -27746,6 +28762,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27846,6 +28866,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27943,6 +28967,10 @@ The monthly interest charge is **$36.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -28042,6 +29070,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28139,6 +29171,10 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28235,6 +29271,10 @@ The first payment’s interest is:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -28338,6 +29378,12 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28439,6 +29485,12 @@ The first payment’s interest is:
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -28542,6 +29594,12 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28644,6 +29702,12 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28744,6 +29808,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -28846,6 +29916,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28942,6 +30018,10 @@ The first month’s interest is:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -29040,6 +30120,10 @@ The first month’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29137,6 +30221,10 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29233,6 +30321,10 @@ The first payment’s interest is:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -29339,6 +30431,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29443,6 +30541,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 - `OPERATION-CORRECT`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -29549,6 +30653,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29654,6 +30764,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29751,6 +30867,10 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29847,6 +30967,10 @@ The first payment’s interest is:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -29961,6 +31085,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30074,6 +31204,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30175,6 +31311,10 @@ After one month:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -30278,6 +31418,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30379,6 +31523,10 @@ After one month:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -30482,6 +31630,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30583,6 +31735,10 @@ After one month:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -30686,6 +31842,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30787,6 +31947,10 @@ After one month:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -30890,6 +32054,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30992,6 +32160,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31093,6 +32265,10 @@ After one month:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -31207,6 +32383,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31320,6 +32502,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31421,6 +32609,10 @@ After one month:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -31524,6 +32716,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31625,6 +32821,10 @@ After one month:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -31728,6 +32928,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31829,6 +33033,10 @@ After one month:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -31932,6 +33140,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -32034,6 +33246,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -32135,6 +33351,10 @@ After one month:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -32406,6 +33626,10 @@ The total annual cost is **$144.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -32497,6 +33721,10 @@ The total annual cost is **$144.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -32764,6 +33992,10 @@ Calculation: **$12 monthly fee × 12 months = $144**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -32855,6 +34087,10 @@ Calculation: **$12 monthly fee × 12 months = $144**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -32948,6 +34184,10 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -33039,6 +34279,10 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -33132,6 +34376,10 @@ The total annual cost is **$144.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -33223,6 +34471,10 @@ The total annual cost is **$144.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -33316,6 +34568,10 @@ The checking account costs **$144 per year** to maintain.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -33407,6 +34663,10 @@ The checking account costs **$144 per year** to maintain.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -33852,6 +35112,10 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -33943,6 +35207,10 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -34218,6 +35486,10 @@ Ending balance after three months: **$42,957.48**.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34313,6 +35585,10 @@ Ending balance after three months: **$42,957.48**.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)`
 
 ### Reason for Adjudication
 
@@ -34411,6 +35687,10 @@ Calculation:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34508,6 +35788,10 @@ Calculation:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34601,6 +35885,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -34696,6 +35984,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34788,6 +36080,10 @@ Ending balance after three months: **$42,957.77**.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34879,6 +36175,10 @@ Ending balance after three months: **$42,957.77**.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -34974,6 +36274,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35067,6 +36371,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -35162,6 +36470,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35255,6 +36567,10 @@ Assuming monthly compounding and a $15 fee each month:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -35350,6 +36666,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35443,6 +36763,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -35538,6 +36862,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35632,6 +36960,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35722,6 +37054,10 @@ The investment account’s **quarterly net growth after fees is approximately $7
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35811,6 +37147,10 @@ The investment account’s **quarterly net growth after fees is approximately $7
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -35906,6 +37246,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35999,6 +37343,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -36094,6 +37442,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36187,6 +37539,10 @@ Assuming monthly compounding and a $15 fee each month:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -36282,6 +37638,10 @@ Assuming monthly compounding and a $15 monthly fee deducted over three months:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36375,6 +37735,10 @@ Assuming monthly compounding and a $15 monthly fee deducted over three months:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -36470,6 +37834,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36563,6 +37931,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -36658,6 +38030,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36751,6 +38127,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -36846,6 +38226,10 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36939,6 +38323,10 @@ Assuming monthly compounding:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -37034,6 +38422,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37127,6 +38519,10 @@ Assuming monthly compounding and a $15 fee each month:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -37222,6 +38618,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37315,6 +38715,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -37410,6 +38814,10 @@ Assuming monthly compounding and a $15 fee charged monthly:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175 * ((1 + 0.078/12)^3 - 1) - 15 * (1 + (1 + 0.078/12) + (1 + 0.078/12)^2)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37503,6 +38911,10 @@ Assuming monthly compounding and a $15 fee charged monthly:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175 * ((1 + 0.078/12)^3 - 1) - 15 * (1 + (1 + 0.078/12) + (1 + 0.078/12)^2)`
 
 ### Reason for Adjudication
 
@@ -37598,6 +39010,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37691,6 +39107,10 @@ Assuming monthly compounding and a $15 fee each month:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -37786,6 +39206,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37880,6 +39304,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37972,6 +39400,10 @@ Assuming monthly compounding and the $15 fee is deducted monthly, the **quarterl
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38063,6 +39495,10 @@ Assuming monthly compounding and the $15 fee is deducted monthly, the **quarterl
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)`
 
 ### Reason for Adjudication
 
@@ -38158,6 +39594,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38251,6 +39691,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -38346,6 +39790,10 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38439,6 +39887,10 @@ Assuming monthly compounding:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -38534,6 +39986,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38627,6 +40083,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -38722,6 +40182,10 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38815,6 +40279,10 @@ Assuming monthly compounding:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -38910,6 +40378,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39003,6 +40475,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -39098,6 +40574,10 @@ Assuming monthly compounding and the $15 fee is charged monthly:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39191,6 +40671,10 @@ Assuming monthly compounding and the $15 fee is charged monthly:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)`
 
 ### Reason for Adjudication
 
@@ -39286,6 +40770,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39379,6 +40867,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -39474,6 +40966,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39567,6 +41063,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -39662,6 +41162,10 @@ Assuming monthly compounding and a $15 monthly fee deducted separately:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39755,6 +41259,10 @@ Assuming monthly compounding and a $15 monthly fee deducted separately:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -39850,6 +41358,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39944,6 +41456,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40034,6 +41550,10 @@ The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40123,6 +41643,10 @@ The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -40225,6 +41749,12 @@ The projected balance after three months is **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40326,6 +41856,12 @@ The projected balance after three months is **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40419,6 +41955,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -40514,6 +42054,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40607,6 +42151,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -40702,6 +42250,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40795,6 +42347,10 @@ Assuming **monthly compounding** and a **$15 monthly fee**:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -40890,6 +42446,10 @@ Assuming **monthly compounding** and a **$15 monthly fee**:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40983,6 +42543,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -41078,6 +42642,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41172,6 +42740,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41265,6 +42837,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -41362,6 +42938,10 @@ Calculation:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41457,6 +43037,10 @@ Calculation:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -41554,6 +43138,10 @@ Ending balance after three months: **$42,957.48**.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41650,6 +43238,10 @@ Ending balance after three months: **$42,957.48**.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41744,6 +43336,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41837,6 +43433,10 @@ Assuming monthly compounding and a $15 monthly fee:
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -41934,6 +43534,10 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -42029,6 +43633,10 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -42126,6 +43734,10 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -42221,6 +43833,10 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 

@@ -50,6 +50,10 @@ Category: interest
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Response shape unrecognised. Cannot extract a figure for comparison.
@@ -139,6 +143,10 @@ Category: interest
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -230,6 +238,10 @@ Category: interest
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Response shape unrecognised. Cannot extract a figure for comparison.
@@ -319,6 +331,10 @@ Category: interest
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -416,6 +432,10 @@ Category: balance
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Response shape unrecognised. Cannot extract a figure for comparison.
@@ -511,6 +531,10 @@ Category: balance
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -608,6 +632,10 @@ Category: balance
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Response shape unrecognised. Cannot extract a figure for comparison.
@@ -703,6 +731,10 @@ Category: balance
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -800,6 +832,10 @@ Category: interest
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Response shape unrecognised. Cannot extract a figure for comparison.
@@ -895,6 +931,10 @@ Category: interest
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -992,6 +1032,10 @@ Category: interest
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Response shape unrecognised. Cannot extract a figure for comparison.
@@ -1087,6 +1131,10 @@ Category: interest
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 

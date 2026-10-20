@@ -380,6 +380,32 @@ def test_sheet_operation_correctness_listed():
         '\n### Reason for Adjudication') in text
 
 
+@pytest.mark.finding('T3-13')
+def test_sheet_operand_provenance_listed_after_operation_correctness():
+    text = one_sheet(
+        operation_correctness=[{'outcome': 'OPERATION-CORRECT', 'reason': 'r'}],
+        provenance_results=[
+            {'outcome': 'OPERANDS-GROUNDED', 'originated_operands': []},
+            {'outcome': 'OPERAND-ORIGINATED', 'originated_operands': [
+                {'value': '10.5', 'literal': '10.50', 'expression': 'a - b'},
+                {'value': '7.3', 'expression': '7.3 + 1'}]},
+            {}])
+    assert (
+        '\n- `OPERATION-CORRECT`: r\n'
+        '\n**Operand provenance (D7.2(a)):**\n'
+        '\n- `OPERANDS-GROUNDED`\n'
+        '\n- `OPERAND-ORIGINATED`: originated `10.50` in `a - b`, '
+        '`7.3` in `7.3 + 1`\n'
+        '\n- `unknown`\n'
+        '\n### Reason for Adjudication') in text
+
+
+@pytest.mark.finding('T3-13')
+def test_sheet_without_provenance_results_has_no_provenance_list():
+    assert 'Operand provenance' not in one_sheet()
+    assert 'Operand provenance' not in one_sheet(provenance_results=[])
+
+
 # -- One sheet: routing reason --------------------------------------------
 
 @pytest.mark.parametrize('outcome', sorted(ADJUDICATION_REASONS))
@@ -657,9 +683,6 @@ def test_sheets_do_not_name_the_arm():
 
 @pytest.mark.finding('T3-13')
 @pytest.mark.req('AP-1 §6.8', 'R3.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-13: the sheet omits the D7.2(a) result the '
-                          '§6.8 composition rule needs')
 def test_sheet_shows_d72a_operand_result():
     # AP-1 v1.3 §6.8 Composition: "Where a computed answer rests on an
     # originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level

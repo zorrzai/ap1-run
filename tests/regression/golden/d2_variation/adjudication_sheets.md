@@ -56,6 +56,10 @@ You have $2500.00 of credit left.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -151,6 +155,10 @@ You have $2500.00 of credit left.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -248,6 +256,10 @@ You have $2500.00 of credit left.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -343,6 +355,10 @@ You have $2500.00 of credit left.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 

@@ -81,7 +81,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q01",
@@ -162,7 +164,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q02",
@@ -219,7 +223,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q02",
@@ -276,7 +282,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q03",
@@ -366,7 +374,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q03",
@@ -456,7 +466,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q04",
@@ -537,7 +549,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q04",
@@ -618,7 +632,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q05",
@@ -723,7 +739,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q05",
@@ -828,7 +846,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q06",
@@ -846,7 +866,9 @@
       "operation_correctness": [],
       "provenance_results": [],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "correct figure, required computation not shown invoked: a RETRIEVED candidate (SPEC R4.1)"
     },
     {
       "item_id": "Q06",
@@ -864,7 +886,9 @@
       "operation_correctness": [],
       "provenance_results": [],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "correct figure, required computation not shown invoked: a RETRIEVED candidate (SPEC R4.1)"
     },
     {
       "item_id": "Q07",
@@ -957,7 +981,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q07",
@@ -1050,7 +1076,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q08",
@@ -1155,7 +1183,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q08",
@@ -1260,7 +1290,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q09",
@@ -1353,7 +1385,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q09",
@@ -1446,7 +1480,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q10",
@@ -1539,7 +1575,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q10",
@@ -1632,7 +1670,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q01",
@@ -1713,7 +1753,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q01",
@@ -1794,7 +1836,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q02",
@@ -1851,7 +1895,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q02",
@@ -1908,7 +1954,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q03",
@@ -1998,7 +2046,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q03",
@@ -2088,7 +2138,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q04",
@@ -2169,7 +2221,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q04",
@@ -2250,7 +2304,9 @@
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q05",
@@ -2355,7 +2411,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q05",
@@ -2460,7 +2518,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q06",
@@ -2478,7 +2538,9 @@
       "operation_correctness": [],
       "provenance_results": [],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "correct figure, required computation not shown invoked: a RETRIEVED candidate (SPEC R4.1)"
     },
     {
       "item_id": "Q06",
@@ -2496,7 +2558,9 @@
       "operation_correctness": [],
       "provenance_results": [],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "correct figure, required computation not shown invoked: a RETRIEVED candidate (SPEC R4.1)"
     },
     {
       "item_id": "Q07",
@@ -2589,7 +2653,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q07",
@@ -2682,7 +2748,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q08",
@@ -2700,7 +2768,9 @@
       "operation_correctness": [],
       "provenance_results": [],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q08",
@@ -2718,7 +2788,9 @@
       "operation_correctness": [],
       "provenance_results": [],
       "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q09",
@@ -2811,7 +2883,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q09",
@@ -2904,7 +2978,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q10",
@@ -2997,7 +3073,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     },
     {
       "item_id": "Q10",
@@ -3090,7 +3168,9 @@
         }
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
-      "release_coverage_outcome": "GOVERNED-RELEASE"
+      "release_coverage_outcome": "GOVERNED-RELEASE",
+      "answer_outcome": "COMPUTED",
+      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
     }
   ],
   "grammar_issues": [],

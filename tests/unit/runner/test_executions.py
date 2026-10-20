@@ -190,7 +190,10 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
         'operation_correctness': [{'outcome': 'OPERATION-CORRECT'}],
         'provenance_results': [{'outcome': 'OPERANDS-GROUNDED'}],
         'transcription_outcome': 'TRANSCRIBED-EXACT',
-        'release_coverage_outcome': 'PARTIALLY-GOVERNED'}]
+        'release_coverage_outcome': 'PARTIALLY-GOVERNED',
+        'answer_outcome': 'COMPUTED',
+        'answer_outcome_reason': 'correct figure; computation invoked; '
+                                 'operands grounded'}]
 
 
 def test_score_execution_defaults_for_a_bare_result(fakes, tpath, capsys):
@@ -216,7 +219,9 @@ def test_score_execution_defaults_for_a_bare_result(fakes, tpath, capsys):
         'tool_calls_count': 0, 'released_figure': '', 'expected': '638.40',
         'shape_ok': False, 'operation_correctness': [],
         'provenance_results': [], 'transcription_outcome':
-        'TRANSCRIBED-EXACT', 'release_coverage_outcome': 'PARTIALLY-GOVERNED'}]
+        'TRANSCRIBED-EXACT', 'release_coverage_outcome': 'PARTIALLY-GOVERNED',
+        'answer_outcome': None, 'answer_outcome_reason':
+        'no figure released: the record does not decide the outcome'}]
     figure_record = transcript.read_all(tpath)[-1]
     assert (figure_record['evidence_class'], figure_record['figure_reason'],
             figure_record['released_figure']) == (None, '', '')

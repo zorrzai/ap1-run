@@ -14,6 +14,7 @@ from decimal import Decimal
 from ap1_run.foundation import transcript
 from ap1_run.foundation.numeric import extract_numeric_tokens
 from ap1_run.scoring.accuracy import score_accuracy
+from ap1_run.scoring.answer_outcome import answer_outcome
 from ap1_run.scoring.figure_id import identify_figure
 from ap1_run.scoring.release_coverage import check_release_coverage
 from ap1_run.scoring.transcription import check_transcription
@@ -242,6 +243,10 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
             op_correctness = tr.get('operation_correctness', [])
             break
 
+    # AP-1 v1.3 section 6.8: the answer-level outcome, where it is decided
+    section_6_8, section_6_8_reason = answer_outcome(
+        outcome, inv_outcome, result.get('provenance_results', []))
+
     findings.all_results.append({
         'item_id': item_id, 'condition': condition,
         'repeat': rep, 'status': 'EXECUTED',
@@ -257,4 +262,6 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'provenance_results': result.get('provenance_results', []),
         'transcription_outcome': transcription_result['outcome'],
         'release_coverage_outcome': coverage_result['outcome'],
+        'answer_outcome': section_6_8,
+        'answer_outcome_reason': section_6_8_reason,
     })

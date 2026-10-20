@@ -50,6 +50,10 @@ Category: growth
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Response shape unrecognised. Cannot extract a figure for comparison.
@@ -139,6 +143,10 @@ Category: growth
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 

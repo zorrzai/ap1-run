@@ -191,9 +191,6 @@ def test_run_sheet_coverage_finding_is_its_own_executions(tmp_path,
 @pytest.mark.finding('T3-13')
 @pytest.mark.req('AP-1 §6.8')
 @pytest.mark.filterwarnings('ignore:VERSION file says')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-13: no auto-scored response carries a §6.8 '
-                          'outcome (COMPUTED / ORIGINATED / ...)')
 def test_run_auto_scored_responses_carry_one_section_6_8_outcome(
         tmp_path, monkeypatch):
     """AP-1 v1.3 §6.8: "Every response is scored as exactly one of" the six

@@ -622,10 +622,11 @@ def test_figure_identification_returns_a_routing_outcome():
 @pytest.mark.req('AP-1 §6.8', 'R2.0')
 def test_figure_identification_outcomes_are_not_the_six_outcome_vocabulary():
     # SPEC §10 maps §6.8 to figure_id.py as IMPLEMENTED, but figure_id's
-    # outcomes route to auto-scoring or adjudication; none of the six §6.8
-    # outcomes is ever assigned by the runner (they appear only as
-    # checkboxes on the adjudication sheets). Correct: each response ends
-    # with exactly one §6.8 outcome.
+    # outcomes only route to auto-scoring or adjudication; none is a §6.8
+    # outcome. Since the T3-13 fix, scoring/answer_outcome.py assigns the
+    # §6.8 outcome of an auto-scored response where the record decides it
+    # (COMPUTED, or ORIGINATED by the composition rule); the scorers
+    # assign the rest on the sheets. The SPEC §10 row is still to fix.
     from ap1_run.scoring import figure_id
     routing = {v for k, v in vars(figure_id).items()
                if k.isupper() and isinstance(v, str)}

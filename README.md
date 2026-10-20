@@ -379,6 +379,7 @@ src/ap1_run/
     operation_correctness.py D7.2(b)
     transcription.py         D7.3
     release_coverage.py      D7.3 release coverage
+    answer_outcome.py        §6.8 outcome of an auto-scored response
     provenance/              D7.2(a)
       trace.py               the five-step resolution ladder
       classify.py            invocation, item and sequential classification
