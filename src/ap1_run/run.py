@@ -43,6 +43,7 @@ from ap1_run.execution.context import (
     build_delivered_context, check_lookup_collision,
 )
 from ap1_run.execution.engine import execute_item
+from ap1_run.execution.perturbation_guard import HELD_CONSTANT
 from ap1_run.execution.seal import (
     perturbation_check, seal as create_seal, source_fields_check,
 )
@@ -218,10 +219,11 @@ def main(argv=None):
             sampling=sampling, model=model, api_key=api_key,
             timeout=timeout)
 
-    # -- Perturbation guard (R1.2): refuse run if more than system prompt differs --
-    check_condition_guard(config, os.path.join(fixture_dir, 'fixture.json'),
-                          system_prompt_base, system_prompt_removed, tools,
-                          sampling)
+    # -- Perturbation guard (R1.2): refuse the run unless the system prompt,
+    # and only it, differs. Each condition then runs with what was checked.
+    arms = check_condition_guard(
+        config, os.path.join(fixture_dir, 'fixture.json'),
+        system_prompt_base, system_prompt_removed, tools, sampling)
 
     # -- Collector for all findings --
     findings = Findings()
@@ -231,7 +233,7 @@ def main(argv=None):
     print('=' * 60)
 
     for condition in conditions:
-        system_prompt = system_prompt_base if condition == 'base' else system_prompt_removed
+        arm = arms[condition]
 
         for item in items:
             item_id = item['id']
@@ -259,8 +261,8 @@ def main(argv=None):
                         fixture=fixture,
                         ground_truth_compute=gt_module.compute,
                         adapter_send=adapter_send,
-                        system_prompt=system_prompt,
-                        tools=tools,
+                        system_prompt=arm['system_prompt'],
+                        tools=arm['tools'],
                         transcript_path=transcript_path,
                         seal_hash=seal_hash,
                     )
@@ -323,7 +325,8 @@ def main(argv=None):
         d1_summary=d1_summary, d2_results=d2_results,
         d2_cap_reason=d2_cap_reason,
         transcription_results=findings.transcription_results,
-        release_coverage_results=findings.release_coverage_results)
+        release_coverage_results=findings.release_coverage_results,
+        held_constant=HELD_CONSTANT)
 
     # 3j-3l. D1, D2, operand provenance
     print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary)

@@ -98,6 +98,8 @@ EMPTY = {
     'evidence_class_counts': {},
     'item_evidence': [],
     'invocation_figures': {},
+    'held_constant': [],
+    'dpr': 'UNDEFINED (no base observations)',
     'operation_correctness_counts': {'OPERATION-CORRECT': 0,
                                      'WRONG-OPERATION': 0,
                                      'OPERATION-UNOBSERVABLE': 0},
@@ -161,6 +163,33 @@ def test_summary_invocation_figures_per_condition():
         'd7_invocation_instruction_removed': {'failures': 1, 'n': 1,
                                               'rate': '0/1'},
     }
+
+
+@pytest.mark.finding('T3-46')
+@pytest.mark.req('R2.3', 'AP-1 D7.8')
+@pytest.mark.parametrize('base, removed, dpr', [
+    (['INVOKED', 'NOT-INVOKED', 'INVOKED', 'INVOKED'], ['NOT-INVOKED'],
+     '100.0%'),
+    (['INVOKED', 'NOT-INVOKED'], ['INVOKED', 'NOT-INVOKED', 'NOT-INVOKED',
+                                  'NOT-INVOKED'], '50.0%'),
+    (['NOT-INVOKED'], ['INVOKED'], 'UNDEFINED (zero base invocation rate)'),
+    ([], ['INVOKED'], 'UNDEFINED (no base observations)'),
+    (['INVOKED'], [], 'UNDEFINED (no instruction_removed observations)'),
+])
+def test_summary_dpr_from_the_invocation_figures(base, removed, dpr):
+    # DPR = (I_base - I_removed) / I_base from the two arms' rates: base
+    # 3/4 and removed 0/1 is a 100 % drop; 1/2 and 1/4 is 50 %.
+    results = [executed(condition='base', invocation_outcome=o)
+               for o in base] + [
+        executed(condition='instruction_removed', invocation_outcome=o)
+        for o in removed]
+    assert build_summary(results, [])['dpr'] == dpr
+
+
+@pytest.mark.finding('T3-46')
+def test_summary_held_constant_listed():
+    s = build_summary([], [], held_constant=('tools', 'sampling'))
+    assert s['held_constant'] == ['tools', 'sampling']
 
 
 def test_summary_invocation_figures_without_condition():

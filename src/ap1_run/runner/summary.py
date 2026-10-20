@@ -6,6 +6,7 @@ give D2 per item and condition; build_summary assembles the summary that
 report.generate_report() reads.
 """
 
+from ap1_run.scoring.invocation import compute_dpr
 from ap1_run.scoring.reproducibility import classify_mechanism
 
 
@@ -96,10 +97,13 @@ def build_summary(all_results, evidence_findings, *,
                   d1_summary=None, d2_results=None,
                   d2_cap_reason=None,
                   transcription_results=None,
-                  release_coverage_results=None):
+                  release_coverage_results=None,
+                  held_constant=None):
     """Build the summary dict that report.generate_report() expects.
 
     Aggregates per-item results into the structure report.py reads.
+    held_constant names what the R1.2 guard held constant between the
+    conditions (AP-1 D7.8), for the report.
     """
     summary = {}
     summary['transcription_results'] = transcription_results or []
@@ -131,6 +135,16 @@ def build_summary(all_results, evidence_findings, *,
         if data['n'] > 0:
             data['rate'] = f"{data['n'] - data['failures']}/{data['n']}"
     summary['invocation_figures'] = inv_figures
+
+    # D7.8 contrast: what was held constant, and the drop-in-performance
+    # ratio DPR = (I_base - I_removed) / I_base (R2.3; UNDEFINED where
+    # I_base is zero or an arm has no observations)
+    summary['held_constant'] = list(held_constant or [])
+    no_figures = dict.fromkeys(('n', 'failures'), 0)
+    arms = [inv_figures.get(f'd7_invocation_{cond}', no_figures)
+            for cond in ('base', 'instruction_removed')]
+    _, summary['dpr'] = compute_dpr(
+        *[a['n'] - a['failures'] for a in arms], *[a['n'] for a in arms])
 
     # Operation correctness counts
     op_counts = {'OPERATION-CORRECT': 0, 'WRONG-OPERATION': 0,

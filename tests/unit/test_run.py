@@ -17,6 +17,7 @@ from decimal import Decimal
 import pytest
 
 from ap1_run import run
+from ap1_run.execution.perturbation_guard import HELD_CONSTANT
 from ap1_run.execution.seal import SealError
 from ap1_run.foundation import adapter
 
@@ -145,6 +146,13 @@ class Run:
 
     def check_condition_guard(self, *args):
         self.calls.append(('guard',) + args)
+        # Each condition's checked request; marked, so that the test sees
+        # the engine is given these and not the config's own values.
+        base, removed, tools = args[2], args[3], args[4]
+        return {'base': {'system_prompt': base + ' (checked)',
+                         'tools': ['base'] + tools},
+                'instruction_removed': {'system_prompt': removed + ' (checked)',
+                                        'tools': ['removed'] + tools}}
 
     def build_delivered_context(self, fixture, accounts):
         self.calls.append(('context', fixture, accounts))
@@ -293,12 +301,16 @@ def test_main_full_run_calls(r, capsys):
     executes = r.named('execute')
     assert [(i['id'], k['condition'], k['system_prompt'])
             for i, k in executes] == [
-        ('Q1', 'base', 'BASE PROMPT'), ('Q1', 'base', 'BASE PROMPT'),
-        ('Q2', 'base', 'BASE PROMPT'), ('Q2', 'base', 'BASE PROMPT'),
-        ('Q1', 'instruction_removed', 'REMOVED PROMPT'),
-        ('Q1', 'instruction_removed', 'REMOVED PROMPT'),
-        ('Q2', 'instruction_removed', 'REMOVED PROMPT'),
-        ('Q2', 'instruction_removed', 'REMOVED PROMPT')]
+        ('Q1', 'base', 'BASE PROMPT (checked)'),
+        ('Q1', 'base', 'BASE PROMPT (checked)'),
+        ('Q2', 'base', 'BASE PROMPT (checked)'),
+        ('Q2', 'base', 'BASE PROMPT (checked)'),
+        ('Q1', 'instruction_removed', 'REMOVED PROMPT (checked)'),
+        ('Q1', 'instruction_removed', 'REMOVED PROMPT (checked)'),
+        ('Q2', 'instruction_removed', 'REMOVED PROMPT (checked)'),
+        ('Q2', 'instruction_removed', 'REMOVED PROMPT (checked)')]
+    assert [k['tools'][0] for _, k in executes] == ['base'] * 4 + [
+        'removed'] * 4
     item, kwargs = executes[0]
     assert item == QUESTIONS['items'][0]
     assert set(kwargs) == {'condition', 'config', 'fixture',
@@ -308,7 +320,7 @@ def test_main_full_run_calls(r, capsys):
     assert kwargs['config'] is config
     assert kwargs['fixture'] == FIXTURE
     assert kwargs['ground_truth_compute']('Q3', {}) == {'derivable': False}
-    assert kwargs['tools'] == CONFIG['tools']
+    assert kwargs['tools'] == ['base'] + CONFIG['tools']
     assert kwargs['transcript_path'] == transcript
     assert kwargs['seal_hash'] == 'SEAL'
 
@@ -373,7 +385,8 @@ def test_main_full_run_calls(r, capsys):
     assert kw == {'d1_summary': {'d1': True, 'n': 0},
                   'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
                   'transcription_results': [],
-                  'release_coverage_results': []}
+                  'release_coverage_results': [],
+                  'held_constant': HELD_CONSTANT}
     assert r.named('scoring_report') == [(
         {'d1': True, 'n': 0}, {'d2': 'results'}, 'CAP', {'summary': True})]
 

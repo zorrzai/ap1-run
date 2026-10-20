@@ -123,6 +123,7 @@ def test_report_is_header_and_sections_joined_by_newlines():
         report._section_d7_figures(summary),
         report._section_d73(summary),
         report._section_clopper_pearson(summary),
+        report._section_condition_contrast(summary),
         report._section_d72a_audit(summary),
         report._section_d72b_counts(summary),
         report._section_operand_provenance(summary),
@@ -135,6 +136,31 @@ def test_report_is_header_and_sections_joined_by_newlines():
         report._section_unmeasured_dimensions(CONFIG),
         report._section_declared_limitations(),
     )
+
+
+@pytest.mark.finding('T3-46')
+@pytest.mark.req('AP-1 D7.8', 'R2.3')
+def test_condition_contrast_states_held_constant_and_dpr():
+    summary = {'held_constant': ['tool declarations', 'sampling parameters'],
+               'dpr': '100.0%'}
+    assert report._section_condition_contrast(summary) == (
+        '### 5a. Instruction-Removal Contrast (D7.8)\n\n'
+        'Held constant between base and instruction_removed (compared '
+        'before execution, R1.2): tool declarations, sampling parameters. '
+        'Varied: the system prompt only.\n\n'
+        'DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): '
+        '100.0%\n')
+
+
+@pytest.mark.finding('T3-46')
+@pytest.mark.parametrize('summary', [{}, {'held_constant': []}])
+def test_condition_contrast_without_a_record(summary):
+    assert report._section_condition_contrast(summary) == (
+        '### 5a. Instruction-Removal Contrast (D7.8)\n\n'
+        'Held constant between base and instruction_removed: not '
+        'recorded.\n\n'
+        'DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): '
+        'not computed\n')
 
 
 def test_report_passes_transcript_records_to_non_outcome_cells():

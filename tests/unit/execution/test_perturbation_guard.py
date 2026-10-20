@@ -7,7 +7,7 @@ from decimal import Decimal
 import pytest
 
 from ap1_run.execution.perturbation_guard import (
-    PerturbationRefusal, _canonical, _summarise,
+    HELD_CONSTANT, PerturbationRefusal, _canonical, _summarise,
     check_single_variable_perturbation,
 )
 
@@ -25,9 +25,9 @@ def removed(**changes):
     return {**BASE, 'system_prompt': 'Answer.', **changes}
 
 
-IDENTICAL = {'field': 'system_prompt',
-             'issue': 'system prompts are IDENTICAL — '
-                      'instruction_removed must alter the system prompt'}
+IDENTICAL = ('instruction_removed condition does not change the system '
+             'prompt (must change exactly 1 quantity: system_prompt): the '
+             'system prompts are IDENTICAL. Other changed quantities:')
 
 HEADER = ('instruction_removed condition changes {n} quantities (must be '
           'exactly 1: system_prompt). Changed quantities:\n'
@@ -74,23 +74,12 @@ def test_guard_missing_sampling_equals_empty_sampling():
 
 
 @pytest.mark.finding('T3-46')
-def test_guard_identical_prompts_returned_not_refused():
-    # Current behaviour: identical prompts give a diff entry but no
-    # refusal, so both arms run the same prompt and are reported as a
-    # contrast. Correct: identical prompts are refused (D7.8).
-    assert check_single_variable_perturbation(BASE, dict(BASE)) == [IDENTICAL]
-
-
-@pytest.mark.finding('T3-46')
-def test_guard_identical_missing_prompts_returned_not_refused():
-    assert check_single_variable_perturbation({}, {}) == [IDENTICAL]
-
-
-@pytest.mark.finding('T3-46')
-def test_guard_valid_result_does_not_report_what_is_held_constant():
-    # Current behaviour: a valid pair returns [], with no record of what
-    # was held constant. Correct (D7.8): what is held constant is reported.
-    assert check_single_variable_perturbation(BASE, removed()) == []
+def test_guard_held_constant_names_every_compared_quantity():
+    # What the guard compares is what the report says was held constant
+    # (D7.8), through HELD_CONSTANT.
+    assert HELD_CONSTANT == ('tool declarations', 'tool_choice',
+                             'sampling parameters', 'fixture content',
+                             'message structure template')
 
 
 # -- refused ----------------------------------------------------------------
@@ -120,17 +109,6 @@ def test_guard_every_change_named_in_order():
         '  - fixture_content', '  - message_template']
 
 
-@pytest.mark.finding('T3-46')
-def test_guard_identical_prompts_plus_violation_says_prompt_changed():
-    # Current behaviour: with identical prompts and one forbidden change,
-    # the refusal still lists system_prompt as "the one allowed change"
-    # and counts 2 changed quantities. Correct: 1 changed (the forbidden
-    # one), and the prompt reported as unchanged.
-    assert refusal(BASE, {**BASE, 'tool_choice': 'none'}) == \
-        HEADER.format(n=2) + \
-        '  - tool_choice: tool_choice differs between conditions'
-
-
 def test_guard_none_sampling_differs_from_missing_sampling():
     base = {k: v for k, v in BASE.items() if k != 'sampling'}
     assert 'sampling' in refusal(base, {**base, 'system_prompt': 'x',
@@ -157,6 +135,21 @@ def test_guard_int_and_string_sampling_differ():
     assert 'sampling:' in refusal(
         {**BASE, 'sampling': {'temperature': 0}},
         removed(sampling={'temperature': '0'}))
+
+
+@pytest.mark.finding('T3-46')
+@pytest.mark.req('R1.2', 'AP-1 D7.8')
+@pytest.mark.parametrize('base, other, rest', [
+    (BASE, dict(BASE), ' none'),
+    ({}, {}, ' none'),
+    (BASE, {**BASE, 'tool_choice': 'none'},
+     '\n  - tool_choice: tool_choice differs between conditions'),
+    (BASE, {**BASE, 'tools': [], 'fixture_hash': 'x'},
+     '\n  - tools: tool declarations differ between conditions'
+     '\n  - fixture_content: fixture content differs between conditions'),
+], ids=['identical', 'both-missing', 'plus-tool-choice', 'plus-two'])
+def test_guard_identical_prompts_refusal_message(base, other, rest):
+    assert refusal(base, other) == IDENTICAL + rest
 
 
 # -- helpers ----------------------------------------------------------------
@@ -202,9 +195,6 @@ def refusal_or_none(base, other):
 
 @pytest.mark.finding('T3-46')
 @pytest.mark.req('R1.2', 'AP-1 D7.8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-46: identical prompts are returned as a diff, '
-                          'not refused')
 def test_guard_identical_prompts_refused():
     # Correct (AP-1 v1.3 D7.8: the instruction-removal condition "shall
     # vary the instruction"; SPEC R1.2 l.316-321): if the two system
@@ -218,9 +208,6 @@ def test_guard_identical_prompts_refused():
 
 @pytest.mark.finding('T3-46')
 @pytest.mark.req('R1.2', 'AP-1 D7.8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-46: with identical prompts and a forbidden '
-                          'change the refusal calls the prompt changed')
 def test_guard_identical_prompts_plus_violation_refusal_says_prompt_unchanged():
     # Correct: the refusal emits the true diff (SPEC R1.2: "refused, not
     # reported, with the diff emitted"). Here the prompt did not change

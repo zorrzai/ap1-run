@@ -17,10 +17,10 @@
     "score": 0.9643
   },
   "execution/perturbation_guard": {
-    "killed": 163,
-    "mutants": 195,
-    "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is returned only when it holds nothing but the identical-prompt entry (S3-G3-4). _summarise itself is tested directly.",
-    "score": 0.8359
+    "killed": 149,
+    "mutants": 181,
+    "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is only ever returned empty. _summarise itself is tested directly. (Step 5 seal-gt-guards, T3-46: identical prompts now raise, and the identical-prompt diff entry is gone; its 14 mutants were all killed, so removing them lowered the score from 163/195 = 0.8359 to 149/181 = 0.8232 with the same 32 survivors.)",
+    "score": 0.8232
   },
   "execution/seal": {
     "killed": 397,
@@ -71,14 +71,14 @@
     "score": 0.9481
   },
   "reporting/report": {
-    "killed": 1518,
-    "mutants": 1569,
+    "killed": 1548,
+    "mutants": 1599,
     "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan').",
-    "score": 0.9675
+    "score": 0.9681
   },
   "run": {
-    "killed": 577,
-    "mutants": 592,
+    "killed": 579,
+    "mutants": 594,
     "notes": "All 15 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored.",
     "score": 0.9747
   },
@@ -107,15 +107,15 @@
     "score": 0.9206
   },
   "runner/settings": {
-    "killed": 248,
-    "mutants": 248,
+    "killed": 260,
+    "mutants": 260,
     "score": 1.0
   },
   "runner/summary": {
-    "killed": 542,
-    "mutants": 554,
+    "killed": 578,
+    "mutants": 590,
     "notes": "All 12 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One changes n > 0 to n >= 0 where n is always at least 1. One drops operator_declared=None, which is classify_mechanism's default.",
-    "score": 0.9783
+    "score": 0.9797
   },
   "scoring/accuracy": {
     "killed": 145,
@@ -129,8 +129,8 @@
     "score": 0.9114
   },
   "scoring/invocation": {
-    "killed": 166,
-    "mutants": 167,
+    "killed": 165,
+    "mutants": 166,
     "notes": "The one survivor is equivalent: 'n > 0' to 'n >= 0' in the cross-class warning, where every class in per_class has at least one item, so n is always at least 1. The module-level getcontext().prec = 50 is not mutated by mutmut; test_invocation_import_sets_global_decimal_precision_to_50 pins it (T3-60).",
     "score": 0.994
   },

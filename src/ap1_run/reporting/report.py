@@ -12,6 +12,7 @@ Contents (SPEC.md R3.3 interface):
   3.  Per-dimension results with n
   4.  Every D7 figure with its evidence class
   5.  Zero-failure results with exact one-sided 95% Clopper-Pearson bound
+  5a. What was held constant between the conditions, and DPR (D7.8)
   6.  D7.2(a) originated-operand listing
   7.  D7.2(b) operation-correctness counts
   8.  Proportion auto-scored vs adjudicated, per dimension
@@ -92,6 +93,9 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
 
     # 5. Zero-failure Clopper-Pearson bounds
     sections.append(_section_clopper_pearson(summary))
+
+    # 5a. D7.8 instruction-removal contrast: held constant, DPR
+    sections.append(_section_condition_contrast(summary))
 
     # 6. D7.2(a) originated-operand listing
     sections.append(_section_d72a_audit(summary))
@@ -341,6 +345,24 @@ def _section_clopper_pearson(summary):
                 f'*not computed (see §Declared Limitations)* |')
 
     lines.append('')
+    return '\n'.join(lines)
+
+
+def _section_condition_contrast(summary):
+    """Section 5a: what was held constant between the conditions, and
+    the drop-in-performance ratio (AP-1 D7.8; SPEC R1.2, R2.3)."""
+    lines = ['### 5a. Instruction-Removal Contrast (D7.8)\n']
+    held = summary.get('held_constant')
+    if held:
+        lines.append(f'Held constant between base and instruction_removed '
+                     f'(compared before execution, R1.2): '
+                     f'{", ".join(held)}. Varied: the system prompt only.\n')
+    else:
+        lines.append('Held constant between base and instruction_removed: '
+                     'not recorded.\n')
+    lines.append(f'DPR (drop-in-performance ratio, '
+                 f'(I_base - I_removed) / I_base): '
+                 f'{summary.get("dpr", "not computed")}\n')
     return '\n'.join(lines)
 
 

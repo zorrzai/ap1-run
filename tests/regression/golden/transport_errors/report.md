@@ -200,6 +200,12 @@ Model: mock-model
 | d7_invocation_base | 0 | 13 | 13/13 | 0.205817 (20.5817%) |
 | d7_invocation_instruction_removed | 0 | 18 | 18/18 | 0.153318 (15.3318%) |
 
+### 5a. Instruction-Removal Contrast (D7.8)
+
+Held constant between base and instruction_removed (compared before execution, R1.2): tool declarations, tool_choice, sampling parameters, fixture content, message structure template. Varied: the system prompt only.
+
+DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 0.0%
+
 ## 6. D7.2(a) Originated-Operand Audit
 
 *No originated operands detected.*

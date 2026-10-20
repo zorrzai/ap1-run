@@ -14,7 +14,15 @@ import json
 
 
 class PerturbationRefusal(Exception):
-    """More than one quantity differs between conditions."""
+    """The conditions differ in more than the system prompt, or not in
+    the system prompt at all."""
+
+
+# The quantities compared and held constant between the conditions, as
+# the report names them (AP-1 D7.8: "what is held constant shall be
+# reported").
+HELD_CONSTANT = ('tool declarations', 'tool_choice', 'sampling parameters',
+                 'fixture content', 'message structure template')
 
 
 def check_single_variable_perturbation(base_config, removed_config):
@@ -24,19 +32,19 @@ def check_single_variable_perturbation(base_config, removed_config):
     Compares: system_prompt, tools, tool_choice, sampling parameters,
     fixture content, message structure template.
 
-    Returns: list of differences found (empty if valid).
+    Returns: list of differences found (always empty: any difference
+             raises).
     Raises: PerturbationRefusal if more than one quantity differs,
-            with the diff naming every changed quantity.
+            with the diff naming every changed quantity, or if the system
+            prompts are identical (nothing was perturbed, so there is no
+            contrast to report; AP-1 D7.8), naming the system prompt and
+            any other changed quantity.
     """
     diffs = []
 
     # System prompt SHOULD differ
-    if base_config.get('system_prompt') == removed_config.get('system_prompt'):
-        diffs.append({
-            'field': 'system_prompt',
-            'issue': 'system prompts are IDENTICAL — '
-                     'instruction_removed must alter the system prompt',
-        })
+    prompt_unchanged = (base_config.get('system_prompt')
+                        == removed_config.get('system_prompt'))
 
     # Tool declarations MUST NOT differ
     if _canonical(base_config.get('tools')) != \
@@ -83,22 +91,21 @@ def check_single_variable_perturbation(base_config, removed_config):
             'issue': 'message structure template differs',
         })
 
-    # Count non-system-prompt violations
-    violations = [d for d in diffs if d['field'] != 'system_prompt']
-    if violations:
+    changed = ''.join(f'\n  - {d["field"]}: {d["issue"]}' for d in diffs)
+    if prompt_unchanged:
+        # Nothing was perturbed: both arms would be the same condition.
+        raise PerturbationRefusal(
+            'instruction_removed condition does not change the system '
+            'prompt (must change exactly 1 quantity: system_prompt): the '
+            'system prompts are IDENTICAL. Other changed quantities:'
+            + (changed or ' none'))
+    if diffs:
         # Total changed = system_prompt (the allowed one) + violations
-        total = len(violations) + 1
         raise PerturbationRefusal(
             f'instruction_removed condition changes '
-            f'{total} quantities (must be exactly 1: '
+            f'{len(diffs) + 1} quantities (must be exactly 1: '
             f'system_prompt). Changed quantities:\n'
-            + '\n'.join(
-                f'  - {d["field"]}: {d["issue"]}'
-                for d in [{'field': 'system_prompt',
-                           'issue': 'the one allowed change'}]
-                + violations
-            )
-        )
+            f'  - system_prompt: the one allowed change' + changed)
 
     return diffs
 
