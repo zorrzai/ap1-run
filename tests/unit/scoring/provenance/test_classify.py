@@ -68,15 +68,6 @@ def test_classify_invocation_originated_entry_keeps_sign_inversion():
         'source_value': '15200.00', 'operand_value': '-15200'}
 
 
-def test_classify_invocation_quantised_intermediate_is_a_finding():
-    r = classify_invocation('53.20 + 1', CTX, GT, CONFIG)
-    assert r['outcome'] == 'OPERANDS-GROUNDED'
-    # The operand is read through a float, so '53.20' becomes '53.2'.
-    assert r['quantisation_findings'] == [{
-        'operand': '53.2', 'matched_intermediate': 'interest',
-        'expression': '53.20 + 1'}]
-
-
 def test_classify_invocation_uses_config_transformations_and_quantisation():
     r = classify_invocation('0.042', CTX, GT, {})
     assert r['outcome'] == 'OPERAND-ORIGINATED'
@@ -107,9 +98,9 @@ def test_classify_invocation_passes_prior_returns_to_step4():
 
 @pytest.mark.finding('T3-2', 'T3-16')
 def test_classify_invocation_no_operands_is_grounded():
-    # Current behaviour: an expression with no operands found (unparseable,
-    # or a leading space) is OPERANDS-GROUNDED, vacuously.
-    r = classify_invocation(' 99999 * 7', CTX, GT, CONFIG)
+    # Current behaviour: an expression with no operands found
+    # (unparseable) is OPERANDS-GROUNDED, vacuously.
+    r = classify_invocation('99999 *', CTX, GT, CONFIG)
     assert r == {'outcome': 'OPERANDS-GROUNDED', 'operand_resolutions': [],
                  'originated_operands': [], 'quantisation_findings': []}
 
@@ -267,9 +258,6 @@ def outcomes(results):
 
 
 @pytest.mark.finding('T3-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-2: a leading space hides every operand and the '
-                          'call is vacuously OPERANDS-GROUNDED')
 def test_classify_invocation_leading_whitespace_operands_still_resolved():
     # Correct: the expression is stripped before its operands are read, so
     # the untraceable 99999 and 7 are found and the call is originated.
@@ -296,9 +284,6 @@ def test_classify_invocation_no_extractable_operands_is_unobservable(
 
 
 @pytest.mark.finding('T3-58', 'F5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-58/F5: the operand is rounded through float '
-                          'to 15200.0 and matches the source exactly')
 def test_classify_invocation_operand_beyond_float_precision_is_originated():
     # 15200.0000000000000001 is not the source value 15200.00. Read
     # exactly (Steven, 2026-10-20; SPEC R0.4.1/R0.4.2; R2.4 "exactly
@@ -310,13 +295,11 @@ def test_classify_invocation_operand_beyond_float_precision_is_originated():
 
 
 @pytest.mark.finding('T3-58', 'F5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-58/F5: the quantisation finding records 53.2, '
-                          'not the operand the model wrote')
 def test_classify_invocation_quantisation_finding_keeps_operand_text():
     # The finding records the operand as written: 53.20 (Steven,
     # 2026-10-20: operands are read exactly from the model's text).
     r = classify_invocation('53.20 + 1', CTX, GT, CONFIG)
+    assert r['outcome'] == 'OPERANDS-GROUNDED'
     assert r['quantisation_findings'] == [{
         'operand': '53.20', 'matched_intermediate': 'interest',
         'expression': '53.20 + 1'}]
@@ -347,9 +330,6 @@ def test_classify_item_chained_without_intermediates_is_unmeasurable():
 
 
 @pytest.mark.finding('T3-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-2: the fabricated first call is GROUNDED, and '
-                          'step 4 then launders its return into the second')
 def test_sequential_leading_whitespace_chain_fails_closed():
     # The review's chain (T3 review, T3-2): ' 7777 * 3' fabricates 23331,
     # which the next call consumes. Correct: the first call is originated,

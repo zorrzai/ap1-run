@@ -135,10 +135,10 @@
     "score": 0.994
   },
   "scoring/operation_correctness": {
-    "killed": 341,
-    "mutants": 362,
+    "killed": 361,
+    "mutants": 382,
     "notes": "All 21 non-killed mutants are equivalent or message-only. 11 change the text of a ValueError raised in _eval_decimal, which evaluate_expression always swallows (returns None). 4 are in evaluate_expression's 'if not isinstance(result, Decimal)' branch, which is unreachable (every evaluator path returns Decimal; converting a Decimal through str keeps value and exponent). In classify_operation: 'and' to 'or' in the expected-value conversion (None becomes Decimal('None'), which fails and gives None again), and two quantisation defaults ({} vs None, both falsy). In reclassify_session: 'er is not None or True' (Decimal('None') fails and gives None again), changed = None (falsy like False), and changed = True, an endless loop that mutmut reports as a timeout (the tests hang, so it is detected, but the score counts only kills).",
-    "score": 0.942
+    "score": 0.945
   },
   "scoring/provenance/audit": {
     "killed": 51,
@@ -152,8 +152,8 @@
     "score": 0.8933
   },
   "scoring/provenance/trace": {
-    "killed": 417,
-    "mutants": 417,
+    "killed": 438,
+    "mutants": 438,
     "score": 1.0
   },
   "scoring/release_coverage": {

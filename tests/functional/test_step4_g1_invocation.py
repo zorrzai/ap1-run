@@ -348,17 +348,22 @@ def test_run_call_to_unoffered_tool_recorded_not_invoked_run_completes(
 
 # -- T3-39, F6, S3-G2-4: model-controlled input never aborts the run ------
 
+_ABORTS = pytest.mark.xfail(
+    strict=True, raises=AssertionError,
+    reason='T3-39/S3-G2-4: model-controlled calculator input aborts the run')
+
+
 @pytest.mark.finding('T3-39', 'F6', 'S3-G2-4', 'S3-G4-5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39/F6/S3-G2-4/S3-G4-5: model-controlled '
-                          'calculator input aborts the run')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}',             # T3-39: not a string
     '{"expression": "True * 15.2"}',    # T3-39: boolean literal
     '{"expression": "True + 1"}',       # F6
-    '{"expression": "1e308*10"}',       # T3-39: the calculator returns inf
-    '"15200 * 1.2 / 100 / 12"',         # S3-G2-4: JSON, not an object
-    '["15200 * 1.2 / 100 / 12"]',       # S3-G2-4
+    pytest.param('{"expression": "1e308*10"}',   # T3-39: calculator inf
+                 marks=_ABORTS),
+    pytest.param('"15200 * 1.2 / 100 / 12"',     # S3-G2-4: not an object
+                 marks=_ABORTS),
+    pytest.param('["15200 * 1.2 / 100 / 12"]',   # S3-G2-4
+                 marks=_ABORTS),
 ], ids=['number', 'true-times', 'true-plus', 'overflow', 'json-string',
         'json-list'])
 def test_run_model_controlled_calculator_input_run_completes(full_run,

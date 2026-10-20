@@ -435,7 +435,7 @@ def test_r41_operand_from_fixture_field_outside_context_is_originated(
         {'say': 'It is ${result}.'}]))
     (prov,) = base_record(result, 'Q01')['provenance_results']
     assert prov['outcome'] == 'OPERAND-ORIGINATED'
-    assert {o['value'] for o in prov['originated_operands']} == {'4850.0'}
+    assert {o['value'] for o in prov['originated_operands']} == {'4850.00'}
 
 
 @pytest.mark.finding('T3-22')

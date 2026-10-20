@@ -634,16 +634,17 @@ def test_execute_item_scoring_error_nothing_written(tmp_path, calculator,
     assert transcript.read_all(tmp_path / 'run.jsonl') == []
 
 
-@pytest.mark.finding('T3-39', 'T3-21')
-def test_execute_item_numeric_expression_crashes_real_provenance(
+@pytest.mark.finding('T3-39', 'T3-2', 'T3-16')
+def test_execute_item_numeric_expression_no_operands_still_grounded(
         tmp_path, calculator):
-    # T3-39: model-controlled {"expression": 15.2} raises TypeError in
-    # D7.2(a), uncaught in execute_item; with T3-21 nothing is written.
-    # Correct: the call is scored unobservable and the run continues.
+    # Model-controlled {"expression": 15.2} no longer raises (its operands
+    # can't be read: none). Current behaviour: a call without operands is
+    # vacuously OPERANDS-GROUNDED (T3-2/T3-16; correct: unobservable).
     bad = tool_call(arguments='{"expression": 15.2}')
-    with pytest.raises(TypeError):
-        run(tmp_path, FakeAdapter(calls(bad), answer()))
-    assert transcript.read_all(tmp_path / 'run.jsonl') == []
+    result, records = run(tmp_path, FakeAdapter(calls(bad), answer()))
+    assert len(records) == 1
+    assert [p['outcome'] for p in result['provenance_results']] == [
+        'OPERANDS-GROUNDED']
 
 
 def test_execute_item_real_scoring_correct_call(tmp_path, calculator):

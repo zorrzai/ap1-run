@@ -121,9 +121,6 @@ def table_count(text, label):
 # -- T3-2: leading whitespace, vacuous grounding and step-4 laundering ----
 
 @pytest.mark.finding('T3-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-2: a leading space makes the fabricated first '
-                          'call GROUNDED and step 4 launders its return')
 def test_run_leading_whitespace_chain_is_originated(full_run):
     # The T3 review's chain on Q01: ' 7777 * 3' fabricates 23331 and the
     # next call consumes it. Correct: the expression is stripped, 7777 and

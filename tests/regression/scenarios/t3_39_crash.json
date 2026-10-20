@@ -1,5 +1,5 @@
 {
-  "description": "T3-39: model-controlled input crashes the run through an unhandled exception in the scoring code (a non-string calculator expression).",
+  "description": "T3-39: model-controlled input (a non-string calculator expression). Until step 5 (d72a-fail-closed) it crashed the run through an unhandled exception in the scoring code; its operands are now unreadable and the run completes.",
   "exercises": ["T3-39", "unhandled exception in provenance"],
   "extends": "clean",
   "config": {"repeat_count": "1"},
