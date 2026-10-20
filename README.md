@@ -126,10 +126,10 @@ python -m pytest              # offline: unit, conformance and functional tests
 ```
 
 **Only the editable install, `pip install -e .`, is supported.** A plain
-`pip install .` leaves a `build/` directory in the clone. Git ignores it, but
-`runner_source_hash` covers every `.py` file under the clone, so its copies
-change the hash (T3-70 in `docs/REVIEW_FINDINGS.md`). For the same reason,
-keep virtual environments outside the clone.
+`pip install .` leaves a `build/` directory in the clone. `runner_source_hash`
+covers only the `.py` files of `src/ap1_run/` and the `VERSION` file (T3-70
+in `docs/REVIEW_FINDINGS.md`), so neither that directory nor a virtual
+environment inside the clone changes it.
 
 `pip install -e .` alone installs the package and its one dependency,
 `requests`; the `[dev]` extra adds pytest, mutmut and coverage. Quote it,
@@ -198,12 +198,11 @@ the default behaviour. The AP-1 text must be the one the seal expects. The
 runner still takes its version and source hash from the clone, so run it from
 a clone (an editable install), not from a wheel.
 
-Two limits for now: `tools/verify_run_seal.py` checks a run only against
+One limit for now: `tools/verify_run_seal.py` checks a run only against
 `example/` and `reference/`, so a run made with other inputs fails
-verification even when its seal is sound (S3-G8-4); and keep fixture copies
-outside the clone, because the source hash covers every `.py` file in it, so
-a copied `ground_truth_example.py` changes `runner_source_hash` and the run
-is reported as modified (T3-70).
+verification even when its seal is sound (S3-G8-4). A fixture copy inside the
+clone no longer changes `runner_source_hash`, which covers only `src/ap1_run/`
+and `VERSION` (T3-70).
 
 ---
 

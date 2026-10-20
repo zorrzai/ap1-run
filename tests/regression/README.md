@@ -141,17 +141,20 @@ golden difference, and `--update` cannot write over it.
 
 `python tests/regression/selftest.py` tests these checks directly, with known
 answers. One of them recomputes the published September `runner_source_hash`
-(`da0739eb…`, docs/REPRODUCING.md) with the oracle's rule from the tag
-`e7-quantise-fix`, so the clone needs its tags (`git fetch --tags`; CI checks
-out full history). That tree is nearly flat (no `tests/` or `src/`), so this
-pins how the files are read, framed and sorted; `check_source_files.py` pins
-which files are in scope.
+(`da0739eb…`, docs/REPRODUCING.md) from the tag `e7-quantise-fix`, with the
+rule from before T3-70 that the oracle keeps for this check only
+(`hash_oracle.source_hash_files_september()`), so the clone needs its tags
+(`git fetch --tags`; CI checks out full history). That tree is nearly flat
+(no `tests/` or `src/`), so this pins how the files are read and framed (as
+the current rule does) and how the old rule sorted them;
+`check_source_files.py` pins which files the current rule takes in.
 
 **The files the source hash covers** are listed in `source_hash_files.txt`:
 the files the hash oracle's rule (`hash_oracle.source_hash_files()`) finds in
-the checkout, tests included, less any that git does not track (named on
-stderr, not listed). `check_source_files.py` compares the list with the tree
-and runs as its own CI step, so a move, a new module or a
+the checkout, the `.py` files of `src/ap1_run/` and `VERSION` (T3-70), less
+any that git does not track (named on stderr, not listed).
+`check_source_files.py` compares the list with the tree and runs as its own
+CI step, so a move, a new module or a
 deletion shows as a reviewed diff of the list. It is checked at each PR head;
 a commit that changes the set updates the list (`--update`).
 

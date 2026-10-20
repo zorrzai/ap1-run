@@ -22,23 +22,26 @@ writing):
   seal_hash        canonical hash of the record without 'timestamp' (and
                    without 'seal_hash' itself)
   runner_source_hash
-                   SHA-256 over every .py file under the runner's base
-                   directory whose relative path does not start with
-                   'output', 'review_output' or '__pycache__'; sorted by
-                   relative path in the platform's own form; for each,
-                   the path with '/' separators, NUL, the bytes, NUL
+                   SHA-256 over the runner's code: every .py file under
+                   src/ap1_run/ outside a __pycache__ directory, and the
+                   VERSION file if it is a file (T3-70); sorted by
+                   relative path with '/' separators; for each, that
+                   path, NUL, the bytes, NUL
 
-The source-hash rule pins current behaviour, defects included: it is the
-scope T3-70 describes (tests, an in-tree venv and scratch files hashed; a
-prefix match on the excluded names, so a top-level output_*.py is left
-out; directory symlinks not followed; the platform's own sort order;
-VERSION not hashed). A fix to T3-70 changes this rule and the runner's in
-the same commit; check_source_files.py then shows the change in the file
-list, and selftest.py's recomputation of the published September hash
-from the tag e7-quantise-fix shows whether the old seals can still be
-reproduced. That tree is nearly flat (no tests/ or src/), so the tag
-check pins how files are read, framed and sorted; the file list pins
-which files are in scope.
+There are two source-hash rules. source_hash_files() is the rule above,
+the runner's since T3-70; check_source_files.py lists the tracked files it
+finds, so a change to the set shows as a reviewed diff of that list, and
+every scenario checks the hash under it. source_hash_files_september() is
+the rule before T3-70: every .py file of the clone (tests, an in-tree venv
+and scratch files included) less a prefix match on 'output',
+'review_output' and '__pycache__', sorted in the platform's own form;
+VERSION not hashed. No run is sealed under it any more. It is kept only
+so that selftest.py can recompute the September runs' published hash
+(da0739eb..., docs/REPRODUCING.md) from the tag e7-quantise-fix, which
+shows those seals can still be reproduced. That tree is nearly flat (no
+tests/ or src/), so the tag check pins how files are read, framed and
+sorted under the old rule; the file list pins which files the current
+rule takes in.
 
 Version fields: the tag and commit are read from the tree's VERSION file
 here, independently (first line that is not blank or a comment; 'unknown'
@@ -71,7 +74,14 @@ REPO = os.path.dirname(os.path.dirname(HERE))
 _FORBIDDEN_MODULES = ('ap1_run', 'numeric', 'seal', 'version', 'smoke_test',
                       'verify_run_seal', 'generate_findings', 'tools')
 
-SOURCE_HASH_EXCLUDED = ('output', 'review_output', '__pycache__')
+# What runner_source_hash covers (T3-70): the ap1_run package's .py files
+# and VERSION. Tests, tools/, examples and anything else in the clone (an
+# in-tree venv, scratch files) are outside it.
+SOURCE_PACKAGE = 'src/ap1_run/'
+SOURCE_VERSION_FILE = 'VERSION'
+
+# The rule before T3-70, for source_hash_files_september() only.
+SEPTEMBER_SOURCE_HASH_EXCLUDED = ('output', 'review_output', '__pycache__')
 
 _HEX64 = re.compile(r'\A[0-9a-f]{64}\Z')
 _TIMESTAMP = re.compile(
@@ -177,29 +187,72 @@ def file_hash(path):
         return hashlib.sha256(f.read()).hexdigest()
 
 
+def source_hash_covers(rel):
+    """Whether runner_source_hash covers the file at rel, a path relative
+    to the base directory with '/' separators."""
+    if rel == SOURCE_VERSION_FILE:
+        return True
+    return (rel.startswith(SOURCE_PACKAGE) and rel.endswith('.py')
+            and '__pycache__' not in rel.split('/'))
+
+
 def source_hash_files(base_dir):
-    """Relative paths (platform form, sorted) the source hash covers."""
+    """Relative paths ('/' separators, sorted) the source hash covers:
+    every file under base_dir the rule takes in."""
+    found = []
+    for root, _dirs, files in os.walk(base_dir):
+        for f in files:
+            rel = os.path.relpath(os.path.join(root, f), base_dir)
+            rel = rel.replace(os.sep, '/')
+            if source_hash_covers(rel):
+                found.append(rel)
+    return sorted(found)
+
+
+def source_hash_files_september(base_dir):
+    """The pre-T3-70 rule, kept only to show that the September runs'
+    published runner_source_hash (da0739eb..., docs/REPRODUCING.md) can
+    still be recomputed from the tag e7-quantise-fix (selftest.py,
+    PublishedSourceHash). Nothing else uses it.
+
+    Relative paths ('/' separators) of every .py file under base_dir whose
+    relative path does not start with 'output', 'review_output' or
+    '__pycache__', in the order the September runner hashed them: sorted
+    in the platform's own path form."""
     found = []
     for root, _dirs, files in os.walk(base_dir):
         for f in files:
             if not f.endswith('.py'):
                 continue
             rel = os.path.relpath(os.path.join(root, f), base_dir)
-            if rel.startswith(SOURCE_HASH_EXCLUDED):
+            if rel.startswith(SEPTEMBER_SOURCE_HASH_EXCLUDED):
                 continue
             found.append(rel)
-    return sorted(found)
+    return [rel.replace(os.sep, '/') for rel in sorted(found)]
 
 
-def runner_source_hash(base_dir):
+def source_hash_over(base_dir, rels):
+    """SHA-256 over the files rels ('/' separators) under base_dir, in the
+    order given: for each, the path, NUL, the bytes, NUL."""
     h = hashlib.sha256()
-    for rel in source_hash_files(base_dir):
-        h.update(rel.replace(os.sep, '/').encode('utf-8'))
+    for rel in rels:
+        h.update(rel.encode('utf-8'))
         h.update(b'\x00')
         with open(os.path.join(base_dir, rel), 'rb') as f:
             h.update(f.read())
         h.update(b'\x00')
     return h.hexdigest()
+
+
+def runner_source_hash(base_dir):
+    """runner_source_hash under the current rule (source_hash_files())."""
+    return source_hash_over(base_dir, source_hash_files(base_dir))
+
+
+def runner_source_hash_september(base_dir):
+    """runner_source_hash under the pre-T3-70 rule
+    (source_hash_files_september()), for the published-hash check only."""
+    return source_hash_over(base_dir, source_hash_files_september(base_dir))
 
 
 def version_file_fields(base_dir):

@@ -58,10 +58,10 @@ excludes, so the hash is the same before and after.
 **Keep virtual environments outside the clone, or name them so that they are
 excluded.** `compute_runner_source_hash` hashes every `.py` file under the
 repository root except `output/`, `review_output*` and `__pycache__/`. A
-`.venv/` inside the clone therefore changes `runner_source_hash`. The same
-goes for the `build/` directory that a non-editable `pip install .` leaves in
-the clone on the current layout (see the README: only `pip install -e .` is
-supported).
+`.venv/` inside the clone therefore changes `runner_source_hash` at that
+commit. On the current layout the hash covers only `src/ap1_run/` and
+`VERSION` (below), so neither a venv nor the `build/` directory that a
+non-editable `pip install .` leaves in the clone changes it.
 
 ### Running the code of a published run
 
@@ -146,7 +146,10 @@ restoring the original ground-truth module".
 
 - **`runner_source_hash` is different.** The hash covers the path and content
   of every `.py` file, and the files moved. That is expected. It is not a
-  change in behaviour.
+  change in behaviour. Since October 2026 it also covers less: only the code
+  that runs, the `.py` files of `src/ap1_run/` and the `VERSION` file. Tests,
+  `tools/`, an in-tree venv and scratch files no longer change it, and a
+  VERSION commit shorter than 7 characters no longer counts as naming HEAD.
 - **Behaviour is unchanged by the move.** The regression baseline
   (`tests/regression/`) pins the runner's behaviour end to end and gave
   identical output before and after it. It includes both September runs
