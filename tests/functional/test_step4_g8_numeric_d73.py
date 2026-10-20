@@ -178,9 +178,6 @@ def test_run_report_counts_transcriptions_rounded_under_declared_policy(
 
 @pytest.mark.finding('T3-41')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-41: a run sealed with European separators '
-                          'parses the responses with US separators')
 def test_run_european_separators_parse_the_released_figure(
         tmp_path, monkeypatch, capsys):
     # SPEC R0.4.2: tokens are parsed with the configured decimal_separator

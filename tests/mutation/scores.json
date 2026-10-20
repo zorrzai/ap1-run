@@ -95,10 +95,10 @@
     "score": 0.9915
   },
   "runner/executions": {
-    "killed": 594,
-    "mutants": 596,
+    "killed": 623,
+    "mutants": 625,
     "notes": "Both survivors are equivalent. tool_calls=None in the figure record: transcript.append writes None as []. 'and' to 'or' in _operation_returns' result check only lets values through that then raise inside the try (a dict without 'result' raises KeyError), which the except turns into the same skipped call.",
-    "score": 0.9966
+    "score": 0.9968
   },
   "runner/outputs": {
     "killed": 170,
@@ -128,10 +128,10 @@
     "score": 1.0
   },
   "scoring/figure_id": {
-    "killed": 144,
-    "mutants": 158,
+    "killed": 165,
+    "mutants": 179,
     "notes": "All 14 survivors are in unreachable code: the defensive 'if len(matched) == 0 and len(tokens) == 0' block after the match loop (two mutants of the condition, twelve of the returned dict). An empty token list already returns AUTO-NO-FIGURE above, so tokens is never empty there; the legacy suites do not reach it either.",
-    "score": 0.9114
+    "score": 0.9218
   },
   "scoring/invocation": {
     "killed": 193,
