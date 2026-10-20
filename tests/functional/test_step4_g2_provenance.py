@@ -248,9 +248,6 @@ def compute(item_id, delivered_context):
 
 
 @pytest.mark.finding('T3-42')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-42: a chained item whose ground truth declares '
-                          'no intermediates is scored GROUNDED by default')
 def test_run_chained_item_without_intermediates_is_unmeasurable(full_run):
     # SPEC R2.4 Failure Modes: "Where the ground-truth module declares no
     # intermediates for a chained item, D7.2 is UNMEASURABLE for that

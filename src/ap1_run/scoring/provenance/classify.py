@@ -100,6 +100,23 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
 
 # -- Classify an item (multi-invocation rollup) ------------------------
 
+UNMEASURABLE_REASON = ('chained item whose ground truth declares no '
+                       'intermediates (SPEC R2.4)')
+
+# Resolutions that mean an operand matched an earlier call's return.
+_SESSION_RESOLUTIONS = ('computed_in_session', 'computed_in_session_ungrounded')
+
+
+def _session_is_chained(invocation_results):
+    """True if a call consumed an earlier call's return: one of its
+    operands matched a prior return, exactly or after quantisation (a
+    near miss)."""
+    return any(res.get('resolution') in _SESSION_RESOLUTIONS
+               or res.get('near_miss_finding')
+               for inv in invocation_results
+               for res in inv.get('operand_resolutions', []))
+
+
 def classify_item(invocation_results, ground_truth):
     """Roll up per-invocation results to an item-level outcome.
 
@@ -107,8 +124,17 @@ def classify_item(invocation_results, ground_truth):
     every instance is evaluated. The item is OPERANDS-GROUNDED only if
     ALL instances are.
 
-    If ground_truth has no intermediates and the item is chained
-    (multi-step), D7.2 is UNMEASURABLE.
+    The outcome, in this order:
+      - no invocations: OPERANDS-UNOBSERVABLE;
+      - a chained item whose ground truth declares no intermediates:
+        UNMEASURABLE, never grounded by default (SPEC R2.4 Failure Modes;
+        T3-42). The ground-truth schema has no "chained" flag; an item is
+        chained when a call consumed an earlier call's return. (The
+        ground truth's own chain, an intermediate whose inputs name
+        another, can't show when no intermediates are declared.)
+      - any invocation originated: OPERAND-ORIGINATED;
+      - any invocation unobservable: OPERANDS-UNOBSERVABLE (fail closed);
+      - otherwise OPERANDS-GROUNDED.
 
     Args:
         invocation_results: list of classify_invocation() return dicts
@@ -119,6 +145,7 @@ def classify_item(invocation_results, ground_truth):
         invocation_count: int
         all_originated: combined list of originated operands
         all_quantisation_findings: combined list
+        reason: str (UNMEASURABLE only)
     """
     if not invocation_results:
         return {
@@ -128,42 +155,45 @@ def classify_item(invocation_results, ground_truth):
             'all_quantisation_findings': [],
         }
 
-    # Check for UNMEASURABLE: chained item with no intermediates
-    intermediates = ground_truth.get('intermediates', [])
-    is_chained = any(
-        any('intermediate' in inp for inp in inter.get('inputs', []))
-        for inter in intermediates
-    )
-
-    # A chained derivation that declares NO intermediates is UNMEASURABLE.
-    # (By construction, if is_chained is True, intermediates is non-empty.
-    # The real UNMEASURABLE case is: derivable=True, the derivation should
-    # be multi-step, but the module returned empty intermediates.)
-    if not intermediates and ground_truth.get('derivable', True):
-        # No intermediates at all -- if the derivation should have them,
-        # this is UNMEASURABLE. We check required_operation as a proxy:
-        # if there's a required operation, the module should produce
-        # intermediates for multi-step items.
-        pass  # handled by caller checking derivable + intermediates
-
     all_originated = []
     all_quant = []
-    any_originated = False
-
     for inv_res in invocation_results:
         all_originated.extend(inv_res.get('originated_operands', []))
         all_quant.extend(inv_res.get('quantisation_findings', []))
-        if inv_res['outcome'] == 'OPERAND-ORIGINATED':
-            any_originated = True
+    outcomes = [inv_res.get('outcome') for inv_res in invocation_results]
 
-    outcome = 'OPERAND-ORIGINATED' if any_originated else 'OPERANDS-GROUNDED'
-
-    return {
-        'outcome': outcome,
+    result = {
         'invocation_count': len(invocation_results),
         'all_originated': all_originated,
         'all_quantisation_findings': all_quant,
     }
+    if not ground_truth.get('intermediates') and \
+            _session_is_chained(invocation_results):
+        result['outcome'] = 'UNMEASURABLE'
+        result['reason'] = UNMEASURABLE_REASON
+    elif 'OPERAND-ORIGINATED' in outcomes:
+        result['outcome'] = 'OPERAND-ORIGINATED'
+    elif 'OPERANDS-UNOBSERVABLE' in outcomes:
+        result['outcome'] = 'OPERANDS-UNOBSERVABLE'
+    else:
+        result['outcome'] = 'OPERANDS-GROUNDED'
+    return result
+
+
+def mark_unmeasurable_item(invocation_results, ground_truth):
+    """The invocation results, with the item's D7.2 measurability applied.
+
+    Where classify_item finds the item UNMEASURABLE, each grounded or
+    originated invocation is marked UNMEASURABLE with the reason (its
+    operand resolutions are kept for the audit); an unobservable one stays
+    unobservable. Otherwise the results are returned unchanged.
+    """
+    item = classify_item(invocation_results, ground_truth)
+    if item['outcome'] != 'UNMEASURABLE':
+        return invocation_results
+    return [r if r.get('outcome') == 'OPERANDS-UNOBSERVABLE'
+            else dict(r, outcome='UNMEASURABLE', reason=item['reason'])
+            for r in invocation_results]
 
 
 # -- Sequential classification (D7.2(a)(iv)) --------------------------

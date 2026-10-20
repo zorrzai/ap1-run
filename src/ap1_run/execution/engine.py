@@ -23,6 +23,7 @@ from ap1_run.execution.evidence import (
 from ap1_run.scoring.operation_correctness import classify_operation, reclassify_session
 from ap1_run.scoring.provenance.classify import (
     classify_invocations_sequential, is_calculator_call,
+    mark_unmeasurable_item,
 )
 
 
@@ -116,9 +117,11 @@ def execute_item(item, *, condition, config, fixture,
         _, att_reason = classify_attestation(
             attestation, {'ev3_implemented': False})
 
-    # D7.2(a): sequential operand provenance (D22 transitivity guard)
-    provenance_results = classify_invocations_sequential(
-        tool_calls_record, ctx, gt, config)
+    # D7.2(a): sequential operand provenance (D22 transitivity guard);
+    # a chained item without declared intermediates is UNMEASURABLE (T3-42)
+    provenance_results = mark_unmeasurable_item(
+        classify_invocations_sequential(tool_calls_record, ctx, gt, config),
+        gt)
 
     # D7.2(b): evaluate operation correctness for each calculator call.
     # A call without a readable expression is OPERATION-UNOBSERVABLE,

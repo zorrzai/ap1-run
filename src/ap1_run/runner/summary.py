@@ -188,15 +188,22 @@ def build_summary(all_results, evidence_findings, *,
     step_5_ungrounded_chain = 0
     step_5_untraceable = 0
     prov_outcomes = {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0,
-                     'OPERANDS-UNOBSERVABLE': 0}
+                     'OPERANDS-UNOBSERVABLE': 0, 'UNMEASURABLE': 0}
     originated_audit = []
+    unmeasurable = []
     for r in all_results:
         if r.get('status') != 'EXECUTED':
             continue
+        reasons = []
         for prov in r.get('provenance_results', []):
             outcome = prov.get('outcome', '')
             if outcome in prov_outcomes:
                 prov_outcomes[outcome] += 1
+            if outcome == 'UNMEASURABLE':
+                # D7.2 is unmeasurable for the item (T3-42): its operands
+                # are neither grounded nor originated findings.
+                reasons.append(prov.get('reason'))
+                continue
             for res in prov.get('operand_resolutions', []):
                 step = res.get('step')
                 if step in step_counts:
@@ -219,6 +226,11 @@ def build_summary(all_results, evidence_findings, *,
                     'condition': r.get('condition'),
                     **orig,
                 })
+        if reasons:
+            unmeasurable.append({'item_id': r.get('item_id'),
+                                 'condition': r.get('condition'),
+                                 'repeat': r.get('repeat'),
+                                 'reason': reasons[0]})
     summary['operand_step_counts'] = step_counts
     summary['step_1_source'] = step_1_source
     summary['step_1_constant'] = step_1_constant
@@ -227,6 +239,7 @@ def build_summary(all_results, evidence_findings, *,
     summary['step_5_untraceable'] = step_5_untraceable
     summary['provenance_outcomes'] = prov_outcomes
     summary['originated_operand_audit'] = originated_audit
+    summary['provenance_unmeasurable'] = unmeasurable
 
     # Non-outcome cells
     non_outcome = []

@@ -149,6 +149,7 @@ result, by us or by anyone, in any document.
   OPERANDS-GROUNDED: 32
   OPERAND-ORIGINATED: 16
   OPERANDS-UNOBSERVABLE: 0
+  UNMEASURABLE: 0
 
 ============================================================
 GENERATING FORMAL REPORT (report.py)

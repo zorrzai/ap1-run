@@ -7,8 +7,9 @@ from decimal import Decimal
 import pytest
 
 from ap1_run.scoring.provenance.classify import (
-    _extract_expression, _parse_return_value, classify_invocation,
-    classify_invocations_sequential, classify_item, is_calculator_call,
+    UNMEASURABLE_REASON, _extract_expression, _parse_return_value,
+    classify_invocation, classify_invocations_sequential, classify_item,
+    is_calculator_call, mark_unmeasurable_item,
 )
 
 D = Decimal
@@ -142,6 +143,77 @@ def test_classify_item_all_grounded():
                       {})
     assert r == {'outcome': 'OPERANDS-GROUNDED', 'invocation_count': 2,
                  'all_originated': [], 'all_quantisation_findings': []}
+
+
+@pytest.mark.finding('T3-16')
+def test_classify_item_unobservable_invocation_fails_closed():
+    # An unobservable invocation keeps the item from being grounded; an
+    # originated one still makes it originated.
+    assert classify_item([inv('OPERANDS-GROUNDED'),
+                          inv('OPERANDS-UNOBSERVABLE')], GT)['outcome'] == \
+        'OPERANDS-UNOBSERVABLE'
+    assert classify_item([inv('OPERANDS-UNOBSERVABLE'),
+                          inv('OPERAND-ORIGINATED')], GT)['outcome'] == \
+        'OPERAND-ORIGINATED'
+
+
+def chained(outcome, **resolution):
+    return dict(inv(outcome), operand_resolutions=[
+        {'resolution': 'source_match'}, resolution])
+
+
+@pytest.mark.finding('T3-42')
+@pytest.mark.parametrize('resolution', [
+    {'resolution': 'computed_in_session'},
+    {'resolution': 'computed_in_session_ungrounded'},
+    {'resolution': 'originated', 'near_miss_finding': {'operand': '2.17'}},
+])
+def test_classify_item_session_chain_without_intermediates_unmeasurable(
+        resolution):
+    # A call consumed an earlier return (exactly, from an ungrounded call,
+    # or after quantisation): the item is chained; with no intermediates
+    # declared, D7.2 is UNMEASURABLE (SPEC R2.4), whatever the outcomes.
+    r = classify_item([inv('OPERAND-ORIGINATED', originated=['o'], quant=['q']),
+                       chained('OPERANDS-GROUNDED', **resolution)],
+                      {'intermediates': []})
+    assert r == {'outcome': 'UNMEASURABLE', 'reason': UNMEASURABLE_REASON,
+                 'invocation_count': 2, 'all_originated': ['o'],
+                 'all_quantisation_findings': ['q']}
+
+
+@pytest.mark.finding('T3-42')
+def test_classify_item_chain_with_intermediates_is_scored():
+    r = classify_item([chained('OPERANDS-GROUNDED',
+                               resolution='computed_in_session')], GT)
+    assert r['outcome'] == 'OPERANDS-GROUNDED' and 'reason' not in r
+
+
+@pytest.mark.finding('T3-42')
+def test_classify_item_no_intermediates_without_chain_is_scored():
+    r = classify_item([chained('OPERANDS-GROUNDED', resolution='constant',
+                               near_miss_finding=None)], {})
+    assert r['outcome'] == 'OPERANDS-GROUNDED'
+
+
+@pytest.mark.finding('T3-42')
+def test_mark_unmeasurable_item_marks_scored_invocations():
+    results = [chained('OPERANDS-GROUNDED', resolution='computed_in_session'),
+               inv('OPERAND-ORIGINATED'), inv('OPERANDS-UNOBSERVABLE')]
+    marked = mark_unmeasurable_item(results, {})
+    assert [r['outcome'] for r in marked] == [
+        'UNMEASURABLE', 'UNMEASURABLE', 'OPERANDS-UNOBSERVABLE']
+    assert [r.get('reason') for r in marked] == [
+        UNMEASURABLE_REASON, UNMEASURABLE_REASON, None]
+    # the resolutions are kept for the audit; the input is not changed
+    assert marked[0]['operand_resolutions'] == \
+        results[0]['operand_resolutions']
+    assert results[0]['outcome'] == 'OPERANDS-GROUNDED'
+
+
+def test_mark_unmeasurable_item_measurable_item_unchanged():
+    results = [chained('OPERANDS-GROUNDED', resolution='computed_in_session')]
+    assert mark_unmeasurable_item(results, GT) is results
+    assert mark_unmeasurable_item([], {}) == []
 
 
 def test_classify_item_tolerates_results_without_lists():
@@ -318,9 +390,6 @@ CHAINED_GT = {'final': D('15.2'), 'derivable': True,
 
 
 @pytest.mark.finding('T3-42')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-42: a chained item whose ground truth declares '
-                          'no intermediates is scored, not UNMEASURABLE')
 def test_classify_item_chained_without_intermediates_is_unmeasurable():
     # SPEC R2.4 Failure Modes: "Where the ground-truth module declares no
     # intermediates for a chained item, D7.2 is UNMEASURABLE for that

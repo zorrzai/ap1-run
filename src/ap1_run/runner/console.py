@@ -185,3 +185,4 @@ def print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary):
     print(f'  OPERAND-ORIGINATED: {prov_out.get("OPERAND-ORIGINATED", 0)}')
     print(f'  OPERANDS-UNOBSERVABLE: '
           f'{prov_out.get("OPERANDS-UNOBSERVABLE", 0)}')
+    print(f'  UNMEASURABLE: {prov_out.get("UNMEASURABLE", 0)}')

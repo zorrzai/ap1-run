@@ -623,7 +623,7 @@ def _section_declared_limitations():
 
 
 PROVENANCE_OUTCOMES = ['OPERANDS-GROUNDED', 'OPERAND-ORIGINATED',
-                       'OPERANDS-UNOBSERVABLE']
+                       'OPERANDS-UNOBSERVABLE', 'UNMEASURABLE']
 
 
 def _section_operand_provenance(summary):
@@ -689,13 +689,29 @@ def _section_operand_provenance(summary):
         lines.append('### Per-Invocation Outcomes\n')
         lines.append('> OPERANDS-UNOBSERVABLE: a calculator call whose '
                      'operands could not be read (malformed arguments or an '
-                     'unreadable expression); declared, never grounded.\n')
+                     'unreadable expression); declared, never grounded. '
+                     'UNMEASURABLE: a call in a chained item whose ground '
+                     'truth declares no intermediates (SPEC R2.4); its '
+                     'operands are not counted in the step table.\n')
         lines.append('| Outcome | Count | % |')
         lines.append('|---|---|---|')
         for outcome in PROVENANCE_OUTCOMES:
             count = prov_outcomes.get(outcome, 0)
             lines.append(f'| {outcome} | {count} | '
                          f'{100*count/total_inv:.1f}% |')
+        lines.append('')
+
+    # Executions for which D7.2 is UNMEASURABLE, with the reason (R3.3)
+    unmeasurable = summary.get('provenance_unmeasurable')
+    if unmeasurable:
+        lines.append('### D7.2 UNMEASURABLE Executions\n')
+        lines.append('| Item | Condition | Repeat | Reason |')
+        lines.append('|---|---|---|---|')
+        for entry in unmeasurable:
+            lines.append(f'| {entry.get("item_id", "?")} '
+                         f'| {entry.get("condition", "?")} '
+                         f'| {entry.get("repeat", "?")} '
+                         f'| {entry.get("reason", "?")} |')
         lines.append('')
 
     # Originated operand audit

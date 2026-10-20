@@ -730,28 +730,38 @@ def test_provenance_outcomes_only_shows_dashes_for_percentages():
         '### Per-Invocation Outcomes\n',
         '> OPERANDS-UNOBSERVABLE: a calculator call whose operands could not '
         'be read (malformed arguments or an unreadable expression); '
-        'declared, never grounded.\n',
+        'declared, never grounded. UNMEASURABLE: a call in a chained item '
+        'whose ground truth declares no intermediates (SPEC R2.4); its '
+        'operands are not counted in the step table.\n',
         '| Outcome | Count | % |',
         '|---|---|---|',
         '| OPERANDS-GROUNDED | 2 | 100.0% |',
         '| OPERAND-ORIGINATED | 0 | 0.0% |',
         '| OPERANDS-UNOBSERVABLE | 0 | 0.0% |',
+        '| UNMEASURABLE | 0 | 0.0% |',
         '')
 
 
 @pytest.mark.finding('T3-42')
-def test_provenance_outcomes_other_than_grounded_or_originated_not_shown():
-    # Only OPERANDS-GROUNDED and OPERAND-ORIGINATED get rows; an
-    # UNMEASURABLE count (which R2.4 asks for when intermediates are
-    # absent, and which is never produced, T3-42) would count towards
-    # the total and not be shown. Correct: every outcome listed.
+def test_provenance_unmeasurable_count_and_executions_shown():
+    # SPEC R2.4/R3.3: UNMEASURABLE invocations get their row, and each
+    # execution for which D7.2 is UNMEASURABLE is listed with its reason.
     text = report._section_operand_provenance({
-        'provenance_outcomes': {'UNMEASURABLE': 3}})
-    assert '### Per-Invocation Outcomes' in text
-    assert 'UNMEASURABLE' not in text
-    assert ('| OPERANDS-GROUNDED | 0 | 0.0% |\n'
+        'provenance_outcomes': {'OPERANDS-GROUNDED': 1, 'UNMEASURABLE': 3},
+        'provenance_unmeasurable': [
+            {'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+             'reason': 'chained'}, {}]})
+    assert ('| OPERANDS-GROUNDED | 1 | 25.0% |\n'
             '| OPERAND-ORIGINATED | 0 | 0.0% |\n'
-            '| OPERANDS-UNOBSERVABLE | 0 | 0.0% |\n') in text
+            '| OPERANDS-UNOBSERVABLE | 0 | 0.0% |\n'
+            '| UNMEASURABLE | 3 | 75.0% |\n') in text
+    assert text.endswith(md(
+        '### D7.2 UNMEASURABLE Executions\n',
+        '| Item | Condition | Repeat | Reason |',
+        '|---|---|---|---|',
+        '| Q01 | base | 2 | chained |',
+        '| ? | ? | ? | ? |',
+        ''))
 
 
 def test_provenance_outcomes_all_zero_are_omitted():
