@@ -190,7 +190,7 @@ def test_score_accuracy_unsupported_rounding_mode_raises():
     with pytest.raises(ValueError, match='unsupported rounding mode'):
         score_accuracy(figure(AUTO_MATCH, D('2.5')), expected_value=D('2.9'),
                        answer_tolerance=D('0'), quantisation_digits=0,
-                       quantisation_rounding='ROUND_DOWN')
+                       quantisation_rounding='ROUND_SIDEWAYS')
 
 
 # -- score_accuracy with identify_figure (the live chain) ---------------------
@@ -392,6 +392,16 @@ def test_clopper_pearson_interval_known_values(x, n, lower, upper):
 
 def test_clopper_pearson_interval_alpha():
     # 90%: each tail 0.05; at 1/2, 1 - p^2 = 0.95 ... upper sqrt(0.95)
+    import decimal
     lo, hi = clopper_pearson_interval(1, 2, D('0.1'))
-    assert abs(hi - D('0.95').sqrt()) < D('1e-39')
-    assert abs(lo - (1 - D('0.95').sqrt())) < D('1e-39')
+    with decimal.localcontext() as ctx:
+        ctx.prec = 60
+        assert abs(hi - D('0.95').sqrt()) < D('1e-39')
+        assert abs(lo - (1 - D('0.95').sqrt())) < D('1e-39')
+
+
+def test_clopper_pearson_interval_lower_end_at_precision_60():
+    # The lower end is 1 - (an upper bound), exactly, whatever the
+    # caller's context (it would be rounded to 28 digits otherwise).
+    assert str(clopper_pearson_interval(8, 10)[0]) == \
+        '0.44390453769235845822179198568327233334976354092898353551992'

@@ -1,71 +1,65 @@
 === Verifying: <RUNDIR>/output/run_a_mini ===
 
-  PASS  seal record parsed: 11 fields
-  PASS  resolved config parsed: model='gpt-4.1-mini'
   PASS  config_hash: MATCH
-  PASS  on-disk config.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
-  PASS  on-disk config_mini.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
   PASS  fixture_hash: MATCH
   PASS  questions_hash: MATCH
   PASS  ap1_text_hash: MATCH
   PASS  seal_hash: MATCH
-  PASS  transcript seal_hash: matches report
+  PASS  transcript seal_hash: all 2000 lines match report
+  PASS  seal timestamp: before the first transcript record (<TIMESTAMP>)
+  WARN  seal_format: none: a record made before October 2026, checked under the rules it was made with (raw bytes, seal_hash without the timestamp)
   FAIL  ground_truth_hash: sealed=dd3434bc62c4976af928798024d1446993ce59dd473e78cf4002832630314715, recomputed=080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812
-          NOTE: E3: constant '4' declared but never used in Q07 computation; removed in commit eadd862. D7.2(a) figures withdrawn. F10/Q05: sign negation removed (commit 8089923). See findings/FINDINGS_ERRATA.md.
-          NOTE: This mismatch is expected. The ground-truth module was modified after the sealed runs: E3 removed an unused constant from Q07, and the Q05 sign-convention correction removed the negation (F10). All other sealed hashes reproduce on any platform.
+          NOTE: August seals. E3: constant '4' declared but never used in Q07's computation; removed in commit 85e8eeb. D7.2(a) figures withdrawn. F10/Q05: sign negation removed (commit 6be2d7b). The seal hashed the module of commit 203fef4 with CRLF line endings. See findings/FINDINGS_ERRATA.md.
 
-  10 passed, 1 failed
+  7 passed, 1 failed, 1 warnings
 
 === Verifying: <RUNDIR>/output/run_b_sol ===
 
-  PASS  seal record parsed: 11 fields
-  PASS  resolved config parsed: model='gpt-5.6-sol'
   PASS  config_hash: MATCH
-  PASS  on-disk config.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
-  PASS  on-disk config_mini.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
   PASS  fixture_hash: MATCH
   PASS  questions_hash: MATCH
   PASS  ap1_text_hash: MATCH
   PASS  seal_hash: MATCH
-  PASS  transcript seal_hash: matches report
+  PASS  transcript seal_hash: all 2000 lines match report
+  PASS  seal timestamp: before the first transcript record (<TIMESTAMP>)
+  WARN  seal_format: none: a record made before October 2026, checked under the rules it was made with (raw bytes, seal_hash without the timestamp)
   FAIL  ground_truth_hash: sealed=dd3434bc62c4976af928798024d1446993ce59dd473e78cf4002832630314715, recomputed=080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812
-          NOTE: E3: constant '4' declared but never used in Q07 computation; removed in commit eadd862. D7.2(a) figures withdrawn. F10/Q05: sign negation removed (commit 8089923). See findings/FINDINGS_ERRATA.md.
-          NOTE: This mismatch is expected. The ground-truth module was modified after the sealed runs: E3 removed an unused constant from Q07, and the Q05 sign-convention correction removed the negation (F10). All other sealed hashes reproduce on any platform.
+          NOTE: August seals. E3: constant '4' declared but never used in Q07's computation; removed in commit 85e8eeb. D7.2(a) figures withdrawn. F10/Q05: sign negation removed (commit 6be2d7b). The seal hashed the module of commit 203fef4 with CRLF line endings. See findings/FINDINGS_ERRATA.md.
 
-  10 passed, 1 failed
+  7 passed, 1 failed, 1 warnings
 
 === Verifying: <RUNDIR>/output/run_e_mini ===
 
-  PASS  seal record parsed: 14 fields
-  PASS  resolved config parsed: model='gpt-4.1-mini'
   PASS  config_hash: MATCH
-  PASS  on-disk config.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
-  PASS  on-disk config_mini.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
   PASS  fixture_hash: MATCH
   PASS  questions_hash: MATCH
   PASS  ap1_text_hash: MATCH
   PASS  seal_hash: MATCH
-  PASS  transcript seal_hash: matches report
+  PASS  transcript seal_hash: all 2000 lines match report
+  PASS  seal timestamp: before the first transcript record (<TIMESTAMP>)
+  WARN  seal_format: none: a record made before October 2026, checked under the rules it was made with (raw bytes, seal_hash without the timestamp)
+  WARN  runner_source_hash: not recomputed: a record made before October 2026 hashed every .py file of the clone; see docs/REPRODUCING.md
+  WARN  runner_modified: the run recorded runner_modified: true (VERSION did not name git HEAD, or the code had uncommitted changes); runner_version_tag does not identify the code
   FAIL  ground_truth_hash: sealed=033ce73d933d6e52a7d4f63b3888bdccfa492ce49cf49228ed2f3dda0d27a643, recomputed=080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812
-          NOTE: This mismatch is expected. The ground-truth module was modified after the sealed runs: E3 removed an unused constant from Q07, and the Q05 sign-convention correction removed the negation (F10). All other sealed hashes reproduce on any platform.
+          NOTE: September seals: the module is unchanged since them (last commit ff8c051), but the seal hashed it with CRLF line endings; with CRLF restored the hash matches. See findings/FINDINGS_ERRATA.md, N2.
 
-  10 passed, 1 failed
+  7 passed, 1 failed, 3 warnings
 
 === Verifying: <RUNDIR>/output/run_f_sol ===
 
-  PASS  seal record parsed: 14 fields
-  PASS  resolved config parsed: model='gpt-5.6-sol'
   PASS  config_hash: MATCH
-  PASS  on-disk config.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
-  PASS  on-disk config_mini.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
   PASS  fixture_hash: MATCH
   PASS  questions_hash: MATCH
   PASS  ap1_text_hash: MATCH
   PASS  seal_hash: MATCH
-  PASS  transcript seal_hash: matches report
+  PASS  transcript seal_hash: all 2000 lines match report
+  PASS  seal timestamp: before the first transcript record (<TIMESTAMP>)
+  WARN  seal_format: none: a record made before October 2026, checked under the rules it was made with (raw bytes, seal_hash without the timestamp)
+  WARN  runner_source_hash: not recomputed: a record made before October 2026 hashed every .py file of the clone; see docs/REPRODUCING.md
+  WARN  runner_modified: the run recorded runner_modified: true (VERSION did not name git HEAD, or the code had uncommitted changes); runner_version_tag does not identify the code
   FAIL  ground_truth_hash: sealed=033ce73d933d6e52a7d4f63b3888bdccfa492ce49cf49228ed2f3dda0d27a643, recomputed=080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812
-          NOTE: This mismatch is expected. The ground-truth module was modified after the sealed runs: E3 removed an unused constant from Q07, and the Q05 sign-convention correction removed the negation (F10). All other sealed hashes reproduce on any platform.
+          NOTE: September seals: the module is unchanged since them (last commit ff8c051), but the seal hashed it with CRLF line endings; with CRLF restored the hash matches. See findings/FINDINGS_ERRATA.md, N2.
 
-  10 passed, 1 failed
+  7 passed, 1 failed, 3 warnings
 
-RESULT: FAIL (4 failures)
+RESULT: FAIL (4 failures, 8 warnings)

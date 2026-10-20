@@ -398,3 +398,18 @@ def test_classify_mechanism_figures_distinct_values_count_answers():
                  response('It is $2500.00.')]
     r = classify_mechanism(responses, surface='figures', minimum_runs=3)
     assert (r['distinct_values'], r['successful_runs']) == (2, 3)
+
+
+# Step 5 (run-robustness): a response whose shape cannot be read has no
+# surface value, as one without choices; never an exception (S3-G2-1).
+
+@pytest.mark.finding('S3-G2-1')
+@pytest.mark.parametrize('surface', ['figures', 'prose'])
+def test_surface_values_unreadable_shape_is_empty(surface):
+    assert _extract_surface_values(
+        ['text', {'choices': ['x']}, {'choices': [{'message': None}]},
+         {'choices': {'a': 1}},
+         {'choices': [{'message': {'content': ['x']}}]},
+         {'choices': [{'message': {'tool_calls': ['x']}}]}],
+        surface) == ([()] if surface == 'figures' else ['']) * 6
+    # (figures: no text states no figures, T3-4)

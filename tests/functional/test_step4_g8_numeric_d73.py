@@ -54,8 +54,7 @@ def run_example(tmp_path, monkeypatch, responses, **config_changes):
     for name in [n for n in list(os.environ) if n.startswith('AP1_SMOKE_')]:
         monkeypatch.delenv(name)
     monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-step4-not-a-real-key-0000')
-    monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-    monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+    mock.point_config(config_path)  # T3-80: config only
     monkeypatch.setattr(time, 'sleep', lambda seconds: None)
     # main() puts the fixture directory on sys.path and imports the
     # example modules; keep that from leaking into other tests.
@@ -178,9 +177,6 @@ def test_run_report_counts_transcriptions_rounded_under_declared_policy(
 
 @pytest.mark.finding('T3-41')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-41: a run sealed with European separators '
-                          'parses the responses with US separators')
 def test_run_european_separators_parse_the_released_figure(
         tmp_path, monkeypatch, capsys):
     # SPEC R0.4.2: tokens are parsed with the configured decimal_separator
@@ -189,8 +185,10 @@ def test_run_european_separators_parse_the_released_figure(
     # governs it. Today: 430 and 75, no match, coverage UNOBSERVABLE.
     out = run_example(tmp_path, monkeypatch, {
         'Q04/*/*': [{'call': '1437.00 - 1006.25'},
-                    {'say': 'Der Tilgungsanteil der ersten Rate betraegt '
-                            '430,75 $ (Zinsen 1.006,25 $).'}]},
+                    # The answer comes last: a dollar figure after it
+                    # would compete with it (T3-3, report-honesty).
+                    {'say': 'Zinsen 1.006,25 $; der Tilgungsanteil der '
+                            'ersten Rate betraegt 430,75 $.'}]},
         decimal_separator=',', grouping_separator='.')
     q04 = rows(out, 'Q04')
     assert {c: (q04[c]['figure_outcome'], q04[c]['released_figure'],
@@ -202,10 +200,6 @@ def test_run_european_separators_parse_the_released_figure(
 
 @pytest.mark.finding('S3-G1-5')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-5: the subtrahend in "1437.00 - 430.75" is '
-                          'extracted as -430.75, hiding a second mention of '
-                          'the expected value from figure identification')
 def test_run_expected_value_as_subtrahend_and_answer_routes_ambiguous(
         tmp_path, monkeypatch, capsys):
     # End-to-end check asked for in the brief: does S3-G1-5 reach figure

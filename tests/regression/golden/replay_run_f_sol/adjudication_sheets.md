@@ -18621,7 +18621,375 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 91: Q02, repeat 5 — Scorer 1
+## Item 91: Q02, repeat 3 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 91: Q02, repeat 3 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 92: Q02, repeat 4 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit = Credit limit − Balance**
+
+$5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 92: Q02, repeat 4 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit = Credit limit − Balance**
+
+$5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 93: Q02, repeat 5 — Scorer 1
 
 ### Question
 
@@ -18715,7 +19083,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 91: Q02, repeat 5 — Scorer 2
+## Item 93: Q02, repeat 5 — Scorer 2
 
 ### Question
 
@@ -18809,7 +19177,193 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 92: Q02, repeat 7 — Scorer 1
+## Item 94: Q02, repeat 6 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 94: Q02, repeat 6 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 95: Q02, repeat 7 — Scorer 1
 
 ### Question
 
@@ -18902,7 +19456,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 92: Q02, repeat 7 — Scorer 2
+## Item 95: Q02, repeat 7 — Scorer 2
 
 ### Question
 
@@ -18995,7 +19549,189 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 93: Q02, repeat 9 — Scorer 1
+## Item 96: Q02, repeat 8 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 96: Q02, repeat 8 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 97: Q02, repeat 9 — Scorer 1
 
 ### Question
 
@@ -19089,7 +19825,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 93: Q02, repeat 9 — Scorer 2
+## Item 97: Q02, repeat 9 — Scorer 2
 
 ### Question
 
@@ -19183,7 +19919,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 94: Q02, repeat 10 — Scorer 1
+## Item 98: Q02, repeat 10 — Scorer 1
 
 ### Question
 
@@ -19277,7 +20013,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 94: Q02, repeat 10 — Scorer 2
+## Item 98: Q02, repeat 10 — Scorer 2
 
 ### Question
 
@@ -19371,7 +20107,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 95: Q02, repeat 11 — Scorer 1
+## Item 99: Q02, repeat 11 — Scorer 1
 
 ### Question
 
@@ -19465,7 +20201,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 95: Q02, repeat 11 — Scorer 2
+## Item 99: Q02, repeat 11 — Scorer 2
 
 ### Question
 
@@ -19559,7 +20295,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 96: Q02, repeat 12 — Scorer 1
+## Item 100: Q02, repeat 12 — Scorer 1
 
 ### Question
 
@@ -19654,7 +20390,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 96: Q02, repeat 12 — Scorer 2
+## Item 100: Q02, repeat 12 — Scorer 2
 
 ### Question
 
@@ -19749,7 +20485,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 97: Q02, repeat 13 — Scorer 1
+## Item 101: Q02, repeat 13 — Scorer 1
 
 ### Question
 
@@ -19843,7 +20579,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 97: Q02, repeat 13 — Scorer 2
+## Item 101: Q02, repeat 13 — Scorer 2
 
 ### Question
 
@@ -19937,7 +20673,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 98: Q02, repeat 15 — Scorer 1
+## Item 102: Q02, repeat 15 — Scorer 1
 
 ### Question
 
@@ -20030,7 +20766,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 98: Q02, repeat 15 — Scorer 2
+## Item 102: Q02, repeat 15 — Scorer 2
 
 ### Question
 
@@ -20123,7 +20859,193 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 99: Q02, repeat 17 — Scorer 1
+## Item 103: Q02, repeat 16 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 103: Q02, repeat 16 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 104: Q02, repeat 17 — Scorer 1
 
 ### Question
 
@@ -20217,7 +21139,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 99: Q02, repeat 17 — Scorer 2
+## Item 104: Q02, repeat 17 — Scorer 2
 
 ### Question
 
@@ -20311,7 +21233,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 100: Q02, repeat 18 — Scorer 1
+## Item 105: Q02, repeat 18 — Scorer 1
 
 ### Question
 
@@ -20406,7 +21328,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 100: Q02, repeat 18 — Scorer 2
+## Item 105: Q02, repeat 18 — Scorer 2
 
 ### Question
 
@@ -20501,7 +21423,189 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 101: Q02, repeat 20 — Scorer 1
+## Item 106: Q02, repeat 19 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 106: Q02, repeat 19 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 107: Q02, repeat 20 — Scorer 1
 
 ### Question
 
@@ -20595,7 +21699,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 101: Q02, repeat 20 — Scorer 2
+## Item 107: Q02, repeat 20 — Scorer 2
 
 ### Question
 
@@ -20689,7 +21793,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 102: Q02, repeat 21 — Scorer 1
+## Item 108: Q02, repeat 21 — Scorer 1
 
 ### Question
 
@@ -20784,7 +21888,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 102: Q02, repeat 21 — Scorer 2
+## Item 108: Q02, repeat 21 — Scorer 2
 
 ### Question
 
@@ -20879,7 +21983,747 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 103: Q02, repeat 26 — Scorer 1
+## Item 109: Q02, repeat 22 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 109: Q02, repeat 22 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 110: Q02, repeat 23 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 110: Q02, repeat 23 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 111: Q02, repeat 24 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 111: Q02, repeat 24 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 112: Q02, repeat 25 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 112: Q02, repeat 25 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 113: Q02, repeat 26 — Scorer 1
 
 ### Question
 
@@ -20974,7 +22818,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 103: Q02, repeat 26 — Scorer 2
+## Item 113: Q02, repeat 26 — Scorer 2
 
 ### Question
 
@@ -21069,7 +22913,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 104: Q02, repeat 27 — Scorer 1
+## Item 114: Q02, repeat 27 — Scorer 1
 
 ### Question
 
@@ -21163,7 +23007,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 104: Q02, repeat 27 — Scorer 2
+## Item 114: Q02, repeat 27 — Scorer 2
 
 ### Question
 
@@ -21257,7 +23101,561 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 105: Q02, repeat 31 — Scorer 1
+## Item 115: Q02, repeat 28 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 115: Q02, repeat 28 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 116: Q02, repeat 29 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 116: Q02, repeat 29 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 117: Q02, repeat 30 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 117: Q02, repeat 30 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 118: Q02, repeat 31 — Scorer 1
 
 ### Question
 
@@ -21351,7 +23749,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 105: Q02, repeat 31 — Scorer 2
+## Item 118: Q02, repeat 31 — Scorer 2
 
 ### Question
 
@@ -21445,7 +23843,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 106: Q02, repeat 32 — Scorer 1
+## Item 119: Q02, repeat 32 — Scorer 1
 
 ### Question
 
@@ -21538,7 +23936,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 106: Q02, repeat 32 — Scorer 2
+## Item 119: Q02, repeat 32 — Scorer 2
 
 ### Question
 
@@ -21631,7 +24029,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 107: Q02, repeat 33 — Scorer 1
+## Item 120: Q02, repeat 33 — Scorer 1
 
 ### Question
 
@@ -21725,7 +24123,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 107: Q02, repeat 33 — Scorer 2
+## Item 120: Q02, repeat 33 — Scorer 2
 
 ### Question
 
@@ -21819,7 +24217,193 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 108: Q02, repeat 35 — Scorer 1
+## Item 121: Q02, repeat 34 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 121: Q02, repeat 34 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 122: Q02, repeat 35 — Scorer 1
 
 ### Question
 
@@ -21913,7 +24497,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 108: Q02, repeat 35 — Scorer 2
+## Item 122: Q02, repeat 35 — Scorer 2
 
 ### Question
 
@@ -22007,7 +24591,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 109: Q02, repeat 36 — Scorer 1
+## Item 123: Q02, repeat 36 — Scorer 1
 
 ### Question
 
@@ -22100,7 +24684,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 109: Q02, repeat 36 — Scorer 2
+## Item 123: Q02, repeat 36 — Scorer 2
 
 ### Question
 
@@ -22193,7 +24777,193 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 110: Q02, repeat 38 — Scorer 1
+## Item 124: Q02, repeat 37 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 124: Q02, repeat 37 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 125: Q02, repeat 38 — Scorer 1
 
 ### Question
 
@@ -22286,7 +25056,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 110: Q02, repeat 38 — Scorer 2
+## Item 125: Q02, repeat 38 — Scorer 2
 
 ### Question
 
@@ -22379,7 +25149,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 111: Q02, repeat 39 — Scorer 1
+## Item 126: Q02, repeat 39 — Scorer 1
 
 ### Question
 
@@ -22472,7 +25242,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 111: Q02, repeat 39 — Scorer 2
+## Item 126: Q02, repeat 39 — Scorer 2
 
 ### Question
 
@@ -22565,7 +25335,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 112: Q02, repeat 40 — Scorer 1
+## Item 127: Q02, repeat 40 — Scorer 1
 
 ### Question
 
@@ -22659,7 +25429,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 112: Q02, repeat 40 — Scorer 2
+## Item 127: Q02, repeat 40 — Scorer 2
 
 ### Question
 
@@ -22753,7 +25523,193 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 113: Q02, repeat 42 — Scorer 1
+## Item 128: Q02, repeat 41 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 128: Q02, repeat 41 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 129: Q02, repeat 42 — Scorer 1
 
 ### Question
 
@@ -22847,7 +25803,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 113: Q02, repeat 42 — Scorer 2
+## Item 129: Q02, repeat 42 — Scorer 2
 
 ### Question
 
@@ -22941,7 +25897,189 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 114: Q02, repeat 44 — Scorer 1
+## Item 130: Q02, repeat 43 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 130: Q02, repeat 43 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 131: Q02, repeat 44 — Scorer 1
 
 ### Question
 
@@ -23035,7 +26173,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 114: Q02, repeat 44 — Scorer 2
+## Item 131: Q02, repeat 44 — Scorer 2
 
 ### Question
 
@@ -23129,7 +26267,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 115: Q02, repeat 45 — Scorer 1
+## Item 132: Q02, repeat 45 — Scorer 1
 
 ### Question
 
@@ -23223,7 +26361,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 115: Q02, repeat 45 — Scorer 2
+## Item 132: Q02, repeat 45 — Scorer 2
 
 ### Question
 
@@ -23317,7 +26455,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 116: Q02, repeat 46 — Scorer 1
+## Item 133: Q02, repeat 46 — Scorer 1
 
 ### Question
 
@@ -23410,7 +26548,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 116: Q02, repeat 46 — Scorer 2
+## Item 133: Q02, repeat 46 — Scorer 2
 
 ### Question
 
@@ -23503,7 +26641,193 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 117: Q02, repeat 49 — Scorer 1
+## Item 134: Q02, repeat 48 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 134: Q02, repeat 48 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 135: Q02, repeat 49 — Scorer 1
 
 ### Question
 
@@ -23598,7 +26922,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 117: Q02, repeat 49 — Scorer 2
+## Item 135: Q02, repeat 49 — Scorer 2
 
 ### Question
 
@@ -23693,7 +27017,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 118: Q02, repeat 50 — Scorer 1
+## Item 136: Q02, repeat 50 — Scorer 1
 
 ### Question
 
@@ -23787,7 +27111,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 118: Q02, repeat 50 — Scorer 2
+## Item 136: Q02, repeat 50 — Scorer 2
 
 ### Question
 
@@ -23881,7 +27205,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 119: Q03, repeat 1 — Scorer 1
+## Item 137: Q03, repeat 1 — Scorer 1
 
 ### Question
 
@@ -23985,7 +27309,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 119: Q03, repeat 1 — Scorer 2
+## Item 137: Q03, repeat 1 — Scorer 2
 
 ### Question
 
@@ -24089,7 +27413,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 120: Q03, repeat 2 — Scorer 1
+## Item 138: Q03, repeat 2 — Scorer 1
 
 ### Question
 
@@ -24191,7 +27515,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 120: Q03, repeat 2 — Scorer 2
+## Item 138: Q03, repeat 2 — Scorer 2
 
 ### Question
 
@@ -24293,7 +27617,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 121: Q03, repeat 3 — Scorer 1
+## Item 139: Q03, repeat 3 — Scorer 1
 
 ### Question
 
@@ -24397,7 +27721,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 121: Q03, repeat 3 — Scorer 2
+## Item 139: Q03, repeat 3 — Scorer 2
 
 ### Question
 
@@ -24501,7 +27825,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 122: Q03, repeat 4 — Scorer 1
+## Item 140: Q03, repeat 4 — Scorer 1
 
 ### Question
 
@@ -24605,7 +27929,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 122: Q03, repeat 4 — Scorer 2
+## Item 140: Q03, repeat 4 — Scorer 2
 
 ### Question
 
@@ -24709,7 +28033,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 123: Q03, repeat 5 — Scorer 1
+## Item 141: Q03, repeat 5 — Scorer 1
 
 ### Question
 
@@ -24811,7 +28135,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 123: Q03, repeat 5 — Scorer 2
+## Item 141: Q03, repeat 5 — Scorer 2
 
 ### Question
 
@@ -24913,7 +28237,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 124: Q03, repeat 6 — Scorer 1
+## Item 142: Q03, repeat 6 — Scorer 1
 
 ### Question
 
@@ -25015,7 +28339,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 124: Q03, repeat 6 — Scorer 2
+## Item 142: Q03, repeat 6 — Scorer 2
 
 ### Question
 
@@ -25117,7 +28441,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 125: Q03, repeat 7 — Scorer 1
+## Item 143: Q03, repeat 7 — Scorer 1
 
 ### Question
 
@@ -25221,7 +28545,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 125: Q03, repeat 7 — Scorer 2
+## Item 143: Q03, repeat 7 — Scorer 2
 
 ### Question
 
@@ -25325,7 +28649,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 126: Q03, repeat 8 — Scorer 1
+## Item 144: Q03, repeat 8 — Scorer 1
 
 ### Question
 
@@ -25429,7 +28753,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 126: Q03, repeat 8 — Scorer 2
+## Item 144: Q03, repeat 8 — Scorer 2
 
 ### Question
 
@@ -25533,7 +28857,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 127: Q03, repeat 9 — Scorer 1
+## Item 145: Q03, repeat 9 — Scorer 1
 
 ### Question
 
@@ -25637,7 +28961,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 127: Q03, repeat 9 — Scorer 2
+## Item 145: Q03, repeat 9 — Scorer 2
 
 ### Question
 
@@ -25741,7 +29065,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 128: Q03, repeat 10 — Scorer 1
+## Item 146: Q03, repeat 10 — Scorer 1
 
 ### Question
 
@@ -25843,7 +29167,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 128: Q03, repeat 10 — Scorer 2
+## Item 146: Q03, repeat 10 — Scorer 2
 
 ### Question
 
@@ -25945,7 +29269,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 129: Q03, repeat 11 — Scorer 1
+## Item 147: Q03, repeat 11 — Scorer 1
 
 ### Question
 
@@ -26049,7 +29373,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 129: Q03, repeat 11 — Scorer 2
+## Item 147: Q03, repeat 11 — Scorer 2
 
 ### Question
 
@@ -26153,7 +29477,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 130: Q03, repeat 13 — Scorer 1
+## Item 148: Q03, repeat 13 — Scorer 1
 
 ### Question
 
@@ -26255,7 +29579,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 130: Q03, repeat 13 — Scorer 2
+## Item 148: Q03, repeat 13 — Scorer 2
 
 ### Question
 
@@ -26357,7 +29681,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 131: Q03, repeat 14 — Scorer 1
+## Item 149: Q03, repeat 14 — Scorer 1
 
 ### Question
 
@@ -26461,7 +29785,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 131: Q03, repeat 14 — Scorer 2
+## Item 149: Q03, repeat 14 — Scorer 2
 
 ### Question
 
@@ -26565,7 +29889,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 132: Q03, repeat 15 — Scorer 1
+## Item 150: Q03, repeat 15 — Scorer 1
 
 ### Question
 
@@ -26667,7 +29991,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 132: Q03, repeat 15 — Scorer 2
+## Item 150: Q03, repeat 15 — Scorer 2
 
 ### Question
 
@@ -26769,7 +30093,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 133: Q03, repeat 16 — Scorer 1
+## Item 151: Q03, repeat 16 — Scorer 1
 
 ### Question
 
@@ -26873,7 +30197,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 133: Q03, repeat 16 — Scorer 2
+## Item 151: Q03, repeat 16 — Scorer 2
 
 ### Question
 
@@ -26977,7 +30301,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 134: Q03, repeat 17 — Scorer 1
+## Item 152: Q03, repeat 17 — Scorer 1
 
 ### Question
 
@@ -27081,7 +30405,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 134: Q03, repeat 17 — Scorer 2
+## Item 152: Q03, repeat 17 — Scorer 2
 
 ### Question
 
@@ -27185,7 +30509,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 135: Q03, repeat 18 — Scorer 1
+## Item 153: Q03, repeat 18 — Scorer 1
 
 ### Question
 
@@ -27289,7 +30613,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 135: Q03, repeat 18 — Scorer 2
+## Item 153: Q03, repeat 18 — Scorer 2
 
 ### Question
 
@@ -27393,109 +30717,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 136: Q03, repeat 19 — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × (18% ÷ 12) = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-**Operand provenance (D7.2(a)):**
-
-- `OPERANDS-GROUNDED`
-
-### Reason for Adjudication
-
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 136: Q03, repeat 19 — Scorer 2
+## Item 154: Q03, repeat 19 — Scorer 1
 
 ### Question
 
@@ -27597,7 +30819,109 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 137: Q03, repeat 20 — Scorer 1
+## Item 154: Q03, repeat 19 — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, calculated as:
+
+**$2,400 × (18% ÷ 12) = $36.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 155: Q03, repeat 20 — Scorer 1
 
 ### Question
 
@@ -27701,7 +31025,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 137: Q03, repeat 20 — Scorer 2
+## Item 155: Q03, repeat 20 — Scorer 2
 
 ### Question
 
@@ -27805,7 +31129,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 138: Q03, repeat 21 — Scorer 1
+## Item 156: Q03, repeat 21 — Scorer 1
 
 ### Question
 
@@ -27909,7 +31233,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 138: Q03, repeat 21 — Scorer 2
+## Item 156: Q03, repeat 21 — Scorer 2
 
 ### Question
 
@@ -28013,7 +31337,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 139: Q03, repeat 22 — Scorer 1
+## Item 157: Q03, repeat 22 — Scorer 1
 
 ### Question
 
@@ -28115,7 +31439,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 139: Q03, repeat 22 — Scorer 2
+## Item 157: Q03, repeat 22 — Scorer 2
 
 ### Question
 
@@ -28217,7 +31541,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 140: Q03, repeat 23 — Scorer 1
+## Item 158: Q03, repeat 23 — Scorer 1
 
 ### Question
 
@@ -28321,7 +31645,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 140: Q03, repeat 23 — Scorer 2
+## Item 158: Q03, repeat 23 — Scorer 2
 
 ### Question
 
@@ -28425,7 +31749,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 141: Q03, repeat 24 — Scorer 1
+## Item 159: Q03, repeat 24 — Scorer 1
 
 ### Question
 
@@ -28529,7 +31853,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 141: Q03, repeat 24 — Scorer 2
+## Item 159: Q03, repeat 24 — Scorer 2
 
 ### Question
 
@@ -28633,7 +31957,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 142: Q03, repeat 25 — Scorer 1
+## Item 160: Q03, repeat 25 — Scorer 1
 
 ### Question
 
@@ -28735,7 +32059,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 142: Q03, repeat 25 — Scorer 2
+## Item 160: Q03, repeat 25 — Scorer 2
 
 ### Question
 
@@ -28837,7 +32161,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 143: Q03, repeat 26 — Scorer 1
+## Item 161: Q03, repeat 26 — Scorer 1
 
 ### Question
 
@@ -28939,7 +32263,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 143: Q03, repeat 26 — Scorer 2
+## Item 161: Q03, repeat 26 — Scorer 2
 
 ### Question
 
@@ -29041,7 +32365,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 144: Q03, repeat 27 — Scorer 1
+## Item 162: Q03, repeat 27 — Scorer 1
 
 ### Question
 
@@ -29145,7 +32469,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 144: Q03, repeat 27 — Scorer 2
+## Item 162: Q03, repeat 27 — Scorer 2
 
 ### Question
 
@@ -29249,7 +32573,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 145: Q03, repeat 28 — Scorer 1
+## Item 163: Q03, repeat 28 — Scorer 1
 
 ### Question
 
@@ -29353,7 +32677,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 145: Q03, repeat 28 — Scorer 2
+## Item 163: Q03, repeat 28 — Scorer 2
 
 ### Question
 
@@ -29457,7 +32781,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 146: Q03, repeat 29 — Scorer 1
+## Item 164: Q03, repeat 29 — Scorer 1
 
 ### Question
 
@@ -29559,7 +32883,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 146: Q03, repeat 29 — Scorer 2
+## Item 164: Q03, repeat 29 — Scorer 2
 
 ### Question
 
@@ -29661,7 +32985,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 147: Q03, repeat 30 — Scorer 1
+## Item 165: Q03, repeat 30 — Scorer 1
 
 ### Question
 
@@ -29765,7 +33089,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 147: Q03, repeat 30 — Scorer 2
+## Item 165: Q03, repeat 30 — Scorer 2
 
 ### Question
 
@@ -29869,7 +33193,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 148: Q03, repeat 31 — Scorer 1
+## Item 166: Q03, repeat 31 — Scorer 1
 
 ### Question
 
@@ -29973,7 +33297,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 148: Q03, repeat 31 — Scorer 2
+## Item 166: Q03, repeat 31 — Scorer 2
 
 ### Question
 
@@ -30077,7 +33401,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 149: Q03, repeat 33 — Scorer 1
+## Item 167: Q03, repeat 33 — Scorer 1
 
 ### Question
 
@@ -30181,7 +33505,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 149: Q03, repeat 33 — Scorer 2
+## Item 167: Q03, repeat 33 — Scorer 2
 
 ### Question
 
@@ -30285,7 +33609,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 150: Q03, repeat 34 — Scorer 1
+## Item 168: Q03, repeat 34 — Scorer 1
 
 ### Question
 
@@ -30387,7 +33711,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 150: Q03, repeat 34 — Scorer 2
+## Item 168: Q03, repeat 34 — Scorer 2
 
 ### Question
 
@@ -30489,7 +33813,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 151: Q03, repeat 35 — Scorer 1
+## Item 169: Q03, repeat 35 — Scorer 1
 
 ### Question
 
@@ -30593,7 +33917,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 151: Q03, repeat 35 — Scorer 2
+## Item 169: Q03, repeat 35 — Scorer 2
 
 ### Question
 
@@ -30697,7 +34021,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 152: Q03, repeat 36 — Scorer 1
+## Item 170: Q03, repeat 36 — Scorer 1
 
 ### Question
 
@@ -30801,7 +34125,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 152: Q03, repeat 36 — Scorer 2
+## Item 170: Q03, repeat 36 — Scorer 2
 
 ### Question
 
@@ -30905,7 +34229,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 153: Q03, repeat 37 — Scorer 1
+## Item 171: Q03, repeat 37 — Scorer 1
 
 ### Question
 
@@ -31007,7 +34331,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 153: Q03, repeat 37 — Scorer 2
+## Item 171: Q03, repeat 37 — Scorer 2
 
 ### Question
 
@@ -31109,7 +34433,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 154: Q03, repeat 38 — Scorer 1
+## Item 172: Q03, repeat 38 — Scorer 1
 
 ### Question
 
@@ -31213,7 +34537,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 154: Q03, repeat 38 — Scorer 2
+## Item 172: Q03, repeat 38 — Scorer 2
 
 ### Question
 
@@ -31317,7 +34641,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 155: Q03, repeat 39 — Scorer 1
+## Item 173: Q03, repeat 39 — Scorer 1
 
 ### Question
 
@@ -31421,7 +34745,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 155: Q03, repeat 39 — Scorer 2
+## Item 173: Q03, repeat 39 — Scorer 2
 
 ### Question
 
@@ -31525,7 +34849,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 156: Q03, repeat 40 — Scorer 1
+## Item 174: Q03, repeat 40 — Scorer 1
 
 ### Question
 
@@ -31629,7 +34953,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 156: Q03, repeat 40 — Scorer 2
+## Item 174: Q03, repeat 40 — Scorer 2
 
 ### Question
 
@@ -31733,7 +35057,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 157: Q03, repeat 42 — Scorer 1
+## Item 175: Q03, repeat 42 — Scorer 1
 
 ### Question
 
@@ -31837,7 +35161,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 157: Q03, repeat 42 — Scorer 2
+## Item 175: Q03, repeat 42 — Scorer 2
 
 ### Question
 
@@ -31941,7 +35265,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 158: Q03, repeat 45 — Scorer 1
+## Item 176: Q03, repeat 45 — Scorer 1
 
 ### Question
 
@@ -32045,7 +35369,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 158: Q03, repeat 45 — Scorer 2
+## Item 176: Q03, repeat 45 — Scorer 2
 
 ### Question
 
@@ -32149,7 +35473,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 159: Q03, repeat 46 — Scorer 1
+## Item 177: Q03, repeat 46 — Scorer 1
 
 ### Question
 
@@ -32251,7 +35575,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 159: Q03, repeat 46 — Scorer 2
+## Item 177: Q03, repeat 46 — Scorer 2
 
 ### Question
 
@@ -32353,7 +35677,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 160: Q03, repeat 47 — Scorer 1
+## Item 178: Q03, repeat 47 — Scorer 1
 
 ### Question
 
@@ -32457,7 +35781,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 160: Q03, repeat 47 — Scorer 2
+## Item 178: Q03, repeat 47 — Scorer 2
 
 ### Question
 
@@ -32561,7 +35885,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 161: Q03, repeat 48 — Scorer 1
+## Item 179: Q03, repeat 48 — Scorer 1
 
 ### Question
 
@@ -32665,7 +35989,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 161: Q03, repeat 48 — Scorer 2
+## Item 179: Q03, repeat 48 — Scorer 2
 
 ### Question
 
@@ -32769,7 +36093,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 162: Q03, repeat 50 — Scorer 1
+## Item 180: Q03, repeat 50 — Scorer 1
 
 ### Question
 
@@ -32871,7 +36195,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 162: Q03, repeat 50 — Scorer 2
+## Item 180: Q03, repeat 50 — Scorer 2
 
 ### Question
 
@@ -32973,7 +36297,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 163: Q04, repeat 1 — Scorer 1
+## Item 181: Q04, repeat 1 — Scorer 1
 
 ### Question
 
@@ -33074,7 +36398,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 163: Q04, repeat 1 — Scorer 2
+## Item 181: Q04, repeat 1 — Scorer 2
 
 ### Question
 
@@ -33175,7 +36499,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 164: Q04, repeat 4 — Scorer 1
+## Item 182: Q04, repeat 4 — Scorer 1
 
 ### Question
 
@@ -33283,7 +36607,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 164: Q04, repeat 4 — Scorer 2
+## Item 182: Q04, repeat 4 — Scorer 2
 
 ### Question
 
@@ -33391,7 +36715,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 165: Q04, repeat 6 — Scorer 1
+## Item 183: Q04, repeat 6 — Scorer 1
 
 ### Question
 
@@ -33499,7 +36823,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 165: Q04, repeat 6 — Scorer 2
+## Item 183: Q04, repeat 6 — Scorer 2
 
 ### Question
 
@@ -33607,7 +36931,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 166: Q04, repeat 9 — Scorer 1
+## Item 184: Q04, repeat 9 — Scorer 1
 
 ### Question
 
@@ -33714,7 +37038,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 166: Q04, repeat 9 — Scorer 2
+## Item 184: Q04, repeat 9 — Scorer 2
 
 ### Question
 
@@ -33821,7 +37145,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 167: Q04, repeat 30 — Scorer 1
+## Item 185: Q04, repeat 30 — Scorer 1
 
 ### Question
 
@@ -33922,7 +37246,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 167: Q04, repeat 30 — Scorer 2
+## Item 185: Q04, repeat 30 — Scorer 2
 
 ### Question
 
@@ -34023,7 +37347,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 168: Q04, repeat 32 — Scorer 1
+## Item 186: Q04, repeat 32 — Scorer 1
 
 ### Question
 
@@ -34124,7 +37448,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 168: Q04, repeat 32 — Scorer 2
+## Item 186: Q04, repeat 32 — Scorer 2
 
 ### Question
 
@@ -34225,7 +37549,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 169: Q04, repeat 34 — Scorer 1
+## Item 187: Q04, repeat 34 — Scorer 1
 
 ### Question
 
@@ -34336,7 +37660,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 169: Q04, repeat 34 — Scorer 2
+## Item 187: Q04, repeat 34 — Scorer 2
 
 ### Question
 
@@ -34447,7 +37771,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 170: Q04, repeat 42 — Scorer 1
+## Item 188: Q04, repeat 42 — Scorer 1
 
 ### Question
 
@@ -34558,7 +37882,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 170: Q04, repeat 42 — Scorer 2
+## Item 188: Q04, repeat 42 — Scorer 2
 
 ### Question
 
@@ -34669,7 +37993,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 171: Q04, repeat 46 — Scorer 1
+## Item 189: Q04, repeat 46 — Scorer 1
 
 ### Question
 
@@ -34770,7 +38094,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 171: Q04, repeat 46 — Scorer 2
+## Item 189: Q04, repeat 46 — Scorer 2
 
 ### Question
 
@@ -34871,7 +38195,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 172: Q05, repeat 5 — Scorer 1
+## Item 190: Q05, repeat 5 — Scorer 1
 
 ### Question
 
@@ -34990,7 +38314,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 172: Q05, repeat 5 — Scorer 2
+## Item 190: Q05, repeat 5 — Scorer 2
 
 ### Question
 
@@ -35109,7 +38433,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 173: Q05, repeat 9 — Scorer 1
+## Item 191: Q05, repeat 9 — Scorer 1
 
 ### Question
 
@@ -35215,7 +38539,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 173: Q05, repeat 9 — Scorer 2
+## Item 191: Q05, repeat 9 — Scorer 2
 
 ### Question
 
@@ -35321,7 +38645,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 174: Q05, repeat 18 — Scorer 1
+## Item 192: Q05, repeat 18 — Scorer 1
 
 ### Question
 
@@ -35427,7 +38751,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 174: Q05, repeat 18 — Scorer 2
+## Item 192: Q05, repeat 18 — Scorer 2
 
 ### Question
 
@@ -35533,7 +38857,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 175: Q05, repeat 22 — Scorer 1
+## Item 193: Q05, repeat 22 — Scorer 1
 
 ### Question
 
@@ -35639,7 +38963,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 175: Q05, repeat 22 — Scorer 2
+## Item 193: Q05, repeat 22 — Scorer 2
 
 ### Question
 
@@ -35745,7 +39069,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 176: Q05, repeat 28 — Scorer 1
+## Item 194: Q05, repeat 28 — Scorer 1
 
 ### Question
 
@@ -35851,7 +39175,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 176: Q05, repeat 28 — Scorer 2
+## Item 194: Q05, repeat 28 — Scorer 2
 
 ### Question
 
@@ -35957,7 +39281,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 177: Q05, repeat 29 — Scorer 1
+## Item 195: Q05, repeat 29 — Scorer 1
 
 ### Question
 
@@ -36063,7 +39387,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 177: Q05, repeat 29 — Scorer 2
+## Item 195: Q05, repeat 29 — Scorer 2
 
 ### Question
 
@@ -36169,7 +39493,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 178: Q05, repeat 30 — Scorer 1
+## Item 196: Q05, repeat 30 — Scorer 1
 
 ### Question
 
@@ -36288,7 +39612,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 178: Q05, repeat 30 — Scorer 2
+## Item 196: Q05, repeat 30 — Scorer 2
 
 ### Question
 
@@ -36407,7 +39731,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 179: Q05, repeat 36 — Scorer 1
+## Item 197: Q05, repeat 36 — Scorer 1
 
 ### Question
 
@@ -36513,7 +39837,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 179: Q05, repeat 36 — Scorer 2
+## Item 197: Q05, repeat 36 — Scorer 2
 
 ### Question
 
@@ -36619,7 +39943,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 180: Q05, repeat 40 — Scorer 1
+## Item 198: Q05, repeat 40 — Scorer 1
 
 ### Question
 
@@ -36725,7 +40049,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 180: Q05, repeat 40 — Scorer 2
+## Item 198: Q05, repeat 40 — Scorer 2
 
 ### Question
 
@@ -36831,7 +40155,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 181: Q05, repeat 44 — Scorer 1
+## Item 199: Q05, repeat 44 — Scorer 1
 
 ### Question
 
@@ -36937,7 +40261,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 181: Q05, repeat 44 — Scorer 2
+## Item 199: Q05, repeat 44 — Scorer 2
 
 ### Question
 
@@ -37043,7 +40367,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 182: Q05, repeat 50 — Scorer 1
+## Item 200: Q05, repeat 50 — Scorer 1
 
 ### Question
 
@@ -37149,7 +40473,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 182: Q05, repeat 50 — Scorer 2
+## Item 200: Q05, repeat 50 — Scorer 2
 
 ### Question
 
@@ -37255,7 +40579,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 183: Q06, repeat 1 — Scorer 1
+## Item 201: Q06, repeat 1 — Scorer 1
 
 ### Question
 
@@ -37344,7 +40668,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 183: Q06, repeat 1 — Scorer 2
+## Item 201: Q06, repeat 1 — Scorer 2
 
 ### Question
 
@@ -37433,7 +40757,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 184: Q06, repeat 2 — Scorer 1
+## Item 202: Q06, repeat 2 — Scorer 1
 
 ### Question
 
@@ -37527,7 +40851,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 184: Q06, repeat 2 — Scorer 2
+## Item 202: Q06, repeat 2 — Scorer 2
 
 ### Question
 
@@ -37621,7 +40945,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 185: Q06, repeat 3 — Scorer 1
+## Item 203: Q06, repeat 3 — Scorer 1
 
 ### Question
 
@@ -37717,7 +41041,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 185: Q06, repeat 3 — Scorer 2
+## Item 203: Q06, repeat 3 — Scorer 2
 
 ### Question
 
@@ -37813,7 +41137,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 186: Q06, repeat 4 — Scorer 1
+## Item 204: Q06, repeat 4 — Scorer 1
 
 ### Question
 
@@ -37907,7 +41231,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 186: Q06, repeat 4 — Scorer 2
+## Item 204: Q06, repeat 4 — Scorer 2
 
 ### Question
 
@@ -38001,7 +41325,181 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 187: Q06, repeat 6 — Scorer 1
+## Item 205: Q06, repeat 5 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 205: Q06, repeat 5 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 206: Q06, repeat 6 — Scorer 1
 
 ### Question
 
@@ -38095,7 +41593,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 187: Q06, repeat 6 — Scorer 2
+## Item 206: Q06, repeat 6 — Scorer 2
 
 ### Question
 
@@ -38189,7 +41687,703 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 188: Q06, repeat 11 — Scorer 1
+## Item 207: Q06, repeat 7 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 207: Q06, repeat 7 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 208: Q06, repeat 8 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 208: Q06, repeat 8 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 209: Q06, repeat 9 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 209: Q06, repeat 9 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 210: Q06, repeat 10 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 210: Q06, repeat 10 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 211: Q06, repeat 11 — Scorer 1
 
 ### Question
 
@@ -38283,7 +42477,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 188: Q06, repeat 11 — Scorer 2
+## Item 211: Q06, repeat 11 — Scorer 2
 
 ### Question
 
@@ -38377,7 +42571,181 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 189: Q06, repeat 13 — Scorer 1
+## Item 212: Q06, repeat 12 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 212: Q06, repeat 12 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 213: Q06, repeat 13 — Scorer 1
 
 ### Question
 
@@ -38464,7 +42832,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 189: Q06, repeat 13 — Scorer 2
+## Item 213: Q06, repeat 13 — Scorer 2
 
 ### Question
 
@@ -38551,7 +42919,533 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 190: Q06, repeat 17 — Scorer 1
+## Item 214: Q06, repeat 14 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**
+
+Since the account earns 0% interest, there is no interest income to offset the fees.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 214: Q06, repeat 14 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**
+
+Since the account earns 0% interest, there is no interest income to offset the fees.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 215: Q06, repeat 15 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 215: Q06, repeat 15 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 216: Q06, repeat 16 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 216: Q06, repeat 16 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 217: Q06, repeat 17 — Scorer 1
 
 ### Question
 
@@ -38645,7 +43539,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 190: Q06, repeat 17 — Scorer 2
+## Item 217: Q06, repeat 17 — Scorer 2
 
 ### Question
 
@@ -38739,7 +43633,181 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 191: Q06, repeat 19 — Scorer 1
+## Item 218: Q06, repeat 18 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 218: Q06, repeat 18 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 219: Q06, repeat 19 — Scorer 1
 
 ### Question
 
@@ -38835,7 +43903,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 191: Q06, repeat 19 — Scorer 2
+## Item 219: Q06, repeat 19 — Scorer 2
 
 ### Question
 
@@ -38931,7 +43999,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 192: Q06, repeat 20 — Scorer 1
+## Item 220: Q06, repeat 20 — Scorer 1
 
 ### Question
 
@@ -39025,7 +44093,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 192: Q06, repeat 20 — Scorer 2
+## Item 220: Q06, repeat 20 — Scorer 2
 
 ### Question
 
@@ -39119,7 +44187,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 193: Q06, repeat 21 — Scorer 1
+## Item 221: Q06, repeat 21 — Scorer 1
 
 ### Question
 
@@ -39213,7 +44281,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 193: Q06, repeat 21 — Scorer 2
+## Item 221: Q06, repeat 21 — Scorer 2
 
 ### Question
 
@@ -39307,7 +44375,181 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 194: Q06, repeat 23 — Scorer 1
+## Item 222: Q06, repeat 22 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12.00 × 12 = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 222: Q06, repeat 22 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12.00 × 12 = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 223: Q06, repeat 23 — Scorer 1
 
 ### Question
 
@@ -39403,7 +44645,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 194: Q06, repeat 23 — Scorer 2
+## Item 223: Q06, repeat 23 — Scorer 2
 
 ### Question
 
@@ -39499,7 +44741,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 195: Q06, repeat 24 — Scorer 1
+## Item 224: Q06, repeat 24 — Scorer 1
 
 ### Question
 
@@ -39593,7 +44835,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 195: Q06, repeat 24 — Scorer 2
+## Item 224: Q06, repeat 24 — Scorer 2
 
 ### Question
 
@@ -39687,7 +44929,181 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 196: Q06, repeat 26 — Scorer 1
+## Item 225: Q06, repeat 25 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12.00 × 12 = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 225: Q06, repeat 25 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12.00 × 12 = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 226: Q06, repeat 26 — Scorer 1
 
 ### Question
 
@@ -39783,7 +45199,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 196: Q06, repeat 26 — Scorer 2
+## Item 226: Q06, repeat 26 — Scorer 2
 
 ### Question
 
@@ -39879,7 +45295,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 197: Q06, repeat 27 — Scorer 1
+## Item 227: Q06, repeat 27 — Scorer 1
 
 ### Question
 
@@ -39975,7 +45391,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 197: Q06, repeat 27 — Scorer 2
+## Item 227: Q06, repeat 27 — Scorer 2
 
 ### Question
 
@@ -40071,7 +45487,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 198: Q06, repeat 28 — Scorer 1
+## Item 228: Q06, repeat 28 — Scorer 1
 
 ### Question
 
@@ -40165,7 +45581,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 198: Q06, repeat 28 — Scorer 2
+## Item 228: Q06, repeat 28 — Scorer 2
 
 ### Question
 
@@ -40259,7 +45675,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 199: Q06, repeat 29 — Scorer 1
+## Item 229: Q06, repeat 29 — Scorer 1
 
 ### Question
 
@@ -40353,7 +45769,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 199: Q06, repeat 29 — Scorer 2
+## Item 229: Q06, repeat 29 — Scorer 2
 
 ### Question
 
@@ -40447,7 +45863,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 200: Q06, repeat 30 — Scorer 1
+## Item 230: Q06, repeat 30 — Scorer 1
 
 ### Question
 
@@ -40541,7 +45957,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 200: Q06, repeat 30 — Scorer 2
+## Item 230: Q06, repeat 30 — Scorer 2
 
 ### Question
 
@@ -40635,7 +46051,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 201: Q06, repeat 31 — Scorer 1
+## Item 231: Q06, repeat 31 — Scorer 1
 
 ### Question
 
@@ -40729,7 +46145,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 201: Q06, repeat 31 — Scorer 2
+## Item 231: Q06, repeat 31 — Scorer 2
 
 ### Question
 
@@ -40823,7 +46239,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 202: Q06, repeat 32 — Scorer 1
+## Item 232: Q06, repeat 32 — Scorer 1
 
 ### Question
 
@@ -40917,7 +46333,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 202: Q06, repeat 32 — Scorer 2
+## Item 232: Q06, repeat 32 — Scorer 2
 
 ### Question
 
@@ -41011,7 +46427,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 203: Q06, repeat 33 — Scorer 1
+## Item 233: Q06, repeat 33 — Scorer 1
 
 ### Question
 
@@ -41100,7 +46516,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 203: Q06, repeat 33 — Scorer 2
+## Item 233: Q06, repeat 33 — Scorer 2
 
 ### Question
 
@@ -41189,7 +46605,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 204: Q06, repeat 34 — Scorer 1
+## Item 234: Q06, repeat 34 — Scorer 1
 
 ### Question
 
@@ -41283,7 +46699,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 204: Q06, repeat 34 — Scorer 2
+## Item 234: Q06, repeat 34 — Scorer 2
 
 ### Question
 
@@ -41377,7 +46793,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 205: Q06, repeat 35 — Scorer 1
+## Item 235: Q06, repeat 35 — Scorer 1
 
 ### Question
 
@@ -41471,7 +46887,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 205: Q06, repeat 35 — Scorer 2
+## Item 235: Q06, repeat 35 — Scorer 2
 
 ### Question
 
@@ -41565,7 +46981,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 206: Q06, repeat 36 — Scorer 1
+## Item 236: Q06, repeat 36 — Scorer 1
 
 ### Question
 
@@ -41659,7 +47075,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 206: Q06, repeat 36 — Scorer 2
+## Item 236: Q06, repeat 36 — Scorer 2
 
 ### Question
 
@@ -41753,7 +47169,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 207: Q06, repeat 37 — Scorer 1
+## Item 237: Q06, repeat 37 — Scorer 1
 
 ### Question
 
@@ -41847,7 +47263,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 207: Q06, repeat 37 — Scorer 2
+## Item 237: Q06, repeat 37 — Scorer 2
 
 ### Question
 
@@ -41941,7 +47357,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 208: Q06, repeat 38 — Scorer 1
+## Item 238: Q06, repeat 38 — Scorer 1
 
 ### Question
 
@@ -42035,7 +47451,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 208: Q06, repeat 38 — Scorer 2
+## Item 238: Q06, repeat 38 — Scorer 2
 
 ### Question
 
@@ -42129,7 +47545,181 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 209: Q06, repeat 40 — Scorer 1
+## Item 239: Q06, repeat 39 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 239: Q06, repeat 39 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 240: Q06, repeat 40 — Scorer 1
 
 ### Question
 
@@ -42216,7 +47806,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 209: Q06, repeat 40 — Scorer 2
+## Item 240: Q06, repeat 40 — Scorer 2
 
 ### Question
 
@@ -42303,7 +47893,181 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 210: Q06, repeat 42 — Scorer 1
+## Item 241: Q06, repeat 41 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 241: Q06, repeat 41 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 242: Q06, repeat 42 — Scorer 1
 
 ### Question
 
@@ -42397,7 +48161,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 210: Q06, repeat 42 — Scorer 2
+## Item 242: Q06, repeat 42 — Scorer 2
 
 ### Question
 
@@ -42491,7 +48255,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 211: Q06, repeat 43 — Scorer 1
+## Item 243: Q06, repeat 43 — Scorer 1
 
 ### Question
 
@@ -42587,7 +48351,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 211: Q06, repeat 43 — Scorer 2
+## Item 243: Q06, repeat 43 — Scorer 2
 
 ### Question
 
@@ -42683,7 +48447,181 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 212: Q06, repeat 45 — Scorer 1
+## Item 244: Q06, repeat 44 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 244: Q06, repeat 44 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 245: Q06, repeat 45 — Scorer 1
 
 ### Question
 
@@ -42777,7 +48715,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 212: Q06, repeat 45 — Scorer 2
+## Item 245: Q06, repeat 45 — Scorer 2
 
 ### Question
 
@@ -42871,7 +48809,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 213: Q06, repeat 46 — Scorer 1
+## Item 246: Q06, repeat 46 — Scorer 1
 
 ### Question
 
@@ -42960,7 +48898,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 213: Q06, repeat 46 — Scorer 2
+## Item 246: Q06, repeat 46 — Scorer 2
 
 ### Question
 
@@ -43049,7 +48987,181 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 214: Q06, repeat 48 — Scorer 1
+## Item 247: Q06, repeat 47 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 247: Q06, repeat 47 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 248: Q06, repeat 48 — Scorer 1
 
 ### Question
 
@@ -43143,7 +49255,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 214: Q06, repeat 48 — Scorer 2
+## Item 248: Q06, repeat 48 — Scorer 2
 
 ### Question
 
@@ -43237,7 +49349,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 215: Q06, repeat 49 — Scorer 1
+## Item 249: Q06, repeat 49 — Scorer 1
 
 ### Question
 
@@ -43331,7 +49443,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 215: Q06, repeat 49 — Scorer 2
+## Item 249: Q06, repeat 49 — Scorer 2
 
 ### Question
 
@@ -43425,7 +49537,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 216: Q06, repeat 50 — Scorer 1
+## Item 250: Q06, repeat 50 — Scorer 1
 
 ### Question
 
@@ -43519,7 +49631,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 216: Q06, repeat 50 — Scorer 2
+## Item 250: Q06, repeat 50 — Scorer 2
 
 ### Question
 
@@ -43613,7 +49725,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 217: Q07, repeat 1 — Scorer 1
+## Item 251: Q07, repeat 1 — Scorer 1
 
 ### Question
 
@@ -43713,7 +49825,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 217: Q07, repeat 1 — Scorer 2
+## Item 251: Q07, repeat 1 — Scorer 2
 
 ### Question
 
@@ -43813,7 +49925,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 218: Q07, repeat 2 — Scorer 1
+## Item 252: Q07, repeat 2 — Scorer 1
 
 ### Question
 
@@ -43914,7 +50026,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 218: Q07, repeat 2 — Scorer 2
+## Item 252: Q07, repeat 2 — Scorer 2
 
 ### Question
 
@@ -44015,7 +50127,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 219: Q07, repeat 3 — Scorer 1
+## Item 253: Q07, repeat 3 — Scorer 1
 
 ### Question
 
@@ -44113,7 +50225,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 219: Q07, repeat 3 — Scorer 2
+## Item 253: Q07, repeat 3 — Scorer 2
 
 ### Question
 
@@ -44211,7 +50323,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 220: Q07, repeat 4 — Scorer 1
+## Item 254: Q07, repeat 4 — Scorer 1
 
 ### Question
 
@@ -44307,7 +50419,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 220: Q07, repeat 4 — Scorer 2
+## Item 254: Q07, repeat 4 — Scorer 2
 
 ### Question
 
@@ -44403,7 +50515,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 221: Q07, repeat 5 — Scorer 1
+## Item 255: Q07, repeat 5 — Scorer 1
 
 ### Question
 
@@ -44501,7 +50613,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 221: Q07, repeat 5 — Scorer 2
+## Item 255: Q07, repeat 5 — Scorer 2
 
 ### Question
 
@@ -44599,7 +50711,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 222: Q07, repeat 7 — Scorer 1
+## Item 256: Q07, repeat 7 — Scorer 1
 
 ### Question
 
@@ -44697,7 +50809,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 222: Q07, repeat 7 — Scorer 2
+## Item 256: Q07, repeat 7 — Scorer 2
 
 ### Question
 
@@ -44795,7 +50907,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 223: Q07, repeat 8 — Scorer 1
+## Item 257: Q07, repeat 8 — Scorer 1
 
 ### Question
 
@@ -44893,7 +51005,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 223: Q07, repeat 8 — Scorer 2
+## Item 257: Q07, repeat 8 — Scorer 2
 
 ### Question
 
@@ -44991,7 +51103,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 224: Q07, repeat 9 — Scorer 1
+## Item 258: Q07, repeat 9 — Scorer 1
 
 ### Question
 
@@ -45089,7 +51201,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 224: Q07, repeat 9 — Scorer 2
+## Item 258: Q07, repeat 9 — Scorer 2
 
 ### Question
 
@@ -45187,7 +51299,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 225: Q07, repeat 10 — Scorer 1
+## Item 259: Q07, repeat 10 — Scorer 1
 
 ### Question
 
@@ -45281,7 +51393,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 225: Q07, repeat 10 — Scorer 2
+## Item 259: Q07, repeat 10 — Scorer 2
 
 ### Question
 
@@ -45375,7 +51487,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 226: Q07, repeat 11 — Scorer 1
+## Item 260: Q07, repeat 11 — Scorer 1
 
 ### Question
 
@@ -45473,7 +51585,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 226: Q07, repeat 11 — Scorer 2
+## Item 260: Q07, repeat 11 — Scorer 2
 
 ### Question
 
@@ -45571,7 +51683,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 227: Q07, repeat 12 — Scorer 1
+## Item 261: Q07, repeat 12 — Scorer 1
 
 ### Question
 
@@ -45669,7 +51781,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 227: Q07, repeat 12 — Scorer 2
+## Item 261: Q07, repeat 12 — Scorer 2
 
 ### Question
 
@@ -45767,7 +51879,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 228: Q07, repeat 13 — Scorer 1
+## Item 262: Q07, repeat 13 — Scorer 1
 
 ### Question
 
@@ -45865,7 +51977,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 228: Q07, repeat 13 — Scorer 2
+## Item 262: Q07, repeat 13 — Scorer 2
 
 ### Question
 
@@ -45963,7 +52075,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 229: Q07, repeat 14 — Scorer 1
+## Item 263: Q07, repeat 14 — Scorer 1
 
 ### Question
 
@@ -46061,7 +52173,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 229: Q07, repeat 14 — Scorer 2
+## Item 263: Q07, repeat 14 — Scorer 2
 
 ### Question
 
@@ -46159,7 +52271,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 230: Q07, repeat 15 — Scorer 1
+## Item 264: Q07, repeat 15 — Scorer 1
 
 ### Question
 
@@ -46257,7 +52369,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 230: Q07, repeat 15 — Scorer 2
+## Item 264: Q07, repeat 15 — Scorer 2
 
 ### Question
 
@@ -46355,7 +52467,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 231: Q07, repeat 16 — Scorer 1
+## Item 265: Q07, repeat 16 — Scorer 1
 
 ### Question
 
@@ -46453,7 +52565,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 231: Q07, repeat 16 — Scorer 2
+## Item 265: Q07, repeat 16 — Scorer 2
 
 ### Question
 
@@ -46551,7 +52663,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 232: Q07, repeat 17 — Scorer 1
+## Item 266: Q07, repeat 17 — Scorer 1
 
 ### Question
 
@@ -46649,7 +52761,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 232: Q07, repeat 17 — Scorer 2
+## Item 266: Q07, repeat 17 — Scorer 2
 
 ### Question
 
@@ -46747,7 +52859,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 233: Q07, repeat 18 — Scorer 1
+## Item 267: Q07, repeat 18 — Scorer 1
 
 ### Question
 
@@ -46845,7 +52957,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 233: Q07, repeat 18 — Scorer 2
+## Item 267: Q07, repeat 18 — Scorer 2
 
 ### Question
 
@@ -46943,7 +53055,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 234: Q07, repeat 19 — Scorer 1
+## Item 268: Q07, repeat 19 — Scorer 1
 
 ### Question
 
@@ -47041,7 +53153,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 234: Q07, repeat 19 — Scorer 2
+## Item 268: Q07, repeat 19 — Scorer 2
 
 ### Question
 
@@ -47139,7 +53251,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 235: Q07, repeat 21 — Scorer 1
+## Item 269: Q07, repeat 21 — Scorer 1
 
 ### Question
 
@@ -47237,7 +53349,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 235: Q07, repeat 21 — Scorer 2
+## Item 269: Q07, repeat 21 — Scorer 2
 
 ### Question
 
@@ -47335,7 +53447,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 236: Q07, repeat 22 — Scorer 1
+## Item 270: Q07, repeat 22 — Scorer 1
 
 ### Question
 
@@ -47433,7 +53545,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 236: Q07, repeat 22 — Scorer 2
+## Item 270: Q07, repeat 22 — Scorer 2
 
 ### Question
 
@@ -47531,7 +53643,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 237: Q07, repeat 23 — Scorer 1
+## Item 271: Q07, repeat 23 — Scorer 1
 
 ### Question
 
@@ -47627,7 +53739,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 237: Q07, repeat 23 — Scorer 2
+## Item 271: Q07, repeat 23 — Scorer 2
 
 ### Question
 
@@ -47723,7 +53835,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 238: Q07, repeat 24 — Scorer 1
+## Item 272: Q07, repeat 24 — Scorer 1
 
 ### Question
 
@@ -47821,7 +53933,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 238: Q07, repeat 24 — Scorer 2
+## Item 272: Q07, repeat 24 — Scorer 2
 
 ### Question
 
@@ -47919,7 +54031,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 239: Q07, repeat 25 — Scorer 1
+## Item 273: Q07, repeat 25 — Scorer 1
 
 ### Question
 
@@ -48017,7 +54129,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 239: Q07, repeat 25 — Scorer 2
+## Item 273: Q07, repeat 25 — Scorer 2
 
 ### Question
 
@@ -48115,7 +54227,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 240: Q07, repeat 26 — Scorer 1
+## Item 274: Q07, repeat 26 — Scorer 1
 
 ### Question
 
@@ -48213,7 +54325,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 240: Q07, repeat 26 — Scorer 2
+## Item 274: Q07, repeat 26 — Scorer 2
 
 ### Question
 
@@ -48311,7 +54423,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 241: Q07, repeat 27 — Scorer 1
+## Item 275: Q07, repeat 27 — Scorer 1
 
 ### Question
 
@@ -48409,7 +54521,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 241: Q07, repeat 27 — Scorer 2
+## Item 275: Q07, repeat 27 — Scorer 2
 
 ### Question
 
@@ -48507,7 +54619,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 242: Q07, repeat 28 — Scorer 1
+## Item 276: Q07, repeat 28 — Scorer 1
 
 ### Question
 
@@ -48605,7 +54717,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 242: Q07, repeat 28 — Scorer 2
+## Item 276: Q07, repeat 28 — Scorer 2
 
 ### Question
 
@@ -48703,7 +54815,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 243: Q07, repeat 29 — Scorer 1
+## Item 277: Q07, repeat 29 — Scorer 1
 
 ### Question
 
@@ -48801,7 +54913,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 243: Q07, repeat 29 — Scorer 2
+## Item 277: Q07, repeat 29 — Scorer 2
 
 ### Question
 
@@ -48899,7 +55011,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 244: Q07, repeat 30 — Scorer 1
+## Item 278: Q07, repeat 30 — Scorer 1
 
 ### Question
 
@@ -48997,7 +55109,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 244: Q07, repeat 30 — Scorer 2
+## Item 278: Q07, repeat 30 — Scorer 2
 
 ### Question
 
@@ -49095,7 +55207,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 245: Q07, repeat 32 — Scorer 1
+## Item 279: Q07, repeat 32 — Scorer 1
 
 ### Question
 
@@ -49193,7 +55305,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 245: Q07, repeat 32 — Scorer 2
+## Item 279: Q07, repeat 32 — Scorer 2
 
 ### Question
 
@@ -49291,7 +55403,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 246: Q07, repeat 33 — Scorer 1
+## Item 280: Q07, repeat 33 — Scorer 1
 
 ### Question
 
@@ -49389,7 +55501,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 246: Q07, repeat 33 — Scorer 2
+## Item 280: Q07, repeat 33 — Scorer 2
 
 ### Question
 
@@ -49487,7 +55599,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 247: Q07, repeat 35 — Scorer 1
+## Item 281: Q07, repeat 35 — Scorer 1
 
 ### Question
 
@@ -49585,7 +55697,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 247: Q07, repeat 35 — Scorer 2
+## Item 281: Q07, repeat 35 — Scorer 2
 
 ### Question
 
@@ -49683,7 +55795,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 248: Q07, repeat 36 — Scorer 1
+## Item 282: Q07, repeat 36 — Scorer 1
 
 ### Question
 
@@ -49777,7 +55889,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 248: Q07, repeat 36 — Scorer 2
+## Item 282: Q07, repeat 36 — Scorer 2
 
 ### Question
 
@@ -49871,7 +55983,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 249: Q07, repeat 37 — Scorer 1
+## Item 283: Q07, repeat 37 — Scorer 1
 
 ### Question
 
@@ -49978,7 +56090,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 249: Q07, repeat 37 — Scorer 2
+## Item 283: Q07, repeat 37 — Scorer 2
 
 ### Question
 
@@ -50085,7 +56197,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 250: Q07, repeat 38 — Scorer 1
+## Item 284: Q07, repeat 38 — Scorer 1
 
 ### Question
 
@@ -50183,7 +56295,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 250: Q07, repeat 38 — Scorer 2
+## Item 284: Q07, repeat 38 — Scorer 2
 
 ### Question
 
@@ -50281,7 +56393,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 251: Q07, repeat 40 — Scorer 1
+## Item 285: Q07, repeat 40 — Scorer 1
 
 ### Question
 
@@ -50379,7 +56491,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 251: Q07, repeat 40 — Scorer 2
+## Item 285: Q07, repeat 40 — Scorer 2
 
 ### Question
 
@@ -50477,7 +56589,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 252: Q07, repeat 41 — Scorer 1
+## Item 286: Q07, repeat 41 — Scorer 1
 
 ### Question
 
@@ -50575,7 +56687,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 252: Q07, repeat 41 — Scorer 2
+## Item 286: Q07, repeat 41 — Scorer 2
 
 ### Question
 
@@ -50673,7 +56785,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 253: Q07, repeat 42 — Scorer 1
+## Item 287: Q07, repeat 42 — Scorer 1
 
 ### Question
 
@@ -50771,7 +56883,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 253: Q07, repeat 42 — Scorer 2
+## Item 287: Q07, repeat 42 — Scorer 2
 
 ### Question
 
@@ -50869,7 +56981,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 254: Q07, repeat 46 — Scorer 1
+## Item 288: Q07, repeat 46 — Scorer 1
 
 ### Question
 
@@ -50967,7 +57079,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 254: Q07, repeat 46 — Scorer 2
+## Item 288: Q07, repeat 46 — Scorer 2
 
 ### Question
 
@@ -51065,7 +57177,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 255: Q07, repeat 48 — Scorer 1
+## Item 289: Q07, repeat 48 — Scorer 1
 
 ### Question
 
@@ -51165,7 +57277,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 255: Q07, repeat 48 — Scorer 2
+## Item 289: Q07, repeat 48 — Scorer 2
 
 ### Question
 
@@ -51265,7 +57377,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 256: Q07, repeat 49 — Scorer 1
+## Item 290: Q07, repeat 49 — Scorer 1
 
 ### Question
 
@@ -51365,7 +57477,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 256: Q07, repeat 49 — Scorer 2
+## Item 290: Q07, repeat 49 — Scorer 2
 
 ### Question
 
@@ -51465,7 +57577,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 257: Q07, repeat 50 — Scorer 1
+## Item 291: Q07, repeat 50 — Scorer 1
 
 ### Question
 
@@ -51563,7 +57675,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 257: Q07, repeat 50 — Scorer 2
+## Item 291: Q07, repeat 50 — Scorer 2
 
 ### Question
 
@@ -51661,7 +57773,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 258: Q08, repeat 1 — Scorer 1
+## Item 292: Q08, repeat 1 — Scorer 1
 
 ### Question
 
@@ -51761,7 +57873,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 258: Q08, repeat 1 — Scorer 2
+## Item 292: Q08, repeat 1 — Scorer 2
 
 ### Question
 
@@ -51861,7 +57973,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 259: Q08, repeat 16 — Scorer 1
+## Item 293: Q08, repeat 16 — Scorer 1
 
 ### Question
 
@@ -51961,7 +58073,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 ---
 
 
-## Item 259: Q08, repeat 16 — Scorer 2
+## Item 293: Q08, repeat 16 — Scorer 2
 
 ### Question
 
@@ -52063,6 +58175,6 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 ---
 
-Total items requiring adjudication: 259
+Total items requiring adjudication: 293
 
-Total sheets: 518 (2 per item, for 2 scorers)
+Total sheets: 586 (2 per item, for 2 scorers)

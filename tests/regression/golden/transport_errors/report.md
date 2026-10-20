@@ -25,13 +25,18 @@ Backend fingerprints (system_fingerprint): not reported
 | `ap1_version_doi` | `10.5281/zenodo.21755443` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
+| `expected_values_hash` | `5b5f7c1d0a5c638692c2bd7b334f38989dee50c8ccba6956048290a3c078dc36` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
-| `ground_truth_hash` | `080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812` |
+| `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
 | `lookup_collisions` | `none` |
+| `package_versions` | `<ENVIRONMENT>` |
+| `platform` | `<ENVIRONMENT>` |
+| `python_version` | `<ENVIRONMENT>` |
 | `questions_hash` | `5f6aa97714e2b0f7e3039ae6018f6566e811354c4a904d210964beac54172af9` |
 | `runner_source_hash` | `<RUNNER_SOURCE_HASH>` |
 | `runner_version_commit` | `e0d9ec9` |
 | `runner_version_tag` | `v1.3.1` |
+| `seal_format` | `2` |
 | `seal_hash` | `<SEAL_HASH>` |
 | `timestamp` | `<TIMESTAMP>` |
 | `verification_keys` | `[]` |
@@ -56,7 +61,6 @@ Backend fingerprints (system_fingerprint): not reported
     "I'm sorry, I cannot"
   ],
   "dimensions_claimed": [
-    "D1",
     "D2",
     "D7"
   ],
@@ -119,7 +123,7 @@ Backend fingerprints (system_fingerprint): not reported
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | Measured | 31 | No rate: 1 items await adjudication (auto-scored 30: 30 correct, 0 incorrect, 0 no figure) |
+| D1 | **NOT MEASURED** | — | — |
 | D2 | Measured | 9 | figures: OBSERVED-ONLY 14, UNMEASURED 3; prose: OBSERVED-ONLY 14, UNMEASURED 3 (§9) |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -130,19 +134,6 @@ Backend fingerprints (system_fingerprint): not reported
 | D7.2 | Measured | see §6-7b | Operand provenance §6, §7b; operation correctness §7 |
 | D7.3 | Partly measured (1 of 31 UNOBSERVABLE) | 31 | Transcription fidelity: D7.3 section |
 | D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |
-
-### D1 per Category
-
-> AP-1 v1.3 D1: results per category, with 95% confidence intervals and n stated; no category claim where n < 10. n counts questions; a question is correct only if every execution of it is. Interval: exact two-sided 95% Clopper-Pearson.
-
-| Category | n (questions) | Executions | Correct | Incorrect | No Figure | Awaiting Adjudication | Accuracy (95% CI) |
-|---|---|---|---|---|---|---|---|
-| interest | 2 | 7 | 7 | 0 | 0 | 0 | no category claim: n < 10 |
-| balance | 2 | 6 | 6 | 0 | 0 | 0 | no category claim: n < 10 |
-| amortisation | 1 | 3 | 3 | 0 | 0 | 0 | no category claim: n < 10 |
-| fees | 1 | 3 | 3 | 0 | 0 | 0 | no category claim: n < 10 |
-| growth | 2 | 8 | 7 | 0 | 0 | 1 | no category claim: n < 10 |
-| net_income | 1 | 4 | 4 | 0 | 0 | 0 | no category claim: n < 10 |
 
 ## 4. D7 Figures by Evidence Class
 
@@ -361,24 +352,36 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 14, UNMEAS
 | Q10 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
 | Q10 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
 
+## 9b. D2.2 Execution Conditions
+
+- Serving stack and version: not disclosed by the endpoint; the runner cannot observe it.
+- Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
+- Concurrency: one request at a time, sequentially, from a single process.
+- Sampling parameters sent:
+  - `max_completion_tokens`: `4096`
+  - `reasoning_effort`: `none`
+  - `temperature`: not sent (platform-rejected)
+  - `top_p`: not sent (operator-declared)
+- Parameter echo: `UNVERIFIED` (31 responses checked)
+
 ## 10. Non-Outcome Cells
 
 > Every cell that is not a scoreable outcome is listed with its reason.
 
-13 cells: execution 9; D7.1 invocation 1; R2.0 figure 1; D7.3 transcription 1; D7.3 release coverage 1.
+13 cells: execution 10; R2.0 figure 1; D7.3 transcription 1; D7.3 release coverage 1.
 
 | Item | Condition | Status | Reason | Repeat | Measurement |
 |---|---|---|---|---|---|
-| Q03 | base | UNMEASURED | rate limited (HTTP 429): {"error": {"message": "Rate limit reached"}} | 1 | execution |
-| Q04 | base | UNMEASURED | HTTP 500: {"error": {"message": "server error"}} | 1 | execution |
-| Q05 | base | UNMEASURED | transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')) | 1 | execution |
-| Q05 | base | UNMEASURED | transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')) | 2 | execution |
-| Q06 | base | UNMEASURED | response is not valid JSON: this is not json | 1 | execution |
-| Q08 | base | UNMEASURED | HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} | 1 | execution |
-| Q08 | base | UNMEASURED | HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} | 2 | execution |
-| Q08 | instruction_removed | UNMEASURED | HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} | 1 | execution |
-| Q08 | instruction_removed | UNMEASURED | HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} | 2 | execution |
-| Q07 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q03 | base | UNMEASURED | rate_limited: rate limited (HTTP 429): {"error": {"message": "Rate limit reached"}} | 1 | execution |
+| Q04 | base | UNMEASURED | transport_error: HTTP 500: {"error": {"message": "server error"}} | 1 | execution |
+| Q05 | base | UNMEASURED | transport_error: transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')) | 1 | execution |
+| Q05 | base | UNMEASURED | transport_error: transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')) | 2 | execution |
+| Q06 | base | UNMEASURED | transport_error: response is not valid JSON: this is not json | 1 | execution |
+| Q08 | base | UNMEASURED | transport_error: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} | 1 | execution |
+| Q08 | base | UNMEASURED | transport_error: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} | 2 | execution |
+| Q08 | instruction_removed | UNMEASURED | transport_error: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} | 1 | execution |
+| Q08 | instruction_removed | UNMEASURED | transport_error: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} | 2 | execution |
+| Q07 | base | UNOBSERVABLE | UNOBSERVABLE: round 1: request failed: rate limited (HTTP 429): {"error": {"message": "Rate limit reached"}} | 1 | execution |
 | Q07 | base | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
 | Q07 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
 | Q07 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
@@ -393,6 +396,7 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 14, UNMEAS
 
 The following dimensions were **not measured** in this evaluation:
 
+- **D1**: Accuracy — not claimed in this configuration (the runner auto-scores it)
 - **D3**: Provenance — requires human adjudication; the runner does not measure it
 - **D4**: Refusal integrity — requires human adjudication; the runner does not measure it
 - **D5**: Adversarial resistance — requires human adjudication; the runner does not measure it

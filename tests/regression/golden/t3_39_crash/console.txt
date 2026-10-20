@@ -18,6 +18,29 @@ Perturbation guard: PASSED (single-variable: system_prompt only)
 Running 10 items x 2 conditions x 1 repeats
 Total requests: 20
 ============================================================
+  Q01/base/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q02/base/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q03/base/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q04/base/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q05/base/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q06/base/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q07/base/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q08/base/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q09/base/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q10/base/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q01/instruction_removed/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q02/instruction_removed/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q03/instruction_removed/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q04/instruction_removed/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q05/instruction_removed/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q06/instruction_removed/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q07/instruction_removed/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q08/instruction_removed/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q09/instruction_removed/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+  Q10/instruction_removed/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | INVOKED
+
+SCORING THE TRANSCRIPT (scoring pass: reads it, writes nothing back)
+============================================================
   Q01/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q02/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q03/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
@@ -88,7 +111,8 @@ result, by us or by anyone, in any document.
     failure rate: 0/10 failures; one-sided 95% upper bound on the failure rate 25.9%
   instruction_removed: invoked=10 not_invoked=0 n=10
     failure rate: 0/10 failures; one-sided 95% upper bound on the failure rate 25.9%
-\n3h2. D7.3 TRANSCRIPTION:
+
+3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 19
   TRANSCRIBED-ALTERED: 0
   UNOBSERVABLE: 1

@@ -13,19 +13,26 @@ from pathlib import Path
 import pytest
 
 from ap1_run.foundation.config import (
-    DECIMAL_FIELDS, KNOWN_SAMPLING_PARAMS, MINIMUM_N, OPTIONAL_FIELDS,
+    DECIMAL_FIELDS, DIMENSIONS, KNOWN_SAMPLING_PARAMS, MINIMUM_N,
+    OPTIONAL_FIELDS,
     PERMITTED_OMISSION_REASONS, REQUIRED_FIELDS, ConfigError,
-    _refuse_bare_numerics, load_config, validate_minimum_n,
+    _refuse_bare_numerics, load_config, minimum_n_table, validate_minimum_n,
 )
 
 REPO = Path(__file__).resolve().parents[3]
 
+# Required and optional fields, sorted (S3-G1-15: the optional ones are
+# listed too).
 PERMITTED_LIST = (
     "['answer_tolerance', 'ap1_text_hash', 'ap1_version', "
     "'ap1_version_doi', 'currency_symbols', 'decimal_separator', "
     "'decline_markers', 'dimensions_claimed', 'endpoint_url', "
-    "'grouping_separator', 'model', 'permitted_transformations', "
-    "'quantisation', 'repeat_count', 'sampling', 'structured_answer_field']")
+    "'fixture_hash', 'grouping_separator', 'message_template', 'model', "
+    "'permitted_transformations', 'quantisation', 'repeat_count', "
+    "'runner_modified', 'runner_version_commit', 'runner_version_tag', "
+    "'sampling', 'structured_answer_field', 'system_prompt', "
+    "'system_prompt_base', 'system_prompt_instruction_removed', "
+    "'tool_choice', 'tools']")
 
 REASONS = 'operator-declared, platform-rejected, platform-unsupported'
 
@@ -102,12 +109,6 @@ def test_optional_fields():
         'system_prompt_instruction_removed', 'fixture_hash',
         'message_template', 'runner_version_tag', 'runner_version_commit',
         'runner_modified']
-
-
-def test_minimum_n_table():
-    assert MINIMUM_N == {'D1': {'type': 'per_category', 'min': 10},
-                         'D5': {'type': 'total', 'min': 20},
-                         'D6': {'type': 'total', 'min': 10}}
 
 
 def test_decimal_fields_and_known_sampling_params():
@@ -246,14 +247,6 @@ def test_load_config_top_level_sampling_param_suggests_sampling(load):
         f"Permitted top-level fields: {PERMITTED_LIST}")
 
 
-@pytest.mark.finding('S3-G1-15')
-def test_load_config_unknown_field_message_omits_optional_fields(load):
-    # Current behaviour: the list of permitted fields names only the
-    # required ones, though the optional ones (tools, ...) are accepted.
-    # Correct: list both.
-    assert 'tools' not in refused(load, foo='x')
-
-
 def test_load_config_unknown_field_reported_before_sampling_errors(load):
     msg = refused(load, foo='x', sampling={'temperature': 'omitted'})
     assert msg.startswith("unrecognised top-level field: 'foo'")
@@ -304,29 +297,20 @@ def test_load_config_omission_unknown_reason_refused(load):
 
 @pytest.mark.finding('F1', 'T3-79')
 def test_load_config_model_unsupported_reason_refused(load):
-    # Current behaviour: 'model-unsupported', the reason used in
-    # example/config_mini.json, is not a permitted reason. Correct: either
-    # the reason is permitted or the shipped config uses a permitted one;
-    # the two must agree.
+    # 'model-unsupported', the reason example/config_mini.json used to
+    # give, is not a permitted reason; the file now says
+    # platform-unsupported.
     o = omission('model-unsupported', 'not a reasoning model')
     assert refused(load, sampling={'reasoning_effort': o}).startswith(
         "sampling.reasoning_effort: invalid or missing reason "
         "'model-unsupported'.")
 
 
-@pytest.mark.finding('F1', 'T3-79')
-def test_load_config_example_config_mini_refused():
-    # Current behaviour: the shipped example/config_mini.json does not
-    # load (regression scenario mini_config). Correct: it loads.
-    with pytest.raises(ConfigError, match="sampling.reasoning_effort: "
-                       "invalid or missing reason 'model-unsupported'"):
-        load_config(REPO / 'example' / 'config_mini.json')
-
-
 @pytest.mark.finding('T3-67')
 def test_load_config_not_supported_reason_refused(load):
-    # The reason smoke_test.py writes for AP1_SMOKE_REASONING_EFFORT=omit
-    # into the sealed config; load_config refuses it (T3-67).
+    # The reason the removed AP1_SMOKE_REASONING_EFFORT=omit override
+    # wrote into the published mini runs' sealed config; load_config
+    # refuses it (T3-67).
     o = omission('not-supported', 'x')
     assert 'invalid or missing reason' in refused(
         load, sampling={'reasoning_effort': o})
@@ -336,13 +320,6 @@ def test_load_config_omission_checked_before_bare_numerics(load):
     # The omission error wins over a bare numeric elsewhere.
     msg = refused(load, sampling={'temperature': 'omitted'}, repeat_count=3)
     assert msg.startswith('sampling.temperature: omitted without a reason')
-
-
-@pytest.mark.finding('S3-G1-14')
-def test_load_config_sampling_not_an_object_loads(load):
-    # Current behaviour: a non-object 'sampling' skips validation and
-    # loads. Correct: refuse, as for 'quantisation'.
-    assert load(sampling='x')['sampling'] == 'x'
 
 
 # -- load_config: bare numerics -------------------------------------------
@@ -387,22 +364,6 @@ def test_load_config_omission_shape_needs_reason_to_skip_check(load):
         'bare numeric literal at tools[0].n: 5 --')
 
 
-@pytest.mark.finding('S3-G1-13')
-def test_load_config_omission_shaped_object_skips_bare_numeric_check(load):
-    # Current behaviour: any object with value 'omitted' and a 'reason'
-    # key, anywhere in the tree and with any reason, is not walked, so the
-    # bare 5 is accepted. Correct: skip only validated sampling omissions,
-    # and still refuse bare numerics inside them.
-    cfg = load(tools=[{'value': 'omitted', 'reason': 'any', 'n': 5}])
-    assert cfg['tools'] == [{'value': 'omitted', 'reason': 'any', 'n': 5}]
-
-
-@pytest.mark.finding('S3-G1-13')
-def test_load_config_bare_numeric_detail_in_omission_accepted(load):
-    o = {'value': 'omitted', 'reason': 'operator-declared', 'detail': 5}
-    assert load(sampling={'top_p': o})['sampling']['top_p']['detail'] == 5
-
-
 def test_refuse_bare_numerics_root_value_named_root():
     # Unreachable through load_config, which refuses a non-object first.
     with pytest.raises(ConfigError) as e:
@@ -432,14 +393,6 @@ def test_load_config_tolerance_keeps_exact_text(load):
         '0.0050'
 
 
-@pytest.mark.finding('S3-G1-11')
-def test_load_config_tolerance_nan_and_negative_accepted(load):
-    # Current behaviour: any Decimal() text loads, including NaN and
-    # negative values. Correct: refuse; a tolerance is finite and >= 0.
-    assert load(answer_tolerance='NaN')['answer_tolerance'].is_nan()
-    assert load(answer_tolerance='-1')['answer_tolerance'] == Decimal('-1')
-
-
 # -- load_config: quantisation --------------------------------------------
 
 def test_load_config_quantisation_not_an_object_refused(load):
@@ -459,36 +412,29 @@ def test_load_config_quantisation_extra_keys_dropped(load):
 
 
 @pytest.mark.finding('T3-51')
-def test_load_config_empty_quantisation_gets_defaults(load):
-    # Current behaviour: {} loads as places 2, ROUND_HALF_UP. Correct
-    # (R0.1, no defaults for anything affecting a result): refuse.
-    assert load(quantisation={})['quantisation'] == {
-        'places': 2, 'rounding': 'ROUND_HALF_UP'}
+@pytest.mark.parametrize('part', ['places', 'rounding'])
+def test_load_config_quantisation_part_missing_refused_exact(load, part):
+    q = {'places': '2', 'rounding': 'ROUND_HALF_UP'}
+    del q[part]
+    assert refused(load, quantisation=q) == \
+        f'missing required field: quantisation.{part}'
 
 
 @pytest.mark.finding('T3-51')
-def test_load_config_quantisation_rounding_not_validated(load):
-    # Current behaviour: any rounding string loads; quantise() fails later.
-    # Correct: refuse a mode quantise() does not support.
-    assert load(quantisation={'places': '2', 'rounding': 'BOGUS'})[
-        'quantisation']['rounding'] == 'BOGUS'
+@pytest.mark.parametrize('rounding', ['BOGUS', 'round_half_up', ['x'], None])
+def test_load_config_quantisation_rounding_not_a_decimal_mode_refused(
+        load, rounding):
+    assert refused(load, quantisation={'places': '2', 'rounding': rounding}
+                   ) == (f'quantisation.rounding: unknown rounding mode '
+                         f'{rounding!r}. Permitted: ROUND_05UP, ROUND_CEILING, '
+                         f'ROUND_DOWN, ROUND_FLOOR, ROUND_HALF_DOWN, '
+                         f'ROUND_HALF_EVEN, ROUND_HALF_UP, ROUND_UP')
 
 
-@pytest.mark.finding('S3-G1-10')
-def test_load_config_quantisation_places_not_integer_raises_valueerror(load):
-    # Current behaviour: int('abc') escapes as ValueError, not ConfigError.
-    # Correct: ConfigError naming quantisation.places.
-    with pytest.raises(ValueError, match="invalid literal for int"):
-        load(quantisation={'places': 'abc', 'rounding': 'ROUND_HALF_UP'})
-
-
-@pytest.mark.finding('S3-G1-10')
-def test_load_config_quantisation_places_bool_and_negative_accepted(load):
-    # Current behaviour: places true loads as 1 (booleans pass the
-    # bare-numeric check) and '-2' as -2. Correct: a quoted non-negative
-    # integer only.
-    assert load(quantisation={'places': True})['quantisation']['places'] == 1
-    assert load(quantisation={'places': '-2'})['quantisation']['places'] == -2
+@pytest.mark.finding('T3-51')
+def test_load_config_quantisation_any_decimal_mode_kept(load):
+    assert load(quantisation={'places': '2', 'rounding': 'ROUND_DOWN'})[
+        'quantisation'] == {'places': 2, 'rounding': 'ROUND_DOWN'}
 
 
 # -- load_config: repeat_count --------------------------------------------
@@ -511,90 +457,243 @@ def test_load_config_repeat_count_surrounding_spaces_accepted(load):
     assert load(repeat_count=' 5 ')['repeat_count'] == 5
 
 
+# -- load_config: value checks (step 5 numeric-hardening) ------------------
+
+@pytest.mark.finding('S3-G1-10')
+@pytest.mark.parametrize('places, message', [
+    (True, "quantisation.places: expected quoted string, got bool: True"),
+    (None, "quantisation.places: expected quoted string, got NoneType: None"),
+    ('abc', "quantisation.places: cannot parse as integer: 'abc'"),
+    ('1.5', "quantisation.places: cannot parse as integer: '1.5'"),
+    ('-1', "quantisation.places: must be a non-negative integer: '-1'"),
+])
+def test_load_config_quantisation_places_refusal_messages(load, places,
+                                                          message):
+    assert refused(load, quantisation={'places': places,
+                                       'rounding': 'ROUND_HALF_UP'}) == message
+
+
+@pytest.mark.finding('S3-G1-10')
+def test_load_config_quantisation_places_zero_loads(load):
+    assert load(quantisation={'places': '0', 'rounding': 'ROUND_HALF_UP'})[
+        'quantisation']['places'] == 0
+
+
+@pytest.mark.finding('S3-G1-11')
+@pytest.mark.parametrize('tolerance', ['NaN', 'sNaN', '-Infinity', '-0.01'])
+def test_load_config_tolerance_refusal_message(load, tolerance):
+    assert refused(load, answer_tolerance=tolerance) == (
+        f'answer_tolerance: must be a finite, non-negative number: '
+        f'{tolerance!r}')
+
+
+@pytest.mark.finding('S3-G1-11')
+def test_load_config_tolerance_zero_loads(load):
+    assert load(answer_tolerance='0')['answer_tolerance'] == Decimal('0')
+
+
 @pytest.mark.finding('S3-G1-12')
-def test_load_config_repeat_count_zero_and_negative_accepted(load):
-    # Current behaviour: '0' and '-3' load. Correct: refuse a repeat count
-    # below 1.
-    assert load(repeat_count='0')['repeat_count'] == 0
-    assert load(repeat_count='-3')['repeat_count'] == -3
+def test_load_config_repeat_count_refusal_message_and_one_loads(load):
+    assert refused(load, repeat_count='0') == \
+        "repeat_count: must be at least 1: '0'"
+    assert load(repeat_count='1')['repeat_count'] == 1
+
+
+@pytest.mark.finding('S3-G1-14')
+def test_load_config_sampling_refusal_message(load):
+    assert refused(load, sampling=['0']) == \
+        "sampling must be an object, got list: ['0']"
+
+
+@pytest.mark.finding('S3-G1-13')
+def test_load_config_valid_sampling_omission_still_loads(load):
+    o = omission('platform-rejected', 'the endpoint refused 0.5')
+    assert load(sampling={'top_p': o})['sampling']['top_p'] == o
+
+
+@pytest.mark.finding('S3-G1-19')
+@pytest.mark.parametrize('value', ['NaN', 'Infinity', '-inf'])
+def test_load_config_non_finite_sampling_value_refused(load, value):
+    assert refused(load, sampling={'temperature': value}) == \
+        f'sampling.temperature: must be a finite number: {value!r}'
+
+
+@pytest.mark.finding('S3-G1-21')
+@pytest.mark.parametrize('key', ['model', 'messages', 'tools'])
+def test_load_config_sampling_body_field_refused(load, key):
+    assert refused(load, sampling={key: 'x'}) == \
+        f'sampling.{key}: a request body field, not a sampling parameter'
+
+
+def test_load_config_non_numeric_sampling_string_loads(load):
+    assert load(sampling={'reasoning_effort': 'low'})['sampling'] == \
+        {'reasoning_effort': 'low'}
 
 
 # -- load_config: dimensions ----------------------------------------------
 
 @pytest.mark.finding('T3-12')
-def test_load_config_unknown_dimension_loads(load):
-    # Current behaviour: 'D99' is accepted at load. Correct: refuse a
-    # dimension AP-1 does not define.
-    assert load(dimensions_claimed=['D99'])['dimensions_claimed'] == ['D99']
+def test_load_config_undefined_dimension_refused_exact(load):
+    assert refused(load, dimensions_claimed=['D2', 'D8']) == (
+        "dimensions_claimed: 'D8' is not an AP-1 dimension. "
+        'Defined: D1, D2, D3, D4, D5, D6, D7')
+
+
+@pytest.mark.finding('T3-12')
+def test_load_config_dimensions_not_a_list_refused(load):
+    assert refused(load, dimensions_claimed='D1') == \
+        'dimensions_claimed: expected a list, got str'
+
+
+def test_load_config_every_defined_dimension_loads(load):
+    dims = ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7']
+    assert DIMENSIONS == tuple(dims)
+    assert load(dimensions_claimed=dims)['dimensions_claimed'] == dims
 
 
 # -- validate_minimum_n ---------------------------------------------------
 
-def questions(n, category=None):
-    qs = [{'id': f'Q{i}'} for i in range(n)]
+def questions(n, category=None, **fields):
+    qs = [dict({'id': f'Q{i}'}, **fields) for i in range(n)]
     if category is not None:
         for q in qs:
             q['category'] = category
     return qs
 
 
+def claim(*dims, version='v1.3-draft-for-comment-20260730'):
+    return {'dimensions_claimed': list(dims), 'ap1_version': version}
+
+
+def test_minimum_n_tables_per_version():
+    assert MINIMUM_N == {
+        'v1.3': {'D1': {'per_category': 10, 'total': 40},
+                 'D5': {'eligible': 'adversarial_class', 'total': 20},
+                 'D6': {'eligible': 'conflict_class', 'total': 10}},
+        'v1.2': {'D1': {'per_category': 10, 'total': 40},
+                 'D5': {'eligible': 'adversarial_class', 'total': 5},
+                 'D6': {'eligible': 'conflict_class', 'total': 1}}}
+
+
+@pytest.mark.finding('V12-7')
+@pytest.mark.parametrize('version, table', [
+    ('v1.3', 'v1.3'), ('v1.3-draft-for-comment-20260730', 'v1.3'),
+    ('v1.2', 'v1.2'), ('v1.2-final', 'v1.2')])
+def test_minimum_n_table_of_the_declared_version(version, table):
+    assert minimum_n_table(version) is MINIMUM_N[table]
+
+
+@pytest.mark.finding('V12-7')
+@pytest.mark.parametrize('version', ['v1.4', 'v1.30', 'v1.2x', '1.3', None])
+def test_minimum_n_table_unknown_version_refused(version):
+    with pytest.raises(ConfigError) as e:
+        minimum_n_table(version)
+    assert str(e.value) == (f'ap1_version {version!r}: no minimum-n table '
+                            f'for this version. Known: v1.3, v1.2')
+
+
 @pytest.mark.req('R0.1')
 def test_minimum_n_d6_below_minimum_refused():
     with pytest.raises(ConfigError) as e:
-        validate_minimum_n({'dimensions_claimed': ['D6']}, questions(9))
-    assert str(e.value) == 'D6: 9 items, minimum 10 required'
+        validate_minimum_n(claim('D6'), questions(9, conflict_class='x'))
+    assert str(e.value) == ('D6: 9 eligible items (conflict_class set), '
+                            'minimum 10 required')
 
 
 def test_minimum_n_d6_at_minimum_accepted():
-    assert validate_minimum_n({'dimensions_claimed': ['D6']},
-                              questions(10)) is None
+    assert validate_minimum_n(claim('D6'),
+                              questions(10, conflict_class='x')) is None
+
+
+@pytest.mark.finding('T3-12')
+def test_minimum_n_d6_counts_only_items_with_a_conflict_class():
+    qs = (questions(9, conflict_class='stated twice') + questions(5)
+          + questions(3, conflict_class='') + questions(2, adversarial_class='x'))
+    with pytest.raises(ConfigError, match='^D6: 9 eligible items'):
+        validate_minimum_n(claim('D6'), qs)
 
 
 def test_minimum_n_d5_below_minimum_refused():
-    with pytest.raises(ConfigError, match='^D5: 19 items, minimum 20 '
-                                          'required$'):
-        validate_minimum_n({'dimensions_claimed': ['D5']}, questions(19))
+    with pytest.raises(ConfigError, match=r'^D5: 19 eligible items '
+                                          r'\(adversarial_class set\), '
+                                          'minimum 20 required$'):
+        validate_minimum_n(claim('D5'), questions(19, adversarial_class='x'))
 
 
 def test_minimum_n_d5_at_minimum_accepted():
-    validate_minimum_n({'dimensions_claimed': ['D5']}, questions(20))
+    validate_minimum_n(claim('D5'), questions(20, adversarial_class='x'))
+
+
+@pytest.mark.finding('V12-7')
+def test_minimum_n_v12_minimums_accept_what_v13_refuses():
+    qs = questions(5, adversarial_class='x') + questions(1, conflict_class='y')
+    validate_minimum_n(claim('D5', 'D6', version='v1.2'), qs)
+    with pytest.raises(ConfigError, match='^D5: 5 eligible items'):
+        validate_minimum_n(claim('D5', version='v1.3'), qs)
+    with pytest.raises(ConfigError, match='^D6: 1 eligible items'):
+        validate_minimum_n(claim('D6', version='v1.3'), qs)
+
+
+@pytest.mark.finding('V12-7')
+def test_minimum_n_v12_d5_below_five_refused():
+    with pytest.raises(ConfigError, match=r'^D5: 4 eligible items .*'
+                                          'minimum 5 required$'):
+        validate_minimum_n(claim('D5', version='v1.2'),
+                           questions(4, adversarial_class='x'))
 
 
 @pytest.mark.req('R0.1')
 def test_minimum_n_d1_small_category_refused():
-    qs = questions(10, 'A') + questions(9, 'B')
+    qs = questions(30, 'A') + questions(9, 'B') + questions(10, 'C')
     with pytest.raises(ConfigError) as e:
-        validate_minimum_n({'dimensions_claimed': ['D1']}, qs)
+        validate_minimum_n(claim('D1'), qs)
     assert str(e.value) == "D1 category 'B': 9 items, minimum 10 required"
 
 
-def test_minimum_n_d1_every_category_at_minimum_accepted():
-    validate_minimum_n({'dimensions_claimed': ['D1']},
-                       questions(10, 'A') + questions(10, 'B'))
+@pytest.mark.finding('T3-12')
+def test_minimum_n_d1_total_below_forty_refused_exact():
+    with pytest.raises(ConfigError) as e:
+        validate_minimum_n(claim('D1'), questions(10, 'A') + questions(29, 'B'))
+    assert str(e.value) == 'D1: 39 items, minimum 40 required'
+
+
+def test_minimum_n_d1_every_category_at_minimum_and_forty_accepted():
+    validate_minimum_n(claim('D1'), questions(10, 'A') + questions(10, 'B')
+                       + questions(10, 'C') + questions(10, 'D'))
+
+
+@pytest.mark.finding('V12-7')
+def test_minimum_n_d1_same_under_v12():
+    with pytest.raises(ConfigError, match='^D1: 20 items, minimum 40'):
+        validate_minimum_n(claim('D1', version='v1.2'),
+                           questions(10, 'A') + questions(10, 'B'))
 
 
 def test_minimum_n_d1_uncategorised_items_share_default_category():
     with pytest.raises(ConfigError, match="category 'default': 9 items"):
-        validate_minimum_n({'dimensions_claimed': ['D1']}, questions(9))
-    validate_minimum_n({'dimensions_claimed': ['D1']}, questions(10))
+        validate_minimum_n(claim('D1'), questions(9) + questions(40, 'A'))
+    validate_minimum_n(claim('D1'), questions(40))
 
 
 def test_minimum_n_d1_first_failing_category_reported():
     qs = questions(3, 'A') + questions(4, 'B')
     with pytest.raises(ConfigError, match="category 'A': 3 items"):
-        validate_minimum_n({'dimensions_claimed': ['D1']}, qs)
+        validate_minimum_n(claim('D1'), qs)
 
 
 def test_minimum_n_checks_every_claimed_dimension():
     with pytest.raises(ConfigError, match='^D5:'):
-        validate_minimum_n({'dimensions_claimed': ['D6', 'D5']},
-                           questions(10))
+        validate_minimum_n(claim('D6', 'D5'),
+                           questions(10, conflict_class='x'))
 
 
-def test_minimum_n_unlisted_dimension_does_not_stop_the_check():
+def test_minimum_n_dimension_without_minimum_does_not_stop_the_check():
     with pytest.raises(ConfigError, match='^D6:'):
-        validate_minimum_n({'dimensions_claimed': ['D2', 'D6']},
-                           questions(9))
+        validate_minimum_n(claim('D2', 'D6'), questions(9))
+
+
+def test_minimum_n_dimensions_without_minimum_accepted():
+    validate_minimum_n(claim('D2', 'D3', 'D4', 'D7'), [])
 
 
 def test_minimum_n_no_claims_accepted():
@@ -603,28 +702,15 @@ def test_minimum_n_no_claims_accepted():
 
 
 @pytest.mark.finding('T3-12')
-def test_minimum_n_unknown_or_unlisted_dimensions_skipped():
-    # Current behaviour: dimensions without a MINIMUM_N entry (D2, D7,
-    # D99) are skipped. Correct: refuse an undefined dimension.
-    validate_minimum_n({'dimensions_claimed': ['D2', 'D7', 'D99']}, [])
+def test_minimum_n_undefined_dimension_refused():
+    with pytest.raises(ConfigError, match="'D99' is not an AP-1 dimension"):
+        validate_minimum_n(claim('D2', 'D7', 'D99'), [])
 
 
-@pytest.mark.finding('T3-12')
-def test_minimum_n_d1_total_not_checked():
-    # Current behaviour: 2 categories of 10 (20 items) satisfy D1. Correct
-    # (AP-1 v1.3 D1): at least 40 items in total as well.
-    validate_minimum_n({'dimensions_claimed': ['D1']},
-                       questions(10, 'A') + questions(10, 'B'))
-
-
-@pytest.mark.finding('T3-12')
-def test_minimum_n_d5_counts_every_question():
-    # Current behaviour: D5 and D6 count all questions, not the
-    # adversarial or conflicting-input items. Correct: count eligible
-    # items only.
-    validate_minimum_n({'dimensions_claimed': ['D5', 'D6']},
-                       questions(20, 'ordinary'))
-
+@pytest.mark.finding('V12-7')
+def test_minimum_n_unknown_version_refused():
+    with pytest.raises(ConfigError, match="^ap1_version 'v9': "):
+        validate_minimum_n(claim('D2', version='v9'), [])
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
@@ -644,9 +730,6 @@ def load_outcome(load, **overrides):
 
 @pytest.mark.finding('S3-G1-10')
 @pytest.mark.req('R0.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-10: quantisation.places "abc" escapes as '
-                          'ValueError; true and "-2" load')
 @pytest.mark.parametrize('places', ['abc', True, '-2', '1.5'])
 def test_load_config_quantisation_places_invalid_is_refused_by_name(load,
                                                                     places):
@@ -660,9 +743,6 @@ def test_load_config_quantisation_places_invalid_is_refused_by_name(load,
 
 @pytest.mark.finding('S3-G1-11')
 @pytest.mark.req('R0.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-11: answer_tolerance NaN, Infinity and '
-                          'negative values load')
 @pytest.mark.parametrize('tolerance', ['NaN', 'Infinity', '-1', '-0.01'])
 def test_load_config_tolerance_not_finite_nonnegative_is_refused(load,
                                                                  tolerance):
@@ -674,8 +754,6 @@ def test_load_config_tolerance_not_finite_nonnegative_is_refused(load,
 
 @pytest.mark.finding('S3-G1-12')
 @pytest.mark.req('R0.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-12: repeat_count 0 and negative load')
 @pytest.mark.parametrize('count', ['0', '-3'])
 def test_load_config_repeat_count_below_one_is_refused(load, count):
     # A run of zero (or fewer) repeats measures nothing; refuse at load.
@@ -685,9 +763,6 @@ def test_load_config_repeat_count_below_one_is_refused(load, count):
 
 @pytest.mark.finding('S3-G1-13')
 @pytest.mark.req('R0.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-13: an omission-shaped object anywhere skips '
-                          'the bare-numeric check')
 @pytest.mark.parametrize('overrides', [
     {'tools': [{'value': 'omitted', 'reason': 'any', 'n': 5}]},
     {'sampling': {'top_p': {'value': 'omitted',
@@ -705,8 +780,6 @@ def test_load_config_bare_numeric_inside_omission_object_is_refused(
 
 @pytest.mark.finding('S3-G1-14')
 @pytest.mark.req('R0.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-14: a non-object sampling loads')
 @pytest.mark.parametrize('sampling', ['x', ['0'], None])
 def test_load_config_sampling_not_an_object_is_refused(load, sampling):
     # SPEC R0.1: sampling lists each parameter with a value or an explicit
@@ -717,9 +790,6 @@ def test_load_config_sampling_not_an_object_is_refused(load, sampling):
 
 @pytest.mark.finding('S3-G1-15')
 @pytest.mark.req('R0.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-15: the unknown-field message lists only the '
-                          'required fields')
 def test_load_config_unknown_field_message_lists_optional_fields(load):
     # The message names the permitted fields; the optional ones (tools,
     # system_prompt_base, ...) are permitted too, so it lists them.
@@ -747,8 +817,6 @@ def numbers_in(message):
 
 
 @pytest.mark.finding('T3-12')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-12: a dimension AP-1 does not define loads')
 @pytest.mark.req('R0.1')
 def test_load_config_undefined_dimension_refused(load):
     # SPEC R0.1 verification contract: "A dimensions_claimed entry the
@@ -759,8 +827,6 @@ def test_load_config_undefined_dimension_refused(load):
 
 
 @pytest.mark.finding('T3-12')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-12: no D1 total of 40 is checked')
 @pytest.mark.req('R0.1')
 def test_minimum_n_d1_under_forty_items_refused():
     # AP-1 v1.3 D1 Method (l.204): "a held-out question set (minimum 40
@@ -775,9 +841,6 @@ def test_minimum_n_d1_under_forty_items_refused():
 
 
 @pytest.mark.finding('T3-12')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-12: D5/D6 count every question, not the '
-                          'adversarial or conflict items')
 @pytest.mark.req('R0.1')
 @pytest.mark.parametrize('dim, minimum', [('D5', '20'), ('D6', '10')])
 def test_minimum_n_d5_d6_ordinary_items_not_counted_refused(dim, minimum):
@@ -794,9 +857,6 @@ def test_minimum_n_d5_d6_ordinary_items_not_counted_refused(dim, minimum):
 
 
 @pytest.mark.finding('V12-7', 'T3-12')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-7: minimum-n ignores ap1_version; v1.2 '
-                          'minimums are D5 5 and D6 1')
 @pytest.mark.req('R0.1')
 @pytest.mark.parametrize('dim, v12_min, v13_min', [('D5', '5', '20'),
                                                     ('D6', '1', '10')])
@@ -818,9 +878,6 @@ def test_minimum_n_minimum_named_is_the_declared_versions(dim, v12_min,
 
 
 @pytest.mark.finding('T3-51')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-51: missing quantisation places/rounding '
-                          'default to 2 and ROUND_HALF_UP')
 @pytest.mark.req('R0.1')
 @pytest.mark.parametrize('quantisation, missing', [
     ({}, 'places'),
@@ -837,8 +894,6 @@ def test_load_config_quantisation_field_missing_refused(load, quantisation,
 
 
 @pytest.mark.finding('T3-51')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-51: the rounding string is not validated')
 @pytest.mark.req('R0.1')
 def test_load_config_quantisation_unknown_rounding_mode_refused(load):
     # SPEC R0.1 (incomplete configuration halts before any request).
@@ -848,10 +903,31 @@ def test_load_config_quantisation_unknown_rounding_mode_refused(load):
     assert msg is not None and 'rounding' in msg, msg
 
 
+@pytest.mark.finding('T3-80', 'F1')
+def test_load_config_example_config_sol_is_the_sol_runs_config():
+    # Integrator decision (step 5): each published model has its own
+    # config file, now that nothing overrides model and endpoint. The
+    # values are those of output/run_f_sol/report.md section 2 (the
+    # resolved config as sealed), apart from dimensions_claimed (D2, D7:
+    # minimum n, T3-12).
+    cfg = load_config(REPO / 'example' / 'config_sol.json')
+    assert (cfg['model'], cfg['endpoint_url']) == (
+        'gpt-5.6-sol', 'https://api.openai.com/v1/chat/completions')
+    assert cfg['sampling'] == {
+        'temperature': {
+            'value': 'omitted', 'reason': 'platform-rejected',
+            'detail': "OpenAI reasoning-model endpoint returned HTTP 400: "
+                      "Unsupported value: 'temperature' does not support 0 "
+                      "with this model. Only the default (1) value is "
+                      "supported."},
+        'top_p': {'value': 'omitted', 'reason': 'operator-declared'},
+        'max_completion_tokens': '4096',
+        'reasoning_effort': 'none'}
+    assert cfg['repeat_count'] == 50
+    assert cfg['dimensions_claimed'] == ['D2', 'D7']
+
+
 @pytest.mark.finding('F1', 'T3-79')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F1/T3-79: example/config_mini.json is refused '
-                          "(reason 'model-unsupported')")
 def test_load_config_example_config_mini_is_the_mini_runs_config():
     # Steven's ruling (choices-for-marcus entry 5): config_mini.json is a
     # valid, complete config for the mini run, with the omission label

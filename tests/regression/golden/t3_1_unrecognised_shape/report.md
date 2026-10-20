@@ -25,13 +25,18 @@ Backend fingerprints (system_fingerprint): not reported
 | `ap1_version_doi` | `10.5281/zenodo.21755443` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
+| `expected_values_hash` | `5b5f7c1d0a5c638692c2bd7b334f38989dee50c8ccba6956048290a3c078dc36` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
-| `ground_truth_hash` | `080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812` |
+| `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
 | `lookup_collisions` | `none` |
+| `package_versions` | `<ENVIRONMENT>` |
+| `platform` | `<ENVIRONMENT>` |
+| `python_version` | `<ENVIRONMENT>` |
 | `questions_hash` | `5f6aa97714e2b0f7e3039ae6018f6566e811354c4a904d210964beac54172af9` |
 | `runner_source_hash` | `<RUNNER_SOURCE_HASH>` |
 | `runner_version_commit` | `e0d9ec9` |
 | `runner_version_tag` | `v1.3.1` |
+| `seal_format` | `2` |
 | `seal_hash` | `<SEAL_HASH>` |
 | `timestamp` | `<TIMESTAMP>` |
 | `verification_keys` | `[]` |
@@ -56,7 +61,6 @@ Backend fingerprints (system_fingerprint): not reported
     "I'm sorry, I cannot"
   ],
   "dimensions_claimed": [
-    "D1",
     "D2",
     "D7"
   ],
@@ -119,7 +123,7 @@ Backend fingerprints (system_fingerprint): not reported
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | Measured | 40 | No rate: 26 items await adjudication (auto-scored 14: 14 correct, 0 incorrect, 0 no figure) |
+| D1 | **NOT MEASURED** | — | — |
 | D2 | Measured | 10 | figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20 (§9) |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -130,19 +134,6 @@ Backend fingerprints (system_fingerprint): not reported
 | D7.2 | Measured | see §6-7b | Operand provenance §6, §7b; operation correctness §7 |
 | D7.3 | Partly measured (26 of 40 UNOBSERVABLE) | 40 | Transcription fidelity: D7.3 section |
 | D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |
-
-### D1 per Category
-
-> AP-1 v1.3 D1: results per category, with 95% confidence intervals and n stated; no category claim where n < 10. n counts questions; a question is correct only if every execution of it is. Interval: exact two-sided 95% Clopper-Pearson.
-
-| Category | n (questions) | Executions | Correct | Incorrect | No Figure | Awaiting Adjudication | Accuracy (95% CI) |
-|---|---|---|---|---|---|---|---|
-| interest | 2 | 8 | 0 | 0 | 0 | 8 | no category claim: n < 10 |
-| balance | 2 | 8 | 2 | 0 | 0 | 6 | no category claim: n < 10 |
-| amortisation | 2 | 8 | 4 | 0 | 0 | 4 | no category claim: n < 10 |
-| fees | 1 | 4 | 2 | 0 | 0 | 2 | no category claim: n < 10 |
-| growth | 2 | 8 | 4 | 0 | 0 | 4 | no category claim: n < 10 |
-| net_income | 1 | 4 | 2 | 0 | 0 | 2 | no category claim: n < 10 |
 
 ## 4. D7 Figures by Evidence Class
 
@@ -376,40 +367,52 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose:
 | Q10 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
 | Q10 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
 
+## 9b. D2.2 Execution Conditions
+
+- Serving stack and version: not disclosed by the endpoint; the runner cannot observe it.
+- Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
+- Concurrency: one request at a time, sequentially, from a single process.
+- Sampling parameters sent:
+  - `max_completion_tokens`: `4096`
+  - `reasoning_effort`: `none`
+  - `temperature`: not sent (platform-rejected)
+  - `top_p`: not sent (operator-declared)
+- Parameter echo: `UNVERIFIED` (40 responses checked)
+
 ## 10. Non-Outcome Cells
 
 > Every cell that is not a scoreable outcome is listed with its reason.
 
-104 cells: D7.1 invocation 26; R2.0 figure 26; D7.3 transcription 26; D7.3 release coverage 26.
+104 cells: execution 26; R2.0 figure 26; D7.3 transcription 26; D7.3 release coverage 26.
 
 | Item | Condition | Status | Reason | Repeat | Measurement |
 |---|---|---|---|---|---|
-| Q01 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
-| Q01 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
-| Q02 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
-| Q02 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
-| Q03 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
-| Q03 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
-| Q01 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
-| Q01 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
-| Q02 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
-| Q02 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
-| Q03 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
-| Q03 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
-| Q04 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
-| Q04 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
-| Q05 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
-| Q05 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
-| Q06 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
-| Q06 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
-| Q07 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
-| Q07 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
-| Q08 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
-| Q08 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
-| Q09 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
-| Q09 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
-| Q10 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
-| Q10 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q01 | base | UNOBSERVABLE | UNOBSERVABLE: round 1: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 1 | execution |
+| Q01 | base | UNOBSERVABLE | UNOBSERVABLE: round 1: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 2 | execution |
+| Q02 | base | UNOBSERVABLE | UNOBSERVABLE: round 1: request failed: HTTP 500: {"error": {"message": "internal error"}} | 1 | execution |
+| Q02 | base | UNOBSERVABLE | UNOBSERVABLE: round 1: request failed: HTTP 500: {"error": {"message": "internal error"}} | 2 | execution |
+| Q03 | base | UNOBSERVABLE | UNOBSERVABLE: round 1: unrecognised response shape: unrecognised response shape (top-level keys: ['id', 'object', 'output']) | 1 | execution |
+| Q03 | base | UNOBSERVABLE | UNOBSERVABLE: round 1: unrecognised response shape: unrecognised response shape (top-level keys: ['id', 'object', 'output']) | 2 | execution |
+| Q01 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 1 | execution |
+| Q01 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 2 | execution |
+| Q02 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 1 | execution |
+| Q02 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 2 | execution |
+| Q03 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 1 | execution |
+| Q03 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 2 | execution |
+| Q04 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 1 | execution |
+| Q04 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 2 | execution |
+| Q05 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 1 | execution |
+| Q05 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 2 | execution |
+| Q06 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 1 | execution |
+| Q06 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 2 | execution |
+| Q07 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 1 | execution |
+| Q07 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 2 | execution |
+| Q08 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 1 | execution |
+| Q08 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 2 | execution |
+| Q09 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 1 | execution |
+| Q09 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 2 | execution |
+| Q10 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 1 | execution |
+| Q10 | instruction_removed | UNOBSERVABLE | UNOBSERVABLE: round 0: unrecognised response shape: response appears Anthropic-shaped (has type=message, content) | 2 | execution |
 | Q01 | base | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
 | Q01 | base | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
 | Q02 | base | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
@@ -499,6 +502,7 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose:
 
 The following dimensions were **not measured** in this evaluation:
 
+- **D1**: Accuracy — not claimed in this configuration (the runner auto-scores it)
 - **D3**: Provenance — requires human adjudication; the runner does not measure it
 - **D4**: Refusal integrity — requires human adjudication; the runner does not measure it
 - **D5**: Adversarial resistance — requires human adjudication; the runner does not measure it

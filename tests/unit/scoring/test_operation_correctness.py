@@ -101,30 +101,36 @@ def test_evaluate_expression_caret_is_power_with_power_precedence():
 
 
 @pytest.mark.finding('T3-77')
-def test_evaluate_expression_pi_and_e_come_from_float():
-    # Correct (R0.4): constants at Decimal precision; today str(math.pi).
-    assert evaluate_expression('pi') == D('3.141592653589793')
-    assert evaluate_expression('e') == D('2.718281828459045')
+def test_evaluate_expression_pi_and_e_at_context_precision():
+    # R0.4: never through float. evaluate_expression runs in
+    # DECIMAL_CONTEXT (precision 50, T3-60), whatever the caller's context.
+    pi_50 = D('3.1415926535897932384626433832795028841971693993751')
+    e_50 = D('2.7182818284590452353602874713526624977572470937000')
+    for prec in (10, 28, 60):
+        with decimal.localcontext() as ctx:
+            ctx.prec = prec
+            assert evaluate_expression('pi') == pi_50
+            assert evaluate_expression('e') == e_50
 
 
 @pytest.mark.finding('T3-77')
-def test_evaluate_expression_round_is_half_even():
-    # Correct: the declared HALF_UP policy (3); Decimal.quantize defaults
-    # to half-even, so round(2.5) is 2.
-    assert evaluate_expression('round(2.5)') == D('2')
+@pytest.mark.parametrize('expression, value', [
+    ('round(2.5)', '3'), ('round(-2.5)', '-3'), ('round(2.4)', '2'),
+    ('round(0.125, 2)', '0.13')])
+def test_evaluate_expression_round_is_half_up(expression, value):
+    # The declared HALF_UP policy, as the reference calculator rounds.
+    assert evaluate_expression(expression) == D(value)
 
 
 @pytest.mark.finding('T3-60')
-def test_evaluate_expression_result_depends_on_context_precision():
-    # The module uses whatever global precision is current, which
-    # invocation.py sets to 50 on import. Correct: a fixed, declared
-    # precision.
-    with decimal.localcontext() as ctx:
-        ctx.prec = 28
-        assert len(str(evaluate_expression('1 / 3'))) == 30
-    with decimal.localcontext() as ctx:
-        ctx.prec = 50
-        assert len(str(evaluate_expression('1 / 3'))) == 52
+def test_evaluate_expression_result_does_not_depend_on_context_precision():
+    # T3-60 fixed: the walker runs in numeric.DECIMAL_CONTEXT (precision
+    # 50, as the live runner had through invocation.py's global setting),
+    # whatever the caller's precision.
+    for prec in (28, 50):
+        with decimal.localcontext() as ctx:
+            ctx.prec = prec
+            assert len(str(evaluate_expression('1 / 3'))) == 52
 
 
 def test_evaluate_expression_huge_literal_is_exact_not_infinity():
@@ -673,9 +679,6 @@ E_60 = D('2.71828182845904523536028747135266249775724709369995957496697')
 
 
 @pytest.mark.finding('T3-77')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-77 (KNOWN_ISSUES #4): pi and e are built '
-                          'from float')
 @pytest.mark.parametrize('name, exact', [('pi', PI_60), ('e', E_60)])
 def test_evaluate_expression_pi_and_e_exact_to_decimal_precision(name,
                                                                  exact):
@@ -687,9 +690,6 @@ def test_evaluate_expression_pi_and_e_exact_to_decimal_precision(name,
 
 
 @pytest.mark.finding('T3-77')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-77 (KNOWN_ISSUES #6): round() in D7.2(b) is '
-                          'half-even, not the declared ROUND_HALF_UP')
 def test_classify_operation_round_uses_declared_half_up():
     # KNOWN_ISSUES #6: the declared rounding policy is ROUND_HALF_UP
     # (CONFIG; AP-1 v1.3 §6.9), so round(2.5) evaluates to 3 and matches an

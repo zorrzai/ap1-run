@@ -62,8 +62,7 @@ def run_example(tmp_path, monkeypatch, *, items, responses, repeat_count):
             if name.startswith('AP1_SMOKE_'):
                 monkeypatch.delenv(name)
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-test')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+        mock.point_config(fx / 'config.json')  # T3-80: config only
         monkeypatch.setattr(run.time, 'sleep', lambda s: None)
         code = run.main(['--config', str(fx / 'config.json'),
                          '--fixture-dir', str(fx),
@@ -142,10 +141,11 @@ def test_run_transport_failure_on_repeat_1_sheets_show_repeat_3(
 @pytest.mark.filterwarnings('ignore:VERSION file says')
 def test_run_transcript_records_carry_their_repeat_index(tmp_path,
                                                          monkeypatch):
-    """Every transcript record (engine and figure-identification, the
-    failed repeat's too) carries the repeat it belongs to, so the outputs
-    can join on it. Fix plan §2 branch 6: "Write a repeat index on every
-    record and join on it". Today no record has one."""
+    """Every transcript record (the failed repeat's too) carries the
+    repeat it belongs to, so the outputs can join on it. Fix plan §2
+    branch 6: "Write a repeat index on every record and join on it".
+    Since the two passes were separated (T3-21), the transcript holds one
+    record per execution and no figure-identification records."""
     out = run_example(tmp_path, monkeypatch, items={'Q02'}, repeat_count=3,
                       responses={'Q02/*/r1': [ERROR_500],
                                  'Q02/*/r2': [Q02_CALL, Q02_RIGHT],
@@ -156,9 +156,7 @@ def test_run_transcript_records_carry_their_repeat_index(tmp_path,
     for cond in ('base', 'instruction_removed'):
         expected += [(cond, 'engine', 1),
                      (cond, 'engine', 2),
-                     (cond, 'figure_identification', 2),
-                     (cond, 'engine', 3),
-                     (cond, 'figure_identification', 3)]
+                     (cond, 'engine', 3)]
     assert seen == expected
 
 

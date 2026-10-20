@@ -7,7 +7,6 @@ live caller; format_rate is used by runner/console.
 """
 
 import decimal
-import importlib
 import math
 import re
 from decimal import Decimal
@@ -15,7 +14,7 @@ from decimal import Decimal
 import pytest
 
 from ap1_run.execution.evidence import EV_0, EV_1, EV_2, EV_3
-from ap1_run.scoring import invocation
+from ap1_run.foundation.numeric import DECIMAL_CONTEXT
 from ap1_run.scoring.invocation import (
     InvocationError, _exact_upper_bound, _summarise_class,
     clopper_pearson_upper, compute_dpr, format_rate, measure_invocation,
@@ -31,18 +30,6 @@ def item(invoked, evidence_class=EV_2, item_id='Q01', condition='base'):
 
 
 # -- module ------------------------------------------------------------------
-
-@pytest.mark.finding('T3-60')
-def test_invocation_import_sets_global_decimal_precision_to_50():
-    # Correct: no module should change the global Decimal context on import;
-    # arithmetic elsewhere then depends on whether this module was imported.
-    decimal.getcontext().prec = 28
-    try:
-        importlib.reload(invocation)
-        assert decimal.getcontext().prec == 50
-    finally:
-        decimal.getcontext().prec = 50
-
 
 def test_invocation_error_is_an_exception():
     assert issubclass(InvocationError, Exception)
@@ -270,9 +257,25 @@ def test_compute_dpr_zero_base_rate_is_undefined_never_one():
 
 
 def test_compute_dpr_relative_drop_in_rate():
+    # Computed in numeric.DECIMAL_CONTEXT (precision 50), not in the
+    # caller's context (T3-60).
     value, text = compute_dpr(45, 10, 50, 50)
-    assert value == (D('0.9') - D('0.2')) / D('0.9')
+    with decimal.localcontext(DECIMAL_CONTEXT):
+        assert value == (D('0.9') - D('0.2')) / D('0.9')
+    assert len(str(value)) == 52
     assert text == '77.8%'
+
+
+@pytest.mark.finding('T3-60')
+def test_format_rate_does_not_depend_on_caller_precision():
+    # format_rate computes in numeric.DECIMAL_CONTEXT: a caller's low
+    # precision cannot make the 0.1 quantisation fail or change a figure.
+    expected = (format_rate(1, 3), format_rate(0, 40))
+    with decimal.localcontext() as ctx:
+        ctx.prec = 2
+        assert (format_rate(1, 3), format_rate(0, 40)) == expected
+    assert expected[0] == ('1/3 (33.3%); one-sided 95% upper bound on the '
+                           'failure rate 86.5%')
 
 
 def test_compute_dpr_uses_rates_not_counts():
@@ -340,9 +343,6 @@ def _fresh_python(code):
 
 @pytest.mark.finding('T3-60')
 @pytest.mark.req('R0.4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-60: importing invocation.py sets the global '
-                          'Decimal precision to 50')
 def test_invocation_import_leaves_global_decimal_context_unchanged():
     # SPEC R0.4: DETERMINISTIC; no result may depend on hidden state. A
     # module that needs more precision uses a local context, and leaves
@@ -358,9 +358,6 @@ def test_invocation_import_leaves_global_decimal_context_unchanged():
 
 @pytest.mark.finding('T3-60')
 @pytest.mark.req('R0.4', 'R0.4.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-60: quantise gives a different result once '
-                          'invocation.py has been imported')
 def test_quantise_result_does_not_depend_on_importing_invocation():
     # T3-60: "the live path runs at precision 50 and offline suites at
     # 28"; the quantise overflow threshold moves with it. The same call
@@ -454,12 +451,21 @@ def test_clopper_pearson_upper_solves_the_binomial_tail(k, n):
     # is above 0.05, at it (rounded up) it is at most 0.05.
     p = clopper_pearson_upper(k, n)
     assert isinstance(p, D) and D(0) < p < D(1)
+    with decimal.localcontext() as ctx:
+        ctx.prec = 60
+        below = p - D('1e-30')
     assert binomial_cdf_reference(k, n, p) <= D('0.05')
-    assert binomial_cdf_reference(k, n, p - D('1e-30')) > D('0.05')
+    assert binomial_cdf_reference(k, n, below) > D('0.05')
 
 
 @pytest.mark.finding('T3-81')
 def test_clopper_pearson_upper_closed_forms():
+    with decimal.localcontext() as ctx:
+        ctx.prec = 60
+        _closed_forms()
+
+
+def _closed_forms():
     # k = 1, n = 2: (1 - p)^2 + 2p(1 - p) = 1 - p^2 = 0.05, p = sqrt(0.95).
     assert abs(clopper_pearson_upper(1, 2) - D('0.95').sqrt()) < D('1e-39')
     assert clopper_pearson_upper(1, 2) >= D('0.95').sqrt()
@@ -503,8 +509,7 @@ def test_clopper_pearson_upper_all_failed_is_one(k, n):
 
 @pytest.mark.parametrize('k, n', [(0, 0), (1, 0), (0, -1), (-1, 5)])
 def test_clopper_pearson_upper_refuses_no_trials_or_negative_failures(k, n):
-    # invocation.InvocationError: the module is reloaded by an earlier test.
-    with pytest.raises(invocation.InvocationError,
+    with pytest.raises(InvocationError,
                        match=rf'no bound for {k} failures in n = {n}'):
         clopper_pearson_upper(k, n)
 

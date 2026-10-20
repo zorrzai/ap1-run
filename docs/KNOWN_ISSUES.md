@@ -21,6 +21,18 @@ without warning.
 
 **File:** `example/calculator_tool.py`, expression evaluation block.
 
+**Status: partly fixed (T3-77).** An arithmetic error (`1/0`, `1 % 0`,
+`log(-1)`, `sqrt(-1)`, an overflow converting to float) is now refused with
+`CalculatorError`, keeping the exception's message, and a complex result is
+refused as "not a real number". The magnitude guard is still missing:
+`9**9**9**9` still runs until memory or time runs out.
+
+In the live runner no calculator exception escapes: the execution engine
+catches every exception from the calculator and records it as that call's
+error return. Since step 5 of the 2026-10 reorganization the scoring code
+also takes the calculator's infinite, huge or NaN results (`inf` for
+`1e308*10`, `nan` for `1e308*10 - 1e308*10`) without aborting the run.
+
 ---
 
 ## 2. Perturbation check: fail-open exception handling
@@ -70,6 +82,10 @@ The instrument's "never through float" design principle (stated in
 
 **File:** `src/ap1_run/scoring/operation_correctness.py`, π/e constant construction.
 
+**Status: fixed (T3-77).** π comes from a 100-digit decimal string and e from
+`Decimal(1).exp()`, both rounded to the Decimal context's precision when the
+expression is evaluated.
+
 ---
 
 ## 5. Numeric parser: grouping separator produces silent misparse
@@ -81,6 +97,15 @@ intended value is `1.23`. The parser does not validate grouping-separator
 position (e.g., requiring groups of three digits).
 
 **File:** `src/ap1_run/foundation/numeric.py`, `parse_decimal`, grouping-separator stripping.
+
+**Fixed** in step 5 of the 2026-10 reorganization (S3-G1-3, T3-77):
+`parse_decimal` checks the digit string against the R0.4.2 grammar, so a
+grouping separator must sit between groups of three digits. `'1,23'` is refused (not a number), not read
+as 123. The same check refuses NaN, Infinity, exponents, underscores and a
+doubled sign. The runner also passes the configured `decimal_separator` and
+`grouping_separator` to every extraction (T3-41), so under a `,` decimal
+separator `'1,23'` is 1.23; a token the configured separators leave ambiguous
+routes the item to adjudication (R0.4.2).
 
 ---
 
@@ -100,6 +125,10 @@ to `2` under HALF_EVEN but `3` under HALF_UP.
 **Files:** `example/calculator_tool.py` (`round()`);
 `src/ap1_run/scoring/operation_correctness.py` (`quantize` calls); example configs
 (`rounding_mode` field).
+
+**Status: fixed (T3-77).** Both the example calculator's `round()` and
+D7.2(b)'s `round()` round half away from zero (ROUND_HALF_UP), as the example
+configs' `quantisation.rounding` declares: `round(2.5)` is 3.
 
 ---
 
@@ -128,6 +157,16 @@ re-score").
 **Files:** `src/ap1_run/foundation/transcript.py` (append function, L17-39);
 `src/ap1_run/execution/engine.py` (`_drive_tool_loop`, L175-235 — intermediate responses
 overwritten on each loop iteration).
+
+**Fixed for new runs** (step 5 of the 2026-10 reorganization, V12-3). Each
+transcript record now has a `rounds` list: every round of the tool loop, in
+order, with the request as the adapter sent it and the raw response (or, for
+a request that failed, the messages it sent and the error). A run can be
+replayed from its transcript. Scoring is a separate pass that only reads the
+transcript (T3-21), and `ap1-run --rescore` runs it alone on a run's
+transcript (README, "Scoring a transcript again"). The published runs in
+`output/` were written before the fix and still lack the intermediate
+responses; they are sealed and are not edited.
 
 ---
 
@@ -166,6 +205,13 @@ external reviewer access.
 
 No existing test asserts the shape of `request_sent` in stored transcripts;
 the fix will not break any test.
+
+**Fixed for new runs** (step 5 of the 2026-10 reorganization). `request_sent`
+carries the adapter's `request_record` (endpoint, model, tools, sampling as
+sent, attempts), and each round's record is in `rounds` (issue 7). The adapter
+copies the messages into the record, so the round-0 record is the request as
+sent, not the message list as the tool loop later extended it (S4-G4-1). The
+published runs are unchanged.
 
 **Files:** `src/ap1_run/execution/engine.py` L76-86 and L140-144 (discards `request_record`);
 `src/ap1_run/foundation/adapter.py` L68-127 (builds and returns it);

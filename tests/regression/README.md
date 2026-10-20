@@ -18,9 +18,11 @@ real adapter and HTTP transport:
   chat-completions API. It serves scripted turns per question, condition,
   repeat and round, or it replays a published transcript.
 - `driver.py`: runs the runner's `main()` from the repository itself. The
-  runner gets the scenario's config with `--config` (a temporary merged copy
-  when the scenario edits it) and a temporary `--output-dir`, so it never
-  writes under the repository; `run_regression.py` checks that `output/` is
+  runner gets the scenario's config with `--config` (a temporary copy, merged
+  when the scenario edits it, with `endpoint_url` and `model` pointed at the
+  mock, since the runner reads both from the config alone) and a temporary
+  `--output-dir`, so it never writes under the repository;
+  `run_regression.py` checks that `output/` is
   unchanged after every real-tree scenario. It imports `smoke_test`, or
   `ap1_run.run` when the tree has no `smoke_test.py`.
 - `run_regression.py`: runs each scenario, normalises the output and compares
@@ -46,11 +48,15 @@ real adapter and HTTP transport:
 
 What is compared for each scenario:
 - the console output, stderr and exit code (or the exception);
-- `report.md`, `adjudication_sheets.md`, `smoke_summary.json`, `smoke_run.jsonl`
-  and `DISCLAIMER.txt`, plus the list of files written;
+- `report.md`, `adjudication_sheets.md`, `smoke_summary.json`, `smoke_run.jsonl`,
+  `DISCLAIMER.txt` and `pre_registration.json`, plus the list of files written;
 - every request the mock received;
 - `outcomes.jsonl`, a per-execution table of what the runner decided about each
-  execution.
+  execution: the execution from the transcript record, its scores (figure,
+  provenance, operation) from `smoke_summary.json`, joined on item, condition
+  and repeat. (Before the two passes were separated, T3-21, the scores were read
+  from the transcript and joined on position, which shifted them after a
+  transport failure.) A run that stops before its summary has no scores.
 
 For the two replays, the large files are kept as a digest only, and
 `outcomes.jsonl` carries the detail. Storing them in full would add about
@@ -65,10 +71,13 @@ run it at both commits and diff the two directories.
 - ISO and epoch timestamps;
 - this run's `seal_hash`, `config_hash` and `runner_source_hash`, read from
   the seal the run actually made. The config hash covers the mock's port. The
-  source hash covers the code, so it changes whenever files move.
+  source hash covers the code, so it changes whenever files move. The seal
+  hash covers the timestamp, so it changes on every run;
+- the seal's environment fields in `report.md` §1 (`python_version`,
+  `platform`, `package_versions`), which depend on the machine.
 
-The fixture, questions, ground-truth and AP-1 text hashes are kept, and so
-they are pinned.
+The fixture, questions, ground-truth, expected-values and AP-1 text hashes
+are kept, and so they are pinned.
 
 ## Running it
 
@@ -97,7 +106,7 @@ October 2026; `tests/RETIREMENT.md` records where each of their checks went.
 |---|---|
 | `clean` | all ten questions correct with grounded calls, both conditions: the main path, every scorer, the report |
 | `wrong_answers` | wrong final figure, wrong operation, transposed operand, no tool call |
-| `multi_round` | chained intermediates over several rounds, several calls per round, intermediate assistant text (V12-3: not kept) |
+| `multi_round` | chained intermediates over several rounds, several calls per round, intermediate assistant text (kept in each record's `rounds` since the V12-3 fix) |
 | `d2_variation` | answers that vary across repeats (D2) |
 | `non_answers` | empty and null content (UNMEASURED, T3-10), declined, unrecognised decline, refusal reciting balances, two candidates, no figure |
 | `transport_errors` | 429, 500 and 401 in round 0 and mid-loop, a dropped connection with retries, a non-JSON body |
@@ -109,9 +118,9 @@ October 2026; `tests/RETIREMENT.md` records where each of their checks went.
 | `t3_39_crash` | **T3-39**: a non-string expression crashes the run |
 | `seal_refused` | AP-1 text hash mismatch: SealError before any request |
 | `config_no_tools` | config without tools: exit 1 |
-| `mini_config` | the shipped `example/config_mini.json` is refused at load today (`model-unsupported` is not a permitted omission reason) |
-| `replay_run_e_mini` | the published gpt-4.1-mini run, 1,000 executions, replayed through today's runner |
-| `replay_run_f_sol` | the published gpt-5.6-sol run, 1,000 executions, replayed |
+| `mini_config` | the shipped `example/config_mini.json`, the mini run's config: temperature 1 sent, `reasoning_effort` omitted as platform-unsupported |
+| `replay_run_e_mini` | the published gpt-4.1-mini run, 1,000 executions, replayed through today's runner with `example/config_mini.json` |
+| `replay_run_f_sol` | the published gpt-5.6-sol run, 1,000 executions, replayed with `example/config_sol.json` |
 | `tool_verify_run_seal` | `verify_run_seal.py` on the four published runs |
 | `tool_verify_run_seal_usage` | `verify_run_seal.py` with no arguments |
 | `tool_generate_findings` | `generate_findings.py`; its output equals the committed `findings/FINDINGS.md` |
@@ -121,17 +130,20 @@ October 2026; `tests/RETIREMENT.md` records where each of their checks went.
 | `cli_help` | `ap1-run --help`: the options and their defaults |
 
 **About the replays:** the recorded final responses are served as they were.
-The intermediate rounds survive only as assistant messages (V12-3), so each
-one is wrapped in a standard envelope. A recorded loop that ended mid-way
+The published transcripts were written before the V12-3 fix: their
+intermediate rounds survive only as assistant messages (in the round-0
+request record, which the tool loop kept extending, S4-G4-1), so each one is
+wrapped in a standard envelope. A recorded loop that ended mid-way
 (EV-0) is replayed as a failure of the next request.
 
 The replayed `report.md` files agree with the published `output/run_e_mini`
 and `output/run_f_sol` reports in every scored figure except the D7.1
 figures of §5 (and console 3h), which step 5 corrected (T3-1, T3-11, V12-5):
 n is now the 10 computable questions, not the 500 executions, and the one
-EV-0 execution per run is out of n and listed per evidence class. Otherwise
-only run metadata differs: model name, endpoint, hashes, timestamps and
-runner commit.
+EV-0 execution per run is out of n and listed per evidence class. In §10,
+that execution's row gives its cause and round (T3-35: the mock's replayed
+mid-loop failure), not just its evidence class. Otherwise only run metadata
+differs: model name, endpoint, hashes, timestamps and runner commit.
 
 ## Coverage (at `77514b4`, Python 3.11, with inspect-ai installed)
 

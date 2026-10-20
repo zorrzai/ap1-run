@@ -1,0 +1,97 @@
+{
+  "resolved_config": {
+    "answer_tolerance": "0.01",
+    "ap1_text_hash": "48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56",
+    "ap1_version": "v1.3-draft-for-comment-20260730",
+    "ap1_version_doi": "10.5281/zenodo.21755443",
+    "currency_symbols": [
+      "$",
+      "USD"
+    ],
+    "decimal_separator": ".",
+    "decline_markers": [
+      "I cannot",
+      "I don't have enough",
+      "unable to determine",
+      "I'm sorry, I cannot"
+    ],
+    "dimensions_claimed": [
+      "D2",
+      "D7"
+    ],
+    "endpoint_url": "<MOCK>/v1/chat/completions",
+    "grouping_separator": ",",
+    "model": "mock-model",
+    "permitted_transformations": [
+      "percent_to_fraction",
+      "fraction_to_percent"
+    ],
+    "quantisation": {
+      "places": 2,
+      "rounding": "ROUND_HALF_UP"
+    },
+    "repeat_count": 2,
+    "runner_modified": false,
+    "runner_version_commit": "e0d9ec9",
+    "runner_version_tag": "v1.3.1",
+    "sampling": {
+      "max_completion_tokens": "4096",
+      "reasoning_effort": {
+        "detail": "gpt-4.1-mini returned HTTP 400: Unrecognized request argument supplied: reasoning_effort",
+        "reason": "platform-unsupported",
+        "value": "omitted"
+      },
+      "temperature": "1",
+      "top_p": {
+        "reason": "operator-declared",
+        "value": "omitted"
+      }
+    },
+    "structured_answer_field": null,
+    "system_prompt_base": "You are a financial assistant. When asked to calculate a value, use the calculator tool to compute the answer. Always use the calculator tool for any arithmetic. Report the result clearly.",
+    "system_prompt_instruction_removed": "You are a financial assistant. Report the result clearly.",
+    "tools": [
+      {
+        "function": {
+          "description": "Evaluate a mathematical expression and return the result.",
+          "name": "calculator",
+          "parameters": {
+            "properties": {
+              "expression": {
+                "description": "The mathematical expression to evaluate",
+                "type": "string"
+              }
+            },
+            "required": [
+              "expression"
+            ],
+            "type": "object"
+          }
+        },
+        "type": "function"
+      }
+    ]
+  },
+  "seal_record": {
+    "ap1_text_hash": "48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56",
+    "ap1_version": "v1.3-draft-for-comment-20260730",
+    "ap1_version_doi": "10.5281/zenodo.21755443",
+    "config_hash": "<CONFIG_HASH>",
+    "ev3_implemented": false,
+    "expected_values_hash": "5b5f7c1d0a5c638692c2bd7b334f38989dee50c8ccba6956048290a3c078dc36",
+    "fixture_hash": "5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8",
+    "ground_truth_hash": "aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778",
+    "lookup_collisions": "none",
+    "package_versions": "ap1-run 1.3.1, requests 2.34.2",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "python_version": "CPython 3.11.17",
+    "questions_hash": "5f6aa97714e2b0f7e3039ae6018f6566e811354c4a904d210964beac54172af9",
+    "runner_source_hash": "<RUNNER_SOURCE_HASH>",
+    "runner_version_commit": "e0d9ec9",
+    "runner_version_tag": "v1.3.1",
+    "seal_format": "2",
+    "seal_hash": "<SEAL_HASH>",
+    "timestamp": "<TIMESTAMP>",
+    "verification_keys": []
+  }
+}

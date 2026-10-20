@@ -213,13 +213,13 @@ def _extract_surface_values(responses, surface):
     worded twice is one value. A text whose numbers cannot be read is
     its own value.
     """
+    # A response whose shape cannot be read (S3-G2-1) has no surface
+    # value, as one without choices.
+    from ap1_run.execution.evidence import _read_message
     values = []
     for r in responses:
-        choices = r.get('choices', [])
-        if choices:
-            text = choices[0].get('message', {}).get('content', '') or ''
-        else:
-            text = ''
+        msg = _read_message(r)[0] or {}
+        text = msg.get('content', '') or ''
         if surface == 'figures':
             values.append(_figures(text))
         elif surface == 'prose':

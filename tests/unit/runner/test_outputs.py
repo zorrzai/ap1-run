@@ -1,77 +1,95 @@
-"""Unit tests for the runner's output files."""
+"""Unit tests for the scoring pass's output files."""
 
 import json
+from decimal import Decimal
 
 import pytest
 
 from ap1_run.runner import outputs
-from ap1_run.runner.outputs import attach_figure_outcomes, write_outputs
+from ap1_run.runner.outputs import attach_scores, write_outputs
 
 
 def engine(item_id, condition, **fields):
     return dict({'item_id': item_id, 'condition': condition}, **fields)
 
 
-def figure(item_id, condition, outcome=None):
-    record = {'item_id': item_id, 'condition': condition,
-              'record_type': 'figure_identification'}
-    if outcome is not None:
-        record['figure_outcome'] = outcome
-    return record
+def executed(item_id, condition, repeat, outcome, **fields):
+    """A scored row of all_results."""
+    return dict({'item_id': item_id, 'condition': condition,
+                 'repeat': repeat, 'status': 'EXECUTED',
+                 'figure_outcome': outcome,
+                 'operation_correctness': [{'outcome': f'OC {outcome}'}],
+                 'provenance_results': [{'outcome': f'P {outcome}'}]},
+                **fields)
 
 
-# -- attach_figure_outcomes -----------------------------------------------
+# -- attach_scores ---------------------------------------------------------
 
-def test_attach_returns_engine_records_only_in_order():
-    records = [engine('Q01', 'base', n=1), figure('Q01', 'base', 'A'),
-               engine('Q02', 'base', n=2), figure('Q02', 'base', 'B'),
-               engine('Q03', 'base', n=3, record_type='execution')]
-    result = attach_figure_outcomes(records)
-    assert [r['n'] for r in result] == [1, 2, 3]
-    assert [r.get('figure_outcome') for r in result] == ['A', 'B', None]
-
-
-def test_attach_matches_repeats_in_order_per_item_and_condition():
-    records = [engine('Q01', 'base', n=1), engine('Q01', 'removed', n=2),
-               engine('Q01', 'base', n=3),
-               figure('Q01', 'removed', 'R1'), figure('Q01', 'base', 'B1'),
-               figure('Q01', 'base', 'B2')]
-    result = attach_figure_outcomes(records)
-    assert [(r['n'], r['figure_outcome']) for r in result] == [
-        (1, 'B1'), (2, 'R1'), (3, 'B2')]
+@pytest.mark.finding('T3-21')
+def test_attach_scores_gives_each_executed_record_its_scores():
+    records = [engine('Q01', 'base', repeat=1, n=1),
+               engine('Q02', 'base', repeat=1, n=2)]
+    results = [executed('Q02', 'base', 1, 'B'),
+               executed('Q01', 'base', 1, 'A')]
+    assert attach_scores(records, results) == [
+        engine('Q01', 'base', repeat=1, n=1, figure_outcome='A',
+               operation_correctness=[{'outcome': 'OC A'}],
+               provenance_results=[{'outcome': 'P A'}]),
+        engine('Q02', 'base', repeat=1, n=2, figure_outcome='B',
+               operation_correctness=[{'outcome': 'OC B'}],
+               provenance_results=[{'outcome': 'P B'}])]
 
 
-def test_attach_matches_on_the_item_whatever_the_order():
-    records = [engine('Q01', 'base', n=1), engine('Q02', 'base', n=2),
-               figure('Q02', 'base', 'B'), figure('Q01', 'base', 'A')]
-    result = attach_figure_outcomes(records)
-    assert [(r['n'], r['figure_outcome']) for r in result] == [
-        (1, 'A'), (2, 'B')]
+@pytest.mark.finding('T3-21')
+def test_attach_scores_leaves_the_records_unchanged():
+    records = [engine('Q01', 'base', repeat=1)]
+    attach_scores(records, [executed('Q01', 'base', 1, 'A')])
+    assert records == [engine('Q01', 'base', repeat=1)]
 
 
-def test_attach_leaves_engine_records_without_a_figure_alone():
-    records = [engine('Q01', 'base'), engine('Q01', 'base'),
-               figure('Q01', 'base', 'B1')]
-    result = attach_figure_outcomes(records)
-    assert result[0]['figure_outcome'] == 'B1'
-    assert 'figure_outcome' not in result[1]
+@pytest.mark.finding('T3-9')
+@pytest.mark.req('R3.2')
+def test_attach_scores_joins_on_item_condition_and_repeat():
+    # Repeat 1 failed in transport: it has no scores, and repeats 2 and 3
+    # keep their own (fix plan §2 branch 6).
+    records = [engine('Q01', 'base', repeat=1,
+                      error_state='TRANSPORT_FAILURE: HTTP 500'),
+               engine('Q01', 'base', repeat=2),
+               engine('Q01', 'removed', repeat=2),
+               engine('Q01', 'base', repeat=3)]
+    results = [{'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+                'status': 'UNMEASURED', 'figure_outcome': 'NOT THIS'},
+               executed('Q01', 'base', 2, 'AUTO-MATCH'),
+               executed('Q01', 'base', 3, 'ADJUDICATE-DECLINE'),
+               executed('Q01', 'removed', 2, 'R2')]
+    assert [(r['condition'], r['repeat'], r.get('figure_outcome'))
+            for r in attach_scores(records, results)] == [
+        ('base', 1, None), ('base', 2, 'AUTO-MATCH'), ('removed', 2, 'R2'),
+        ('base', 3, 'ADJUDICATE-DECLINE')]
 
 
-def test_attach_figure_record_without_outcome_gives_empty_string():
-    result = attach_figure_outcomes([engine('Q01', 'base'),
-                                     figure('Q01', 'base')])
-    assert result[0]['figure_outcome'] == ''
+def test_attach_scores_defaults_for_a_bare_row():
+    (record,) = attach_scores([engine('Q01', 'base', repeat=1)], [
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+         'status': 'EXECUTED'}])
+    assert (record['figure_outcome'], record['operation_correctness'],
+            record['provenance_results']) == ('', [], [])
 
 
-def test_attach_records_without_ids_match_each_other():
-    result = attach_figure_outcomes([
-        {'n': 1}, {'record_type': 'figure_identification',
-                   'figure_outcome': 'X'}])
-    assert result == [{'n': 1, 'figure_outcome': 'X'}]
+def test_attach_scores_in_their_recorded_form():
+    # As the transcript held them before T3-21: JSON, sorted keys,
+    # Decimals as strings.
+    (record,) = attach_scores([engine('Q01', 'base', repeat=1)], [
+        executed('Q01', 'base', 1, 'A',
+                 provenance_results=[{'z': Decimal('1.50'), 'a': 1}],
+                 operation_correctness=[{'y': Decimal('2'), 'b': None}])])
+    assert record['provenance_results'] == [{'a': 1, 'z': '1.50'}]
+    assert list(record['provenance_results'][0]) == ['a', 'z']
+    assert record['operation_correctness'] == [{'b': None, 'y': '2'}]
 
 
-def test_attach_of_nothing():
-    assert attach_figure_outcomes([]) == []
+def test_attach_scores_of_nothing():
+    assert attach_scores([], [executed('Q01', 'base', 1, 'A')]) == []
 
 
 # -- write_outputs --------------------------------------------------------
@@ -90,22 +108,18 @@ def stubs(monkeypatch):
                           release_coverage_results)
         return 'SHEETS TEXT\n'
 
-    def read_all(path):
-        seen['transcript'] = path
-        return [engine('Q01', 'base'), figure('Q01', 'base', 'AUTO-MATCH')]
-
     monkeypatch.setattr(outputs.report, 'generate_report', generate_report)
     monkeypatch.setattr(outputs.adjudication, 'generate_sheets',
                         generate_sheets)
-    monkeypatch.setattr(outputs.transcript, 'read_all', read_all)
     return seen
 
 
 def test_write_outputs_writes_four_files_and_says_where(
         tmp_path, stubs, capsys):
-    transcript_path = str(tmp_path / 'smoke_run.jsonl')
+    records = [{'item_id': 'Q01', 'condition': 'base',
+                'figure_outcome': 'AUTO-MATCH'}]
     write_outputs(
-        str(tmp_path), transcript_path, summary={'s': 1},
+        str(tmp_path), records=records, summary={'s': 1},
         config={'c': 2}, seal_record={'seal_hash': 'h'},
         questions={'q': 3}, fixture={'f': 4},
         release_coverage_results=['rc'],
@@ -113,12 +127,9 @@ def test_write_outputs_writes_four_files_and_says_where(
         smoke_summary={'seal_hash': 'h', 'all_results': [{'v': '1.50'}],
                        'other': object})
 
-    engine_records = [{'item_id': 'Q01', 'condition': 'base',
-                       'figure_outcome': 'AUTO-MATCH'}]
-    assert stubs['transcript'] == transcript_path
     assert stubs['report'] == ({'s': 1}, {'c': 2}, {'seal_hash': 'h'},
-                               engine_records)
-    assert stubs['sheets'] == (engine_records, {'q': 3}, {'f': 4},
+                               records)
+    assert stubs['sheets'] == (records, {'q': 3}, {'f': 4},
                                {'c': 2}, ['rc'])
 
     # Exact names (the file system may ignore case).
@@ -146,25 +157,4 @@ def test_write_outputs_writes_four_files_and_says_where(
         f'Formal report written to {tmp_path}/report.md\n'
         '\nGENERATING ADJUDICATION SHEETS (adjudication.py)\n'
         f'Adjudication sheets written to {tmp_path}/adjudication_sheets.md\n'
-        f'\nSummary written to {tmp_path}/smoke_summary.json\n'
-        f'Transcript written to {transcript_path}\n')
-
-
-# --- Step 4: correct behaviour (failing until fixed) ---
-
-@pytest.mark.finding('T3-9')
-@pytest.mark.req('R3.2')
-def test_attach_joins_figure_outcomes_on_the_repeat_index():
-    # Repeat 1 failed in transport: an engine record, no figure record.
-    # Correct (fix plan §2 branch 6): every record carries its repeat and
-    # the join uses it, so repeats 2 and 3 keep their own outcomes and
-    # repeat 1 gets none. Today repeat 1 takes repeat 2's outcome.
-    records = [engine('Q01', 'base', repeat=1,
-                      error_state='TRANSPORT_FAILURE: HTTP 500'),
-               engine('Q01', 'base', repeat=2),
-               dict(figure('Q01', 'base', 'AUTO-MATCH'), repeat=2),
-               engine('Q01', 'base', repeat=3),
-               dict(figure('Q01', 'base', 'ADJUDICATE-DECLINE'), repeat=3)]
-    result = attach_figure_outcomes(records)
-    assert [(r['repeat'], r.get('figure_outcome')) for r in result] == [
-        (1, None), (2, 'AUTO-MATCH'), (3, 'ADJUDICATE-DECLINE')]
+        f'\nSummary written to {tmp_path}/smoke_summary.json\n')

@@ -1,11 +1,12 @@
 """Unit tests for the execution engine (execution/engine.py).
 
 execute_item builds the request, sends it through the adapter, drives the
-tool loop, classifies the evidence, runs D7.2(a)/(b) and writes one
-transcript record. The adapter is a recording fake that returns scripted
-responses; the calculator is a fake module put in sys.modules. The
-transcript is real, in a temporary directory. The scoring modules are
-real unless a test replaces them with recorders to check the wiring.
+tool loop, classifies the evidence and writes one transcript record, with
+every round's request and response; it scores nothing (T3-21: D7.2 is
+scored by the scoring pass, tests/unit/runner/test_executions.py). The
+adapter is a recording fake that returns scripted responses; the
+calculator is a fake module put in sys.modules. The transcript is real, in
+a temporary directory.
 """
 
 import copy
@@ -118,41 +119,6 @@ def without_timestamp(record):
     return record
 
 
-class Recorders:
-    """Recording stand-ins for the scoring functions execute_item calls."""
-
-    def __init__(self, monkeypatch):
-        self.calls = {}
-        self.operation = {}      # expression -> result dict or exception
-        monkeypatch.setattr(engine, 'classify_invocations_sequential',
-                            self.classify_invocations_sequential)
-        monkeypatch.setattr(engine, 'classify_operation',
-                            self.classify_operation)
-        monkeypatch.setattr(engine, 'reclassify_session',
-                            self.reclassify_session)
-
-    def classify_invocations_sequential(self, *args):
-        self.calls.setdefault('provenance', []).append(copy.deepcopy(args))
-        return [{'provenance': 'P'}]
-
-    def classify_operation(self, *args):
-        self.calls.setdefault('operation', []).append(args)
-        found = self.operation.get(args[0], {'outcome': f'OC {args[0]}'})
-        if isinstance(found, Exception):
-            raise found
-        return found
-
-    def reclassify_session(self, results, exprs):
-        self.calls.setdefault('reclassify', []).append(
-            (list(results), list(exprs)))
-        return [dict(r, reclassified=True) for r in results]
-
-
-@pytest.fixture
-def recorders(monkeypatch):
-    return Recorders(monkeypatch)
-
-
 # -- constants ---------------------------------------------------------
 
 def test_conditions_base_and_instruction_removed():
@@ -178,7 +144,7 @@ def test_execute_item_underivable_void_without_request(tmp_path):
         'condition': 'instruction_removed', 'request_sent': None,
         'response_received': None, 'tool_calls': [], 'evidence_class': None,
         'error_state': 'VOID', 'seal_hash': 'seal-1',
-        'void_reason': 'underivable', 'repeat': None}]
+        'void_reason': 'underivable', 'repeat': None, 'status': 'VOID'}]
 
 
 def test_execute_item_derivable_missing_treated_derivable(tmp_path):
@@ -238,28 +204,46 @@ def test_execute_item_no_system_prompt_user_message_only(tmp_path, prompt):
 # -- round-0 transport failure -----------------------------------------
 
 @pytest.mark.finding('F4', 'T3-65')
-@pytest.mark.parametrize('error', [
-    adapter.RateLimitError('Rate limit reached'),
-    adapter.HTTPError('HTTP 500: server error', 500, '{}'),
-    adapter.AdapterError('connection dropped'),
-    RuntimeError('anything'),
+@pytest.mark.parametrize('error, cause', [
+    (adapter.RateLimitError('Rate limit reached'), 'rate_limited'),
+    (adapter.HTTPError('HTTP 500: server error', 500, '{}'),
+     'transport_error'),
+    (adapter.AdapterError('connection dropped'), 'transport_error'),
+    (RuntimeError('anything'), 'transport_error'),
 ], ids=['rate-limit', 'http', 'adapter', 'other'])
-def test_execute_item_first_send_fails_unmeasured(tmp_path, error):
-    # F4 / T3-65: every exception from the first send is caught here and
-    # returned as UNMEASURED, so run.py's RateLimitError/AdapterError
-    # handlers never fire on this path. Correct: either let adapter
-    # errors reach the runner, or drop the dead handlers and keep the
-    # transport-failure record (needs a ruling, TASKS T21).
+def test_execute_item_first_send_fails_unmeasured(tmp_path, error, cause):
+    # F4 / T3-65 (Steven, choices-for-marcus #7): every exception from the
+    # first send is caught here, written to the transcript and returned
+    # as UNMEASURED with its cause (a rate limit or a transport error);
+    # the runner lists the cell (runner/executions.record_not_scored).
     result, records = run(tmp_path, FakeAdapter(error))
     assert result == {'item_id': 'Q01', 'condition': 'base',
                       'status': 'UNMEASURED', 'error': str(error),
-                      'ground_truth': GT}
+                      'cause': cause, 'ground_truth': GT}
     assert [without_timestamp(r) for r in records] == [{
         'item_id': 'Q01', 'arm_id': 'base', 'condition': 'base',
         'request_sent': {'messages': INITIAL}, 'response_received': None,
         'tool_calls': [], 'evidence_class': EV_0,
         'error_state': f'TRANSPORT_FAILURE: {error}', 'seal_hash': 'seal-1',
-        'repeat': None}]
+        'repeat': None,
+        # V12-3: the failed round, with the messages it sent
+        'rounds': [{'round': 0, 'request': {'messages': INITIAL},
+                    'error': str(error)}],
+        # the cause is recorded, so the scoring pass reads it (T3-21)
+        'status': 'UNMEASURED', 'cause': cause}]
+
+
+@pytest.mark.finding('V12-3', 'S3-G1-18')
+def test_execute_item_failed_round_keeps_the_adapter_attempt_log(tmp_path):
+    # A failed round records the adapter's request record with its
+    # attempt log where the error carries one (numeric-hardening,
+    # S3-G1-18), not just the messages.
+    error = adapter.AdapterError('transport failure after 3 attempts: x')
+    error.request_record = {'messages': INITIAL, 'attempts': [1, 2, 3]}
+    _, records = run(tmp_path, FakeAdapter(error))
+    assert records[0]['rounds'] == [{
+        'round': 0, 'error': str(error),
+        'request': {'messages': INITIAL, 'attempts': [1, 2, 3]}}]
 
 
 # -- the repeat index (T3-9) --------------------------------------------
@@ -269,10 +253,13 @@ def test_execute_item_first_send_fails_unmeasured(tmp_path, error):
 @pytest.mark.parametrize('gt, replies', [
     (dict(GT, derivable=False), []),
     (GT, [adapter.AdapterError('HTTP 500')]),
-    (GT, [answer()])], ids=['void', 'transport-failure', 'executed'])
+    (GT, [answer('')]),
+    (GT, [answer()])],
+    ids=['void', 'transport-failure', 'empty-response', 'executed'])
 def test_execute_item_writes_its_repeat_on_the_record(tmp_path, gt, replies):
     # Every record the engine writes carries the repeat it was given, so
-    # the outputs can join a record to its own execution.
+    # the outputs can join a record to its own execution (the scoring pass
+    # finds each execution's record by it, T3-21).
     path = tmp_path / 'run.jsonl'
     execute_item(
         ITEM, condition='base', config=CONFIG, fixture=FIXTURE,
@@ -287,9 +274,8 @@ def test_execute_item_writes_its_repeat_on_the_record(tmp_path, gt, replies):
 
 @pytest.mark.finding('T3-21')
 def test_execute_item_answer_without_tools_record_exact(tmp_path):
-    # T3-21: the record carries the D7.2 scoring (operation_correctness,
-    # provenance_results) computed before the write. Correct (SPEC §2):
-    # the engine writes what happened; scoring is a separate pass.
+    # T3-21 (fixed): the record holds what happened, with no scoring in
+    # it (SPEC §2); the scoring pass scores it.
     result, records = run(tmp_path, FakeAdapter(answer()))
     assert [without_timestamp(r) for r in records] == [{
         'item_id': 'Q01', 'arm_id': 'base', 'condition': 'base',
@@ -300,13 +286,15 @@ def test_execute_item_answer_without_tools_record_exact(tmp_path):
         'repeat': None,
         'invocation_outcome': 'NOT-INVOKED', 'self_report': None,
         'attestation_reason': None, 'ground_truth_final': '15.20',
-        'required_operation': 'calculator', 'operation_correctness': [],
-        'provenance_results': []}]
+        'required_operation': 'calculator',
+        'rounds': [{'round': 0, 'request': {'request_no': 1},
+                    'response': answer()}],
+        'status': 'EXECUTED'}]
     assert result == {
         'item_id': 'Q01', 'condition': 'base', 'status': 'EXECUTED',
         'evidence_class': EV_2, 'invocation_outcome': 'NOT-INVOKED',
         'self_report': None, 'tool_calls': [], 'response': answer(),
-        'ground_truth': GT, 'provenance_results': []}
+        'ground_truth': GT}
 
 
 def test_execute_item_self_report_recorded(tmp_path):
@@ -330,6 +318,11 @@ def test_execute_item_empty_response_recorded_as_empty_without_outcome(
             records[0]['tool_calls']) == ('UNMEASURED: empty response', None, [])
     assert records[0]['request_sent'] == {
         'messages': INITIAL, 'request_record': {'request_no': 1}}
+    assert records[0]['rounds'] == [{'round': 0,
+                                     'request': {'request_no': 1},
+                                     'response': answer('')}]
+    assert (records[0]['status'], records[0]['repeat']) == (
+        'UNMEASURED', None)
     assert (records[0]['seal_hash'], records[0]['item_id'],
             records[0]['arm_id'], records[0]['condition']) == (
         'seal-1', 'Q01', 'base', 'base')
@@ -369,10 +362,11 @@ def test_execute_item_whitespace_response_is_not_empty(tmp_path):
 @pytest.mark.parametrize('tools', [None, []])
 def test_execute_item_no_tools_ev0(tmp_path, tools):
     send = FakeAdapter(answer())
-    result, _ = run(tmp_path, send, tools=tools)
+    result, records = run(tmp_path, send, tools=tools)
     assert (result['evidence_class'], result['invocation_outcome']) == (
         EV_0, None)
     assert send.calls[0]['tools'] == tools
+    assert records[0]['error_state'] == 'UNOBSERVABLE: no tools offered'
 
 
 def test_execute_item_attestation_reason_recorded_class_unchanged(tmp_path):
@@ -485,34 +479,6 @@ def test_execute_item_call_without_function_unknown_tool(tmp_path,
     assert result['invocation_outcome'] == 'NOT-INVOKED'
 
 
-@pytest.mark.finding('S3-G2-2')
-def test_execute_item_call_without_id_raises(tmp_path, calculator):
-    # S3-G2-2: the record's id defaults to 'call_<turn>', but the return
-    # value is looked up by tc.get('id', ''), so a call without an id
-    # raises EngineError and the whole run stops. Correct: match by the
-    # same default (or by position), never abort on a platform omission.
-    tc = tool_call()
-    del tc['id']
-    with pytest.raises(EngineError) as exc:
-        run(tmp_path, FakeAdapter(calls(tc), answer()))
-    assert str(exc.value) == ("tool_call_id '' not found in all_tool_calls; "
-                              "cannot attach return_value")
-
-
-@pytest.mark.finding('S3-G2-3')
-def test_execute_item_repeated_call_id_return_on_first_record(
-        tmp_path, calculator):
-    # S3-G2-3: return values are attached to the first record with the
-    # same id, so a repeated id (here across turns) overwrites the first
-    # call's return and leaves the second without one. Correct: attach
-    # to the record of this turn's call.
-    send = FakeAdapter(calls(tool_call('1+1', id='x')),
-                       calls(tool_call('boom', id='x')), answer())
-    result, _ = run(tmp_path, send)
-    assert [r.get('return_value') for r in result['tool_calls']] == [
-        '{"error": "cannot evaluate boom"}', None]
-
-
 @pytest.mark.finding('T3-38')
 def test_execute_item_hallucinated_tool_not_invoked_with_calls(
         tmp_path, calculator):
@@ -526,12 +492,11 @@ def test_execute_item_hallucinated_tool_not_invoked_with_calls(
 
 
 @pytest.mark.finding('T3-67')
-def test_execute_item_tool_loop_stops_after_ten_turns_silently(
+def test_execute_item_tool_loop_stops_after_ten_turns_flagged(
         tmp_path, calculator):
-    # T3-67: after 10 turns the 11th response's calls are neither
-    # executed nor flagged; the item is EXECUTED/INVOKED as usual.
-    # Correct: the exhaustion is recorded (and the item not scored as
-    # complete).
+    # After 10 turns the 11th response's calls are not executed; the
+    # execution is still EXECUTED/INVOKED (the calls made were observed),
+    # and the exhaustion is recorded in the transcript and the result.
     replies = [calls(tool_call(id=f'c{n}')) for n in range(1, 12)]
     send = FakeAdapter(*replies)
     result, records = run(tmp_path, send)
@@ -541,7 +506,32 @@ def test_execute_item_tool_loop_stops_after_ten_turns_silently(
     assert result['response'] == replies[10]
     assert (result['status'], result['invocation_outcome']) == (
         'EXECUTED', 'INVOKED')
+    flag = ('TOOL_LOOP_EXHAUSTED: the response after 10 tool turns still '
+            'asked for 1 tool call(s), which were not executed')
+    assert records[0]['error_state'] == flag
+    assert result['error_state'] == flag
+
+
+@pytest.mark.finding('T3-67')
+def test_execute_item_loop_ending_at_turn_limit_not_flagged(tmp_path,
+                                                           calculator):
+    # Ten tool turns followed by an answer: the loop completed.
+    replies = [calls(tool_call(id=f'c{n}')) for n in range(1, 11)]
+    result, records = run(tmp_path, FakeAdapter(*replies, answer()))
+    assert len(result['tool_calls']) == 10
     assert records[0]['error_state'] is None
+    assert 'error_state' not in result
+
+
+def test_loop_exhaustion_counts_pending_calls():
+    final = calls(tool_call(id='a'), tool_call(id='b'))
+    assert engine._loop_exhaustion(final, [(True, None)]) == (
+        'TOOL_LOOP_EXHAUSTED: the response after 10 tool turns still '
+        'asked for 2 tool call(s), which were not executed')
+    assert engine._loop_exhaustion(final, [(True, None), (False, 'x')]) \
+        is None
+    assert engine._loop_exhaustion(final, []) is None
+    assert engine._loop_exhaustion(answer(), [(True, None)]) is None
 
 
 # -- unrecognised shapes and mid-loop failures -------------------------
@@ -550,33 +540,61 @@ ANTHROPIC = {'type': 'message', 'role': 'assistant',
              'content': [{'type': 'text', 'text': '15.20'}]}
 
 
-@pytest.mark.finding('T3-1')
+@pytest.mark.finding('T3-1', 'T3-35')
 def test_execute_item_unrecognised_first_response_executed_ev0(tmp_path):
     # T3-1: EXECUTED with outcome None (EV-0). Since the T3-1 fix the
     # run's summary keeps it out of the D7.1 rate and reports it per
-    # class.
+    # class. T3-35 (fixed): the record names the cause and the round.
     send = FakeAdapter(ANTHROPIC)
     result, records = run(tmp_path, send)
     assert len(send.calls) == 1
     assert (result['status'], result['evidence_class'],
             result['invocation_outcome']) == ('EXECUTED', EV_0, None)
-    assert records[0]['error_state'] is None
+    assert records[0]['error_state'] == (
+        'UNOBSERVABLE: round 0: unrecognised response shape: response '
+        'appears Anthropic-shaped (has type=message, content)')
 
 
 def test_execute_item_unrecognised_later_response_ev0(tmp_path, calculator):
-    result, _ = run(tmp_path, FakeAdapter(calls(tool_call()), ANTHROPIC))
+    result, records = run(tmp_path, FakeAdapter(calls(tool_call()),
+                                                 ANTHROPIC))
     assert (result['evidence_class'], result['invocation_outcome']) == (
         EV_0, None)
     assert result['response'] == ANTHROPIC
+    assert records[0]['error_state'] == (
+        'UNOBSERVABLE: round 1: unrecognised response shape: response '
+        'appears Anthropic-shaped (has type=message, content)')
+
+
+@pytest.mark.finding('T3-35')
+def test_unobservable_cause_first_unrecognised_round_named():
+    # The first unobservable round is named; a failed request is told
+    # apart from an unrecognised shape by the error its round holds.
+    shapes = [(True, None), (False, 'choices is empty or not a list'),
+              (False, 'later')]
+    rounds = [{'round': 0}, {'round': 1, 'response': {}}]
+    assert engine._unobservable_cause(shapes, rounds, True) == (
+        'UNOBSERVABLE: round 1: unrecognised response shape: choices is '
+        'empty or not a list')
+    rounds[1] = {'round': 1, 'error': 'HTTP 503: down'}
+    assert engine._unobservable_cause(shapes, rounds, True) == (
+        'UNOBSERVABLE: round 1: request failed: HTTP 503: down')
+    # a shape failure past the recorded rounds is still a shape failure
+    assert engine._unobservable_cause([(False, 'r')], [], True) == (
+        'UNOBSERVABLE: round 0: unrecognised response shape: r')
+    assert engine._unobservable_cause([(True, None)], [], True) == \
+        'UNOBSERVABLE'
+    assert engine._unobservable_cause([(False, 'r')], [], False) == \
+        'UNOBSERVABLE: no tools offered'
 
 
 @pytest.mark.finding('T3-1', 'T3-35')
-def test_execute_item_later_send_fails_executed_ev0_no_error(
+def test_execute_item_later_send_fails_executed_ev0_cause_recorded(
         tmp_path, calculator):
     # T3-1: a mid-loop failure is EXECUTED with outcome None (EV-0); since
-    # the T3-1 fix it is out of the D7.1 rate. T3-35: the failure itself
-    # is not recorded (error_state None; the last good response stands
-    # as final). Correct: the cause of the EV-0 is recorded.
+    # the T3-1 fix it is out of the D7.1 rate. The last good response
+    # stands as final. T3-35 (fixed): the record's error state names the
+    # failed request and its round.
     first = calls(tool_call())
     send = FakeAdapter(first, adapter.RateLimitError('Rate limit reached'))
     result, records = run(tmp_path, send)
@@ -585,7 +603,8 @@ def test_execute_item_later_send_fails_executed_ev0_no_error(
             result['invocation_outcome']) == ('EXECUTED', EV_0, None)
     assert result['response'] == first
     assert len(result['tool_calls']) == 1
-    assert records[0]['error_state'] is None
+    assert records[0]['error_state'] == (
+        'UNOBSERVABLE: round 1: request failed: Rate limit reached')
 
 
 def test_drive_tool_loop_failed_round_recorded_unrecognised(calculator):
@@ -598,6 +617,47 @@ def test_drive_tool_loop_failed_round_recorded_unrecognised(calculator):
                       (False, 'adapter_send failed on turn 1: reset by peer')]
     assert final == calls(tool_call())
     assert len(tcs) == 1
+
+
+@pytest.mark.finding('V12-3')
+@pytest.mark.req('R0.2', 'AP-1 §5.6')
+def test_execute_item_rounds_recorded_in_order_failed_round_with_error(
+        tmp_path, calculator):
+    # V12-3: the record's rounds hold, in order, each round's request as
+    # the adapter returned it and the raw response; a round whose request
+    # failed holds the messages it sent and the error.
+    first = calls(tool_call(id='a'))
+    second = calls(tool_call(id='b'))
+    send = FakeAdapter(first, second, RuntimeError('reset by peer'))
+    _, records = run(tmp_path, send)
+    rounds = records[0]['rounds']
+    assert [r['round'] for r in rounds] == [0, 1, 2]
+    assert rounds[0] == {'round': 0, 'request': {'request_no': 1},
+                         'response': first}
+    assert rounds[1] == {'round': 1, 'request': {'request_no': 2},
+                         'response': second}
+    assert rounds[2] == {'round': 2,
+                         'request': {'messages': send.calls[2]['messages']},
+                         'error': 'reset by peer'}
+
+
+def test_drive_tool_loop_rounds_receive_later_rounds_only(calculator):
+    # The caller records round 0; the loop appends rounds 1 onwards, and
+    # the failed round's messages are a copy taken when it was sent.
+    send = FakeAdapter(calls(tool_call(id='b')), RuntimeError('down'))
+    messages, rounds = [], []
+    engine._drive_tool_loop(
+        response=calls(tool_call(id='a')), messages=messages, config=CONFIG,
+        tools=TOOLS, adapter_send=send, sampling={}, rounds=rounds)
+    assert rounds == [
+        {'round': 1, 'request': {'request_no': 1},
+         'response': calls(tool_call(id='b'))},
+        {'round': 2, 'request': {'messages': send.calls[1]['messages']},
+         'error': 'down'}]
+    recorded = copy.deepcopy(rounds[1]['request']['messages'])
+    messages[0]['content'] = 'changed later'
+    messages.append('later')
+    assert rounds[1]['request']['messages'] == recorded
 
 
 def test_drive_tool_loop_max_turns_parameter_bounds_sends(calculator):
@@ -616,112 +676,34 @@ def test_drive_tool_loop_round_shapes_one_per_response(calculator):
     assert shapes == [(True, None)] * 3
 
 
-@pytest.mark.finding('S3-G2-1')
-@pytest.mark.parametrize('final, error', [
-    ({'choices': [{'message': None}]}, AttributeError),
-    ({'choices': ['x']}, AttributeError),
-    ({'choices': [{'message': {'role': 'assistant', 'content': 'x',
-                               'metadata': 'attestation'}}]}, TypeError),
-], ids=['null-message', 'str-choice', 'str-metadata'])
-def test_execute_item_malformed_response_shape_raises(tmp_path, final, error):
-    # S3-G2-1: shapes the evidence code reports as unrecognised (EV-0)
-    # make _extract_tool_calls or extract_attestation raise, and
-    # execute_item does not catch it: the run stops. Correct: EV-0 (or
-    # UNMEASURED), the run continues.
-    with pytest.raises(error):
-        run(tmp_path, FakeAdapter(final))
-    assert transcript.read_all(tmp_path / 'run.jsonl') == []
+# -- no scoring (T3-21) -------------------------------------------------
 
-
-# -- D7.2 wiring -------------------------------------------------------
-
-def test_execute_item_scoring_wired(tmp_path, calculator, recorders):
-    send = FakeAdapter(calls(tool_call('1+1', id='a'),
-                             tool_call(name='python', id='b'),
-                             tool_call('2*3', id='c')), answer())
-    result, records = run(tmp_path, send)
-    tcs = result['tool_calls']
-    ctx = {'savings': {'balance': '15200.00', 'annual_rate': '1.2'}}
-    assert recorders.calls['provenance'] == [(tcs, ctx, GT, CONFIG)]
-    assert recorders.calls['operation'] == [('1+1', GT, CONFIG),
-                                            ('2*3', GT, CONFIG)]
-    # One expression per calculator call, aligned with the results; the
-    # python call is not a calculator call (T3-16).
-    assert recorders.calls['reclassify'] == [
-        ([{'outcome': 'OC 1+1'}, {'outcome': 'OC 2*3'}],
-         ['1+1', '2*3'])]
-    assert records[0]['operation_correctness'] == [
-        {'outcome': 'OC 1+1', 'reclassified': True},
-        {'outcome': 'OC 2*3', 'reclassified': True}]
-    assert records[0]['provenance_results'] == [{'provenance': 'P'}]
-    assert result['provenance_results'] == [{'provenance': 'P'}]
-
-
-def test_execute_item_operation_error_unobservable(tmp_path, calculator,
-                                                   recorders):
-    recorders.operation['1+1'] = ZeroDivisionError('division by zero')
-    _, records = run(tmp_path, FakeAdapter(calls(tool_call('1+1')),
-                                           answer()))
-    assert records[0]['operation_correctness'] == [{
-        'outcome': 'OPERATION-UNOBSERVABLE',
-        'reason': 'evaluation failed: ZeroDivisionError: division by zero',
-        'reclassified': True}]
+@pytest.mark.finding('T3-21')
+@pytest.mark.req('R1.2')
+def test_execute_item_scores_no_d72(tmp_path, calculator):
+    # SPEC R1.2 "Perform no scoring": D7.2 (provenance, operation
+    # correctness) is scored by the scoring pass from this record
+    # (runner/executions.py score_d72), not here.
+    result, records = run(tmp_path, FakeAdapter(calls(tool_call('1+1')),
+                                                answer()))
+    assert not {'provenance_results', 'operation_correctness'} & (
+        set(result) | set(records[0]))
+    assert (records[0]['status'], records[0]['tool_calls'][0]['id']) == (
+        'EXECUTED', 'call_1')
+    for name in ('classify_invocations_sequential', 'classify_operation',
+                 'reclassify_session'):
+        assert not hasattr(engine, name), name
 
 
 @pytest.mark.finding('T3-16')
-def test_execute_item_malformed_arguments_invoked_and_scored(
-        tmp_path, calculator, recorders):
-    # T3-16: non-JSON arguments count as INVOKED (D7.7) and are scored:
-    # classify_operation gets no expression (None, so its outcome is
-    # OPERATION-UNOBSERVABLE), and reclassify_session gets one result and
-    # one expression for the call, aligned.
+def test_execute_item_malformed_arguments_invoked(tmp_path, calculator):
+    # T3-16: non-JSON arguments count as INVOKED (D7.7); the call is
+    # recorded with its raw arguments for the scoring pass.
     bad = tool_call(arguments='15200*1.2/100/12')
     result, records = run(tmp_path, FakeAdapter(calls(bad), answer()))
     assert result['invocation_outcome'] == 'INVOKED'
-    assert recorders.calls['operation'] == [(None, GT, CONFIG)]
-    assert recorders.calls['reclassify'] == [([{'outcome': 'OC None'}],
-                                              [None])]
-    assert records[0]['operation_correctness'] == [
-        {'outcome': 'OC None', 'reclassified': True}]
-
-
-@pytest.mark.finding('T3-16')
-def test_execute_item_malformed_call_real_scoring_unobservable(
-        tmp_path, calculator):
-    # With the real scorers, the malformed call is OPERANDS-UNOBSERVABLE
-    # and OPERATION-UNOBSERVABLE, and the valid call after it is scored.
-    bad = tool_call(arguments='15200*1.2/100/12', id='a')
-    send = FakeAdapter(calls(bad, tool_call('15200*1.2', id='b')), answer())
-    result, records = run(tmp_path, send)
-    assert [p['outcome'] for p in result['provenance_results']] == [
-        'OPERANDS-UNOBSERVABLE', 'OPERANDS-GROUNDED']
-    assert [o['outcome'] for o in records[0]['operation_correctness']] == [
-        'OPERATION-UNOBSERVABLE', 'WRONG-OPERATION']
-
-
-@pytest.mark.finding('T3-21')
-def test_execute_item_scoring_error_nothing_written(tmp_path, calculator,
-                                                    monkeypatch):
-    # T3-21: scoring runs before the transcript write, so a scoring
-    # failure loses the spent request and its response. Correct: the
-    # record is written first.
-    def broken(*args):
-        raise RuntimeError('scorer bug')
-
-    monkeypatch.setattr(engine, 'classify_invocations_sequential', broken)
-    send = FakeAdapter(calls(tool_call()), answer())
-    with pytest.raises(RuntimeError, match='scorer bug'):
-        run(tmp_path, send)
-    assert len(send.calls) == 2
-    assert transcript.read_all(tmp_path / 'run.jsonl') == []
-
-
-def test_execute_item_real_scoring_correct_call(tmp_path, calculator):
-    result, records = run(tmp_path, FakeAdapter(calls(tool_call('15200*1.2')),
-                                                answer()))
-    assert [p['outcome'] for p in result['provenance_results']] == [
-        'OPERANDS-GROUNDED']
-    assert len(records[0]['operation_correctness']) == 1
+    assert records[0]['tool_calls'][0]['function']['arguments'] == \
+        '15200*1.2/100/12'
 
 
 # -- _execute_tool -----------------------------------------------------
@@ -826,10 +808,6 @@ def _contains(tree, target):
 
 @pytest.mark.finding('T3-21')
 @pytest.mark.req('R1.2', 'R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-21: the engine writes D7.2(a)/(b) scoring '
-                          '(provenance_results, operation_correctness) into '
-                          'the transcript record')
 def test_execute_item_record_has_no_scoring_fields(tmp_path, calculator):
     # Correct (SPEC §2 "R1 EXECUTE: no scoring occurs here"; R1.2 "Perform
     # no scoring"; Steven's ruling, choices-for-marcus.md entry 1): the
@@ -841,9 +819,6 @@ def test_execute_item_record_has_no_scoring_fields(tmp_path, calculator):
 
 @pytest.mark.finding('V12-3', 'T3-52')
 @pytest.mark.req('R0.2', 'R0.3', 'AP-1 §5.6')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-3: only the first request and the final '
-                          'response of a tool loop reach the transcript')
 def test_execute_item_every_round_request_and_response_recorded(
         tmp_path, calculator):
     # Correct (SPEC R0.2 "Every request and response is written to the
@@ -863,10 +838,6 @@ def test_execute_item_every_round_request_and_response_recorded(
 
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: a mid-loop send failure gives EV-0 with '
-                          'error_state None; cause and round only in the '
-                          'unwritten round_shapes')
 def test_execute_item_later_send_fails_error_state_names_cause_and_round(
         tmp_path, calculator):
     # Correct (SPEC R1.3 "EV-0 UNOBSERVABLE with the round identified";
@@ -887,9 +858,6 @@ def test_execute_item_later_send_fails_error_state_names_cause_and_round(
 
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: an unrecognised later response gives EV-0 '
-                          'with error_state None and the round unidentified')
 def test_execute_item_unrecognised_later_response_error_state_names_round(
         tmp_path, calculator):
     # Correct (SPEC R1.3, as above): the record names the unrecognised
@@ -927,8 +895,6 @@ def test_execute_item_empty_response_unmeasured(tmp_path, content):
 
 
 @pytest.mark.finding('T3-67')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-67: tool-loop exhaustion is silent')
 def test_execute_item_tool_loop_exhausted_flagged_in_transcript(
         tmp_path, calculator):
     # Correct (T3 review T3-67; SPEC R0.1, R1.3 "the accumulation is
@@ -946,9 +912,6 @@ def test_execute_item_tool_loop_exhausted_flagged_in_transcript(
 
 
 @pytest.mark.finding('S3-G2-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-1: malformed response shape raises out of '
-                          'execute_item')
 @pytest.mark.parametrize('final', [
     {'choices': [{'message': None}]},
     {'choices': ['x']},
@@ -967,10 +930,45 @@ def test_execute_item_malformed_response_shape_ev0_recorded(tmp_path, final):
         result['evidence_class'] == EV_0, result
 
 
+@pytest.mark.finding('S3-G2-1')
+@pytest.mark.parametrize('message', [
+    {'content': None, 'tool_calls': {'id': 'c1'}},
+    {'content': None, 'tool_calls': ['calculator']},
+    {'content': None, 'tool_calls': [{'id': 'c1', 'function': 'calc'}]},
+    {'content': [{'type': 'text', 'text': '15.20'}]},
+], ids=['dict-tool-calls', 'str-call', 'str-function', 'list-content'])
+def test_execute_item_unreadable_message_part_ev0_no_tool_run(
+        tmp_path, calculator, message):
+    # Step 5 (run-robustness): a message part the evidence code cannot
+    # read is an unrecognised shape: EV-0 with outcome None, nothing is
+    # executed, the execution is recorded.
+    final = {'choices': [{'message': {'role': 'assistant', **message}}]}
+    send = FakeAdapter(final)
+    result, records = run(tmp_path, send)
+    assert (result['status'], result['evidence_class'],
+            result['invocation_outcome']) == ('EXECUTED', EV_0, None)
+    assert (result['tool_calls'], calculator.seen, len(send.calls)) == (
+        [], [], 1)
+    assert [r['response_received'] for r in records] == [final]
+
+
+@pytest.mark.finding('S3-G2-2', 'S3-G2-3')
+def test_execute_item_two_calls_without_id_in_one_turn_each_own_return(
+        tmp_path, calculator):
+    # Two calls of one turn without ids share the default id 'call_1';
+    # each return still goes on its own record, in order.
+    a, b = tool_call('1+1'), tool_call('boom')
+    del a['id'], b['id']
+    send = FakeAdapter(calls(a, b), answer())
+    result, _ = run(tmp_path, send)
+    assert [(r['id'], r['return_value']) for r in result['tool_calls']] == [
+        ('call_1', '{"result": "15.2"}'),
+        ('call_1', '{"error": "cannot evaluate boom"}')]
+    assert [m.get('tool_call_id') for m in send.calls[1]['messages']
+            if m['role'] == 'tool'] == ['call_1', 'call_1']
+
+
 @pytest.mark.finding('S3-G2-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-2: a tool call without an id raises '
-                          'EngineError')
 def test_execute_item_call_without_id_return_attached(tmp_path, calculator):
     # Correct (S3-G2-2): a call the platform sent without an id is
     # executed and its return value attached to its own record (by the
@@ -986,9 +984,6 @@ def test_execute_item_call_without_id_return_attached(tmp_path, calculator):
 
 
 @pytest.mark.finding('S3-G2-3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-3: a repeated call id attaches the return '
-                          'to the first record')
 def test_execute_item_repeated_call_id_return_on_own_record(tmp_path,
                                                             calculator):
     # Correct (S3-G2-3; AP-1 v1.3 D7.2(a)(iv) uses prior returns): each
@@ -1024,9 +1019,15 @@ def test_execute_item_model_controlled_arguments_recorded_no_raise(
     # #9; S3-G2-4): input the model controls never raises out of the
     # engine; the call is recorded and the execution written to the
     # transcript, with that call's operands unobservable.
+    # Since T3-21, D7.2 is scored by the scoring pass (score_d72), from
+    # the record; it must not raise either.
+    from ap1_run.runner.executions import score_d72
     send = FakeAdapter(calls(tool_call(arguments=arguments)), answer())
     result, records, error = run_without_raising(tmp_path, send)
     assert error is None, f'{type(error).__name__}: {error}'
     assert len(records) == 1 and len(result['tool_calls']) == 1
+    ctx = {'savings': {'balance': '15200.00', 'annual_rate': '1.2'}}
+    provenance_results, _ = score_d72(records[0]['tool_calls'], ctx, GT,
+                                      CONFIG)
     assert all(p['outcome'] != 'OPERANDS-GROUNDED'
-               for p in result['provenance_results'])
+               for p in provenance_results)

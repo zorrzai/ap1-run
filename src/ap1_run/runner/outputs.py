@@ -1,75 +1,63 @@
-"""The live runner's output files.
+"""The scoring pass's output files.
 
 write_outputs writes report.md, adjudication_sheets.md, DISCLAIMER.txt and
-smoke_summary.json to the output directory, from the transcript the run
-wrote. attach_figure_outcomes joins each engine record with the figure
-outcome recorded for it.
+smoke_summary.json to the output directory. The report and the sheets read
+the transcript's records with each execution's scores attached
+(attach_scores); the transcript itself is never written.
 """
 
 import json
 import os
 
-from ap1_run.foundation import transcript
 from ap1_run.reporting import adjudication, report
+from ap1_run.runner.executions import as_recorded
 
 
-def attach_figure_outcomes(tr_records):
-    """The engine records of a transcript, each given the figure_outcome
-    of the matching figure_identification record.
+def attach_scores(tr_records, all_results):
+    """Copies of the transcript's records, each executed one given its
+    scores from the run's results: figure_outcome, operation_correctness
+    and provenance_results (as they were recorded, see as_recorded).
 
-    Records are matched by (item_id, condition, repeat): an execution
-    takes the figure outcome recorded for its own repeat, so a repeat
-    with no figure record (a transport failure) gets none and never
-    shifts the others. Within one key (a transcript written before
-    records carried a repeat index has repeat None throughout), the n-th
-    engine record takes the n-th figure outcome.
+    Records and results are matched by (item_id, condition, repeat). The
+    records themselves are not changed.
     """
-    # Engine records don't have figure_outcome; figure_identification records do
-    engine_records = [r for r in tr_records
-                      if r.get('record_type') != 'figure_identification']
-    figure_records = [r for r in tr_records
-                      if r.get('record_type') == 'figure_identification']
-
-    def key(record):
-        return (record.get('item_id'), record.get('condition'),
-                record.get('repeat'))
-
-    fig_lookup = {}
-    for fr in figure_records:
-        fig_lookup.setdefault(key(fr), []).append(
-            fr.get('figure_outcome', ''))
-
-    # Attach figure_outcome to engine records for adjudication routing
-    for er in engine_records:
-        figs = fig_lookup.get(key(er))
-        if figs:
-            er['figure_outcome'] = figs.pop(0)
-    return engine_records
+    scored = {(r.get('item_id'), r.get('condition'), r.get('repeat')): r
+              for r in all_results if r.get('status') == 'EXECUTED'}
+    records = []
+    for record in tr_records:
+        record = dict(record)
+        result = scored.get((record.get('item_id'), record.get('condition'),
+                             record.get('repeat')))
+        if result is not None:
+            record['operation_correctness'] = as_recorded(
+                result.get('operation_correctness', []))
+            record['provenance_results'] = as_recorded(
+                result.get('provenance_results', []))
+            record['figure_outcome'] = result.get('figure_outcome', '')
+        records.append(record)
+    return records
 
 
-def write_outputs(output_dir, transcript_path, *, summary, config,
-                  seal_record, questions, fixture, release_coverage_results,
-                  disclaimer, smoke_summary):
+def write_outputs(output_dir, *, records, summary, config, seal_record,
+                  questions, fixture, release_coverage_results, disclaimer,
+                  smoke_summary):
     """Generate and write the output files, printing where each went.
 
-    smoke_summary holds the content of smoke_summary.json after its
-    '_disclaimer' line (seal_hash and the run's collected findings).
+    records are the transcript's records with their scores attached
+    (attach_scores). smoke_summary holds the content of smoke_summary.json
+    after its '_disclaimer' line (seal_hash and the run's collected
+    findings).
     """
     # -- Generate formal report (report.py) --
     print('\n' + '=' * 60)
     print('GENERATING FORMAL REPORT (report.py)')
     print('=' * 60)
 
-    # Read full transcript for report
-    tr_records = transcript.read_all(transcript_path)
-
-    engine_records = attach_figure_outcomes(tr_records)
-
     report_text = report.generate_report(
         summary=summary,
         config=config,
         seal_record=seal_record,
-        transcript_records=engine_records,
+        transcript_records=records,
     )
 
     report_path = os.path.join(output_dir, 'report.md')
@@ -81,7 +69,7 @@ def write_outputs(output_dir, transcript_path, *, summary, config,
     print('\nGENERATING ADJUDICATION SHEETS (adjudication.py)')
 
     sheets_text = adjudication.generate_sheets(
-        engine_records, questions, fixture, config,
+        records, questions, fixture, config,
         release_coverage_results=release_coverage_results)
 
     sheets_path = os.path.join(output_dir, 'adjudication_sheets.md')
@@ -102,4 +90,3 @@ def write_outputs(output_dir, transcript_path, *, summary, config,
             **smoke_summary,
         }, f, indent=2, default=str, ensure_ascii=False)
     print(f'\nSummary written to {summary_path}')
-    print(f'Transcript written to {transcript_path}')

@@ -1,7 +1,7 @@
 """Step 4, group g4-transcript: the transcript and the two-pass design,
 end to end (fix plan branch 4: raw-response preservation).
 
-Correct behaviour, failing on today's code (each test is a strict xfail
+Correct behaviour, written failing in step 4 (each test was a strict xfail
 with its finding):
 
 - T3-21: SPEC §2 ("Two passes ... The separation is a conformance
@@ -24,16 +24,18 @@ mock endpoint (tests/fixtures/mock_endpoint.py) on 127.0.0.1, with a copy
 of the shipped example in tmp_path; nothing is written into the
 repository.
 
-The re-scorer does not exist yet. The tests that need it import it in one
-place, _rescore() below, which names the API the fix must provide:
+The tests that need the re-scorer import it in one place, _rescore()
+below:
 
     ap1_run.scoring.rescore.rescore_transcript(
         transcript_path, *, config_path, fixture_dir, output_dir) -> dict
 
 It scores a finished (or partial) transcript, opening it read-only, and
 returns the run summary: the same content as the run's smoke_summary.json
-(without its '_disclaimer' line). The fix may choose another name or
-shape; it then updates _rescore() and nothing else.
+(without its '_disclaimer' line).
+
+All of these were strict xfails written in step 4; the step-5 fix branch
+raw-response-preservation turned them green.
 """
 
 import importlib.util
@@ -63,10 +65,6 @@ AP1_TEXT = ROOT / 'reference' / 'AP-1_v1.3_DRAFT_FOR_COMMENT.md'
 SCORING_FIELDS = ('operation_correctness', 'provenance_results',
                   'figure_outcome', 'figure_reason', 'released_figure')
 
-RESCORE_RAISES = (AttributeError, ImportError, TypeError, AssertionError)
-RESCORE_API = ('the fix must provide ap1_run.scoring.rescore.'
-               'rescore_transcript(transcript_path, *, config_path, '
-               'fixture_dir, output_dir) -> summary dict')
 
 
 def _mock_endpoint_class():
@@ -115,7 +113,7 @@ def _read_jsonl(path):
 
 def _rescore(transcript_path, *, config_path, fixture_dir, output_dir):
     """The scoring pass over a transcript (T3-21). See the module
-    docstring: this API does not exist yet."""
+    docstring."""
     from ap1_run.scoring.rescore import rescore_transcript
     return rescore_transcript(transcript_path, config_path=config_path,
                               fixture_dir=fixture_dir, output_dir=output_dir)
@@ -161,8 +159,7 @@ def cli(tmp_path, monkeypatch):
                             'instruction_removed'},
             responses=responses).start()
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-test')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+        mock.point_config(fx / 'config.json')  # T3-80: config only
         if around_execute is not None:
             real = run.execute_item
             monkeypatch.setattr(
@@ -210,10 +207,6 @@ MULTI_ROUND = {
 
 @pytest.mark.finding('T3-21')
 @pytest.mark.req('R1.2', 'R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-21: the run writes scoring into the transcript '
-                          '(operation_correctness, provenance_results, '
-                          'figure_identification records)')
 def test_run_transcript_contains_no_scoring(cli):
     # Correct (SPEC §2 diagram "R1 EXECUTE: no scoring occurs here", R1.2
     # "Perform no scoring", R0.3's record fields): the transcript holds
@@ -230,9 +223,6 @@ def test_run_transcript_contains_no_scoring(cli):
 
 @pytest.mark.finding('T3-21')
 @pytest.mark.req('R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-21: the scoring in the run appends '
-                          'figure_identification records to the transcript')
 def test_run_transcript_is_only_what_the_execution_wrote(cli):
     # Correct (SPEC §2 "R2 SCORE: reads only; never writes back"): every
     # byte of the transcript is written by the execution pass
@@ -259,9 +249,6 @@ def test_run_transcript_is_only_what_the_execution_wrote(cli):
 
 @pytest.mark.finding('T3-21')
 @pytest.mark.req('R0.3', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=RESCORE_RAISES,
-                   reason='T3-21: no scoring pass over a transcript; '
-                          + RESCORE_API)
 def test_rescore_of_finished_run_reproduces_its_summary(cli, tmp_path):
     # Correct (Steven's ruling, choices-for-marcus.md entry 1; SPEC §2 "A
     # single-pass design makes re-scoring impossible"): re-scoring a
@@ -283,9 +270,6 @@ def test_rescore_of_finished_run_reproduces_its_summary(cli, tmp_path):
 
 @pytest.mark.finding('V12-3', 'T3-52')
 @pytest.mark.req('R0.2', 'R0.3', 'AP-1 §5.6')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-3: the raw responses of the intermediate '
-                          'tool-loop rounds are not in the transcript')
 def test_run_multi_round_every_raw_response_in_transcript(cli):
     # Correct (SPEC R0.2 "Every request and response is written to the
     # transcript before any other processing"; AP-1 §5.6): every response
@@ -303,9 +287,6 @@ def test_run_multi_round_every_raw_response_in_transcript(cli):
 
 @pytest.mark.finding('V12-3', 'T3-52')
 @pytest.mark.req('R0.2', 'R0.3', 'AP-1 §5.6')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-3: the requests of the intermediate '
-                          'tool-loop rounds are not in the transcript')
 def test_run_multi_round_every_request_in_transcript(cli):
     # Correct (SPEC R0.2 "Every request and response is written to the
     # transcript ... The request as sent"): the messages of every request
@@ -358,9 +339,6 @@ class _Server:
 
 @pytest.mark.finding('T3-52')
 @pytest.mark.req('R0.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-52: the adapter follows an HTTP redirect to '
-                          'another host')
 def test_adapter_redirect_to_other_host_not_followed():
     # Correct (SPEC R0.2 verification contract: "The adapter makes no
     # network call to any host other than the configured endpoint"; §9
@@ -394,9 +372,6 @@ def test_adapter_redirect_to_other_host_not_followed():
 
 @pytest.mark.finding('T3-52')
 @pytest.mark.req('R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-52: the scoring opens the transcript for '
-                          'writing (it fails on a read-only transcript)')
 def test_run_scoring_with_read_only_transcript_completes(cli):
     # Correct (SPEC R0.3 verification contract: "The scorer opens the
     # transcript read-only"): once an execution's record is written, the
@@ -420,10 +395,6 @@ def test_run_scoring_with_read_only_transcript_completes(cli):
 
 @pytest.mark.finding('T3-52')
 @pytest.mark.req('R0.3')
-@pytest.mark.xfail(strict=True, raises=RESCORE_RAISES,
-                   reason='T3-52: an interrupted run has no report and '
-                          'nothing reports its unreached items not-run; '
-                          + RESCORE_API)
 def test_interrupted_run_partial_transcript_scored_unreached_not_run(
         cli, tmp_path):
     # Correct (SPEC R0.3 verification contract: "An interrupted run leaves
@@ -467,10 +438,6 @@ ANTHROPIC = {'id': 'msg_mock', 'type': 'message', 'role': 'assistant',
 
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: an EV-0 record has error_state None; the '
-                          'cause and failing round go only into the '
-                          'unwritten round_shapes')
 @pytest.mark.parametrize('second_round, cause', [
     ({'http': 503, 'body': '{"error": "upstream down"}'}, '503'),
     ({'close': True}, 'transport'),
@@ -515,25 +482,6 @@ def _round0_request_messages(cli):
 
 @pytest.mark.finding('S4-G4-1')
 @pytest.mark.req('R0.2')
-def test_run_round0_request_record_holds_the_messages_of_later_rounds(cli):
-    # S4-G4-1, today's behaviour: adapter.send puts the messages list it
-    # was given into request_record by reference, and the engine's tool
-    # loop keeps appending to that list. So the transcript's round-0
-    # "request as sent" shows the messages of the last request (7: the
-    # assistant and tool messages of rounds 0 and 1 too), while the
-    # request actually sent in round 0 had 2. (The regression mock's
-    # replay relies on this to rebuild the intermediate rounds of the
-    # published runs.)
-    recorded, sent = _round0_request_messages(cli)
-    assert [len(m) for m in sent] == [2, 5, 7]
-    assert recorded == sent[2]
-
-
-@pytest.mark.finding('S4-G4-1')
-@pytest.mark.req('R0.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S4-G4-1: the round-0 request record is mutated by '
-                          'the tool loop after it was sent')
 def test_run_round0_request_record_is_the_request_as_sent(cli):
     # Correct (SPEC R0.2 "The request as sent -- not as constructed -- is
     # recorded"): the recorded round-0 request has exactly the messages

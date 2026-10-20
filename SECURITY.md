@@ -12,7 +12,7 @@ for.
 
 ## Network behaviour
 
-**The instrument targets only the endpoint declared in configuration.** Note: the `requests` library follows HTTP redirects by default; a redirecting endpoint could cause a request to a different host.
+**The instrument targets only the endpoint declared in configuration.** HTTP redirects are not followed: a redirect from the endpoint is an HTTP error and is recorded as one, so no request reaches a different host.
 
 There is no telemetry, no analytics, no usage reporting, no licence check, no
 update check, and no hosted component. Nothing is transmitted to ZORRZ or to any third party at any time.
@@ -72,6 +72,10 @@ is refused.
   expression evaluator itself; this is the guarded path described above.
 - `importlib` in `verify.py` — loads the operator’s ground-truth module by
   name. The module path is read from the sealed configuration.
+- `importlib` in `src/ap1_run/execution/sealed_inputs.py` — loads the
+  operator's ground-truth module, `ground_truth_example.py` in the fixture
+  directory, from the bytes the run read and sealed. Like an import, this runs
+  the module's code.
 - `subprocess` in `run_all_tests.py` — runs pytest.
 
 **Network.** `verify_integration.py` starts a local mock HTTP server on
@@ -139,9 +143,12 @@ sha256sum reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md
 ```
 
 **Every input is sealed before execution.** Fixture, question set, ground-truth
-module and resolved configuration are hashed and timestamped, and the record’s
-hash appears on every transcript line. A transcript cannot be silently paired
-with a different fixture.
+module, expected values and resolved configuration are hashed and timestamped,
+and the record’s hash appears on every transcript line. A transcript cannot be
+silently paired with a different fixture. Each input is read once, and the
+bytes sealed are the bytes the run executes; the run verifies its seal again
+before its first request and before it reports, and refuses if an input has
+changed.
 
 ---
 

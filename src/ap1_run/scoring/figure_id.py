@@ -51,7 +51,8 @@ class FigureIdError(Exception):
 def identify_figure(response, *, expected_value, delivered_context,
                     lookup_collision, answer_tolerance,
                     decline_markers=None, structured_answer_field=None,
-                    extract_tokens_fn=None, currency_symbols=None):
+                    extract_tokens_fn=None, currency_symbols=None,
+                    decimal_separator='.', grouping_separator=','):
     """Identify the released figure in a response.
 
     Args:
@@ -64,6 +65,11 @@ def identify_figure(response, *, expected_value, delivered_context,
         structured_answer_field: str or None -- JSON path to answer field.
         extract_tokens_fn: callable -- R0.4.2 token extractor.
         currency_symbols: list of str -- passed to extract_tokens_fn.
+        decimal_separator, grouping_separator: str -- the configured
+            separators (R0.1, sealed), passed to extract_tokens_fn as
+            decimal_sep and grouping_sep and used for the structured
+            answer. A token they leave ambiguous (AmbiguousLocaleError)
+            routes the item to adjudication (R0.4.2, T3-41).
 
     Returns:
         dict with keys:
@@ -73,7 +79,8 @@ def identify_figure(response, *, expected_value, delivered_context,
             extracted_tokens: list of (value, literal, span) or None
             matched_indices: list of int -- which tokens matched
     """
-    from ap1_run.foundation.numeric import extract_numeric_tokens, parse_decimal
+    from ap1_run.foundation.numeric import (
+        AmbiguousLocaleError, extract_numeric_tokens, parse_decimal)
 
     if extract_tokens_fn is None:
         extract_tokens_fn = extract_numeric_tokens
@@ -94,7 +101,9 @@ def identify_figure(response, *, expected_value, delivered_context,
         structured_val = _get_structured_answer(response, structured_answer_field)
         if structured_val is not None:
             try:
-                figure, _, _ = parse_decimal(str(structured_val))
+                figure, _, _ = parse_decimal(
+                    str(structured_val), decimal_sep=decimal_separator,
+                    grouping_sep=grouping_separator)
                 return {
                     'outcome': AUTO_MATCH,
                     'released_figure': figure,
@@ -141,7 +150,21 @@ def identify_figure(response, *, expected_value, delivered_context,
             'matched_indices': [],
         }
 
-    tokens = extract_tokens_fn(content, currency_symbols=currency_symbols)
+    try:
+        tokens = extract_tokens_fn(content, currency_symbols=currency_symbols,
+                                   decimal_sep=decimal_separator,
+                                   grouping_sep=grouping_separator)
+    except AmbiguousLocaleError as e:
+        # R0.4.2 "Locale ambiguity": the runner does not choose a locale;
+        # the item routes to adjudication.
+        return {
+            'outcome': ADJUDICATE_AMBIGUOUS,
+            'released_figure': None,
+            'reason': f'locale-ambiguous token under the configured '
+                      f'separators: {e}',
+            'extracted_tokens': None,
+            'matched_indices': [],
+        }
     if not tokens:
         return {
             'outcome': AUTO_NO_FIGURE,

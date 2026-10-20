@@ -111,6 +111,10 @@ def run(tmp_path_factory):
     config = json.loads((EXAMPLE / 'config.json').read_text('utf-8'))
     config['repeat_count'] = '2'
     config['structured_answer_field'] = 'answer'
+    # The D1 sections are under test, so the run claims D1, which the
+    # 10-item example cannot support (R0.1 minimum-n, T3-12); the
+    # minimum-n check is switched off below for this run only.
+    config['dimensions_claimed'] = ['D1', 'D2', 'D7']
     config_path = tmp / 'config.json'
     config_path.write_text(json.dumps(config, indent=2), 'utf-8')
     output_dir = tmp / 'output'
@@ -145,10 +149,11 @@ def run(tmp_path_factory):
                 if name.startswith('AP1_SMOKE_'):
                     mp.delenv(name)
             mp.setenv('AP1_SMOKE_API_KEY', 'sk-step4-not-a-real-key-0000')
-            mp.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-            mp.setenv('AP1_SMOKE_MODEL', 'mock-model')
+            mock.point_config(config_path)  # T3-80: config only
             mp.setattr(time, 'sleep', lambda seconds: None)
             from ap1_run import run as runner
+            mp.setattr(runner, 'validate_minimum_n',
+                       lambda config, items: None)
             exit_code = runner.main([
                 '--config', str(config_path),
                 '--fixture-dir', str(fixture_dir),

@@ -5,6 +5,13 @@ Spec: AP-1 Runner Build Spec v0.3, section 4 R1.2.
 Iterate items and conditions; call R0.2; drive the tool loop;
 write to R0.3. PERFORM NO SCORING.
 
+This is the execution pass (SPEC §2): execute_item writes one transcript
+record per execution, with every round's request and raw response, the
+structural tool-call record, the evidence class (R1.3) and the execution's
+status (EXECUTED, UNMEASURED or VOID). Scoring (figure identification, D1,
+D2, D7.2, D7.3) is a separate pass over the transcript
+(runner/scoring_pass.py), which never writes to it.
+
 Conditions in v1.0: 'base' and 'instruction_removed' (D7.1b).
 
 Item selection (normative):
@@ -14,16 +21,11 @@ Item selection (normative):
 
 import copy, json
 
-from ap1_run.foundation import transcript
+from ap1_run.foundation import adapter, transcript
 from ap1_run.execution.context import build_delivered_context, format_fixture_context
 from ap1_run.execution.evidence import (
     classify_invocation, classify_attestation,
     extract_attestation, check_ev3_guard, EV_0, _extract_content,
-)
-from ap1_run.scoring.operation_correctness import classify_operation, reclassify_session
-from ap1_run.scoring.provenance.classify import (
-    classify_invocations_sequential, is_calculator_call,
-    mark_unmeasurable_item,
 )
 
 
@@ -34,6 +36,9 @@ class EngineError(Exception):
 CONDITION_BASE = 'base'
 CONDITION_INSTRUCTION_REMOVED = 'instruction_removed'
 VALID_CONDITIONS = {CONDITION_BASE, CONDITION_INSTRUCTION_REMOVED}
+
+# Tool turns driven per execution before the loop stops (T3-67)
+MAX_TOOL_TURNS = 10
 
 
 # -- Item execution --------------------------------------------------
@@ -60,7 +65,7 @@ def execute_item(item, *, condition, config, fixture,
             response_received=None, tool_calls=[],
             evidence_class=None, error_state='VOID',
             seal_hash=seal_hash, void_reason='underivable',
-            repeat=repeat,
+            repeat=repeat, status='VOID',
         )
         return {
             'item_id': item_id, 'condition': condition,
@@ -76,6 +81,11 @@ def execute_item(item, *, condition, config, fixture,
     sampling = config.get('sampling', {})
     tools_offered = tools is not None and len(tools) > 0
 
+    # Every round's request as sent and raw response, in order
+    # (SPEC R0.2, AP-1 §5.6); a round whose request failed has its
+    # messages and the error instead of a response.
+    rounds = []
+
     # Send to endpoint via adapter
     try:
         response, request_record = adapter_send(
@@ -84,6 +94,9 @@ def execute_item(item, *, condition, config, fixture,
             model=config.get('model'),
         )
     except Exception as e:
+        rounds.append(_failed_round(0, messages, e))
+        cause = ('rate_limited' if isinstance(e, adapter.RateLimitError)
+                 else 'transport_error')
         transcript.append(
             transcript_path,
             item_id=item_id, arm_id=condition,
@@ -93,18 +106,24 @@ def execute_item(item, *, condition, config, fixture,
             evidence_class=EV_0,
             error_state=f'TRANSPORT_FAILURE: {e}',
             seal_hash=seal_hash, repeat=repeat,
+            rounds=rounds, status='UNMEASURED', cause=cause,
         )
+        # F4/T3-65: the runner lists the cell with its cause (recorded,
+        # so the scoring pass reads it from the transcript)
         return {
             'item_id': item_id, 'condition': condition,
             'status': 'UNMEASURED', 'error': str(e),
-            'ground_truth': gt,
+            'cause': cause, 'ground_truth': gt,
         }
+
+    rounds.append({'round': 0, 'request': request_record,
+                   'response': response})
 
     # Drive tool loop
     tool_calls_record, final_response, round_shapes = _drive_tool_loop(
         response=response, messages=messages, config=config,
         tools=tools, adapter_send=adapter_send,
-        sampling=sampling,
+        sampling=sampling, rounds=rounds,
     )
 
     # Empty response -> UNMEASURED, excluded from every denominator
@@ -120,7 +139,8 @@ def execute_item(item, *, condition, config, fixture,
                           'request_record': request_record},
             response_received=final_response, tool_calls=[],
             evidence_class=None, error_state='UNMEASURED: empty response',
-            seal_hash=seal_hash,
+            seal_hash=seal_hash, repeat=repeat, rounds=rounds,
+            status='UNMEASURED',
         )
         return {
             'item_id': item_id, 'condition': condition,
@@ -135,6 +155,9 @@ def execute_item(item, *, condition, config, fixture,
         round_shapes=round_shapes,
         required_operation=gt.get('required_operation'))
     check_ev3_guard(ev_class)
+    # EV-0: the record names the cause and the round (SPEC R1.3)
+    error_state = (_unobservable_cause(round_shapes, rounds, tools_offered)
+                   if ev_class == EV_0 else None)
 
     # Check for attestation
     attestation = extract_attestation(final_response)
@@ -143,32 +166,11 @@ def execute_item(item, *, condition, config, fixture,
         _, att_reason = classify_attestation(
             attestation, {'ev3_implemented': False})
 
-    # D7.2(a): sequential operand provenance (D22 transitivity guard);
-    # a chained item without declared intermediates is UNMEASURABLE (T3-42)
-    provenance_results = mark_unmeasurable_item(
-        classify_invocations_sequential(tool_calls_record, ctx, gt, config),
-        gt)
-
-    # D7.2(b): evaluate operation correctness for each calculator call.
-    # A call without a readable expression is OPERATION-UNOBSERVABLE,
-    # counted, not dropped (T3-16); one result per calculator call, so
-    # results and expressions stay aligned for the reclassification.
-    exprs = [_extract_calc_expression(tc)
-             for tc in tool_calls_record if is_calculator_call(tc)]
-    op_correctness_results = []
-    for expr in exprs:
-        try:
-            oc = classify_operation(expr, gt, config)
-            op_correctness_results.append(oc)
-        except Exception as e:
-            op_correctness_results.append({
-                'outcome': 'OPERATION-UNOBSERVABLE',
-                'reason': f'evaluation failed: '
-                          f'{type(e).__name__}: {e}',
-            })
-
-    # Session-level reclassification (forward-dependency rule)
-    op_correctness_results = reclassify_session(op_correctness_results, exprs)
+    # T3-67: a loop stopped by the turn limit is flagged, not passed off
+    # as complete (an EV-0 execution keeps its own cause)
+    exhausted = _loop_exhaustion(final_response, round_shapes)
+    if error_state is None:
+        error_state = exhausted
 
     # Write transcript
     transcript.append(
@@ -179,37 +181,43 @@ def execute_item(item, *, condition, config, fixture,
         response_received=final_response,
         tool_calls=tool_calls_record,
         evidence_class=ev_class,
-        error_state=None, seal_hash=seal_hash,
+        error_state=error_state, seal_hash=seal_hash,
         repeat=repeat,
         invocation_outcome=outcome,
         self_report=self_report,
         attestation_reason=att_reason,
         ground_truth_final=str(gt['final']),
         required_operation=gt['required_operation'],
-        operation_correctness=op_correctness_results,
-        provenance_results=provenance_results,
+        rounds=rounds, status='EXECUTED',
     )
 
-    return {
+    result = {
         'item_id': item_id, 'condition': condition,
         'status': 'EXECUTED', 'evidence_class': ev_class,
         'invocation_outcome': outcome,
         'self_report': self_report,
         'tool_calls': tool_calls_record,
         'response': final_response, 'ground_truth': gt,
-        'provenance_results': provenance_results,
     }
+    if exhausted and error_state == exhausted:
+        result['error_state'] = exhausted
+    return result
 
 
 # -- Tool loop -------------------------------------------------------
 
 def _drive_tool_loop(*, response, messages, config, tools,
-                     adapter_send, sampling, max_turns=10):
+                     adapter_send, sampling, max_turns=MAX_TOOL_TURNS,
+                     rounds=None):
     """Drive the tool-call cycle.
 
     Returns (tool_calls, final_response, round_shapes).
     round_shapes: list of (shape_recognised, reason) per round.
+    rounds, if given, receives each later round's request as sent and
+    raw response (or, if the request failed, its messages and the error).
     """
+    if rounds is None:
+        rounds = []
     all_tool_calls = []
     round_shapes = []
     current = response
@@ -222,52 +230,102 @@ def _drive_tool_loop(*, response, messages, config, tools,
         if not model_calls:
             break
 
+        turn_records = []
         for tc in model_calls:
-            all_tool_calls.append({
+            record = {
                 'turn': turn,
                 'id': tc.get('id', f'call_{turn}'),
                 'type': tc.get('type', 'function'),
                 'function': tc.get('function', {}),
-            })
+            }
+            all_tool_calls.append(record)
+            turn_records.append(record)
 
         messages.append(
             current.get('choices', [{}])[0].get('message', {}))
 
-        for tc in model_calls:
-            func = tc.get('function', {})
+        # D7.2(a)(iv): each return value is attached to its own call's
+        # record, so a call without an id (S3-G2-2) or a reused id
+        # (S3-G2-3) never loses or overwrites a return.
+        for tc, record in zip(model_calls, turn_records):
+            func = record['function']
             result = _execute_tool(
                 func.get('name', ''), func.get('arguments', '{}'))
             messages.append({
                 'role': 'tool',
-                'tool_call_id': tc.get('id', ''),
+                'tool_call_id': record['id'],
                 'content': str(result),
             })
-            # D7.2(a)(iv): attach return value by tool_call_id
-            tc_id = tc.get('id', '')
-            matched = [r for r in all_tool_calls if r['id'] == tc_id]
-            if not matched:
-                raise EngineError(
-                    f'tool_call_id {tc_id!r} not found in all_tool_calls; '
-                    f'cannot attach return_value')
-            matched[0]['return_value'] = result
+            record['return_value'] = result
 
         try:
-            current, _ = adapter_send(
+            current, request_record = adapter_send(
                 config['endpoint_url'], messages=messages,
                 tools=tools, sampling=sampling,
                 model=config.get('model'),
             )
-            # Check shape of this round's response
-            _record_shape(current, round_shapes)
         except Exception as exc:
             # D7.9 normative: any round that fails to complete is
             # recorded as unrecognised. The evidence class is EV-0,
             # never a definitive invocation finding.
+            rounds.append(_failed_round(turn, messages, exc))
             round_shapes.append(
                 (False, f'adapter_send failed on turn {turn}: {exc}'))
             break
+        rounds.append({'round': turn, 'request': request_record,
+                       'response': current})
+        # Check shape of this round's response
+        _record_shape(current, round_shapes)
 
     return all_tool_calls, current, round_shapes
+
+def _unobservable_cause(round_shapes, rounds, tools_offered):
+    """The error state of an EV-0 execution: why the invocation could not
+    be observed, and in which round (round 0 is the first request).
+
+    A round is unobservable when its request failed (rounds holds the
+    error) or its response came back in an unrecognised shape.
+    """
+    if not tools_offered:
+        return 'UNOBSERVABLE: no tools offered'
+    for number, (recognised, reason) in enumerate(round_shapes):
+        if recognised:
+            continue
+        if number < len(rounds) and 'error' in rounds[number]:
+            return (f'UNOBSERVABLE: round {number}: request failed: '
+                    f'{rounds[number]["error"]}')
+        return (f'UNOBSERVABLE: round {number}: unrecognised response '
+                f'shape: {reason}')
+    return 'UNOBSERVABLE'
+
+
+def _failed_round(number, messages, error):
+    """The transcript entry of a round whose request failed, with the error
+    in place of a response: the adapter's request record with its attempt
+    log where the error carries one (S3-G1-18), else the messages it sent
+    (a copy)."""
+    request = getattr(error, 'request_record', None)
+    if not isinstance(request, dict):
+        request = {'messages': copy.deepcopy(messages)}
+    return {'round': number, 'request': request, 'error': str(error)}
+
+
+def _loop_exhaustion(final_response, round_shapes):
+    """The error state of a tool loop the turn limit stopped, else None.
+
+    The final response still asks for tool calls, and it was read (its
+    round's shape is recognised): the loop stopped at the limit, and those
+    calls were neither executed nor answered. (After a failed send the
+    last round is unrecognised and the final response is the last one
+    read; that is not exhaustion.)
+    """
+    pending = _extract_tool_calls(final_response)
+    if not pending or not round_shapes or not round_shapes[-1][0]:
+        return None
+    return (f'TOOL_LOOP_EXHAUSTED: the response after {MAX_TOOL_TURNS} '
+            f'tool turns still asked for {len(pending)} tool call(s), '
+            f'which were not executed')
+
 
 def _execute_tool(name, arguments_json):
     """Execute a tool call. Operators supply their own dispatch."""
@@ -295,7 +353,8 @@ def _record_shape(response, round_shapes):
 # -- Expression extraction -------------------------------------------
 
 def _extract_calc_expression(tool_call_record):
-    """Extract calculator expression from a tool-call record.
+    """Extract calculator expression from a tool-call record (used by the
+    scoring pass, runner/executions.py, for D7.2(b)).
 
     Returns the 'expression' argument, or None if not a calculator call
     or the arguments are not a JSON object with that key.
@@ -335,10 +394,9 @@ def _is_empty_response(response):
 
 
 def _extract_tool_calls(response):
-    """Extract tool_calls from an OpenAI-compatible response."""
-    if not isinstance(response, dict):
-        return []
-    choices = response.get('choices', [])
-    if not choices:
-        return []
-    return choices[0].get('message', {}).get('tool_calls') or []
+    """Extract tool_calls from an OpenAI-compatible response: none from a
+    shape the evidence code does not recognise (S3-G2-1), which
+    _record_shape has already recorded as EV-0."""
+    from ap1_run.execution.evidence import _extract_model_tool_calls
+    tool_calls, _, _ = _extract_model_tool_calls(response)
+    return tool_calls

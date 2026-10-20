@@ -8,10 +8,11 @@ Outcomes: OPERATION-CORRECT, WRONG-OPERATION, OPERATION-UNOBSERVABLE.
 
 import ast
 import operator
-import math
-from decimal import Decimal, DecimalException, InvalidOperation
+from decimal import (
+    ROUND_HALF_UP, Decimal, DecimalException, InvalidOperation, localcontext,
+)
 
-from ap1_run.foundation.numeric import quantise
+from ap1_run.foundation.numeric import DECIMAL_CONTEXT, quantise
 from ap1_run.scoring.provenance.trace import (
     TRANSFORMATIONS, is_number, literal_decimal, parse_expression,
 )
@@ -55,14 +56,35 @@ _ALLOWED_UNARYOPS = {
     ast.USub: operator.neg,
 }
 
+# pi to 100 decimal places, as text: never through float (R0.4).
+_PI = Decimal('3.14159265358979323846264338327950288419716939937510'
+              '58209749445923078164062862089986280348253421170679')
+
+
+def _pi():
+    """pi rounded to the current Decimal precision (exact for any
+    precision up to 100 digits; evaluate_expression uses DECIMAL_CONTEXT,
+    precision 50)."""
+    return +_PI
+
+
+def _e():
+    """e to the current Decimal precision."""
+    return Decimal(1).exp()
+
+
+# Evaluated when the expression is, at DECIMAL_CONTEXT's precision (R0.4).
 _ALLOWED_NAMES = {
-    'pi': Decimal(str(math.pi)),
-    'e': Decimal(str(math.e)),
+    'pi': _pi,
+    'e': _e,
 }
 
 _ALLOWED_FUNCS = {
     'abs': abs,
-    'round': lambda v, n=0: v.quantize(Decimal(10) ** -int(n)),
+    # Half away from zero, as the reference calculator rounds and as the
+    # example configs declare (ROUND_HALF_UP); round(2.5) is 3.
+    'round': lambda v, n=0: v.quantize(Decimal(10) ** -int(n),
+                                       rounding=ROUND_HALF_UP),
 }
 
 def _eval_decimal(node, source):
@@ -99,7 +121,7 @@ def _eval_decimal(node, source):
 
     if isinstance(node, ast.Name):
         if node.id in _ALLOWED_NAMES:
-            return _ALLOWED_NAMES[node.id]
+            return _ALLOWED_NAMES[node.id]()
         raise ValueError(f'unsupported name: {node.id!r}')
 
     if isinstance(node, ast.Call):
@@ -132,7 +154,8 @@ def evaluate_expression(expression_str):
         tree = ast.parse(expr_clean, mode='eval')
         # Every node evaluates to a Decimal (literals, names, operators
         # and the two functions all give one), so the result is one.
-        return _eval_decimal(tree, expr_clean)
+        with localcontext(DECIMAL_CONTEXT):
+            return _eval_decimal(tree, expr_clean)
     except (SyntaxError, ValueError, DecimalException, ZeroDivisionError,
             OverflowError, TypeError, RecursionError, MemoryError):
         return None

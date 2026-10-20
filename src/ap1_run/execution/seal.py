@@ -9,98 +9,205 @@ text version, and any public keys required to verify attestations.
 A run that starts without a valid record is refused.
 """
 
+import hashlib
 from datetime import datetime, timezone
 from pathlib import Path
 
+from ap1_run.execution.version import runner_environment
 from ap1_run.foundation.numeric import canonical_hash, file_hash
+
+# The record format. A record without this field was made by an earlier
+# runner, under the rules of tools/verify_run_seal.py's legacy mode: raw
+# file bytes, a seal_hash that leaves out the timestamp, no expected
+# values or environment.
+SEAL_FORMAT = '2'
+
+# The fields every record of this format carries. seal_hash covers all
+# of them (T3-15, T3-47: the timestamp too).
+SEALED_FIELDS = (
+    'seal_format', 'timestamp',
+    'fixture_hash', 'questions_hash', 'ground_truth_hash',
+    'expected_values_hash', 'config_hash',
+    'ap1_version', 'ap1_version_doi', 'ap1_text_hash',
+    'runner_version_tag', 'runner_version_commit', 'runner_source_hash',
+    'python_version', 'platform', 'package_versions',
+    'verification_keys', 'ev3_implemented',
+)
+
+# The sealed text inputs, by name: the record field is '<name>_hash'.
+TEXT_INPUTS = ('fixture', 'questions', 'ground_truth')
+
+_BOM = b'\xef\xbb\xbf'
 
 
 class SealError(Exception):
     """Seal validation failure."""
 
 
+def text_hash(data):
+    """SHA-256 of a sealed text input, with its line endings made LF and a
+    leading UTF-8 byte-order mark dropped (T3-50), so the same text gives
+    the same digest on every platform and in every editor. An LF file
+    without a BOM hashes exactly as its raw bytes. The AP-1 text is not
+    hashed this way: it must equal the publisher's deposit byte for byte.
+    """
+    if data.startswith(_BOM):
+        data = data[len(_BOM):]
+    data = data.replace(b'\r\n', b'\n').replace(b'\r', b'\n')
+    return hashlib.sha256(data).hexdigest()
+
+
+def text_file_hash(path):
+    """text_hash of a file's contents."""
+    with open(path, 'rb') as f:
+        return text_hash(f.read())
+
+
+def expected_values_hash(expected_values):
+    """The canonical hash of the expected values: what the ground-truth
+    module returned for each item, {item_id: result} (R1.1, T3-48).
+    Raises SealError if a result cannot be hashed (a float, or a value
+    JSON cannot hold)."""
+    try:
+        return canonical_hash(expected_values)
+    except (TypeError, ValueError) as e:
+        raise SealError(f'expected values cannot be sealed: {e}') from e
+
+
+def record_hash(record):
+    """seal_hash: the canonical hash of every field but seal_hash itself,
+    the timestamp included (T3-47)."""
+    return canonical_hash({k: v for k, v in record.items()
+                           if k != 'seal_hash'})
+
+
+def _declared_ap1_hash(config):
+    """The AP-1 text hash the config declares, or SealError if it declares
+    none (T3-68: a blank or 'placeholder' hash checks nothing)."""
+    declared = config.get('ap1_text_hash')
+    if not declared or declared == 'placeholder':
+        raise SealError(
+            f'AP-1 text hash: the config declares {declared!r}; a sealed '
+            f'run needs the SHA-256 of the AP-1 text it claims (R1.1)')
+    return declared
+
+
 def seal(*, config, fixture_path, questions_path, ground_truth_path,
          ap1_text_path=None, verification_keys=None,
-         runner_source_hash=None, lookup_collisions=None):
+         runner_source_hash=None, expected_values=None, loaded=None,
+         lookup_collisions=None):
     """Create a pre-registration record. R1.1.
 
-    Hashes all inputs and timestamps the record. The seal_hash
-    appears on every transcript line.
+    Hashes all inputs and timestamps the record. The seal_hash covers
+    every field, the timestamp included, and appears on every transcript
+    line.
 
+    The AP-1 text is required: SealError if ap1_text_path is not given or
+    not found, if the config declares no hash for it (blank, missing or
+    'placeholder'), or if the file's hash differs from the declared one
+    (T3-68).
+
+    expected_values: {item_id: ground-truth result}, computed before the
+    seal (T3-48); its hash is sealed ('' if not given).
+    loaded: {name: bytes} for 'fixture', 'questions' and 'ground_truth',
+    the bytes the run read and executes. When given, these are hashed
+    instead of the files being read again (T3-72: seal what is executed).
     lookup_collisions, if given (a list of (item_id, field), from
     context.lookup_collisions), is recorded in the sealed record as text,
     'none' if empty: R3.1 reports collisions at seal (T3-75).
-
-    If ap1_text_path is provided and its hash does not match
-    config['ap1_text_hash'], raises SealError.
 
     Returns: dict with component hashes and seal_hash.
     """
     now = datetime.now(timezone.utc).isoformat()
 
+    # AP-1 text hash -- R1.1 normative
+    declared_hash = _declared_ap1_hash(config)
+    if not ap1_text_path:
+        raise SealError('AP-1 text: no file given; a sealed run hashes the '
+                        'AP-1 text it claims (R1.1)')
+    ap1_path = Path(ap1_text_path)
+    if not ap1_path.exists():
+        raise SealError(f'AP-1 text file not found: {ap1_path}')
+    computed = file_hash(str(ap1_path))
+    if declared_hash != computed:
+        raise SealError(
+            f'AP-1 text hash mismatch: config declares '
+            f'{declared_hash!r}, file hashes to {computed!r}')
+
+    loaded = loaded or {}
+    paths = {'fixture': fixture_path, 'questions': questions_path,
+             'ground_truth': ground_truth_path}
+    hashes = {name: (text_hash(loaded[name]) if name in loaded
+                     else text_file_hash(str(paths[name])))
+              for name in TEXT_INPUTS}
+
     record = {
+        'seal_format': SEAL_FORMAT,
         'timestamp': now,
-        'fixture_hash': file_hash(str(fixture_path)),
-        'questions_hash': file_hash(str(questions_path)),
-        'ground_truth_hash': file_hash(str(ground_truth_path)),
+        'fixture_hash': hashes['fixture'],
+        'questions_hash': hashes['questions'],
+        'ground_truth_hash': hashes['ground_truth'],
+        'expected_values_hash': (
+            '' if expected_values is None
+            else expected_values_hash(expected_values)),
         'config_hash': canonical_hash(config),
         'ap1_version': config.get('ap1_version', ''),
         'ap1_version_doi': config.get('ap1_version_doi', ''),
+        'ap1_text_hash': computed,
         'runner_version_tag': config.get('runner_version_tag', ''),
         'runner_version_commit': config.get('runner_version_commit', ''),
         'runner_source_hash': runner_source_hash or '',
+        # The environment, outside runner_source_hash (F2)
+        **runner_environment(),
+        # Verification keys for EV-3 (not implemented in v1.0)
+        'verification_keys': verification_keys or [],
+        'ev3_implemented': False,
     }
-
-    # AP-1 text hash -- R1.1 normative
-    declared_hash = config.get('ap1_text_hash', '')
-    if ap1_text_path:
-        ap1_path = Path(ap1_text_path)
-        if not ap1_path.exists():
-            raise SealError(f'AP-1 text file not found: {ap1_path}')
-        computed = file_hash(str(ap1_path))
-        if declared_hash and declared_hash != 'placeholder' and \
-                declared_hash != computed:
-            raise SealError(
-                f'AP-1 text hash mismatch: config declares '
-                f'{declared_hash!r}, file hashes to {computed!r}')
-        record['ap1_text_hash'] = computed
-    else:
-        record['ap1_text_hash'] = declared_hash
-
     if lookup_collisions is not None:
         record['lookup_collisions'] = '; '.join(
             f'{item_id} ({field})'
             for item_id, field in lookup_collisions) or 'none'
 
-    # Verification keys for EV-3 (not implemented in v1.0)
-    record['verification_keys'] = verification_keys or []
-    record['ev3_implemented'] = False
-
-    # Seal: hash the entire record so far
-    # (timestamp excluded from hash to allow re-sealing check
-    #  on component hashes only)
-    hashable = {k: v for k, v in record.items() if k != 'timestamp'}
-    record['seal_hash'] = canonical_hash(hashable)
+    # Seal: hash the entire record, the timestamp included
+    record['seal_hash'] = record_hash(record)
 
     return record
 
 
 def verify_seal(record, *, config, fixture_path, questions_path,
-                ground_truth_path, ap1_text_path=None):
+                ground_truth_path, ap1_text_path=None,
+                runner_source_hash=None, expected_values=None):
     """Verify a pre-registration record against current files.
 
-    The scorer calls this before processing. Raises SealError
-    if any component hash does not match, naming the mismatch.
+    The scorer calls this before processing. Raises SealError naming
+    every mismatch: a field missing from the record, a seal_hash that
+    does not match the record (so a rewritten field of any kind is
+    refused), and each component that differs from the current inputs:
+    the three text inputs, the config, the AP-1 text (always compared
+    with the config's declared hash, and with the file if its path is
+    given), the DOI, and the runner source hash and expected values when
+    given.
     """
+    mismatches = []
+    missing = [f for f in SEALED_FIELDS if f not in record]
+    if missing:
+        mismatches.append(f'record: missing {", ".join(missing)}')
+    recomputed = record_hash(record)
+    if record.get('seal_hash') != recomputed:
+        mismatches.append(f'seal_hash: sealed={record.get("seal_hash")!r}, '
+                          f'recomputed={recomputed!r}')
+
     checks = [
         ('fixture', record.get('fixture_hash'),
-         file_hash(str(fixture_path))),
+         text_file_hash(str(fixture_path))),
         ('questions', record.get('questions_hash'),
-         file_hash(str(questions_path))),
+         text_file_hash(str(questions_path))),
         ('ground_truth', record.get('ground_truth_hash'),
-         file_hash(str(ground_truth_path))),
+         text_file_hash(str(ground_truth_path))),
         ('config', record.get('config_hash'),
          canonical_hash(config)),
+        ('ap1_text', record.get('ap1_text_hash'),
+         config.get('ap1_text_hash')),
     ]
 
     if ap1_text_path:
@@ -108,14 +215,17 @@ def verify_seal(record, *, config, fixture_path, questions_path,
             ('ap1_text', record.get('ap1_text_hash'),
              file_hash(str(ap1_text_path))))
 
-    # Version DOI check
-    sealed_doi = record.get('ap1_version_doi', '')
-    config_doi = config.get('ap1_version_doi', '')
-    if sealed_doi and config_doi and sealed_doi != config_doi:
-        checks.append(
-            ('ap1_version_doi', sealed_doi, config_doi))
+    # Version DOI check: a DOI on one side only is a mismatch too
+    checks.append(('ap1_version_doi', record.get('ap1_version_doi', ''),
+                   config.get('ap1_version_doi', '')))
 
-    mismatches = []
+    if runner_source_hash is not None:
+        checks.append(('runner_source_hash',
+                       record.get('runner_source_hash'), runner_source_hash))
+    if expected_values is not None:
+        checks.append(('expected_values', record.get('expected_values_hash'),
+                       expected_values_hash(expected_values)))
+
     for name, expected, actual in checks:
         if expected != actual:
             mismatches.append(

@@ -25,13 +25,18 @@ Backend fingerprints (system_fingerprint): not reported
 | `ap1_version_doi` | `10.5281/zenodo.21755443` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
+| `expected_values_hash` | `5b5f7c1d0a5c638692c2bd7b334f38989dee50c8ccba6956048290a3c078dc36` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
-| `ground_truth_hash` | `080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812` |
+| `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
 | `lookup_collisions` | `none` |
+| `package_versions` | `<ENVIRONMENT>` |
+| `platform` | `<ENVIRONMENT>` |
+| `python_version` | `<ENVIRONMENT>` |
 | `questions_hash` | `5f6aa97714e2b0f7e3039ae6018f6566e811354c4a904d210964beac54172af9` |
 | `runner_source_hash` | `<RUNNER_SOURCE_HASH>` |
 | `runner_version_commit` | `e0d9ec9` |
 | `runner_version_tag` | `v1.3.1` |
+| `seal_format` | `2` |
 | `seal_hash` | `<SEAL_HASH>` |
 | `timestamp` | `<TIMESTAMP>` |
 | `verification_keys` | `[]` |
@@ -56,7 +61,6 @@ Backend fingerprints (system_fingerprint): not reported
     "I'm sorry, I cannot"
   ],
   "dimensions_claimed": [
-    "D1",
     "D2",
     "D7"
   ],
@@ -119,7 +123,7 @@ Backend fingerprints (system_fingerprint): not reported
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | Measured | 40 | No rate: 8 items await adjudication (auto-scored 32: 32 correct, 0 incorrect, 0 no figure) |
+| D1 | **NOT MEASURED** | — | — |
 | D2 | Measured | 10 | figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20 (§9) |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -130,19 +134,6 @@ Backend fingerprints (system_fingerprint): not reported
 | D7.2 | Measured | see §6-7b | Operand provenance §6, §7b; operation correctness §7 |
 | D7.3 | Partly measured (8 of 40 UNOBSERVABLE) | 40 | Transcription fidelity: D7.3 section |
 | D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |
-
-### D1 per Category
-
-> AP-1 v1.3 D1: results per category, with 95% confidence intervals and n stated; no category claim where n < 10. n counts questions; a question is correct only if every execution of it is. Interval: exact two-sided 95% Clopper-Pearson.
-
-| Category | n (questions) | Executions | Correct | Incorrect | No Figure | Awaiting Adjudication | Accuracy (95% CI) |
-|---|---|---|---|---|---|---|---|
-| interest | 2 | 8 | 4 | 0 | 0 | 4 | no category claim: n < 10 |
-| balance | 2 | 8 | 8 | 0 | 0 | 0 | no category claim: n < 10 |
-| amortisation | 2 | 8 | 8 | 0 | 0 | 0 | no category claim: n < 10 |
-| fees | 1 | 4 | 4 | 0 | 0 | 0 | no category claim: n < 10 |
-| growth | 2 | 8 | 8 | 0 | 0 | 0 | no category claim: n < 10 |
-| net_income | 1 | 4 | 0 | 0 | 0 | 4 | no category claim: n < 10 |
 
 ## 4. D7 Figures by Evidence Class
 
@@ -435,6 +426,18 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose:
 | Q10 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
 | Q10 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
 
+## 9b. D2.2 Execution Conditions
+
+- Serving stack and version: not disclosed by the endpoint; the runner cannot observe it.
+- Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
+- Concurrency: one request at a time, sequentially, from a single process.
+- Sampling parameters sent:
+  - `max_completion_tokens`: `4096`
+  - `reasoning_effort`: `none`
+  - `temperature`: not sent (platform-rejected)
+  - `top_p`: not sent (operator-declared)
+- Parameter echo: `UNVERIFIED` (40 responses checked)
+
 ## 10. Non-Outcome Cells
 
 > Every cell that is not a scoreable outcome is listed with its reason.
@@ -470,6 +473,7 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose:
 
 The following dimensions were **not measured** in this evaluation:
 
+- **D1**: Accuracy — not claimed in this configuration (the runner auto-scores it)
 - **D3**: Provenance — requires human adjudication; the runner does not measure it
 - **D4**: Refusal integrity — requires human adjudication; the runner does not measure it
 - **D5**: Adversarial resistance — requires human adjudication; the runner does not measure it

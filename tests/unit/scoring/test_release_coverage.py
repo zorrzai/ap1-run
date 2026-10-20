@@ -3,7 +3,7 @@ figure matching the expected value was returned by some tool call
 (D7.3 release coverage, the E7 fix)."""
 
 import json
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal
 
 import pytest
 
@@ -270,18 +270,6 @@ def test_release_coverage_nan_return_governs_nothing():
     assert r['outcome'] == PARTIALLY_GOVERNED
 
 
-@pytest.mark.finding('T3-39')
-@pytest.mark.parametrize('result', ['inf', 'Infinity', '1e+60'])
-def test_release_coverage_unquantisable_return_raises(result):
-    # Today: a tool return that cannot be quantised (the calculator gives
-    # 'inf' for 1e300*1e300 and '1e+60' for 10.0**60) raises
-    # InvalidOperation out of the check, which aborts the run after paid
-    # requests. Correct: such a return governs nothing, or is recorded,
-    # without an exception.
-    with pytest.raises(InvalidOperation):
-        check_release_coverage([call(result)], [D('430.75')], D('430.75'))
-
-
 # --- Step 4: correct behaviour (failing until fixed) ---
 
 @pytest.mark.finding('S3-G5-1')
@@ -298,9 +286,6 @@ def test_release_coverage_no_tool_returns_names_no_ungoverned_figures():
 # Group g1-invocation (fix plan branch 10).
 
 @pytest.mark.finding('T3-39')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39: an unquantisable tool return raises '
-                          'InvalidOperation')
 @pytest.mark.parametrize('result', ['inf', 'Infinity', '1e+60'])
 def test_release_coverage_unquantisable_return_governs_nothing(result):
     # Correct (T3 review T3-39): a tool return that cannot be quantised
@@ -312,3 +297,20 @@ def test_release_coverage_unquantisable_return_governs_nothing(result):
     except Exception as e:
         r = {'outcome': e}
     assert r['outcome'] in (PARTIALLY_GOVERNED, COVERAGE_UNOBSERVABLE), r
+
+
+# Step 5 (run-robustness): values that cannot be quantised (T3-39).
+
+@pytest.mark.finding('T3-39')
+def test_release_coverage_unquantisable_return_beside_governing_one():
+    r = check_release_coverage([call('inf'), call('430.75')], [D('430.75')],
+                               D('430.75'))
+    assert r['outcome'] == GOVERNED_RELEASE
+    assert r['tool_returns'] == [D('Infinity'), D('430.75')]
+
+
+@pytest.mark.finding('T3-39')
+def test_release_coverage_unquantisable_candidate_ungoverned():
+    r = check_release_coverage([call('430.75')], [D('1e+60')], D('430.75'))
+    assert (r['outcome'], r['ungoverned_figures']) == (
+        PARTIALLY_GOVERNED, [D('1e+60')])
