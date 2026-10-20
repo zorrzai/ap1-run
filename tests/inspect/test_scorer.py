@@ -7,6 +7,7 @@ Pins where the Inspect path diverges from the runner today (T3-43).
 """
 
 import asyncio
+import importlib.util
 import json
 from decimal import Decimal
 from pathlib import Path
@@ -30,7 +31,13 @@ EXAMPLE = Path(__file__).resolve().parents[2] / 'example'
 
 @pytest.fixture(scope='module')
 def example():
-    import ground_truth_example  # example/ is on sys.path via ap1_inspect
+    # The shipped module, loaded from its file under a private name: other
+    # tests may leave a different module registered as ground_truth_example
+    # in sys.modules (the runner registers the sealed one there).
+    spec = importlib.util.spec_from_file_location(
+        '_inspect_test_ground_truth', EXAMPLE / 'ground_truth_example.py')
+    ground_truth_example = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(ground_truth_example)
     config = load_config(EXAMPLE / 'config.json')
     fixture = json.loads((EXAMPLE / 'fixture.json').read_text('utf-8'))
     items = {q['id']: q for q in json.loads(
