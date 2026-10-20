@@ -9,9 +9,9 @@ Outcomes: OPERATION-CORRECT, WRONG-OPERATION, OPERATION-UNOBSERVABLE.
 import ast
 import operator
 import math
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, localcontext
 
-from ap1_run.foundation.numeric import quantise
+from ap1_run.foundation.numeric import DECIMAL_CONTEXT, quantise
 from ap1_run.scoring.provenance.trace import (
     TRANSFORMATIONS, is_number, literal_decimal, parse_expression,
 )
@@ -113,9 +113,10 @@ def evaluate_expression(expression_str):
         # E6: translate ^ to ** for correct mathematical precedence
         expr_clean = expression_str.strip().replace('^', '**')
         tree = ast.parse(expr_clean, mode='eval')
-        result = _eval_decimal(tree, expr_clean)
-        if not isinstance(result, Decimal):
-            result = Decimal(str(result))
+        with localcontext(DECIMAL_CONTEXT):
+            result = _eval_decimal(tree, expr_clean)
+            if not isinstance(result, Decimal):
+                result = Decimal(str(result))
         return result
     except (SyntaxError, ValueError, InvalidOperation,
             ZeroDivisionError, OverflowError, TypeError):
