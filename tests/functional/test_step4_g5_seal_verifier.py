@@ -323,9 +323,6 @@ def load_verifier():
 
 @pytest.mark.finding('T3-18')
 @pytest.mark.req('R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-18: verify_run_seal.py passes a run whose '
-                          'transcript is missing')
 def test_verifier_on_real_run_without_transcript_fails(runner, monkeypatch,
                                                        capsys):
     # End to end: a genuine run of the example (inputs read in place, so

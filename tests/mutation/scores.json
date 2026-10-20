@@ -2,8 +2,8 @@
   "execution/ap1_texts": {
     "killed": 46,
     "mutants": 46,
-    "score": 1.0,
-    "notes": "New in step 5 (seal-verifier-hardening, V12-4). No survivors."
+    "notes": "New in step 5 (seal-verifier-hardening, V12-4). No survivors.",
+    "score": 1.0
   },
   "execution/context": {
     "killed": 93,
@@ -41,10 +41,10 @@
     "score": 1.0
   },
   "execution/sealed_inputs": {
-    "killed": 101,
-    "mutants": 109,
-    "notes": "New in step 5 (seal-verifier-hardening, T3-48/T3-72). All 8 survivors are equivalent. Two decode the JSON inputs as 'UTF-8', the same codec. Three change the message of the OSError path_stats raises, which importlib catches and never shows. Two pass location None or no location to spec_from_file_location: it then takes the location from the loader's get_filename, the same path. One pops the module from sys.modules without a default: it is always there at that point (load_ground_truth put it there).",
-    "score": 0.9266
+    "killed": 100,
+    "mutants": 107,
+    "notes": "New in step 5 (seal-verifier-hardening, T3-48/T3-72). All 7 survivors are equivalent. One decodes the JSON inputs as 'UTF-8-SIG', the same codec. Three change the message of the OSError path_stats raises, which importlib catches and never shows. Two pass location None or no location to spec_from_file_location: it then takes the location from the loader's get_filename, the same path. One pops the module from sys.modules without a default: it is always there at that point (load_ground_truth put it there).",
+    "score": 0.9346
   },
   "execution/version": {
     "killed": 171,
@@ -121,8 +121,8 @@
   "runner/settings": {
     "killed": 258,
     "mutants": 258,
-    "score": 1.0,
-    "notes": "(Step 5 seal-verifier-hardening, V12-4: --ap1-text has no default path; the text comes from the version table.)"
+    "notes": "(Step 5 seal-verifier-hardening, V12-4: --ap1-text has no default path; the text comes from the version table.)",
+    "score": 1.0
   },
   "runner/summary": {
     "killed": 656,

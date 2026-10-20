@@ -68,6 +68,12 @@ python verify_run_seal.py output/run_f_sol
 ```
 
 On the current layout, the same script is `python tools/verify_run_seal.py`.
+Since October 2026 it checks a record without a `seal_format` field, as the
+published runs' are, under the rules it was made with (raw bytes, a
+`seal_hash` without the timestamp), and says so in a warning. It also checks
+every transcript line and the time of the seal. It cannot recompute those
+records' `runner_source_hash` (it covered every `.py` file of the clone); that
+is a warning too.
 
 **Expected mismatch.** `ground_truth_hash` fails on a clean clone, and only
 because of line endings. The repository checks `.py` files out with LF; the

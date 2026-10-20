@@ -478,9 +478,22 @@ python tools/verify_run_seal.py output/run_b_sol
 ```
 
 This reads the seal record from `report.md` §1 and the resolved
-configuration from `report.md` §2, then recomputes and compares all five
-component hashes and the composite `seal_hash`. It reports each check
-individually and exits non-zero if any check fails.
+configuration from `report.md` §2, then recomputes and compares the
+component hashes and the composite `seal_hash`, checks that every line of the
+transcript (`smoke_run.jsonl`, which must be there) carries that `seal_hash`,
+and that the seal is dated no later than the first transcript record. For a
+record with `seal_format` it also checks that the record holds every sealed
+field, recomputes the expected values by running the ground-truth module, and
+compares `runner_source_hash` with this checkout's code (so verify a run from a
+checkout of its `runner_version_commit`). It reports each comparison
+individually, PASS or FAIL; what it cannot check, or should tell you (a record
+made before October 2026, `runner_modified: true`), is a WARN, never a PASS.
+It exits non-zero if any check fails.
+
+The inputs are read from `example/` and the AP-1 text from `reference/` (the
+text of the run's `ap1_version`). For a run made with other inputs, give the
+verifier the runner's own options: `--fixture-dir` and `--ap1-text`. Paths
+are taken from the working directory.
 
 **Do not** hash `example/config.json` directly — it will not match the
 sealed `config_hash` because it contains the placeholder model, not the
@@ -493,7 +506,9 @@ longer matches the current file. Erratum E3 in
 declared in Q07's derivation metadata but never used in the computation.
 The correction was made for cause; the sealed state is not restored.
 The verifier reports this mismatch with the E3 reference and exits
-non-zero.
+non-zero. For the September seals the cause is line endings only
+(FINDINGS_ERRATA N2), and the verifier says so. Any other ground-truth
+mismatch is reported without a note.
 
 **Line endings.** Since October 2026 the fixture, the questions and the
 ground-truth module are hashed with LF line endings and without a UTF-8
