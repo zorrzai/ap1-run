@@ -151,7 +151,7 @@ def check_parameter_echo(requested_params, echoed_params):
         if echoed_val is None:
             findings.append(
                 f'parameter {param!r} requested but not echoed')
-        elif str(echoed_val) != str(requested_val):
+        elif not _same_value(requested_val, echoed_val):
             findings.append(
                 f'parameter {param!r}: requested={requested_val!r}, '
                 f'applied={echoed_val!r} — silently ignored')
@@ -168,6 +168,18 @@ def check_parameter_echo(requested_params, echoed_params):
         'findings': [],
         'status': 'VERIFIED',
     }
+
+
+def _same_value(requested, echoed):
+    """True if an echoed parameter is the value requested: the same text,
+    or numbers equal as Decimals of their text (0 and 0.0 are the same
+    temperature; S3-G5-4). Never through float."""
+    if str(requested) == str(echoed):
+        return True
+    try:
+        return Decimal(str(requested)) == Decimal(str(echoed))
+    except (ArithmeticError, ValueError):
+        return False
 
 
 def _is_error_or_limited(response):

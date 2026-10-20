@@ -168,10 +168,10 @@
     "score": 0.9732
   },
   "scoring/reproducibility": {
-    "killed": 207,
-    "mutants": 215,
+    "killed": 219,
+    "mutants": 227,
     "notes": "All 8 survivors are equivalent. Each is in _extract_surface_values and replaces a .get() default with None or drops it (also None): r.get('choices', []) on the figures and the prose surface (4), and .get('content', '') on both surfaces (4). None is falsy like [] and '', and every use is guarded by 'if choices:' or followed by \"or ''\", so the value is the same.",
-    "score": 0.9628
+    "score": 0.9648
   },
   "scoring/transcription": {
     "killed": 124,

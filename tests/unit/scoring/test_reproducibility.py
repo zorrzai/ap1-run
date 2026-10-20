@@ -316,17 +316,6 @@ def test_parameter_echo_compares_as_strings():
     assert check_parameter_echo({'t': 0.0}, {'t': '0.0'})['status'] == 'VERIFIED'
 
 
-@pytest.mark.finding('S3-G5-4')
-def test_parameter_echo_numerically_equal_values_can_mismatch():
-    # Today: values are compared as strings, so temperature 0 requested
-    # and 0.0 echoed is reported as "silently ignored". Correct: compare
-    # numbers as numbers. (No live caller today; see T3-90.)
-    r = check_parameter_echo({'temperature': 0}, {'temperature': 0.0})
-    assert r['status'] == 'MISMATCH'
-    assert r['findings'] == [
-        "parameter 'temperature': requested=0, applied=0.0 — silently ignored"]
-
-
 # --- Step 4: correct behaviour (failing until fixed) ---
 # Group g7-report (fix branch 7). xfail(strict=True) until the fix.
 
@@ -353,9 +342,6 @@ def test_classify_mechanism_figures_surface_counts_numeric_answers():
 
 
 @pytest.mark.finding('S3-G5-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G5-4: echo compared as strings; 0 requested, '
-                          '0.0 applied is reported silently ignored')
 def test_parameter_echo_numerically_equal_values_verified():
     # SPEC R2.2: "a parameter requested and silently ignored is a platform
     # finding". 0 and 0.0 are the same temperature. Correct: numbers are
@@ -389,3 +375,22 @@ def test_classify_mechanism_no_observations_is_unmeasured():
     # and one success is UNMEASURED) is the same rule with one run.
     r = classify_mechanism([], surface='prose', minimum_runs=0)
     assert r['mechanism'] == UNMEASURED
+
+
+@pytest.mark.finding('S3-G5-4')
+@pytest.mark.parametrize('requested, echoed, status', [
+    ('0.70', 0.7, 'VERIFIED'),          # equal as numbers
+    (1, '1.0', 'VERIFIED'),
+    ('auto', 'auto', 'VERIFIED'),       # equal as text
+    ('auto', 'none', 'MISMATCH'),       # text, not numbers
+    (True, 1, 'MISMATCH'),              # a bool is not the number 1
+    (0.5, 'high', 'MISMATCH'),          # one side not a number
+    ('sNaN', 'sNaN', 'VERIFIED'),       # same text, never compared as numbers
+    ('sNaN', '0', 'MISMATCH'),          # a signalling NaN never raises out
+    (0.7, 0.70001, 'MISMATCH'),
+])
+def test_parameter_echo_compares_numbers_as_decimals_else_text(
+        requested, echoed, status):
+    r = check_parameter_echo({'p': requested}, {'p': echoed})
+    assert r['status'] == status
+    assert r['verified'] is (status == 'VERIFIED')
