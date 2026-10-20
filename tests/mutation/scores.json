@@ -77,10 +77,10 @@
     "score": 0.9675
   },
   "run": {
-    "killed": 553,
-    "mutants": 568,
+    "killed": 577,
+    "mutants": 592,
     "notes": "All 15 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored.",
-    "score": 0.9736
+    "score": 0.9747
   },
   "runner/console": {
     "killed": 467,

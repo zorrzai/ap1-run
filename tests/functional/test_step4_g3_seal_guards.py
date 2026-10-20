@@ -163,9 +163,6 @@ def compute(item_id, delivered_context):
 
 @pytest.mark.finding('T3-7')
 @pytest.mark.req('R3.1', 'R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-7: the R3.1 guards are never called on a live '
-                          'run; a constant-returning module is sealed and run')
 def test_run_constant_ground_truth_module_refused_before_any_request(
         fx, tmp_path, monkeypatch, capsys):
     # Correct (SPEC R3.1 l.686-694, "A constant-returning module is
@@ -182,9 +179,6 @@ def test_run_constant_ground_truth_module_refused_before_any_request(
 
 @pytest.mark.finding('T3-8', 'T3-7')
 @pytest.mark.req('R3.1', 'R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-8/T3-7: an undeclared read through .get() is '
-                          'not seen, and the guard is not called live')
 def test_run_undeclared_field_read_through_get_refused_before_any_request(
         fx, tmp_path, monkeypatch, capsys):
     # Correct (R3.1 via source_fields_check: "A module reading a field NOT
@@ -215,9 +209,6 @@ def compute(item_id, delivered_context):
 
 @pytest.mark.finding('T3-7')
 @pytest.mark.req('R3.1', 'R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-7: declared_constants_check is never called on '
-                          'a live run; an undeclared constant is sealed')
 def test_run_undeclared_constant_refused_before_any_request(
         fx, tmp_path, monkeypatch, capsys):
     # Correct (R3.1, the declared-constants check, the E3 defect class):

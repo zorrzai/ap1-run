@@ -698,8 +698,8 @@ def test_source_fields_check_raising_item_does_not_stop_later_items():
 
 
 # -- the shipped example module --------------------------------------------
-# The guards are never called on a live run (T3-7), so these are the only
-# checks that the example ground-truth module satisfies them. Read only.
+# The live run calls the guards before sealing (T3-7); these check the
+# example ground-truth module directly. Read only.
 
 EXAMPLE = Path(__file__).resolve().parents[3] / 'example'
 

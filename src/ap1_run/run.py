@@ -43,7 +43,10 @@ from ap1_run.execution.context import (
     build_delivered_context, check_lookup_collision,
 )
 from ap1_run.execution.engine import execute_item
-from ap1_run.execution.seal import seal as create_seal
+from ap1_run.execution.seal import (
+    perturbation_check, seal as create_seal, source_fields_check,
+)
+from ap1_run.execution.seal_constants import declared_constants_check
 from ap1_run.execution.version import (
     compute_runner_source_hash, resolve_runner_version,
 )
@@ -164,6 +167,18 @@ def main(argv=None):
         print(f'  WARNING: runner appears modified '
               f'(git HEAD: {runner_info.get("git_commit", "?")[:12]})')
     print(f'Runner source hash: {runner_source_hash[:16]}...')
+    print()
+
+    # -- R3.1 seal-time ground-truth guards --
+    # The module must compute its expected values from its declared
+    # source fields: refused (SealError) before sealing and before any
+    # request if its output ignores a declared field, if it reads a field
+    # it does not declare, or if it uses an undeclared numeric constant.
+    perturbation_check(gt_module, fixture, questions)
+    source_fields_check(gt_module, fixture, questions)
+    declared_constants_check(gt_module, fixture, questions)
+    print('Ground-truth guards (R3.1): PASSED (perturbation, source fields, '
+          'declared constants)')
     print()
 
     # -- SEAL: R1.1 pre-registration record --
