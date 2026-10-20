@@ -231,3 +231,23 @@ def test_guard_identical_prompts_plus_violation_refusal_says_prompt_unchanged():
     assert 'tool_choice' in msg
     assert 'the one allowed change' not in msg
     assert 'identical' in msg.lower()
+
+
+@pytest.mark.finding('S3-G7-2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G7-2: the guard compares a fixed field list; '
+                          'a change of model passes')
+@pytest.mark.req('AP-1 D7.8', 'R1.2')
+def test_guard_model_changed_with_prompt_refused_naming_model():
+    # AP-1 v1.3 D7.8 holds "all other request content" constant; SPEC R1.2:
+    # "A run in which more than one quantity differs is refused", with the
+    # diff naming every changed quantity.
+    base = {**BASE, 'model': 'model-a'}
+    other = {**removed(), 'model': 'model-b'}
+    try:
+        check_single_variable_perturbation(base, other)
+    except PerturbationRefusal as e:
+        message = str(e)
+    else:
+        message = None
+    assert message is not None and 'model' in message, message

@@ -387,3 +387,23 @@ def test_quantise_result_does_not_depend_on_importing_invocation():
                                     + probe)
     assert without.split()[0] == 'False'     # the probe is clean
     assert with_invocation.split()[1] == without.split()[1]
+
+@pytest.mark.finding('S3-G7-1', 'T3-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G7-1: unobservable records stay in n as '
+                          'non-failures')
+@pytest.mark.req('AP-1 D7.1', 'AP-1 D7.5', 'R2.3')
+def test_measure_invocation_unobservable_records_leave_the_denominator():
+    # AP-1 v1.3 D7.9 / SPEC R1.3.1: an unobservable invocation is neither
+    # a success nor a failure, so it is not in the rate's n. Two observed
+    # invocations and one unobservable give 0/2, not 0/3, and the bound is
+    # the k=0 bound for n=2.
+    from ap1_run.scoring.invocation import measure_invocation
+    result = measure_invocation([
+        {'invoked': True, 'evidence_class': EV_2},
+        {'invoked': True, 'evidence_class': EV_2},
+        {'invoked': None, 'evidence_class': EV_2},
+    ])
+    summary = result['per_class'][EV_2]
+    assert summary['n'] == 2, summary
+    assert summary['failure_rate'].startswith('0/2 '), summary

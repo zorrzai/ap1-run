@@ -728,3 +728,33 @@ def test_evaluate_expression_overflow_or_deep_nesting_is_none(expression):
     # the call is OPERATION-UNOBSERVABLE with its detail. Correct: None,
     # no exception (step-3 report g4, item 4).
     assert _evaluated(expression) is None
+
+PI_60 = D('3.14159265358979323846264338327950288419716939937510582097494')
+E_60 = D('2.71828182845904523536028747135266249775724709369995957496697')
+
+
+@pytest.mark.finding('T3-77')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-77 (KNOWN_ISSUES #4): pi and e are built '
+                          'from float')
+@pytest.mark.parametrize('name, exact', [('pi', PI_60), ('e', E_60)])
+def test_evaluate_expression_pi_and_e_exact_to_decimal_precision(name,
+                                                                 exact):
+    # SPEC R0.4 ("never through float"); KNOWN_ISSUES #4. Correct: right
+    # to the Decimal context's precision (within a few units in the last
+    # place). Today Decimal(str(math.pi)) is right to 16 digits only.
+    places = decimal.getcontext().prec - 3
+    assert abs(evaluate_expression(name) - exact) < D(10) ** -places
+
+
+@pytest.mark.finding('T3-77')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-77 (KNOWN_ISSUES #6): round() in D7.2(b) is '
+                          'half-even, not the declared ROUND_HALF_UP')
+def test_classify_operation_round_uses_declared_half_up():
+    # KNOWN_ISSUES #6: the declared rounding policy is ROUND_HALF_UP
+    # (CONFIG; AP-1 v1.3 §6.9), so round(2.5) evaluates to 3 and matches an
+    # expected 3. Today it evaluates to 2: WRONG-OPERATION.
+    result = classify('round(2.5)', gt={'final': D('3'),
+                                        'intermediates': []})
+    assert (result['outcome'], result['evaluated_result']) == (OC, '3')

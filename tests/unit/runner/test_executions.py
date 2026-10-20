@@ -659,3 +659,38 @@ def test_score_execution_locale_ambiguous_figure_routes_to_adjudication(
     except Exception as e:  # the fix must route, not raise
         outcome = f'raised {type(e).__name__}: {e}'
     assert outcome.startswith('ADJUDICATE')
+
+
+NO_FIGURE = {'outcome': 'ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING',
+             'reason': '1 numeric tokens found, none matching expected',
+             'released_figure': None}
+
+
+@pytest.mark.finding('S4-G9-1')
+def test_score_execution_no_released_figure_written_as_string_none(fakes,
+                                                                    tpath):
+    # Current behaviour: identify_figure gives released_figure None for
+    # every outcome that releases no figure, and score_execution writes
+    # str(None), so the transcript and smoke_summary.json say "None" (the
+    # no-key case writes ''). Correct: no figure is recorded as null.
+    fakes.figure = dict(NO_FIGURE)
+    findings = Findings()
+    score(findings, {'response': response('It is $15.25.'),
+                     'tool_calls': []}, tpath)
+    assert transcript.read_all(tpath)[-1]['released_figure'] == 'None'
+    assert findings.all_results[0]['released_figure'] == 'None'
+
+
+@pytest.mark.finding('S4-G9-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason="S4-G9-1: no released figure is written as the "
+                          "string 'None'")
+def test_score_execution_no_released_figure_recorded_as_null(fakes, tpath):
+    # R0.3: the transcript records what happened; a figure that was not
+    # released is null, not the text "None".
+    fakes.figure = dict(NO_FIGURE)
+    findings = Findings()
+    score(findings, {'response': response('It is $15.25.'),
+                     'tool_calls': []}, tpath)
+    assert transcript.read_all(tpath)[-1]['released_figure'] is None
+    assert findings.all_results[0]['released_figure'] is None
