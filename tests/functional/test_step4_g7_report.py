@@ -113,6 +113,10 @@ def _run(tmp_path_factory, dimensions_claimed, later_model=None):
     config['repeat_count'] = '2'
     config['dimensions_claimed'] = dimensions_claimed
     config['structured_answer_field'] = 'answer'
+    # The D1 sections are under test, so the run claims D1, which the
+    # 10-item example cannot support (R0.1 minimum-n, T3-12); the
+    # minimum-n check is switched off below for this run only.
+    config['dimensions_claimed'] = ['D1', 'D2', 'D7']
     config_path = tmp / 'config.json'
     config_path.write_text(json.dumps(config, indent=2), 'utf-8')
     output_dir = tmp / 'output'
@@ -153,6 +157,8 @@ def _run(tmp_path_factory, dimensions_claimed, later_model=None):
             mp.setenv('AP1_SMOKE_MODEL', 'mock-model')
             mp.setattr(time, 'sleep', lambda seconds: None)
             from ap1_run import run as runner
+            mp.setattr(runner, 'validate_minimum_n',
+                       lambda config, items: None)
             exit_code = runner.main([
                 '--config', str(config_path),
                 '--fixture-dir', str(fixture_dir),
