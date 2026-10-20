@@ -15051,7 +15051,375 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 71: Q02, repeat 5 — Scorer 1
+## Item 71: Q02, repeat 3 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 71: Q02, repeat 3 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 72: Q02, repeat 4 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit = Credit limit − Balance**
+
+$5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 72: Q02, repeat 4 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit = Credit limit − Balance**
+
+$5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 73: Q02, repeat 5 — Scorer 1
 
 Execution id: `<EXECUTION_ID_71>`
 
@@ -15147,7 +15515,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 71: Q02, repeat 5 — Scorer 2
+## Item 73: Q02, repeat 5 — Scorer 2
 
 Execution id: `<EXECUTION_ID_71>`
 
@@ -15243,7 +15611,193 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 72: Q02, repeat 7 — Scorer 1
+## Item 74: Q02, repeat 6 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 74: Q02, repeat 6 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 75: Q02, repeat 7 — Scorer 1
 
 Execution id: `<EXECUTION_ID_72>`
 
@@ -15338,7 +15892,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 72: Q02, repeat 7 — Scorer 2
+## Item 75: Q02, repeat 7 — Scorer 2
 
 Execution id: `<EXECUTION_ID_72>`
 
@@ -15433,7 +15987,189 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 73: Q02, repeat 9 — Scorer 1
+## Item 76: Q02, repeat 8 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 76: Q02, repeat 8 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 77: Q02, repeat 9 — Scorer 1
 
 Execution id: `<EXECUTION_ID_73>`
 
@@ -15529,7 +16265,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 73: Q02, repeat 9 — Scorer 2
+## Item 77: Q02, repeat 9 — Scorer 2
 
 Execution id: `<EXECUTION_ID_73>`
 
@@ -15625,7 +16361,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 74: Q02, repeat 10 — Scorer 1
+## Item 78: Q02, repeat 10 — Scorer 1
 
 Execution id: `<EXECUTION_ID_74>`
 
@@ -15721,7 +16457,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 74: Q02, repeat 10 — Scorer 2
+## Item 78: Q02, repeat 10 — Scorer 2
 
 Execution id: `<EXECUTION_ID_74>`
 
@@ -15817,7 +16553,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 75: Q02, repeat 11 — Scorer 1
+## Item 79: Q02, repeat 11 — Scorer 1
 
 Execution id: `<EXECUTION_ID_75>`
 
@@ -15913,7 +16649,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 75: Q02, repeat 11 — Scorer 2
+## Item 79: Q02, repeat 11 — Scorer 2
 
 Execution id: `<EXECUTION_ID_75>`
 
@@ -16009,7 +16745,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 76: Q02, repeat 12 — Scorer 1
+## Item 80: Q02, repeat 12 — Scorer 1
 
 Execution id: `<EXECUTION_ID_76>`
 
@@ -16106,7 +16842,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 76: Q02, repeat 12 — Scorer 2
+## Item 80: Q02, repeat 12 — Scorer 2
 
 Execution id: `<EXECUTION_ID_76>`
 
@@ -16203,7 +16939,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 77: Q02, repeat 13 — Scorer 1
+## Item 81: Q02, repeat 13 — Scorer 1
 
 Execution id: `<EXECUTION_ID_77>`
 
@@ -16299,7 +17035,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 77: Q02, repeat 13 — Scorer 2
+## Item 81: Q02, repeat 13 — Scorer 2
 
 Execution id: `<EXECUTION_ID_77>`
 
@@ -16395,7 +17131,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 78: Q02, repeat 15 — Scorer 1
+## Item 82: Q02, repeat 15 — Scorer 1
 
 Execution id: `<EXECUTION_ID_78>`
 
@@ -16490,7 +17226,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 78: Q02, repeat 15 — Scorer 2
+## Item 82: Q02, repeat 15 — Scorer 2
 
 Execution id: `<EXECUTION_ID_78>`
 
@@ -16585,7 +17321,193 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 79: Q02, repeat 17 — Scorer 1
+## Item 83: Q02, repeat 16 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 83: Q02, repeat 16 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 84: Q02, repeat 17 — Scorer 1
 
 Execution id: `<EXECUTION_ID_79>`
 
@@ -16681,7 +17603,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 79: Q02, repeat 17 — Scorer 2
+## Item 84: Q02, repeat 17 — Scorer 2
 
 Execution id: `<EXECUTION_ID_79>`
 
@@ -16777,7 +17699,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 80: Q02, repeat 18 — Scorer 1
+## Item 85: Q02, repeat 18 — Scorer 1
 
 Execution id: `<EXECUTION_ID_80>`
 
@@ -16874,7 +17796,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 80: Q02, repeat 18 — Scorer 2
+## Item 85: Q02, repeat 18 — Scorer 2
 
 Execution id: `<EXECUTION_ID_80>`
 
@@ -16971,7 +17893,189 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 81: Q02, repeat 20 — Scorer 1
+## Item 86: Q02, repeat 19 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 86: Q02, repeat 19 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 87: Q02, repeat 20 — Scorer 1
 
 Execution id: `<EXECUTION_ID_81>`
 
@@ -17067,7 +18171,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 81: Q02, repeat 20 — Scorer 2
+## Item 87: Q02, repeat 20 — Scorer 2
 
 Execution id: `<EXECUTION_ID_81>`
 
@@ -17163,7 +18267,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 82: Q02, repeat 21 — Scorer 1
+## Item 88: Q02, repeat 21 — Scorer 1
 
 Execution id: `<EXECUTION_ID_82>`
 
@@ -17260,7 +18364,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 82: Q02, repeat 21 — Scorer 2
+## Item 88: Q02, repeat 21 — Scorer 2
 
 Execution id: `<EXECUTION_ID_82>`
 
@@ -17357,7 +18461,747 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 83: Q02, repeat 26 — Scorer 1
+## Item 89: Q02, repeat 22 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 89: Q02, repeat 22 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 90: Q02, repeat 23 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 90: Q02, repeat 23 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 91: Q02, repeat 24 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 91: Q02, repeat 24 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 92: Q02, repeat 25 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 92: Q02, repeat 25 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 93: Q02, repeat 26 — Scorer 1
 
 Execution id: `<EXECUTION_ID_83>`
 
@@ -17454,7 +19298,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 83: Q02, repeat 26 — Scorer 2
+## Item 93: Q02, repeat 26 — Scorer 2
 
 Execution id: `<EXECUTION_ID_83>`
 
@@ -17551,7 +19395,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 84: Q02, repeat 27 — Scorer 1
+## Item 94: Q02, repeat 27 — Scorer 1
 
 Execution id: `<EXECUTION_ID_84>`
 
@@ -17647,7 +19491,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 84: Q02, repeat 27 — Scorer 2
+## Item 94: Q02, repeat 27 — Scorer 2
 
 Execution id: `<EXECUTION_ID_84>`
 
@@ -17743,7 +19587,561 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 85: Q02, repeat 31 — Scorer 1
+## Item 95: Q02, repeat 28 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 95: Q02, repeat 28 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = $5,000.00 − $2,400.00 = **$2,600.00**.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 96: Q02, repeat 29 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 96: Q02, repeat 29 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 97: Q02, repeat 30 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 97: Q02, repeat 30 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 98: Q02, repeat 31 — Scorer 1
 
 Execution id: `<EXECUTION_ID_85>`
 
@@ -17839,7 +20237,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 85: Q02, repeat 31 — Scorer 2
+## Item 98: Q02, repeat 31 — Scorer 2
 
 Execution id: `<EXECUTION_ID_85>`
 
@@ -17935,7 +20333,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 86: Q02, repeat 32 — Scorer 1
+## Item 99: Q02, repeat 32 — Scorer 1
 
 Execution id: `<EXECUTION_ID_86>`
 
@@ -18030,7 +20428,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 86: Q02, repeat 32 — Scorer 2
+## Item 99: Q02, repeat 32 — Scorer 2
 
 Execution id: `<EXECUTION_ID_86>`
 
@@ -18125,7 +20523,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 87: Q02, repeat 33 — Scorer 1
+## Item 100: Q02, repeat 33 — Scorer 1
 
 Execution id: `<EXECUTION_ID_87>`
 
@@ -18221,7 +20619,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 87: Q02, repeat 33 — Scorer 2
+## Item 100: Q02, repeat 33 — Scorer 2
 
 Execution id: `<EXECUTION_ID_87>`
 
@@ -18317,7 +20715,193 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 88: Q02, repeat 35 — Scorer 1
+## Item 101: Q02, repeat 34 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 101: Q02, repeat 34 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 102: Q02, repeat 35 — Scorer 1
 
 Execution id: `<EXECUTION_ID_88>`
 
@@ -18413,7 +20997,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 88: Q02, repeat 35 — Scorer 2
+## Item 102: Q02, repeat 35 — Scorer 2
 
 Execution id: `<EXECUTION_ID_88>`
 
@@ -18509,7 +21093,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 89: Q02, repeat 36 — Scorer 1
+## Item 103: Q02, repeat 36 — Scorer 1
 
 Execution id: `<EXECUTION_ID_89>`
 
@@ -18604,7 +21188,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 89: Q02, repeat 36 — Scorer 2
+## Item 103: Q02, repeat 36 — Scorer 2
 
 Execution id: `<EXECUTION_ID_89>`
 
@@ -18699,7 +21283,193 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 90: Q02, repeat 38 — Scorer 1
+## Item 104: Q02, repeat 37 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 104: Q02, repeat 37 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 105: Q02, repeat 38 — Scorer 1
 
 Execution id: `<EXECUTION_ID_90>`
 
@@ -18794,7 +21564,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 90: Q02, repeat 38 — Scorer 2
+## Item 105: Q02, repeat 38 — Scorer 2
 
 Execution id: `<EXECUTION_ID_90>`
 
@@ -18889,7 +21659,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 91: Q02, repeat 39 — Scorer 1
+## Item 106: Q02, repeat 39 — Scorer 1
 
 Execution id: `<EXECUTION_ID_91>`
 
@@ -18984,7 +21754,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 91: Q02, repeat 39 — Scorer 2
+## Item 106: Q02, repeat 39 — Scorer 2
 
 Execution id: `<EXECUTION_ID_91>`
 
@@ -19079,7 +21849,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 92: Q02, repeat 40 — Scorer 1
+## Item 107: Q02, repeat 40 — Scorer 1
 
 Execution id: `<EXECUTION_ID_92>`
 
@@ -19175,7 +21945,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 92: Q02, repeat 40 — Scorer 2
+## Item 107: Q02, repeat 40 — Scorer 2
 
 Execution id: `<EXECUTION_ID_92>`
 
@@ -19271,7 +22041,193 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 93: Q02, repeat 42 — Scorer 1
+## Item 108: Q02, repeat 41 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 108: Q02, repeat 41 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 109: Q02, repeat 42 — Scorer 1
 
 Execution id: `<EXECUTION_ID_93>`
 
@@ -19367,7 +22323,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 93: Q02, repeat 42 — Scorer 2
+## Item 109: Q02, repeat 42 — Scorer 2
 
 Execution id: `<EXECUTION_ID_93>`
 
@@ -19463,7 +22419,189 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 94: Q02, repeat 44 — Scorer 1
+## Item 110: Q02, repeat 43 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 110: Q02, repeat 43 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+**Available credit:** $5,000.00 − $2,400.00 = **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 111: Q02, repeat 44 — Scorer 1
 
 Execution id: `<EXECUTION_ID_94>`
 
@@ -19559,7 +22697,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 94: Q02, repeat 44 — Scorer 2
+## Item 111: Q02, repeat 44 — Scorer 2
 
 Execution id: `<EXECUTION_ID_94>`
 
@@ -19655,7 +22793,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 95: Q02, repeat 45 — Scorer 1
+## Item 112: Q02, repeat 45 — Scorer 1
 
 Execution id: `<EXECUTION_ID_95>`
 
@@ -19751,7 +22889,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 95: Q02, repeat 45 — Scorer 2
+## Item 112: Q02, repeat 45 — Scorer 2
 
 Execution id: `<EXECUTION_ID_95>`
 
@@ -19847,7 +22985,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 96: Q02, repeat 46 — Scorer 1
+## Item 113: Q02, repeat 46 — Scorer 1
 
 Execution id: `<EXECUTION_ID_96>`
 
@@ -19942,7 +23080,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 96: Q02, repeat 46 — Scorer 2
+## Item 113: Q02, repeat 46 — Scorer 2
 
 Execution id: `<EXECUTION_ID_96>`
 
@@ -20037,7 +23175,193 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 97: Q02, repeat 49 — Scorer 1
+## Item 114: Q02, repeat 48 — Scorer 1
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 114: Q02, repeat 48 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+= $5,000.00 − $2,400.00  
+= **$2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 115: Q02, repeat 49 — Scorer 1
 
 Execution id: `<EXECUTION_ID_97>`
 
@@ -20134,7 +23458,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 97: Q02, repeat 49 — Scorer 2
+## Item 115: Q02, repeat 49 — Scorer 2
 
 Execution id: `<EXECUTION_ID_97>`
 
@@ -20231,7 +23555,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 98: Q02, repeat 50 — Scorer 1
+## Item 116: Q02, repeat 50 — Scorer 1
 
 Execution id: `<EXECUTION_ID_98>`
 
@@ -20327,7 +23651,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 98: Q02, repeat 50 — Scorer 2
+## Item 116: Q02, repeat 50 — Scorer 2
 
 Execution id: `<EXECUTION_ID_98>`
 
@@ -20423,7 +23747,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 99: Q03, repeat 1 — Scorer 1
+## Item 117: Q03, repeat 1 — Scorer 1
 
 Execution id: `<EXECUTION_ID_99>`
 
@@ -20529,7 +23853,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 99: Q03, repeat 1 — Scorer 2
+## Item 117: Q03, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_99>`
 
@@ -20635,7 +23959,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 100: Q03, repeat 2 — Scorer 1
+## Item 118: Q03, repeat 2 — Scorer 1
 
 Execution id: `<EXECUTION_ID_100>`
 
@@ -20739,7 +24063,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 100: Q03, repeat 2 — Scorer 2
+## Item 118: Q03, repeat 2 — Scorer 2
 
 Execution id: `<EXECUTION_ID_100>`
 
@@ -20843,7 +24167,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 101: Q03, repeat 3 — Scorer 1
+## Item 119: Q03, repeat 3 — Scorer 1
 
 Execution id: `<EXECUTION_ID_101>`
 
@@ -20949,7 +24273,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 101: Q03, repeat 3 — Scorer 2
+## Item 119: Q03, repeat 3 — Scorer 2
 
 Execution id: `<EXECUTION_ID_101>`
 
@@ -21055,7 +24379,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 102: Q03, repeat 4 — Scorer 1
+## Item 120: Q03, repeat 4 — Scorer 1
 
 Execution id: `<EXECUTION_ID_102>`
 
@@ -21161,7 +24485,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 102: Q03, repeat 4 — Scorer 2
+## Item 120: Q03, repeat 4 — Scorer 2
 
 Execution id: `<EXECUTION_ID_102>`
 
@@ -21267,7 +24591,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 103: Q03, repeat 5 — Scorer 1
+## Item 121: Q03, repeat 5 — Scorer 1
 
 Execution id: `<EXECUTION_ID_103>`
 
@@ -21371,7 +24695,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 103: Q03, repeat 5 — Scorer 2
+## Item 121: Q03, repeat 5 — Scorer 2
 
 Execution id: `<EXECUTION_ID_103>`
 
@@ -21475,7 +24799,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 104: Q03, repeat 6 — Scorer 1
+## Item 122: Q03, repeat 6 — Scorer 1
 
 Execution id: `<EXECUTION_ID_104>`
 
@@ -21579,7 +24903,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 104: Q03, repeat 6 — Scorer 2
+## Item 122: Q03, repeat 6 — Scorer 2
 
 Execution id: `<EXECUTION_ID_104>`
 
@@ -21683,7 +25007,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 105: Q03, repeat 7 — Scorer 1
+## Item 123: Q03, repeat 7 — Scorer 1
 
 Execution id: `<EXECUTION_ID_105>`
 
@@ -21789,7 +25113,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 105: Q03, repeat 7 — Scorer 2
+## Item 123: Q03, repeat 7 — Scorer 2
 
 Execution id: `<EXECUTION_ID_105>`
 
@@ -21895,7 +25219,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 106: Q03, repeat 8 — Scorer 1
+## Item 124: Q03, repeat 8 — Scorer 1
 
 Execution id: `<EXECUTION_ID_106>`
 
@@ -22001,7 +25325,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 106: Q03, repeat 8 — Scorer 2
+## Item 124: Q03, repeat 8 — Scorer 2
 
 Execution id: `<EXECUTION_ID_106>`
 
@@ -22107,7 +25431,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 107: Q03, repeat 9 — Scorer 1
+## Item 125: Q03, repeat 9 — Scorer 1
 
 Execution id: `<EXECUTION_ID_107>`
 
@@ -22213,7 +25537,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 107: Q03, repeat 9 — Scorer 2
+## Item 125: Q03, repeat 9 — Scorer 2
 
 Execution id: `<EXECUTION_ID_107>`
 
@@ -22319,7 +25643,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 108: Q03, repeat 10 — Scorer 1
+## Item 126: Q03, repeat 10 — Scorer 1
 
 Execution id: `<EXECUTION_ID_108>`
 
@@ -22423,7 +25747,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 108: Q03, repeat 10 — Scorer 2
+## Item 126: Q03, repeat 10 — Scorer 2
 
 Execution id: `<EXECUTION_ID_108>`
 
@@ -22527,7 +25851,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 109: Q03, repeat 11 — Scorer 1
+## Item 127: Q03, repeat 11 — Scorer 1
 
 Execution id: `<EXECUTION_ID_109>`
 
@@ -22633,7 +25957,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 109: Q03, repeat 11 — Scorer 2
+## Item 127: Q03, repeat 11 — Scorer 2
 
 Execution id: `<EXECUTION_ID_109>`
 
@@ -22739,7 +26063,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 110: Q03, repeat 13 — Scorer 1
+## Item 128: Q03, repeat 13 — Scorer 1
 
 Execution id: `<EXECUTION_ID_110>`
 
@@ -22843,7 +26167,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 110: Q03, repeat 13 — Scorer 2
+## Item 128: Q03, repeat 13 — Scorer 2
 
 Execution id: `<EXECUTION_ID_110>`
 
@@ -22947,7 +26271,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 111: Q03, repeat 14 — Scorer 1
+## Item 129: Q03, repeat 14 — Scorer 1
 
 Execution id: `<EXECUTION_ID_111>`
 
@@ -23053,7 +26377,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 111: Q03, repeat 14 — Scorer 2
+## Item 129: Q03, repeat 14 — Scorer 2
 
 Execution id: `<EXECUTION_ID_111>`
 
@@ -23159,7 +26483,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 112: Q03, repeat 15 — Scorer 1
+## Item 130: Q03, repeat 15 — Scorer 1
 
 Execution id: `<EXECUTION_ID_112>`
 
@@ -23263,7 +26587,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 112: Q03, repeat 15 — Scorer 2
+## Item 130: Q03, repeat 15 — Scorer 2
 
 Execution id: `<EXECUTION_ID_112>`
 
@@ -23367,7 +26691,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 113: Q03, repeat 16 — Scorer 1
+## Item 131: Q03, repeat 16 — Scorer 1
 
 Execution id: `<EXECUTION_ID_113>`
 
@@ -23473,7 +26797,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 113: Q03, repeat 16 — Scorer 2
+## Item 131: Q03, repeat 16 — Scorer 2
 
 Execution id: `<EXECUTION_ID_113>`
 
@@ -23579,7 +26903,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 114: Q03, repeat 17 — Scorer 1
+## Item 132: Q03, repeat 17 — Scorer 1
 
 Execution id: `<EXECUTION_ID_114>`
 
@@ -23685,7 +27009,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 114: Q03, repeat 17 — Scorer 2
+## Item 132: Q03, repeat 17 — Scorer 2
 
 Execution id: `<EXECUTION_ID_114>`
 
@@ -23791,7 +27115,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 115: Q03, repeat 18 — Scorer 1
+## Item 133: Q03, repeat 18 — Scorer 1
 
 Execution id: `<EXECUTION_ID_115>`
 
@@ -23897,7 +27221,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 115: Q03, repeat 18 — Scorer 2
+## Item 133: Q03, repeat 18 — Scorer 2
 
 Execution id: `<EXECUTION_ID_115>`
 
@@ -24003,7 +27327,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 116: Q03, repeat 19 — Scorer 1
+## Item 134: Q03, repeat 19 — Scorer 1
 
 Execution id: `<EXECUTION_ID_116>`
 
@@ -24107,7 +27431,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 116: Q03, repeat 19 — Scorer 2
+## Item 134: Q03, repeat 19 — Scorer 2
 
 Execution id: `<EXECUTION_ID_116>`
 
@@ -24211,7 +27535,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 117: Q03, repeat 20 — Scorer 1
+## Item 135: Q03, repeat 20 — Scorer 1
 
 Execution id: `<EXECUTION_ID_117>`
 
@@ -24317,7 +27641,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 117: Q03, repeat 20 — Scorer 2
+## Item 135: Q03, repeat 20 — Scorer 2
 
 Execution id: `<EXECUTION_ID_117>`
 
@@ -24423,7 +27747,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 118: Q03, repeat 21 — Scorer 1
+## Item 136: Q03, repeat 21 — Scorer 1
 
 Execution id: `<EXECUTION_ID_118>`
 
@@ -24529,7 +27853,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 118: Q03, repeat 21 — Scorer 2
+## Item 136: Q03, repeat 21 — Scorer 2
 
 Execution id: `<EXECUTION_ID_118>`
 
@@ -24635,7 +27959,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 119: Q03, repeat 22 — Scorer 1
+## Item 137: Q03, repeat 22 — Scorer 1
 
 Execution id: `<EXECUTION_ID_119>`
 
@@ -24739,7 +28063,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 119: Q03, repeat 22 — Scorer 2
+## Item 137: Q03, repeat 22 — Scorer 2
 
 Execution id: `<EXECUTION_ID_119>`
 
@@ -24843,7 +28167,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 120: Q03, repeat 23 — Scorer 1
+## Item 138: Q03, repeat 23 — Scorer 1
 
 Execution id: `<EXECUTION_ID_120>`
 
@@ -24949,7 +28273,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 120: Q03, repeat 23 — Scorer 2
+## Item 138: Q03, repeat 23 — Scorer 2
 
 Execution id: `<EXECUTION_ID_120>`
 
@@ -25055,7 +28379,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 121: Q03, repeat 24 — Scorer 1
+## Item 139: Q03, repeat 24 — Scorer 1
 
 Execution id: `<EXECUTION_ID_121>`
 
@@ -25161,7 +28485,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 121: Q03, repeat 24 — Scorer 2
+## Item 139: Q03, repeat 24 — Scorer 2
 
 Execution id: `<EXECUTION_ID_121>`
 
@@ -25267,7 +28591,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 122: Q03, repeat 25 — Scorer 1
+## Item 140: Q03, repeat 25 — Scorer 1
 
 Execution id: `<EXECUTION_ID_122>`
 
@@ -25371,7 +28695,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 122: Q03, repeat 25 — Scorer 2
+## Item 140: Q03, repeat 25 — Scorer 2
 
 Execution id: `<EXECUTION_ID_122>`
 
@@ -25475,7 +28799,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 123: Q03, repeat 26 — Scorer 1
+## Item 141: Q03, repeat 26 — Scorer 1
 
 Execution id: `<EXECUTION_ID_123>`
 
@@ -25579,7 +28903,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 123: Q03, repeat 26 — Scorer 2
+## Item 141: Q03, repeat 26 — Scorer 2
 
 Execution id: `<EXECUTION_ID_123>`
 
@@ -25683,7 +29007,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 124: Q03, repeat 27 — Scorer 1
+## Item 142: Q03, repeat 27 — Scorer 1
 
 Execution id: `<EXECUTION_ID_124>`
 
@@ -25789,7 +29113,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 124: Q03, repeat 27 — Scorer 2
+## Item 142: Q03, repeat 27 — Scorer 2
 
 Execution id: `<EXECUTION_ID_124>`
 
@@ -25895,7 +29219,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 125: Q03, repeat 28 — Scorer 1
+## Item 143: Q03, repeat 28 — Scorer 1
 
 Execution id: `<EXECUTION_ID_125>`
 
@@ -26001,7 +29325,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 125: Q03, repeat 28 — Scorer 2
+## Item 143: Q03, repeat 28 — Scorer 2
 
 Execution id: `<EXECUTION_ID_125>`
 
@@ -26107,7 +29431,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 126: Q03, repeat 29 — Scorer 1
+## Item 144: Q03, repeat 29 — Scorer 1
 
 Execution id: `<EXECUTION_ID_126>`
 
@@ -26211,7 +29535,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 126: Q03, repeat 29 — Scorer 2
+## Item 144: Q03, repeat 29 — Scorer 2
 
 Execution id: `<EXECUTION_ID_126>`
 
@@ -26315,7 +29639,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 127: Q03, repeat 30 — Scorer 1
+## Item 145: Q03, repeat 30 — Scorer 1
 
 Execution id: `<EXECUTION_ID_127>`
 
@@ -26421,7 +29745,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 127: Q03, repeat 30 — Scorer 2
+## Item 145: Q03, repeat 30 — Scorer 2
 
 Execution id: `<EXECUTION_ID_127>`
 
@@ -26527,7 +29851,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 128: Q03, repeat 31 — Scorer 1
+## Item 146: Q03, repeat 31 — Scorer 1
 
 Execution id: `<EXECUTION_ID_128>`
 
@@ -26633,7 +29957,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 128: Q03, repeat 31 — Scorer 2
+## Item 146: Q03, repeat 31 — Scorer 2
 
 Execution id: `<EXECUTION_ID_128>`
 
@@ -26739,7 +30063,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 129: Q03, repeat 33 — Scorer 1
+## Item 147: Q03, repeat 33 — Scorer 1
 
 Execution id: `<EXECUTION_ID_129>`
 
@@ -26845,7 +30169,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 129: Q03, repeat 33 — Scorer 2
+## Item 147: Q03, repeat 33 — Scorer 2
 
 Execution id: `<EXECUTION_ID_129>`
 
@@ -26951,7 +30275,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 130: Q03, repeat 34 — Scorer 1
+## Item 148: Q03, repeat 34 — Scorer 1
 
 Execution id: `<EXECUTION_ID_130>`
 
@@ -27055,7 +30379,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 130: Q03, repeat 34 — Scorer 2
+## Item 148: Q03, repeat 34 — Scorer 2
 
 Execution id: `<EXECUTION_ID_130>`
 
@@ -27159,7 +30483,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 131: Q03, repeat 35 — Scorer 1
+## Item 149: Q03, repeat 35 — Scorer 1
 
 Execution id: `<EXECUTION_ID_131>`
 
@@ -27265,7 +30589,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 131: Q03, repeat 35 — Scorer 2
+## Item 149: Q03, repeat 35 — Scorer 2
 
 Execution id: `<EXECUTION_ID_131>`
 
@@ -27371,7 +30695,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 132: Q03, repeat 36 — Scorer 1
+## Item 150: Q03, repeat 36 — Scorer 1
 
 Execution id: `<EXECUTION_ID_132>`
 
@@ -27477,7 +30801,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 132: Q03, repeat 36 — Scorer 2
+## Item 150: Q03, repeat 36 — Scorer 2
 
 Execution id: `<EXECUTION_ID_132>`
 
@@ -27583,7 +30907,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 133: Q03, repeat 37 — Scorer 1
+## Item 151: Q03, repeat 37 — Scorer 1
 
 Execution id: `<EXECUTION_ID_133>`
 
@@ -27687,7 +31011,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 133: Q03, repeat 37 — Scorer 2
+## Item 151: Q03, repeat 37 — Scorer 2
 
 Execution id: `<EXECUTION_ID_133>`
 
@@ -27791,7 +31115,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 134: Q03, repeat 38 — Scorer 1
+## Item 152: Q03, repeat 38 — Scorer 1
 
 Execution id: `<EXECUTION_ID_134>`
 
@@ -27897,7 +31221,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 134: Q03, repeat 38 — Scorer 2
+## Item 152: Q03, repeat 38 — Scorer 2
 
 Execution id: `<EXECUTION_ID_134>`
 
@@ -28003,7 +31327,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 135: Q03, repeat 39 — Scorer 1
+## Item 153: Q03, repeat 39 — Scorer 1
 
 Execution id: `<EXECUTION_ID_135>`
 
@@ -28109,7 +31433,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 135: Q03, repeat 39 — Scorer 2
+## Item 153: Q03, repeat 39 — Scorer 2
 
 Execution id: `<EXECUTION_ID_135>`
 
@@ -28215,7 +31539,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 136: Q03, repeat 40 — Scorer 1
+## Item 154: Q03, repeat 40 — Scorer 1
 
 Execution id: `<EXECUTION_ID_136>`
 
@@ -28321,7 +31645,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 136: Q03, repeat 40 — Scorer 2
+## Item 154: Q03, repeat 40 — Scorer 2
 
 Execution id: `<EXECUTION_ID_136>`
 
@@ -28427,7 +31751,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 137: Q03, repeat 42 — Scorer 1
+## Item 155: Q03, repeat 42 — Scorer 1
 
 Execution id: `<EXECUTION_ID_137>`
 
@@ -28533,7 +31857,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 137: Q03, repeat 42 — Scorer 2
+## Item 155: Q03, repeat 42 — Scorer 2
 
 Execution id: `<EXECUTION_ID_137>`
 
@@ -28639,7 +31963,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 138: Q03, repeat 45 — Scorer 1
+## Item 156: Q03, repeat 45 — Scorer 1
 
 Execution id: `<EXECUTION_ID_138>`
 
@@ -28745,7 +32069,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 138: Q03, repeat 45 — Scorer 2
+## Item 156: Q03, repeat 45 — Scorer 2
 
 Execution id: `<EXECUTION_ID_138>`
 
@@ -28851,7 +32175,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 139: Q03, repeat 46 — Scorer 1
+## Item 157: Q03, repeat 46 — Scorer 1
 
 Execution id: `<EXECUTION_ID_139>`
 
@@ -28955,7 +32279,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 139: Q03, repeat 46 — Scorer 2
+## Item 157: Q03, repeat 46 — Scorer 2
 
 Execution id: `<EXECUTION_ID_139>`
 
@@ -29059,7 +32383,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 140: Q03, repeat 47 — Scorer 1
+## Item 158: Q03, repeat 47 — Scorer 1
 
 Execution id: `<EXECUTION_ID_140>`
 
@@ -29165,7 +32489,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 140: Q03, repeat 47 — Scorer 2
+## Item 158: Q03, repeat 47 — Scorer 2
 
 Execution id: `<EXECUTION_ID_140>`
 
@@ -29271,7 +32595,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 141: Q03, repeat 48 — Scorer 1
+## Item 159: Q03, repeat 48 — Scorer 1
 
 Execution id: `<EXECUTION_ID_141>`
 
@@ -29377,7 +32701,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 141: Q03, repeat 48 — Scorer 2
+## Item 159: Q03, repeat 48 — Scorer 2
 
 Execution id: `<EXECUTION_ID_141>`
 
@@ -29483,7 +32807,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 142: Q03, repeat 50 — Scorer 1
+## Item 160: Q03, repeat 50 — Scorer 1
 
 Execution id: `<EXECUTION_ID_142>`
 
@@ -29587,7 +32911,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 142: Q03, repeat 50 — Scorer 2
+## Item 160: Q03, repeat 50 — Scorer 2
 
 Execution id: `<EXECUTION_ID_142>`
 
@@ -29691,7 +33015,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 143: Q04, repeat 1 — Scorer 1
+## Item 161: Q04, repeat 1 — Scorer 1
 
 Execution id: `<EXECUTION_ID_143>`
 
@@ -29794,7 +33118,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 143: Q04, repeat 1 — Scorer 2
+## Item 161: Q04, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_143>`
 
@@ -29897,7 +33221,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 144: Q04, repeat 4 — Scorer 1
+## Item 162: Q04, repeat 4 — Scorer 1
 
 Execution id: `<EXECUTION_ID_144>`
 
@@ -30007,7 +33331,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 144: Q04, repeat 4 — Scorer 2
+## Item 162: Q04, repeat 4 — Scorer 2
 
 Execution id: `<EXECUTION_ID_144>`
 
@@ -30117,7 +33441,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 145: Q04, repeat 6 — Scorer 1
+## Item 163: Q04, repeat 6 — Scorer 1
 
 Execution id: `<EXECUTION_ID_145>`
 
@@ -30227,7 +33551,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 145: Q04, repeat 6 — Scorer 2
+## Item 163: Q04, repeat 6 — Scorer 2
 
 Execution id: `<EXECUTION_ID_145>`
 
@@ -30337,7 +33661,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 146: Q04, repeat 9 — Scorer 1
+## Item 164: Q04, repeat 9 — Scorer 1
 
 Execution id: `<EXECUTION_ID_146>`
 
@@ -30446,7 +33770,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 146: Q04, repeat 9 — Scorer 2
+## Item 164: Q04, repeat 9 — Scorer 2
 
 Execution id: `<EXECUTION_ID_146>`
 
@@ -30555,7 +33879,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 147: Q04, repeat 30 — Scorer 1
+## Item 165: Q04, repeat 30 — Scorer 1
 
 Execution id: `<EXECUTION_ID_147>`
 
@@ -30658,7 +33982,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 147: Q04, repeat 30 — Scorer 2
+## Item 165: Q04, repeat 30 — Scorer 2
 
 Execution id: `<EXECUTION_ID_147>`
 
@@ -30761,7 +34085,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 148: Q04, repeat 32 — Scorer 1
+## Item 166: Q04, repeat 32 — Scorer 1
 
 Execution id: `<EXECUTION_ID_148>`
 
@@ -30864,7 +34188,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 148: Q04, repeat 32 — Scorer 2
+## Item 166: Q04, repeat 32 — Scorer 2
 
 Execution id: `<EXECUTION_ID_148>`
 
@@ -30967,7 +34291,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 149: Q04, repeat 34 — Scorer 1
+## Item 167: Q04, repeat 34 — Scorer 1
 
 Execution id: `<EXECUTION_ID_149>`
 
@@ -31080,7 +34404,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 149: Q04, repeat 34 — Scorer 2
+## Item 167: Q04, repeat 34 — Scorer 2
 
 Execution id: `<EXECUTION_ID_149>`
 
@@ -31193,7 +34517,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 150: Q04, repeat 42 — Scorer 1
+## Item 168: Q04, repeat 42 — Scorer 1
 
 Execution id: `<EXECUTION_ID_150>`
 
@@ -31306,7 +34630,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 150: Q04, repeat 42 — Scorer 2
+## Item 168: Q04, repeat 42 — Scorer 2
 
 Execution id: `<EXECUTION_ID_150>`
 
@@ -31419,7 +34743,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 151: Q04, repeat 46 — Scorer 1
+## Item 169: Q04, repeat 46 — Scorer 1
 
 Execution id: `<EXECUTION_ID_151>`
 
@@ -31522,7 +34846,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 151: Q04, repeat 46 — Scorer 2
+## Item 169: Q04, repeat 46 — Scorer 2
 
 Execution id: `<EXECUTION_ID_151>`
 
@@ -31625,7 +34949,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 152: Q05, repeat 5 — Scorer 1
+## Item 170: Q05, repeat 5 — Scorer 1
 
 Execution id: `<EXECUTION_ID_152>`
 
@@ -31746,7 +35070,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 152: Q05, repeat 5 — Scorer 2
+## Item 170: Q05, repeat 5 — Scorer 2
 
 Execution id: `<EXECUTION_ID_152>`
 
@@ -31867,7 +35191,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 153: Q05, repeat 9 — Scorer 1
+## Item 171: Q05, repeat 9 — Scorer 1
 
 Execution id: `<EXECUTION_ID_153>`
 
@@ -31975,7 +35299,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 153: Q05, repeat 9 — Scorer 2
+## Item 171: Q05, repeat 9 — Scorer 2
 
 Execution id: `<EXECUTION_ID_153>`
 
@@ -32083,7 +35407,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 154: Q05, repeat 18 — Scorer 1
+## Item 172: Q05, repeat 18 — Scorer 1
 
 Execution id: `<EXECUTION_ID_154>`
 
@@ -32191,7 +35515,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 154: Q05, repeat 18 — Scorer 2
+## Item 172: Q05, repeat 18 — Scorer 2
 
 Execution id: `<EXECUTION_ID_154>`
 
@@ -32299,7 +35623,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 155: Q05, repeat 22 — Scorer 1
+## Item 173: Q05, repeat 22 — Scorer 1
 
 Execution id: `<EXECUTION_ID_155>`
 
@@ -32407,7 +35731,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 155: Q05, repeat 22 — Scorer 2
+## Item 173: Q05, repeat 22 — Scorer 2
 
 Execution id: `<EXECUTION_ID_155>`
 
@@ -32515,7 +35839,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 156: Q05, repeat 28 — Scorer 1
+## Item 174: Q05, repeat 28 — Scorer 1
 
 Execution id: `<EXECUTION_ID_156>`
 
@@ -32623,7 +35947,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 156: Q05, repeat 28 — Scorer 2
+## Item 174: Q05, repeat 28 — Scorer 2
 
 Execution id: `<EXECUTION_ID_156>`
 
@@ -32731,7 +36055,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 157: Q05, repeat 29 — Scorer 1
+## Item 175: Q05, repeat 29 — Scorer 1
 
 Execution id: `<EXECUTION_ID_157>`
 
@@ -32839,7 +36163,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 157: Q05, repeat 29 — Scorer 2
+## Item 175: Q05, repeat 29 — Scorer 2
 
 Execution id: `<EXECUTION_ID_157>`
 
@@ -32947,7 +36271,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 158: Q05, repeat 30 — Scorer 1
+## Item 176: Q05, repeat 30 — Scorer 1
 
 Execution id: `<EXECUTION_ID_158>`
 
@@ -33068,7 +36392,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 158: Q05, repeat 30 — Scorer 2
+## Item 176: Q05, repeat 30 — Scorer 2
 
 Execution id: `<EXECUTION_ID_158>`
 
@@ -33189,7 +36513,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 159: Q05, repeat 36 — Scorer 1
+## Item 177: Q05, repeat 36 — Scorer 1
 
 Execution id: `<EXECUTION_ID_159>`
 
@@ -33297,7 +36621,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 159: Q05, repeat 36 — Scorer 2
+## Item 177: Q05, repeat 36 — Scorer 2
 
 Execution id: `<EXECUTION_ID_159>`
 
@@ -33405,7 +36729,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 160: Q05, repeat 40 — Scorer 1
+## Item 178: Q05, repeat 40 — Scorer 1
 
 Execution id: `<EXECUTION_ID_160>`
 
@@ -33513,7 +36837,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 160: Q05, repeat 40 — Scorer 2
+## Item 178: Q05, repeat 40 — Scorer 2
 
 Execution id: `<EXECUTION_ID_160>`
 
@@ -33621,7 +36945,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 161: Q05, repeat 44 — Scorer 1
+## Item 179: Q05, repeat 44 — Scorer 1
 
 Execution id: `<EXECUTION_ID_161>`
 
@@ -33729,7 +37053,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 161: Q05, repeat 44 — Scorer 2
+## Item 179: Q05, repeat 44 — Scorer 2
 
 Execution id: `<EXECUTION_ID_161>`
 
@@ -33837,7 +37161,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 162: Q05, repeat 50 — Scorer 1
+## Item 180: Q05, repeat 50 — Scorer 1
 
 Execution id: `<EXECUTION_ID_162>`
 
@@ -33945,7 +37269,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 162: Q05, repeat 50 — Scorer 2
+## Item 180: Q05, repeat 50 — Scorer 2
 
 Execution id: `<EXECUTION_ID_162>`
 
@@ -34053,7 +37377,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 163: Q06, repeat 1 — Scorer 1
+## Item 181: Q06, repeat 1 — Scorer 1
 
 Execution id: `<EXECUTION_ID_163>`
 
@@ -34144,7 +37468,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 163: Q06, repeat 1 — Scorer 2
+## Item 181: Q06, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_163>`
 
@@ -34235,7 +37559,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 164: Q06, repeat 3 — Scorer 1
+## Item 182: Q06, repeat 3 — Scorer 1
 
 Execution id: `<EXECUTION_ID_164>`
 
@@ -34333,7 +37657,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 164: Q06, repeat 3 — Scorer 2
+## Item 182: Q06, repeat 3 — Scorer 2
 
 Execution id: `<EXECUTION_ID_164>`
 
@@ -34431,7 +37755,1051 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 165: Q06, repeat 13 — Scorer 1
+## Item 183: Q06, repeat 5 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 183: Q06, repeat 5 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 184: Q06, repeat 7 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 184: Q06, repeat 7 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 185: Q06, repeat 8 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 185: Q06, repeat 8 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 186: Q06, repeat 9 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 186: Q06, repeat 9 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 187: Q06, repeat 10 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 187: Q06, repeat 10 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 188: Q06, repeat 12 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 188: Q06, repeat 12 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 189: Q06, repeat 13 — Scorer 1
 
 Execution id: `<EXECUTION_ID_165>`
 
@@ -34520,7 +38888,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 165: Q06, repeat 13 — Scorer 2
+## Item 189: Q06, repeat 13 — Scorer 2
 
 Execution id: `<EXECUTION_ID_165>`
 
@@ -34609,7 +38977,707 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 166: Q06, repeat 19 — Scorer 1
+## Item 190: Q06, repeat 14 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**
+
+Since the account earns 0% interest, there is no interest income to offset the fees.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 190: Q06, repeat 14 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**
+
+Since the account earns 0% interest, there is no interest income to offset the fees.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 191: Q06, repeat 15 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 191: Q06, repeat 15 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 192: Q06, repeat 16 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 192: Q06, repeat 16 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 193: Q06, repeat 18 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 193: Q06, repeat 18 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 194: Q06, repeat 19 — Scorer 1
 
 Execution id: `<EXECUTION_ID_166>`
 
@@ -34707,7 +39775,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 166: Q06, repeat 19 — Scorer 2
+## Item 194: Q06, repeat 19 — Scorer 2
 
 Execution id: `<EXECUTION_ID_166>`
 
@@ -34805,7 +39873,181 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 167: Q06, repeat 23 — Scorer 1
+## Item 195: Q06, repeat 22 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12.00 × 12 = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 195: Q06, repeat 22 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12.00 × 12 = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 196: Q06, repeat 23 — Scorer 1
 
 Execution id: `<EXECUTION_ID_167>`
 
@@ -34903,7 +40145,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 167: Q06, repeat 23 — Scorer 2
+## Item 196: Q06, repeat 23 — Scorer 2
 
 Execution id: `<EXECUTION_ID_167>`
 
@@ -35001,7 +40243,181 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 168: Q06, repeat 26 — Scorer 1
+## Item 197: Q06, repeat 25 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12.00 × 12 = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 197: Q06, repeat 25 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12.00 × 12 = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 198: Q06, repeat 26 — Scorer 1
 
 Execution id: `<EXECUTION_ID_168>`
 
@@ -35099,7 +40515,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 168: Q06, repeat 26 — Scorer 2
+## Item 198: Q06, repeat 26 — Scorer 2
 
 Execution id: `<EXECUTION_ID_168>`
 
@@ -35197,7 +40613,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 169: Q06, repeat 27 — Scorer 1
+## Item 199: Q06, repeat 27 — Scorer 1
 
 Execution id: `<EXECUTION_ID_169>`
 
@@ -35295,7 +40711,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 169: Q06, repeat 27 — Scorer 2
+## Item 199: Q06, repeat 27 — Scorer 2
 
 Execution id: `<EXECUTION_ID_169>`
 
@@ -35393,7 +40809,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 170: Q06, repeat 33 — Scorer 1
+## Item 200: Q06, repeat 33 — Scorer 1
 
 Execution id: `<EXECUTION_ID_170>`
 
@@ -35484,7 +40900,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 170: Q06, repeat 33 — Scorer 2
+## Item 200: Q06, repeat 33 — Scorer 2
 
 Execution id: `<EXECUTION_ID_170>`
 
@@ -35575,7 +40991,181 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 171: Q06, repeat 40 — Scorer 1
+## Item 201: Q06, repeat 39 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 201: Q06, repeat 39 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 202: Q06, repeat 40 — Scorer 1
 
 Execution id: `<EXECUTION_ID_171>`
 
@@ -35664,7 +41254,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 171: Q06, repeat 40 — Scorer 2
+## Item 202: Q06, repeat 40 — Scorer 2
 
 Execution id: `<EXECUTION_ID_171>`
 
@@ -35753,7 +41343,181 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 172: Q06, repeat 43 — Scorer 1
+## Item 203: Q06, repeat 41 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 203: Q06, repeat 41 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 204: Q06, repeat 43 — Scorer 1
 
 Execution id: `<EXECUTION_ID_172>`
 
@@ -35851,7 +41615,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 172: Q06, repeat 43 — Scorer 2
+## Item 204: Q06, repeat 43 — Scorer 2
 
 Execution id: `<EXECUTION_ID_172>`
 
@@ -35949,7 +41713,181 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 173: Q06, repeat 46 — Scorer 1
+## Item 205: Q06, repeat 44 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 205: Q06, repeat 44 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is:
+
+**$12 × 12 months = $144 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 206: Q06, repeat 46 — Scorer 1
 
 Execution id: `<EXECUTION_ID_173>`
 
@@ -36040,7 +41978,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 173: Q06, repeat 46 — Scorer 2
+## Item 206: Q06, repeat 46 — Scorer 2
 
 Execution id: `<EXECUTION_ID_173>`
 
@@ -36131,7 +42069,181 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 174: Q07, repeat 1 — Scorer 1
+## Item 207: Q06, repeat 47 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 207: Q06, repeat 47 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The monthly fee is **$12.00**.
+
+**Total annual cost:** $12 × 12 months = **$144.00 per year**.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 208: Q07, repeat 1 — Scorer 1
 
 Execution id: `<EXECUTION_ID_174>`
 
@@ -36233,7 +42345,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 174: Q07, repeat 1 — Scorer 2
+## Item 208: Q07, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_174>`
 
@@ -36335,7 +42447,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 175: Q07, repeat 2 — Scorer 1
+## Item 209: Q07, repeat 2 — Scorer 1
 
 Execution id: `<EXECUTION_ID_175>`
 
@@ -36438,7 +42550,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 175: Q07, repeat 2 — Scorer 2
+## Item 209: Q07, repeat 2 — Scorer 2
 
 Execution id: `<EXECUTION_ID_175>`
 
@@ -36541,7 +42653,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 176: Q07, repeat 3 — Scorer 1
+## Item 210: Q07, repeat 3 — Scorer 1
 
 Execution id: `<EXECUTION_ID_176>`
 
@@ -36641,7 +42753,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 176: Q07, repeat 3 — Scorer 2
+## Item 210: Q07, repeat 3 — Scorer 2
 
 Execution id: `<EXECUTION_ID_176>`
 
@@ -36741,7 +42853,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 177: Q07, repeat 4 — Scorer 1
+## Item 211: Q07, repeat 4 — Scorer 1
 
 Execution id: `<EXECUTION_ID_177>`
 
@@ -36839,7 +42951,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 177: Q07, repeat 4 — Scorer 2
+## Item 211: Q07, repeat 4 — Scorer 2
 
 Execution id: `<EXECUTION_ID_177>`
 
@@ -36937,7 +43049,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 178: Q07, repeat 5 — Scorer 1
+## Item 212: Q07, repeat 5 — Scorer 1
 
 Execution id: `<EXECUTION_ID_178>`
 
@@ -37037,7 +43149,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 178: Q07, repeat 5 — Scorer 2
+## Item 212: Q07, repeat 5 — Scorer 2
 
 Execution id: `<EXECUTION_ID_178>`
 
@@ -37137,7 +43249,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 179: Q07, repeat 7 — Scorer 1
+## Item 213: Q07, repeat 7 — Scorer 1
 
 Execution id: `<EXECUTION_ID_179>`
 
@@ -37237,7 +43349,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 179: Q07, repeat 7 — Scorer 2
+## Item 213: Q07, repeat 7 — Scorer 2
 
 Execution id: `<EXECUTION_ID_179>`
 
@@ -37337,7 +43449,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 180: Q07, repeat 8 — Scorer 1
+## Item 214: Q07, repeat 8 — Scorer 1
 
 Execution id: `<EXECUTION_ID_180>`
 
@@ -37437,7 +43549,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 180: Q07, repeat 8 — Scorer 2
+## Item 214: Q07, repeat 8 — Scorer 2
 
 Execution id: `<EXECUTION_ID_180>`
 
@@ -37537,7 +43649,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 181: Q07, repeat 9 — Scorer 1
+## Item 215: Q07, repeat 9 — Scorer 1
 
 Execution id: `<EXECUTION_ID_181>`
 
@@ -37637,7 +43749,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 181: Q07, repeat 9 — Scorer 2
+## Item 215: Q07, repeat 9 — Scorer 2
 
 Execution id: `<EXECUTION_ID_181>`
 
@@ -37737,7 +43849,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 182: Q07, repeat 10 — Scorer 1
+## Item 216: Q07, repeat 10 — Scorer 1
 
 Execution id: `<EXECUTION_ID_182>`
 
@@ -37833,7 +43945,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 182: Q07, repeat 10 — Scorer 2
+## Item 216: Q07, repeat 10 — Scorer 2
 
 Execution id: `<EXECUTION_ID_182>`
 
@@ -37929,7 +44041,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 183: Q07, repeat 11 — Scorer 1
+## Item 217: Q07, repeat 11 — Scorer 1
 
 Execution id: `<EXECUTION_ID_183>`
 
@@ -38029,7 +44141,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 183: Q07, repeat 11 — Scorer 2
+## Item 217: Q07, repeat 11 — Scorer 2
 
 Execution id: `<EXECUTION_ID_183>`
 
@@ -38129,7 +44241,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 184: Q07, repeat 12 — Scorer 1
+## Item 218: Q07, repeat 12 — Scorer 1
 
 Execution id: `<EXECUTION_ID_184>`
 
@@ -38229,7 +44341,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 184: Q07, repeat 12 — Scorer 2
+## Item 218: Q07, repeat 12 — Scorer 2
 
 Execution id: `<EXECUTION_ID_184>`
 
@@ -38329,7 +44441,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 185: Q07, repeat 13 — Scorer 1
+## Item 219: Q07, repeat 13 — Scorer 1
 
 Execution id: `<EXECUTION_ID_185>`
 
@@ -38429,7 +44541,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 185: Q07, repeat 13 — Scorer 2
+## Item 219: Q07, repeat 13 — Scorer 2
 
 Execution id: `<EXECUTION_ID_185>`
 
@@ -38529,7 +44641,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 186: Q07, repeat 14 — Scorer 1
+## Item 220: Q07, repeat 14 — Scorer 1
 
 Execution id: `<EXECUTION_ID_186>`
 
@@ -38629,7 +44741,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 186: Q07, repeat 14 — Scorer 2
+## Item 220: Q07, repeat 14 — Scorer 2
 
 Execution id: `<EXECUTION_ID_186>`
 
@@ -38729,7 +44841,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 187: Q07, repeat 15 — Scorer 1
+## Item 221: Q07, repeat 15 — Scorer 1
 
 Execution id: `<EXECUTION_ID_187>`
 
@@ -38829,7 +44941,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 187: Q07, repeat 15 — Scorer 2
+## Item 221: Q07, repeat 15 — Scorer 2
 
 Execution id: `<EXECUTION_ID_187>`
 
@@ -38929,7 +45041,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 188: Q07, repeat 16 — Scorer 1
+## Item 222: Q07, repeat 16 — Scorer 1
 
 Execution id: `<EXECUTION_ID_188>`
 
@@ -39029,7 +45141,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 188: Q07, repeat 16 — Scorer 2
+## Item 222: Q07, repeat 16 — Scorer 2
 
 Execution id: `<EXECUTION_ID_188>`
 
@@ -39129,7 +45241,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 189: Q07, repeat 17 — Scorer 1
+## Item 223: Q07, repeat 17 — Scorer 1
 
 Execution id: `<EXECUTION_ID_189>`
 
@@ -39229,7 +45341,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 189: Q07, repeat 17 — Scorer 2
+## Item 223: Q07, repeat 17 — Scorer 2
 
 Execution id: `<EXECUTION_ID_189>`
 
@@ -39329,7 +45441,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 190: Q07, repeat 18 — Scorer 1
+## Item 224: Q07, repeat 18 — Scorer 1
 
 Execution id: `<EXECUTION_ID_190>`
 
@@ -39429,7 +45541,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 190: Q07, repeat 18 — Scorer 2
+## Item 224: Q07, repeat 18 — Scorer 2
 
 Execution id: `<EXECUTION_ID_190>`
 
@@ -39529,7 +45641,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 191: Q07, repeat 19 — Scorer 1
+## Item 225: Q07, repeat 19 — Scorer 1
 
 Execution id: `<EXECUTION_ID_191>`
 
@@ -39629,7 +45741,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 191: Q07, repeat 19 — Scorer 2
+## Item 225: Q07, repeat 19 — Scorer 2
 
 Execution id: `<EXECUTION_ID_191>`
 
@@ -39729,7 +45841,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 192: Q07, repeat 21 — Scorer 1
+## Item 226: Q07, repeat 21 — Scorer 1
 
 Execution id: `<EXECUTION_ID_192>`
 
@@ -39829,7 +45941,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 192: Q07, repeat 21 — Scorer 2
+## Item 226: Q07, repeat 21 — Scorer 2
 
 Execution id: `<EXECUTION_ID_192>`
 
@@ -39929,7 +46041,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 193: Q07, repeat 22 — Scorer 1
+## Item 227: Q07, repeat 22 — Scorer 1
 
 Execution id: `<EXECUTION_ID_193>`
 
@@ -40029,7 +46141,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 193: Q07, repeat 22 — Scorer 2
+## Item 227: Q07, repeat 22 — Scorer 2
 
 Execution id: `<EXECUTION_ID_193>`
 
@@ -40129,7 +46241,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 194: Q07, repeat 23 — Scorer 1
+## Item 228: Q07, repeat 23 — Scorer 1
 
 Execution id: `<EXECUTION_ID_194>`
 
@@ -40227,7 +46339,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 194: Q07, repeat 23 — Scorer 2
+## Item 228: Q07, repeat 23 — Scorer 2
 
 Execution id: `<EXECUTION_ID_194>`
 
@@ -40325,7 +46437,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 195: Q07, repeat 24 — Scorer 1
+## Item 229: Q07, repeat 24 — Scorer 1
 
 Execution id: `<EXECUTION_ID_195>`
 
@@ -40425,7 +46537,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 195: Q07, repeat 24 — Scorer 2
+## Item 229: Q07, repeat 24 — Scorer 2
 
 Execution id: `<EXECUTION_ID_195>`
 
@@ -40525,7 +46637,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 196: Q07, repeat 25 — Scorer 1
+## Item 230: Q07, repeat 25 — Scorer 1
 
 Execution id: `<EXECUTION_ID_196>`
 
@@ -40625,7 +46737,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 196: Q07, repeat 25 — Scorer 2
+## Item 230: Q07, repeat 25 — Scorer 2
 
 Execution id: `<EXECUTION_ID_196>`
 
@@ -40725,7 +46837,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 197: Q07, repeat 26 — Scorer 1
+## Item 231: Q07, repeat 26 — Scorer 1
 
 Execution id: `<EXECUTION_ID_197>`
 
@@ -40825,7 +46937,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 197: Q07, repeat 26 — Scorer 2
+## Item 231: Q07, repeat 26 — Scorer 2
 
 Execution id: `<EXECUTION_ID_197>`
 
@@ -40925,7 +47037,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 198: Q07, repeat 27 — Scorer 1
+## Item 232: Q07, repeat 27 — Scorer 1
 
 Execution id: `<EXECUTION_ID_198>`
 
@@ -41025,7 +47137,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 198: Q07, repeat 27 — Scorer 2
+## Item 232: Q07, repeat 27 — Scorer 2
 
 Execution id: `<EXECUTION_ID_198>`
 
@@ -41125,7 +47237,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 199: Q07, repeat 28 — Scorer 1
+## Item 233: Q07, repeat 28 — Scorer 1
 
 Execution id: `<EXECUTION_ID_199>`
 
@@ -41225,7 +47337,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 199: Q07, repeat 28 — Scorer 2
+## Item 233: Q07, repeat 28 — Scorer 2
 
 Execution id: `<EXECUTION_ID_199>`
 
@@ -41325,7 +47437,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 200: Q07, repeat 29 — Scorer 1
+## Item 234: Q07, repeat 29 — Scorer 1
 
 Execution id: `<EXECUTION_ID_200>`
 
@@ -41425,7 +47537,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 200: Q07, repeat 29 — Scorer 2
+## Item 234: Q07, repeat 29 — Scorer 2
 
 Execution id: `<EXECUTION_ID_200>`
 
@@ -41525,7 +47637,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 201: Q07, repeat 30 — Scorer 1
+## Item 235: Q07, repeat 30 — Scorer 1
 
 Execution id: `<EXECUTION_ID_201>`
 
@@ -41625,7 +47737,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 201: Q07, repeat 30 — Scorer 2
+## Item 235: Q07, repeat 30 — Scorer 2
 
 Execution id: `<EXECUTION_ID_201>`
 
@@ -41725,7 +47837,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 202: Q07, repeat 32 — Scorer 1
+## Item 236: Q07, repeat 32 — Scorer 1
 
 Execution id: `<EXECUTION_ID_202>`
 
@@ -41825,7 +47937,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 202: Q07, repeat 32 — Scorer 2
+## Item 236: Q07, repeat 32 — Scorer 2
 
 Execution id: `<EXECUTION_ID_202>`
 
@@ -41925,7 +48037,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 203: Q07, repeat 33 — Scorer 1
+## Item 237: Q07, repeat 33 — Scorer 1
 
 Execution id: `<EXECUTION_ID_203>`
 
@@ -42025,7 +48137,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 203: Q07, repeat 33 — Scorer 2
+## Item 237: Q07, repeat 33 — Scorer 2
 
 Execution id: `<EXECUTION_ID_203>`
 
@@ -42125,7 +48237,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 204: Q07, repeat 35 — Scorer 1
+## Item 238: Q07, repeat 35 — Scorer 1
 
 Execution id: `<EXECUTION_ID_204>`
 
@@ -42225,7 +48337,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 204: Q07, repeat 35 — Scorer 2
+## Item 238: Q07, repeat 35 — Scorer 2
 
 Execution id: `<EXECUTION_ID_204>`
 
@@ -42325,7 +48437,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 205: Q07, repeat 36 — Scorer 1
+## Item 239: Q07, repeat 36 — Scorer 1
 
 Execution id: `<EXECUTION_ID_205>`
 
@@ -42421,7 +48533,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 205: Q07, repeat 36 — Scorer 2
+## Item 239: Q07, repeat 36 — Scorer 2
 
 Execution id: `<EXECUTION_ID_205>`
 
@@ -42517,7 +48629,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 206: Q07, repeat 37 — Scorer 1
+## Item 240: Q07, repeat 37 — Scorer 1
 
 Execution id: `<EXECUTION_ID_206>`
 
@@ -42626,7 +48738,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 206: Q07, repeat 37 — Scorer 2
+## Item 240: Q07, repeat 37 — Scorer 2
 
 Execution id: `<EXECUTION_ID_206>`
 
@@ -42735,7 +48847,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 207: Q07, repeat 38 — Scorer 1
+## Item 241: Q07, repeat 38 — Scorer 1
 
 Execution id: `<EXECUTION_ID_207>`
 
@@ -42835,7 +48947,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 207: Q07, repeat 38 — Scorer 2
+## Item 241: Q07, repeat 38 — Scorer 2
 
 Execution id: `<EXECUTION_ID_207>`
 
@@ -42935,7 +49047,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 208: Q07, repeat 40 — Scorer 1
+## Item 242: Q07, repeat 40 — Scorer 1
 
 Execution id: `<EXECUTION_ID_208>`
 
@@ -43035,7 +49147,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 208: Q07, repeat 40 — Scorer 2
+## Item 242: Q07, repeat 40 — Scorer 2
 
 Execution id: `<EXECUTION_ID_208>`
 
@@ -43135,7 +49247,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 209: Q07, repeat 41 — Scorer 1
+## Item 243: Q07, repeat 41 — Scorer 1
 
 Execution id: `<EXECUTION_ID_209>`
 
@@ -43235,7 +49347,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 209: Q07, repeat 41 — Scorer 2
+## Item 243: Q07, repeat 41 — Scorer 2
 
 Execution id: `<EXECUTION_ID_209>`
 
@@ -43335,7 +49447,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 210: Q07, repeat 42 — Scorer 1
+## Item 244: Q07, repeat 42 — Scorer 1
 
 Execution id: `<EXECUTION_ID_210>`
 
@@ -43435,7 +49547,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 210: Q07, repeat 42 — Scorer 2
+## Item 244: Q07, repeat 42 — Scorer 2
 
 Execution id: `<EXECUTION_ID_210>`
 
@@ -43535,7 +49647,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 211: Q07, repeat 46 — Scorer 1
+## Item 245: Q07, repeat 46 — Scorer 1
 
 Execution id: `<EXECUTION_ID_211>`
 
@@ -43635,7 +49747,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 211: Q07, repeat 46 — Scorer 2
+## Item 245: Q07, repeat 46 — Scorer 2
 
 Execution id: `<EXECUTION_ID_211>`
 
@@ -43735,7 +49847,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 212: Q07, repeat 48 — Scorer 1
+## Item 246: Q07, repeat 48 — Scorer 1
 
 Execution id: `<EXECUTION_ID_212>`
 
@@ -43837,7 +49949,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 212: Q07, repeat 48 — Scorer 2
+## Item 246: Q07, repeat 48 — Scorer 2
 
 Execution id: `<EXECUTION_ID_212>`
 
@@ -43939,7 +50051,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 213: Q07, repeat 49 — Scorer 1
+## Item 247: Q07, repeat 49 — Scorer 1
 
 Execution id: `<EXECUTION_ID_213>`
 
@@ -44041,7 +50153,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 213: Q07, repeat 49 — Scorer 2
+## Item 247: Q07, repeat 49 — Scorer 2
 
 Execution id: `<EXECUTION_ID_213>`
 
@@ -44143,7 +50255,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 214: Q07, repeat 50 — Scorer 1
+## Item 248: Q07, repeat 50 — Scorer 1
 
 Execution id: `<EXECUTION_ID_214>`
 
@@ -44243,7 +50355,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 214: Q07, repeat 50 — Scorer 2
+## Item 248: Q07, repeat 50 — Scorer 2
 
 Execution id: `<EXECUTION_ID_214>`
 
@@ -44343,7 +50455,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 215: Q08, repeat 1 — Scorer 1
+## Item 249: Q08, repeat 1 — Scorer 1
 
 Execution id: `<EXECUTION_ID_215>`
 
@@ -44445,7 +50557,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 215: Q08, repeat 1 — Scorer 2
+## Item 249: Q08, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_215>`
 
@@ -44547,7 +50659,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 216: Q08, repeat 16 — Scorer 1
+## Item 250: Q08, repeat 16 — Scorer 1
 
 Execution id: `<EXECUTION_ID_216>`
 
@@ -44649,7 +50761,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 216: Q08, repeat 16 — Scorer 2
+## Item 250: Q08, repeat 16 — Scorer 2
 
 Execution id: `<EXECUTION_ID_216>`
 
@@ -44753,6 +50865,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ---
 
-Total items requiring adjudication: 216
+Total items requiring adjudication: 250
 
-Total sheets: 432 (2 per item, for 2 scorers)
+Total sheets: 500 (2 per item, for 2 scorers)
