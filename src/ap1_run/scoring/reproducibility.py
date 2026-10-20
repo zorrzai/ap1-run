@@ -27,6 +27,9 @@ UNMEASURED = 'UNMEASURED'
 
 VALID_CLASSES = frozenset({STRUCTURAL, CONFIGURED, OBSERVED_ONLY, UNMEASURED})
 
+# The surfaces a mechanism is classified on.
+SURFACES = ('figures', 'prose')
+
 
 class ReproducibilityError(Exception):
     """Reproducibility classification failure."""
@@ -51,7 +54,14 @@ def classify_mechanism(responses, *, surface, minimum_runs,
             distinct_values: int or None
             successful_runs: int
             reason: str
+
+    Raises:
+        ReproducibilityError: surface is not one of SURFACES.
     """
+    if surface not in SURFACES:
+        raise ReproducibilityError(
+            f'unknown surface {surface!r}; expected one of {SURFACES}')
+
     successful = [r for r in responses if not _is_error_or_limited(r)]
     n_successful = len(successful)
 
@@ -64,6 +74,17 @@ def classify_mechanism(responses, *, surface, minimum_runs,
             'successful_runs': n_successful,
             'reason': (f'{n_successful} successful runs below minimum '
                        f'{minimum_runs} — UNMEASURED'),
+        }
+
+    # No observations (reachable with minimum_runs 0): nothing is known
+    # about the mechanism
+    if n_successful == 0:
+        return {
+            'mechanism': UNMEASURED,
+            'operator_declared': False,
+            'distinct_values': None,
+            'successful_runs': 0,
+            'reason': '0 successful runs — UNMEASURED',
         }
 
     # Extract the surface values
