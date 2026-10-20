@@ -751,6 +751,9 @@ def test_build_messages_system_then_user():
 
 # --- Step 4: correct behaviour (failing until fixed) ---
 
+import re  # noqa: E402  (kept in this section to ease merging)
+
+
 def _contains(tree, target):
     """True if target is tree or any value nested in it."""
     if tree == target:
@@ -797,3 +800,45 @@ def test_execute_item_every_round_request_and_response_recorded(
                + [f'response {n}' for n, reply in enumerate(replies, 1)
                   if not _contains(records, reply)])
     assert missing == []
+
+
+@pytest.mark.finding('T3-35')
+@pytest.mark.req('R1.3', 'AP-1 D7.9')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-35: a mid-loop send failure gives EV-0 with '
+                          'error_state None; cause and round only in the '
+                          'unwritten round_shapes')
+def test_execute_item_later_send_fails_error_state_names_cause_and_round(
+        tmp_path, calculator):
+    # Correct (SPEC R1.3 "EV-0 UNOBSERVABLE with the round identified";
+    # R0.3 "error state" field): the record says what failed and in which
+    # round (the second request, round 1 counting the first as round 0).
+    # Today's round_shapes reason "adapter_send failed on turn 1: Rate
+    # limit reached" written into error_state would pass.
+    send = FakeAdapter(calls(tool_call()),
+                       adapter.RateLimitError('Rate limit reached'))
+    _, records = run(tmp_path, send)
+    assert records[0]['evidence_class'] == EV_0
+    error_state = records[0]['error_state']
+    assert error_state is not None
+    text = json.dumps(error_state).lower()
+    assert 'rate limit' in text
+    assert re.search(r'\b(round|turn)\D{0,3}[12]\b', text)
+
+
+@pytest.mark.finding('T3-35')
+@pytest.mark.req('R1.3', 'AP-1 D7.9')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-35: an unrecognised later response gives EV-0 '
+                          'with error_state None and the round unidentified')
+def test_execute_item_unrecognised_later_response_error_state_names_round(
+        tmp_path, calculator):
+    # Correct (SPEC R1.3, as above): the record names the unrecognised
+    # shape and the round it came in (round 1).
+    _, records = run(tmp_path, FakeAdapter(calls(tool_call()), ANTHROPIC))
+    assert records[0]['evidence_class'] == EV_0
+    error_state = records[0]['error_state']
+    assert error_state is not None
+    text = json.dumps(error_state).lower()
+    assert 'shape' in text
+    assert re.search(r'\b(round|turn)\D{0,3}[12]\b', text)

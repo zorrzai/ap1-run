@@ -16,6 +16,8 @@ with its finding):
   tool loop, request and raw response, is in the transcript.
 - T3-52: the other R0.2/R0.3 verification contracts (single-host egress,
   read-only scorer, interrupted run reported not-run).
+- T3-35 (engine part): SPEC R1.3 ("EV-0 UNOBSERVABLE with the round
+  identified"): an EV-0 execution's record carries its cause and round.
 
 Each run is the real runner (ap1_run.run.main) against the regression
 mock endpoint (tests/fixtures/mock_endpoint.py) on 127.0.0.1, with a copy
@@ -37,6 +39,7 @@ shape; it then updates _rescore() and nothing else.
 import importlib.util
 import json
 import os
+import re
 import shutil
 import stat
 import sys
@@ -48,7 +51,11 @@ from types import SimpleNamespace
 import pytest
 
 from ap1_run import run
+from ap1_run.execution.evidence import EV_0
 from ap1_run.foundation import adapter
+
+# The runner warns that VERSION and git HEAD differ (any branch commit).
+pytestmark = pytest.mark.filterwarnings('ignore:VERSION file says')
 
 ROOT = Path(__file__).resolve().parents[2]
 EXAMPLE = ROOT / 'example'
@@ -448,3 +455,46 @@ def test_interrupted_run_partial_transcript_scored_unreached_not_run(
                     ('Q01', 'instruction_removed', 1): 'NOT-RUN',
                     ('Q02', 'instruction_removed', 1): 'NOT-RUN'}
     assert summary['unmeasured_cells'] == []
+
+
+# -- T3-35 (engine part): the cause and round of an EV-0 --------------------
+
+ANTHROPIC = {'id': 'msg_mock', 'type': 'message', 'role': 'assistant',
+             'content': [{'type': 'text',
+                          'text': 'The monthly interest is $15.20.'}],
+             'stop_reason': 'end_turn'}
+
+
+@pytest.mark.finding('T3-35')
+@pytest.mark.req('R1.3', 'AP-1 D7.9')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-35: an EV-0 record has error_state None; the '
+                          'cause and failing round go only into the '
+                          'unwritten round_shapes')
+@pytest.mark.parametrize('second_round, cause', [
+    ({'http': 503, 'body': '{"error": "upstream down"}'}, '503'),
+    ({'close': True}, 'transport'),
+    ({'raw': ANTHROPIC}, 'shape'),
+], ids=['http-503', 'dropped-connection', 'unrecognised-shape'])
+def test_run_ev0_record_names_cause_and_round(cli, second_round, cause):
+    # Correct (SPEC R1.3 "the evidence class is EV-0 UNOBSERVABLE with the
+    # round identified"; R0.3 record field "error state"): the transcript
+    # record of an execution whose second round (round 1, counting the
+    # first request as round 0) fails, or comes back in an unrecognised
+    # shape, has evidence class EV-0 and an error state naming the cause
+    # and the round. Today's round_shapes reason ("adapter_send failed on
+    # turn 1: HTTP 503: ...", "response appears Anthropic-shaped ...")
+    # written into error_state would pass.
+    r = cli({'Q01/base/*': [{'call': '15200.00 * 1.2 / 100 / 12'},
+                            second_round],
+             'Q01/instruction_removed/*': ONE_ROUND['Q01/*/*']},
+            items=('Q01',), repeat=1)
+    records = [rec for rec in _read_jsonl(r.transcript)
+               if rec['condition'] == 'base'
+               and rec.get('record_type') != 'figure_identification']
+    assert [rec['evidence_class'] for rec in records] == [EV_0]
+    error_state = records[0]['error_state']
+    assert error_state is not None
+    text = json.dumps(error_state).lower()
+    assert cause in text
+    assert re.search(r'\b(round|turn)\D{0,3}[12]\b', text)
