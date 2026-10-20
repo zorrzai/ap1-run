@@ -459,19 +459,29 @@ def test_load_config_quantisation_extra_keys_dropped(load):
 
 
 @pytest.mark.finding('T3-51')
-def test_load_config_empty_quantisation_gets_defaults(load):
-    # Current behaviour: {} loads as places 2, ROUND_HALF_UP. Correct
-    # (R0.1, no defaults for anything affecting a result): refuse.
-    assert load(quantisation={})['quantisation'] == {
-        'places': 2, 'rounding': 'ROUND_HALF_UP'}
+@pytest.mark.parametrize('part', ['places', 'rounding'])
+def test_load_config_quantisation_part_missing_refused_exact(load, part):
+    q = {'places': '2', 'rounding': 'ROUND_HALF_UP'}
+    del q[part]
+    assert refused(load, quantisation=q) == \
+        f'missing required field: quantisation.{part}'
 
 
 @pytest.mark.finding('T3-51')
-def test_load_config_quantisation_rounding_not_validated(load):
-    # Current behaviour: any rounding string loads; quantise() fails later.
-    # Correct: refuse a mode quantise() does not support.
-    assert load(quantisation={'places': '2', 'rounding': 'BOGUS'})[
-        'quantisation']['rounding'] == 'BOGUS'
+@pytest.mark.parametrize('rounding', ['BOGUS', 'round_half_up', ['x'], None])
+def test_load_config_quantisation_rounding_not_a_decimal_mode_refused(
+        load, rounding):
+    assert refused(load, quantisation={'places': '2', 'rounding': rounding}
+                   ) == (f'quantisation.rounding: unknown rounding mode '
+                         f'{rounding!r}. Permitted: ROUND_05UP, ROUND_CEILING, '
+                         f'ROUND_DOWN, ROUND_FLOOR, ROUND_HALF_DOWN, '
+                         f'ROUND_HALF_EVEN, ROUND_HALF_UP, ROUND_UP')
+
+
+@pytest.mark.finding('T3-51')
+def test_load_config_quantisation_any_decimal_mode_kept(load):
+    assert load(quantisation={'places': '2', 'rounding': 'ROUND_DOWN'})[
+        'quantisation'] == {'places': 2, 'rounding': 'ROUND_DOWN'}
 
 
 @pytest.mark.finding('S3-G1-10')
@@ -487,8 +497,11 @@ def test_load_config_quantisation_places_bool_and_negative_accepted(load):
     # Current behaviour: places true loads as 1 (booleans pass the
     # bare-numeric check) and '-2' as -2. Correct: a quoted non-negative
     # integer only.
-    assert load(quantisation={'places': True})['quantisation']['places'] == 1
-    assert load(quantisation={'places': '-2'})['quantisation']['places'] == -2
+    half_up = {'rounding': 'ROUND_HALF_UP'}
+    assert load(quantisation=dict(half_up, places=True))[
+        'quantisation']['places'] == 1
+    assert load(quantisation=dict(half_up, places='-2'))[
+        'quantisation']['places'] == -2
 
 
 # -- load_config: repeat_count --------------------------------------------
@@ -818,9 +831,6 @@ def test_minimum_n_minimum_named_is_the_declared_versions(dim, v12_min,
 
 
 @pytest.mark.finding('T3-51')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-51: missing quantisation places/rounding '
-                          'default to 2 and ROUND_HALF_UP')
 @pytest.mark.req('R0.1')
 @pytest.mark.parametrize('quantisation, missing', [
     ({}, 'places'),
@@ -837,8 +847,6 @@ def test_load_config_quantisation_field_missing_refused(load, quantisation,
 
 
 @pytest.mark.finding('T3-51')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-51: the rounding string is not validated')
 @pytest.mark.req('R0.1')
 def test_load_config_quantisation_unknown_rounding_mode_refused(load):
     # SPEC R0.1 (incomplete configuration halts before any request).

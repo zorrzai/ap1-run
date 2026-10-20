@@ -37,7 +37,6 @@ import json
 import os
 import sys
 import time
-from decimal import Decimal
 
 from ap1_run.execution.context import (
     build_delivered_context, check_lookup_collision,
@@ -184,16 +183,16 @@ def main(argv=None):
     print()
 
     # -- Run configuration --
-    repeat_count = config.get('repeat_count', 3)
+    # Every one of these is a required field, validated by load_config
+    # (repeat_count an int, answer_tolerance a Decimal): no defaults (R0.1).
+    repeat_count = config['repeat_count']
     conditions = ['base', 'instruction_removed']
     items = questions['items']
 
-    sampling = config.get('sampling', {})
-    answer_tolerance = config.get('answer_tolerance', Decimal('0.01'))
-    if isinstance(answer_tolerance, str):
-        answer_tolerance = Decimal(answer_tolerance)
-    decline_markers = config.get('decline_markers', [])
-    currency_symbols = config.get('currency_symbols', [])
+    sampling = config['sampling']
+    answer_tolerance = config['answer_tolerance']
+    decline_markers = config['decline_markers']
+    currency_symbols = config['currency_symbols']
 
     # -- Adapter wrapper (binds api_key) --
     def adapter_send(endpoint_url, *, messages, tools=None,
@@ -299,7 +298,7 @@ def main(argv=None):
     d1_summary['n'] = len(findings.all_accuracy_results)
 
     # -- D2 classification per (item, condition) per surface --
-    d2_cap_reason = find_d2_cap(config.get('sampling', {}))
+    d2_cap_reason = find_d2_cap(sampling)
     d2_results = classify_reproducibility(findings.d2_responses, repeat_count,
                                           d2_cap_reason)
 

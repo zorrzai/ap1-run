@@ -108,9 +108,13 @@ class Run:
     # -- fakes ---------------------------------------------------------
     def load_config(self, path):
         # The real load_config validates every field; main() is tested
-        # here with whatever config it is given.
+        # here with whatever config it is given, with answer_tolerance
+        # parsed to Decimal as load_config does.
         self.config_path = path
-        return json.loads(json.dumps(self.config))
+        config = json.loads(json.dumps(self.config))
+        if isinstance(config.get('answer_tolerance'), str):
+            config['answer_tolerance'] = D(config['answer_tolerance'])
+        return config
 
     def resolve_runner_version(self, base_dir):
         self.calls.append(('version', base_dir))
@@ -408,24 +412,17 @@ def test_main_creates_a_missing_output_dir(r):
     assert r.output_dir.is_dir()
 
 
-def test_main_defaults_without_tolerance_markers_or_symbols(r):
-    for key in ('answer_tolerance', 'decline_markers', 'currency_symbols',
-                'sampling', 'repeat_count'):
-        del r.config[key]
-    assert r.main() == 0
-    kw = r.named('score')[0][1]
-    assert (kw['answer_tolerance'], kw['decline_markers'],
-            kw['currency_symbols']) == (D('0.01'), [], [])
-    assert len(r.named('execute')) == 2 * 2 * 3   # repeat_count 3
-    assert r.named('d2_cap') == [({},)]
-    assert r.named('guard')[0][-1] == {}
-
-
-def test_main_numeric_tolerance_is_kept_as_given(r):
-    r.config['answer_tolerance'] = 0.5   # not a string: not converted
-    r.main()
-    tolerance = r.named('score')[0][1]['answer_tolerance']
-    assert tolerance == 0.5 and isinstance(tolerance, float)
+@pytest.mark.finding('T3-51')
+@pytest.mark.parametrize('key', ['answer_tolerance', 'decline_markers',
+                                 'currency_symbols', 'sampling',
+                                 'repeat_count'])
+def test_main_result_affecting_field_has_no_default(r, key):
+    # R0.1: no defaults for anything affecting a result. load_config
+    # refuses a config without these; main() never invents one.
+    del r.config[key]
+    with pytest.raises(KeyError, match=key):
+        r.main()
+    assert r.named('execute') == []
 
 
 def test_main_execution_with_no_status_is_scored(r):

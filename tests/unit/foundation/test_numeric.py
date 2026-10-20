@@ -614,8 +614,23 @@ def test_extract_run1_literal_mortgage_prose():
 
 # -- quantise -------------------------------------------------------------
 
-def test_rounding_modes_are_the_two_declared():
-    assert set(ROUNDING_MODES) == {'ROUND_HALF_UP', 'ROUND_HALF_EVEN'}
+@pytest.mark.finding('T3-51')
+def test_rounding_modes_are_decimals_eight():
+    # A config may declare any rounding mode the decimal module defines;
+    # quantise supports every one it accepts (R0.1, AP-1 v1.3 §6.9).
+    import decimal
+    assert ROUNDING_MODES == {name: getattr(decimal, name) for name in (
+        'ROUND_05UP', 'ROUND_CEILING', 'ROUND_DOWN', 'ROUND_FLOOR',
+        'ROUND_HALF_DOWN', 'ROUND_HALF_EVEN', 'ROUND_HALF_UP', 'ROUND_UP')}
+
+
+@pytest.mark.finding('T3-51')
+@pytest.mark.parametrize('mode, expected', [
+    ('ROUND_DOWN', '2.34'), ('ROUND_UP', '2.35'), ('ROUND_FLOOR', '2.34'),
+    ('ROUND_CEILING', '2.35'), ('ROUND_HALF_DOWN', '2.34'),
+    ('ROUND_05UP', '2.34')])
+def test_quantise_other_decimal_modes(mode, expected):
+    assert str(quantise(D('2.345'), 2, mode)) == expected
 
 
 @pytest.mark.req('R0.4.1')
@@ -647,8 +662,8 @@ def test_quantise_once_differs_from_each_step():
 
 def test_quantise_unknown_mode_raises():
     with pytest.raises(ValueError) as e:
-        quantise(D('1'), 2, 'ROUND_DOWN')
-    assert str(e.value) == "unsupported rounding mode: 'ROUND_DOWN'"
+        quantise(D('1'), 2, 'ROUND_SIDEWAYS')
+    assert str(e.value) == "unsupported rounding mode: 'ROUND_SIDEWAYS'"
 
 
 @pytest.mark.finding('S3-G1-9')
