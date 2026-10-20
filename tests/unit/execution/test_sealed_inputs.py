@@ -57,11 +57,20 @@ def test_read_inputs_paths_bytes_and_parsed_values(tmp_path):
     assert inputs.ground_truth.__file__ == str(root / 'ground_truth_example.py')
 
 
-def test_read_inputs_json_decoded_as_utf8_without_bom(tmp_path):
-    # As before: a byte-order mark in a JSON input is an error.
-    root = write_dir(tmp_path / 'fx', fixture=b'\xef\xbb\xbf{}')
-    with pytest.raises(json.JSONDecodeError):
-        read_inputs(str(root))
+def test_read_inputs_json_with_a_byte_order_mark(tmp_path):
+    # T3-50: the seal hashes a JSON input without its BOM, so the run
+    # reads it too (it was a JSONDecodeError before).
+    root = write_dir(tmp_path / 'fx', fixture=b'\xef\xbb\xbf{"a": "\xc3\xa9"}',
+                     questions=b'\xef\xbb\xbf{"items": []}')
+    inputs = read_inputs(str(root))
+    assert inputs.fixture == {'a': 'é'}
+    assert inputs.questions == {'items': []}
+
+
+@pytest.mark.parametrize('data', [b'\xff{}', b'{oops}'])
+def test_parse_json_input_refuses_what_is_not_utf8_json(data):
+    with pytest.raises(ValueError):
+        sealed_inputs.parse_json_input(data)
 
 
 def test_read_inputs_reads_each_file_once(tmp_path, monkeypatch):

@@ -41,10 +41,16 @@ class SealedInputs:
     def __init__(self, paths, data):
         self.paths = paths
         self.data = data
-        self.fixture = json.loads(data['fixture'].decode('utf-8'))
-        self.questions = json.loads(data['questions'].decode('utf-8'))
+        self.fixture = parse_json_input(data['fixture'])
+        self.questions = parse_json_input(data['questions'])
         self.ground_truth = load_ground_truth(paths['ground_truth'],
                                               data['ground_truth'])
+
+
+def parse_json_input(data):
+    """A JSON input from its bytes: UTF-8, a leading byte-order mark
+    allowed, as the seal hashes it without one (T3-50)."""
+    return json.loads(data.decode('utf-8-sig'))
 
 
 def read_inputs(fixture_dir):

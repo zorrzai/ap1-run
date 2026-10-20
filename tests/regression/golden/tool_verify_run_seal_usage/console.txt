@@ -1,4 +1,4 @@
-Usage: python tools/verify_run_seal.py <output_dir> [<output_dir2> ...]
+Usage: python tools/verify_run_seal.py [--fixture-dir DIR] [--ap1-text FILE] <output_dir> [<output_dir2> ...]
 
 Example:
   python tools/verify_run_seal.py output/run_a_mini output/run_b_sol
