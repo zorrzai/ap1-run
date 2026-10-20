@@ -35,5 +35,5 @@ pythonpath = ["src"]
 addopts = ["--strict-markers", "--import-mode=importlib"]
 markers = [
     "req(*ids): the requirement IDs a test checks, e.g. @pytest.mark.req('R2.4')",
-    "finding(*ids): pins today's behaviour for a known finding, e.g. @pytest.mark.finding('T3-2'); the fix changes the test",
+    "finding(*ids): the test concerns a known finding, e.g. @pytest.mark.finding('T3-2'). Without xfail it pins today's behaviour (the fix changes it); with xfail(strict=True) it states the correct behaviour (the fix removes the xfail)",
 ]
