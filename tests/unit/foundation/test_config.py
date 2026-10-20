@@ -515,6 +515,25 @@ def test_load_config_valid_sampling_omission_still_loads(load):
     assert load(sampling={'top_p': o})['sampling']['top_p'] == o
 
 
+@pytest.mark.finding('S3-G1-19')
+@pytest.mark.parametrize('value', ['NaN', 'Infinity', '-inf'])
+def test_load_config_non_finite_sampling_value_refused(load, value):
+    assert refused(load, sampling={'temperature': value}) == \
+        f'sampling.temperature: must be a finite number: {value!r}'
+
+
+@pytest.mark.finding('S3-G1-21')
+@pytest.mark.parametrize('key', ['model', 'messages', 'tools'])
+def test_load_config_sampling_body_field_refused(load, key):
+    assert refused(load, sampling={key: 'x'}) == \
+        f'sampling.{key}: a request body field, not a sampling parameter'
+
+
+def test_load_config_non_numeric_sampling_string_loads(load):
+    assert load(sampling={'reasoning_effort': 'low'})['sampling'] == \
+        {'reasoning_effort': 'low'}
+
+
 # -- load_config: dimensions ----------------------------------------------
 
 @pytest.mark.finding('T3-12')
