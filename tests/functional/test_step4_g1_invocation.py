@@ -215,8 +215,6 @@ def test_run_mixed_classes_d71_counts_only_observed_and_names_classes(
 # -- T3-10: an empty response is UNMEASURED -------------------------------
 
 @pytest.mark.finding('T3-10')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-10: empty response scored EXECUTED/NOT-INVOKED')
 def test_run_empty_response_unmeasured_outside_d71(full_run):
     """Q01 answers with empty content and no tool call, under both
     conditions. Correct (SPEC R4.1 "Empty response -> UNMEASURED", R0.2,

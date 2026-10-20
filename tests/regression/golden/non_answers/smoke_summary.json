@@ -6,37 +6,15 @@
       "item_id": "Q01",
       "condition": "base",
       "repeat": 1,
-      "status": "EXECUTED",
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED",
-      "figure_outcome": "UNMEASURABLE",
-      "figure_reason": "response has no text content",
-      "tool_calls_count": 0,
-      "released_figure": "None",
-      "expected": "15.200",
-      "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
-      "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "status": "UNMEASURED",
+      "cause": "empty response"
     },
     {
       "item_id": "Q01",
       "condition": "base",
       "repeat": 2,
-      "status": "EXECUTED",
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED",
-      "figure_outcome": "UNMEASURABLE",
-      "figure_reason": "response has no text content",
-      "tool_calls_count": 0,
-      "released_figure": "None",
-      "expected": "15.200",
-      "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
-      "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "status": "UNMEASURED",
+      "cause": "empty response"
     },
     {
       "item_id": "Q02",
@@ -300,37 +278,15 @@
       "item_id": "Q05",
       "condition": "base",
       "repeat": 1,
-      "status": "EXECUTED",
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED",
-      "figure_outcome": "UNMEASURABLE",
-      "figure_reason": "response has no text content",
-      "tool_calls_count": 0,
-      "released_figure": "None",
-      "expected": "2411.000",
-      "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
-      "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "status": "UNMEASURED",
+      "cause": "empty response"
     },
     {
       "item_id": "Q05",
       "condition": "base",
       "repeat": 2,
-      "status": "EXECUTED",
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED",
-      "figure_outcome": "UNMEASURABLE",
-      "figure_reason": "response has no text content",
-      "tool_calls_count": 0,
-      "released_figure": "None",
-      "expected": "2411.000",
-      "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
-      "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "status": "UNMEASURED",
+      "cause": "empty response"
     },
     {
       "item_id": "Q06",
@@ -1218,37 +1174,15 @@
       "item_id": "Q01",
       "condition": "instruction_removed",
       "repeat": 1,
-      "status": "EXECUTED",
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED",
-      "figure_outcome": "UNMEASURABLE",
-      "figure_reason": "response has no text content",
-      "tool_calls_count": 0,
-      "released_figure": "None",
-      "expected": "15.200",
-      "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
-      "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "status": "UNMEASURED",
+      "cause": "empty response"
     },
     {
       "item_id": "Q01",
       "condition": "instruction_removed",
       "repeat": 2,
-      "status": "EXECUTED",
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED",
-      "figure_outcome": "UNMEASURABLE",
-      "figure_reason": "response has no text content",
-      "tool_calls_count": 0,
-      "released_figure": "None",
-      "expected": "15.200",
-      "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
-      "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "status": "UNMEASURED",
+      "cause": "empty response"
     },
     {
       "item_id": "Q02",
@@ -1512,37 +1446,15 @@
       "item_id": "Q05",
       "condition": "instruction_removed",
       "repeat": 1,
-      "status": "EXECUTED",
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED",
-      "figure_outcome": "UNMEASURABLE",
-      "figure_reason": "response has no text content",
-      "tool_calls_count": 0,
-      "released_figure": "None",
-      "expected": "2411.000",
-      "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
-      "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "status": "UNMEASURED",
+      "cause": "empty response"
     },
     {
       "item_id": "Q05",
       "condition": "instruction_removed",
       "repeat": 2,
-      "status": "EXECUTED",
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED",
-      "figure_outcome": "UNMEASURABLE",
-      "figure_reason": "response has no text content",
-      "tool_calls_count": 0,
-      "released_figure": "None",
-      "expected": "2411.000",
-      "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
-      "transcription_outcome": "UNOBSERVABLE",
-      "release_coverage_outcome": "COVERAGE-UNOBSERVABLE"
+      "status": "UNMEASURED",
+      "cause": "empty response"
     },
     {
       "item_id": "Q06",
@@ -2626,20 +2538,6 @@
   ],
   "evidence_findings": [
     {
-      "item_id": "Q01",
-      "condition": "base",
-      "repeat": 1,
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED"
-    },
-    {
-      "item_id": "Q01",
-      "condition": "base",
-      "repeat": 2,
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED"
-    },
-    {
       "item_id": "Q02",
       "condition": "base",
       "repeat": 1,
@@ -2680,20 +2578,6 @@
       "repeat": 2,
       "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
       "invocation_outcome": "INVOKED"
-    },
-    {
-      "item_id": "Q05",
-      "condition": "base",
-      "repeat": 1,
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED"
-    },
-    {
-      "item_id": "Q05",
-      "condition": "base",
-      "repeat": 2,
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED"
     },
     {
       "item_id": "Q06",
@@ -2766,20 +2650,6 @@
       "invocation_outcome": "INVOKED"
     },
     {
-      "item_id": "Q01",
-      "condition": "instruction_removed",
-      "repeat": 1,
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED"
-    },
-    {
-      "item_id": "Q01",
-      "condition": "instruction_removed",
-      "repeat": 2,
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED"
-    },
-    {
       "item_id": "Q02",
       "condition": "instruction_removed",
       "repeat": 1,
@@ -2820,20 +2690,6 @@
       "repeat": 2,
       "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
       "invocation_outcome": "INVOKED"
-    },
-    {
-      "item_id": "Q05",
-      "condition": "instruction_removed",
-      "repeat": 1,
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED"
-    },
-    {
-      "item_id": "Q05",
-      "condition": "instruction_removed",
-      "repeat": 2,
-      "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
-      "invocation_outcome": "NOT-INVOKED"
     },
     {
       "item_id": "Q06",

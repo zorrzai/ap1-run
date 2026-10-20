@@ -15,16 +15,16 @@ Perturbation guard: PASSED (single-variable: system_prompt only)
 Running 10 items x 2 conditions x 2 repeats
 Total requests: 40
 ============================================================
-  Q01/base/r1: UNMEASURABLE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
-  Q01/base/r2: UNMEASURABLE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
+  Q01/base/r1: UNMEASURED
+  Q01/base/r2: UNMEASURED
   Q02/base/r1: ADJUDICATE-DECLINE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
   Q02/base/r2: ADJUDICATE-DECLINE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
   Q03/base/r1: ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
   Q03/base/r2: ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
   Q04/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q04/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
-  Q05/base/r1: UNMEASURABLE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
-  Q05/base/r2: UNMEASURABLE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
+  Q05/base/r1: UNMEASURED
+  Q05/base/r2: UNMEASURED
   Q06/base/r1: AUTO-NO-FIGURE | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q06/base/r2: AUTO-NO-FIGURE | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q07/base/r1: ADJUDICATE-AMBIGUOUS | EV-2 PLATFORM-STRUCTURAL | INVOKED
@@ -35,16 +35,16 @@ Total requests: 40
   Q09/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q10/base/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q10/base/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
-  Q01/instruction_removed/r1: UNMEASURABLE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
-  Q01/instruction_removed/r2: UNMEASURABLE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
+  Q01/instruction_removed/r1: UNMEASURED
+  Q01/instruction_removed/r2: UNMEASURED
   Q02/instruction_removed/r1: ADJUDICATE-DECLINE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
   Q02/instruction_removed/r2: ADJUDICATE-DECLINE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
   Q03/instruction_removed/r1: ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
   Q03/instruction_removed/r2: ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
   Q04/instruction_removed/r1: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q04/instruction_removed/r2: AUTO-MATCH | EV-2 PLATFORM-STRUCTURAL | INVOKED
-  Q05/instruction_removed/r1: UNMEASURABLE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
-  Q05/instruction_removed/r2: UNMEASURABLE | EV-2 PLATFORM-STRUCTURAL | NOT-INVOKED
+  Q05/instruction_removed/r1: UNMEASURED
+  Q05/instruction_removed/r2: UNMEASURED
   Q06/instruction_removed/r1: AUTO-NO-FIGURE | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q06/instruction_removed/r2: AUTO-NO-FIGURE | EV-2 PLATFORM-STRUCTURAL | INVOKED
   Q07/instruction_removed/r1: ADJUDICATE-AMBIGUOUS | EV-2 PLATFORM-STRUCTURAL | INVOKED
@@ -70,7 +70,7 @@ No figure from it may be reported, cited, quoted or described as an AP-1
 result, by us or by anyone, in any document.
 
 
-3a. COMPLETION: 40 executed, 0 unmeasured, 0 void
+3a. COMPLETION: 32 executed, 8 unmeasured, 0 void
 
 3b. FIGURE IDENTIFICATION:
   ADJUDICATE-AMBIGUOUS: 4
@@ -78,16 +78,13 @@ result, by us or by anyone, in any document.
   ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING: 4
   AUTO-MATCH: 16
   AUTO-NO-FIGURE: 4
-  UNMEASURABLE: 8
-  Auto-scored: 20/40 (50%)
-  Adjudicated: 20/40 (50%)
+  Auto-scored: 20/32 (62%)
+  Adjudicated: 12/32 (38%)
 
   Per item (base condition, first repeat):
-    Q01: UNMEASURABLE — response has no text content
     Q02: ADJUDICATE-DECLINE — decline marker matched: 'I cannot'
     Q03: ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING — 2 numeric tokens found, none matching expected
     Q04: AUTO-MATCH — exactly one token matches: '$430.75'
-    Q05: UNMEASURABLE — response has no text content
     Q06: AUTO-NO-FIGURE — no numeric tokens found in response
     Q07: ADJUDICATE-AMBIGUOUS — 2 tokens match expected value — ambiguous
     Q08: AUTO-MATCH — exactly one token matches: '$287069.25'
@@ -101,24 +98,24 @@ result, by us or by anyone, in any document.
 3e. TOOL-CALL ARGUMENT STRUCTURES: 24 calls
 
 3f. EVIDENCE CLASSES:
-  EV-2 PLATFORM-STRUCTURAL: 40
+  EV-2 PLATFORM-STRUCTURAL: 32
 
 3g. UNMEASURED CELLS: 0
 
 3h. D7.1 INVOCATION:
-  base: invoked=12 not_invoked=8 n=20
-    failure rate: 8/20 (40.0%)
-  instruction_removed: invoked=12 not_invoked=8 n=20
-    failure rate: 8/20 (40.0%)
+  base: invoked=12 not_invoked=4 n=16
+    failure rate: 4/16 (25.0%)
+  instruction_removed: invoked=12 not_invoked=4 n=16
+    failure rate: 4/16 (25.0%)
 \n3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 16
   TRANSCRIBED-ALTERED: 0
-  UNOBSERVABLE: 24
+  UNOBSERVABLE: 16
 
 3h3. D7.3 RELEASE COVERAGE:
   GOVERNED-RELEASE: 20
   PARTIALLY-GOVERNED: 0
-  COVERAGE-UNOBSERVABLE: 20
+  COVERAGE-UNOBSERVABLE: 12
 
 3i. D7.2(b) OPERATION CORRECTNESS:
   OPERATION-CORRECT: 24
@@ -135,7 +132,7 @@ result, by us or by anyone, in any document.
 
 3k. D2 REPRODUCIBILITY:
   CAP: D2.2 cap: temperature was platform-rejected. Detail: OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported.
-  OBSERVED-ONLY: 40
+  OBSERVED-ONLY: 32
 
 3l. D7.2(a) OPERAND PROVENANCE:
   step 1 (source match):       68

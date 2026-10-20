@@ -294,11 +294,53 @@ def test_execute_item_self_report_recorded(tmp_path):
 
 
 @pytest.mark.finding('T3-10')
-def test_execute_item_empty_response_executed_not_invoked(tmp_path):
-    # T3-10: correct is UNMEASURED, outside the D7.1 denominator.
-    result, _ = run(tmp_path, FakeAdapter(answer('')))
-    assert (result['status'], result['evidence_class'],
-            result['invocation_outcome']) == ('EXECUTED', EV_2, 'NOT-INVOKED')
+def test_execute_item_empty_response_recorded_as_empty_without_outcome(
+        tmp_path):
+    # T3-10 (fixed): an empty response is UNMEASURED with its cause; it
+    # carries no evidence class and no invocation outcome, and the
+    # transcript record names it.
+    result, records = run(tmp_path, FakeAdapter(answer('')))
+    assert result['error'] == 'empty response'
+    assert 'invocation_outcome' not in result
+    assert 'evidence_class' not in result
+    assert (records[0]['error_state'], records[0]['evidence_class'],
+            records[0]['tool_calls']) == ('UNMEASURED: empty response', None, [])
+    assert records[0]['request_sent'] == {
+        'messages': INITIAL, 'request_record': {'request_no': 1}}
+    assert (records[0]['seal_hash'], records[0]['item_id'],
+            records[0]['arm_id'], records[0]['condition']) == (
+        'seal-1', 'Q01', 'base', 'base')
+    assert result['ground_truth'] == GT
+    assert (result['item_id'], result['condition']) == ('Q01', 'base')
+
+
+@pytest.mark.finding('T3-10')
+def test_execute_item_empty_answer_after_tool_call_stays_executed(
+        tmp_path, calculator):
+    # Only a response with no text and no tool call in any round is
+    # "empty". An empty final answer after an observed call keeps its
+    # observed invocation (the figure is then UNMEASURABLE in R2.0).
+    result, _ = run(tmp_path, FakeAdapter(calls(tool_call()), answer('')))
+    assert (result['status'], result['invocation_outcome']) == (
+        'EXECUTED', 'INVOKED')
+
+
+@pytest.mark.finding('T3-10')
+def test_execute_item_unrecognised_empty_shape_is_ev0_not_unmeasured(
+        tmp_path):
+    # An unreadable shape is EV-0 UNOBSERVABLE (R1.3), not an empty
+    # response.
+    result, _ = run(tmp_path, FakeAdapter({'choices': []}))
+    assert (result['status'], result['evidence_class']) == ('EXECUTED', EV_0)
+
+
+@pytest.mark.finding('T3-10')
+def test_execute_item_whitespace_response_is_not_empty(tmp_path):
+    # As in R2.0 figure identification ("response has no text content"),
+    # only no content at all is empty.
+    result, _ = run(tmp_path, FakeAdapter(answer(' ')))
+    assert (result['status'], result['invocation_outcome']) == (
+        'EXECUTED', 'NOT-INVOKED')
 
 
 @pytest.mark.parametrize('tools', [None, []])
@@ -855,8 +897,6 @@ def run_without_raising(tmp_path, adapter_send, **kwargs):
 
 
 @pytest.mark.finding('T3-10')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-10: empty response scored EXECUTED/NOT-INVOKED')
 @pytest.mark.parametrize('content', ['', None], ids=['empty', 'null'])
 def test_execute_item_empty_response_unmeasured(tmp_path, content):
     # Correct (SPEC R4.1 "Empty response -> UNMEASURED", R0.2; AP-1 v1.3

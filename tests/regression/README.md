@@ -99,7 +99,7 @@ October 2026; `tests/RETIREMENT.md` records where each of their checks went.
 | `wrong_answers` | wrong final figure, wrong operation, transposed operand, no tool call |
 | `multi_round` | chained intermediates over several rounds, several calls per round, intermediate assistant text (V12-3: not kept) |
 | `d2_variation` | answers that vary across repeats (D2) |
-| `non_answers` | empty, declined, unrecognised decline, refusal reciting balances, two candidates, null content, no figure |
+| `non_answers` | empty and null content (UNMEASURED, T3-10), declined, unrecognised decline, refusal reciting balances, two candidates, no figure |
 | `transport_errors` | 429, 500 and 401 in round 0 and mid-loop, a dropped connection with retries, a non-JSON body |
 | `t3_1_unrecognised_shape` | **T3-1**: EV-0 (Anthropic- and Responses-shaped bodies, mid-loop failure) counted as invoked; an all-EV-0 arm prints 0/20 failures |
 | `t3_2_leading_whitespace` | **T3-2**: a leading space or tab makes the call OPERANDS-GROUNDED; a chained launder, with the no-space contrast |
