@@ -9,7 +9,7 @@ Version DOI: 10.5281/zenodo.21755443
 ---
 
 
-## Item 1: Q01 (Condition: base) — Scorer 1
+## Item 1: Q01, repeat 1 (Condition: base) — Scorer 1
 
 ### Question
 
@@ -99,7 +99,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 1: Q01 (Condition: base) — Scorer 2
+## Item 1: Q01, repeat 1 (Condition: base) — Scorer 2
 
 ### Question
 
@@ -189,7 +189,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 2: Q01 (Condition: base) — Scorer 1
+## Item 2: Q01, repeat 2 (Condition: base) — Scorer 1
 
 ### Question
 
@@ -279,7 +279,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 2: Q01 (Condition: base) — Scorer 2
+## Item 2: Q01, repeat 2 (Condition: base) — Scorer 2
 
 ### Question
 
@@ -369,7 +369,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 3: Q02 (Condition: base) — Scorer 1
+## Item 3: Q02, repeat 1 (Condition: base) — Scorer 1
 
 ### Question
 
@@ -465,7 +465,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 3: Q02 (Condition: base) — Scorer 2
+## Item 3: Q02, repeat 1 (Condition: base) — Scorer 2
 
 ### Question
 
@@ -561,7 +561,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 4: Q02 (Condition: base) — Scorer 1
+## Item 4: Q02, repeat 2 (Condition: base) — Scorer 1
 
 ### Question
 
@@ -657,7 +657,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 4: Q02 (Condition: base) — Scorer 2
+## Item 4: Q02, repeat 2 (Condition: base) — Scorer 2
 
 ### Question
 
@@ -753,7 +753,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 5: Q03 (Condition: base) — Scorer 1
+## Item 5: Q03, repeat 1 (Condition: base) — Scorer 1
 
 ### Question
 
@@ -849,7 +849,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 5: Q03 (Condition: base) — Scorer 2
+## Item 5: Q03, repeat 1 (Condition: base) — Scorer 2
 
 ### Question
 
@@ -945,7 +945,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 6: Q03 (Condition: base) — Scorer 1
+## Item 6: Q03, repeat 2 (Condition: base) — Scorer 1
 
 ### Question
 
@@ -1041,7 +1041,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 6: Q03 (Condition: base) — Scorer 2
+## Item 6: Q03, repeat 2 (Condition: base) — Scorer 2
 
 ### Question
 
@@ -1137,7 +1137,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 7: Q01 (Condition: instruction_removed) — Scorer 1
+## Item 7: Q01, repeat 1 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -1222,7 +1222,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 7: Q01 (Condition: instruction_removed) — Scorer 2
+## Item 7: Q01, repeat 1 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -1307,7 +1307,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 8: Q01 (Condition: instruction_removed) — Scorer 1
+## Item 8: Q01, repeat 2 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -1392,7 +1392,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 8: Q01 (Condition: instruction_removed) — Scorer 2
+## Item 8: Q01, repeat 2 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -1477,7 +1477,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 9: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 9: Q02, repeat 1 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -1568,7 +1568,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 9: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 9: Q02, repeat 1 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -1659,7 +1659,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 10: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 10: Q02, repeat 2 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -1750,7 +1750,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 10: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 10: Q02, repeat 2 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -1841,7 +1841,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 11: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 11: Q03, repeat 1 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -1932,7 +1932,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 11: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 11: Q03, repeat 1 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -2023,7 +2023,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 12: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 12: Q03, repeat 2 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -2114,7 +2114,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 12: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 12: Q03, repeat 2 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -2205,7 +2205,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 13: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 13: Q04, repeat 1 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -2292,7 +2292,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 13: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 13: Q04, repeat 1 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -2379,7 +2379,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 14: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 14: Q04, repeat 2 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -2466,7 +2466,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 14: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 14: Q04, repeat 2 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -2553,7 +2553,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 15: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 15: Q05, repeat 1 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -2644,7 +2644,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 15: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 15: Q05, repeat 1 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -2735,7 +2735,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 16: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 16: Q05, repeat 2 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -2826,7 +2826,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 16: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 16: Q05, repeat 2 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -2917,7 +2917,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 17: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 17: Q06, repeat 1 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -3002,7 +3002,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 17: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 17: Q06, repeat 1 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -3087,7 +3087,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 18: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 18: Q06, repeat 2 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -3172,7 +3172,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 18: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 18: Q06, repeat 2 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -3257,7 +3257,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 19: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 19: Q07, repeat 1 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -3342,7 +3342,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 19: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 19: Q07, repeat 1 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -3427,7 +3427,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 20: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 20: Q07, repeat 2 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -3512,7 +3512,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 20: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 20: Q07, repeat 2 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -3597,7 +3597,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 21: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 21: Q08, repeat 1 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -3684,7 +3684,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 21: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 21: Q08, repeat 1 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -3771,7 +3771,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 22: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 22: Q08, repeat 2 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -3858,7 +3858,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 22: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 22: Q08, repeat 2 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -3945,7 +3945,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 23: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 23: Q09, repeat 1 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -4041,7 +4041,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 23: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 23: Q09, repeat 1 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -4137,7 +4137,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 24: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 24: Q09, repeat 2 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -4233,7 +4233,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 24: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 24: Q09, repeat 2 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -4329,7 +4329,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 25: Q10 (Condition: instruction_removed) — Scorer 1
+## Item 25: Q10, repeat 1 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -4414,7 +4414,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 25: Q10 (Condition: instruction_removed) — Scorer 2
+## Item 25: Q10, repeat 1 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -4499,7 +4499,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 26: Q10 (Condition: instruction_removed) — Scorer 1
+## Item 26: Q10, repeat 2 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -4584,7 +4584,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 26: Q10 (Condition: instruction_removed) — Scorer 2
+## Item 26: Q10, repeat 2 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 

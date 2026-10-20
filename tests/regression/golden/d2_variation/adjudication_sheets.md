@@ -9,7 +9,7 @@ Version DOI: 10.5281/zenodo.21755443
 ---
 
 
-## Item 1: Q02 (Condition: base) — Scorer 1
+## Item 1: Q02, repeat 3 (Condition: base) — Scorer 1
 
 ### Question
 
@@ -105,7 +105,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 1: Q02 (Condition: base) — Scorer 2
+## Item 1: Q02, repeat 3 (Condition: base) — Scorer 2
 
 ### Question
 
@@ -201,7 +201,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 2: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 2: Q02, repeat 3 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -297,7 +297,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 2: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 2: Q02, repeat 3 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
