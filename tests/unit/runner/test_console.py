@@ -211,9 +211,13 @@ PROVENANCE = (
     '  UNMEASURABLE: 2\n')
 
 
+@pytest.mark.finding('T3-3', 'T3-66')
 def test_scoring_report_full(capsys):
-    d1 = {'auto_scored_n': 50, 'adjudicated_n': 10, 'correct': 40,
-          'incorrect': 8, 'no_figure': 2, 'accuracy_rate': '40/50'}
+    # T3-3: no rate while items await adjudication (every wrong figure is
+    # among them, SPEC R2.0); T3-66: UNMEASURABLE shown.
+    d1 = {'auto_scored_n': 50, 'adjudicated_n': 10, 'unmeasurable_n': 1,
+          'correct': 40, 'incorrect': 8, 'no_figure': 2,
+          'accuracy_rate': '40/50'}
     d2 = {'Q01/base': {'figures': {'mechanism': 'OBSERVED-ONLY'},
                        'prose': {'mechanism': 'UNMEASURED'}},
           'Q02/base': {'figures': {'mechanism': 'OBSERVED-ONLY'},
@@ -226,7 +230,8 @@ def test_scoring_report_full(capsys):
         '  Correct: 40\n'
         '  Incorrect: 8\n'
         '  No figure: 2\n'
-        '  Accuracy rate: 40/50\n'
+        '  Unmeasurable: 1\n'
+        '  Accuracy rate: not computed (11 items await adjudication)\n'
         '\n3k. D2 REPRODUCIBILITY:\n'
         '  CAP: D2.2 cap: why\n'
         '  OBSERVED-ONLY: 3\n'
@@ -242,6 +247,7 @@ def test_scoring_report_defaults_when_values_are_missing(capsys):
         '  Correct: 0\n'
         '  Incorrect: 0\n'
         '  No figure: 0\n'
+        '  Unmeasurable: 0\n'
         '\n3k. D2 REPRODUCIBILITY:\n'
         '\n3l. D7.2(a) OPERAND PROVENANCE:\n'
         '  step 1 (source match):       0\n'
@@ -256,6 +262,29 @@ def test_scoring_report_defaults_when_values_are_missing(capsys):
         '  OPERAND-ORIGINATED: 0\n'
         '  OPERANDS-UNOBSERVABLE: 0\n'
         '  UNMEASURABLE: 0\n')
+
+
+@pytest.mark.finding('T3-3')
+@pytest.mark.parametrize('pending', [{}, {'adjudicated_n': 0,
+                                          'unmeasurable_n': 0}])
+def test_scoring_report_rate_printed_when_nothing_awaits_adjudication(
+        capsys, pending):
+    print_scoring_report(dict({'auto_scored_n': 5, 'correct': 4,
+                               'incorrect': 1, 'accuracy_rate': '0.8'},
+                              **pending), {}, None, {})
+    assert '  Unmeasurable: 0\n  Accuracy rate: 0.8\n\n3k.' in \
+        capsys.readouterr().out
+
+
+@pytest.mark.finding('T3-3')
+@pytest.mark.parametrize('adj, unm', [(1, 0), (0, 1)])
+def test_scoring_report_no_rate_while_any_item_awaits_adjudication(
+        capsys, adj, unm):
+    print_scoring_report({'auto_scored_n': 5, 'adjudicated_n': adj,
+                          'unmeasurable_n': unm, 'accuracy_rate': '1'},
+                         {}, None, {})
+    assert '  Accuracy rate: not computed (1 items await adjudication)\n' \
+        in capsys.readouterr().out
 
 
 def test_scoring_report_without_d1_summary(capsys):

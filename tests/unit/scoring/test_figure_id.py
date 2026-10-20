@@ -297,26 +297,6 @@ def test_identify_figure_same_value_written_twice_is_ambiguous():
     assert r['outcome'] == ADJUDICATE_AMBIGUOUS
 
 
-@pytest.mark.finding('T3-3')
-def test_identify_figure_takes_matching_token_over_the_conclusion():
-    # Correct: the released figure is what the response concludes
-    # (182.40), not the one token that happens to equal the expected value.
-    r = identify(response('Rate 1.2% on 15200 gives 15.20 a year? '
-                          'No: answer is $182.40.'))
-    assert r['outcome'] == AUTO_MATCH
-    assert r['released_figure'] == D('15.20')
-
-
-@pytest.mark.finding('S3-G4-2')
-def test_identify_figure_percentage_token_matches_a_money_value():
-    # The token's percent flag is ignored: '15.20%' matches an expected
-    # $15.20. Correct: a percentage is not the released money figure
-    # (route to adjudication, or compare like with like).
-    r = identify(response('The rate is 15.20%.'))
-    assert r['outcome'] == AUTO_MATCH
-    assert r['extracted_tokens'][0].percent is True
-
-
 def test_identify_figure_negative_token_does_not_match_positive_expected():
     assert identify(response('It is -15.20.'))['outcome'] == \
         ADJUDICATE_NO_MATCH
@@ -352,10 +332,6 @@ def test_identify_figure_extractor_returning_nothing_is_auto_no_figure():
 # Group g7-report (fix branch 7). xfail(strict=True) until the fix.
 
 @pytest.mark.finding('T3-3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-3: a matching non-final token is taken as the '
-                          'released figure (AUTO-MATCH 15.20; the response '
-                          'concludes 182.40)')
 def test_identify_figure_matching_non_final_token_is_not_auto_matched():
     # The response mentions 15.20 on the way and concludes $182.40. SPEC
     # R2.0: the module identifies "which numeric value ... is the released
@@ -369,9 +345,6 @@ def test_identify_figure_matching_non_final_token_is_not_auto_matched():
 
 
 @pytest.mark.finding('S3-G4-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G4-2: "15.20%" AUTO-MATCHes an expected money '
-                          'value of 15.20')
 def test_identify_figure_percentage_token_does_not_match_money_value():
     # SPEC R0.4.2: percentages are recorded with a percent flag; 15.20%
     # is not the money figure 15.20. Correct: compare like with like, so a
@@ -405,3 +378,79 @@ def test_identify_figure_locale_ambiguous_token_routes_to_adjudication():
     except AmbiguousLocaleError as e:
         outcome = f'raised AmbiguousLocaleError: {e}'
     assert outcome.startswith('ADJUDICATE')
+
+
+# -- Step 5 (report-honesty): T3-3, S3-G4-2 ------------------------------------
+
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.0')
+def test_identify_figure_match_followed_by_a_figure_is_ambiguous():
+    r = identify(response('That is 15.20 a month, or 182.40 a year.'))
+    toks = r['extracted_tokens']
+    assert r == {
+        'outcome': ADJUDICATE_AMBIGUOUS, 'released_figure': None,
+        'reason': "the one matching token '15.20' is followed by 1 other "
+                  "figure(s) of the same kind, first '182.40'; which figure "
+                  "is the released answer is undetermined",
+        'extracted_tokens': toks, 'matched_indices': [0]}
+    assert [t.literal for t in toks] == ['15.20', '182.40']
+
+
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.0')
+def test_identify_figure_only_figures_after_the_match_compete():
+    r = identify(response('15.20, then 1 and 2.'))
+    assert "followed by 2 other figure(s) of the same kind, first '1';" \
+        in r['reason']
+    r = identify(response('Of 15200: 15.20, or 182.40 a year.'))
+    assert (r['outcome'], r['matched_indices']) == (ADJUDICATE_AMBIGUOUS, [1])
+    assert "followed by 1 other figure(s) of the same kind, first " \
+        "'182.40'" in r['reason']
+
+
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.0')
+def test_identify_figure_working_then_matching_conclusion_is_auto_match():
+    # Figures before the match (the working) do not stop it being the
+    # released figure: the response ends on it.
+    r = identify(response('15200 * 1.2% / 12 = $15.20'))
+    assert r['outcome'] == AUTO_MATCH
+    assert r['released_figure'] == D('15.20')
+    assert r['matched_indices'] == [3]
+
+
+@pytest.mark.finding('T3-3', 'S3-G4-2')
+@pytest.mark.req('R2.0', 'R0.4.2')
+def test_identify_figure_trailing_percentage_does_not_compete():
+    r = identify(response('It is 15.20, at 1.2%.'))
+    assert (r['outcome'], r['released_figure']) == (AUTO_MATCH, D('15.20'))
+
+
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.0', 'R0.4.2')
+def test_identify_figure_currency_match_competes_only_with_currency():
+    # Like with like: after a match in dollars, a bare count (12 months)
+    # is not a competing answer; another dollar figure is.
+    plain = identify(response('It is $15.20, over 12 months.'),
+                     currency_symbols=['$'])
+    assert (plain['outcome'], plain['released_figure']) == \
+        (AUTO_MATCH, D('15.20'))
+    money = identify(response('It is $15.20, or $182.40 a year.'),
+                     currency_symbols=['$'])
+    assert money['outcome'] == ADJUDICATE_AMBIGUOUS
+    assert "first '$182.40'" in money['reason']
+    # A match without a currency symbol competes with any later figure.
+    bare = identify(response('It is 15.20, over 12 months.'),
+                    currency_symbols=['$'])
+    assert bare['outcome'] == ADJUDICATE_AMBIGUOUS
+
+
+@pytest.mark.finding('S3-G4-2')
+@pytest.mark.req('R0.4.2', 'R2.0')
+def test_identify_figure_percentage_is_never_the_match():
+    # 15.20% is not compared; the money figure after it is the match.
+    r = identify(response('At 15.20% the charge is $15.20.'))
+    assert (r['outcome'], r['matched_indices']) == (AUTO_MATCH, [1])
+    # A percentage alone: figures present, none matching.
+    assert identify(response('The rate is 15.20%.'))['outcome'] == \
+        ADJUDICATE_NO_MATCH

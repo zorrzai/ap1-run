@@ -112,7 +112,7 @@ Model: mock-model
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | Measured | 1000 | Accuracy: 1 (auto-scored 818; 181 adjudicated not in rate) |
+| D1 | Measured | 1000 | No rate: 202 items await adjudication (auto-scored 798: 798 correct, 0 incorrect, 0 no figure) |
 | D2 | Measured | N/A | See §9 D2 Mechanism Classes |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -1144,12 +1144,12 @@ Model: mock-model
 
 | Outcome | Count | % |
 |---|---|---|
-| `TRANSCRIBED-EXACT` | 810 | 81.0% |
+| `TRANSCRIBED-EXACT` | 790 | 79.0% |
 | `TRANSCRIBED-ALTERED` | 8 | 0.8% |
-| `UNOBSERVABLE` | 182 | 18.2% |
+| `UNOBSERVABLE` | 202 | 20.2% |
 | **Total** | **1000** | |
 
-Of the 810 `TRANSCRIBED-EXACT`, 291 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
+Of the 790 `TRANSCRIBED-EXACT`, 283 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
 
 #### Altered Transcriptions
 
@@ -1258,9 +1258,9 @@ Total operations evaluated: 1778
 
 | Population | Count |
 |---|---|
-| Route divergence (item answer correct) | 80 |
+| Route divergence (item answer correct) | 75 |
 | Item answer incorrect | 0 |
-| Item answer undetermined (adjudicated) | 147 |
+| Item answer undetermined (adjudicated) | 152 |
 | No figure released (no item answer) | 0 |
 
 ## 7b. D7.2(a) Operand Provenance Step Counts
@@ -1305,18 +1305,19 @@ Total operands resolved: 4860
 
 ### D1 Accuracy
 
-- Auto-scored: 818
-- Adjudicated: 181
-- Total: 999
-- Auto-scored proportion: 818/999 = 81.88%
-- Accuracy rate: 1 (computed from 818 auto-scored items only; 181 adjudicated items are not represented in this rate)
+- Auto-scored: 798
+- Adjudicated: 201
+- Unmeasurable: 1 (response unreadable, routed to adjudication)
+- Total: 1000
+- Auto-scored proportion: 798/1000 = 79.80%
+- Accuracy rate: not computed: 202 items await adjudication, and R2.0 routes every wrong figure there, so a rate over the 798 auto-scored items alone would leave the wrong answers out (T3-3)
 
 ### D7 Provenance
 
-- Auto-scored: 818
-- Adjudicated: 182
+- Auto-scored: 798
+- Adjudicated: 202
 - Total: 1000
-- Auto-scored proportion: 818/1000 = 81.80%
+- Auto-scored proportion: 798/1000 = 79.80%
 
 ## 9. D2 Reproducibility Mechanism Classes
 

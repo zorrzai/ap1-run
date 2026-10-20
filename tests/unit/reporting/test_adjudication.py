@@ -425,8 +425,10 @@ def test_sheet_ambiguous_reason_given_for_same_value_written_twice():
                      response_received='Interest is $15.20, so $15.20.')
     assert 'Interest is $15.20, so $15.20.' in text
     assert section(text, 'Reason for Adjudication') == (
-        '\nMultiple numeric tokens in the response match the expected '
-        'value. Which one is the released figure is ambiguous.\n')
+        '\nWhich figure in the response is the released answer is '
+        'ambiguous: several numeric tokens match the expected value, or the '
+        'one that matches is followed by another figure of the same kind.'
+        '\n')
 
 
 def test_sheet_reason_for_unlisted_outcome_names_it():
@@ -458,9 +460,12 @@ def test_adjudication_reasons_text():
             'the expected value within tolerance. A scorer must determine '
             'whether the figure answers the right question at the wrong '
             'scope, or is originated.',
-        'ADJUDICATE-AMBIGUOUS': 'Multiple numeric tokens in the response '
-                                'match the expected value. Which one is the '
-                                'released figure is ambiguous.',
+        # T3-3 (step 5): also a match followed by a competing figure.
+        'ADJUDICATE-AMBIGUOUS': 'Which figure in the response is the '
+                                'released answer is ambiguous: several '
+                                'numeric tokens match the expected value, '
+                                'or the one that matches is followed by '
+                                'another figure of the same kind.',
         'UNMEASURABLE': 'Response shape unrecognised. Cannot extract a '
                         'figure for comparison.',
     }

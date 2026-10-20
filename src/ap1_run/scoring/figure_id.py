@@ -15,6 +15,18 @@ Steps, in order:
   2  Decline markers -> adjudication, NOT auto-scored
   3  Lookup collision -> adjudication, never auto-scored
   4  Extract per R0.4.2 -> AUTO-MATCH / AUTO-NO-FIGURE / ADJUDICATE
+
+In step 4 figures are compared like with like. A percentage token is
+not compared with the expected value (R0.4.2 records the percent flag;
+15.20% is not the figure 15.20, S3-G4-2). One matching token is
+AUTO-MATCH only if no competing figure follows it: a response that
+mentions the expected value on the way and concludes with another
+figure has not released it, and the runner does not guess which figure
+was the answer (R2.0 normative; T3-3), so it is ADJUDICATE-AMBIGUOUS. A
+competing figure is a later token that is not a percentage and, where
+the match carries a currency symbol, carries one too: '$15.20, assuming
+the 1.2% rate over 12 months' releases $15.20; '15.20 a year? No:
+$182.40' does not.
 """
 
 from decimal import Decimal
@@ -139,13 +151,32 @@ def identify_figure(response, *, expected_value, delivered_context,
             'matched_indices': [],
         }
 
-    # Find which tokens match expected_value within tolerance
+    # Find which tokens match expected_value within tolerance. A
+    # percentage is not the expected figure (S3-G4-2).
     matched = []
     for i, tok in enumerate(tokens):
-        if abs(tok.value - expected_value) <= answer_tolerance:
+        if not tok.percent and \
+                abs(tok.value - expected_value) <= answer_tolerance:
             matched.append(i)
 
     if len(matched) == 1:
+        match = tokens[matched[0]]
+        competing = [t for t in tokens[matched[0] + 1:]
+                     if not t.percent and (t.currency or not match.currency)]
+        if competing:
+            # A figure of the same kind follows the one match: which
+            # figure the response releases is undetermined (T3-3)
+            return {
+                'outcome': ADJUDICATE_AMBIGUOUS,
+                'released_figure': None,
+                'reason': (f'the one matching token {match.literal!r} is '
+                           f'followed by {len(competing)} other figure(s) '
+                           f'of the same kind, first '
+                           f'{competing[0].literal!r}; which figure is the '
+                           f'released answer is undetermined'),
+                'extracted_tokens': tokens,
+                'matched_indices': matched,
+            }
         return {
             'outcome': AUTO_MATCH,
             'released_figure': tokens[matched[0]].value,

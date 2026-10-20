@@ -202,20 +202,23 @@ def identify(content, expected):
 
 
 @pytest.mark.finding('T3-3')
-def test_score_accuracy_wrong_conclusion_with_one_matching_token_is_correct():
+def test_score_accuracy_wrong_conclusion_with_one_matching_token_is_adjudicated():
     # The response concludes 182.40; the one token that equals the expected
-    # 15.20 is taken as the released figure. Correct: the released figure
-    # is the conclusion, so this is INCORRECT (or adjudicated).
+    # 15.20 comes before it. Fixed (T3-3, SPEC R2.0): R2.0 no longer takes
+    # 15.20 as the released figure, so D1 does not score it CORRECT; the
+    # item goes to adjudication.
     fig = identify('Rate 1.2% on 15200 gives 15.20 a year? '
                    'No: answer is $182.40.', '15.20')
-    assert score(fig, digits=2)['outcome'] == CORRECT
+    assert score(fig, digits=2)['outcome'] == ADJUDICATED
 
 
 @pytest.mark.finding('T3-3')
 def test_score_accuracy_wrong_answer_is_adjudicated_never_incorrect():
     # A plainly wrong answer routes to adjudication, so on the live path
-    # (no adjudication) D1 can never count it INCORRECT. Correct: a single
-    # unambiguous wrong figure is auto-scored INCORRECT.
+    # (no adjudication) D1 can never count it INCORRECT. This is SPEC
+    # R2.0 ("does not conclude that a response containing unmatched
+    # figures is wrong"; ruling on T3-3), so the report prints no
+    # auto-scored rate while items await adjudication (report.py).
     fig = identify('The answer is $15.30.', '15.20')
     r = score(fig, digits=2)
     assert r['outcome'] == ADJUDICATED

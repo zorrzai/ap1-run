@@ -102,7 +102,9 @@ ERROR_500 = {'http': 500, 'body': '{"error": {"message": "server error"}}'}
 
 # Q02 (available credit, expected 2600.00): a grounded call, then text.
 Q02_CALL = {'call': '5000 - 2400'}
-Q02_RIGHT = {'say': 'The available credit is ${result}. REP2-MARKER'}
+# The marker comes first: its digit is a numeric token, and a figure
+# followed by another one is not auto-matched (T3-3, step 5).
+Q02_RIGHT = {'say': 'REP2-MARKER The available credit is ${result}.'}
 # "I cannot" is a configured decline marker: ADJUDICATE-DECLINE.
 Q02_DECLINE = {'say': 'I cannot be certain of this. REP3-MARKER'}
 

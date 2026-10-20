@@ -259,6 +259,7 @@ Total operands resolved: 84
 
 - Auto-scored: 20
 - Adjudicated: 0
+- Unmeasurable: 0 (response unreadable, routed to adjudication)
 - Total: 20
 - Auto-scored proportion: 20/20 = 100.00%
 - Accuracy rate: 1 (computed from 20 auto-scored items only; 0 adjudicated items are not represented in this rate)

@@ -273,20 +273,28 @@ def test_dimension_results_claimed_without_data_says_so():
     assert rows[0] == '| D1 | Claimed but no results | \u2014 | \u2014 |'
 
 
-@pytest.mark.finding('T3-3', 'T3-32')
-def test_dimension_results_d1_prints_pooled_rate_without_interval():
-    # T3-3: the rate is correct/(correct+incorrect) over auto-scored items,
-    # which is 1 whenever defined, and it is printed as "Accuracy: 1".
-    # T3-32: one pooled rate, no category breakdown, no 95 % CI, even when
-    # the summary has the counts. Correct: no headline rate without
-    # adjudication; per category with a 95 % interval and n.
-    d1 = {'n': 10, 'auto_scored_n': 7, 'adjudicated_n': 3,
-          'accuracy_rate': Decimal('1'), 'correct': 7, 'incorrect': 0,
-          'by_category': {'interest': {'n': 5}}}
+@pytest.mark.finding('T3-3')
+def test_dimension_results_d1_pending_adjudication_states_counts_not_rate():
+    # T3-3 (fixed): with 3 items awaiting adjudication the row gives the
+    # counts, not the auto-scored rate (which would leave out every wrong
+    # figure, SPEC R2.0).
+    d1 = {'n': 10, 'auto_scored_n': 7, 'adjudicated_n': 2,
+          'unmeasurable_n': 1, 'accuracy_rate': Decimal('5') / 6,
+          'correct': 5, 'incorrect': 1, 'no_figure': 1}
     rows = dim_rows(report._section_dimension_results(
         {'d1_results': d1}, {'dimensions_claimed': ['D1']}))
-    assert rows[0] == ('| D1 | Measured | 10 | Accuracy: 1 '
-                       '(auto-scored 7; 3 adjudicated not in rate) |')
+    assert rows[0] == ('| D1 | Measured | 10 | No rate: 3 items await '
+                       'adjudication (auto-scored 7: 5 correct, 1 '
+                       'incorrect, 1 no figure) |')
+
+
+def test_dimension_results_d1_pending_counts_default_to_zero():
+    rows = dim_rows(report._section_dimension_results(
+        {'d1_results': {'n': 1, 'adjudicated_n': 1, 'accuracy_rate': 1}},
+        {'dimensions_claimed': ['D1']}))
+    assert rows[0] == ('| D1 | Measured | 1 | No rate: 1 items await '
+                       'adjudication (auto-scored 0: 0 correct, 0 '
+                       'incorrect, 0 no figure) |')
 
 
 def test_dimension_results_d1_n_falls_back_to_auto_scored_n():
@@ -913,24 +921,34 @@ def test_scoring_proportions_without_data_says_so():
         '*No scoring proportion data available.*\n')
 
 
-@pytest.mark.finding('T3-3')
-def test_scoring_proportions_d1_split_and_rate():
-    # The rate is printed with the note that adjudicated items are not in
-    # it; nothing says it cannot be below 1 (T3-3). Correct: no rate
-    # until the adjudicated items are scored.
+@pytest.mark.finding('T3-3', 'T3-66')
+def test_scoring_proportions_d1_split_and_no_rate_while_pending():
+    # T3-3 (fixed): no rate until the adjudicated items are scored;
+    # T3-66 (fixed): UNMEASURABLE shown and in the total.
     text = report._section_scoring_proportions({'d1_results': {
-        'auto_scored_n': 22, 'adjudicated_n': 18,
+        'auto_scored_n': 22, 'adjudicated_n': 17, 'unmeasurable_n': 1,
         'accuracy_rate': Decimal('1')}})
     assert text == md(
         '## 8. Scoring Proportions\n',
         '### D1 Accuracy\n',
         '- Auto-scored: 22',
-        '- Adjudicated: 18',
+        '- Adjudicated: 17',
+        '- Unmeasurable: 1 (response unreadable, routed to adjudication)',
         '- Total: 40',
         '- Auto-scored proportion: 22/40 = 55.00%',
-        '- Accuracy rate: 1 (computed from 22 auto-scored items only; '
-        '18 adjudicated items are not represented in this rate)',
+        '- Accuracy rate: not computed: 18 items await adjudication, and '
+        'R2.0 routes every wrong figure there, so a rate over the 22 '
+        'auto-scored items alone would leave the wrong answers out (T3-3)',
         '')
+
+
+def test_scoring_proportions_d1_rate_when_nothing_pending():
+    text = report._section_scoring_proportions({'d1_results': {
+        'auto_scored_n': 5, 'accuracy_rate': Decimal('0.8')}})
+    assert text.endswith(md(
+        '- Auto-scored proportion: 5/5 = 100.00%',
+        '- Accuracy rate: 0.8 (computed from 5 auto-scored items only; '
+        '0 adjudicated items are not represented in this rate)', ''))
 
 
 def test_scoring_proportions_d1_proportion_two_decimals():
@@ -946,24 +964,9 @@ def test_scoring_proportions_d1_without_counts_or_rate():
         '### D1 Accuracy\n',
         '- Auto-scored: 0',
         '- Adjudicated: 0',
+        '- Unmeasurable: 0 (response unreadable, routed to adjudication)',
         '- Total: 0',
         '')
-
-
-@pytest.mark.finding('T3-66')
-def test_scoring_proportions_d1_total_ignores_n_and_unmeasurable():
-    # §8's total is auto + adjudicated; §3 prints d1 'n'. With an
-    # UNMEASURABLE item the two disagree (§3 10, §8 9) and the
-    # UNMEASURABLE item appears in neither split. Correct: one n, with
-    # UNMEASURABLE counted and shown.
-    summary = {'d1_results': {'n': 10, 'auto_scored_n': 8,
-                              'adjudicated_n': 1, 'unmeasurable_n': 1,
-                              'accuracy_rate': Decimal('1')}}
-    text = report._section_scoring_proportions(summary)
-    assert '- Total: 9' in text
-    assert 'nmeasurable' not in text
-    assert '| D1 | Measured | 10 |' in report._section_dimension_results(
-        summary, {'dimensions_claimed': ['D1']})
 
 
 @pytest.mark.finding('T3-33')
@@ -1509,9 +1512,6 @@ ACCURACY_ONE = re.compile(r'Accuracy(?: rate)?: 1(?:\.0+)?(?![\d./])')
 
 
 @pytest.mark.finding('T3-3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-3: "Accuracy: 1" headline from auto-scored '
-                          'items while 18 of 40 await adjudication')
 def test_dimension_results_d1_pending_adjudication_prints_no_rate_of_one():
     # Every wrong figure routes to adjudication (SPEC R2.0 step 4), so the
     # auto-scored rate is 1 whenever it is defined. Correct (T3-3, fix
@@ -1525,9 +1525,6 @@ def test_dimension_results_d1_pending_adjudication_prints_no_rate_of_one():
 
 
 @pytest.mark.finding('T3-3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-3: §8 prints "Accuracy rate: 1" while 18 '
-                          'items await adjudication')
 def test_scoring_proportions_d1_pending_adjudication_prints_no_rate_of_one():
     # Correct: as for §3, no rate of 1 from the auto-scored items alone
     # while adjudication is pending (T3-3).
@@ -1804,9 +1801,6 @@ def test_d72a_audit_live_entries_show_the_operand():
 
 
 @pytest.mark.finding('T3-66')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-66: §8 total (auto + adjudicated) differs from '
-                          '§3 n; UNMEASURABLE not shown')
 def test_scoring_proportions_d1_total_is_n_with_unmeasurable_shown():
     # Correct (SPEC R2.1: auto-scored and adjudicated n stated, never
     # merged silently; T3-66): one n for D1 in §3 and §8, with the

@@ -50,9 +50,11 @@ ADJUDICATION_REASONS = {
         'expected value within tolerance. A scorer must determine whether '
         'the figure answers the right question at the wrong scope, or is '
         'originated.',
-    'ADJUDICATE-AMBIGUOUS': 'Multiple numeric tokens in the response match '
-                            'the expected value. Which one is the released '
-                            'figure is ambiguous.',
+    'ADJUDICATE-AMBIGUOUS': 'Which figure in the response is the released '
+                            'answer is ambiguous: several numeric tokens '
+                            'match the expected value, or the one that '
+                            'matches is followed by another figure of the '
+                            'same kind.',
     'UNMEASURABLE': 'Response shape unrecognised. Cannot extract a figure '
                     'for comparison.',
 }

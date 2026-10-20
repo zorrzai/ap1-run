@@ -188,10 +188,6 @@ def d1_row(report):
 
 
 @pytest.mark.finding('T3-3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-3: report.md prints "Accuracy: 1" with wrong '
-                          'answers in the run and items awaiting '
-                          'adjudication')
 def test_run_report_prints_no_accuracy_of_one_with_adjudication_pending(run):
     # The run has wrong final answers (Q01 concludes $182.40, Q02 r2 and
     # Q03 release wrong figures) and 14 items routed to adjudication that
@@ -314,9 +310,6 @@ def test_run_report_originated_operand_audit_names_the_operand(run):
 
 
 @pytest.mark.finding('T3-66')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-66: §3 D1 n 36, §8 total 32; the four '
-                          'UNMEASURABLE items are in neither split')
 def test_run_report_d1_n_agrees_between_sections(run):
     # Correct (SPEC R2.1; T3-66): §3's D1 n equals §8's D1 total, and §8
     # shows the UNMEASURABLE count.

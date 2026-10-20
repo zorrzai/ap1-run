@@ -737,7 +737,391 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 5: Q07, repeat 1 — Scorer 1
+## Item 5: Q04, repeat 1 — Scorer 1
+
+### Question
+
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 5: Q04, repeat 1 — Scorer 2
+
+### Question
+
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 6: Q04, repeat 2 — Scorer 1
+
+### Question
+
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 6: Q04, repeat 2 — Scorer 2
+
+### Question
+
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 7: Q07, repeat 1 — Scorer 1
 
 ### Question
 
@@ -784,7 +1168,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -831,7 +1215,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 5: Q07, repeat 1 — Scorer 2
+## Item 7: Q07, repeat 1 — Scorer 2
 
 ### Question
 
@@ -878,7 +1262,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -925,7 +1309,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 6: Q07, repeat 2 — Scorer 1
+## Item 8: Q07, repeat 2 — Scorer 1
 
 ### Question
 
@@ -972,7 +1356,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1019,7 +1403,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 6: Q07, repeat 2 — Scorer 2
+## Item 8: Q07, repeat 2 — Scorer 2
 
 ### Question
 
@@ -1066,7 +1450,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1113,7 +1497,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 7: Q02, repeat 1 — Scorer 1
+## Item 9: Q02, repeat 1 — Scorer 1
 
 ### Question
 
@@ -1204,7 +1588,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 7: Q02, repeat 1 — Scorer 2
+## Item 9: Q02, repeat 1 — Scorer 2
 
 ### Question
 
@@ -1295,7 +1679,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 8: Q02, repeat 2 — Scorer 1
+## Item 10: Q02, repeat 2 — Scorer 1
 
 ### Question
 
@@ -1386,7 +1770,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 8: Q02, repeat 2 — Scorer 2
+## Item 10: Q02, repeat 2 — Scorer 2
 
 ### Question
 
@@ -1477,7 +1861,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 9: Q03, repeat 1 — Scorer 1
+## Item 11: Q03, repeat 1 — Scorer 1
 
 ### Question
 
@@ -1568,7 +1952,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 9: Q03, repeat 1 — Scorer 2
+## Item 11: Q03, repeat 1 — Scorer 2
 
 ### Question
 
@@ -1659,7 +2043,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 10: Q03, repeat 2 — Scorer 1
+## Item 12: Q03, repeat 2 — Scorer 1
 
 ### Question
 
@@ -1750,7 +2134,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 10: Q03, repeat 2 — Scorer 2
+## Item 12: Q03, repeat 2 — Scorer 2
 
 ### Question
 
@@ -1841,7 +2225,391 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 11: Q07, repeat 1 — Scorer 1
+## Item 13: Q04, repeat 1 — Scorer 1
+
+### Question
+
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 13: Q04, repeat 1 — Scorer 2
+
+### Question
+
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 14: Q04, repeat 2 — Scorer 1
+
+### Question
+
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 14: Q04, repeat 2 — Scorer 2
+
+### Question
+
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 15: Q07, repeat 1 — Scorer 1
 
 ### Question
 
@@ -1888,7 +2656,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1935,7 +2703,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 11: Q07, repeat 1 — Scorer 2
+## Item 15: Q07, repeat 1 — Scorer 2
 
 ### Question
 
@@ -1982,7 +2750,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2029,7 +2797,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 12: Q07, repeat 2 — Scorer 1
+## Item 16: Q07, repeat 2 — Scorer 1
 
 ### Question
 
@@ -2076,7 +2844,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2123,7 +2891,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 12: Q07, repeat 2 — Scorer 2
+## Item 16: Q07, repeat 2 — Scorer 2
 
 ### Question
 
@@ -2170,7 +2938,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2219,6 +2987,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ---
 
-Total items requiring adjudication: 12
+Total items requiring adjudication: 16
 
-Total sheets: 24 (2 per item, for 2 scorers)
+Total sheets: 32 (2 per item, for 2 scorers)

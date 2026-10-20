@@ -168,8 +168,15 @@ def print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary):
         print(f'  Correct: {d1_summary.get("correct", 0)}')
         print(f'  Incorrect: {d1_summary.get("incorrect", 0)}')
         print(f'  No figure: {d1_summary.get("no_figure", 0)}')
+        print(f'  Unmeasurable: {d1_summary.get("unmeasurable_n", 0)}')
         rate = d1_summary.get('accuracy_rate')
-        if rate is not None:
+        pending = (d1_summary.get('adjudicated_n', 0)
+                   + d1_summary.get('unmeasurable_n', 0))
+        if rate is not None and pending:
+            # every wrong figure awaits adjudication (SPEC R2.0; T3-3)
+            print(f'  Accuracy rate: not computed ({pending} items await '
+                  f'adjudication)')
+        elif rate is not None:
             print(f'  Accuracy rate: {rate}')
 
     # 3k. D2 Reproducibility

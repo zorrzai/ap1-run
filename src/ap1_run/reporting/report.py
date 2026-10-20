@@ -509,16 +509,28 @@ def _section_scoring_proportions(summary):
     if d1:
         auto = d1.get('auto_scored_n', 0)
         adj = d1.get('adjudicated_n', 0)
-        total = auto + adj
+        unmeasurable = d1.get('unmeasurable_n', 0)
+        # One D1 n (T3-66): every scored execution is auto-scored,
+        # adjudicated or UNMEASURABLE (adjudicated with a reason)
+        total = auto + adj + unmeasurable
         lines.append('### D1 Accuracy\n')
         lines.append(f'- Auto-scored: {auto}')
         lines.append(f'- Adjudicated: {adj}')
+        lines.append(f'- Unmeasurable: {unmeasurable} (response unreadable, '
+                     f'routed to adjudication)')
         lines.append(f'- Total: {total}')
         if total > 0:
             lines.append(f'- Auto-scored proportion: '
                          f'{auto}/{total} = {auto/total:.2%}')
         rate = d1.get('accuracy_rate')
-        if rate is not None:
+        pending = adj + unmeasurable
+        if rate is not None and pending:
+            lines.append(f'- Accuracy rate: not computed: {pending} items '
+                         f'await adjudication, and R2.0 routes every wrong '
+                         f'figure there, so a rate over the {auto} '
+                         f'auto-scored items alone would leave the wrong '
+                         f'answers out (T3-3)')
+        elif rate is not None:
             lines.append(f'- Accuracy rate: {rate} '
                          f'(computed from {auto} auto-scored items only; '
                          f'{adj} adjudicated items are not represented '
@@ -856,6 +868,14 @@ def _format_dim_result(dim, data):
         rate = data.get('accuracy_rate')
         auto = data.get('auto_scored_n', 0)
         adj = data.get('adjudicated_n', 0)
+        pending = adj + data.get('unmeasurable_n', 0)
+        if rate is not None and pending:
+            # Every wrong figure is among the items awaiting
+            # adjudication (SPEC R2.0), so no rate is printed (T3-3)
+            return (f'No rate: {pending} items await adjudication '
+                    f'(auto-scored {auto}: {data.get("correct", 0)} '
+                    f'correct, {data.get("incorrect", 0)} incorrect, '
+                    f'{data.get("no_figure", 0)} no figure)')
         if rate is not None:
             return (f'Accuracy: {rate} '
                     f'(auto-scored {auto}; {adj} adjudicated not in rate)')

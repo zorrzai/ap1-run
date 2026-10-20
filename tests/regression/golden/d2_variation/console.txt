@@ -154,7 +154,8 @@ result, by us or by anyone, in any document.
   Correct: 58
   Incorrect: 0
   No figure: 0
-  Accuracy rate: 1
+  Unmeasurable: 0
+  Accuracy rate: not computed (2 items await adjudication)
 
 3k. D2 REPRODUCIBILITY:
   CAP: D2.2 cap: temperature was platform-rejected. Detail: OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported.

@@ -71,10 +71,10 @@
     "score": 0.9725
   },
   "reporting/report": {
-    "killed": 1754,
-    "mutants": 1799,
+    "killed": 1801,
+    "mutants": 1846,
     "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Integrator, step 5: re-recorded after merging the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after the merge.] [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
-    "score": 0.975
+    "score": 0.9756
   },
   "run": {
     "killed": 581,
@@ -83,10 +83,10 @@
     "score": 0.9748
   },
   "runner/console": {
-    "killed": 523,
-    "mutants": 524,
+    "killed": 550,
+    "mutants": 551,
     "notes": "The one survivor is equivalent: it changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
-    "score": 0.9981
+    "score": 0.9982
   },
   "runner/credentials": {
     "killed": 116,
@@ -128,10 +128,10 @@
     "score": 1.0
   },
   "scoring/figure_id": {
-    "killed": 144,
-    "mutants": 158,
+    "killed": 167,
+    "mutants": 181,
     "notes": "All 14 survivors are in unreachable code: the defensive 'if len(matched) == 0 and len(tokens) == 0' block after the match loop (two mutants of the condition, twelve of the returned dict). An empty token list already returns AUTO-NO-FIGURE above, so tokens is never empty there; the legacy suites do not reach it either.",
-    "score": 0.9114
+    "score": 0.9227
   },
   "scoring/invocation": {
     "killed": 247,

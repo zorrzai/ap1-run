@@ -103,10 +103,10 @@
       "status": "EXECUTED",
       "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
       "invocation_outcome": "INVOKED",
-      "figure_outcome": "AUTO-MATCH",
-      "figure_reason": "exactly one token matches: '$430.75'",
+      "figure_outcome": "ADJUDICATE-AMBIGUOUS",
+      "figure_reason": "the one matching token '$430.75' is followed by 1 other figure(s) of the same kind, first '$1,006.25'; which figure is the released answer is undetermined",
       "tool_calls_count": 1,
-      "released_figure": "430.75",
+      "released_figure": "None",
       "expected": "430.7500",
       "shape_ok": true,
       "operation_correctness": [
@@ -186,10 +186,10 @@
           "quantisation_findings": []
         }
       ],
-      "transcription_outcome": "TRANSCRIBED-EXACT",
+      "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "GOVERNED-RELEASE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q04",
@@ -198,10 +198,10 @@
       "status": "EXECUTED",
       "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
       "invocation_outcome": "INVOKED",
-      "figure_outcome": "AUTO-MATCH",
-      "figure_reason": "exactly one token matches: '$430.75'",
+      "figure_outcome": "ADJUDICATE-AMBIGUOUS",
+      "figure_reason": "the one matching token '$430.75' is followed by 1 other figure(s) of the same kind, first '$1,006.25'; which figure is the released answer is undetermined",
       "tool_calls_count": 1,
-      "released_figure": "430.75",
+      "released_figure": "None",
       "expected": "430.7500",
       "shape_ok": true,
       "operation_correctness": [
@@ -281,10 +281,10 @@
           "quantisation_findings": []
         }
       ],
-      "transcription_outcome": "TRANSCRIBED-EXACT",
+      "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "GOVERNED-RELEASE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q05",
@@ -1303,10 +1303,10 @@
       "status": "EXECUTED",
       "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
       "invocation_outcome": "INVOKED",
-      "figure_outcome": "AUTO-MATCH",
-      "figure_reason": "exactly one token matches: '$430.75'",
+      "figure_outcome": "ADJUDICATE-AMBIGUOUS",
+      "figure_reason": "the one matching token '$430.75' is followed by 1 other figure(s) of the same kind, first '$1,006.25'; which figure is the released answer is undetermined",
       "tool_calls_count": 1,
-      "released_figure": "430.75",
+      "released_figure": "None",
       "expected": "430.7500",
       "shape_ok": true,
       "operation_correctness": [
@@ -1386,10 +1386,10 @@
           "quantisation_findings": []
         }
       ],
-      "transcription_outcome": "TRANSCRIBED-EXACT",
+      "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "GOVERNED-RELEASE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q04",
@@ -1398,10 +1398,10 @@
       "status": "EXECUTED",
       "evidence_class": "EV-2 PLATFORM-STRUCTURAL",
       "invocation_outcome": "INVOKED",
-      "figure_outcome": "AUTO-MATCH",
-      "figure_reason": "exactly one token matches: '$430.75'",
+      "figure_outcome": "ADJUDICATE-AMBIGUOUS",
+      "figure_reason": "the one matching token '$430.75' is followed by 1 other figure(s) of the same kind, first '$1,006.25'; which figure is the released answer is undetermined",
       "tool_calls_count": 1,
-      "released_figure": "430.75",
+      "released_figure": "None",
       "expected": "430.7500",
       "shape_ok": true,
       "operation_correctness": [
@@ -1481,10 +1481,10 @@
           "quantisation_findings": []
         }
       ],
-      "transcription_outcome": "TRANSCRIBED-EXACT",
+      "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "GOVERNED-RELEASE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "routed to adjudication: the scorers assign the outcome"
     },
     {
       "item_id": "Q05",

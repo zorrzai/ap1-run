@@ -108,6 +108,7 @@ result, by us or by anyone, in any document.
   Correct: 20
   Incorrect: 0
   No figure: 0
+  Unmeasurable: 0
   Accuracy rate: 1
 
 3k. D2 REPRODUCIBILITY:

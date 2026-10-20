@@ -112,7 +112,7 @@ Model: mock-model
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | Measured | 31 | Accuracy: 1 (auto-scored 30; 0 adjudicated not in rate) |
+| D1 | Measured | 31 | No rate: 1 items await adjudication (auto-scored 30: 30 correct, 0 incorrect, 0 no figure) |
 | D2 | Measured | N/A | See §9 D2 Mechanism Classes |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -274,9 +274,10 @@ Total operands resolved: 129
 
 - Auto-scored: 30
 - Adjudicated: 0
-- Total: 30
-- Auto-scored proportion: 30/30 = 100.00%
-- Accuracy rate: 1 (computed from 30 auto-scored items only; 0 adjudicated items are not represented in this rate)
+- Unmeasurable: 1 (response unreadable, routed to adjudication)
+- Total: 31
+- Auto-scored proportion: 30/31 = 96.77%
+- Accuracy rate: not computed: 1 items await adjudication, and R2.0 routes every wrong figure there, so a rate over the 30 auto-scored items alone would leave the wrong answers out (T3-3)
 
 ### D7 Provenance
 

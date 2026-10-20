@@ -112,7 +112,7 @@ Model: mock-model
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | Measured | 1000 | Accuracy: 1 (auto-scored 784; 215 adjudicated not in rate) |
+| D1 | Measured | 1000 | No rate: 259 items await adjudication (auto-scored 741: 741 correct, 0 incorrect, 0 no figure) |
 | D2 | Measured | N/A | See §9 D2 Mechanism Classes |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -1144,12 +1144,12 @@ Model: mock-model
 
 | Outcome | Count | % |
 |---|---|---|
-| `TRANSCRIBED-EXACT` | 750 | 75.0% |
+| `TRANSCRIBED-EXACT` | 707 | 70.7% |
 | `TRANSCRIBED-ALTERED` | 0 | 0.0% |
-| `UNOBSERVABLE` | 250 | 25.0% |
+| `UNOBSERVABLE` | 293 | 29.3% |
 | **Total** | **1000** | |
 
-Of the 750 `TRANSCRIBED-EXACT`, 320 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
+Of the 707 `TRANSCRIBED-EXACT`, 319 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
 
 ### B. Release Coverage
 
@@ -1266,18 +1266,19 @@ Total operands resolved: 4722
 
 ### D1 Accuracy
 
-- Auto-scored: 784
-- Adjudicated: 215
-- Total: 999
-- Auto-scored proportion: 784/999 = 78.48%
-- Accuracy rate: 1 (computed from 784 auto-scored items only; 215 adjudicated items are not represented in this rate)
+- Auto-scored: 741
+- Adjudicated: 258
+- Unmeasurable: 1 (response unreadable, routed to adjudication)
+- Total: 1000
+- Auto-scored proportion: 741/1000 = 74.10%
+- Accuracy rate: not computed: 259 items await adjudication, and R2.0 routes every wrong figure there, so a rate over the 741 auto-scored items alone would leave the wrong answers out (T3-3)
 
 ### D7 Provenance
 
-- Auto-scored: 784
-- Adjudicated: 216
+- Auto-scored: 741
+- Adjudicated: 259
 - Total: 1000
-- Auto-scored proportion: 784/1000 = 78.40%
+- Auto-scored proportion: 741/1000 = 74.10%
 
 ## 9. D2 Reproducibility Mechanism Classes
 

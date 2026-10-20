@@ -64,7 +64,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -166,7 +166,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -270,7 +270,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -374,7 +374,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -476,7 +476,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -578,7 +578,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -680,7 +680,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -782,7 +782,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -884,7 +884,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -986,7 +986,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1088,7 +1088,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1190,7 +1190,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1292,7 +1292,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1394,7 +1394,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1496,7 +1496,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1598,7 +1598,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1700,7 +1700,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1802,7 +1802,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1904,7 +1904,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2006,7 +2006,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2108,7 +2108,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2210,7 +2210,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2257,7 +2257,207 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 12: Q03, repeat 23 — Scorer 1
+## Item 12: Q03, repeat 21 — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming an 18% APR applied to the $2,400 balance.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 12: Q03, repeat 21 — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming an 18% APR applied to the $2,400 balance.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 13: Q03, repeat 23 — Scorer 1
 
 ### Question
 
@@ -2312,7 +2512,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2359,7 +2559,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 12: Q03, repeat 23 — Scorer 2
+## Item 13: Q03, repeat 23 — Scorer 2
 
 ### Question
 
@@ -2414,7 +2614,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2461,7 +2661,407 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 13: Q03, repeat 30 — Scorer 1
+## Item 14: Q03, repeat 25 — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming a constant $2,400 balance and an 18% APR divided evenly over 12 months.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 14: Q03, repeat 25 — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming a constant $2,400 balance and an 18% APR divided evenly over 12 months.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 15: Q03, repeat 27 — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming a constant $2,400 balance and an 18% APR divided evenly over 12 months.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 15: Q03, repeat 27 — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming a constant $2,400 balance and an 18% APR divided evenly over 12 months.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 16: Q03, repeat 30 — Scorer 1
 
 ### Question
 
@@ -2516,7 +3116,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2563,7 +3163,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 13: Q03, repeat 30 — Scorer 2
+## Item 16: Q03, repeat 30 — Scorer 2
 
 ### Question
 
@@ -2618,7 +3218,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2665,7 +3265,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 14: Q03, repeat 31 — Scorer 1
+## Item 17: Q03, repeat 31 — Scorer 1
 
 ### Question
 
@@ -2720,7 +3320,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2767,7 +3367,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 14: Q03, repeat 31 — Scorer 2
+## Item 17: Q03, repeat 31 — Scorer 2
 
 ### Question
 
@@ -2822,7 +3422,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2869,7 +3469,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 15: Q03, repeat 32 — Scorer 1
+## Item 18: Q03, repeat 32 — Scorer 1
 
 ### Question
 
@@ -2924,7 +3524,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2971,7 +3571,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 15: Q03, repeat 32 — Scorer 2
+## Item 18: Q03, repeat 32 — Scorer 2
 
 ### Question
 
@@ -3026,7 +3626,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3073,7 +3673,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 16: Q03, repeat 35 — Scorer 1
+## Item 19: Q03, repeat 35 — Scorer 1
 
 ### Question
 
@@ -3128,7 +3728,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3175,7 +3775,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 16: Q03, repeat 35 — Scorer 2
+## Item 19: Q03, repeat 35 — Scorer 2
 
 ### Question
 
@@ -3230,7 +3830,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3277,7 +3877,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 17: Q03, repeat 37 — Scorer 1
+## Item 20: Q03, repeat 37 — Scorer 1
 
 ### Question
 
@@ -3332,7 +3932,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3379,7 +3979,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 17: Q03, repeat 37 — Scorer 2
+## Item 20: Q03, repeat 37 — Scorer 2
 
 ### Question
 
@@ -3434,7 +4034,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3481,7 +4081,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 18: Q03, repeat 38 — Scorer 1
+## Item 21: Q03, repeat 38 — Scorer 1
 
 ### Question
 
@@ -3536,7 +4136,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3583,7 +4183,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 18: Q03, repeat 38 — Scorer 2
+## Item 21: Q03, repeat 38 — Scorer 2
 
 ### Question
 
@@ -3638,7 +4238,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3685,7 +4285,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 19: Q03, repeat 39 — Scorer 1
+## Item 22: Q03, repeat 39 — Scorer 1
 
 ### Question
 
@@ -3740,7 +4340,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3787,7 +4387,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 19: Q03, repeat 39 — Scorer 2
+## Item 22: Q03, repeat 39 — Scorer 2
 
 ### Question
 
@@ -3842,7 +4442,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3889,7 +4489,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 20: Q03, repeat 40 — Scorer 1
+## Item 23: Q03, repeat 40 — Scorer 1
 
 ### Question
 
@@ -3944,7 +4544,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3991,7 +4591,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 20: Q03, repeat 40 — Scorer 2
+## Item 23: Q03, repeat 40 — Scorer 2
 
 ### Question
 
@@ -4046,7 +4646,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4093,7 +4693,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 21: Q03, repeat 41 — Scorer 1
+## Item 24: Q03, repeat 41 — Scorer 1
 
 ### Question
 
@@ -4148,7 +4748,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4195,7 +4795,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 21: Q03, repeat 41 — Scorer 2
+## Item 24: Q03, repeat 41 — Scorer 2
 
 ### Question
 
@@ -4250,7 +4850,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4297,7 +4897,207 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 22: Q03, repeat 43 — Scorer 1
+## Item 25: Q03, repeat 42 — Scorer 1
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming a constant $2,400 balance and an 18% APR divided evenly over 12 months.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 25: Q03, repeat 42 — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming a constant $2,400 balance and an 18% APR divided evenly over 12 months.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 26: Q03, repeat 43 — Scorer 1
 
 ### Question
 
@@ -4352,7 +5152,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4399,7 +5199,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 22: Q03, repeat 43 — Scorer 2
+## Item 26: Q03, repeat 43 — Scorer 2
 
 ### Question
 
@@ -4454,7 +5254,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4501,7 +5301,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 23: Q03, repeat 44 — Scorer 1
+## Item 27: Q03, repeat 44 — Scorer 1
 
 ### Question
 
@@ -4556,7 +5356,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4603,7 +5403,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 23: Q03, repeat 44 — Scorer 2
+## Item 27: Q03, repeat 44 — Scorer 2
 
 ### Question
 
@@ -4658,7 +5458,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4705,7 +5505,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 24: Q03, repeat 47 — Scorer 1
+## Item 28: Q03, repeat 47 — Scorer 1
 
 ### Question
 
@@ -4760,7 +5560,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4807,7 +5607,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 24: Q03, repeat 47 — Scorer 2
+## Item 28: Q03, repeat 47 — Scorer 2
 
 ### Question
 
@@ -4862,7 +5662,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4909,7 +5709,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 25: Q03, repeat 50 — Scorer 1
+## Item 29: Q03, repeat 50 — Scorer 1
 
 ### Question
 
@@ -4964,7 +5764,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5011,7 +5811,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 25: Q03, repeat 50 — Scorer 2
+## Item 29: Q03, repeat 50 — Scorer 2
 
 ### Question
 
@@ -5066,7 +5866,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5113,7 +5913,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 26: Q04, repeat 4 — Scorer 1
+## Item 30: Q04, repeat 4 — Scorer 1
 
 ### Question
 
@@ -5177,7 +5977,7 @@ Therefore, the principal portion of the $1,437 payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5224,7 +6024,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 26: Q04, repeat 4 — Scorer 2
+## Item 30: Q04, repeat 4 — Scorer 2
 
 ### Question
 
@@ -5288,7 +6088,7 @@ Therefore, the principal portion of the $1,437 payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5335,7 +6135,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 27: Q04, repeat 7 — Scorer 1
+## Item 31: Q04, repeat 7 — Scorer 1
 
 ### Question
 
@@ -5395,7 +6195,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5442,7 +6242,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 27: Q04, repeat 7 — Scorer 2
+## Item 31: Q04, repeat 7 — Scorer 2
 
 ### Question
 
@@ -5502,7 +6302,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5549,7 +6349,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 28: Q04, repeat 9 — Scorer 1
+## Item 32: Q04, repeat 9 — Scorer 1
 
 ### Question
 
@@ -5613,7 +6413,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5660,7 +6460,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 28: Q04, repeat 9 — Scorer 2
+## Item 32: Q04, repeat 9 — Scorer 2
 
 ### Question
 
@@ -5724,7 +6524,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5771,7 +6571,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 29: Q04, repeat 10 — Scorer 1
+## Item 33: Q04, repeat 10 — Scorer 1
 
 ### Question
 
@@ -5835,7 +6635,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5882,7 +6682,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 29: Q04, repeat 10 — Scorer 2
+## Item 33: Q04, repeat 10 — Scorer 2
 
 ### Question
 
@@ -5946,7 +6746,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5993,7 +6793,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 30: Q04, repeat 14 — Scorer 1
+## Item 34: Q04, repeat 14 — Scorer 1
 
 ### Question
 
@@ -6046,7 +6846,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6093,7 +6893,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 30: Q04, repeat 14 — Scorer 2
+## Item 34: Q04, repeat 14 — Scorer 2
 
 ### Question
 
@@ -6146,7 +6946,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6193,7 +6993,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 31: Q04, repeat 17 — Scorer 1
+## Item 35: Q04, repeat 17 — Scorer 1
 
 ### Question
 
@@ -6250,7 +7050,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6297,7 +7097,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 31: Q04, repeat 17 — Scorer 2
+## Item 35: Q04, repeat 17 — Scorer 2
 
 ### Question
 
@@ -6354,7 +7154,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6401,7 +7201,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 32: Q04, repeat 20 — Scorer 1
+## Item 36: Q04, repeat 20 — Scorer 1
 
 ### Question
 
@@ -6454,7 +7254,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6501,7 +7301,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 32: Q04, repeat 20 — Scorer 2
+## Item 36: Q04, repeat 20 — Scorer 2
 
 ### Question
 
@@ -6554,7 +7354,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6601,7 +7401,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 33: Q04, repeat 22 — Scorer 1
+## Item 37: Q04, repeat 22 — Scorer 1
 
 ### Question
 
@@ -6661,7 +7461,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6708,7 +7508,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 33: Q04, repeat 22 — Scorer 2
+## Item 37: Q04, repeat 22 — Scorer 2
 
 ### Question
 
@@ -6768,7 +7568,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6815,7 +7615,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 34: Q04, repeat 23 — Scorer 1
+## Item 38: Q04, repeat 23 — Scorer 1
 
 ### Question
 
@@ -6869,7 +7669,7 @@ The first month’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6916,7 +7716,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 34: Q04, repeat 23 — Scorer 2
+## Item 38: Q04, repeat 23 — Scorer 2
 
 ### Question
 
@@ -6970,7 +7770,7 @@ The first month’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7017,7 +7817,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 35: Q04, repeat 24 — Scorer 1
+## Item 39: Q04, repeat 24 — Scorer 1
 
 ### Question
 
@@ -7070,7 +7870,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7117,7 +7917,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 35: Q04, repeat 24 — Scorer 2
+## Item 39: Q04, repeat 24 — Scorer 2
 
 ### Question
 
@@ -7170,7 +7970,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7217,7 +8017,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 36: Q04, repeat 25 — Scorer 1
+## Item 40: Q04, repeat 25 — Scorer 1
 
 ### Question
 
@@ -7277,7 +8077,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7324,7 +8124,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 36: Q04, repeat 25 — Scorer 2
+## Item 40: Q04, repeat 25 — Scorer 2
 
 ### Question
 
@@ -7384,7 +8184,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7431,7 +8231,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 37: Q04, repeat 30 — Scorer 1
+## Item 41: Q04, repeat 30 — Scorer 1
 
 ### Question
 
@@ -7495,7 +8295,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7542,7 +8342,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 37: Q04, repeat 30 — Scorer 2
+## Item 41: Q04, repeat 30 — Scorer 2
 
 ### Question
 
@@ -7606,7 +8406,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7653,7 +8453,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 38: Q04, repeat 32 — Scorer 1
+## Item 42: Q04, repeat 32 — Scorer 1
 
 ### Question
 
@@ -7713,7 +8513,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7760,7 +8560,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 38: Q04, repeat 32 — Scorer 2
+## Item 42: Q04, repeat 32 — Scorer 2
 
 ### Question
 
@@ -7820,7 +8620,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7867,7 +8667,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 39: Q04, repeat 36 — Scorer 1
+## Item 43: Q04, repeat 36 — Scorer 1
 
 ### Question
 
@@ -7927,7 +8727,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7974,7 +8774,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 39: Q04, repeat 36 — Scorer 2
+## Item 43: Q04, repeat 36 — Scorer 2
 
 ### Question
 
@@ -8034,7 +8834,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8081,7 +8881,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 40: Q04, repeat 39 — Scorer 1
+## Item 44: Q04, repeat 39 — Scorer 1
 
 ### Question
 
@@ -8141,7 +8941,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8188,7 +8988,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 40: Q04, repeat 39 — Scorer 2
+## Item 44: Q04, repeat 39 — Scorer 2
 
 ### Question
 
@@ -8248,7 +9048,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8295,7 +9095,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 41: Q04, repeat 44 — Scorer 1
+## Item 45: Q04, repeat 44 — Scorer 1
 
 ### Question
 
@@ -8348,7 +9148,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8395,7 +9195,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 41: Q04, repeat 44 — Scorer 2
+## Item 45: Q04, repeat 44 — Scorer 2
 
 ### Question
 
@@ -8448,7 +9248,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8495,7 +9295,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 42: Q04, repeat 45 — Scorer 1
+## Item 46: Q04, repeat 45 — Scorer 1
 
 ### Question
 
@@ -8548,7 +9348,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8595,7 +9395,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 42: Q04, repeat 45 — Scorer 2
+## Item 46: Q04, repeat 45 — Scorer 2
 
 ### Question
 
@@ -8648,7 +9448,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8695,7 +9495,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 43: Q04, repeat 47 — Scorer 1
+## Item 47: Q04, repeat 47 — Scorer 1
 
 ### Question
 
@@ -8748,7 +9548,7 @@ The first month’s interest is **$1,006.25**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8795,7 +9595,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 43: Q04, repeat 47 — Scorer 2
+## Item 47: Q04, repeat 47 — Scorer 2
 
 ### Question
 
@@ -8848,7 +9648,7 @@ The first month’s interest is **$1,006.25**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8895,7 +9695,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 44: Q04, repeat 48 — Scorer 1
+## Item 48: Q04, repeat 48 — Scorer 1
 
 ### Question
 
@@ -8959,7 +9759,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9006,7 +9806,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 44: Q04, repeat 48 — Scorer 2
+## Item 48: Q04, repeat 48 — Scorer 2
 
 ### Question
 
@@ -9070,7 +9870,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9117,7 +9917,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 45: Q05, repeat 2 — Scorer 1
+## Item 49: Q05, repeat 2 — Scorer 1
 
 ### Question
 
@@ -9176,7 +9976,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9223,7 +10023,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 45: Q05, repeat 2 — Scorer 2
+## Item 49: Q05, repeat 2 — Scorer 2
 
 ### Question
 
@@ -9282,7 +10082,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9329,7 +10129,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 46: Q05, repeat 3 — Scorer 1
+## Item 50: Q05, repeat 3 — Scorer 1
 
 ### Question
 
@@ -9394,7 +10194,7 @@ Assuming interest is charged before the payment:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9441,7 +10241,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 46: Q05, repeat 3 — Scorer 2
+## Item 50: Q05, repeat 3 — Scorer 2
 
 ### Question
 
@@ -9506,7 +10306,7 @@ Assuming interest is charged before the payment:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9553,7 +10353,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 47: Q05, repeat 10 — Scorer 1
+## Item 51: Q05, repeat 10 — Scorer 1
 
 ### Question
 
@@ -9618,7 +10418,7 @@ Assuming interest is charged before the payment:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9665,7 +10465,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 47: Q05, repeat 10 — Scorer 2
+## Item 51: Q05, repeat 10 — Scorer 2
 
 ### Question
 
@@ -9730,7 +10530,7 @@ Assuming interest is charged before the payment:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9777,7 +10577,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 48: Q05, repeat 14 — Scorer 1
+## Item 52: Q05, repeat 14 — Scorer 1
 
 ### Question
 
@@ -9849,7 +10649,7 @@ The balance after one month is **$2,411.00**, assuming interest is added before 
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9896,7 +10696,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 48: Q05, repeat 14 — Scorer 2
+## Item 52: Q05, repeat 14 — Scorer 2
 
 ### Question
 
@@ -9968,7 +10768,7 @@ The balance after one month is **$2,411.00**, assuming interest is added before 
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10015,7 +10815,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 49: Q05, repeat 22 — Scorer 1
+## Item 53: Q05, repeat 22 — Scorer 1
 
 ### Question
 
@@ -10087,7 +10887,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10134,7 +10934,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 49: Q05, repeat 22 — Scorer 2
+## Item 53: Q05, repeat 22 — Scorer 2
 
 ### Question
 
@@ -10206,7 +11006,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10253,7 +11053,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 50: Q05, repeat 23 — Scorer 1
+## Item 54: Q05, repeat 23 — Scorer 1
 
 ### Question
 
@@ -10318,7 +11118,7 @@ Assuming interest is charged before the minimum payment:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10365,7 +11165,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 50: Q05, repeat 23 — Scorer 2
+## Item 54: Q05, repeat 23 — Scorer 2
 
 ### Question
 
@@ -10430,7 +11230,7 @@ Assuming interest is charged before the minimum payment:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10477,7 +11277,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 51: Q05, repeat 31 — Scorer 1
+## Item 55: Q05, repeat 31 — Scorer 1
 
 ### Question
 
@@ -10549,7 +11349,7 @@ The credit card balance after one month is **$2,411.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10596,7 +11396,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 51: Q05, repeat 31 — Scorer 2
+## Item 55: Q05, repeat 31 — Scorer 2
 
 ### Question
 
@@ -10668,7 +11468,7 @@ The credit card balance after one month is **$2,411.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10715,7 +11515,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 52: Q05, repeat 34 — Scorer 1
+## Item 56: Q05, repeat 34 — Scorer 1
 
 ### Question
 
@@ -10783,7 +11583,7 @@ After adding interest and making the $25 minimum payment:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10830,7 +11630,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 52: Q05, repeat 34 — Scorer 2
+## Item 56: Q05, repeat 34 — Scorer 2
 
 ### Question
 
@@ -10898,7 +11698,7 @@ After adding interest and making the $25 minimum payment:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10945,7 +11745,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 53: Q05, repeat 35 — Scorer 1
+## Item 57: Q05, repeat 35 — Scorer 1
 
 ### Question
 
@@ -11010,7 +11810,7 @@ Assuming interest is applied before the payment:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11057,7 +11857,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 53: Q05, repeat 35 — Scorer 2
+## Item 57: Q05, repeat 35 — Scorer 2
 
 ### Question
 
@@ -11122,7 +11922,7 @@ Assuming interest is applied before the payment:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11169,7 +11969,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 54: Q05, repeat 37 — Scorer 1
+## Item 58: Q05, repeat 37 — Scorer 1
 
 ### Question
 
@@ -11241,7 +12041,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11288,7 +12088,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 54: Q05, repeat 37 — Scorer 2
+## Item 58: Q05, repeat 37 — Scorer 2
 
 ### Question
 
@@ -11360,7 +12160,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11407,7 +12207,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 55: Q05, repeat 39 — Scorer 1
+## Item 59: Q05, repeat 39 — Scorer 1
 
 ### Question
 
@@ -11466,7 +12266,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11513,7 +12313,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 55: Q05, repeat 39 — Scorer 2
+## Item 59: Q05, repeat 39 — Scorer 2
 
 ### Question
 
@@ -11572,7 +12372,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11619,7 +12419,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 56: Q05, repeat 40 — Scorer 1
+## Item 60: Q05, repeat 40 — Scorer 1
 
 ### Question
 
@@ -11691,7 +12491,7 @@ The credit card balance after one month is **$2,411.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11738,7 +12538,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 56: Q05, repeat 40 — Scorer 2
+## Item 60: Q05, repeat 40 — Scorer 2
 
 ### Question
 
@@ -11810,7 +12610,7 @@ The credit card balance after one month is **$2,411.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11857,7 +12657,2839 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 57: Q07, repeat 7 — Scorer 1
+## Item 61: Q06, repeat 2 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 61: Q06, repeat 2 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 62: Q06, repeat 3 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 62: Q06, repeat 3 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 63: Q06, repeat 9 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 63: Q06, repeat 9 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 64: Q06, repeat 10 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 64: Q06, repeat 10 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 65: Q06, repeat 11 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 65: Q06, repeat 11 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 66: Q06, repeat 12 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** (a $12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 66: Q06, repeat 12 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** (a $12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 67: Q06, repeat 14 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 67: Q06, repeat 14 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 68: Q06, repeat 18 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 68: Q06, repeat 18 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 69: Q06, repeat 19 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 69: Q06, repeat 19 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 70: Q06, repeat 22 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 70: Q06, repeat 22 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 71: Q06, repeat 23 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 71: Q06, repeat 23 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 72: Q06, repeat 25 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 72: Q06, repeat 25 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 73: Q06, repeat 33 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 73: Q06, repeat 33 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 74: Q06, repeat 44 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 74: Q06, repeat 44 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12.00 * 12"}`)
+  → `{"result": "144.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 75: Q07, repeat 6 — Scorer 1
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+The quarterly investment growth is:
+
+- **Interest earned:** $822.41  
+- **Quarterly fees:** $45.00  
+- **Net quarterly growth:** **$777.41**
+
+*Assumes the annual rate is divided evenly across four quarters and the $15 monthly fee is charged three times.*
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175.00*(0.078/4)-15.00*3"}`)
+  → `{"result": "777.4125"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 75: Q07, repeat 6 — Scorer 2
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+The quarterly investment growth is:
+
+- **Interest earned:** $822.41  
+- **Quarterly fees:** $45.00  
+- **Net quarterly growth:** **$777.41**
+
+*Assumes the annual rate is divided evenly across four quarters and the $15 monthly fee is charged three times.*
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"42175.00*(0.078/4)-15.00*3"}`)
+  → `{"result": "777.4125"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 76: Q07, repeat 7 — Scorer 1
 
 ### Question
 
@@ -11969,7 +15601,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 57: Q07, repeat 7 — Scorer 2
+## Item 76: Q07, repeat 7 — Scorer 2
 
 ### Question
 
@@ -12081,7 +15713,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 58: Q07, repeat 22 — Scorer 1
+## Item 77: Q07, repeat 22 — Scorer 1
 
 ### Question
 
@@ -12193,7 +15825,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 58: Q07, repeat 22 — Scorer 2
+## Item 77: Q07, repeat 22 — Scorer 2
 
 ### Question
 
@@ -12305,7 +15937,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 59: Q07, repeat 28 — Scorer 1
+## Item 78: Q07, repeat 28 — Scorer 1
 
 ### Question
 
@@ -12399,7 +16031,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 59: Q07, repeat 28 — Scorer 2
+## Item 78: Q07, repeat 28 — Scorer 2
 
 ### Question
 
@@ -12493,7 +16125,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 60: Q07, repeat 30 — Scorer 1
+## Item 79: Q07, repeat 30 — Scorer 1
 
 ### Question
 
@@ -12600,7 +16232,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 60: Q07, repeat 30 — Scorer 2
+## Item 79: Q07, repeat 30 — Scorer 2
 
 ### Question
 
@@ -12707,7 +16339,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 61: Q07, repeat 33 — Scorer 1
+## Item 80: Q07, repeat 33 — Scorer 1
 
 ### Question
 
@@ -12813,7 +16445,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 61: Q07, repeat 33 — Scorer 2
+## Item 80: Q07, repeat 33 — Scorer 2
 
 ### Question
 
@@ -12919,7 +16551,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 62: Q07, repeat 34 — Scorer 1
+## Item 81: Q07, repeat 34 — Scorer 1
 
 ### Question
 
@@ -13026,7 +16658,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 62: Q07, repeat 34 — Scorer 2
+## Item 81: Q07, repeat 34 — Scorer 2
 
 ### Question
 
@@ -13133,7 +16765,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 63: Q07, repeat 36 — Scorer 1
+## Item 82: Q07, repeat 36 — Scorer 1
 
 ### Question
 
@@ -13239,7 +16871,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 63: Q07, repeat 36 — Scorer 2
+## Item 82: Q07, repeat 36 — Scorer 2
 
 ### Question
 
@@ -13345,7 +16977,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 64: Q07, repeat 42 — Scorer 1
+## Item 83: Q07, repeat 42 — Scorer 1
 
 ### Question
 
@@ -13457,7 +17089,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 64: Q07, repeat 42 — Scorer 2
+## Item 83: Q07, repeat 42 — Scorer 2
 
 ### Question
 
@@ -13569,7 +17201,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 65: Q07, repeat 48 — Scorer 1
+## Item 84: Q07, repeat 48 — Scorer 1
 
 ### Question
 
@@ -13676,7 +17308,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 65: Q07, repeat 48 — Scorer 2
+## Item 84: Q07, repeat 48 — Scorer 2
 
 ### Question
 
@@ -13783,7 +17415,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 66: Q07, repeat 49 — Scorer 1
+## Item 85: Q07, repeat 49 — Scorer 1
 
 ### Question
 
@@ -13895,7 +17527,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 66: Q07, repeat 49 — Scorer 2
+## Item 85: Q07, repeat 49 — Scorer 2
 
 ### Question
 
@@ -14007,7 +17639,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 67: Q08, repeat 1 — Scorer 1
+## Item 86: Q08, repeat 1 — Scorer 1
 
 ### Question
 
@@ -14103,7 +17735,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 67: Q08, repeat 1 — Scorer 2
+## Item 86: Q08, repeat 1 — Scorer 2
 
 ### Question
 
@@ -14199,7 +17831,225 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 68: Q10, repeat 38 — Scorer 1
+## Item 87: Q08, repeat 47 — Scorer 1
+
+### Question
+
+> What is the remaining mortgage balance after the first monthly payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+After the first monthly payment:
+
+- Monthly interest: **$1,006.25**
+- Principal repaid: **$430.75**
+- **Remaining mortgage balance: $287,069.25**
+
+This assumes interest accrues monthly at **4.20% ÷ 12** and the full **$1,437 payment** is applied after interest.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "287500 * (0.042 / 12)"}`)
+  → `{"result": "1006.25"}`
+
+- **calculator**(`{"expression": "287500 * (1 + 0.042 / 12) - 1437"}`)
+  → `{"result": "287069.25"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `287069.2500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 87: Q08, repeat 47 — Scorer 2
+
+### Question
+
+> What is the remaining mortgage balance after the first monthly payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+After the first monthly payment:
+
+- Monthly interest: **$1,006.25**
+- Principal repaid: **$430.75**
+- **Remaining mortgage balance: $287,069.25**
+
+This assumes interest accrues monthly at **4.20% ÷ 12** and the full **$1,437 payment** is applied after interest.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "287500 * (0.042 / 12)"}`)
+  → `{"result": "1006.25"}`
+
+- **calculator**(`{"expression": "287500 * (1 + 0.042 / 12) - 1437"}`)
+  → `{"result": "287069.25"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `287069.2500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 88: Q10, repeat 38 — Scorer 1
 
 ### Question
 
@@ -14250,7 +18100,7 @@ The annual net growth after fees is **$3,109.65**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14297,7 +18147,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 68: Q10, repeat 38 — Scorer 2
+## Item 88: Q10, repeat 38 — Scorer 2
 
 ### Question
 
@@ -14348,7 +18198,7 @@ The annual net growth after fees is **$3,109.65**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14395,7 +18245,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 69: Q02, repeat 1 — Scorer 1
+## Item 89: Q02, repeat 1 — Scorer 1
 
 ### Question
 
@@ -14442,7 +18292,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14489,7 +18339,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 69: Q02, repeat 1 — Scorer 2
+## Item 89: Q02, repeat 1 — Scorer 2
 
 ### Question
 
@@ -14536,7 +18386,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14583,7 +18433,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 70: Q02, repeat 2 — Scorer 1
+## Item 90: Q02, repeat 2 — Scorer 1
 
 ### Question
 
@@ -14630,7 +18480,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14677,7 +18527,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 70: Q02, repeat 2 — Scorer 2
+## Item 90: Q02, repeat 2 — Scorer 2
 
 ### Question
 
@@ -14724,7 +18574,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14771,7 +18621,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 71: Q02, repeat 5 — Scorer 1
+## Item 91: Q02, repeat 5 — Scorer 1
 
 ### Question
 
@@ -14818,7 +18668,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14865,7 +18715,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 71: Q02, repeat 5 — Scorer 2
+## Item 91: Q02, repeat 5 — Scorer 2
 
 ### Question
 
@@ -14912,7 +18762,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14959,7 +18809,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 72: Q02, repeat 7 — Scorer 1
+## Item 92: Q02, repeat 7 — Scorer 1
 
 ### Question
 
@@ -15005,7 +18855,7 @@ Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15052,7 +18902,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 72: Q02, repeat 7 — Scorer 2
+## Item 92: Q02, repeat 7 — Scorer 2
 
 ### Question
 
@@ -15098,7 +18948,7 @@ Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15145,7 +18995,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 73: Q02, repeat 9 — Scorer 1
+## Item 93: Q02, repeat 9 — Scorer 1
 
 ### Question
 
@@ -15192,7 +19042,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15239,7 +19089,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 73: Q02, repeat 9 — Scorer 2
+## Item 93: Q02, repeat 9 — Scorer 2
 
 ### Question
 
@@ -15286,7 +19136,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15333,7 +19183,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 74: Q02, repeat 10 — Scorer 1
+## Item 94: Q02, repeat 10 — Scorer 1
 
 ### Question
 
@@ -15380,7 +19230,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15427,7 +19277,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 74: Q02, repeat 10 — Scorer 2
+## Item 94: Q02, repeat 10 — Scorer 2
 
 ### Question
 
@@ -15474,7 +19324,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15521,7 +19371,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 75: Q02, repeat 11 — Scorer 1
+## Item 95: Q02, repeat 11 — Scorer 1
 
 ### Question
 
@@ -15568,7 +19418,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15615,7 +19465,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 75: Q02, repeat 11 — Scorer 2
+## Item 95: Q02, repeat 11 — Scorer 2
 
 ### Question
 
@@ -15662,7 +19512,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15709,7 +19559,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 76: Q02, repeat 12 — Scorer 1
+## Item 96: Q02, repeat 12 — Scorer 1
 
 ### Question
 
@@ -15757,7 +19607,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15804,7 +19654,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 76: Q02, repeat 12 — Scorer 2
+## Item 96: Q02, repeat 12 — Scorer 2
 
 ### Question
 
@@ -15852,7 +19702,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15899,7 +19749,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 77: Q02, repeat 13 — Scorer 1
+## Item 97: Q02, repeat 13 — Scorer 1
 
 ### Question
 
@@ -15946,7 +19796,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15993,7 +19843,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 77: Q02, repeat 13 — Scorer 2
+## Item 97: Q02, repeat 13 — Scorer 2
 
 ### Question
 
@@ -16040,7 +19890,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16087,7 +19937,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 78: Q02, repeat 15 — Scorer 1
+## Item 98: Q02, repeat 15 — Scorer 1
 
 ### Question
 
@@ -16133,7 +19983,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16180,7 +20030,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 78: Q02, repeat 15 — Scorer 2
+## Item 98: Q02, repeat 15 — Scorer 2
 
 ### Question
 
@@ -16226,7 +20076,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16273,7 +20123,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 79: Q02, repeat 17 — Scorer 1
+## Item 99: Q02, repeat 17 — Scorer 1
 
 ### Question
 
@@ -16320,7 +20170,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16367,7 +20217,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 79: Q02, repeat 17 — Scorer 2
+## Item 99: Q02, repeat 17 — Scorer 2
 
 ### Question
 
@@ -16414,7 +20264,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16461,7 +20311,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 80: Q02, repeat 18 — Scorer 1
+## Item 100: Q02, repeat 18 — Scorer 1
 
 ### Question
 
@@ -16509,7 +20359,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16556,7 +20406,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 80: Q02, repeat 18 — Scorer 2
+## Item 100: Q02, repeat 18 — Scorer 2
 
 ### Question
 
@@ -16604,7 +20454,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16651,7 +20501,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 81: Q02, repeat 20 — Scorer 1
+## Item 101: Q02, repeat 20 — Scorer 1
 
 ### Question
 
@@ -16698,7 +20548,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16745,7 +20595,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 81: Q02, repeat 20 — Scorer 2
+## Item 101: Q02, repeat 20 — Scorer 2
 
 ### Question
 
@@ -16792,7 +20642,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16839,7 +20689,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 82: Q02, repeat 21 — Scorer 1
+## Item 102: Q02, repeat 21 — Scorer 1
 
 ### Question
 
@@ -16887,7 +20737,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16934,7 +20784,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 82: Q02, repeat 21 — Scorer 2
+## Item 102: Q02, repeat 21 — Scorer 2
 
 ### Question
 
@@ -16982,7 +20832,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17029,7 +20879,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 83: Q02, repeat 26 — Scorer 1
+## Item 103: Q02, repeat 26 — Scorer 1
 
 ### Question
 
@@ -17077,7 +20927,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17124,7 +20974,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 83: Q02, repeat 26 — Scorer 2
+## Item 103: Q02, repeat 26 — Scorer 2
 
 ### Question
 
@@ -17172,7 +21022,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17219,7 +21069,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 84: Q02, repeat 27 — Scorer 1
+## Item 104: Q02, repeat 27 — Scorer 1
 
 ### Question
 
@@ -17266,7 +21116,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17313,7 +21163,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 84: Q02, repeat 27 — Scorer 2
+## Item 104: Q02, repeat 27 — Scorer 2
 
 ### Question
 
@@ -17360,7 +21210,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17407,101 +21257,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 85: Q02, repeat 31 — Scorer 1
-
-### Question
-
-> What is the available credit remaining on the credit card?
-
-Category: balance
-
-### Response (verbatim)
-
-```
-Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `2600.00`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 85: Q02, repeat 31 — Scorer 2
+## Item 105: Q02, repeat 31 — Scorer 1
 
 ### Question
 
@@ -17548,7 +21304,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17595,7 +21351,101 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 86: Q02, repeat 32 — Scorer 1
+## Item 105: Q02, repeat 31 — Scorer 2
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+**$5,000 − $2,400 = $2,600.00**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 106: Q02, repeat 32 — Scorer 1
 
 ### Question
 
@@ -17641,7 +21491,7 @@ Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17688,7 +21538,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 86: Q02, repeat 32 — Scorer 2
+## Item 106: Q02, repeat 32 — Scorer 2
 
 ### Question
 
@@ -17734,7 +21584,7 @@ Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17781,7 +21631,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 87: Q02, repeat 33 — Scorer 1
+## Item 107: Q02, repeat 33 — Scorer 1
 
 ### Question
 
@@ -17828,7 +21678,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17875,7 +21725,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 87: Q02, repeat 33 — Scorer 2
+## Item 107: Q02, repeat 33 — Scorer 2
 
 ### Question
 
@@ -17922,7 +21772,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17969,7 +21819,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 88: Q02, repeat 35 — Scorer 1
+## Item 108: Q02, repeat 35 — Scorer 1
 
 ### Question
 
@@ -18016,7 +21866,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18063,7 +21913,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 88: Q02, repeat 35 — Scorer 2
+## Item 108: Q02, repeat 35 — Scorer 2
 
 ### Question
 
@@ -18110,7 +21960,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18157,7 +22007,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 89: Q02, repeat 36 — Scorer 1
+## Item 109: Q02, repeat 36 — Scorer 1
 
 ### Question
 
@@ -18203,7 +22053,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18250,7 +22100,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 89: Q02, repeat 36 — Scorer 2
+## Item 109: Q02, repeat 36 — Scorer 2
 
 ### Question
 
@@ -18296,7 +22146,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18343,7 +22193,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 90: Q02, repeat 38 — Scorer 1
+## Item 110: Q02, repeat 38 — Scorer 1
 
 ### Question
 
@@ -18389,7 +22239,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18436,7 +22286,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 90: Q02, repeat 38 — Scorer 2
+## Item 110: Q02, repeat 38 — Scorer 2
 
 ### Question
 
@@ -18482,7 +22332,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18529,7 +22379,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 91: Q02, repeat 39 — Scorer 1
+## Item 111: Q02, repeat 39 — Scorer 1
 
 ### Question
 
@@ -18575,7 +22425,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18622,7 +22472,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 91: Q02, repeat 39 — Scorer 2
+## Item 111: Q02, repeat 39 — Scorer 2
 
 ### Question
 
@@ -18668,7 +22518,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18715,7 +22565,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 92: Q02, repeat 40 — Scorer 1
+## Item 112: Q02, repeat 40 — Scorer 1
 
 ### Question
 
@@ -18762,7 +22612,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18809,7 +22659,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 92: Q02, repeat 40 — Scorer 2
+## Item 112: Q02, repeat 40 — Scorer 2
 
 ### Question
 
@@ -18856,7 +22706,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18903,7 +22753,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 93: Q02, repeat 42 — Scorer 1
+## Item 113: Q02, repeat 42 — Scorer 1
 
 ### Question
 
@@ -18950,7 +22800,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18997,7 +22847,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 93: Q02, repeat 42 — Scorer 2
+## Item 113: Q02, repeat 42 — Scorer 2
 
 ### Question
 
@@ -19044,7 +22894,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19091,7 +22941,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 94: Q02, repeat 44 — Scorer 1
+## Item 114: Q02, repeat 44 — Scorer 1
 
 ### Question
 
@@ -19138,7 +22988,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19185,7 +23035,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 94: Q02, repeat 44 — Scorer 2
+## Item 114: Q02, repeat 44 — Scorer 2
 
 ### Question
 
@@ -19232,7 +23082,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19279,7 +23129,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 95: Q02, repeat 45 — Scorer 1
+## Item 115: Q02, repeat 45 — Scorer 1
 
 ### Question
 
@@ -19326,7 +23176,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19373,7 +23223,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 95: Q02, repeat 45 — Scorer 2
+## Item 115: Q02, repeat 45 — Scorer 2
 
 ### Question
 
@@ -19420,7 +23270,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19467,7 +23317,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 96: Q02, repeat 46 — Scorer 1
+## Item 116: Q02, repeat 46 — Scorer 1
 
 ### Question
 
@@ -19513,7 +23363,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19560,7 +23410,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 96: Q02, repeat 46 — Scorer 2
+## Item 116: Q02, repeat 46 — Scorer 2
 
 ### Question
 
@@ -19606,7 +23456,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19653,7 +23503,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 97: Q02, repeat 49 — Scorer 1
+## Item 117: Q02, repeat 49 — Scorer 1
 
 ### Question
 
@@ -19701,7 +23551,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19748,7 +23598,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 97: Q02, repeat 49 — Scorer 2
+## Item 117: Q02, repeat 49 — Scorer 2
 
 ### Question
 
@@ -19796,7 +23646,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19843,7 +23693,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 98: Q02, repeat 50 — Scorer 1
+## Item 118: Q02, repeat 50 — Scorer 1
 
 ### Question
 
@@ -19890,7 +23740,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19937,7 +23787,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 98: Q02, repeat 50 — Scorer 2
+## Item 118: Q02, repeat 50 — Scorer 2
 
 ### Question
 
@@ -19984,7 +23834,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20031,7 +23881,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 99: Q03, repeat 1 — Scorer 1
+## Item 119: Q03, repeat 1 — Scorer 1
 
 ### Question
 
@@ -20088,7 +23938,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20135,7 +23985,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 99: Q03, repeat 1 — Scorer 2
+## Item 119: Q03, repeat 1 — Scorer 2
 
 ### Question
 
@@ -20192,7 +24042,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20239,7 +24089,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 100: Q03, repeat 2 — Scorer 1
+## Item 120: Q03, repeat 2 — Scorer 1
 
 ### Question
 
@@ -20294,7 +24144,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20341,7 +24191,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 100: Q03, repeat 2 — Scorer 2
+## Item 120: Q03, repeat 2 — Scorer 2
 
 ### Question
 
@@ -20396,7 +24246,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20443,7 +24293,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 101: Q03, repeat 3 — Scorer 1
+## Item 121: Q03, repeat 3 — Scorer 1
 
 ### Question
 
@@ -20500,7 +24350,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20547,7 +24397,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 101: Q03, repeat 3 — Scorer 2
+## Item 121: Q03, repeat 3 — Scorer 2
 
 ### Question
 
@@ -20604,7 +24454,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20651,7 +24501,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 102: Q03, repeat 4 — Scorer 1
+## Item 122: Q03, repeat 4 — Scorer 1
 
 ### Question
 
@@ -20708,7 +24558,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20755,7 +24605,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 102: Q03, repeat 4 — Scorer 2
+## Item 122: Q03, repeat 4 — Scorer 2
 
 ### Question
 
@@ -20812,7 +24662,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20859,7 +24709,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 103: Q03, repeat 5 — Scorer 1
+## Item 123: Q03, repeat 5 — Scorer 1
 
 ### Question
 
@@ -20914,7 +24764,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20961,7 +24811,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 103: Q03, repeat 5 — Scorer 2
+## Item 123: Q03, repeat 5 — Scorer 2
 
 ### Question
 
@@ -21016,7 +24866,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21063,7 +24913,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 104: Q03, repeat 6 — Scorer 1
+## Item 124: Q03, repeat 6 — Scorer 1
 
 ### Question
 
@@ -21118,7 +24968,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21165,7 +25015,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 104: Q03, repeat 6 — Scorer 2
+## Item 124: Q03, repeat 6 — Scorer 2
 
 ### Question
 
@@ -21220,7 +25070,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21267,7 +25117,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 105: Q03, repeat 7 — Scorer 1
+## Item 125: Q03, repeat 7 — Scorer 1
 
 ### Question
 
@@ -21324,7 +25174,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21371,7 +25221,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 105: Q03, repeat 7 — Scorer 2
+## Item 125: Q03, repeat 7 — Scorer 2
 
 ### Question
 
@@ -21428,7 +25278,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21475,7 +25325,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 106: Q03, repeat 8 — Scorer 1
+## Item 126: Q03, repeat 8 — Scorer 1
 
 ### Question
 
@@ -21532,7 +25382,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21579,7 +25429,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 106: Q03, repeat 8 — Scorer 2
+## Item 126: Q03, repeat 8 — Scorer 2
 
 ### Question
 
@@ -21636,7 +25486,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21683,7 +25533,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 107: Q03, repeat 9 — Scorer 1
+## Item 127: Q03, repeat 9 — Scorer 1
 
 ### Question
 
@@ -21740,7 +25590,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21787,7 +25637,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 107: Q03, repeat 9 — Scorer 2
+## Item 127: Q03, repeat 9 — Scorer 2
 
 ### Question
 
@@ -21844,7 +25694,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21891,7 +25741,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 108: Q03, repeat 10 — Scorer 1
+## Item 128: Q03, repeat 10 — Scorer 1
 
 ### Question
 
@@ -21946,7 +25796,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21993,7 +25843,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 108: Q03, repeat 10 — Scorer 2
+## Item 128: Q03, repeat 10 — Scorer 2
 
 ### Question
 
@@ -22048,7 +25898,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22095,7 +25945,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 109: Q03, repeat 11 — Scorer 1
+## Item 129: Q03, repeat 11 — Scorer 1
 
 ### Question
 
@@ -22152,7 +26002,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22199,7 +26049,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 109: Q03, repeat 11 — Scorer 2
+## Item 129: Q03, repeat 11 — Scorer 2
 
 ### Question
 
@@ -22256,7 +26106,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22303,7 +26153,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 110: Q03, repeat 13 — Scorer 1
+## Item 130: Q03, repeat 13 — Scorer 1
 
 ### Question
 
@@ -22358,7 +26208,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22405,7 +26255,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 110: Q03, repeat 13 — Scorer 2
+## Item 130: Q03, repeat 13 — Scorer 2
 
 ### Question
 
@@ -22460,7 +26310,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22507,7 +26357,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 111: Q03, repeat 14 — Scorer 1
+## Item 131: Q03, repeat 14 — Scorer 1
 
 ### Question
 
@@ -22564,7 +26414,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22611,7 +26461,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 111: Q03, repeat 14 — Scorer 2
+## Item 131: Q03, repeat 14 — Scorer 2
 
 ### Question
 
@@ -22668,7 +26518,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22715,7 +26565,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 112: Q03, repeat 15 — Scorer 1
+## Item 132: Q03, repeat 15 — Scorer 1
 
 ### Question
 
@@ -22770,7 +26620,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22817,7 +26667,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 112: Q03, repeat 15 — Scorer 2
+## Item 132: Q03, repeat 15 — Scorer 2
 
 ### Question
 
@@ -22872,7 +26722,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22919,7 +26769,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 113: Q03, repeat 16 — Scorer 1
+## Item 133: Q03, repeat 16 — Scorer 1
 
 ### Question
 
@@ -22976,7 +26826,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR applied to the fu
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23023,7 +26873,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 113: Q03, repeat 16 — Scorer 2
+## Item 133: Q03, repeat 16 — Scorer 2
 
 ### Question
 
@@ -23080,7 +26930,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR applied to the fu
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23127,7 +26977,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 114: Q03, repeat 17 — Scorer 1
+## Item 134: Q03, repeat 17 — Scorer 1
 
 ### Question
 
@@ -23184,7 +27034,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23231,7 +27081,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 114: Q03, repeat 17 — Scorer 2
+## Item 134: Q03, repeat 17 — Scorer 2
 
 ### Question
 
@@ -23288,7 +27138,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23335,7 +27185,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 115: Q03, repeat 18 — Scorer 1
+## Item 135: Q03, repeat 18 — Scorer 1
 
 ### Question
 
@@ -23392,7 +27242,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23439,7 +27289,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 115: Q03, repeat 18 — Scorer 2
+## Item 135: Q03, repeat 18 — Scorer 2
 
 ### Question
 
@@ -23496,7 +27346,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23543,109 +27393,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 116: Q03, repeat 19 — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × (18% ÷ 12) = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-**Operand provenance (D7.2(a)):**
-
-- `OPERANDS-GROUNDED`
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 116: Q03, repeat 19 — Scorer 2
+## Item 136: Q03, repeat 19 — Scorer 1
 
 ### Question
 
@@ -23700,7 +27448,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23747,7 +27495,109 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 117: Q03, repeat 20 — Scorer 1
+## Item 136: Q03, repeat 19 — Scorer 2
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, calculated as:
+
+**$2,400 × (18% ÷ 12) = $36.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 137: Q03, repeat 20 — Scorer 1
 
 ### Question
 
@@ -23804,7 +27654,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23851,7 +27701,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 117: Q03, repeat 20 — Scorer 2
+## Item 137: Q03, repeat 20 — Scorer 2
 
 ### Question
 
@@ -23908,7 +27758,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23955,7 +27805,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 118: Q03, repeat 21 — Scorer 1
+## Item 138: Q03, repeat 21 — Scorer 1
 
 ### Question
 
@@ -24012,7 +27862,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24059,7 +27909,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 118: Q03, repeat 21 — Scorer 2
+## Item 138: Q03, repeat 21 — Scorer 2
 
 ### Question
 
@@ -24116,7 +27966,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24163,7 +28013,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 119: Q03, repeat 22 — Scorer 1
+## Item 139: Q03, repeat 22 — Scorer 1
 
 ### Question
 
@@ -24218,7 +28068,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24265,7 +28115,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 119: Q03, repeat 22 — Scorer 2
+## Item 139: Q03, repeat 22 — Scorer 2
 
 ### Question
 
@@ -24320,7 +28170,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24367,7 +28217,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 120: Q03, repeat 23 — Scorer 1
+## Item 140: Q03, repeat 23 — Scorer 1
 
 ### Question
 
@@ -24424,7 +28274,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24471,7 +28321,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 120: Q03, repeat 23 — Scorer 2
+## Item 140: Q03, repeat 23 — Scorer 2
 
 ### Question
 
@@ -24528,7 +28378,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24575,7 +28425,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 121: Q03, repeat 24 — Scorer 1
+## Item 141: Q03, repeat 24 — Scorer 1
 
 ### Question
 
@@ -24632,7 +28482,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24679,7 +28529,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 121: Q03, repeat 24 — Scorer 2
+## Item 141: Q03, repeat 24 — Scorer 2
 
 ### Question
 
@@ -24736,7 +28586,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24783,7 +28633,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 122: Q03, repeat 25 — Scorer 1
+## Item 142: Q03, repeat 25 — Scorer 1
 
 ### Question
 
@@ -24838,7 +28688,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24885,7 +28735,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 122: Q03, repeat 25 — Scorer 2
+## Item 142: Q03, repeat 25 — Scorer 2
 
 ### Question
 
@@ -24940,7 +28790,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24987,7 +28837,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 123: Q03, repeat 26 — Scorer 1
+## Item 143: Q03, repeat 26 — Scorer 1
 
 ### Question
 
@@ -25042,7 +28892,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25089,7 +28939,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 123: Q03, repeat 26 — Scorer 2
+## Item 143: Q03, repeat 26 — Scorer 2
 
 ### Question
 
@@ -25144,7 +28994,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25191,7 +29041,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 124: Q03, repeat 27 — Scorer 1
+## Item 144: Q03, repeat 27 — Scorer 1
 
 ### Question
 
@@ -25248,7 +29098,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25295,7 +29145,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 124: Q03, repeat 27 — Scorer 2
+## Item 144: Q03, repeat 27 — Scorer 2
 
 ### Question
 
@@ -25352,7 +29202,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25399,7 +29249,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 125: Q03, repeat 28 — Scorer 1
+## Item 145: Q03, repeat 28 — Scorer 1
 
 ### Question
 
@@ -25456,7 +29306,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25503,7 +29353,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 125: Q03, repeat 28 — Scorer 2
+## Item 145: Q03, repeat 28 — Scorer 2
 
 ### Question
 
@@ -25560,7 +29410,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25607,7 +29457,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 126: Q03, repeat 29 — Scorer 1
+## Item 146: Q03, repeat 29 — Scorer 1
 
 ### Question
 
@@ -25662,7 +29512,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25709,7 +29559,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 126: Q03, repeat 29 — Scorer 2
+## Item 146: Q03, repeat 29 — Scorer 2
 
 ### Question
 
@@ -25764,7 +29614,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25811,7 +29661,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 127: Q03, repeat 30 — Scorer 1
+## Item 147: Q03, repeat 30 — Scorer 1
 
 ### Question
 
@@ -25868,7 +29718,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25915,7 +29765,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 127: Q03, repeat 30 — Scorer 2
+## Item 147: Q03, repeat 30 — Scorer 2
 
 ### Question
 
@@ -25972,7 +29822,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26019,7 +29869,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 128: Q03, repeat 31 — Scorer 1
+## Item 148: Q03, repeat 31 — Scorer 1
 
 ### Question
 
@@ -26076,7 +29926,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26123,7 +29973,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 128: Q03, repeat 31 — Scorer 2
+## Item 148: Q03, repeat 31 — Scorer 2
 
 ### Question
 
@@ -26180,7 +30030,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26227,7 +30077,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 129: Q03, repeat 33 — Scorer 1
+## Item 149: Q03, repeat 33 — Scorer 1
 
 ### Question
 
@@ -26284,7 +30134,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26331,7 +30181,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 129: Q03, repeat 33 — Scorer 2
+## Item 149: Q03, repeat 33 — Scorer 2
 
 ### Question
 
@@ -26388,7 +30238,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26435,7 +30285,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 130: Q03, repeat 34 — Scorer 1
+## Item 150: Q03, repeat 34 — Scorer 1
 
 ### Question
 
@@ -26490,7 +30340,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26537,7 +30387,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 130: Q03, repeat 34 — Scorer 2
+## Item 150: Q03, repeat 34 — Scorer 2
 
 ### Question
 
@@ -26592,7 +30442,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26639,7 +30489,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 131: Q03, repeat 35 — Scorer 1
+## Item 151: Q03, repeat 35 — Scorer 1
 
 ### Question
 
@@ -26696,7 +30546,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26743,7 +30593,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 131: Q03, repeat 35 — Scorer 2
+## Item 151: Q03, repeat 35 — Scorer 2
 
 ### Question
 
@@ -26800,7 +30650,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26847,7 +30697,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 132: Q03, repeat 36 — Scorer 1
+## Item 152: Q03, repeat 36 — Scorer 1
 
 ### Question
 
@@ -26904,7 +30754,7 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26951,7 +30801,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 132: Q03, repeat 36 — Scorer 2
+## Item 152: Q03, repeat 36 — Scorer 2
 
 ### Question
 
@@ -27008,7 +30858,7 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27055,7 +30905,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 133: Q03, repeat 37 — Scorer 1
+## Item 153: Q03, repeat 37 — Scorer 1
 
 ### Question
 
@@ -27110,7 +30960,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27157,7 +31007,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 133: Q03, repeat 37 — Scorer 2
+## Item 153: Q03, repeat 37 — Scorer 2
 
 ### Question
 
@@ -27212,7 +31062,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27259,7 +31109,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 134: Q03, repeat 38 — Scorer 1
+## Item 154: Q03, repeat 38 — Scorer 1
 
 ### Question
 
@@ -27316,7 +31166,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27363,7 +31213,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 134: Q03, repeat 38 — Scorer 2
+## Item 154: Q03, repeat 38 — Scorer 2
 
 ### Question
 
@@ -27420,7 +31270,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27467,7 +31317,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 135: Q03, repeat 39 — Scorer 1
+## Item 155: Q03, repeat 39 — Scorer 1
 
 ### Question
 
@@ -27524,7 +31374,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ac
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27571,7 +31421,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 135: Q03, repeat 39 — Scorer 2
+## Item 155: Q03, repeat 39 — Scorer 2
 
 ### Question
 
@@ -27628,7 +31478,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ac
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27675,7 +31525,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 136: Q03, repeat 40 — Scorer 1
+## Item 156: Q03, repeat 40 — Scorer 1
 
 ### Question
 
@@ -27732,7 +31582,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27779,7 +31629,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 136: Q03, repeat 40 — Scorer 2
+## Item 156: Q03, repeat 40 — Scorer 2
 
 ### Question
 
@@ -27836,7 +31686,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27883,7 +31733,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 137: Q03, repeat 42 — Scorer 1
+## Item 157: Q03, repeat 42 — Scorer 1
 
 ### Question
 
@@ -27940,7 +31790,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27987,7 +31837,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 137: Q03, repeat 42 — Scorer 2
+## Item 157: Q03, repeat 42 — Scorer 2
 
 ### Question
 
@@ -28044,7 +31894,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28091,7 +31941,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 138: Q03, repeat 45 — Scorer 1
+## Item 158: Q03, repeat 45 — Scorer 1
 
 ### Question
 
@@ -28148,7 +31998,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28195,7 +32045,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 138: Q03, repeat 45 — Scorer 2
+## Item 158: Q03, repeat 45 — Scorer 2
 
 ### Question
 
@@ -28252,7 +32102,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28299,7 +32149,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 139: Q03, repeat 46 — Scorer 1
+## Item 159: Q03, repeat 46 — Scorer 1
 
 ### Question
 
@@ -28354,7 +32204,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28401,7 +32251,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 139: Q03, repeat 46 — Scorer 2
+## Item 159: Q03, repeat 46 — Scorer 2
 
 ### Question
 
@@ -28456,7 +32306,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28503,7 +32353,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 140: Q03, repeat 47 — Scorer 1
+## Item 160: Q03, repeat 47 — Scorer 1
 
 ### Question
 
@@ -28560,7 +32410,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28607,7 +32457,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 140: Q03, repeat 47 — Scorer 2
+## Item 160: Q03, repeat 47 — Scorer 2
 
 ### Question
 
@@ -28664,7 +32514,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28711,7 +32561,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 141: Q03, repeat 48 — Scorer 1
+## Item 161: Q03, repeat 48 — Scorer 1
 
 ### Question
 
@@ -28768,7 +32618,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28815,7 +32665,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 141: Q03, repeat 48 — Scorer 2
+## Item 161: Q03, repeat 48 — Scorer 2
 
 ### Question
 
@@ -28872,7 +32722,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28919,7 +32769,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 142: Q03, repeat 50 — Scorer 1
+## Item 162: Q03, repeat 50 — Scorer 1
 
 ### Question
 
@@ -28974,7 +32824,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29021,7 +32871,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 142: Q03, repeat 50 — Scorer 2
+## Item 162: Q03, repeat 50 — Scorer 2
 
 ### Question
 
@@ -29076,7 +32926,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29123,7 +32973,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 143: Q04, repeat 1 — Scorer 1
+## Item 163: Q04, repeat 1 — Scorer 1
 
 ### Question
 
@@ -29177,7 +33027,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29224,7 +33074,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 143: Q04, repeat 1 — Scorer 2
+## Item 163: Q04, repeat 1 — Scorer 2
 
 ### Question
 
@@ -29278,7 +33128,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29325,7 +33175,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 144: Q04, repeat 4 — Scorer 1
+## Item 164: Q04, repeat 4 — Scorer 1
 
 ### Question
 
@@ -29386,7 +33236,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29433,7 +33283,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 144: Q04, repeat 4 — Scorer 2
+## Item 164: Q04, repeat 4 — Scorer 2
 
 ### Question
 
@@ -29494,7 +33344,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29541,7 +33391,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 145: Q04, repeat 6 — Scorer 1
+## Item 165: Q04, repeat 6 — Scorer 1
 
 ### Question
 
@@ -29602,7 +33452,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29649,7 +33499,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 145: Q04, repeat 6 — Scorer 2
+## Item 165: Q04, repeat 6 — Scorer 2
 
 ### Question
 
@@ -29710,7 +33560,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29757,7 +33607,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 146: Q04, repeat 9 — Scorer 1
+## Item 166: Q04, repeat 9 — Scorer 1
 
 ### Question
 
@@ -29817,7 +33667,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29864,7 +33714,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 146: Q04, repeat 9 — Scorer 2
+## Item 166: Q04, repeat 9 — Scorer 2
 
 ### Question
 
@@ -29924,7 +33774,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29971,7 +33821,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 147: Q04, repeat 30 — Scorer 1
+## Item 167: Q04, repeat 30 — Scorer 1
 
 ### Question
 
@@ -30025,7 +33875,7 @@ The first month’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30072,7 +33922,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 147: Q04, repeat 30 — Scorer 2
+## Item 167: Q04, repeat 30 — Scorer 2
 
 ### Question
 
@@ -30126,7 +33976,7 @@ The first month’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30173,7 +34023,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 148: Q04, repeat 32 — Scorer 1
+## Item 168: Q04, repeat 32 — Scorer 1
 
 ### Question
 
@@ -30227,7 +34077,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30274,7 +34124,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 148: Q04, repeat 32 — Scorer 2
+## Item 168: Q04, repeat 32 — Scorer 2
 
 ### Question
 
@@ -30328,7 +34178,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30375,7 +34225,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 149: Q04, repeat 34 — Scorer 1
+## Item 169: Q04, repeat 34 — Scorer 1
 
 ### Question
 
@@ -30439,7 +34289,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30486,7 +34336,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 149: Q04, repeat 34 — Scorer 2
+## Item 169: Q04, repeat 34 — Scorer 2
 
 ### Question
 
@@ -30550,7 +34400,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30597,7 +34447,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 150: Q04, repeat 42 — Scorer 1
+## Item 170: Q04, repeat 42 — Scorer 1
 
 ### Question
 
@@ -30661,7 +34511,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30708,7 +34558,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 150: Q04, repeat 42 — Scorer 2
+## Item 170: Q04, repeat 42 — Scorer 2
 
 ### Question
 
@@ -30772,7 +34622,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30819,7 +34669,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 151: Q04, repeat 46 — Scorer 1
+## Item 171: Q04, repeat 46 — Scorer 1
 
 ### Question
 
@@ -30873,7 +34723,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30920,7 +34770,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 151: Q04, repeat 46 — Scorer 2
+## Item 171: Q04, repeat 46 — Scorer 2
 
 ### Question
 
@@ -30974,7 +34824,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31021,7 +34871,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 152: Q05, repeat 5 — Scorer 1
+## Item 172: Q05, repeat 5 — Scorer 1
 
 ### Question
 
@@ -31093,7 +34943,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31140,7 +34990,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 152: Q05, repeat 5 — Scorer 2
+## Item 172: Q05, repeat 5 — Scorer 2
 
 ### Question
 
@@ -31212,7 +35062,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31259,7 +35109,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 153: Q05, repeat 9 — Scorer 1
+## Item 173: Q05, repeat 9 — Scorer 1
 
 ### Question
 
@@ -31318,7 +35168,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31365,7 +35215,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 153: Q05, repeat 9 — Scorer 2
+## Item 173: Q05, repeat 9 — Scorer 2
 
 ### Question
 
@@ -31424,7 +35274,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31471,7 +35321,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 154: Q05, repeat 18 — Scorer 1
+## Item 174: Q05, repeat 18 — Scorer 1
 
 ### Question
 
@@ -31530,7 +35380,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31577,7 +35427,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 154: Q05, repeat 18 — Scorer 2
+## Item 174: Q05, repeat 18 — Scorer 2
 
 ### Question
 
@@ -31636,7 +35486,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31683,7 +35533,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 155: Q05, repeat 22 — Scorer 1
+## Item 175: Q05, repeat 22 — Scorer 1
 
 ### Question
 
@@ -31742,7 +35592,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31789,7 +35639,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 155: Q05, repeat 22 — Scorer 2
+## Item 175: Q05, repeat 22 — Scorer 2
 
 ### Question
 
@@ -31848,7 +35698,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31895,7 +35745,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 156: Q05, repeat 28 — Scorer 1
+## Item 176: Q05, repeat 28 — Scorer 1
 
 ### Question
 
@@ -31954,7 +35804,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -32001,7 +35851,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 156: Q05, repeat 28 — Scorer 2
+## Item 176: Q05, repeat 28 — Scorer 2
 
 ### Question
 
@@ -32060,7 +35910,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -32107,7 +35957,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 157: Q05, repeat 29 — Scorer 1
+## Item 177: Q05, repeat 29 — Scorer 1
 
 ### Question
 
@@ -32166,7 +36016,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -32213,7 +36063,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 157: Q05, repeat 29 — Scorer 2
+## Item 177: Q05, repeat 29 — Scorer 2
 
 ### Question
 
@@ -32272,7 +36122,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -32319,7 +36169,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 158: Q05, repeat 30 — Scorer 1
+## Item 178: Q05, repeat 30 — Scorer 1
 
 ### Question
 
@@ -32391,7 +36241,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -32438,7 +36288,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 158: Q05, repeat 30 — Scorer 2
+## Item 178: Q05, repeat 30 — Scorer 2
 
 ### Question
 
@@ -32510,7 +36360,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -32557,7 +36407,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 159: Q05, repeat 36 — Scorer 1
+## Item 179: Q05, repeat 36 — Scorer 1
 
 ### Question
 
@@ -32616,7 +36466,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -32663,7 +36513,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 159: Q05, repeat 36 — Scorer 2
+## Item 179: Q05, repeat 36 — Scorer 2
 
 ### Question
 
@@ -32722,7 +36572,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -32769,7 +36619,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 160: Q05, repeat 40 — Scorer 1
+## Item 180: Q05, repeat 40 — Scorer 1
 
 ### Question
 
@@ -32828,7 +36678,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -32875,7 +36725,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 160: Q05, repeat 40 — Scorer 2
+## Item 180: Q05, repeat 40 — Scorer 2
 
 ### Question
 
@@ -32934,7 +36784,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -32981,7 +36831,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 161: Q05, repeat 44 — Scorer 1
+## Item 181: Q05, repeat 44 — Scorer 1
 
 ### Question
 
@@ -33040,7 +36890,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33087,7 +36937,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 161: Q05, repeat 44 — Scorer 2
+## Item 181: Q05, repeat 44 — Scorer 2
 
 ### Question
 
@@ -33146,7 +36996,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33193,7 +37043,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 162: Q05, repeat 50 — Scorer 1
+## Item 182: Q05, repeat 50 — Scorer 1
 
 ### Question
 
@@ -33252,7 +37102,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33299,7 +37149,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 162: Q05, repeat 50 — Scorer 2
+## Item 182: Q05, repeat 50 — Scorer 2
 
 ### Question
 
@@ -33358,7 +37208,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33405,7 +37255,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 163: Q06, repeat 1 — Scorer 1
+## Item 183: Q06, repeat 1 — Scorer 1
 
 ### Question
 
@@ -33447,7 +37297,7 @@ Since the account earns no interest, the **total annual cost is $144.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33494,7 +37344,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 163: Q06, repeat 1 — Scorer 2
+## Item 183: Q06, repeat 1 — Scorer 2
 
 ### Question
 
@@ -33536,7 +37386,7 @@ Since the account earns no interest, the **total annual cost is $144.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33583,7 +37433,195 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 164: Q06, repeat 3 — Scorer 1
+## Item 184: Q06, repeat 2 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 184: Q06, repeat 2 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 185: Q06, repeat 3 — Scorer 1
 
 ### Question
 
@@ -33632,7 +37670,7 @@ The total annual cost is **$144.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33679,7 +37717,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 164: Q06, repeat 3 — Scorer 2
+## Item 185: Q06, repeat 3 — Scorer 2
 
 ### Question
 
@@ -33728,7 +37766,7 @@ The total annual cost is **$144.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33775,7 +37813,571 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 165: Q06, repeat 13 — Scorer 1
+## Item 186: Q06, repeat 4 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 186: Q06, repeat 4 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 187: Q06, repeat 6 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 187: Q06, repeat 6 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 188: Q06, repeat 11 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 188: Q06, repeat 11 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 189: Q06, repeat 13 — Scorer 1
 
 ### Question
 
@@ -33815,7 +38417,7 @@ Calculation: **$12 monthly fee × 12 months = $144 annually**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33862,7 +38464,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 165: Q06, repeat 13 — Scorer 2
+## Item 189: Q06, repeat 13 — Scorer 2
 
 ### Question
 
@@ -33902,7 +38504,7 @@ Calculation: **$12 monthly fee × 12 months = $144 annually**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33949,7 +38551,195 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 166: Q06, repeat 19 — Scorer 1
+## Item 190: Q06, repeat 17 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 190: Q06, repeat 17 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 191: Q06, repeat 19 — Scorer 1
 
 ### Question
 
@@ -33998,7 +38788,7 @@ Calculation: **$12 monthly fee × 12 months = $144**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34045,7 +38835,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 166: Q06, repeat 19 — Scorer 2
+## Item 191: Q06, repeat 19 — Scorer 2
 
 ### Question
 
@@ -34094,7 +38884,7 @@ Calculation: **$12 monthly fee × 12 months = $144**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34141,7 +38931,383 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 167: Q06, repeat 23 — Scorer 1
+## Item 192: Q06, repeat 20 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 192: Q06, repeat 20 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 193: Q06, repeat 21 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 193: Q06, repeat 21 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 194: Q06, repeat 23 — Scorer 1
 
 ### Question
 
@@ -34190,7 +39356,7 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34237,7 +39403,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 167: Q06, repeat 23 — Scorer 2
+## Item 194: Q06, repeat 23 — Scorer 2
 
 ### Question
 
@@ -34286,7 +39452,7 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34333,7 +39499,195 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 168: Q06, repeat 26 — Scorer 1
+## Item 195: Q06, repeat 24 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 195: Q06, repeat 24 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 196: Q06, repeat 26 — Scorer 1
 
 ### Question
 
@@ -34382,7 +39736,7 @@ The total annual cost is **$144.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34429,7 +39783,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 168: Q06, repeat 26 — Scorer 2
+## Item 196: Q06, repeat 26 — Scorer 2
 
 ### Question
 
@@ -34478,7 +39832,7 @@ The total annual cost is **$144.00**, calculated as:
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34525,7 +39879,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 169: Q06, repeat 27 — Scorer 1
+## Item 197: Q06, repeat 27 — Scorer 1
 
 ### Question
 
@@ -34574,7 +39928,7 @@ The checking account costs **$144 per year** to maintain.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34621,7 +39975,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 169: Q06, repeat 27 — Scorer 2
+## Item 197: Q06, repeat 27 — Scorer 2
 
 ### Question
 
@@ -34670,7 +40024,7 @@ The checking account costs **$144 per year** to maintain.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34717,7 +40071,947 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 170: Q06, repeat 33 — Scorer 1
+## Item 198: Q06, repeat 28 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 198: Q06, repeat 28 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 199: Q06, repeat 29 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 199: Q06, repeat 29 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 200: Q06, repeat 30 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 200: Q06, repeat 30 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 201: Q06, repeat 31 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 201: Q06, repeat 31 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 202: Q06, repeat 32 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 202: Q06, repeat 32 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 203: Q06, repeat 33 — Scorer 1
 
 ### Question
 
@@ -34759,7 +41053,7 @@ Since the account earns no interest, the **total annual cost is $144.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34806,7 +41100,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 170: Q06, repeat 33 — Scorer 2
+## Item 203: Q06, repeat 33 — Scorer 2
 
 ### Question
 
@@ -34848,7 +41142,7 @@ Since the account earns no interest, the **total annual cost is $144.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34895,7 +41189,947 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 171: Q06, repeat 40 — Scorer 1
+## Item 204: Q06, repeat 34 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 204: Q06, repeat 34 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 205: Q06, repeat 35 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 205: Q06, repeat 35 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 206: Q06, repeat 36 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 206: Q06, repeat 36 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 207: Q06, repeat 37 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 207: Q06, repeat 37 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 208: Q06, repeat 38 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 208: Q06, repeat 38 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 209: Q06, repeat 40 — Scorer 1
 
 ### Question
 
@@ -34935,7 +42169,7 @@ Calculation: **$12 monthly fee × 12 months = $144**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34982,7 +42216,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 171: Q06, repeat 40 — Scorer 2
+## Item 209: Q06, repeat 40 — Scorer 2
 
 ### Question
 
@@ -35022,7 +42256,7 @@ Calculation: **$12 monthly fee × 12 months = $144**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35069,7 +42303,195 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 172: Q06, repeat 43 — Scorer 1
+## Item 210: Q06, repeat 42 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 210: Q06, repeat 42 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 211: Q06, repeat 43 — Scorer 1
 
 ### Question
 
@@ -35118,7 +42540,7 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35165,7 +42587,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 172: Q06, repeat 43 — Scorer 2
+## Item 211: Q06, repeat 43 — Scorer 2
 
 ### Question
 
@@ -35214,7 +42636,7 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35261,7 +42683,195 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 173: Q06, repeat 46 — Scorer 1
+## Item 212: Q06, repeat 45 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 212: Q06, repeat 45 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 213: Q06, repeat 46 — Scorer 1
 
 ### Question
 
@@ -35303,7 +42913,7 @@ Since the account earns no interest, the **total annual cost is $144.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35350,7 +42960,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 173: Q06, repeat 46 — Scorer 2
+## Item 213: Q06, repeat 46 — Scorer 2
 
 ### Question
 
@@ -35392,7 +43002,7 @@ Since the account earns no interest, the **total annual cost is $144.00**.
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35439,7 +43049,571 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 174: Q07, repeat 1 — Scorer 1
+## Item 214: Q06, repeat 48 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 214: Q06, repeat 48 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12 * 12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 215: Q06, repeat 49 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 215: Q06, repeat 49 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 216: Q06, repeat 50 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 216: Q06, repeat 50 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost is **$144.00** ($12 monthly fee × 12 months).
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"12*12"}`)
+  → `{"result": "144"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 217: Q07, repeat 1 — Scorer 1
 
 ### Question
 
@@ -35539,7 +43713,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 174: Q07, repeat 1 — Scorer 2
+## Item 217: Q07, repeat 1 — Scorer 2
 
 ### Question
 
@@ -35639,7 +43813,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 175: Q07, repeat 2 — Scorer 1
+## Item 218: Q07, repeat 2 — Scorer 1
 
 ### Question
 
@@ -35740,7 +43914,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 175: Q07, repeat 2 — Scorer 2
+## Item 218: Q07, repeat 2 — Scorer 2
 
 ### Question
 
@@ -35841,7 +44015,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 176: Q07, repeat 3 — Scorer 1
+## Item 219: Q07, repeat 3 — Scorer 1
 
 ### Question
 
@@ -35939,7 +44113,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 176: Q07, repeat 3 — Scorer 2
+## Item 219: Q07, repeat 3 — Scorer 2
 
 ### Question
 
@@ -36037,7 +44211,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 177: Q07, repeat 4 — Scorer 1
+## Item 220: Q07, repeat 4 — Scorer 1
 
 ### Question
 
@@ -36133,7 +44307,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 177: Q07, repeat 4 — Scorer 2
+## Item 220: Q07, repeat 4 — Scorer 2
 
 ### Question
 
@@ -36229,7 +44403,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 178: Q07, repeat 5 — Scorer 1
+## Item 221: Q07, repeat 5 — Scorer 1
 
 ### Question
 
@@ -36327,7 +44501,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 178: Q07, repeat 5 — Scorer 2
+## Item 221: Q07, repeat 5 — Scorer 2
 
 ### Question
 
@@ -36425,7 +44599,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 179: Q07, repeat 7 — Scorer 1
+## Item 222: Q07, repeat 7 — Scorer 1
 
 ### Question
 
@@ -36523,7 +44697,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 179: Q07, repeat 7 — Scorer 2
+## Item 222: Q07, repeat 7 — Scorer 2
 
 ### Question
 
@@ -36621,7 +44795,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 180: Q07, repeat 8 — Scorer 1
+## Item 223: Q07, repeat 8 — Scorer 1
 
 ### Question
 
@@ -36719,7 +44893,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 180: Q07, repeat 8 — Scorer 2
+## Item 223: Q07, repeat 8 — Scorer 2
 
 ### Question
 
@@ -36817,7 +44991,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 181: Q07, repeat 9 — Scorer 1
+## Item 224: Q07, repeat 9 — Scorer 1
 
 ### Question
 
@@ -36915,7 +45089,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 181: Q07, repeat 9 — Scorer 2
+## Item 224: Q07, repeat 9 — Scorer 2
 
 ### Question
 
@@ -37013,7 +45187,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 182: Q07, repeat 10 — Scorer 1
+## Item 225: Q07, repeat 10 — Scorer 1
 
 ### Question
 
@@ -37107,7 +45281,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 182: Q07, repeat 10 — Scorer 2
+## Item 225: Q07, repeat 10 — Scorer 2
 
 ### Question
 
@@ -37201,7 +45375,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 183: Q07, repeat 11 — Scorer 1
+## Item 226: Q07, repeat 11 — Scorer 1
 
 ### Question
 
@@ -37299,7 +45473,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 183: Q07, repeat 11 — Scorer 2
+## Item 226: Q07, repeat 11 — Scorer 2
 
 ### Question
 
@@ -37397,7 +45571,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 184: Q07, repeat 12 — Scorer 1
+## Item 227: Q07, repeat 12 — Scorer 1
 
 ### Question
 
@@ -37495,7 +45669,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 184: Q07, repeat 12 — Scorer 2
+## Item 227: Q07, repeat 12 — Scorer 2
 
 ### Question
 
@@ -37593,7 +45767,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 185: Q07, repeat 13 — Scorer 1
+## Item 228: Q07, repeat 13 — Scorer 1
 
 ### Question
 
@@ -37691,7 +45865,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 185: Q07, repeat 13 — Scorer 2
+## Item 228: Q07, repeat 13 — Scorer 2
 
 ### Question
 
@@ -37789,7 +45963,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 186: Q07, repeat 14 — Scorer 1
+## Item 229: Q07, repeat 14 — Scorer 1
 
 ### Question
 
@@ -37887,7 +46061,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 186: Q07, repeat 14 — Scorer 2
+## Item 229: Q07, repeat 14 — Scorer 2
 
 ### Question
 
@@ -37985,7 +46159,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 187: Q07, repeat 15 — Scorer 1
+## Item 230: Q07, repeat 15 — Scorer 1
 
 ### Question
 
@@ -38083,7 +46257,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 187: Q07, repeat 15 — Scorer 2
+## Item 230: Q07, repeat 15 — Scorer 2
 
 ### Question
 
@@ -38181,7 +46355,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 188: Q07, repeat 16 — Scorer 1
+## Item 231: Q07, repeat 16 — Scorer 1
 
 ### Question
 
@@ -38279,7 +46453,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 188: Q07, repeat 16 — Scorer 2
+## Item 231: Q07, repeat 16 — Scorer 2
 
 ### Question
 
@@ -38377,7 +46551,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 189: Q07, repeat 17 — Scorer 1
+## Item 232: Q07, repeat 17 — Scorer 1
 
 ### Question
 
@@ -38475,7 +46649,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 189: Q07, repeat 17 — Scorer 2
+## Item 232: Q07, repeat 17 — Scorer 2
 
 ### Question
 
@@ -38573,7 +46747,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 190: Q07, repeat 18 — Scorer 1
+## Item 233: Q07, repeat 18 — Scorer 1
 
 ### Question
 
@@ -38671,7 +46845,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 190: Q07, repeat 18 — Scorer 2
+## Item 233: Q07, repeat 18 — Scorer 2
 
 ### Question
 
@@ -38769,7 +46943,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 191: Q07, repeat 19 — Scorer 1
+## Item 234: Q07, repeat 19 — Scorer 1
 
 ### Question
 
@@ -38867,7 +47041,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 191: Q07, repeat 19 — Scorer 2
+## Item 234: Q07, repeat 19 — Scorer 2
 
 ### Question
 
@@ -38965,7 +47139,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 192: Q07, repeat 21 — Scorer 1
+## Item 235: Q07, repeat 21 — Scorer 1
 
 ### Question
 
@@ -39063,7 +47237,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 192: Q07, repeat 21 — Scorer 2
+## Item 235: Q07, repeat 21 — Scorer 2
 
 ### Question
 
@@ -39161,7 +47335,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 193: Q07, repeat 22 — Scorer 1
+## Item 236: Q07, repeat 22 — Scorer 1
 
 ### Question
 
@@ -39259,7 +47433,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 193: Q07, repeat 22 — Scorer 2
+## Item 236: Q07, repeat 22 — Scorer 2
 
 ### Question
 
@@ -39357,7 +47531,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 194: Q07, repeat 23 — Scorer 1
+## Item 237: Q07, repeat 23 — Scorer 1
 
 ### Question
 
@@ -39453,7 +47627,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 194: Q07, repeat 23 — Scorer 2
+## Item 237: Q07, repeat 23 — Scorer 2
 
 ### Question
 
@@ -39549,7 +47723,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 195: Q07, repeat 24 — Scorer 1
+## Item 238: Q07, repeat 24 — Scorer 1
 
 ### Question
 
@@ -39647,7 +47821,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 195: Q07, repeat 24 — Scorer 2
+## Item 238: Q07, repeat 24 — Scorer 2
 
 ### Question
 
@@ -39745,7 +47919,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 196: Q07, repeat 25 — Scorer 1
+## Item 239: Q07, repeat 25 — Scorer 1
 
 ### Question
 
@@ -39843,7 +48017,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 196: Q07, repeat 25 — Scorer 2
+## Item 239: Q07, repeat 25 — Scorer 2
 
 ### Question
 
@@ -39941,7 +48115,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 197: Q07, repeat 26 — Scorer 1
+## Item 240: Q07, repeat 26 — Scorer 1
 
 ### Question
 
@@ -40039,7 +48213,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 197: Q07, repeat 26 — Scorer 2
+## Item 240: Q07, repeat 26 — Scorer 2
 
 ### Question
 
@@ -40137,7 +48311,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 198: Q07, repeat 27 — Scorer 1
+## Item 241: Q07, repeat 27 — Scorer 1
 
 ### Question
 
@@ -40235,7 +48409,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 198: Q07, repeat 27 — Scorer 2
+## Item 241: Q07, repeat 27 — Scorer 2
 
 ### Question
 
@@ -40333,7 +48507,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 199: Q07, repeat 28 — Scorer 1
+## Item 242: Q07, repeat 28 — Scorer 1
 
 ### Question
 
@@ -40431,7 +48605,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 199: Q07, repeat 28 — Scorer 2
+## Item 242: Q07, repeat 28 — Scorer 2
 
 ### Question
 
@@ -40529,7 +48703,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 200: Q07, repeat 29 — Scorer 1
+## Item 243: Q07, repeat 29 — Scorer 1
 
 ### Question
 
@@ -40627,7 +48801,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 200: Q07, repeat 29 — Scorer 2
+## Item 243: Q07, repeat 29 — Scorer 2
 
 ### Question
 
@@ -40725,7 +48899,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 201: Q07, repeat 30 — Scorer 1
+## Item 244: Q07, repeat 30 — Scorer 1
 
 ### Question
 
@@ -40823,7 +48997,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 201: Q07, repeat 30 — Scorer 2
+## Item 244: Q07, repeat 30 — Scorer 2
 
 ### Question
 
@@ -40921,7 +49095,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 202: Q07, repeat 32 — Scorer 1
+## Item 245: Q07, repeat 32 — Scorer 1
 
 ### Question
 
@@ -41019,7 +49193,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 202: Q07, repeat 32 — Scorer 2
+## Item 245: Q07, repeat 32 — Scorer 2
 
 ### Question
 
@@ -41117,7 +49291,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 203: Q07, repeat 33 — Scorer 1
+## Item 246: Q07, repeat 33 — Scorer 1
 
 ### Question
 
@@ -41215,7 +49389,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 203: Q07, repeat 33 — Scorer 2
+## Item 246: Q07, repeat 33 — Scorer 2
 
 ### Question
 
@@ -41313,7 +49487,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 204: Q07, repeat 35 — Scorer 1
+## Item 247: Q07, repeat 35 — Scorer 1
 
 ### Question
 
@@ -41411,7 +49585,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 204: Q07, repeat 35 — Scorer 2
+## Item 247: Q07, repeat 35 — Scorer 2
 
 ### Question
 
@@ -41509,7 +49683,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 205: Q07, repeat 36 — Scorer 1
+## Item 248: Q07, repeat 36 — Scorer 1
 
 ### Question
 
@@ -41603,7 +49777,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 205: Q07, repeat 36 — Scorer 2
+## Item 248: Q07, repeat 36 — Scorer 2
 
 ### Question
 
@@ -41697,7 +49871,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 206: Q07, repeat 37 — Scorer 1
+## Item 249: Q07, repeat 37 — Scorer 1
 
 ### Question
 
@@ -41804,7 +49978,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 206: Q07, repeat 37 — Scorer 2
+## Item 249: Q07, repeat 37 — Scorer 2
 
 ### Question
 
@@ -41911,7 +50085,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 207: Q07, repeat 38 — Scorer 1
+## Item 250: Q07, repeat 38 — Scorer 1
 
 ### Question
 
@@ -42009,7 +50183,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 207: Q07, repeat 38 — Scorer 2
+## Item 250: Q07, repeat 38 — Scorer 2
 
 ### Question
 
@@ -42107,7 +50281,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 208: Q07, repeat 40 — Scorer 1
+## Item 251: Q07, repeat 40 — Scorer 1
 
 ### Question
 
@@ -42205,7 +50379,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 208: Q07, repeat 40 — Scorer 2
+## Item 251: Q07, repeat 40 — Scorer 2
 
 ### Question
 
@@ -42303,7 +50477,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 209: Q07, repeat 41 — Scorer 1
+## Item 252: Q07, repeat 41 — Scorer 1
 
 ### Question
 
@@ -42401,7 +50575,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 209: Q07, repeat 41 — Scorer 2
+## Item 252: Q07, repeat 41 — Scorer 2
 
 ### Question
 
@@ -42499,7 +50673,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 210: Q07, repeat 42 — Scorer 1
+## Item 253: Q07, repeat 42 — Scorer 1
 
 ### Question
 
@@ -42597,7 +50771,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 210: Q07, repeat 42 — Scorer 2
+## Item 253: Q07, repeat 42 — Scorer 2
 
 ### Question
 
@@ -42695,7 +50869,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 211: Q07, repeat 46 — Scorer 1
+## Item 254: Q07, repeat 46 — Scorer 1
 
 ### Question
 
@@ -42793,7 +50967,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 211: Q07, repeat 46 — Scorer 2
+## Item 254: Q07, repeat 46 — Scorer 2
 
 ### Question
 
@@ -42891,7 +51065,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 212: Q07, repeat 48 — Scorer 1
+## Item 255: Q07, repeat 48 — Scorer 1
 
 ### Question
 
@@ -42991,7 +51165,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 212: Q07, repeat 48 — Scorer 2
+## Item 255: Q07, repeat 48 — Scorer 2
 
 ### Question
 
@@ -43091,7 +51265,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 213: Q07, repeat 49 — Scorer 1
+## Item 256: Q07, repeat 49 — Scorer 1
 
 ### Question
 
@@ -43191,7 +51365,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 213: Q07, repeat 49 — Scorer 2
+## Item 256: Q07, repeat 49 — Scorer 2
 
 ### Question
 
@@ -43291,7 +51465,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 214: Q07, repeat 50 — Scorer 1
+## Item 257: Q07, repeat 50 — Scorer 1
 
 ### Question
 
@@ -43389,7 +51563,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 214: Q07, repeat 50 — Scorer 2
+## Item 257: Q07, repeat 50 — Scorer 2
 
 ### Question
 
@@ -43487,7 +51661,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 215: Q08, repeat 1 — Scorer 1
+## Item 258: Q08, repeat 1 — Scorer 1
 
 ### Question
 
@@ -43540,7 +51714,7 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43587,7 +51761,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 215: Q08, repeat 1 — Scorer 2
+## Item 258: Q08, repeat 1 — Scorer 2
 
 ### Question
 
@@ -43640,7 +51814,7 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43687,7 +51861,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 216: Q08, repeat 16 — Scorer 1
+## Item 259: Q08, repeat 16 — Scorer 1
 
 ### Question
 
@@ -43740,7 +51914,7 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43787,7 +51961,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 216: Q08, repeat 16 — Scorer 2
+## Item 259: Q08, repeat 16 — Scorer 2
 
 ### Question
 
@@ -43840,7 +52014,7 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43889,6 +52063,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ---
 
-Total items requiring adjudication: 216
+Total items requiring adjudication: 259
 
-Total sheets: 432 (2 per item, for 2 scorers)
+Total sheets: 518 (2 per item, for 2 scorers)
