@@ -660,3 +660,25 @@ def test_reclassify_session_pairs_results_and_expressions_by_position():
     out = reclassify_session([wo('822.4125'), oc('777.4125')],
                              ['', '42175 * 7.8 / 100 / 4', '822.4125 - 45'])
     assert out[0]['outcome'] == WO
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# Group g1-invocation (fix plan branch 10).
+
+@pytest.mark.finding('S3-G4-5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G4-5: reclassify_session raises on '
+                          'model-controlled expressions')
+@pytest.mark.parametrize('expression', ['True + 1', '-' * 5000 + '1'],
+                         ids=['bool-literal', 'deep-nesting'])
+def test_reclassify_session_unreadable_expression_kept_no_raise(expression):
+    # Correct (S3-G4-5; Steven's ruling on F6, choices-for-marcus #9: a
+    # boolean is not an operand): an expression whose operands cannot be
+    # read gives no operands and no exception; the lone wrong call stays
+    # WRONG-OPERATION.
+    try:
+        out = reclassify_session([wo('45')], [expression])
+    except BaseException as e:   # RecursionError included
+        out = e
+    assert isinstance(out, list), f'{type(out).__name__}: {out}'
+    assert [o['outcome'] for o in out] == [WO]

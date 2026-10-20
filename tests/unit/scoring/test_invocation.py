@@ -297,3 +297,48 @@ def test_compute_dpr_no_removed_observations_reports_full_drop():
     # UNDEFINED like the zero-base case. Today the removed rate is taken
     # as 0 and DPR is reported as 100.0 %, a full drop measured on no data.
     assert compute_dpr(10, 5, 10, 0) == (D(1), '100.0%')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# Group g1-invocation (fix plan branch 1).
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-1: unobservable executions counted in n')
+def test_measure_invocation_unobservable_only_has_no_rate():
+    # Correct (SPEC R2.3 outcomes INVOKED / NOT-INVOKED / UNOBSERVABLE;
+    # R1.3.1: EV-0 is not admissible): unobservable executions are
+    # counted as such and are not observations of the rate, so two of
+    # them give n = 0 and no "0/2 failures" with a bound.
+    summary = measure_invocation([item(None, EV_0),
+                                  item(None, EV_0, item_id='Q02')])
+    summary = summary['per_class'][EV_0]
+    assert summary['unobservable'] == 2
+    assert summary['n'] == 0
+    assert summary['failure_rate'] == 'no observations'
+
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-1: unobservable executions dilute the rate')
+def test_measure_invocation_unobservable_left_out_of_class_rate():
+    # Correct: one failure in one observed execution is 1/1; the
+    # unobservable one beside it is not a success.
+    r = measure_invocation([item(False, EV_2),
+                            item(None, EV_2, item_id='Q02')])
+    assert r['per_class'][EV_2]['failure_rate'] == '1/1 (100.0%)'
+
+
+@pytest.mark.finding('T3-11')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-11: repeats of a question pooled as n')
+def test_measure_invocation_n_counts_questions_not_repeats():
+    # Correct (AP-1 v1.3 D7.1 "proportion of computable questions", D7.5
+    # example "49 items", DISPOSITION_RECORD GH-5 ACCEPTED): repeats of a
+    # question are not independent trials; n is the number of questions,
+    # so three repeats of Q01 and one of Q02 give n = 2 and the bound
+    # 1 - 0.05^(1/2) = 77.6 %, not n = 4 (52.7 %).
+    r = measure_invocation([item(True), item(True), item(True),
+                            item(True, item_id='Q02')])
+    assert r['per_class'][EV_2]['n'] == 2
+    assert r['per_class'][EV_2]['failure_rate'].startswith('0/2 failures')
