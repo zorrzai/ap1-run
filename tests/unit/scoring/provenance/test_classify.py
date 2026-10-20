@@ -408,3 +408,49 @@ def test_sequential_return_of_unobservable_call_originates_dependent_operand():
                                  'OPERAND-ORIGINATED']
     assert results[1]['operand_resolutions'][0]['resolution'] == \
         'computed_in_session_ungrounded'
+
+# Group g1-invocation (fix plan branch 10).
+
+def raw_call(arguments):
+    return {'id': 'c1', 'function': {'name': 'calculator',
+                                     'arguments': arguments},
+            'return_value': result_json('15.2')}
+
+
+@pytest.mark.finding('T3-39', 'F6')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-39/F6: model-controlled expression raises out '
+                          'of provenance')
+@pytest.mark.parametrize('arguments', [
+    '{"expression": 15.2}', '{"expression": "True * 15.2"}',
+    '{"expression": "True + 1"}',
+], ids=['number', 'true-times', 'true-plus'])
+def test_sequential_unreadable_expression_operands_unobservable(arguments):
+    # Correct (T3 review T3-39; Steven's ruling on F6, choices-for-marcus
+    # #9): no exception; the call's operands cannot be read, so its
+    # provenance is OPERANDS-UNOBSERVABLE (SPEC R2.4), not grounded.
+    try:
+        results = classify_invocations_sequential(
+            [raw_call(arguments)], CTX, GT, CONFIG)
+    except Exception as e:
+        results = e
+    assert isinstance(results, list), \
+        f'{type(results).__name__}: {results}'
+    assert [r['outcome'] for r in results] == ['OPERANDS-UNOBSERVABLE']
+
+
+@pytest.mark.finding('S3-G2-4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G2-4: non-object JSON arguments raise '
+                          'AttributeError')
+@pytest.mark.parametrize('arguments', ['["1+1"]', '"1+1"', '15.2'])
+def test_extract_expression_non_object_json_none(arguments):
+    # Correct (S3-G2-4, provenance's copy of engine._extract_calc_
+    # expression): valid JSON that is not an object carries no
+    # expression: None.
+    record = {'function': {'name': 'calculator', 'arguments': arguments}}
+    try:
+        found = _extract_expression(record)
+    except Exception as e:
+        found = e
+    assert found is None

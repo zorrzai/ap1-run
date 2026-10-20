@@ -758,3 +758,23 @@ def test_classify_operation_round_uses_declared_half_up():
     result = classify('round(2.5)', gt={'final': D('3'),
                                         'intermediates': []})
     assert (result['outcome'], result['evaluated_result']) == (OC, '3')
+
+# Group g1-invocation (fix plan branch 10).
+
+@pytest.mark.finding('S3-G4-5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G4-5: reclassify_session raises on '
+                          'model-controlled expressions')
+@pytest.mark.parametrize('expression', ['True + 1', '-' * 5000 + '1'],
+                         ids=['bool-literal', 'deep-nesting'])
+def test_reclassify_session_unreadable_expression_kept_no_raise(expression):
+    # Correct (S3-G4-5; Steven's ruling on F6, choices-for-marcus #9: a
+    # boolean is not an operand): an expression whose operands cannot be
+    # read gives no operands and no exception; the lone wrong call stays
+    # WRONG-OPERATION.
+    try:
+        out = reclassify_session([wo('45')], [expression])
+    except BaseException as e:   # RecursionError included
+        out = e
+    assert isinstance(out, list), f'{type(out).__name__}: {out}'
+    assert [o['outcome'] for o in out] == [WO]

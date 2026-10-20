@@ -694,3 +694,26 @@ def test_score_execution_no_released_figure_recorded_as_null(fakes, tpath):
                      'tool_calls': []}, tpath)
     assert transcript.read_all(tpath)[-1]['released_figure'] is None
     assert findings.all_results[0]['released_figure'] is None
+
+# Group g1-invocation (fix plan branch 10).
+
+@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-65/F4: engine UNMEASURED results never reach '
+                          'unmeasured_cells')
+@pytest.mark.parametrize('error, word', [
+    ('rate limited (HTTP 429): {"error": "Rate limit"}', 'rate'),
+    ('transport failure after 3 attempts: reset', 'transport'),
+], ids=['rate-limited', 'transport'])
+def test_record_not_scored_unmeasured_listed_with_cause(error, word):
+    # Correct (Steven's ruling on F4, choices-for-marcus #7): the engine
+    # returns UNMEASURED for a failed round-0 request; the runner lists
+    # that cell among the unmeasured cells, with its cause, as well as in
+    # all_results.
+    findings = Findings()
+    record_not_scored(findings, 'Q03', 'base', 1, 'UNMEASURED',
+                      {'status': 'UNMEASURED', 'error': error})
+    assert [(c['item_id'], c['condition'], c['repeat'])
+            for c in findings.unmeasured_cells] == [('Q03', 'base', 1)]
+    assert word in findings.unmeasured_cells[0]['cause'].lower()
+    assert [r['status'] for r in findings.all_results] == ['UNMEASURED']

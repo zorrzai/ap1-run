@@ -305,3 +305,59 @@ def test_run_report_section_3h2_heading_starts_after_a_blank_line(capsys):
     assert '\\n' not in out
     assert '    failure rate: no observations\n\n3h2. D7.3 TRANSCRIPTION:\n' \
         in out
+
+# Group g1-invocation (fix plan branches 1 and 10).
+
+import pytest  # noqa: E402  (the step-3 tests above need no marks)
+
+
+def section(out, label):
+    start = out.index(f'\n{label}. ')
+    end = out.find('\n\n3', start + 1)
+    return out[start:end if end > 0 else None]
+
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-1: EV-0 executions counted in console 3h n')
+def test_run_report_3h_ev0_execution_not_in_rate(capsys):
+    # Correct (SPEC R2.3, R1.3.1): the EV-0 execution (outcome None) is
+    # not an observation of the rate; base is 0 failures in 1, not in 2.
+    out = run_report(capsys, [
+        executed('Q01', 'base', 1, 'AUTO-MATCH', invocation_outcome='INVOKED',
+                 evidence_class='EV-2 PLATFORM-STRUCTURAL'),
+        executed('Q02', 'base', 1, 'AUTO-MATCH', invocation_outcome=None,
+                 evidence_class='EV-0 UNOBSERVABLE')])
+    text = section(out, '3h')
+    assert 'n=2' not in text and '0/2' not in text, text
+    assert '0/1 failures' in text, text
+
+
+@pytest.mark.finding('T3-11')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-11: console 3h pools repeats as n')
+def test_run_report_3h_rate_counts_questions_not_repeats(capsys):
+    # Correct (AP-1 v1.3 D7.1, GH-5): three repeats of one question are
+    # one question: "0/1 failures", not "0/3".
+    out = run_report(capsys, [
+        executed('Q01', 'base', rep, 'AUTO-MATCH',
+                 invocation_outcome='INVOKED') for rep in (1, 2, 3)])
+    text = section(out, '3h')
+    assert '0/1 failures' in text, text
+
+
+@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-65/F4: console 3g prints only a count')
+def test_run_report_3g_lists_each_unmeasured_cell_with_cause(capsys):
+    # Correct (Steven's ruling on F4, choices-for-marcus #7): section 3g
+    # names each unmeasured cell with its cause.
+    cells = [{'item_id': 'Q03', 'condition': 'base', 'repeat': 1,
+              'cause': 'rate limited (HTTP 429)'},
+             {'item_id': 'Q05', 'condition': 'base', 'repeat': 2,
+              'cause': 'transport failure after 3 attempts'}]
+    out = run_report(capsys, [], unmeasured_cells=cells)
+    text = section(out, '3g')
+    assert 'UNMEASURED CELLS: 2' in text
+    for cell in cells:
+        assert cell['item_id'] in text and cell['cause'] in text, text

@@ -310,3 +310,22 @@ def test_transcription_exact_match_is_flagged_not_rounded():
                             figure_outcome=AUTO_MATCH, quantisation_digits=2)
     assert r['outcome'] == TRANSCRIBED_EXACT
     assert r.get('rounded_under_declared_policy') is False
+
+# Group g1-invocation (fix plan branch 10).
+
+@pytest.mark.finding('T3-39')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-39: quantising an infinite or huge return '
+                          'raises InvalidOperation')
+@pytest.mark.parametrize('value', ['Infinity', '1e+60'])
+def test_transcription_unquantisable_return_altered_or_unobservable(value):
+    # Correct (T3 review T3-39, the step-3 pin's own comment): a tool
+    # return that cannot be quantised is UNOBSERVABLE (or ALTERED), never
+    # an exception.
+    try:
+        r = check_transcription(D(value), D('430.75'),
+                                figure_outcome=AUTO_MATCH,
+                                quantisation_digits=2)
+    except Exception as e:
+        r = {'outcome': e}
+    assert r['outcome'] in (UNOBSERVABLE_TRANSCRIPTION, TRANSCRIBED_ALTERED), r

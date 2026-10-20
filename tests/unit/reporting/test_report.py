@@ -1716,3 +1716,19 @@ def test_d73_reports_count_of_exact_rounded_under_declared_policy():
              if re.search(r'rounded under (the )?declared '
                           r'(quantisation )?policy', ln, re.I)]
     assert any(re.search(r'\b2\b', ln) for ln in lines), lines
+
+# Group g1-invocation (fix plan branch 1).
+
+@pytest.mark.finding('V12-5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='V12-5: §5 prints no invocation percentage')
+def test_clopper_pearson_section_rate_as_percentage_with_k_n_and_bound():
+    # Correct (AP-1 §6.2 "invoked on [X]% of computable questions"; fix
+    # plan row 1): the figure is printed as a percentage, with k/n and
+    # the bound beside it (never "100%" alone, SPEC R2.3).
+    text = report._section_clopper_pearson({'invocation_figures': {
+        'd7_invocation_base': {'failures': 0, 'n': 10, 'rate': '10/10'}}})
+    rows = [line for line in text.splitlines() if '10/10' in line]
+    assert rows, text
+    assert re.search(r'\b100(\.0+)?\s?%', rows[0]), rows[0]
+    assert re.search(r'25\.8[89]|25\.9', rows[0]), rows[0]

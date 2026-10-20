@@ -310,3 +310,21 @@ def test_release_coverage_no_tool_returns_names_no_ungoverned_figures():
     r = check_release_coverage([], [D('430.75'), D('430.75')], D('430.75'))
     assert r['outcome'] == COVERAGE_UNOBSERVABLE
     assert r['ungoverned_figures'] == []
+
+# Group g1-invocation (fix plan branch 10).
+
+@pytest.mark.finding('T3-39')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-39: an unquantisable tool return raises '
+                          'InvalidOperation')
+@pytest.mark.parametrize('result', ['inf', 'Infinity', '1e+60'])
+def test_release_coverage_unquantisable_return_governs_nothing(result):
+    # Correct (T3 review T3-39): a tool return that cannot be quantised
+    # (the calculator gives 'inf' for 1e308*10) governs no released
+    # figure, and the check never raises.
+    try:
+        r = check_release_coverage([call(result)], [D('430.75')],
+                                   D('430.75'))
+    except Exception as e:
+        r = {'outcome': e}
+    assert r['outcome'] in (PARTIALLY_GOVERNED, COVERAGE_UNOBSERVABLE), r

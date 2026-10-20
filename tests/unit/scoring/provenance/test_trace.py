@@ -500,3 +500,33 @@ def test_resolve_step4_grounded_matching_prior_return_grounds_in_any_order():
         outcomes[order] = (r['step'], r['resolution'])
     assert outcomes == {'ungrounded_first': (4, 'computed_in_session'),
                         'grounded_first': (4, 'computed_in_session')}
+
+# Group g1-invocation (fix plan branch 10).
+
+def extract_without_raising(expression):
+    try:
+        return extract_operands(expression), None
+    except Exception as e:
+        return None, e
+
+
+@pytest.mark.finding('F6')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='F6: a boolean literal in the expression raises')
+def test_extract_operands_boolean_literal_not_an_operand_no_raise():
+    # Correct (Steven's ruling on F6, choices-for-marcus #9): "True + 1"
+    # in a model's expression never raises; a boolean is not a numeric
+    # operand, so it is never returned as one.
+    operands, error = extract_without_raising('True + 1')
+    assert error is None, f'{type(error).__name__}: {error}'
+    assert 'True' not in [literal for _, literal in operands]
+
+
+@pytest.mark.finding('T3-39')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-39: a non-string expression raises TypeError')
+def test_extract_operands_non_string_expression_no_raise():
+    # Correct (T3 review T3-39): {"expression": 15.2} is model-controlled;
+    # extracting operands from a value that is not a string never raises.
+    _, error = extract_without_raising(15.2)
+    assert error is None, f'{type(error).__name__}: {error}'

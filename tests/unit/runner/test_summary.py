@@ -496,3 +496,69 @@ def test_summary_wrong_operation_in_no_figure_execution_not_item_wrong():
                         operation_correctness=[{'outcome': 'WRONG-OPERATION'}])]
     s = build_summary(results, [])
     assert s['wrong_operation_split']['item_wrong'] == 0
+
+# Group g1-invocation (fix plan branch 1).
+
+@pytest.mark.finding('T3-38')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-38: NOT-INVOKED with a call to an unoffered '
+                          'tool is treated as FATAL')
+def test_consistency_not_invoked_with_call_to_other_tool_accepted():
+    # Correct (SPEC R0.3: calls not matching the declared required
+    # operation are recorded and reported but do not affect D7.1; R2.3:
+    # NOT-INVOKED is legitimate): the row score_execution builds for an
+    # execution whose one call was to "python" passes the check. The
+    # invariant to keep is about calls to the required operation; if the
+    # fix adds a field for that to the row, add it here too.
+    try:
+        verify_invocation_consistency([executed(
+            invocation_outcome='NOT-INVOKED', tool_calls_count=1,
+            evidence_class='EV-2 PLATFORM-STRUCTURAL')])
+    except RuntimeError as e:
+        raise AssertionError(f'raised: {e}') from e
+
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-1: EV-0 executions counted as INVOKED in D7.1')
+def test_summary_d71_ev0_execution_not_counted():
+    # Correct (SPEC R2.3, R1.3.1; AP-1 v1.3 D7.7): an EV-0 execution
+    # (outcome None, UNOBSERVABLE) is neither a success nor a failure, so
+    # the base D7.1 figure rests on the one observed execution: n = 1.
+    s = build_summary([
+        executed('Q01', evidence_class='EV-2 PLATFORM-STRUCTURAL',
+                 invocation_outcome='INVOKED'),
+        executed('Q02', evidence_class='EV-0 UNOBSERVABLE',
+                 invocation_outcome=None),
+    ], [])
+    base = s['invocation_figures']['d7_invocation_base']
+    assert (base['failures'], base['n']) == (0, 1)
+
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-1: an all-EV-0 condition prints n/n')
+def test_summary_d71_all_ev0_has_no_observations():
+    # Correct: a condition with only EV-0 executions has no D7.1
+    # observations, so no figure with n > 0 (which §5 would print as
+    # "n/n" with a bound).
+    s = build_summary([
+        executed(q, evidence_class='EV-0 UNOBSERVABLE',
+                 invocation_outcome=None) for q in ('Q01', 'Q02')], [])
+    figures = s['invocation_figures']
+    assert all(f['n'] == 0 for f in figures.values()), figures
+
+
+@pytest.mark.finding('T3-11')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-11: D7.1 n pools repeats')
+def test_summary_d71_n_counts_questions_not_repeats():
+    # Correct (AP-1 v1.3 D7.1 "proportion of computable questions",
+    # DISPOSITION_RECORD GH-5 ACCEPTED, T3 review T3-11): three repeats
+    # of two questions, all invoked, are n = 2 questions, not 6.
+    s = build_summary([
+        executed(q, repeat=rep, evidence_class='EV-2 PLATFORM-STRUCTURAL',
+                 invocation_outcome='INVOKED')
+        for q in ('Q01', 'Q02') for rep in (1, 2, 3)], [])
+    base = s['invocation_figures']['d7_invocation_base']
+    assert (base['failures'], base['n']) == (0, 2)
