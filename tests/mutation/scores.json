@@ -47,10 +47,10 @@
     "score": 0.9639
   },
   "foundation/config": {
-    "killed": 215,
-    "mutants": 223,
+    "killed": 226,
+    "mutants": 234,
     "notes": "All 8 survivors are equivalent. Four change how config.json is opened: 'UTF-8' is the same codec, no 'r' is the default mode, and encoding None or no encoding means the locale's, which is UTF-8 on macOS and Linux (the tests load a non-ASCII config; on Windows these would be killed). Four change the .get() default for 'sampling' and 'quantisation' ({} to None or no default): both are required fields, checked present just before, so the default is never used.",
-    "score": 0.9641
+    "score": 0.9658
   },
   "foundation/numeric": {
     "killed": 432,
