@@ -17,10 +17,10 @@
     "score": 0.9643
   },
   "execution/perturbation_guard": {
-    "killed": 149,
-    "mutants": 181,
-    "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is only ever returned empty. _summarise itself is tested directly. (The T3-46 fix: identical prompts now raise, and the identical-prompt diff entry is gone; its 14 mutants were all killed, so removing them lowered the score from 163/195 = 0.8359 to 149/181 = 0.8232 with the same 32 survivors.)",
-    "score": 0.8232
+    "killed": 178,
+    "mutants": 210,
+    "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is returned only when it holds nothing but the identical-prompt entry (S3-G3-4). _summarise itself is tested directly.",
+    "score": 0.8476
   },
   "execution/seal": {
     "killed": 397,

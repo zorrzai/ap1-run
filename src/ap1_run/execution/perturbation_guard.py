@@ -25,12 +25,18 @@ HELD_CONSTANT = ('tool declarations', 'tool_choice', 'sampling parameters',
                  'fixture content', 'message structure template')
 
 
+# The fields compared one by one below; any other field is compared too.
+_NAMED_FIELDS = frozenset({'system_prompt', 'tools', 'tool_choice',
+                           'sampling', 'fixture_hash', 'message_template'})
+
+
 def check_single_variable_perturbation(base_config, removed_config):
     """Verify instruction_removed differs from base in exactly
     one quantity: the system prompt.
 
     Compares: system_prompt, tools, tool_choice, sampling parameters,
-    fixture content, message structure template.
+    fixture content, message structure template, and any other field
+    either condition has (a model, an endpoint).
 
     Returns: list of differences found (always empty: any difference
              raises).
@@ -90,6 +96,17 @@ def check_single_variable_perturbation(base_config, removed_config):
             'field': 'message_template',
             'issue': 'message structure template differs',
         })
+
+    # Every other request field (the model, the endpoint, ...) MUST NOT
+    # differ either: AP-1 D7.8 holds all other request content constant.
+    for field in sorted((set(base_config) | set(removed_config))
+                        - _NAMED_FIELDS):
+        if _canonical(base_config.get(field)) != \
+                _canonical(removed_config.get(field)):
+            diffs.append({
+                'field': field,
+                'issue': f'{field} differs between conditions',
+            })
 
     changed = ''.join(f'\n  - {d["field"]}: {d["issue"]}' for d in diffs)
     if prompt_unchanged:
