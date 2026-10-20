@@ -79,6 +79,11 @@ def execute_item(item, *, condition, config, fixture,
     sampling = config.get('sampling', {})
     tools_offered = tools is not None and len(tools) > 0
 
+    # Every round's request as sent and raw response, in order
+    # (SPEC R0.2, AP-1 §5.6); a round whose request failed has its
+    # messages and the error instead of a response.
+    rounds = []
+
     # Send to endpoint via adapter
     try:
         response, request_record = adapter_send(
@@ -87,6 +92,7 @@ def execute_item(item, *, condition, config, fixture,
             model=config.get('model'),
         )
     except Exception as e:
+        rounds.append(_failed_round(0, messages, e))
         transcript.append(
             transcript_path,
             item_id=item_id, arm_id=condition,
@@ -96,6 +102,7 @@ def execute_item(item, *, condition, config, fixture,
             evidence_class=EV_0,
             error_state=f'TRANSPORT_FAILURE: {e}',
             seal_hash=seal_hash, repeat=repeat,
+            rounds=rounds,
         )
         # F4/T3-65: the runner lists the cell with its cause
         return {
@@ -106,11 +113,14 @@ def execute_item(item, *, condition, config, fixture,
             'ground_truth': gt,
         }
 
+    rounds.append({'round': 0, 'request': request_record,
+                   'response': response})
+
     # Drive tool loop
     tool_calls_record, final_response, round_shapes = _drive_tool_loop(
         response=response, messages=messages, config=config,
         tools=tools, adapter_send=adapter_send,
-        sampling=sampling,
+        sampling=sampling, rounds=rounds,
     )
 
     # A provider refusal or content-filter stop is EXECUTED, never an
@@ -133,7 +143,7 @@ def execute_item(item, *, condition, config, fixture,
                           'request_record': request_record},
             response_received=final_response, tool_calls=[],
             evidence_class=None, error_state='UNMEASURED: empty response',
-            seal_hash=seal_hash, repeat=repeat,
+            seal_hash=seal_hash, repeat=repeat, rounds=rounds,
         )
         return {
             'item_id': item_id, 'condition': condition,
@@ -211,6 +221,7 @@ def execute_item(item, *, condition, config, fixture,
         operation_correctness=op_correctness_results,
         provenance_results=provenance_results,
         **refusal_record,
+        rounds=rounds,
     )
 
     result = {
@@ -268,12 +279,17 @@ def refusal_of(response):
 # -- Tool loop -------------------------------------------------------
 
 def _drive_tool_loop(*, response, messages, config, tools,
-                     adapter_send, sampling, max_turns=MAX_TOOL_TURNS):
+                     adapter_send, sampling, max_turns=MAX_TOOL_TURNS,
+                     rounds=None):
     """Drive the tool-call cycle.
 
     Returns (tool_calls, final_response, round_shapes).
     round_shapes: list of (shape_recognised, reason) per round.
+    rounds, if given, receives each later round's request as sent and
+    raw response (or, if the request failed, its messages and the error).
     """
+    if rounds is None:
+        rounds = []
     all_tool_calls = []
     round_shapes = []
     current = response
@@ -315,20 +331,23 @@ def _drive_tool_loop(*, response, messages, config, tools,
             record['return_value'] = result
 
         try:
-            current, _ = adapter_send(
+            current, request_record = adapter_send(
                 config['endpoint_url'], messages=messages,
                 tools=tools, sampling=sampling,
                 model=config.get('model'),
             )
-            # Check shape of this round's response
-            _record_shape(current, round_shapes)
         except Exception as exc:
             # D7.9 normative: any round that fails to complete is
             # recorded as unrecognised. The evidence class is EV-0,
             # never a definitive invocation finding.
+            rounds.append(_failed_round(turn, messages, exc))
             round_shapes.append(
                 (False, f'adapter_send failed on turn {turn}: {exc}'))
             break
+        rounds.append({'round': turn, 'request': request_record,
+                       'response': current})
+        # Check shape of this round's response
+        _record_shape(current, round_shapes)
 
     return all_tool_calls, current, round_shapes
 
@@ -347,6 +366,13 @@ def _loop_exhaustion(final_response, round_shapes):
     return (f'TOOL_LOOP_EXHAUSTED: the response after {MAX_TOOL_TURNS} '
             f'tool turns still asked for {len(pending)} tool call(s), '
             f'which were not executed')
+
+
+def _failed_round(number, messages, error):
+    """The transcript entry of a round whose request failed: the messages
+    it sent (a copy) and the error, in place of a response."""
+    return {'round': number, 'request': {'messages': copy.deepcopy(messages)},
+            'error': str(error)}
 
 
 def _execute_tool(name, arguments_json):
