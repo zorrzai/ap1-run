@@ -604,7 +604,9 @@ def test_r41_requested_temperature_ignored_is_a_d2_platform_finding(ap1_run):
 @pytest.mark.finding('T3-30')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-30: report.md has no §2.5 statement of the '
-                          'links cleared and not cleared')
+                          'links cleared and not cleared; blocked: what '
+                          'clears each link (a)-(e) needs a ruling (step-5 '
+                          'spec-conformance-claims report)')
 @pytest.mark.req('AP-1 §2.5')
 def test_report_states_which_defeat_condition_links_were_cleared(ap1_run):
     # AP-1 v1.3 §2.5 (l.146): "A refutation must clear (a) through (e).
