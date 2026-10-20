@@ -673,3 +673,158 @@ def test_perturbation_check_passes_example_module(example):
 
 def test_source_fields_check_passes_example_module(example):
     assert source_fields_check(*example) == []
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# Group g3-seal-guards. Each test asserts the correct behaviour and is
+# xfail(strict) until the fix; see inbox/2026-10-20_step4-g3-seal-guards-report.md.
+
+def refusal_of(check, *args, **kwargs):
+    """The SealError message of a guard, or None if the guard passed.
+    (Not pytest.raises: its DID NOT RAISE is not an AssertionError, and
+    these tests must fail at their assertion.)"""
+    try:
+        check(*args, **kwargs)
+    except SealError as exc:
+        return str(exc)
+    return None
+
+
+@pytest.mark.finding('T3-7')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-7: perturbation_check passes a constant module '
+                          'whose declaration perturbs nothing')
+@pytest.mark.parametrize('declared', [
+    None, [], ['nope.balance'], ['acct.nope'], ['balance'], ['acct.kind']],
+    ids=['missing-key', 'none', 'unknown-account', 'unknown-field', 'no-dot',
+         'non-numeric'])
+def test_perturbation_check_vacuous_declaration_refused(declared):
+    # Correct (SPEC R3.1, l.686-694: "A constant-returning module is
+    # refused, perturbation named"): a derivable item whose declaration
+    # gives the check nothing to perturb (no fields, an account or field
+    # not in the delivered context, a spec with no dot, a non-numeric
+    # field) cannot be shown to compute its answer, so it is refused, and
+    # the refusal names the declaration it could not perturb. Today every
+    # one of these is skipped with a silent `continue` and the module
+    # returning Decimal('42') passes.
+    def compute(item_id, ctx):
+        out = {'final': Decimal('42'), 'derivable': True}
+        if declared is not None:
+            out['source_fields_consumed'] = list(declared)
+        return out
+    msg = refusal_of(perturbation_check, module(compute), FIXTURE,
+                     questions('Q01'))
+    assert msg is not None, 'constant module passed perturbation_check'
+    for spec in declared or []:
+        assert spec in msg
+
+
+@pytest.mark.finding('T3-7')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-7: an item whose final is None is skipped '
+                          'although it is declared derivable')
+def test_perturbation_check_final_none_on_derivable_item_refused():
+    # Correct: only an item declared non-derivable may be exempt (SPEC
+    # R1.2 "item selection"; R3.1). A derivable item with no final value
+    # has no expected value to score against, so the module is refused,
+    # naming the item. Today `if baseline_final is None: continue`.
+    def compute(item_id, ctx):
+        return {'final': None, 'derivable': True,
+                'source_fields_consumed': ['acct.balance']}
+    msg = refusal_of(perturbation_check, module(compute), FIXTURE,
+                     questions('Q01'))
+    assert msg is not None, 'final None on a derivable item passed'
+    assert 'Q01' in msg
+
+
+@pytest.mark.finding('T3-8')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-8: source_fields_check tracks subscript reads '
+                          'only')
+@pytest.mark.parametrize('read', [
+    lambda acct: acct.get('rate'),
+    lambda acct: [v for k, v in acct.items() if k == 'rate'],
+    lambda acct: list(acct.values()),
+    lambda acct: acct.copy()['rate'],
+    lambda acct: dict(acct)['rate'],
+    lambda acct: {**acct}['rate'],
+], ids=['get', 'items', 'values', 'copy', 'dict', 'unpack'])
+def test_source_fields_check_undeclared_read_by_any_path_refused_naming_field(
+        read):
+    # Correct (source_fields_check's own contract, R3.1: "A module reading
+    # a field NOT in source_fields_consumed is refused, with the field
+    # named"): every path that hands the module a field's value counts as
+    # a read. The module declares acct.balance and also reads acct.rate,
+    # through a path other than a subscript. Today only __getitem__ is
+    # tracked and the check returns [].
+    def compute(item_id, ctx):
+        acct = ctx['acct']
+        acct['balance']
+        read(acct)
+        return {'final': Decimal('1'),
+                'source_fields_consumed': ['acct.balance']}
+    msg = refusal_of(source_fields_check, module(compute), FIXTURE,
+                     questions('Q01'))
+    assert msg is not None, 'undeclared read of acct.rate passed'
+    assert 'acct.rate' in msg
+
+
+@pytest.mark.finding('S3-G3-3')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G3-3: source_fields_check drops the exception '
+                          'and reports "accessed []"')
+def test_source_fields_check_compute_raising_refused_naming_the_error():
+    # Correct: the refusal says what went wrong. A compute that raises is
+    # refused (fail closed, as today) with the exception named, not as a
+    # module that "reads undeclared fields ... accessed []". The reason is
+    # built in the failure dict today and then dropped.
+    def compute(item_id, ctx):
+        raise ZeroDivisionError('boom')
+    msg = refusal_of(source_fields_check, module(compute), FIXTURE,
+                     questions('Q01'))
+    assert msg is not None
+    assert 'ZeroDivisionError' in msg and 'boom' in msg
+    assert 'reads undeclared fields' not in msg
+
+
+@pytest.mark.finding('S3-G3-3')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G3-3: perturbation_check drops the exception '
+                          'and calls the module constant-returning')
+@pytest.mark.parametrize('when', ['baseline', 'perturbed'])
+def test_perturbation_check_compute_raising_refused_naming_the_error(when):
+    # Correct: a compute that raises (on the baseline or on the perturbed
+    # context) is refused with the exception named. Today the refusal says
+    # "constant-returning module detected. Fields that had no effect:
+    # (baseline)" or names the field, and the exception text is dropped.
+    def compute(item_id, ctx):
+        if when == 'baseline' or ctx['acct']['balance'] != '100':
+            raise KeyError('missing-input')
+        return {'final': Decimal(ctx['acct']['balance']),
+                'source_fields_consumed': ['acct.balance']}
+    msg = refusal_of(perturbation_check, module(compute), FIXTURE,
+                     questions('Q01'))
+    assert msg is not None
+    assert 'KeyError' in msg and 'missing-input' in msg
+
+
+@pytest.mark.finding('S3-G3-3')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G3-3: the refusal names the field but not the '
+                          'perturbation applied or the item')
+def test_perturbation_check_constant_module_refusal_names_the_perturbation():
+    # Correct (SPEC R3.1, l.688-694: refused "with the perturbation
+    # named"): the refusal says which item, which field and what was done
+    # to it (the factor). Today the failure dict's reason ("output
+    # unchanged when acct.balance perturbed by factor 1.1") is dropped and
+    # the message names the field only.
+    msg = refusal_of(perturbation_check, module(constant(['acct.balance'])),
+                     FIXTURE, questions('Q01'))
+    assert msg is not None
+    assert 'Q01' in msg and 'acct.balance' in msg and '1.1' in msg

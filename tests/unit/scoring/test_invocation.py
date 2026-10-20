@@ -315,3 +315,19 @@ def test_format_rate_displayed_bound_is_never_below_the_exact_bound(n):
     text = format_rate(0, n)
     shown = D(re.search(r'failure rate (\d+(?:\.\d+)?)%', text).group(1))
     assert shown >= _exact_upper_bound(n) * 100, text
+
+# Group g3-seal-guards; see inbox/2026-10-20_step4-g3-seal-guards-report.md.
+
+@pytest.mark.finding('S3-G4-1')
+@pytest.mark.req('R2.3', 'AP-1 D7.8')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G4-1: no removed-arm observations taken as a '
+                          'removed rate of 0, DPR 100.0%')
+def test_compute_dpr_no_removed_observations_undefined():
+    # Correct: DPR = (I_base - I_removed) / I_base needs both rates (SPEC
+    # R2.3 l.546-547). With no observations in the removed arm, I_removed
+    # is unknown, so DPR is UNDEFINED like the zero-base case, never a
+    # full drop. Today the removed rate is taken as 0: (D(1), '100.0%').
+    value, text = compute_dpr(10, 5, 10, 0)
+    assert value is None
+    assert text.startswith('UNDEFINED')
