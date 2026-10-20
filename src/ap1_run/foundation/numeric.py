@@ -367,13 +367,18 @@ def quantise(value, places, rounding='ROUND_HALF_UP'):
 # -- R0.4.3 Canonical hashing ----------------------------------------
 
 def _check_no_float(obj, path='$'):
-    """Refuse any float in the data structure. R0.4.1 enforcement."""
+    """Refuse any float in the data structure, as a value or as a dict
+    key (T3-71). R0.4.1 enforcement."""
     if isinstance(obj, float):
         raise TypeError(
             f'float at {path}: {obj!r} -- R0.4.1 prohibits float '
             f'on comparison paths')
     if isinstance(obj, dict):
         for k, v in obj.items():
+            if isinstance(k, float):
+                raise TypeError(
+                    f'float key at {path}: {k!r} -- R0.4.1 prohibits '
+                    f'float on comparison paths')
             _check_no_float(v, f'{path}.{k}')
     elif isinstance(obj, (list, tuple)):
         for i, v in enumerate(obj):

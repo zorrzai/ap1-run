@@ -711,8 +711,17 @@ def test_check_no_float_paths_name_keys_and_indexes():
         _check_no_float([1, (3.5,)])
 
 
+@pytest.mark.finding('T3-71')
+def test_check_no_float_float_key_refused_with_path():
+    with pytest.raises(TypeError) as e:
+        _check_no_float({'a': {1.5: 'x'}})
+    assert str(e.value) == ('float key at $.a: 1.5 -- R0.4.1 prohibits '
+                            'float on comparison paths')
+
+
 def test_check_no_float_accepts_other_types():
     assert _check_no_float({'a': [1, True, None, 'x', D('1.5')]}) is None
+    assert _check_no_float({1: 'a', True: 'b', D('1.5'): 'c'}) is None
 
 
 # -- canonical_json and canonical_hash ------------------------------------
@@ -806,13 +815,6 @@ def test_canonical_hash_decimal_and_string_collide():
 @pytest.mark.finding('T3-71')
 def test_canonical_hash_tuple_and_list_collide():
     assert canonical_hash({'x': (1, 2)}) == canonical_hash({'x': [1, 2]})
-
-
-@pytest.mark.finding('T3-71')
-def test_canonical_json_float_key_accepted():
-    # Current behaviour: _check_no_float looks only at values, so a float
-    # dict key passes and is written as a string. Correct: refuse it.
-    assert canonical_json({0.1: 'x'}) == '{"0.1":"x"}'
 
 
 @pytest.mark.finding('T3-71')
@@ -963,9 +965,6 @@ def test_quantise_negative_places_refused_or_rounds_to_hundreds():
 
 @pytest.mark.finding('T3-71')
 @pytest.mark.req('R0.4.1', 'R0.4.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-71: _check_no_float looks only at values; a '
-                          'float dict key is hashed')
 def test_canonical_json_float_key_is_refused():
     # SPEC R0.4.1: no float anywhere a value is compared or hashed;
     # canonical_json refuses float values (TypeError), so a float key must
