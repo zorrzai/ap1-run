@@ -1,5 +1,5 @@
 {
-  "description": "T3-1 (critical): unrecognised response shapes and mid-loop failures give EV-0, which today counts as a successful invocation in D7.1. One question per kind, and the whole instruction_removed condition answering in the Anthropic Messages shape.",
+  "description": "T3-1 (critical): unrecognised response shapes and mid-loop failures give EV-0, which counted as a successful invocation in D7.1 until the step-5 fix; now UNOBSERVABLE, out of n and listed per evidence class. One question per kind, and the whole instruction_removed condition answering in the Anthropic Messages shape.",
   "exercises": [
     "T3-1",
     "EV-0",

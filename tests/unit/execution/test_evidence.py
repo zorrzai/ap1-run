@@ -64,9 +64,9 @@ def test_classify_invocation_tools_not_offered_self_report_recorded():
 
 @pytest.mark.finding('T3-1')
 def test_classify_invocation_any_round_unrecognised_ev0_no_outcome():
-    # T3-1 (aggregation side): EV-0 gives outcome None, which the run's
-    # summary then counts as a success. The classification itself is
-    # what R1.3 asks for; the fix belongs in the aggregation.
+    # T3-1 (aggregation side): EV-0 gives outcome None. The
+    # classification itself is what R1.3 asks for; since the T3-1 fix
+    # the aggregation keeps it out of the D7.1 rate.
     result = classify_invocation(
         response(), tools_offered=True,
         accumulated_tool_calls=[call()],

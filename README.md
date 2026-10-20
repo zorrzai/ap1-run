@@ -294,6 +294,12 @@ bound 5.9%"*, not *"100%"*. The familiar 3/n rule is its large-n approximation
 and is shown only for n ≥ 30; below that it overstates, and at n < 3 it returns
 a value above 1, which is not a rate.
 
+**For D7.1, n counts computable questions, not executions.** Repeats of a
+question are not independent trials, so ten questions run fifty times each are
+n = 10. A question counts as a failure if any of its repeats is NOT-INVOKED.
+An execution whose invocation is unobservable (EV-0) is neither a success nor
+a failure: it is in no n, and the report lists it under its evidence class.
+
 **There is no pass mark.** AP-1 has no threshold, no certificate, no seal and no
 registry, and the runner cannot output one. A supervisor reads the profile and
 decides whether it is adequate for their use.

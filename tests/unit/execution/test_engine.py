@@ -529,9 +529,9 @@ ANTHROPIC = {'type': 'message', 'role': 'assistant',
 
 @pytest.mark.finding('T3-1')
 def test_execute_item_unrecognised_first_response_executed_ev0(tmp_path):
-    # T3-1: EXECUTED with outcome None, which the run's summary counts as
-    # a success. Correct: excluded from the D7.1 rate (reported per
-    # class).
+    # T3-1: EXECUTED with outcome None (EV-0). Since the T3-1 fix the
+    # run's summary keeps it out of the D7.1 rate and reports it per
+    # class.
     send = FakeAdapter(ANTHROPIC)
     result, records = run(tmp_path, send)
     assert len(send.calls) == 1
@@ -550,11 +550,10 @@ def test_execute_item_unrecognised_later_response_ev0(tmp_path, calculator):
 @pytest.mark.finding('T3-1', 'T3-35')
 def test_execute_item_later_send_fails_executed_ev0_no_error(
         tmp_path, calculator):
-    # T3-1: a mid-loop failure is EXECUTED with outcome None and counts
-    # as a success downstream. T3-35: the failure itself is not recorded
-    # (error_state None; the last good response stands as final).
-    # Correct: the cause of the EV-0 is recorded and the execution is
-    # out of the D7.1 rate.
+    # T3-1: a mid-loop failure is EXECUTED with outcome None (EV-0); since
+    # the T3-1 fix it is out of the D7.1 rate. T3-35: the failure itself
+    # is not recorded (error_state None; the last good response stands
+    # as final). Correct: the cause of the EV-0 is recorded.
     first = calls(tool_call())
     send = FakeAdapter(first, adapter.RateLimitError('Rate limit reached'))
     result, records = run(tmp_path, send)

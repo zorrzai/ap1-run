@@ -195,10 +195,24 @@ Model: mock-model
 
 > AP-1 v1.3 D7.5: any invocation figure, including 100%, shall be reported with the exact one-sided 95% upper confidence bound.
 
-| Metric | k (failures) | n | Rate | 95% Upper Bound |
-|---|---|---|---|---|
-| d7_invocation_base | 4 | 16 | 12/16 | *not computed (see §Declared Limitations)* |
-| d7_invocation_instruction_removed | 4 | 16 | 12/16 | *not computed (see §Declared Limitations)* |
+> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
+
+| Metric | k (failures) | n | Rate | 95% Upper Bound | Evidence Class |
+|---|---|---|---|---|---|
+| d7_invocation_base | 2 | 8 | 6/8 (75.0%) | *not computed (see §Declared Limitations)* | `EV-2 PLATFORM-STRUCTURAL` |
+| d7_invocation_instruction_removed | 2 | 8 | 6/8 (75.0%) | *not computed (see §Declared Limitations)* | `EV-2 PLATFORM-STRUCTURAL` |
+
+**Headline (AP-1 §6.2):**
+
+- Deterministic computation was invoked on 75.0% of computable questions (6/8; 2 not invoked; upper bound on the failure rate not computed, see §Declared Limitations), under base, on evidence class EV-2 PLATFORM-STRUCTURAL.
+- Deterministic computation was invoked on 75.0% of computable questions (6/8; 2 not invoked; upper bound on the failure rate not computed, see §Declared Limitations), under instruction_removed, on evidence class EV-2 PLATFORM-STRUCTURAL.
+
+**Executions by evidence class:**
+
+| Condition | Evidence Class | Executions | Questions | Questions in n | Unobservable Executions |
+|---|---|---|---|---|---|
+| base | `EV-2 PLATFORM-STRUCTURAL` | 16 | 8 | 8 | 0 |
+| instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | 16 | 8 | 8 | 0 |
 
 ## 6. D7.2(a) Originated-Operand Audit
 

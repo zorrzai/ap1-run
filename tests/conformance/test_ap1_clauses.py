@@ -180,14 +180,11 @@ def test_measure_invocation_reports_n_and_rate_per_evidence_class():
 
 @pytest.mark.finding('S3-G7-1', 'T3-1')
 @pytest.mark.req('AP-1 D7.1', 'AP-1 D7.5', 'R2.3')
-def test_measure_invocation_counts_unobservable_items_as_zero_failures():
+def test_measure_invocation_unobservable_items_have_no_rate():
     # Records with no 'invoked' field (here: the shape legacy
     # verify_conformance passed, keyed by 'invocation_outcome') are
-    # unobservable, yet they stay in n and the class reports
-    # "0/3 failures" with a zero-failure bound. Correct: unobservable
-    # items leave the denominator, and a class with no observations
-    # reports no rate. Same defect class as T3-1; measure_invocation
-    # itself has no live caller.
+    # unobservable. Since the T3-1 fix they leave the denominator, and a
+    # class with no observations reports no rate.
     from ap1_run.scoring.invocation import measure_invocation
     result = measure_invocation([
         {'invocation_outcome': 'INVOKED', 'evidence_class': 'EV-2'},
@@ -195,17 +192,17 @@ def test_measure_invocation_counts_unobservable_items_as_zero_failures():
         {'invocation_outcome': 'NOT-INVOKED', 'evidence_class': 'EV-2'},
     ])
     assert result['unobservable_n'] == 3
-    assert result['per_class']['EV-2']['failure_rate'] == (
-        '0/3 failures; one-sided 95% upper bound on the failure rate 63.2%')
+    assert result['per_class']['EV-2']['n'] == 0
+    assert result['per_class']['EV-2']['failure_rate'] == 'no observations'
 
 
 @pytest.mark.finding('T3-31')
 @pytest.mark.req('AP-1 D7.1')
-def test_measure_invocation_has_no_caller_in_the_runner():
-    # The D7.1 conformance check exercises a function the live path never
-    # calls (the runner aggregates in runner/summary.py). Correct: the
-    # conformance test exercises the code that produces the report.
-    assert callers_in_package('measure_invocation') == []
+def test_measure_invocation_is_called_by_the_runner_summary():
+    # T3-31 instance, closed by the T3-1 fix: the D7.1 conformance tests
+    # above exercise measure_invocation, and the runner's summary (which
+    # the report and console 3h read) now aggregates D7.1 through it.
+    assert callers_in_package('measure_invocation') == ['runner/summary.py']
 
 
 # =====================================================================

@@ -71,10 +71,10 @@
     "score": 0.9481
   },
   "reporting/report": {
-    "killed": 1518,
-    "mutants": 1569,
-    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan').",
-    "score": 0.9675
+    "killed": 1637,
+    "mutants": 1683,
+    "notes": "All 46 survivors are equivalent. 36 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, invocation_evidence (twice), originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan').",
+    "score": 0.9727
   },
   "run": {
     "killed": 553,
@@ -83,10 +83,10 @@
     "score": 0.9736
   },
   "runner/console": {
-    "killed": 467,
-    "mutants": 470,
-    "notes": "All 3 survivors are equivalent. Two let n = 0 reach format_rate, which itself returns 'no observations' for n = 0. One changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
-    "score": 0.9936
+    "killed": 489,
+    "mutants": 490,
+    "notes": "The one survivor is equivalent: it changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
+    "score": 0.998
   },
   "runner/credentials": {
     "killed": 116,
@@ -112,10 +112,10 @@
     "score": 1.0
   },
   "runner/summary": {
-    "killed": 542,
-    "mutants": 554,
-    "notes": "All 12 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One changes n > 0 to n >= 0 where n is always at least 1. One drops operator_declared=None, which is classify_mechanism's default.",
-    "score": 0.9783
+    "killed": 620,
+    "mutants": 631,
+    "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default.",
+    "score": 0.9826
   },
   "scoring/accuracy": {
     "killed": 145,
@@ -129,10 +129,10 @@
     "score": 0.9114
   },
   "scoring/invocation": {
-    "killed": 166,
-    "mutants": 167,
-    "notes": "The one survivor is equivalent: 'n > 0' to 'n >= 0' in the cross-class warning, where every class in per_class has at least one item, so n is always at least 1. The module-level getcontext().prec = 50 is not mutated by mutmut; test_invocation_import_sets_global_decimal_precision_to_50 pins it (T3-60).",
-    "score": 0.994
+    "killed": 179,
+    "mutants": 180,
+    "notes": "The one survivor is equivalent: it changes the '#' in the key ('#', i) that _summarise_class gives a record without an item_id; any tuple key is distinct from every item_id string and from the other records' keys. The module-level getcontext().prec = 50 is not mutated by mutmut; test_invocation_import_sets_global_decimal_precision_to_50 pins it (T3-60).",
+    "score": 0.9944
   },
   "scoring/operation_correctness": {
     "killed": 341,

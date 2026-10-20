@@ -102,11 +102,11 @@ result, by us or by anyone, in any document.
 
 3g. UNMEASURED CELLS: 0
 
-3h. D7.1 INVOCATION:
-  base: invoked=12 not_invoked=4 n=16
-    failure rate: 4/16 (25.0%)
-  instruction_removed: invoked=12 not_invoked=4 n=16
-    failure rate: 4/16 (25.0%)
+3h. D7.1 INVOCATION (n = questions; a question fails if any repeat is NOT-INVOKED; UNOBSERVABLE not in n):
+  base: invoked=6 not_invoked=2 n=8
+    failure rate: 2/8 (25.0%)
+  instruction_removed: invoked=6 not_invoked=2 n=8
+    failure rate: 2/8 (25.0%)
 \n3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 16
   TRANSCRIBED-ALTERED: 0
