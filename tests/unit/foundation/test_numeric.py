@@ -442,7 +442,8 @@ def test_extract_trailing_currency_longest_symbol_first():
 
 
 def test_extract_symbol_with_regex_metacharacters_is_literal():
-    assert tokens('cost $5 or x5', currency_symbols=['$']) == [
+    # ('x 5', not 'x5': digits glued to a letter are not a token, S3-G1-6.)
+    assert tokens('cost $5 or x 5', currency_symbols=['$']) == [
         ('5', False, '$', '$5'), ('5', False, '', '5')]
 
 
@@ -483,8 +484,74 @@ def test_extract_percent_with_space():
 
 
 def test_extract_adjacent_tokens_both_kept():
-    # T3-55: a mutant dropping '-3' from '5-3' survived the legacy suites.
-    assert tokens('5-3') == [('5', False, '', '5'), ('-3', False, '', '-3')]
+    # T3-55: a mutant dropping the second token of '5-3' survived the
+    # legacy suites. S3-G1-5 (section B decision, 2026-10-20): a '-'
+    # directly after a number is an operator, so the tokens are 5 and 3
+    # (this pinned 5 and -3 before the fix).
+    assert tokens('5-3') == [('5', False, '', '5'), ('3', False, '', '3')]
+
+
+@pytest.mark.finding('S3-G1-5')
+def test_extract_sign_after_number_is_an_operator_positions():
+    toks = extract_numeric_tokens('x 10 - $3 or 7 -2', currency_symbols=['$'])
+    assert [(str(t.value), t.literal, t.start, t.end) for t in toks] == [
+        ('10', '10', 2, 5), ('3', '$3', 7, 10), ('7', '7', 13, 15),
+        ('2', '2', 16, 17)]
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.parametrize('text, expected', [
+    ('was -5', ['-5']),
+    ('5 - -3', ['5', '-3']),
+    ('5% \u22123', ['5', '3']),
+    ('(4) -1', ['-4', '1']),
+    ('x: -5, then -6', ['-5', '-6']),
+])
+def test_extract_sign_not_after_a_number_stays_a_sign(text, expected):
+    assert values(text) == expected
+
+
+@pytest.mark.finding('S3-G1-6', 'S3-G1-1')
+@pytest.mark.parametrize('text, expected', [
+    ('1e5', []),
+    ('Q04: 5', ['5']),
+    ('10%x', ['10']),
+    ('US$5', ['5']),
+    ('A1.5 and 2', ['2']),
+    ('2.0.1v', []),
+    ('item 7.', ['7']),
+    ('see Q1, 3', ['3']),
+    ('5_000', []),
+    ('2.0.1v', []),
+    ('Q4-5', []),
+    ('see Q1,5', []),
+    ('see Q1, 5', ['5']),
+    ('1.006,25', ['1.006', '25']),
+    ('4.5.6', ['4.5', '6']),
+    ('v1.2.3.4.5', []),
+    ('1.2.3.4.5v', []),
+    ('1.2.3.4.5 v', ['1.2', '3.4', '5']),
+    ('1 2.3.4v', ['1']),
+    ('v1.2.3 4', ['4']),
+])
+def test_extract_word_boundaries(text, expected):
+    assert values(text, currency_symbols=['$']) == expected
+
+
+@pytest.mark.finding('S3-G1-6')
+@pytest.mark.parametrize('text, decimal_sep, grouping_sep, expected', [
+    ('Q12 5', ',', ' ', ['5']),     # a space separator does not join
+    ('Q12.5', ',', '.', []),
+    ('Q1,5', '.', None, ['5']),     # no grouping separator: ',' does not join
+    ('Q1,5', '.', '', ['5']),
+    ('Q1,5', '.', ',', []),
+    ('v2.0.1', '.', None, []),      # the gap is exactly the separator set
+    ('v2.0,1', '.', ',', []),
+])
+def test_extract_word_runs_use_the_configured_separators(
+        text, decimal_sep, grouping_sep, expected):
+    assert values(text, decimal_sep=decimal_sep,
+                  grouping_sep=grouping_sep) == expected
 
 
 def test_extract_adjacent_currency_tokens_positions():
@@ -500,28 +567,6 @@ def test_extract_overlap_keeps_longest_match():
         ('-5', False, '$', '-$5')]
 
 
-@pytest.mark.finding('S3-G1-5')
-def test_extract_subtraction_operand_read_as_negative():
-    # Current behaviour: the sign-led pattern takes the minus of a
-    # subtraction, so '1437.00 - 1006.25 = 430.75' yields -1006.25.
-    # Correct: a minus between two operands is an operator; 1006.25.
-    text = 'Principal portion = 1437.00 - 1006.25 = 430.75'
-    assert tokens(text) == [
-        ('1437.00', False, '', '1437.00'),
-        ('-1006.25', False, '', '- 1006.25'),
-        ('430.75', False, '', '430.75')]
-
-
-@pytest.mark.finding('S3-G1-6')
-def test_extract_digits_inside_words_are_tokens():
-    # Current behaviour: no word boundary, so identifiers and version
-    # strings yield numbers ('Q04' -> 4, 'v2.0.1' -> 2.0 and 1, '1e5' ->
-    # 1 and 5). Correct: digits inside a word are not numeric tokens.
-    assert tokens('Q04') == [('4', False, '', '04')]
-    assert values('v2.0.1') == ['2.0', '1']
-    assert values('1e5') == ['1', '5']
-
-
 def test_extract_unparseable_match_is_skipped_and_extraction_goes_on():
     # T3-55: a mutant ending extraction at the first unparseable match
     # ('continue' -> 'break') survived the legacy suites. '($5$)' matches
@@ -530,13 +575,6 @@ def test_extract_unparseable_match_is_skipped_and_extraction_goes_on():
     # replaces the S3-G1-4 pin on '10%USD', which now parses.)
     assert tokens('($5$) and 7', currency_symbols=['$']) == [
         ('7', False, '', '7')]
-
-
-@pytest.mark.finding('S3-G1-8')
-def test_extract_parenthesised_percent_loses_negative():
-    # Current behaviour: the parenthesised pattern has no '%', so
-    # '(12.5%)' is read as +12.5 %. Correct: -12.5 %.
-    assert tokens('(12.5%)') == [('12.5', True, '', '12.5%')]
 
 
 @pytest.mark.req('R0.4.2')
@@ -877,9 +915,6 @@ def test_extract_percent_then_currency_token_kept():
 
 @pytest.mark.finding('S3-G1-5')
 @pytest.mark.req('R0.4.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-5: the minus of a subtraction is read as the '
-                          'sign of the next token')
 @pytest.mark.parametrize('text, expected', [
     ('Principal portion = 1437.00 - 1006.25 = 430.75',
      ['1437.00', '1006.25', '430.75']),
@@ -898,9 +933,6 @@ def test_extract_minus_between_operands_is_an_operator(text, expected):
 
 @pytest.mark.finding('S3-G1-6')
 @pytest.mark.req('R0.4.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-6: digits inside identifiers are numeric '
-                          'tokens (Q04 -> 4)')
 @pytest.mark.parametrize('text', ['Q04', 'v2.0.1', 'item A1'])
 def test_extract_digits_inside_a_word_are_not_tokens(text):
     # SPEC R0.4.2 defines a token as currency/sign/digits/decimal/percent;
@@ -911,8 +943,6 @@ def test_extract_digits_inside_a_word_are_not_tokens(text):
 
 @pytest.mark.finding('S3-G1-8')
 @pytest.mark.req('R0.4.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-8: (12.5%) is extracted as +12.5 %')
 def test_extract_parenthesised_percent_is_negative():
     # SPEC R0.4.2: parentheses denote negative; a trailing '%' is allowed.
     # '(12.5%)' is -12.5, percent.

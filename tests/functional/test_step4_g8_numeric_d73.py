@@ -202,10 +202,6 @@ def test_run_european_separators_parse_the_released_figure(
 
 @pytest.mark.finding('S3-G1-5')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-5: the subtrahend in "1437.00 - 430.75" is '
-                          'extracted as -430.75, hiding a second mention of '
-                          'the expected value from figure identification')
 def test_run_expected_value_as_subtrahend_and_answer_routes_ambiguous(
         tmp_path, monkeypatch, capsys):
     # End-to-end check asked for in the brief: does S3-G1-5 reach figure
