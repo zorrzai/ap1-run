@@ -125,7 +125,8 @@ result, by us or by anyone, in any document.
     failure rate: 0/30 failures; one-sided 95% upper bound on the failure rate 9.5% (≈3/30=10.0%)
   instruction_removed: invoked=30 not_invoked=0 n=30
     failure rate: 0/30 failures; one-sided 95% upper bound on the failure rate 9.5% (≈3/30=10.0%)
-\n3h2. D7.3 TRANSCRIPTION:
+
+3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 60
   TRANSCRIBED-ALTERED: 0
   UNOBSERVABLE: 0

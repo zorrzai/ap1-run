@@ -106,7 +106,8 @@ result, by us or by anyone, in any document.
     failure rate: 2/20 (10.0%)
   instruction_removed: invoked=16 not_invoked=4 n=20
     failure rate: 4/20 (20.0%)
-\n3h2. D7.3 TRANSCRIPTION:
+
+3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 18
   TRANSCRIBED-ALTERED: 0
   UNOBSERVABLE: 22
