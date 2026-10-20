@@ -65,10 +65,10 @@
     "score": 0.8933
   },
   "reporting/adjudication": {
-    "killed": 498,
-    "mutants": 515,
-    "notes": "All 17 survivors are equivalent. One changes _needs_adjudication's figure_outcome default '' to 'XXXX', which is neither ADJUDICATE* nor UNMEASURABLE either. Two pass fixture=None and config=None to _generate_one_sheet, which never reads either parameter. Fourteen replace a .get() default ([] or {} or '') by None or no default, falsy alike: the release-coverage lookup, account_map, tool_calls, operation_correctness, ungoverned_figures, choices and message content.",
-    "score": 0.967
+    "killed": 488,
+    "mutants": 503,
+    "notes": "All 15 survivors are equivalent. One changes _needs_adjudication's figure_outcome default '' to 'XXXX', which is neither ADJUDICATE* nor UNMEASURABLE either. Two pass fixture=None and config=None to _generate_one_sheet, which never reads either parameter. Twelve replace a .get() default ([] or {} or '') by None or no default, falsy alike: account_map, tool_calls, operation_correctness, ungoverned_figures, choices and message content.",
+    "score": 0.9702
   },
   "reporting/report": {
     "killed": 1518,

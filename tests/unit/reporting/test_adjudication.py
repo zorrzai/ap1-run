@@ -105,10 +105,10 @@ def test_sheets_two_copies_per_item_with_shared_item_number():
     text = sheets_for([record(), record('Q02', 'instruction_removed')])
     headings = re.findall(r'\n## (.*)\n', text)
     assert headings == [
-        'Item 1: Q01 (Condition: base) \u2014 Scorer 1',
-        'Item 1: Q01 (Condition: base) \u2014 Scorer 2',
-        'Item 2: Q02 (Condition: instruction_removed) \u2014 Scorer 1',
-        'Item 2: Q02 (Condition: instruction_removed) \u2014 Scorer 2',
+        'Item 1: Q01 \u2014 Scorer 1',
+        'Item 1: Q01 \u2014 Scorer 2',
+        'Item 2: Q02 \u2014 Scorer 1',
+        'Item 2: Q02 \u2014 Scorer 2',
     ]
 
 
@@ -116,10 +116,10 @@ def test_sheets_two_copies_per_item_with_shared_item_number():
 def test_sheets_heading_names_the_repeat():
     text = sheets_for([record(repeat=3), record(repeat=0)])
     assert re.findall(r'\n## (.*)\n', text) == [
-        'Item 1: Q01, repeat 3 (Condition: base) \u2014 Scorer 1',
-        'Item 1: Q01, repeat 3 (Condition: base) \u2014 Scorer 2',
-        'Item 2: Q01, repeat 0 (Condition: base) \u2014 Scorer 1',
-        'Item 2: Q01, repeat 0 (Condition: base) \u2014 Scorer 2',
+        'Item 1: Q01, repeat 3 \u2014 Scorer 1',
+        'Item 1: Q01, repeat 3 \u2014 Scorer 2',
+        'Item 2: Q01, repeat 0 \u2014 Scorer 1',
+        'Item 2: Q01, repeat 0 \u2014 Scorer 2',
     ]
 
 
@@ -185,13 +185,13 @@ def test_sheets_skip_void_records_even_when_adjudicated():
 def test_sheets_void_record_does_not_stop_later_records():
     text = sheets_for([record(error_state='VOID: x'), record('Q02')])
     assert 'Total items requiring adjudication: 1' in text
-    assert '## Item 1: Q02 (Condition: base)' in text
+    assert '## Item 1: Q02 \u2014' in text
 
 
 def test_sheets_auto_scored_record_does_not_stop_later_records():
     text = sheets_for([record(figure_outcome='AUTO-MATCH'), record('Q02')])
     assert 'Total items requiring adjudication: 1' in text
-    assert '## Item 1: Q02 (Condition: base)' in text
+    assert '## Item 1: Q02 \u2014' in text
 
 
 def test_sheets_skip_only_error_states_starting_with_void():
@@ -213,18 +213,19 @@ def test_sheets_falsy_error_state_does_not_skip():
     assert 'Total items requiring adjudication: 1' in text
 
 
-def test_sheets_record_without_condition_reads_unknown():
+def test_sheets_record_without_condition_still_gets_its_sheets():
     rec = record()
     del rec['condition']
     text = sheets_for([rec])
-    assert '## Item 1: Q01 (Condition: unknown) \u2014 Scorer 1' in text
+    assert '## Item 1: Q01 \u2014 Scorer 1' in text
+    assert 'Total items requiring adjudication: 1' in text
 
 
 def test_sheets_record_without_item_id_reads_unknown():
     rec = record()
     del rec['item_id']
     text = sheets_for([rec])
-    assert '## Item 1: unknown (Condition: base)' in text
+    assert '## Item 1: unknown \u2014 Scorer 1' in text
     assert '> [question not found]' in text
 
 
@@ -578,7 +579,7 @@ def test_sheet_reference_values_default_unknown():
 def test_sheet_sections_in_order():
     text = one_sheet(coverage_records=[coverage(1)])
     order = [text.index(h) for h in (
-        '\n## Item 1: Q01 (Condition: base) \u2014 Scorer 1\n',
+        '\n## Item 1: Q01 \u2014 Scorer 1\n',
         '### Question\n', '### Response (verbatim)\n',
         '### Fixture Excerpt\n', '### Structural Tool-Call Record\n',
         '### Reason for Adjudication\n',
@@ -586,7 +587,7 @@ def test_sheet_sections_in_order():
         '### Release Coverage Finding\n', '### Reference Values\n')]
     assert order == sorted(order)
     assert text.startswith(
-        '\n## Item 1: Q01 (Condition: base) \u2014 Scorer 1\n\n### Question')
+        '\n## Item 1: Q01 \u2014 Scorer 1\n\n### Question')
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
@@ -639,14 +640,12 @@ def test_sheets_each_sheet_names_its_repeat():
 
 @pytest.mark.finding('T3-36')
 @pytest.mark.req('AP-1 §13.8', 'R3.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-36: every sheet header prints the arm '
-                          '(condition)')
 def test_sheets_do_not_name_the_arm():
     # AP-1 v1.3 §13.8: "Two scorers, blind to arm identity where the
     # response text permits". The arm (instructed or instruction-removed)
     # is the D7.1b contrast being measured; the sheet must not print it.
-    # Today: "## Item 1: Q01 (Condition: instruction_removed) — Scorer 1".
+    # Before the fix: "## Item 1: Q01 (Condition: instruction_removed) —
+    # Scorer 1".
     text = sheets_for([record(condition='instruction_removed', arm_id=
                               'instruction_removed'),
                        record(condition='base', arm_id='base')])

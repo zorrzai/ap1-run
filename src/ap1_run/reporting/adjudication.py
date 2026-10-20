@@ -113,7 +113,7 @@ def generate_sheets(transcript_records, questions, fixture, config,
         # Generate TWO sheets for this item (two scorers per section 13.8)
         for scorer_num in (1, 2):
             _rc_key = (item_id, condition, record.get('repeat'))
-            _rc_for_item = _rc_lookup.get(_rc_key, [])
+            _rc_for_item = _rc_lookup.get(_rc_key)
             sheet = _generate_one_sheet(
                 record=record,
                 question=question,
@@ -163,14 +163,15 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
                         coverage_records=None):
     """Generate a single adjudication sheet for one scorer."""
     item_id = record.get('item_id', 'unknown')
-    condition = record.get('condition', 'unknown')
     repeat = record.get('repeat')
-    # The sheet names its execution's repeat, so a mark joins back to it.
+    # The sheet names its execution's repeat, so a mark joins back to it,
+    # and not its arm (condition): AP-1 v1.3 section 13.8, scorers are
+    # blind to arm identity where the response text permits.
     execution = item_id if repeat is None else f'{item_id}, repeat {repeat}'
 
     lines = []
     lines.append(f'\n## Item {item_num}: {execution} '
-                 f'(Condition: {condition}) \u2014 Scorer {scorer_num}\n')
+                 f'\u2014 Scorer {scorer_num}\n')
 
     # 1. Question
     lines.append('### Question\n')

@@ -9,7 +9,7 @@ Version DOI: 10.5281/zenodo.21755443
 ---
 
 
-## Item 1: Q01, repeat 1 (Condition: base) — Scorer 1
+## Item 1: Q01, repeat 1 — Scorer 1
 
 ### Question
 
@@ -99,7 +99,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 1: Q01, repeat 1 (Condition: base) — Scorer 2
+## Item 1: Q01, repeat 1 — Scorer 2
 
 ### Question
 
@@ -189,7 +189,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 2: Q01, repeat 2 (Condition: base) — Scorer 1
+## Item 2: Q01, repeat 2 — Scorer 1
 
 ### Question
 
@@ -279,7 +279,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 2: Q01, repeat 2 (Condition: base) — Scorer 2
+## Item 2: Q01, repeat 2 — Scorer 2
 
 ### Question
 
@@ -369,7 +369,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 3: Q02, repeat 1 (Condition: base) — Scorer 1
+## Item 3: Q02, repeat 1 — Scorer 1
 
 ### Question
 
@@ -465,7 +465,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 3: Q02, repeat 1 (Condition: base) — Scorer 2
+## Item 3: Q02, repeat 1 — Scorer 2
 
 ### Question
 
@@ -561,7 +561,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 4: Q02, repeat 2 (Condition: base) — Scorer 1
+## Item 4: Q02, repeat 2 — Scorer 1
 
 ### Question
 
@@ -657,7 +657,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 4: Q02, repeat 2 (Condition: base) — Scorer 2
+## Item 4: Q02, repeat 2 — Scorer 2
 
 ### Question
 
@@ -753,7 +753,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 5: Q03, repeat 1 (Condition: base) — Scorer 1
+## Item 5: Q03, repeat 1 — Scorer 1
 
 ### Question
 
@@ -849,7 +849,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 5: Q03, repeat 1 (Condition: base) — Scorer 2
+## Item 5: Q03, repeat 1 — Scorer 2
 
 ### Question
 
@@ -945,7 +945,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 6: Q03, repeat 2 (Condition: base) — Scorer 1
+## Item 6: Q03, repeat 2 — Scorer 1
 
 ### Question
 
@@ -1041,7 +1041,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 6: Q03, repeat 2 (Condition: base) — Scorer 2
+## Item 6: Q03, repeat 2 — Scorer 2
 
 ### Question
 
@@ -1137,7 +1137,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 7: Q04, repeat 1 (Condition: base) — Scorer 1
+## Item 7: Q04, repeat 1 — Scorer 1
 
 ### Question
 
@@ -1229,7 +1229,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 7: Q04, repeat 1 (Condition: base) — Scorer 2
+## Item 7: Q04, repeat 1 — Scorer 2
 
 ### Question
 
@@ -1321,7 +1321,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 8: Q04, repeat 2 (Condition: base) — Scorer 1
+## Item 8: Q04, repeat 2 — Scorer 1
 
 ### Question
 
@@ -1413,7 +1413,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 8: Q04, repeat 2 (Condition: base) — Scorer 2
+## Item 8: Q04, repeat 2 — Scorer 2
 
 ### Question
 
@@ -1505,7 +1505,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 9: Q01, repeat 1 (Condition: instruction_removed) — Scorer 1
+## Item 9: Q01, repeat 1 — Scorer 1
 
 ### Question
 
@@ -1595,7 +1595,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 9: Q01, repeat 1 (Condition: instruction_removed) — Scorer 2
+## Item 9: Q01, repeat 1 — Scorer 2
 
 ### Question
 
@@ -1685,7 +1685,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 10: Q01, repeat 2 (Condition: instruction_removed) — Scorer 1
+## Item 10: Q01, repeat 2 — Scorer 1
 
 ### Question
 
@@ -1775,7 +1775,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 10: Q01, repeat 2 (Condition: instruction_removed) — Scorer 2
+## Item 10: Q01, repeat 2 — Scorer 2
 
 ### Question
 
@@ -1865,7 +1865,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 11: Q02, repeat 1 (Condition: instruction_removed) — Scorer 1
+## Item 11: Q02, repeat 1 — Scorer 1
 
 ### Question
 
@@ -1961,7 +1961,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 11: Q02, repeat 1 (Condition: instruction_removed) — Scorer 2
+## Item 11: Q02, repeat 1 — Scorer 2
 
 ### Question
 
@@ -2057,7 +2057,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 12: Q02, repeat 2 (Condition: instruction_removed) — Scorer 1
+## Item 12: Q02, repeat 2 — Scorer 1
 
 ### Question
 
@@ -2153,7 +2153,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 12: Q02, repeat 2 (Condition: instruction_removed) — Scorer 2
+## Item 12: Q02, repeat 2 — Scorer 2
 
 ### Question
 
@@ -2249,7 +2249,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 13: Q03, repeat 1 (Condition: instruction_removed) — Scorer 1
+## Item 13: Q03, repeat 1 — Scorer 1
 
 ### Question
 
@@ -2345,7 +2345,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 13: Q03, repeat 1 (Condition: instruction_removed) — Scorer 2
+## Item 13: Q03, repeat 1 — Scorer 2
 
 ### Question
 
@@ -2441,7 +2441,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 14: Q03, repeat 2 (Condition: instruction_removed) — Scorer 1
+## Item 14: Q03, repeat 2 — Scorer 1
 
 ### Question
 
@@ -2537,7 +2537,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 14: Q03, repeat 2 (Condition: instruction_removed) — Scorer 2
+## Item 14: Q03, repeat 2 — Scorer 2
 
 ### Question
 
@@ -2633,7 +2633,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 15: Q04, repeat 1 (Condition: instruction_removed) — Scorer 1
+## Item 15: Q04, repeat 1 — Scorer 1
 
 ### Question
 
@@ -2725,7 +2725,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 15: Q04, repeat 1 (Condition: instruction_removed) — Scorer 2
+## Item 15: Q04, repeat 1 — Scorer 2
 
 ### Question
 
@@ -2817,7 +2817,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 16: Q04, repeat 2 (Condition: instruction_removed) — Scorer 1
+## Item 16: Q04, repeat 2 — Scorer 1
 
 ### Question
 
@@ -2909,7 +2909,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 16: Q04, repeat 2 (Condition: instruction_removed) — Scorer 2
+## Item 16: Q04, repeat 2 — Scorer 2
 
 ### Question
 
@@ -3001,7 +3001,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 17: Q08, repeat 1 (Condition: instruction_removed) — Scorer 1
+## Item 17: Q08, repeat 1 — Scorer 1
 
 ### Question
 
@@ -3088,7 +3088,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 17: Q08, repeat 1 (Condition: instruction_removed) — Scorer 2
+## Item 17: Q08, repeat 1 — Scorer 2
 
 ### Question
 
@@ -3175,7 +3175,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 18: Q08, repeat 2 (Condition: instruction_removed) — Scorer 1
+## Item 18: Q08, repeat 2 — Scorer 1
 
 ### Question
 
@@ -3262,7 +3262,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 18: Q08, repeat 2 (Condition: instruction_removed) — Scorer 2
+## Item 18: Q08, repeat 2 — Scorer 2
 
 ### Question
 
