@@ -639,16 +639,6 @@ def test_source_fields_check_raising_item_does_not_stop_later_items():
         "Q01: accessed []; Q02: accessed ['acct.rate']")
 
 
-@pytest.mark.finding('T3-8')
-def test_source_fields_check_misses_reads_through_get():
-    # Current behaviour: only subscript reads are tracked, so a field read
-    # with .get() (or .items(), .values(), dict(), {**a}) goes unseen.
-    # Correct: every read path is tracked, and this module is refused.
-    mod = module(reads('acct.balance', declared=['acct.balance'],
-                       via_get=['acct.rate']))
-    assert source_fields_check(mod, FIXTURE, questions('Q01')) == []
-
-
 # -- the shipped example module --------------------------------------------
 # The guards are never called on a live run (T3-7), so these are the only
 # checks that the example ground-truth module satisfies them. Read only.
@@ -741,9 +731,6 @@ def test_perturbation_check_final_none_on_derivable_item_refused():
 
 @pytest.mark.finding('T3-8')
 @pytest.mark.req('R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-8: source_fields_check tracks subscript reads '
-                          'only')
 @pytest.mark.parametrize('read', [
     lambda acct: acct.get('rate'),
     lambda acct: [v for k, v in acct.items() if k == 'rate'],

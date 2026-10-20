@@ -1,7 +1,7 @@
 {
   "execution/context": {
-    "killed": 76,
-    "mutants": 76,
+    "killed": 93,
+    "mutants": 93,
     "score": 1.0
   },
   "execution/engine": {

@@ -210,32 +210,11 @@ def test_tracking_context_base_dict_not_modified():
     assert base == {'a': {'x': '1'}}
 
 
-@pytest.mark.finding('T3-8')
-@pytest.mark.parametrize('read', [
-    lambda acct: acct.get('annual_rate'),
-    lambda acct: list(acct.items()),
-    lambda acct: list(acct.values()),
-    lambda acct: acct.copy()['annual_rate'],
-    lambda acct: dict(acct)['annual_rate'],
-    lambda acct: {**acct}['annual_rate'],
-], ids=['get', 'items', 'values', 'copy', 'dict', 'unpack'])
-def test_tracking_context_non_subscript_read_not_recorded(read):
-    # T3-8: only __getitem__ is tracked, so a ground-truth module reading a
-    # field through any other path passes source_fields_check. Correct:
-    # every read of a field value is recorded (or the context refuses
-    # untracked access).
-    tc = TrackingContext({'savings': {'balance': '1', 'annual_rate': '2'}})
-    read(tc['savings'])
-    assert tc.accessed_fields() == set()
-
-
 # --- Step 4: correct behaviour (failing until fixed) ---
 # Group g3-seal-guards; see inbox/2026-10-20_step4-g3-seal-guards-report.md.
 
 @pytest.mark.finding('T3-8')
 @pytest.mark.req('R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-8: TrackingAccount records __getitem__ only')
 @pytest.mark.parametrize('read', [
     lambda acct: acct.get('annual_rate'),
     lambda acct: list(acct.items()),
@@ -253,3 +232,56 @@ def test_tracking_context_non_subscript_read_recorded(read):
     tc = TrackingContext({'savings': {'balance': '1', 'annual_rate': '2'}})
     read(tc['savings'])
     assert 'savings.annual_rate' in tc.accessed_fields()
+
+
+# --- Step 5 (seal-gt-guards): the exact record of each access path ---
+
+ACCT = {'balance': '1', 'annual_rate': '2'}
+BOTH = {'s.balance', 's.annual_rate'}
+
+
+def tracked():
+    tc = TrackingContext({'s': dict(ACCT)})
+    return tc, tc['s']
+
+
+@pytest.mark.finding('T3-8')
+@pytest.mark.parametrize('read, value, recorded', [
+    (lambda a: a.get('balance'), '1', {'s.balance'}),
+    (lambda a: a.get('nope'), None, {'s.nope'}),
+    (lambda a: a.get('nope', 'd'), 'd', {'s.nope'}),
+    (lambda a: a.pop('balance'), '1', {'s.balance'}),
+    (lambda a: a.pop('nope', 'd'), 'd', {'s.nope'}),
+    (lambda a: a.setdefault('balance'), '1', {'s.balance'}),
+    (lambda a: a.setdefault('nope', 'd'), 'd', {'s.nope'}),
+    (lambda a: a.popitem(), ('annual_rate', '2'), BOTH),
+    (lambda a: sorted(a.items()), [('annual_rate', '2'), ('balance', '1')],
+     BOTH),
+    (lambda a: sorted(a.values()), ['1', '2'], BOTH),
+    (lambda a: a.copy(), ACCT, BOTH),
+    (lambda a: type(a.copy()), dict, BOTH),
+    (lambda a: dict(a), ACCT, BOTH),
+    (lambda a: {**a}, ACCT, BOTH),
+    (lambda a: repr(a), repr(ACCT), BOTH),
+    (lambda a: sorted(a), ['annual_rate', 'balance'], set()),
+    (lambda a: sorted(a.keys()), ['annual_rate', 'balance'], set()),
+    (lambda a: 'balance' in a, True, set()),
+    (lambda a: len(a), 2, set()),
+])
+def test_tracking_account_access_path_value_and_record(read, value, recorded):
+    tc, acct = tracked()
+    assert read(acct) == value
+    assert tc.accessed_fields() == recorded
+
+
+def test_tracking_account_pop_missing_without_default_recorded_then_raises():
+    tc, acct = tracked()
+    with pytest.raises(KeyError):
+        acct.pop('nope')
+    assert tc.accessed_fields() == {'s.nope'}
+
+
+def test_tracking_account_setdefault_without_default_inserts_none():
+    tc, acct = tracked()
+    assert acct.setdefault('nope') is None
+    assert dict.__getitem__(acct, 'nope') is None
