@@ -284,7 +284,15 @@ def test_run_refusal_executed_adjudicated_outside_d71_and_d1(
         ('EXECUTED', 'ADJUDICATE-REFUSAL', kind, provisional)] * 2
     assert not [c for c in r.summary.get('unmeasured_cells', [])
                 if c['item_id'] == 'Q01']
-    assert lines_with(r.report_section(10), 'Q01') == []
+    # §10 lists every UNOBSERVABLE measurement cell (SPEC R3.3): a
+    # refusal has no released figure, so only its D7.3 and release-
+    # coverage cells, never an UNMEASURED or VOID execution
+    q01_cells = lines_with(r.report_section(10), 'Q01')
+    assert q01_cells and all(
+        line.split(' | ')[2].endswith('UNOBSERVABLE')
+        and line.endswith(('| D7.3 transcription |',
+                           '| D7.3 release coverage |'))
+        for line in q01_cells), q01_cells
     base = lines_with(r.report_section(5), 'base')
     assert any('9/9' in line for line in base), base
     sheets = r.file('adjudication_sheets.md')
