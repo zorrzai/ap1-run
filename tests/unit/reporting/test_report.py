@@ -68,6 +68,7 @@ def test_report_header_names_version_doi_and_model():
         r'AP-1 Version: 1\.3\n\n'
         r'Version DOI: 10\.5281/zenodo\.1\n\n'
         r'Model: test-model\n\n'
+        r'> \*\*Demonstration run, not a conformance result\.\*\* .*\n\n'
         r'---\n\n'
         r'## 1\. Pre-Registration Record\n', text)
 
@@ -80,15 +81,17 @@ def test_report_header_missing_fields_read_unknown():
 
 
 @pytest.mark.finding('T3-45')
-def test_report_header_carries_no_disclaimer():
-    # report.md opens with "AP-1 Evaluation Report" and no warning that a
-    # smoke run is not an AP-1 evaluation. Correct: the run's disclaimer
-    # at the top of report.md.
+def test_report_header_carries_the_readme_statement():
+    # Fixed (T3-45): the README's statement, before the first section.
     text = generate_report(summary={}, config=CONFIG, seal_record={})
     head = text[:text.index('## 1.')]
-    assert 'disclaimer' not in head.lower()
-    assert 'not an ap-1 evaluation' not in text.lower()
-    assert 'smoke' not in text.lower()
+    assert report.DEMONSTRATION_STATEMENT == (
+        '> **Demonstration run, not a conformance result.** ap1-run '
+        'implements the AP-1 v1.3 Draft for Comment; v1.2 remains the '
+        'version in force. A run of this instrument is a demonstration '
+        'run, not a conformance result under either version (README, '
+        '"Which version of AP-1").\n')
+    assert '\n' + report.DEMONSTRATION_STATEMENT + '\n---\n' in head
 
 
 def test_report_sections_in_order():
@@ -1826,9 +1829,6 @@ def test_cells_non_string_error_state_with_colon_is_listed():
 
 
 @pytest.mark.finding('T3-45')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-45: report.md has no demonstration-run / '
-                          'non-conformance statement')
 def test_report_header_says_demonstration_run_not_conformance_result():
     # Marcus (2026-10-13): runs are described as demonstration runs, not
     # conformance results; the README says so (lines 21-22). Correct: the

@@ -57,6 +57,15 @@ AUTO_MEASURED = {'D1', 'D2', 'D7'}
 HUMAN_ADJUDICATED = {'D3', 'D4', 'D5', 'D6'}
 
 
+# The README's statement (T3-45): report.md is the artifact most likely
+# to be forwarded, so it says what a run is before its first section.
+DEMONSTRATION_STATEMENT = (
+    '> **Demonstration run, not a conformance result.** ap1-run implements '
+    'the AP-1 v1.3 Draft for Comment; v1.2 remains the version in force. '
+    'A run of this instrument is a demonstration run, not a conformance '
+    'result under either version (README, "Which version of AP-1").\n')
+
+
 def generate_report(*, summary, config, seal_record, transcript_records=None):
     """Generate the evaluation report.
 
@@ -78,6 +87,7 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
     sections.append(f'AP-1 Version: {config.get("ap1_version", "unknown")}\n')
     sections.append(f'Version DOI: {config.get("ap1_version_doi", "unknown")}\n')
     sections.append(f'Model: {config.get("model", "unknown")}\n')
+    sections.append(DEMONSTRATION_STATEMENT)
     sections.append('---\n')
 
     # 1. Pre-registration record

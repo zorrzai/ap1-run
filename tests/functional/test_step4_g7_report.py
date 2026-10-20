@@ -279,9 +279,6 @@ def test_run_report_lists_every_non_outcome_kind(run):
 
 
 @pytest.mark.finding('T3-45')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-45: report.md carries no demonstration-run / '
-                          'non-conformance statement')
 def test_run_report_says_demonstration_run_not_conformance_result(run):
     # Marcus (2026-10-13): runs are demonstration runs, not conformance
     # results (README lines 21-22). The run writes that only to
