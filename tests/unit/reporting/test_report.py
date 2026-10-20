@@ -1371,3 +1371,325 @@ def test_clopper_pearson_section_bounds_nonzero_failures():
     exact = exact_cp_upper(92, 500)
     assert shown and all(exact <= v <= exact + Decimal('0.001')
                          for v in shown), cell
+
+# Group g7-report (fix branch 7, report honesty). Each test asserts what
+# SPEC/AP-1 require and is xfail(strict=True) until the fix lands.
+
+# D1 with adjudication pending: 22 auto-scored (all CORRECT), 18 routed to
+# adjudication and not yet scored, as on every live run.
+D1_PENDING = {'n': 40, 'auto_scored_n': 22, 'adjudicated_n': 18,
+              'unmeasurable_n': 0, 'correct': 22, 'incorrect': 0,
+              'no_figure': 0, 'accuracy_rate': Decimal('1')}
+
+ACCURACY_ONE = re.compile(r'Accuracy(?: rate)?: 1(?:\.0+)?(?![\d./])')
+
+
+@pytest.mark.finding('T3-3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-3: "Accuracy: 1" headline from auto-scored '
+                          'items while 18 of 40 await adjudication')
+def test_dimension_results_d1_pending_adjudication_prints_no_rate_of_one():
+    # Every wrong figure routes to adjudication (SPEC R2.0 step 4), so the
+    # auto-scored rate is 1 whenever it is defined. Correct (T3-3, fix
+    # plan branch 7; SPEC R2.3 "100 % never printed alone", by analogy):
+    # no "Accuracy: 1" headline while items await adjudication; the row
+    # states the adjudicated share instead.
+    rows = dim_rows(report._section_dimension_results(
+        {'d1_results': D1_PENDING}, {'dimensions_claimed': ['D1']}))
+    assert not ACCURACY_ONE.search(rows[0]), rows[0]
+    assert 'adjudicat' in rows[0]
+
+
+@pytest.mark.finding('T3-3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-3: §8 prints "Accuracy rate: 1" while 18 '
+                          'items await adjudication')
+def test_scoring_proportions_d1_pending_adjudication_prints_no_rate_of_one():
+    # Correct: as for §3, no rate of 1 from the auto-scored items alone
+    # while adjudication is pending (T3-3).
+    text = report._section_scoring_proportions({'d1_results': D1_PENDING})
+    assert not ACCURACY_ONE.search(text), text
+
+
+@pytest.mark.finding('T3-4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-4: §9 reads d2["surfaces"]; the live '
+                          '"<item>/<condition>" shape renders as no data')
+def test_d2_live_shape_renders_mechanism_per_surface():
+    # build_summary passes D2 keyed '<item>/<condition>', one dict per
+    # surface. Correct (SPEC R2.2, R3.3 "D2 mechanism classes per surface
+    # with evidence basis and operator-declared marking"; AP-1 D2 "distinct
+    # numeric answers per question"): §9 shows each question's class per
+    # surface, with its distinct values.
+    d2 = {'Q01/base': {
+        'figures': {'mechanism': 'OBSERVED-ONLY', 'operator_declared': False,
+                    'distinct_values': 2, 'successful_runs': 3},
+        'prose': {'mechanism': 'OBSERVED-ONLY', 'operator_declared': False,
+                  'distinct_values': 3, 'successful_runs': 3}}}
+    text = report._section_d2_mechanisms({'d2_results': d2})
+    assert 'No per-surface D2 data' not in text
+    assert 'Q01' in text
+    assert re.search(r'figures.*OBSERVED-ONLY', text)
+    assert re.search(r'prose.*OBSERVED-ONLY', text)
+
+
+@pytest.mark.finding('T3-4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-4: §3 prints D2 "Measured" with n N/A for the '
+                          'live shape')
+def test_dimension_results_d2_live_shape_states_n():
+    # Correct (AP-1 §6.1 "for each dimension, the result and the n"): the
+    # D2 row gives its n (questions or runs), never N/A, when results exist.
+    d2 = {'Q01/base': {'figures': {'mechanism': 'OBSERVED-ONLY',
+                                   'successful_runs': 3}}}
+    rows = dim_rows(report._section_dimension_results(
+        {'d2_results': d2}, {'dimensions_claimed': ['D2']}))
+    assert '| N/A |' not in rows[1], rows[1]
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-29: one "D7 Measured" row; D7.4 never declared '
+                          'not measured')
+def test_report_d7_claimed_declares_d74_not_measured():
+    # AP-1 v1.3 D7: "Report all four" (D7.1-D7.4). The runner never
+    # measures D7.4 (invocation under pressure). Correct: the report
+    # declares D7.4 not measured (SPEC R3.3 "a dimension not measured is
+    # declared, never omitted") and does not call D7 as a whole Measured.
+    text = generate_report(
+        summary={'d7_results': {'n': 40, 'auto_scored_n': 22,
+                                'adjudicated_n': 18}},
+        config=CONFIG, seal_record={})
+    assert re.search(r'D7\.4[^\n]*not measured', text, flags=re.I)
+    assert '| D7 | Measured |' not in text
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-29: §12 does not declare the unobservable part '
+                          'of D7.3')
+def test_unmeasured_dimensions_declares_d73_unobservable_part():
+    # Correct (T3-29; SPEC R3.3): with D7 claimed and D7.3 UNOBSERVABLE for
+    # the adjudicated items, the declaration names D7.3 as only partly
+    # measured. The section today takes only the config.
+    summary = {'d7_results': {'n': 2},
+               'transcription_results': [tr('TRANSCRIBED-EXACT', 1),
+                                         tr('UNOBSERVABLE', 2)]}
+    text = generate_report(summary=summary, config=CONFIG, seal_record={})
+    s12 = text[text.index('## 12.'):text.index('## 13.')]
+    assert 'D7.3' in s12, s12
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-29: D7.2(b) and D7.3 tables carry no evidence '
+                          'class')
+def test_d72b_and_d73_figures_carry_their_evidence_class():
+    # SPEC R3.3 "every D7 figure with its evidence class"; AP-1 D7.7
+    # "Every D7 figure is reported with its evidence class". Correct: the
+    # D7.2(b) and D7.3 sections name the evidence class(es) they rest on.
+    summary = {'evidence_class_counts': {'EV-2 PLATFORM-STRUCTURAL': 2},
+               'operation_correctness_counts': {'OPERATION-CORRECT': 2},
+               'transcription_results': [tr('TRANSCRIBED-EXACT', 1),
+                                         tr('TRANSCRIBED-EXACT', 2)],
+               'release_coverage_results': [tr('GOVERNED-RELEASE', 1),
+                                            tr('GOVERNED-RELEASE', 2)]}
+    assert 'EV-2' in report._section_d72b_counts(summary)
+    assert 'EV-2' in report._section_d73(summary)
+
+
+AP1_NAMES = {'D3': 'Provenance', 'D4': 'Refusal integrity', 'D5': 'Adversarial resistance',
+             'D6': 'Conflicting input', 'D7': 'Computation invocation'}
+
+
+@pytest.mark.finding('T3-33')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-33: §12 names D3-D6 and D7 with dimensions '
+                          'AP-1 does not define')
+def test_unmeasured_dimensions_use_ap1_names():
+    # AP-1 v1.3 §4: D3 Provenance, D4 Refusal integrity, D5 Adversarial
+    # resistance, D6 Conflicting input, D7 Computation invocation. Correct:
+    # §12 uses these names. (D2 is "Determinism" in AP-1 v1.3 but
+    # "Reproducibility" in SPEC and the code alike; not asserted here.)
+    text = report._section_unmeasured_dimensions({})
+    for dim, name in AP1_NAMES.items():
+        assert re.search(rf'\*\*{dim}\*\*: {name}\b', text), (dim, text)
+
+
+@pytest.mark.finding('T3-33')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-33: §8 labels D7 "Provenance"')
+def test_scoring_proportions_d7_labelled_computation_invocation():
+    # D7 is "Computation invocation" (AP-1 v1.3 §4); "Provenance" is D3.
+    text = report._section_scoring_proportions({'d7_results': {
+        'auto_scored_n': 30, 'adjudicated_n': 10}})
+    assert 'D7 Provenance' not in text
+    assert 'Computation invocation' in text
+
+
+@pytest.mark.finding('T3-33')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-33: §4 cites §6.4 for non-comparability; the '
+                          'clause is D7.7')
+def test_d7_figures_cite_d77_for_non_comparability():
+    # AP-1 v1.3 D7.7: "Figures resting on different classes are not
+    # comparable". §6.4 is about discretionary correctness.
+    text = report._section_d7_figures({'evidence_class_counts': {
+        'EV-2 PLATFORM-STRUCTURAL': 3, 'EV-0 UNOBSERVABLE': 1}})
+    assert 'D7.7' in text
+    assert '§6.4' not in text
+
+
+@pytest.mark.finding('S3-G6-2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G6-2: §12 says unclaimed D1, D2 and D7 require '
+                          'human adjudication')
+def test_unmeasured_dimensions_auto_dimensions_not_said_to_need_adjudication():
+    # The runner measures D1 (partly), D2 and D7 automatically (SPEC §1.1);
+    # only D3-D6 need human adjudication (SPEC §1.2). Correct: §12 does
+    # not say every unclaimed dimension requires human adjudication.
+    text = report._section_unmeasured_dimensions({})
+    assert 'and require human adjudication' not in text
+    for dim in ('D1', 'D2', 'D7'):
+        line = next(l for l in text.split('\n') if f'**{dim}**' in l)
+        assert 'human adjudication' not in line, line
+
+
+@pytest.mark.finding('T3-35')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-35: §10 de-duplicates cells on (item, '
+                          'condition, status)')
+def test_cells_each_repeat_listed_with_its_reason():
+    # SPEC R3.3 "every UNMEASURED, UNOBSERVABLE, UNMEASURABLE and VOID cell
+    # with its reason". Correct: 49 rate-limited repeats are 49 rows.
+    text = report._section_unmeasured_cells({'non_outcome_cells': [
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': i,
+         'status': 'UNMEASURED', 'reason': f'rate limited r{i}'}
+        for i in range(1, 50)]}, None)
+    assert len(re.findall(r'^\| Q01 \|.*UNMEASURED', text, flags=re.M)) == 49
+    assert 'rate limited r49' in text
+
+
+@pytest.mark.finding('T3-35')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-35: figure UNMEASURABLE, transcription '
+                          'UNOBSERVABLE and COVERAGE-UNOBSERVABLE cells are '
+                          'not listed')
+def test_cells_other_non_outcome_kinds_listed():
+    # Correct (SPEC R3.3): every non-outcome cell, whatever measurement it
+    # belongs to, is listed.
+    summary = {
+        'transcription_results': [{'item_id': 'Q03', 'condition': 'base',
+                                   'repeat': 1, 'outcome': 'UNOBSERVABLE',
+                                   'reason': 'pending adjudication'}],
+        'release_coverage_results': [{'item_id': 'Q04', 'condition': 'base',
+                                      'repeat': 1,
+                                      'outcome': 'COVERAGE-UNOBSERVABLE'}],
+        'd1_results': {'unmeasurable_n': 1},
+    }
+    text = report._section_unmeasured_cells(summary, [
+        {'item_id': 'Q07', 'condition': 'base',
+         'figure_outcome': 'UNMEASURABLE'}])
+    assert re.search(r'^\| Q07 \|.*UNMEASURABLE', text, flags=re.M), text
+    assert re.search(r'^\| Q03 \|.*UNOBSERVABLE', text, flags=re.M), text
+    assert re.search(r'^\| Q04 \|.*COVERAGE-UNOBSERVABLE', text,
+                     flags=re.M), text
+
+
+@pytest.mark.finding('T3-35')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-35: one transport failure is listed three '
+                          'times')
+def test_cells_one_failure_is_one_row():
+    # The summary's UNMEASURED cell, the transcript's error_state and its
+    # EV-0 class are the same execution. Correct: one row per cell.
+    text = report._section_unmeasured_cells(
+        {'non_outcome_cells': [{'item_id': 'Q01', 'condition': 'base',
+                                'repeat': 1, 'status': 'UNMEASURED',
+                                'reason': 'transport'}]},
+        [{'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+          'error_state': 'TRANSPORT_FAILURE: timeout',
+          'evidence_class': 'EV-0 UNOBSERVABLE'}])
+    assert len(re.findall(r'^\| Q01 \| base \|', text, flags=re.M)) == 1, \
+        text
+
+
+@pytest.mark.finding('T3-35')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-35: §10 appends transcript cells to the '
+                          "caller's summary in place")
+def test_cells_leave_the_summary_unchanged():
+    # Correct: rendering a section has no side effect on its input.
+    summary = {'non_outcome_cells': []}
+    report._section_unmeasured_cells(
+        summary, [{'item_id': 'Q01', 'condition': 'base',
+                   'error_state': 'VOID'}])
+    assert summary == {'non_outcome_cells': []}
+
+
+@pytest.mark.finding('S3-G6-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G6-1: a non-string error_state containing ":" '
+                          'raises AttributeError')
+def test_cells_non_string_error_state_with_colon_is_listed():
+    # Correct: any error_state is rendered (str() then split), and the
+    # report is written.
+    class Error:
+        def __str__(self):
+            return 'TIMEOUT: after 120 s'
+    try:
+        text = report._section_unmeasured_cells({}, [
+            {'item_id': 'Q', 'condition': 'c', 'error_state': Error()}])
+    except AttributeError as e:  # today's defect, shown as the failure
+        text = f'raised {e!r}'
+    assert '| Q | c | TIMEOUT | TIMEOUT: after 120 s |' in text, text
+
+
+@pytest.mark.finding('T3-45')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-45: report.md has no demonstration-run / '
+                          'non-conformance statement')
+def test_report_header_says_demonstration_run_not_conformance_result():
+    # Marcus (2026-10-13): runs are described as demonstration runs, not
+    # conformance results; the README says so (lines 21-22). Correct: the
+    # report says so before its first section, since report.md is the
+    # artifact most likely to be forwarded. (If the fix passes the
+    # statement in from the runner, pass it here.)
+    text = generate_report(summary={}, config=CONFIG, seal_record={})
+    head = text[:text.index('## 1.')].lower()
+    assert 'demonstration run' in head, head
+    assert 'not' in head and 'conformance result' in head, head
+
+
+@pytest.mark.finding('T3-64')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason="T3-64: §6 renders '?' for Operation and Operand "
+                          'with live audit entries')
+def test_d72a_audit_live_entries_show_the_operand():
+    # The live entries (runner/summary.build_summary) carry 'value' and
+    # 'literal'. Correct (SPEC R3.3 "the D7.2 originated-operand listing";
+    # README: the reviewer's artifact): the operand is shown and no column
+    # reads '?'.
+    text = report._section_d72a_audit({'originated_operand_audit': [
+        {'item_id': 'Q03', 'condition': 'base', 'value': '81.0',
+         'literal': '81.0', 'expression': '2400 * (81.0 / 100) / 12',
+         'resolution': 'originated', 'sign_inversion_finding': None}]})
+    row = next(l for l in text.split('\n') if l.startswith('| Q03 '))
+    assert '81.0' in row.replace('2400 * (81.0 / 100) / 12', '')
+    assert '?' not in row, row
+
+
+@pytest.mark.finding('T3-66')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-66: §8 total (auto + adjudicated) differs from '
+                          '§3 n; UNMEASURABLE not shown')
+def test_scoring_proportions_d1_total_is_n_with_unmeasurable_shown():
+    # Correct (SPEC R2.1: auto-scored and adjudicated n stated, never
+    # merged silently; T3-66): one n for D1 in §3 and §8, with the
+    # UNMEASURABLE items counted and shown.
+    summary = {'d1_results': {'n': 10, 'auto_scored_n': 8,
+                              'adjudicated_n': 1, 'unmeasurable_n': 1,
+                              'accuracy_rate': Decimal('1')}}
+    text = report._section_scoring_proportions(summary)
+    assert '- Total: 10' in text, text
+    assert re.search(r'nmeasurable: 1\b', text), text
