@@ -15,8 +15,23 @@
       "released_figure": "15.20",
       "expected": "15.200",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -35,8 +50,23 @@
       "released_figure": "15.20",
       "expected": "15.200",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -55,8 +85,23 @@
       "released_figure": "2600.00",
       "expected": "2600.00",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -75,8 +120,23 @@
       "released_figure": "2600.00",
       "expected": "2600.00",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -215,13 +275,26 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 430.7500 matches expected value 430.7500 (tolerance 0.01)",
-          "evaluated_result": "430.7500",
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        },
+        {
+          "detail": "result 430.75000 matches expected value 430.7500 (tolerance 0.01)",
+          "evaluated_result": "430.75000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
       ],
       "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        },
         {
           "outcome": "OPERANDS-GROUNDED",
           "operand_resolutions": [
@@ -233,8 +306,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "1437.0",
-              "operand_literal": "1437.0",
+              "operand_value": "1437.00",
+              "operand_literal": "1437.00",
               "expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"
             },
             {
@@ -245,8 +318,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "287500.0",
-              "operand_literal": "287500.0",
+              "operand_value": "287500.00",
+              "operand_literal": "287500.00",
               "expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"
             },
             {
@@ -257,8 +330,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "4.2",
-              "operand_literal": "4.2",
+              "operand_value": "4.20",
+              "operand_literal": "4.20",
               "expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"
             },
             {
@@ -292,8 +365,8 @@
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
       "release_coverage_outcome": "GOVERNED-RELEASE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "operands not shown grounded (D7.2(a))"
     },
     {
       "item_id": "Q04",
@@ -310,13 +383,26 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 430.7500 matches expected value 430.7500 (tolerance 0.01)",
-          "evaluated_result": "430.7500",
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        },
+        {
+          "detail": "result 430.75000 matches expected value 430.7500 (tolerance 0.01)",
+          "evaluated_result": "430.75000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
       ],
       "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        },
         {
           "outcome": "OPERANDS-GROUNDED",
           "operand_resolutions": [
@@ -328,8 +414,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "1437.0",
-              "operand_literal": "1437.0",
+              "operand_value": "1437.00",
+              "operand_literal": "1437.00",
               "expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"
             },
             {
@@ -340,8 +426,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "287500.0",
-              "operand_literal": "287500.0",
+              "operand_value": "287500.00",
+              "operand_literal": "287500.00",
               "expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"
             },
             {
@@ -352,8 +438,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "4.2",
-              "operand_literal": "4.2",
+              "operand_value": "4.20",
+              "operand_literal": "4.20",
               "expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"
             },
             {
@@ -387,8 +473,8 @@
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
       "release_coverage_outcome": "GOVERNED-RELEASE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "operands not shown grounded (D7.2(a))"
     },
     {
       "item_id": "Q05",
@@ -619,8 +705,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 144.0 matches expected value 144.00 (tolerance 0.01)",
-          "evaluated_result": "144.0",
+          "detail": "result 144.00 matches expected value 144.00 (tolerance 0.01)",
+          "evaluated_result": "144.00",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -637,8 +723,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "12.0",
-              "operand_literal": "12.0",
+              "operand_value": "12.00",
+              "operand_literal": "12.00",
               "expression": "12.00 * 12"
             },
             {
@@ -678,8 +764,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 144.0 matches expected value 144.00 (tolerance 0.01)",
-          "evaluated_result": "144.0",
+          "detail": "result 144.00 matches expected value 144.00 (tolerance 0.01)",
+          "evaluated_result": "144.00",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -696,8 +782,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "12.0",
-              "operand_literal": "12.0",
+              "operand_value": "12.00",
+              "operand_literal": "12.00",
               "expression": "12.00 * 12"
             },
             {
@@ -1331,8 +1417,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 3109.6500 matches expected value 3109.6500 (tolerance 0.01)",
-          "evaluated_result": "3109.6500",
+          "detail": "result 3109.65000 matches expected value 3109.6500 (tolerance 0.01)",
+          "evaluated_result": "3109.65000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -1349,8 +1435,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "42175.0",
-              "operand_literal": "42175.0",
+              "operand_value": "42175.00",
+              "operand_literal": "42175.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -1385,8 +1471,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "15.0",
-              "operand_literal": "15.0",
+              "operand_value": "15.00",
+              "operand_literal": "15.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -1426,8 +1512,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 3109.6500 matches expected value 3109.6500 (tolerance 0.01)",
-          "evaluated_result": "3109.6500",
+          "detail": "result 3109.65000 matches expected value 3109.6500 (tolerance 0.01)",
+          "evaluated_result": "3109.65000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -1444,8 +1530,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "42175.0",
-              "operand_literal": "42175.0",
+              "operand_value": "42175.00",
+              "operand_literal": "42175.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -1480,8 +1566,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "15.0",
-              "operand_literal": "15.0",
+              "operand_value": "15.00",
+              "operand_literal": "15.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -1519,8 +1605,23 @@
       "released_figure": "15.20",
       "expected": "15.200",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -1539,8 +1640,23 @@
       "released_figure": "15.20",
       "expected": "15.200",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -1559,8 +1675,23 @@
       "released_figure": "2600.00",
       "expected": "2600.00",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -1579,8 +1710,23 @@
       "released_figure": "2600.00",
       "expected": "2600.00",
       "shape_ok": true,
-      "operation_correctness": [],
-      "provenance_results": [],
+      "operation_correctness": [
+        {
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        }
+      ],
+      "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        }
+      ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
       "answer_outcome": null,
@@ -1719,13 +1865,26 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 430.7500 matches expected value 430.7500 (tolerance 0.01)",
-          "evaluated_result": "430.7500",
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        },
+        {
+          "detail": "result 430.75000 matches expected value 430.7500 (tolerance 0.01)",
+          "evaluated_result": "430.75000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
       ],
       "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        },
         {
           "outcome": "OPERANDS-GROUNDED",
           "operand_resolutions": [
@@ -1737,8 +1896,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "1437.0",
-              "operand_literal": "1437.0",
+              "operand_value": "1437.00",
+              "operand_literal": "1437.00",
               "expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"
             },
             {
@@ -1749,8 +1908,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "287500.0",
-              "operand_literal": "287500.0",
+              "operand_value": "287500.00",
+              "operand_literal": "287500.00",
               "expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"
             },
             {
@@ -1761,8 +1920,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "4.2",
-              "operand_literal": "4.2",
+              "operand_value": "4.20",
+              "operand_literal": "4.20",
               "expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"
             },
             {
@@ -1796,8 +1955,8 @@
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
       "release_coverage_outcome": "GOVERNED-RELEASE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "operands not shown grounded (D7.2(a))"
     },
     {
       "item_id": "Q04",
@@ -1814,13 +1973,26 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 430.7500 matches expected value 430.7500 (tolerance 0.01)",
-          "evaluated_result": "430.7500",
+          "detail": "expression unparseable or non-numeric: None",
+          "evaluated_result": null,
+          "matched_against": null,
+          "outcome": "OPERATION-UNOBSERVABLE"
+        },
+        {
+          "detail": "result 430.75000 matches expected value 430.7500 (tolerance 0.01)",
+          "evaluated_result": "430.75000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
       ],
       "provenance_results": [
+        {
+          "outcome": "OPERANDS-UNOBSERVABLE",
+          "operand_resolutions": [],
+          "originated_operands": [],
+          "quantisation_findings": [],
+          "reason": "no operand could be read from the expression None"
+        },
         {
           "outcome": "OPERANDS-GROUNDED",
           "operand_resolutions": [
@@ -1832,8 +2004,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "1437.0",
-              "operand_literal": "1437.0",
+              "operand_value": "1437.00",
+              "operand_literal": "1437.00",
               "expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"
             },
             {
@@ -1844,8 +2016,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "287500.0",
-              "operand_literal": "287500.0",
+              "operand_value": "287500.00",
+              "operand_literal": "287500.00",
               "expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"
             },
             {
@@ -1856,8 +2028,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "4.2",
-              "operand_literal": "4.2",
+              "operand_value": "4.20",
+              "operand_literal": "4.20",
               "expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"
             },
             {
@@ -1891,8 +2063,8 @@
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
       "release_coverage_outcome": "GOVERNED-RELEASE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "operands not shown grounded (D7.2(a))"
     },
     {
       "item_id": "Q05",
@@ -2123,8 +2295,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 144.0 matches expected value 144.00 (tolerance 0.01)",
-          "evaluated_result": "144.0",
+          "detail": "result 144.00 matches expected value 144.00 (tolerance 0.01)",
+          "evaluated_result": "144.00",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -2141,8 +2313,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "12.0",
-              "operand_literal": "12.0",
+              "operand_value": "12.00",
+              "operand_literal": "12.00",
               "expression": "12.00 * 12"
             },
             {
@@ -2182,8 +2354,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 144.0 matches expected value 144.00 (tolerance 0.01)",
-          "evaluated_result": "144.0",
+          "detail": "result 144.00 matches expected value 144.00 (tolerance 0.01)",
+          "evaluated_result": "144.00",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -2200,8 +2372,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "12.0",
-              "operand_literal": "12.0",
+              "operand_value": "12.00",
+              "operand_literal": "12.00",
               "expression": "12.00 * 12"
             },
             {
@@ -2835,8 +3007,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 3109.6500 matches expected value 3109.6500 (tolerance 0.01)",
-          "evaluated_result": "3109.6500",
+          "detail": "result 3109.65000 matches expected value 3109.6500 (tolerance 0.01)",
+          "evaluated_result": "3109.65000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -2853,8 +3025,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "42175.0",
-              "operand_literal": "42175.0",
+              "operand_value": "42175.00",
+              "operand_literal": "42175.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -2889,8 +3061,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "15.0",
-              "operand_literal": "15.0",
+              "operand_value": "15.00",
+              "operand_literal": "15.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -2930,8 +3102,8 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 3109.6500 matches expected value 3109.6500 (tolerance 0.01)",
-          "evaluated_result": "3109.6500",
+          "detail": "result 3109.65000 matches expected value 3109.6500 (tolerance 0.01)",
+          "evaluated_result": "3109.65000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -2948,8 +3120,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "42175.0",
-              "operand_literal": "42175.0",
+              "operand_value": "42175.00",
+              "operand_literal": "42175.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {
@@ -2984,8 +3156,8 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "15.0",
-              "operand_literal": "15.0",
+              "operand_value": "15.00",
+              "operand_literal": "15.00",
               "expression": "42175.00 * (7.8 / 100) - (15.00 * 12)"
             },
             {

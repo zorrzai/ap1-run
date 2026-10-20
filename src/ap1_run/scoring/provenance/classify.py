@@ -28,8 +28,14 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
             'intermediates' list with typed inputs)
         config: runner config dict
 
+    An expression with no operand that can be read (unparseable, not a
+    string, a boolean or string constant, or only named constants) is
+    OPERANDS-UNOBSERVABLE, never vacuously grounded (T3-2; AP-1 v1.3
+    D7.2(a): the unobservable case is declared, never silently skipped).
+
     Returns: dict with:
-        outcome: 'OPERANDS-GROUNDED' | 'OPERAND-ORIGINATED'
+        outcome: 'OPERANDS-GROUNDED' | 'OPERAND-ORIGINATED' |
+            'OPERANDS-UNOBSERVABLE'
         operand_resolutions: list of per-operand resolution dicts
         originated_operands: list of originated operand audit entries
         quantisation_findings: list of quantisation findings
@@ -73,20 +79,43 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
                 'expression': expression_str,
             })
 
-    if originated:
+    if not operands:
+        outcome = 'OPERANDS-UNOBSERVABLE'
+    elif originated:
         outcome = 'OPERAND-ORIGINATED'
     else:
         outcome = 'OPERANDS-GROUNDED'
 
-    return {
+    result = {
         'outcome': outcome,
         'operand_resolutions': resolutions,
         'originated_operands': originated,
         'quantisation_findings': quant_findings,
     }
+    if not operands:
+        result['reason'] = (f'no operand could be read from the expression '
+                            f'{expression_str!r}')
+    return result
 
 
 # -- Classify an item (multi-invocation rollup) ------------------------
+
+UNMEASURABLE_REASON = ('chained item whose ground truth declares no '
+                       'intermediates (SPEC R2.4)')
+
+# Resolutions that mean an operand matched an earlier call's return.
+_SESSION_RESOLUTIONS = ('computed_in_session', 'computed_in_session_ungrounded')
+
+
+def _session_is_chained(invocation_results):
+    """True if a call consumed an earlier call's return: one of its
+    operands matched a prior return, exactly or after quantisation (a
+    near miss)."""
+    return any(res.get('resolution') in _SESSION_RESOLUTIONS
+               or res.get('near_miss_finding')
+               for inv in invocation_results
+               for res in inv.get('operand_resolutions', []))
+
 
 def classify_item(invocation_results, ground_truth):
     """Roll up per-invocation results to an item-level outcome.
@@ -95,8 +124,17 @@ def classify_item(invocation_results, ground_truth):
     every instance is evaluated. The item is OPERANDS-GROUNDED only if
     ALL instances are.
 
-    If ground_truth has no intermediates and the item is chained
-    (multi-step), D7.2 is UNMEASURABLE.
+    The outcome, in this order:
+      - no invocations: OPERANDS-UNOBSERVABLE;
+      - a chained item whose ground truth declares no intermediates:
+        UNMEASURABLE, never grounded by default (SPEC R2.4 Failure Modes;
+        T3-42). The ground-truth schema has no "chained" flag; an item is
+        chained when a call consumed an earlier call's return. (The
+        ground truth's own chain, an intermediate whose inputs name
+        another, can't show when no intermediates are declared.)
+      - any invocation originated: OPERAND-ORIGINATED;
+      - any invocation unobservable: OPERANDS-UNOBSERVABLE (fail closed);
+      - otherwise OPERANDS-GROUNDED.
 
     Args:
         invocation_results: list of classify_invocation() return dicts
@@ -107,6 +145,7 @@ def classify_item(invocation_results, ground_truth):
         invocation_count: int
         all_originated: combined list of originated operands
         all_quantisation_findings: combined list
+        reason: str (UNMEASURABLE only)
     """
     if not invocation_results:
         return {
@@ -116,60 +155,70 @@ def classify_item(invocation_results, ground_truth):
             'all_quantisation_findings': [],
         }
 
-    # Check for UNMEASURABLE: chained item with no intermediates
-    intermediates = ground_truth.get('intermediates', [])
-    is_chained = any(
-        any('intermediate' in inp for inp in inter.get('inputs', []))
-        for inter in intermediates
-    )
-
-    # A chained derivation that declares NO intermediates is UNMEASURABLE.
-    # (By construction, if is_chained is True, intermediates is non-empty.
-    # The real UNMEASURABLE case is: derivable=True, the derivation should
-    # be multi-step, but the module returned empty intermediates.)
-    if not intermediates and ground_truth.get('derivable', True):
-        # No intermediates at all -- if the derivation should have them,
-        # this is UNMEASURABLE. We check required_operation as a proxy:
-        # if there's a required operation, the module should produce
-        # intermediates for multi-step items.
-        pass  # handled by caller checking derivable + intermediates
-
     all_originated = []
     all_quant = []
-    any_originated = False
-
     for inv_res in invocation_results:
         all_originated.extend(inv_res.get('originated_operands', []))
         all_quant.extend(inv_res.get('quantisation_findings', []))
-        if inv_res['outcome'] == 'OPERAND-ORIGINATED':
-            any_originated = True
+    outcomes = [inv_res.get('outcome') for inv_res in invocation_results]
 
-    outcome = 'OPERAND-ORIGINATED' if any_originated else 'OPERANDS-GROUNDED'
-
-    return {
-        'outcome': outcome,
+    result = {
         'invocation_count': len(invocation_results),
         'all_originated': all_originated,
         'all_quantisation_findings': all_quant,
     }
+    if not ground_truth.get('intermediates') and \
+            _session_is_chained(invocation_results):
+        result['outcome'] = 'UNMEASURABLE'
+        result['reason'] = UNMEASURABLE_REASON
+    elif 'OPERAND-ORIGINATED' in outcomes:
+        result['outcome'] = 'OPERAND-ORIGINATED'
+    elif 'OPERANDS-UNOBSERVABLE' in outcomes:
+        result['outcome'] = 'OPERANDS-UNOBSERVABLE'
+    else:
+        result['outcome'] = 'OPERANDS-GROUNDED'
+    return result
+
+
+def mark_unmeasurable_item(invocation_results, ground_truth):
+    """The invocation results, with the item's D7.2 measurability applied.
+
+    Where classify_item finds the item UNMEASURABLE, each grounded or
+    originated invocation is marked UNMEASURABLE with the reason (its
+    operand resolutions are kept for the audit); an unobservable one stays
+    unobservable. Otherwise the results are returned unchanged.
+    """
+    item = classify_item(invocation_results, ground_truth)
+    if item['outcome'] != 'UNMEASURABLE':
+        return invocation_results
+    return [r if r.get('outcome') == 'OPERANDS-UNOBSERVABLE'
+            else dict(r, outcome='UNMEASURABLE', reason=item['reason'])
+            for r in invocation_results]
 
 
 # -- Sequential classification (D7.2(a)(iv)) --------------------------
 
+def is_calculator_call(tool_call_record):
+    """True if the tool-call record is a call to the calculator."""
+    return tool_call_record.get('function', {}).get('name') == 'calculator'
+
+
 def _extract_expression(tool_call_record):
     """Extract calculator expression from a tool-call record.
 
-    Returns the expression string, or None if this is not a calculator
-    call or the arguments are malformed.
+    Returns the 'expression' argument, or None if this is not a calculator
+    call or the arguments are malformed (not JSON, not a JSON object, or
+    without an 'expression' key).
     """
-    func = tool_call_record.get('function', {})
-    if func.get('name') != 'calculator':
+    if not is_calculator_call(tool_call_record):
         return None
     try:
-        args = json.loads(func.get('arguments', '{}'))
-        return args.get('expression')
+        args = json.loads(tool_call_record['function'].get('arguments', '{}'))
     except (json.JSONDecodeError, TypeError):
         return None
+    if not isinstance(args, dict):
+        return None
+    return args.get('expression')
 
 
 def _parse_return_value(return_value_str):
@@ -204,6 +253,11 @@ def classify_invocations_sequential(tool_calls, delivered_context,
         ground_truth: dict from ground-truth module.
         config: runner config dict.
 
+    Every calculator call gets a result, in order. One whose arguments
+    carry no readable expression (malformed or wrongly keyed) is
+    OPERANDS-UNOBSERVABLE, declared and counted, never skipped, and the
+    calls after it are still classified (T3-16; AP-1 v1.3 D7.2(a)).
+
     Returns: list of classify_invocation() return dicts, one per
         calculator invocation found in tool_calls.
     """
@@ -211,9 +265,9 @@ def classify_invocations_sequential(tool_calls, delivered_context,
     results = []
 
     for tc in tool_calls:
-        expr = _extract_expression(tc)
-        if expr is None:
+        if not is_calculator_call(tc):
             continue
+        expr = _extract_expression(tc)
         result = classify_invocation(
             expr, delivered_context, ground_truth, config,
             prior_returns=prior_returns)

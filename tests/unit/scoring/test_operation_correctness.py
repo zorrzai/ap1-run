@@ -80,13 +80,13 @@ def test_evaluate_expression_is_exact_decimal_not_float():
         D('15200') * D('1.2') / D('100') / D('12')
 
 
-@pytest.mark.finding('T3-58')
-def test_evaluate_expression_reads_literals_through_float():
-    # Literals go through float: '15.20' loses its trailing zero and 17+
-    # significant digits are rounded. Correct (R0.4.2): parse the literal
-    # text to Decimal.
-    assert str(evaluate_expression('15.20')) == '15.2'
-    assert evaluate_expression('15200.0000000000000001') == D('15200.0')
+def test_evaluate_expression_integer_literal_in_another_base_is_exact():
+    assert evaluate_expression('0x10 + 1_000') == D('1016')
+
+
+def test_evaluate_expression_bool_constant_is_unreadable():
+    # True is not a number the model wrote (Steven's ruling on F6).
+    assert evaluate_expression('True + 1') is None
 
 
 def test_evaluate_expression_strips_surrounding_whitespace():
@@ -136,8 +136,9 @@ def test_evaluate_expression_result_depends_on_context_precision():
         assert len(str(evaluate_expression('1 / 3'))) == 52
 
 
-def test_evaluate_expression_huge_float_literal_is_infinity():
-    assert evaluate_expression('1e400') == D('Infinity')
+def test_evaluate_expression_huge_literal_is_exact_not_infinity():
+    # Read from its text (T3-58), not through float.
+    assert evaluate_expression('1e400') == D('1E+400')
 
 
 # -- evaluate_expression: refusals -----------------------------------------------
@@ -608,22 +609,6 @@ def test_reclassify_session_skipped_calls_do_not_stop_the_pass():
     assert out[1]['outcome'] == WO
 
 
-@pytest.mark.finding('S3-G4-5')
-def test_reclassify_session_bool_literal_raises_invalid_operation():
-    # Model-controlled input. True is an int, Decimal('True') raises
-    # decimal.InvalidOperation, which is not caught; the engine calls
-    # reclassify_session without a try, so the run would abort (as in
-    # T3-39). Correct: no operands from the expression, no exception.
-    with pytest.raises(decimal.InvalidOperation):
-        reclassify_session([wo('45')], ['True + 1'])
-
-
-@pytest.mark.finding('S3-G4-5')
-def test_reclassify_session_deep_nesting_raises_recursion_error():
-    with pytest.raises(RecursionError):
-        reclassify_session([wo('45')], ['-' * 5000 + '1'])
-
-
 def test_reclassify_session_ignores_string_and_name_constants():
     out = reclassify_session([wo('45'), oc('1')], ['15 * 3', "'45' or pi"])
     assert out[0]['outcome'] == WO
@@ -636,16 +621,6 @@ def test_reclassify_session_reads_operands_after_stripping_whitespace():
 
 def test_reclassify_session_matches_operands_by_value_not_text():
     out = reclassify_session([wo('45.00'), oc('1')], ['15 * 3', '45 - 44'])
-    assert out[0]['outcome'] == OC
-
-
-@pytest.mark.finding('T3-58')
-def test_reclassify_session_operands_are_read_through_float():
-    # The literal 0.1000000000000000001 becomes the float 0.1, so a
-    # result of exactly 0.1 is taken as its operand. Correct (R0.4.2):
-    # read the literal as Decimal; the values differ.
-    out = reclassify_session([wo('0.1'), oc('1')],
-                             ['1 / 10', '0.1000000000000000001 + 0.9'])
     assert out[0]['outcome'] == OC
 
 
@@ -665,9 +640,6 @@ def test_reclassify_session_pairs_results_and_expressions_by_position():
 # --- Step 4: correct behaviour (failing until fixed) ---
 
 @pytest.mark.finding('T3-58', 'F5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-58/F5: expression literals are read through '
-                          'float before the Decimal evaluation')
 @pytest.mark.parametrize('literal', ['15.20', '15200.0000000000000001',
                                      '0.12345678901234567890'])
 def test_evaluate_expression_reads_literal_text_exactly(literal):
@@ -679,9 +651,6 @@ def test_evaluate_expression_reads_literal_text_exactly(literal):
 
 
 @pytest.mark.finding('T3-58', 'F5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-58/F5: 0.1000000000000000001 is read as the '
-                          'float 0.1 and taken for the earlier result 0.1')
 def test_reclassify_session_operand_beyond_float_precision_is_not_the_result():
     # Read exactly, 0.1000000000000000001 is not the first call's result
     # 0.1, so the first call does not feed the second and stays
@@ -762,9 +731,6 @@ def test_classify_operation_round_uses_declared_half_up():
 # Group g1-invocation (fix plan branch 10).
 
 @pytest.mark.finding('S3-G4-5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G4-5: reclassify_session raises on '
-                          'model-controlled expressions')
 @pytest.mark.parametrize('expression', ['True + 1', '-' * 5000 + '1'],
                          ids=['bool-literal', 'deep-nesting'])
 def test_reclassify_session_unreadable_expression_kept_no_raise(expression):

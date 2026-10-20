@@ -1222,6 +1222,7 @@ Total operations evaluated: 1077
 | Route divergence (item answer correct) | 58 |
 | Item answer incorrect | 0 |
 | Item answer undetermined (adjudicated) | 59 |
+| No figure released (no item answer) | 0 |
 
 ## 7b. D7.2(a) Operand Provenance Step Counts
 
@@ -1242,10 +1243,14 @@ Total operands resolved: 4722
 
 ### Per-Invocation Outcomes
 
-| Outcome | Count |
-|---|---|
-| OPERANDS-GROUNDED | 1072 |
-| OPERAND-ORIGINATED | 5 |
+> OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded. UNMEASURABLE: a call in a chained item whose ground truth declares no intermediates (SPEC R2.4); its operands are not counted in the step table.
+
+| Outcome | Count | % |
+|---|---|---|
+| OPERANDS-GROUNDED | 1072 | 99.5% |
+| OPERAND-ORIGINATED | 5 | 0.5% |
+| OPERANDS-UNOBSERVABLE | 0 | 0.0% |
+| UNMEASURABLE | 0 | 0.0% |
 
 ### Originated Operand Audit
 

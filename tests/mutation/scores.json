@@ -5,10 +5,10 @@
     "score": 1.0
   },
   "execution/engine": {
-    "killed": 542,
-    "mutants": 566,
+    "killed": 543,
+    "mutants": 567,
     "notes": "All 24 survivors are equivalent or unreachable. Three pass tool_calls=None instead of [] in the VOID, transport-failure and empty-response (T3-10) records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Two drop the f'call_{turn}' default for a missing tool-call id and three change the '' default of tool_call_id in the tool message: a call without an id raises EngineError on the return-value lookup right after (S3-G2-2), so neither default is ever observed. Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). Two change the [] default of choices in _extract_tool_calls to None: both falsy, both give [].",
-    "score": 0.9576
+    "score": 0.9577
   },
   "execution/evidence": {
     "killed": 216,
@@ -71,10 +71,10 @@
     "score": 0.9725
   },
   "reporting/report": {
-    "killed": 1690,
-    "mutants": 1736,
+    "killed": 1758,
+    "mutants": 1804,
     "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Integrator, step 5: re-recorded after merging the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after the merge.] [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
-    "score": 0.9735
+    "score": 0.9745
   },
   "run": {
     "killed": 581,
@@ -83,10 +83,10 @@
     "score": 0.9748
   },
   "runner/console": {
-    "killed": 489,
-    "mutants": 490,
+    "killed": 523,
+    "mutants": 524,
     "notes": "The one survivor is equivalent: it changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
-    "score": 0.998
+    "score": 0.9981
   },
   "runner/credentials": {
     "killed": 116,
@@ -112,10 +112,10 @@
     "score": 1.0
   },
   "runner/summary": {
-    "killed": 656,
-    "mutants": 667,
+    "killed": 709,
+    "mutants": 720,
     "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default. [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
-    "score": 0.9835
+    "score": 0.9847
   },
   "scoring/accuracy": {
     "killed": 149,
@@ -140,10 +140,10 @@
     "score": 0.9944
   },
   "scoring/operation_correctness": {
-    "killed": 341,
-    "mutants": 362,
+    "killed": 361,
+    "mutants": 382,
     "notes": "All 21 non-killed mutants are equivalent or message-only. 11 change the text of a ValueError raised in _eval_decimal, which evaluate_expression always swallows (returns None). 4 are in evaluate_expression's 'if not isinstance(result, Decimal)' branch, which is unreachable (every evaluator path returns Decimal; converting a Decimal through str keeps value and exponent). In classify_operation: 'and' to 'or' in the expected-value conversion (None becomes Decimal('None'), which fails and gives None again), and two quantisation defaults ({} vs None, both falsy). In reclassify_session: 'er is not None or True' (Decimal('None') fails and gives None again), changed = None (falsy like False), and changed = True, an endless loop that mutmut reports as a timeout (the tests hang, so it is detected, but the score counts only kills).",
-    "score": 0.942
+    "score": 0.945
   },
   "scoring/provenance/audit": {
     "killed": 51,
@@ -151,14 +151,14 @@
     "score": 1.0
   },
   "scoring/provenance/classify": {
-    "killed": 226,
-    "mutants": 253,
-    "notes": "All 27 survivors are equivalent mutants. 23 are in classify_item's dead code: is_chained is computed but never used, and the 'if not intermediates and derivable: pass' block does nothing; any_originated=None behaves as False. The other 4 change a default that behaves the same: quantisation {} vs None (both skip quantisation), and arguments '{}' vs None or an invalid string (all give no expression).",
-    "score": 0.8933
+    "killed": 299,
+    "mutants": 304,
+    "notes": "All 5 survivors are equivalent. Two change the quantisation default ({} to None or no default): both falsy, both skip quantisation. Three change the '{}' default of arguments in _extract_expression (None, no default, 'XX{}XX'): each raises TypeError or JSONDecodeError, which is caught and gives None, the same as '{}' (no expression). Step 5 (d72a-fail-closed, T3-42) replaced classify_item's dead code (is_chained computed and unused, an empty 'if' block), which held 23 of the earlier 27 survivors.",
+    "score": 0.9836
   },
   "scoring/provenance/trace": {
-    "killed": 417,
-    "mutants": 417,
+    "killed": 440,
+    "mutants": 440,
     "score": 1.0
   },
   "scoring/release_coverage": {

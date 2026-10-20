@@ -237,13 +237,13 @@ DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 0.0%
 
 ## 7. D7.2(b) Operation Correctness
 
-Total operations evaluated: 32
+Total operations evaluated: 44
 
 | Outcome | Count |
 |---|---|
 | OPERATION-CORRECT | 28 |
 | WRONG-OPERATION | 0 |
-| OPERATION-UNOBSERVABLE | 4 |
+| OPERATION-UNOBSERVABLE | 16 |
 
 ## 7b. D7.2(a) Operand Provenance Step Counts
 
@@ -264,10 +264,14 @@ Total operands resolved: 144
 
 ### Per-Invocation Outcomes
 
-| Outcome | Count |
-|---|---|
-| OPERANDS-GROUNDED | 32 |
-| OPERAND-ORIGINATED | 0 |
+> OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded. UNMEASURABLE: a call in a chained item whose ground truth declares no intermediates (SPEC R2.4); its operands are not counted in the step table.
+
+| Outcome | Count | % |
+|---|---|---|
+| OPERANDS-GROUNDED | 32 | 72.7% |
+| OPERAND-ORIGINATED | 0 | 0.0% |
+| OPERANDS-UNOBSERVABLE | 12 | 27.3% |
+| UNMEASURABLE | 0 | 0.0% |
 
 ## 8. Scoring Proportions
 

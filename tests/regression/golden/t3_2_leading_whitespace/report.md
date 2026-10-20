@@ -235,12 +235,24 @@ DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 0.0%
 
 | Item | Condition | Operation | Originated Operand | Expression | Resolution |
 |---|---|---|---|---|---|
+| Q01 | base | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | base | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | base | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | base | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | base | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | base | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
 | Q09 | base | ? | `?` | `7777 * 3` | originated |
 | Q09 | base | ? | `?` | `7777 * 3` | originated |
 | Q09 | base | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
 | Q09 | base | ? | `?` | `7777 * 3` | originated |
 | Q09 | base | ? | `?` | `7777 * 3` | originated |
 | Q09 | base | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | instruction_removed | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | instruction_removed | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
 | Q09 | instruction_removed | ? | `?` | `7777 * 3` | originated |
 | Q09 | instruction_removed | ? | `?` | `7777 * 3` | originated |
 | Q09 | instruction_removed | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
@@ -265,41 +277,58 @@ Total operations evaluated: 48
 | Route divergence (item answer correct) | 0 |
 | Item answer incorrect | 0 |
 | Item answer undetermined (adjudicated) | 16 |
+| No figure released (no item answer) | 0 |
 
 ## 7b. D7.2(a) Operand Provenance Step Counts
 
 > Each operand in each tool-call expression is resolved through the five-step hierarchy (AP-1 v1.3 D7.2(a)).
 
-Total operands resolved: 144
+Total operands resolved: 180
 
 | Step | Resolution | Count | % |
 |---|---|---|---|
-| 1 | Source match | 72 | 50.0% |
-| 1 | Declared constant | 44 | 30.6% |
-| 2 | Transformed source | 12 | 8.3% |
+| 1 | Source match | 92 | 51.1% |
+| 1 | Declared constant | 52 | 28.9% |
+| 2 | Transformed source | 12 | 6.7% |
 | 3 | Reference intermediate | 0 | 0.0% |
-| 4 | Computed in session | 4 | 2.8% |
+| 4 | Computed in session | 0 | 0.0% |
 | 5 | Originated, sign-inverted from source | 0 | 0.0% |
-| 5 | Originated, computed from ungrounded invocation | 4 | 2.8% |
-| 5 | Originated, no traceable basis | 8 | 5.6% |
+| 5 | Originated, computed from ungrounded invocation | 8 | 4.4% |
+| 5 | Originated, no traceable basis | 16 | 8.9% |
 
 ### Per-Invocation Outcomes
 
-| Outcome | Count |
-|---|---|
-| OPERANDS-GROUNDED | 40 |
-| OPERAND-ORIGINATED | 8 |
+> OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded. UNMEASURABLE: a call in a chained item whose ground truth declares no intermediates (SPEC R2.4); its operands are not counted in the step table.
+
+| Outcome | Count | % |
+|---|---|---|
+| OPERANDS-GROUNDED | 32 | 66.7% |
+| OPERAND-ORIGINATED | 16 | 33.3% |
+| OPERANDS-UNOBSERVABLE | 0 | 0.0% |
+| UNMEASURABLE | 0 | 0.0% |
 
 ### Originated Operand Audit
 
 | Item | Condition | Value | Expression | Resolution |
 |---|---|---|---|---|
+| Q01 | base | `7777` | ` 7777 * 3` | originated |
+| Q01 | base | `3` | ` 7777 * 3` | originated |
+| Q01 | base | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | base | `7777` | ` 7777 * 3` | originated |
+| Q01 | base | `3` | ` 7777 * 3` | originated |
+| Q01 | base | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
 | Q09 | base | `7777` | `7777 * 3` | originated |
 | Q09 | base | `3` | `7777 * 3` | originated |
 | Q09 | base | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
 | Q09 | base | `7777` | `7777 * 3` | originated |
 | Q09 | base | `3` | `7777 * 3` | originated |
 | Q09 | base | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | instruction_removed | `7777` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | `3` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | instruction_removed | `7777` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | `3` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
 | Q09 | instruction_removed | `7777` | `7777 * 3` | originated |
 | Q09 | instruction_removed | `3` | `7777 * 3` | originated |
 | Q09 | instruction_removed | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |

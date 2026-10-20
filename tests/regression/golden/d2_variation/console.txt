@@ -146,6 +146,7 @@ result, by us or by anyone, in any document.
       route divergence (item answer correct):      0
       item answer incorrect:                       0
       item answer undetermined (adjudicated):      2
+      no figure released (no item answer):         0
 
 3j. D1 ACCURACY:
   Auto-scored: 58
@@ -170,6 +171,8 @@ result, by us or by anyone, in any document.
   step 5 (originated, no traceable basis):                  0
   OPERANDS-GROUNDED: 58
   OPERAND-ORIGINATED: 0
+  OPERANDS-UNOBSERVABLE: 0
+  UNMEASURABLE: 0
 
 ============================================================
 GENERATING FORMAL REPORT (report.py)
