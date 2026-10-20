@@ -43,7 +43,8 @@ def pct(num, denom, places=1):
     if denom == 0:
         return Decimal("0")
     q = Decimal("0.1") if places == 1 else Decimal(10) ** -places
-    return (Decimal(num) / Decimal(denom) * 100).quantize(q)
+    return (Decimal(num) / Decimal(denom) * 100).quantize(
+        q, rounding=ROUND_HALF_UP)
 
 
 def fmt(n):
@@ -325,7 +326,10 @@ def compute_figures():
                 v[f"{pfx}_{qid}_am_pct"] = pct(v[am_key], v[total_key])
 
     # Ops per execution (for F4)
-    v["b_ops_per_exec"] = round(v["b_total_ops"] / v["b_total_entries"], 2)
+    # An empty run B has no executions: 0 calls per execution
+    v["b_ops_per_exec"] = (
+        round(v["b_total_ops"] / v["b_total_entries"], 2)
+        if v["b_total_entries"] else 0)
 
     # Q10 calls per execution for Run A
     q10_a = [r for r in run_a["all_results"] if r["item_id"] == "Q10"]
@@ -364,9 +368,10 @@ def compute_figures():
             v[f"{pfx}_wo_item_wrong_cp"] = f"{auto_scored_wrong}/{auto_scored_wo:,}"
 
     # D7.5 bound for zero base non-invocations (D7.1b invocation figure)
-    for pfx in ("a", "b"):
+    for pfx, run in [("a", run_a), ("b", run_b)]:
         k_val = v.get(f"{pfx}_not_invoked_base", 0)
-        n_val = 500  # 10 items x 50 repeats, base condition
+        # n is the run's own count of base-condition executions
+        n_val = sum(1 for r in run["all_results"] if r["condition"] == "base")
         if k_val == 0 and n_val > 0:
             bound = clopper_pearson_upper_k0(n_val)
             v[f"{pfx}_base_noninvoke_cp"] = (
