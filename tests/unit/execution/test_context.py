@@ -285,3 +285,31 @@ def test_tracking_account_setdefault_without_default_inserts_none():
     tc, acct = tracked()
     assert acct.setdefault('nope') is None
     assert dict.__getitem__(acct, 'nope') is None
+
+
+# --- Step 5: the text the model sees agrees with the scored context ---
+
+def _shipped_items():
+    import json
+    from pathlib import Path
+    example = Path(__file__).resolve().parents[3] / 'example'
+    fixture = json.loads((example / 'fixture.json').read_text('utf-8'))
+    items = json.loads((example / 'questions.json').read_text('utf-8'))['items']
+    return [pytest.param(fixture, item, id=item['id']) for item in items]
+
+
+@pytest.mark.finding('T3-56')
+@pytest.mark.parametrize('fx,item', _shipped_items())
+def test_shown_text_carries_exactly_the_delivered_values(fx, item):
+    # Provenance resolves the model's operands against
+    # build_delivered_context; the model sees format_fixture_context. Every
+    # delivered value must be shown, under its account, and nothing else.
+    ctx = build_delivered_context(fx, item['source_accounts'])
+    text = format_fixture_context(fx, item)
+    names = {a['id']: a.get('name', a['id']) for a in fx['accounts']}
+    expected = ['Here is the financial information:']
+    for acct_id, fields in ctx.items():
+        expected.append(f'\n{names[acct_id]}:')
+        expected += [f"  {k.replace('_', ' ').title()}: {v}"
+                     for k, v in fields.items()]
+    assert text == '\n'.join(expected)
