@@ -229,6 +229,12 @@ Of the 14 `TRANSCRIBED-EXACT`, 6 were rounded under the declared quantisation po
 
 > base: aggregate spans 2 evidence classes (EV-0 UNOBSERVABLE, EV-2 PLATFORM-STRUCTURAL); figures are not comparable across classes; only observed outcomes are in n.
 
+### 5a. Instruction-Removal Contrast (D7.8)
+
+Held constant between base and instruction_removed (compared before execution, R1.2): tool declarations, tool_choice, sampling parameters, fixture content, message structure template. Varied: the system prompt only.
+
+DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): UNDEFINED (no instruction_removed observations)
+
 ## 6. D7.2(a) Originated-Operand Audit
 
 *No originated operands detected.*

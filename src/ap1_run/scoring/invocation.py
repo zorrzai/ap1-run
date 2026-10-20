@@ -165,7 +165,8 @@ def compute_dpr(invoked_base, invoked_removed, n_base, n_removed):
 
     DPR = (I_base - I_removed) / I_base
 
-    Where I_base is zero, DPR is UNDEFINED, never 1.0.
+    Where I_base is zero, DPR is UNDEFINED, never 1.0. Where either
+    condition has no observations, DPR is UNDEFINED too (S3-G4-1).
 
     Args:
         invoked_base: int -- invocations in base condition
@@ -186,8 +187,9 @@ def compute_dpr(invoked_base, invoked_removed, n_base, n_removed):
     if rate_base == 0:
         return None, 'UNDEFINED (zero base invocation rate)'
 
-    rate_removed = Decimal(invoked_removed) / Decimal(n_removed) \
-        if n_removed > 0 else Decimal(0)
+    if n_removed == 0:
+        return None, 'UNDEFINED (no instruction_removed observations)'
+    rate_removed = Decimal(invoked_removed) / Decimal(n_removed)
 
     dpr = (rate_base - rate_removed) / rate_base
     pct = (dpr * 100).quantize(Decimal('0.1'))

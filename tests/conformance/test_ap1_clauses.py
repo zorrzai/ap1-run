@@ -571,18 +571,6 @@ def test_perturbation_guard_ignores_a_change_of_model():
     assert check_single_variable_perturbation(PERTURBATION_BASE, changed) == []
 
 
-@pytest.mark.finding('T3-46')
-@pytest.mark.req('AP-1 D7.8', 'R1.2')
-def test_perturbation_guard_returns_identical_prompts_without_refusing():
-    # Identical prompts mean nothing was perturbed; the guard reports it
-    # in its return value but does not raise. Correct: refuse the run.
-    from ap1_run.execution.perturbation_guard import \
-        check_single_variable_perturbation
-    diffs = check_single_variable_perturbation(PERTURBATION_BASE,
-                                               dict(PERTURBATION_BASE))
-    assert [d['field'] for d in diffs] == ['system_prompt']
-
-
 # =====================================================================
 # §6.8 Outcome vocabulary
 # =====================================================================

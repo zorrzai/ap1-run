@@ -296,16 +296,15 @@ def test_compute_dpr_equal_rates_is_zero():
     assert compute_dpr(10, 10, 10, 10) == (D(0), '0.0%')
 
 
+@pytest.mark.finding('S3-G4-1')
+def test_compute_dpr_no_removed_observations_text():
+    # (A zero base rate is reported first: see the zero-base tests.)
+    assert compute_dpr(10, 5, 10, 0) == (
+        None, 'UNDEFINED (no instruction_removed observations)')
+
+
 def test_compute_dpr_removed_above_base_is_negative():
     assert compute_dpr(5, 10, 10, 10) == (D(-1), '-100.0%')
-
-
-@pytest.mark.finding('S3-G4-1')
-def test_compute_dpr_no_removed_observations_reports_full_drop():
-    # Correct: with no observations in the removed arm, DPR is
-    # UNDEFINED like the zero-base case. Today the removed rate is taken
-    # as 0 and DPR is reported as 100.0 %, a full drop measured on no data.
-    assert compute_dpr(10, 5, 10, 0) == (D(1), '100.0%')
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
@@ -328,9 +327,6 @@ def test_format_rate_displayed_bound_is_never_below_the_exact_bound(n):
 
 @pytest.mark.finding('S3-G4-1')
 @pytest.mark.req('R2.3', 'AP-1 D7.8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G4-1: no removed-arm observations taken as a '
-                          'removed rate of 0, DPR 100.0%')
 def test_compute_dpr_no_removed_observations_undefined():
     # Correct: DPR = (I_base - I_removed) / I_base needs both rates (SPEC
     # R2.3 l.546-547). With no observations in the removed arm, I_removed

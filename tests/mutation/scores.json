@@ -1,7 +1,7 @@
 {
   "execution/context": {
-    "killed": 76,
-    "mutants": 76,
+    "killed": 93,
+    "mutants": 93,
     "score": 1.0
   },
   "execution/engine": {
@@ -17,22 +17,22 @@
     "score": 0.9643
   },
   "execution/perturbation_guard": {
-    "killed": 163,
-    "mutants": 195,
-    "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is returned only when it holds nothing but the identical-prompt entry (S3-G3-4). _summarise itself is tested directly.",
-    "score": 0.8359
+    "killed": 149,
+    "mutants": 181,
+    "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is only ever returned empty. _summarise itself is tested directly. (Step 5 seal-gt-guards, T3-46: identical prompts now raise, and the identical-prompt diff entry is gone; its 14 mutants were all killed, so removing them lowered the score from 163/195 = 0.8359 to 149/181 = 0.8232 with the same 32 survivors.)",
+    "score": 0.8232
   },
   "execution/seal": {
-    "killed": 336,
-    "mutants": 361,
-    "notes": "All 25 survivors are equivalent. 21 rename a key ('item_id', 'reason', 'declared_fields') or change the exception type name inside the failure dicts of perturbation_check and source_fields_check. Those dicts are never observable: any failure raises SealError, whose message uses only 'field' (perturbation) or 'item_id' and 'undeclared_fields' (source fields), and the functions only ever return an empty list (S3-G3-3). 4 replace the '' default of ap1_version_doi in verify_seal with None or no default, which is falsy like '' and skips the DOI check the same way.",
-    "score": 0.9307
+    "killed": 397,
+    "mutants": 402,
+    "notes": "All 5 survivors are equivalent. 1 sets perturbed_any = None instead of False in perturbation_check: both are falsy, and the flag is only ever tested for truth. 4 replace the '' default of ap1_version_doi in verify_seal with None or no default, which is falsy like '' and skips the DOI check the same way. (Step 5 seal-gt-guards: the failure dicts no longer carry a 'field' key, which nothing read; every failure's item and reason are in the SealError message, S3-G3-3.)",
+    "score": 0.9876
   },
   "execution/seal_constants": {
-    "killed": 100,
-    "mutants": 102,
-    "notes": "Both survivors are equivalent: they rename the 'reason' key of a failure dict. The dicts are never observable, because any failure raises SealError (whose message does not use 'reason') and the function only ever returns an empty list. Legacy suites verify_d72b.py + verify_e7_coverage.py score 0.7549 on the same mutants.",
-    "score": 0.9804
+    "killed": 173,
+    "mutants": 173,
+    "notes": "No survivors. (Step 5 seal-gt-guards rewrote the check: failures are message strings, so the old survivors, renames of an unread 'reason' key, are gone. Legacy suites verify_d72b.py + verify_e7_coverage.py scored 0.7549 on the pre-step-5 mutants.)",
+    "score": 1.0
   },
   "execution/version": {
     "killed": 155,
@@ -71,16 +71,16 @@
     "score": 0.9481
   },
   "reporting/report": {
-    "killed": 1660,
-    "mutants": 1706,
-    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Integrator, step 5: re-recorded after merging the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after the merge.]",
-    "score": 0.973
+    "killed": 1690,
+    "mutants": 1736,
+    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Integrator, step 5: re-recorded after merging the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after the merge.] [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
+    "score": 0.9735
   },
   "run": {
-    "killed": 553,
-    "mutants": 568,
+    "killed": 579,
+    "mutants": 594,
     "notes": "All 15 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored.",
-    "score": 0.9736
+    "score": 0.9747
   },
   "runner/console": {
     "killed": 489,
@@ -107,15 +107,15 @@
     "score": 0.9206
   },
   "runner/settings": {
-    "killed": 248,
-    "mutants": 248,
+    "killed": 260,
+    "mutants": 260,
     "score": 1.0
   },
   "runner/summary": {
-    "killed": 620,
-    "mutants": 631,
-    "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default.",
-    "score": 0.9826
+    "killed": 656,
+    "mutants": 667,
+    "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default. [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
+    "score": 0.9835
   },
   "scoring/accuracy": {
     "killed": 149,
@@ -129,8 +129,8 @@
     "score": 0.9114
   },
   "scoring/invocation": {
-    "killed": 179,
-    "mutants": 180,
+    "killed": 178,
+    "mutants": 179,
     "notes": "The one survivor is equivalent: it changes the '#' in the key ('#', i) that _summarise_class gives a record without an item_id; any tuple key is distinct from every item_id string and from the other records' keys. The module-level getcontext().prec = 50 is not mutated by mutmut; test_invocation_import_sets_global_decimal_precision_to_50 pins it (T3-60).",
     "score": 0.9944
   },

@@ -113,22 +113,43 @@ def apply_sampling_overrides(config, environ=os.environ):
         print(f'  reasoning_effort={re_val} (from config)')
 
 
-def check_condition_guard(config, fixture_path, system_prompt_base,
-                          system_prompt_removed, tools, sampling):
-    """R1.2: refuse the run if the two conditions differ in anything but
-    the system prompt (raises PerturbationRefusal)."""
-    _fixture_bytes = open(fixture_path, 'rb').read()
-    _fixture_hash = hashlib.sha256(_fixture_bytes).hexdigest()
-    _base_guard = {
-        'system_prompt': system_prompt_base,
+def condition_request(config, fixture_hash, system_prompt, tools, sampling):
+    """What one condition sends, as the R1.2 guard compares it.
+
+    The runner builds both conditions with this, checks them against
+    each other, and gives the engine each condition's own system prompt
+    and tools from the result, so that the guard compares what each arm
+    is actually run with (T3-46).
+    """
+    return {
+        'system_prompt': system_prompt,
         'tools': tools,
         'tool_choice': config.get('tool_choice'),
         'sampling': sampling,
-        'fixture_hash': _fixture_hash,
+        'fixture_hash': fixture_hash,
         'message_template': config.get('message_template'),
     }
-    _removed_guard = dict(_base_guard)
-    _removed_guard['system_prompt'] = system_prompt_removed
-    check_single_variable_perturbation(_base_guard, _removed_guard)
+
+
+def check_condition_guard(config, fixture_path, system_prompt_base,
+                          system_prompt_removed, tools, sampling):
+    """R1.2: refuse the run if the two conditions differ in anything but
+    the system prompt, or if the system prompts are identical (raises
+    PerturbationRefusal).
+
+    Returns {condition: condition_request(...)} for 'base' and
+    'instruction_removed'.
+    """
+    with open(fixture_path, 'rb') as f:
+        fixture_hash = hashlib.sha256(f.read()).hexdigest()
+    arms = {
+        condition: condition_request(config, fixture_hash, prompt, tools,
+                                     sampling)
+        for condition, prompt in (('base', system_prompt_base),
+                                  ('instruction_removed',
+                                   system_prompt_removed))}
+    check_single_variable_perturbation(arms['base'],
+                                       arms['instruction_removed'])
     print('Perturbation guard: PASSED (single-variable: system_prompt only)')
     print()
+    return arms
