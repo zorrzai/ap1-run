@@ -8,6 +8,7 @@ including its known flaws (the literal backslash-n before 3h2).
 
 from collections import Counter
 
+from ap1_run.runner.summary import measure_invocation_by_condition
 from ap1_run.scoring.invocation import format_rate
 
 
@@ -75,19 +76,31 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
     # 3g. Unmeasured cells
     print(f'\n3g. UNMEASURED CELLS: {len(unmeasured_cells)}')
 
-    # 3h. Invocation under both conditions
-    print(f'\n3h. D7.1 INVOCATION:')
+    # 3h. Invocation under both conditions. n counts computable questions
+    # with an observed outcome; a question fails if any repeat is
+    # NOT-INVOKED; UNOBSERVABLE (EV-0) executions are in no n.
+    print(f'\n3h. D7.1 INVOCATION (n = questions; a question fails if any '
+          f'repeat is NOT-INVOKED; UNOBSERVABLE not in n):')
+    measured = measure_invocation_by_condition(all_results)
     for cond in conditions:
-        cond_results = [r for r in executed if r['condition'] == cond]
-        invoked = sum(1 for r in cond_results
-                      if r.get('invocation_outcome') == 'INVOKED')
-        not_invoked = sum(1 for r in cond_results
-                          if r.get('invocation_outcome') == 'NOT-INVOKED')
-        failures = not_invoked
-        n = len(cond_results)
-        rate_str = format_rate(failures, n) if n > 0 else 'no observations'
+        m = measured.get(cond, {'per_class': {}, 'cross_class_warning': None})
+        observed = {ec: c for ec, c in m['per_class'].items() if c['n'] > 0}
+        invoked = sum(c['invoked'] for c in observed.values())
+        not_invoked = sum(c['not_invoked'] for c in observed.values())
+        n = sum(c['n'] for c in observed.values())
         print(f'  {cond}: invoked={invoked} not_invoked={not_invoked} n={n}')
-        print(f'    failure rate: {rate_str}')
+        for ec, c in m['per_class'].items():
+            if c['unobservable']:
+                print(f'    {ec or "no evidence class"} executions: '
+                      f'{c["unobservable"]} UNOBSERVABLE, not in n')
+        if m['cross_class_warning']:
+            print(f'    {m["cross_class_warning"]}')
+        if len(observed) > 1:
+            for ec, c in observed.items():
+                print(f'    failure rate ({ec}): {c["failure_rate"]}')
+        else:
+            rate_str = format_rate(not_invoked, n)
+            print(f'    failure rate: {rate_str}')
 
     # 3h2. D7.3 Transcription
     print(f'\\n3h2. D7.3 TRANSCRIPTION:')

@@ -101,11 +101,11 @@ result, by us or by anyone, in any document.
 
 3g. UNMEASURED CELLS: 0
 
-3h. D7.1 INVOCATION:
-  base: invoked=20 not_invoked=0 n=20
-    failure rate: 0/20 failures; one-sided 95% upper bound on the failure rate 13.9%
-  instruction_removed: invoked=20 not_invoked=0 n=20
-    failure rate: 0/20 failures; one-sided 95% upper bound on the failure rate 13.9%
+3h. D7.1 INVOCATION (n = questions; a question fails if any repeat is NOT-INVOKED; UNOBSERVABLE not in n):
+  base: invoked=10 not_invoked=0 n=10
+    failure rate: 0/10 failures; one-sided 95% upper bound on the failure rate 25.9%
+  instruction_removed: invoked=10 not_invoked=0 n=10
+    failure rate: 0/10 failures; one-sided 95% upper bound on the failure rate 25.9%
 \n3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 32
   TRANSCRIBED-ALTERED: 0

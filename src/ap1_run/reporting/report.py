@@ -38,7 +38,7 @@ Classification: DETERMINISTIC. No model, no network.
 import json
 import math
 from datetime import datetime, timezone
-from decimal import Decimal
+from decimal import ROUND_DOWN, Decimal
 
 
 # -- All seven dimensions per AP-1 v1.3 --------------------------------
@@ -308,10 +308,15 @@ def _section_d73(summary):
     return '\n'.join(lines)
 
 def _section_clopper_pearson(summary):
-    """Section 5: Zero-failure Clopper-Pearson bounds.
+    """Section 5: D7.1 invocation figures with their bounds.
 
-    k=0 only: p_upper = 1 - 0.05^(1/n).
-    k>0: point estimate, no bound, with declared limitation.
+    n is the number of computable questions with an observed outcome
+    (AP-1 v1.3 D7.1; a question fails if any repeat is NOT-INVOKED).
+    k=0: p_upper = 1 - 0.05^(1/n). k>0: point estimate, no bound, with
+    declared limitation. The rate is printed as a percentage with k/n
+    and the bound, never "100%" alone (SPEC R2.3), and each condition
+    gets the AP-1 \u00a76.2 headline. EV-0 (UNOBSERVABLE) executions are
+    listed per evidence class and are in no n (SPEC R1.3.1, R2.3).
     """
     lines = ['## 5. Invocation Figures with Confidence Bounds\n']
     lines.append('> AP-1 v1.3 D7.5: any invocation figure, including 100%, '
@@ -323,36 +328,91 @@ def _section_clopper_pearson(summary):
         lines.append('*No invocation figures available.*\n')
         return '\n'.join(lines)
 
-    lines.append('| Metric | k (failures) | n | Rate | 95% Upper Bound |')
-    lines.append('|---|---|---|---|---|')
+    lines.append('> D7.1 n counts the computable questions that have an '
+                 'observed outcome, not the executions: the '
+                 'repeats of a question are not independent trials. A '
+                 'question counts as a failure if any of its repeats is '
+                 'NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither '
+                 'successes nor failures and are in no n (SPEC R2.3, '
+                 'R1.3.1).\n')
 
+    lines.append('| Metric | k (failures) | n | Rate | 95% Upper Bound '
+                 '| Evidence Class |')
+    lines.append('|---|---|---|---|---|---|')
+
+    headlines = []
     for metric, data in sorted(inv_figures.items()):
         k = data.get('failures', 0)
         n = data.get('n', 0)
-        rate = data.get('rate')
+        ec = data.get('evidence_class')
+        ec_str = f'`{ec}`' if ec else '\u2014'
+        cond = data.get('condition', metric)
 
         if n == 0:
-            lines.append(f'| {metric} | {k} | {n} | — | — |')
+            lines.append(f'| {metric} | {k} | {n} | \u2014 | \u2014 '
+                         f'| {ec_str} |')
+            headlines.append(
+                f'- Under {cond}: no computable question has an observed '
+                f'invocation outcome; D7.1 is not measured.')
             continue
 
-        rate_str = f'{rate}' if rate is not None else '—'
+        pct = _percent(n - k, n)
+        rate_str = f'{n - k}/{n} ({pct}%)'
 
         if k == 0:
             # Exact closed-form Clopper-Pearson: p_upper = 1 - alpha^(1/n)
             alpha = 0.05
             p_upper = 1.0 - alpha ** (1.0 / n)
-            lines.append(
-                f'| {metric} | 0 | {n} | {n}/{n} | '
-                f'{p_upper:.6f} ({p_upper*100:.4f}%) |')
+            bound_str = f'{p_upper:.6f} ({p_upper*100:.4f}%)'
+            bound_text = (f'one-sided 95% upper bound on the failure rate '
+                          f'{p_upper*100:.4f}%')
         else:
             # k > 0: report point estimate only
-            point = k / n if n > 0 else 0
-            lines.append(
-                f'| {metric} | {k} | {n} | {rate_str} | '
-                f'*not computed (see §Declared Limitations)* |')
+            bound_str = '*not computed (see \u00a7Declared Limitations)*'
+            bound_text = ('upper bound on the failure rate not computed, '
+                          'see \u00a7Declared Limitations')
+        lines.append(f'| {metric} | {k} | {n} | {rate_str} | {bound_str} '
+                     f'| {ec_str} |')
+        headlines.append(
+            f'- Deterministic computation was invoked on {pct}% of '
+            f'computable questions ({n - k}/{n}; {k} not invoked; '
+            f'{bound_text}), under {cond}'
+            + (f', on evidence class {ec}' if ec else '') + '.')
 
     lines.append('')
+    lines.append('**Headline (AP-1 \u00a76.2):**\n')
+    lines.extend(headlines)
+    lines.append('')
+
+    evidence = summary.get('invocation_evidence', {})
+    if evidence:
+        lines.append('**Executions by evidence class:**\n')
+        lines.append('| Condition | Evidence Class | Executions | Questions '
+                     '| Questions in n | Unobservable Executions |')
+        lines.append('|---|---|---|---|---|---|')
+        warnings = []
+        for cond, data in evidence.items():
+            for ec, c in data['classes'].items():
+                lines.append(
+                    f'| {cond} | `{ec}` | {c["executions"]} '
+                    f'| {c["questions"]} | {c["observed_questions"]} '
+                    f'| {c["unobservable_executions"]} |')
+            if data.get('cross_class_warning'):
+                warnings.append(f'> {cond}: {data["cross_class_warning"]}; '
+                                f'only observed outcomes are in n.')
+        lines.append('')
+        for w in warnings:
+            lines.append(w)
+            lines.append('')
+
     return '\n'.join(lines)
+
+
+def _percent(part, whole):
+    """part/whole as a percentage string with one decimal, rounded down
+    so that an invocation rate below 100% never prints as 100.0%."""
+    return str((Decimal(part) / Decimal(whole) * 100).quantize(
+        Decimal('0.1'), rounding=ROUND_DOWN))
 
 
 def _section_d72a_audit(summary):

@@ -6,7 +6,10 @@ give D2 per item and condition; build_summary assembles the summary that
 report.generate_report() reads.
 """
 
+from ap1_run.scoring.invocation import measure_invocation
 from ap1_run.scoring.reproducibility import classify_mechanism
+
+_OUTCOME_OBSERVED = {'INVOKED': True, 'NOT-INVOKED': False}
 
 
 def verify_invocation_consistency(results):
@@ -41,6 +44,38 @@ def verify_invocation_consistency(results):
                 f'NOT-INVOKED but tool_calls_count={tc_count}. '
                 f'A scoring outcome that contradicts its own evidence '
                 f'is a defect, not a finding.')
+
+
+def measure_invocation_by_condition(all_results):
+    """D7.1 per condition, from the runner's per-execution rows.
+
+    Only EXECUTED rows count (UNMEASURED and VOID cells are in no
+    denominator). Each row becomes a measure_invocation record: INVOKED
+    and NOT-INVOKED are observations, any other outcome (None for EV-0)
+    is UNOBSERVABLE. Returns {condition: measure_invocation(...)} in the
+    order the conditions first appear, each with an extra 'executions'
+    entry: {evidence_class: (executions, distinct questions)}.
+    """
+    by_condition = {}
+    for r in all_results:
+        if r.get('status') != 'EXECUTED':
+            continue
+        by_condition.setdefault(r.get('condition', ''), []).append({
+            'item_id': r.get('item_id'),
+            'invoked': _OUTCOME_OBSERVED.get(r.get('invocation_outcome')),
+            'evidence_class': r.get('evidence_class') or '',
+        })
+    measured = {}
+    for cond, records in by_condition.items():
+        m = measure_invocation(records)
+        per_class = {}
+        for rec in records:
+            per_class.setdefault(rec['evidence_class'], []).append(
+                rec['item_id'])
+        m['executions'] = {ec: (len(ids), len(set(ids)))
+                           for ec, ids in sorted(per_class.items())}
+        measured[cond] = m
+    return measured
 
 
 def find_d2_cap(sampling):
@@ -115,22 +150,36 @@ def build_summary(all_results, evidence_findings, *,
     # Item evidence detail
     summary['item_evidence'] = evidence_findings
 
-    # Invocation figures per condition
+    # D7.1 invocation figures per condition and evidence class. The unit
+    # is the computable question; EV-0 (UNOBSERVABLE) executions are not
+    # in n and are listed per class in invocation_evidence.
     inv_figures = {}
-    for r in all_results:
-        if r.get('status') != 'EXECUTED':
-            continue
-        cond = r.get('condition', '')
-        key = f'd7_invocation_{cond}'
-        if key not in inv_figures:
-            inv_figures[key] = {'failures': 0, 'n': 0, 'rate': None}
-        inv_figures[key]['n'] += 1
-        if r.get('invocation_outcome') == 'NOT-INVOKED':
-            inv_figures[key]['failures'] += 1
-    for key, data in inv_figures.items():
-        if data['n'] > 0:
-            data['rate'] = f"{data['n'] - data['failures']}/{data['n']}"
+    inv_evidence = {}
+    for cond, m in measure_invocation_by_condition(all_results).items():
+        classes = {ec: c for ec, c in m['per_class'].items() if c['n'] > 0}
+        inv_evidence[cond] = {
+            'classes': {ec: {'executions': m['executions'][ec][0],
+                             'questions': m['executions'][ec][1],
+                             'observed_questions': c['n'],
+                             'unobservable_executions': c['unobservable']}
+                        for ec, c in m['per_class'].items()},
+            'cross_class_warning': m['cross_class_warning'],
+        }
+        if not classes:
+            classes = {None: {'n': 0, 'not_invoked': 0}}
+        for ec, c in classes.items():
+            key = f'd7_invocation_{cond}'
+            if len(classes) > 1:
+                key += f' ({ec})'
+            n, k = c['n'], c['not_invoked']
+            inv_figures[key] = {
+                'failures': k, 'n': n,
+                'rate': f'{n - k}/{n}' if n > 0 else None,
+                'condition': cond, 'evidence_class': ec,
+                'unobservable': m['unobservable_n'],
+            }
     summary['invocation_figures'] = inv_figures
+    summary['invocation_evidence'] = inv_evidence
 
     # Operation correctness counts
     op_counts = {'OPERATION-CORRECT': 0, 'WRONG-OPERATION': 0,
@@ -165,7 +214,7 @@ def build_summary(all_results, evidence_findings, *,
     total_executed = sum(1 for r in all_results
                         if r.get('status') == 'EXECUTED')
     summary['d7_results'] = {
-        'n': total_executed,  # every execution with observable evidence
+        'n': total_executed,  # every executed response (any class)
         'auto_scored_n': auto_n,
         'adjudicated_n': adj_n,
     }
