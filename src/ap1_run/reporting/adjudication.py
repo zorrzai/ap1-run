@@ -300,5 +300,11 @@ def _extract_response_content(response):
     choices = response.get('choices', [])
     if not choices:
         return '[empty response]'
-    msg = choices[0].get('message', {})
+    first = choices[0] if isinstance(choices, list) else None
+    msg = first.get('message', {}) if isinstance(first, dict) else None
+    if not isinstance(msg, dict) or \
+            not isinstance(msg.get('content') or '', str):
+        # A shape that cannot be read (S3-G2-1) is named, not read
+        from ap1_run.execution.evidence import _read_message
+        return f'[unrecognised response shape: {_read_message(response)[1]}]'
     return msg.get('content', '') or '[no text content]'

@@ -375,8 +375,6 @@ def test_run_model_controlled_calculator_input_run_completes(full_run,
 # -- S3-G2-1, S3-G2-2: platform-shaped surprises never abort the run ------
 
 @pytest.mark.finding('S3-G2-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-1: malformed response shape aborts the run')
 @pytest.mark.parametrize('body', [
     {'choices': [{'index': 0, 'message': None, 'finish_reason': 'stop'}]},
     {'choices': ['The monthly interest is $15.20.']},
@@ -396,9 +394,6 @@ def test_run_malformed_response_shape_ev0_run_completes(full_run, body):
 
 
 @pytest.mark.finding('S3-G2-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-2: a tool call without an id aborts the '
-                          'run')
 def test_run_tool_call_without_id_executed_and_scored(full_run):
     """Q01/base's calculator call has no "id" (some OpenAI-compatible
     servers omit it). Correct (S3-G2-2): the call is executed, its

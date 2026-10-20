@@ -192,27 +192,22 @@ def _extract_surface_values(responses, surface):
     For 'figures': extract the numeric content (the released figure).
     For 'prose': extract the full text content.
     """
+    # A response whose shape cannot be read (S3-G2-1) has no surface
+    # value, as one without choices.
+    from ap1_run.execution.evidence import _read_message
     values = []
     for r in responses:
+        msg = _read_message(r)[0] or {}
         if surface == 'figures':
             # The figure value, normalised to string for comparison
-            choices = r.get('choices', [])
-            if choices:
-                msg = choices[0].get('message', {})
-                tool_calls = msg.get('tool_calls') or []
-                if tool_calls:
-                    # Use tool call arguments as the figure surface
-                    val = str(tool_calls[0].get('function', {}).get('arguments', ''))
-                else:
-                    val = msg.get('content', '') or ''
+            tool_calls = msg.get('tool_calls') or []
+            if tool_calls:
+                # Use tool call arguments as the figure surface
+                val = str(tool_calls[0].get('function', {}).get('arguments', ''))
             else:
-                val = ''
+                val = msg.get('content', '') or ''
             values.append(val)
         elif surface == 'prose':
-            choices = r.get('choices', [])
-            if choices:
-                val = choices[0].get('message', {}).get('content', '') or ''
-            else:
-                val = ''
+            val = msg.get('content', '') or ''
             values.append(val)
     return values

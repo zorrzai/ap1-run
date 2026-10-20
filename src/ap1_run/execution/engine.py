@@ -222,34 +222,33 @@ def _drive_tool_loop(*, response, messages, config, tools,
         if not model_calls:
             break
 
+        turn_records = []
         for tc in model_calls:
-            all_tool_calls.append({
+            record = {
                 'turn': turn,
                 'id': tc.get('id', f'call_{turn}'),
                 'type': tc.get('type', 'function'),
                 'function': tc.get('function', {}),
-            })
+            }
+            all_tool_calls.append(record)
+            turn_records.append(record)
 
         messages.append(
             current.get('choices', [{}])[0].get('message', {}))
 
-        for tc in model_calls:
-            func = tc.get('function', {})
+        # D7.2(a)(iv): each return value is attached to its own call's
+        # record, so a call without an id (S3-G2-2) or a reused id
+        # (S3-G2-3) never loses or overwrites a return.
+        for tc, record in zip(model_calls, turn_records):
+            func = record['function']
             result = _execute_tool(
                 func.get('name', ''), func.get('arguments', '{}'))
             messages.append({
                 'role': 'tool',
-                'tool_call_id': tc.get('id', ''),
+                'tool_call_id': record['id'],
                 'content': str(result),
             })
-            # D7.2(a)(iv): attach return value by tool_call_id
-            tc_id = tc.get('id', '')
-            matched = [r for r in all_tool_calls if r['id'] == tc_id]
-            if not matched:
-                raise EngineError(
-                    f'tool_call_id {tc_id!r} not found in all_tool_calls; '
-                    f'cannot attach return_value')
-            matched[0]['return_value'] = result
+            record['return_value'] = result
 
         try:
             current, _ = adapter_send(
@@ -335,10 +334,9 @@ def _is_empty_response(response):
 
 
 def _extract_tool_calls(response):
-    """Extract tool_calls from an OpenAI-compatible response."""
-    if not isinstance(response, dict):
-        return []
-    choices = response.get('choices', [])
-    if not choices:
-        return []
-    return choices[0].get('message', {}).get('tool_calls') or []
+    """Extract tool_calls from an OpenAI-compatible response: none from a
+    shape the evidence code does not recognise (S3-G2-1), which
+    _record_shape has already recorded as EV-0."""
+    from ap1_run.execution.evidence import _extract_model_tool_calls
+    tool_calls, _, _ = _extract_model_tool_calls(response)
+    return tool_calls
