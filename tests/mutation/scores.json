@@ -35,10 +35,10 @@
     "score": 1.0
   },
   "execution/version": {
-    "killed": 155,
-    "mutants": 167,
-    "notes": "All 12 survivors are equivalent. Three touch dead code: the local 'modified' (False to None or True) and the first 'result = {}' are assigned and never read. Three change the unreachable else of 'parts[0] if parts else ...' (a stripped non-empty line always splits into at least one part). Five change how VERSION is opened or a path is encoded: 'UTF-8' is the same codec; no 'r', no encoding or encoding=None mean the locale's, UTF-8 on macOS and Linux. One opens 'version' instead of 'VERSION', which macOS's case-insensitive file system finds anyway. No legacy suite imports version.py (0 % legacy coverage); the regression scenarios run it end to end.",
-    "score": 0.9281
+    "killed": 159,
+    "mutants": 171,
+    "notes": "All 12 survivors are equivalent. Three touch dead code: the local 'modified' (False to None or True) and the first 'result = {}' are assigned and never read. Three change the unreachable else of 'parts[0] if parts else ...' (a stripped non-empty line always splits into at least one part). Five change how VERSION is opened or a path is encoded: 'UTF-8' is the same codec; no 'r', no encoding or encoding=None mean the locale's, UTF-8 on macOS and Linux. One opens 'version' instead of 'VERSION', which macOS's case-insensitive file system finds anyway. (Step 5 seal-verifier-hardening: the source hash covers src/ap1_run/ and VERSION only, F2/T3-70, and a VERSION commit under 7 characters marks the runner modified, S3-G3-2; the 12 survivors are the same ones.) No legacy suite imports version.py (0 % legacy coverage); the regression scenarios run it end to end.",
+    "score": 0.9298
   },
   "foundation/adapter": {
     "killed": 160,
