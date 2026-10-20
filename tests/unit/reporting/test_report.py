@@ -334,15 +334,73 @@ def test_dimension_results_d2_live_shape_is_measured_with_n_na():
 
 
 @pytest.mark.finding('T3-29')
-def test_dimension_results_d7_is_one_measured_row():
-    # One D7 row says "Measured", although D7.4 is never measured and
-    # part of D7.3 is unobservable. Correct: D7.1-D7.4 reported
-    # separately, D7.4 declared not measured.
-    rows = dim_rows(report._section_dimension_results(
-        {'d7_results': {'n': 40, 'auto_scored_n': 22, 'adjudicated_n': 18}},
-        {'dimensions_claimed': ['D7']}))
-    assert rows[6] == '| D7 | Measured | 40 | See \u00a74-7 D7 Figures |'
-    assert len(rows) == 7
+def test_dimension_results_d7_reported_per_sub_dimension():
+    # Fixed (T3-29; AP-1 v1.3 D7 "Report all four"): D7.1-D7.4 each have
+    # a row; D7.4 is not measured; D7.3 says how much is UNOBSERVABLE.
+    text = report._section_dimension_results(
+        {'d7_results': {'n': 40, 'auto_scored_n': 22, 'adjudicated_n': 18},
+         'transcription_results': [tr('TRANSCRIBED-EXACT', 1),
+                                   tr('UNOBSERVABLE', 2),
+                                   tr('TRANSCRIBED-ALTERED', 3)]},
+        {'dimensions_claimed': ['D7']})
+    assert text.split('\n')[-6:] == [
+        '| D7 | Partly measured | 40 | D7.1-D7.3 measured, D7.4 not '
+        'measured (\u00a712) |',
+        '| D7.1 | Measured | see \u00a75 | Invocation rate per condition: '
+        '\u00a75 |',
+        '| D7.2 | Measured | see \u00a76-7b | Operand provenance \u00a76, '
+        '\u00a77b; operation correctness \u00a77 |',
+        '| D7.3 | Partly measured (1 of 3 UNOBSERVABLE) | 3 | Transcription '
+        'fidelity: D7.3 section |',
+        '| D7.4 | **NOT MEASURED** | \u2014 | Invocation under pressure '
+        '(\u00a712) |',
+        '']
+    assert len(dim_rows(text)) == 7
+
+
+def test_dimension_results_d7_without_unobservable_and_without_n():
+    text = report._section_dimension_results(
+        {'d7_results': {'auto_scored_n': 1},
+         'transcription_results': [tr('TRANSCRIBED-EXACT', 1)]},
+        {'dimensions_claimed': ['D7']})
+    assert '| D7 | Partly measured | N/A |' in text
+    assert '| D7.3 | Measured | 1 |' in text
+    assert '| D7.3 | Measured | 0 |' in report._section_dimension_results(
+        {'d7_results': {'n': 1}}, {'dimensions_claimed': ['D7']})
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7.7')
+def test_evidence_line_prefers_the_figures_own_executions():
+    summary = {'evidence_class_counts': {'EV-0 UNOBSERVABLE': 1,
+                                         'EV-2 PLATFORM-STRUCTURAL': 5},
+               'd7_evidence': {'D7.2(b)': {'EV-2 PLATFORM-STRUCTURAL': 4},
+                               'D7.3': {}}}
+    assert report._evidence_line(summary, 'D7.2(b)') == (
+        'Evidence class (AP-1 D7.7), executions: '
+        '`EV-2 PLATFORM-STRUCTURAL` (4).\n')
+    # No executions recorded for the figure: the run's classes, and a
+    # statement that figures across classes are not comparable.
+    assert report._evidence_line(summary, 'D7.3') == (
+        'Evidence class (AP-1 D7.7), executions: `EV-0 UNOBSERVABLE` (1), '
+        '`EV-2 PLATFORM-STRUCTURAL` (5). Figures resting on different '
+        'classes are not comparable.\n')
+    assert report._evidence_line({}, 'D7.3') is None
+    assert report._evidence_line({'d7_evidence': {}}, 'D7.3') is None
+
+
+@pytest.mark.finding('T3-29')
+def test_d72b_and_d73_evidence_line_placement():
+    summary = {'d7_evidence': {'D7.2(b)': {'EV-2': 2}, 'D7.3': {'EV-1': 3}},
+               'operation_correctness_counts': {'OPERATION-CORRECT': 2}}
+    assert report._section_d72b_counts(summary).startswith(md(
+        '## 7. D7.2(b) Operation Correctness\n',
+        'Evidence class (AP-1 D7.7), executions: `EV-2` (2).\n',
+        'Total operations evaluated: 2\n'))
+    assert report._section_d73(summary).startswith(md(
+        '## D7.3 Transcription Fidelity\n',
+        'Evidence class (AP-1 D7.7), executions: `EV-1` (3).\n',
+        '### A. Transcription Check\n'))
 
 
 def test_dimension_results_other_claimed_dimension_prints_its_data():
@@ -1264,10 +1322,18 @@ ADJ = 'requires human adjudication; the runner does not measure it'
 NOT_CLAIMED = 'not claimed in this configuration'
 
 
-@pytest.mark.finding('T3-33')
+D7_HEAD = ('\nD7 is claimed, but not all of it was measured (AP-1 v1.3 '
+           'D7: "Report all four"):\n')
+D74 = ('- **D7.4**: Invocation under pressure \u2014 not measured: the '
+       'runner sends each item once, with no rephrasing, casual framing, '
+       'escalating pressure or adversarial input')
+
+
+@pytest.mark.finding('T3-33', 'T3-29')
 def test_unmeasured_dimensions_names_d3_to_d6_as_ap1():
     # T3-33 (fixed): AP-1 v1.3 §4 names D3 Provenance, D4 Refusal
     # integrity, D5 Adversarial resistance, D6 Conflicting input.
+    # T3-29 (fixed): with D7 claimed, D7.4 is declared not measured.
     text = report._section_unmeasured_dimensions(CONFIG)
     assert text == md(
         *DIMS_HEAD,
@@ -1277,15 +1343,26 @@ def test_unmeasured_dimensions_names_d3_to_d6_as_ap1():
         f'- **D4**: Refusal integrity \u2014 {ADJ}',
         f'- **D5**: Adversarial resistance \u2014 {ADJ}',
         f'- **D6**: Conflicting input \u2014 {ADJ}',
+        D7_HEAD, D74,
         '')
 
 
 @pytest.mark.finding('T3-29')
-def test_unmeasured_dimensions_does_not_declare_d7_parts():
-    # With D7 claimed, nothing declares D7.4 (never measured) or the
-    # unobservable part of D7.3. Correct: declare both.
-    text = report._section_unmeasured_dimensions(CONFIG)
-    assert 'D7' not in text
+def test_unmeasured_dimensions_declares_d73_unobservable_count():
+    text = report._section_unmeasured_dimensions(CONFIG, {
+        'transcription_results': [tr('UNOBSERVABLE', 1),
+                                  tr('TRANSCRIBED-EXACT', 2),
+                                  tr('UNOBSERVABLE', 3)]})
+    assert text.endswith(md(
+        D7_HEAD,
+        '- **D7.3**: Transcription fidelity \u2014 partly measured: 2 of 3 '
+        'executions are UNOBSERVABLE (no single released figure to '
+        'compare: routed to adjudication, or no return of the required '
+        'operation)',
+        D74, ''))
+    # Nothing unobservable: only D7.4.
+    assert 'D7.3' not in report._section_unmeasured_dimensions(
+        CONFIG, {'transcription_results': [tr('TRANSCRIBED-EXACT', 1)]})
 
 
 @pytest.mark.finding('T3-33', 'S3-G6-2')
@@ -1309,9 +1386,11 @@ def test_unmeasured_dimensions_all_unclaimed():
 
 
 def test_unmeasured_dimensions_all_claimed():
+    # T3-29: D7.4 is declared even when every dimension is claimed.
     assert report._section_unmeasured_dimensions(
         {'dimensions_claimed': ALL_DIMENSIONS}) == md(
-        *DIMS_HEAD, 'All seven dimensions were claimed for measurement.', '')
+        *DIMS_HEAD, 'All seven dimensions were claimed for measurement.',
+        D7_HEAD, D74, '')
 
 
 def test_unmeasured_reason_unknown_dimension():
@@ -1569,9 +1648,6 @@ def test_dimension_results_d2_live_shape_states_n():
 
 
 @pytest.mark.finding('T3-29')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-29: one "D7 Measured" row; D7.4 never declared '
-                          'not measured')
 def test_report_d7_claimed_declares_d74_not_measured():
     # AP-1 v1.3 D7: "Report all four" (D7.1-D7.4). The runner never
     # measures D7.4 (invocation under pressure). Correct: the report
@@ -1586,9 +1662,6 @@ def test_report_d7_claimed_declares_d74_not_measured():
 
 
 @pytest.mark.finding('T3-29')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-29: §12 does not declare the unobservable part '
-                          'of D7.3')
 def test_unmeasured_dimensions_declares_d73_unobservable_part():
     # Correct (T3-29; SPEC R3.3): with D7 claimed and D7.3 UNOBSERVABLE for
     # the adjudicated items, the declaration names D7.3 as only partly
@@ -1602,9 +1675,6 @@ def test_unmeasured_dimensions_declares_d73_unobservable_part():
 
 
 @pytest.mark.finding('T3-29')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-29: D7.2(b) and D7.3 tables carry no evidence '
-                          'class')
 def test_d72b_and_d73_figures_carry_their_evidence_class():
     # SPEC R3.3 "every D7 figure with its evidence class"; AP-1 D7.7
     # "Every D7 figure is reported with its evidence class". Correct: the

@@ -240,6 +240,20 @@ def build_summary(all_results, evidence_findings, *,
         'adjudicated_n': adj_n,
     }
 
+    # The evidence classes each D7 figure rests on (AP-1 D7.7; T3-29):
+    # D7.2(b) on the executions with an evaluated operation, D7.3 on
+    # every executed response
+    d7_evidence = {'D7.2(b)': {}, 'D7.3': {}}
+    for r in all_results:
+        if r.get('status') != 'EXECUTED':
+            continue
+        ec = r.get('evidence_class') or ''
+        figures = ['D7.2(b)', 'D7.3'] if r.get('operation_correctness') \
+            else ['D7.3']
+        for figure in figures:
+            d7_evidence[figure][ec] = d7_evidence[figure].get(ec, 0) + 1
+    summary['d7_evidence'] = d7_evidence
+
     # D1 results
     if d1_summary:
         summary['d1_results'] = d1_summary

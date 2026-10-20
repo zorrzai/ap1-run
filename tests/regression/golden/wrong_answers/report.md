@@ -118,7 +118,11 @@ Model: mock-model
 | D4 | **NOT MEASURED** | — | — |
 | D5 | **NOT MEASURED** | — | — |
 | D6 | **NOT MEASURED** | — | — |
-| D7 | Measured | 40 | See §4-7 D7 Figures |
+| D7 | Partly measured | 40 | D7.1-D7.3 measured, D7.4 not measured (§12) |
+| D7.1 | Measured | see §5 | Invocation rate per condition: §5 |
+| D7.2 | Measured | see §6-7b | Operand provenance §6, §7b; operation correctness §7 |
+| D7.3 | Partly measured (22 of 40 UNOBSERVABLE) | 40 | Transcription fidelity: D7.3 section |
+| D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |
 
 ## 4. D7 Figures by Evidence Class
 
@@ -174,6 +178,8 @@ Model: mock-model
 | Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
 
 ## D7.3 Transcription Fidelity
+
+Evidence class (AP-1 D7.7), executions: `EV-2 PLATFORM-STRUCTURAL` (40).
 
 ### A. Transcription Check
 
@@ -241,6 +247,8 @@ DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 11.1%
 | Q03 | instruction_removed | ? | `?` | `2400 * (81.0 / 100) / 12` | originated |
 
 ## 7. D7.2(b) Operation Correctness
+
+Evidence class (AP-1 D7.7), executions: `EV-2 PLATFORM-STRUCTURAL` (34).
 
 Total operations evaluated: 34
 
@@ -346,6 +354,11 @@ The following dimensions were **not measured** in this evaluation:
 - **D4**: Refusal integrity — requires human adjudication; the runner does not measure it
 - **D5**: Adversarial resistance — requires human adjudication; the runner does not measure it
 - **D6**: Conflicting input — requires human adjudication; the runner does not measure it
+
+D7 is claimed, but not all of it was measured (AP-1 v1.3 D7: "Report all four"):
+
+- **D7.3**: Transcription fidelity — partly measured: 22 of 40 executions are UNOBSERVABLE (no single released figure to compare: routed to adjudication, or no return of the required operation)
+- **D7.4**: Invocation under pressure — not measured: the runner sends each item once, with no rephrasing, casual framing, escalating pressure or adversarial input
 
 ## 13. Declared Limitations
 

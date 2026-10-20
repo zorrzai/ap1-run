@@ -123,7 +123,7 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
     sections.append(_section_quantisation(summary))
 
     # 12. Declaration of unmeasured dimensions
-    sections.append(_section_unmeasured_dimensions(config))
+    sections.append(_section_unmeasured_dimensions(config, summary))
 
     # Declared limitations
     sections.append(_section_declared_limitations())
@@ -169,7 +169,9 @@ def _section_dimension_results(summary, config):
     for dim in ALL_DIMENSIONS:
         if dim in dims_claimed:
             dim_data = summary.get(f'{dim.lower()}_results', {})
-            if dim_data:
+            if dim_data and dim == 'D7':
+                lines.extend(_d7_rows(summary, dim_data))
+            elif dim_data:
                 n = dim_data.get('n', dim_data.get('auto_scored_n', 'N/A'))
                 result = _format_dim_result(dim, dim_data)
                 lines.append(f'| {dim} | Measured | {n} | {result} |')
@@ -180,6 +182,42 @@ def _section_dimension_results(summary, config):
 
     lines.append('')
     return '\n'.join(lines)
+
+
+def _d7_rows(summary, d7):
+    """§3 rows for a claimed D7: one per sub-dimension (AP-1 v1.3 D7
+    "Report all four"; T3-29). D7.4 is never measured; D7.3 is partly
+    unobservable when any execution has no single released figure."""
+    tr = summary.get('transcription_results', [])
+    unobservable = sum(1 for r in tr if r.get('outcome') == 'UNOBSERVABLE')
+    d73_status = (f'Partly measured ({unobservable} of {len(tr)} '
+                  f'UNOBSERVABLE)' if unobservable else 'Measured')
+    return [
+        f'| D7 | Partly measured | {d7.get("n", "N/A")} | D7.1-D7.3 '
+        f'measured, D7.4 not measured (§12) |',
+        '| D7.1 | Measured | see §5 | Invocation rate per condition: §5 |',
+        '| D7.2 | Measured | see §6-7b | Operand provenance §6, §7b; '
+        'operation correctness §7 |',
+        f'| D7.3 | {d73_status} | {len(tr)} | Transcription fidelity: '
+        f'D7.3 section |',
+        '| D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |',
+    ]
+
+
+def _evidence_line(summary, figure):
+    """The evidence classes a D7 figure rests on (AP-1 v1.3 D7.7: every
+    D7 figure with its evidence class; SPEC R3.3), or None. Uses the
+    figure's own executions where the summary has them
+    (d7_evidence[figure]), otherwise the run's evidence class counts."""
+    classes = (summary.get('d7_evidence', {}).get(figure)
+               or summary.get('evidence_class_counts', {}))
+    if not classes:
+        return None
+    listed = ', '.join(f'`{ec}` ({c})' for ec, c in sorted(classes.items()))
+    line = f'Evidence class (AP-1 D7.7), executions: {listed}.'
+    if len(classes) > 1:
+        line += ' Figures resting on different classes are not comparable.'
+    return line + '\n'
 
 
 def _section_d7_figures(summary):
@@ -228,6 +266,9 @@ def _section_d73(summary):
     B. Release coverage     (check_release_coverage -- ALL items)
     """
     lines = ['## D7.3 Transcription Fidelity\n']
+    evidence = _evidence_line(summary, 'D7.3')
+    if evidence:
+        lines.append(evidence)
 
     # -- A. Transcription Check --
     lines.append('### A. Transcription Check\n')
@@ -471,6 +512,9 @@ def _section_d72b_counts(summary):
         lines.append('*No operation correctness data available.*\n')
         return '\n'.join(lines)
 
+    evidence = _evidence_line(summary, 'D7.2(b)')
+    if evidence:
+        lines.append(evidence)
     total = sum(op_counts.values())
     lines.append(f'Total operations evaluated: {total}\n')
     lines.append('| Outcome | Count |')
@@ -684,10 +728,12 @@ def _section_quantisation(summary):
     return '\n'.join(lines)
 
 
-def _section_unmeasured_dimensions(config):
+def _section_unmeasured_dimensions(config, summary=None):
     """Section 12: Declaration of which dimensions were NOT measured.
 
-    A dimension not measured is declared, never omitted.
+    A dimension not measured is declared, never omitted. With D7
+    claimed, the parts of D7 not measured are declared too: D7.4 always,
+    and D7.3 where some executions are UNOBSERVABLE (T3-29).
     """
     lines = ['## 12. Unmeasured Dimensions Declaration\n']
     lines.append('> A dimension not measured is declared, never omitted.\n')
@@ -707,6 +753,23 @@ def _section_unmeasured_dimensions(config):
             lines.append(f'- **{dim}**: {reason}')
     else:
         lines.append('All seven dimensions were claimed for measurement.')
+
+    if 'D7' in dims_claimed:
+        lines.append('\nD7 is claimed, but not all of it was measured (AP-1 '
+                     'v1.3 D7: "Report all four"):\n')
+        tr = (summary or {}).get('transcription_results', [])
+        unobservable = sum(1 for r in tr
+                           if r.get('outcome') == 'UNOBSERVABLE')
+        if unobservable:
+            lines.append(f'- **D7.3**: Transcription fidelity \u2014 partly '
+                         f'measured: {unobservable} of {len(tr)} executions '
+                         f'are UNOBSERVABLE (no single released figure to '
+                         f'compare: routed to adjudication, or no return of '
+                         f'the required operation)')
+        lines.append('- **D7.4**: Invocation under pressure \u2014 not '
+                     'measured: the runner sends each item once, with no '
+                     'rephrasing, casual framing, escalating pressure or '
+                     'adversarial input')
 
     lines.append('')
     return '\n'.join(lines)

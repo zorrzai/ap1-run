@@ -108,6 +108,7 @@ EMPTY = {
     'wrong_operation_split': {'route_divergence': 0, 'item_wrong': 0,
                               'undetermined': 0, 'no_figure': 0},
     'd7_results': {'n': 0, 'auto_scored_n': 0, 'adjudicated_n': 0},
+    'd7_evidence': {'D7.2(b)': {}, 'D7.3': {}},
     'operand_step_counts': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
     'step_1_source': 0,
     'step_1_constant': 0,
@@ -717,3 +718,23 @@ def test_summary_d71_n_counts_questions_not_repeats():
         for q in ('Q01', 'Q02') for rep in (1, 2, 3)], [])
     base = s['invocation_figures']['d7_invocation_base']
     assert (base['failures'], base['n']) == (0, 2)
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7.7', 'R3.3')
+def test_summary_d7_evidence_per_figure():
+    # D7.2(b) rests on the executions with an evaluated operation, D7.3
+    # on every executed response; non-executed cells are in neither.
+    results = [
+        executed('Q01', evidence_class=EV2,
+                 operation_correctness=[{'outcome': 'OPERATION-CORRECT'}]),
+        {'item_id': 'Q00', 'status': 'VOID', 'evidence_class': EV2},
+        executed('Q02', evidence_class=EV2, operation_correctness=[]),
+        executed('Q03', evidence_class=EV0),
+        executed('Q04', evidence_class=EV2,
+                 operation_correctness=[{'outcome': 'WRONG-OPERATION'}]),
+        executed('Q05'),
+        {'item_id': 'Q06', 'status': 'UNMEASURED', 'evidence_class': EV0},
+    ]
+    assert build_summary(results, [])['d7_evidence'] == {
+        'D7.2(b)': {EV2: 2}, 'D7.3': {EV2: 3, EV0: 1, '': 1}}

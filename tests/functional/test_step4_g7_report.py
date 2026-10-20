@@ -216,9 +216,6 @@ def test_run_report_shows_d2_classes_per_question_and_surface(run):
 
 
 @pytest.mark.finding('T3-29')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-29: report.md says "D7 Measured"; D7.4 is not '
-                          'declared not measured')
 def test_run_report_declares_d74_not_measured(run):
     # AP-1 v1.3 D7: "Report all four"; the runner never measures D7.4.
     # Correct: report.md declares D7.4 not measured, and no single D7 row
