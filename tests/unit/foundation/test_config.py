@@ -110,7 +110,6 @@ def test_optional_fields():
         'runner_modified']
 
 
-@pytest.mark.finding('V12-7')
 def test_minimum_n_table():
     assert MINIMUM_N == {'D1': {'type': 'per_category', 'min': 10},
                          'D5': {'type': 'total', 'min': 20},
@@ -315,7 +314,7 @@ def test_load_config_model_unsupported_reason_refused(load):
         "'model-unsupported'.")
 
 
-@pytest.mark.finding('T3-79')
+@pytest.mark.finding('F1', 'T3-79')
 def test_load_config_example_config_mini_refused():
     # Current behaviour: the shipped example/config_mini.json does not
     # load (regression scenario mini_config). Correct: it loads.
@@ -429,19 +428,29 @@ def test_load_config_quantisation_extra_keys_dropped(load):
 
 
 @pytest.mark.finding('T3-51')
-def test_load_config_empty_quantisation_gets_defaults(load):
-    # Current behaviour: {} loads as places 2, ROUND_HALF_UP. Correct
-    # (R0.1, no defaults for anything affecting a result): refuse.
-    assert load(quantisation={})['quantisation'] == {
-        'places': 2, 'rounding': 'ROUND_HALF_UP'}
+@pytest.mark.parametrize('part', ['places', 'rounding'])
+def test_load_config_quantisation_part_missing_refused_exact(load, part):
+    q = {'places': '2', 'rounding': 'ROUND_HALF_UP'}
+    del q[part]
+    assert refused(load, quantisation=q) == \
+        f'missing required field: quantisation.{part}'
 
 
 @pytest.mark.finding('T3-51')
-def test_load_config_quantisation_rounding_not_validated(load):
-    # Current behaviour: any rounding string loads; quantise() fails later.
-    # Correct: refuse a mode quantise() does not support.
-    assert load(quantisation={'places': '2', 'rounding': 'BOGUS'})[
-        'quantisation']['rounding'] == 'BOGUS'
+@pytest.mark.parametrize('rounding', ['BOGUS', 'round_half_up', ['x'], None])
+def test_load_config_quantisation_rounding_not_a_decimal_mode_refused(
+        load, rounding):
+    assert refused(load, quantisation={'places': '2', 'rounding': rounding}
+                   ) == (f'quantisation.rounding: unknown rounding mode '
+                         f'{rounding!r}. Permitted: ROUND_05UP, ROUND_CEILING, '
+                         f'ROUND_DOWN, ROUND_FLOOR, ROUND_HALF_DOWN, '
+                         f'ROUND_HALF_EVEN, ROUND_HALF_UP, ROUND_UP')
+
+
+@pytest.mark.finding('T3-51')
+def test_load_config_quantisation_any_decimal_mode_kept(load):
+    assert load(quantisation={'places': '2', 'rounding': 'ROUND_DOWN'})[
+        'quantisation'] == {'places': 2, 'rounding': 'ROUND_DOWN'}
 
 
 # -- load_config: repeat_count --------------------------------------------
@@ -823,9 +832,6 @@ def test_minimum_n_minimum_named_is_the_declared_versions(dim, v12_min,
 
 
 @pytest.mark.finding('T3-51')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-51: missing quantisation places/rounding '
-                          'default to 2 and ROUND_HALF_UP')
 @pytest.mark.req('R0.1')
 @pytest.mark.parametrize('quantisation, missing', [
     ({}, 'places'),
@@ -842,8 +848,6 @@ def test_load_config_quantisation_field_missing_refused(load, quantisation,
 
 
 @pytest.mark.finding('T3-51')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-51: the rounding string is not validated')
 @pytest.mark.req('R0.1')
 def test_load_config_quantisation_unknown_rounding_mode_refused(load):
     # SPEC R0.1 (incomplete configuration halts before any request).
@@ -857,8 +861,35 @@ def test_load_config_quantisation_unknown_rounding_mode_refused(load):
     'T3-79/T3-67: one config file per run (config_mini.json valid, the '
     'AP1_SMOKE_* sampling overrides removed); proposed, not decided')
 @pytest.mark.finding('T3-79')
+
+
+@pytest.mark.finding('T3-80', 'F1')
+def test_load_config_example_config_sol_is_the_sol_runs_config():
+    # Integrator decision (step 5): each published model has its own
+    # config file, now that nothing overrides model and endpoint. The
+    # values are those of output/run_f_sol/report.md section 2 (the
+    # resolved config as sealed), apart from dimensions_claimed (D2, D7:
+    # minimum n, T3-12).
+    cfg = load_config(REPO / 'example' / 'config_sol.json')
+    assert (cfg['model'], cfg['endpoint_url']) == (
+        'gpt-5.6-sol', 'https://api.openai.com/v1/chat/completions')
+    assert cfg['sampling'] == {
+        'temperature': {
+            'value': 'omitted', 'reason': 'platform-rejected',
+            'detail': "OpenAI reasoning-model endpoint returned HTTP 400: "
+                      "Unsupported value: 'temperature' does not support 0 "
+                      "with this model. Only the default (1) value is "
+                      "supported."},
+        'top_p': {'value': 'omitted', 'reason': 'operator-declared'},
+        'max_completion_tokens': '4096',
+        'reasoning_effort': 'none'}
+    assert cfg['repeat_count'] == 50
+    assert cfg['dimensions_claimed'] == ['D2', 'D7']
+
+
+@pytest.mark.finding('F1', 'T3-79')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-79: example/config_mini.json is refused '
+                   reason='F1/T3-79: example/config_mini.json is refused '
                           "(reason 'model-unsupported')")
 def test_load_config_example_config_mini_is_the_mini_runs_config():
     # Correct (T3-79): config_mini.json is a

@@ -8,8 +8,9 @@ Binary floating-point arithmetic is prohibited anywhere a value is
 compared, quantised, or reported.
 """
 
+import decimal
 from decimal import (Context, Decimal, DivisionByZero, InvalidOperation,
-                     Overflow, ROUND_HALF_UP, ROUND_HALF_EVEN, localcontext)
+                     Overflow, ROUND_HALF_EVEN, localcontext)
 import hashlib
 import json
 import re
@@ -339,10 +340,14 @@ DECIMAL_CONTEXT = Context(
 
 # -- R0.4.1 Quantisation ---------------------------------------------
 
-ROUNDING_MODES = {
-    'ROUND_HALF_UP': ROUND_HALF_UP,
-    'ROUND_HALF_EVEN': ROUND_HALF_EVEN,
-}
+# Every rounding mode the decimal module defines, by its name there
+# (ROUND_HALF_UP, ROUND_HALF_EVEN, ROUND_DOWN, ...). A config's
+# quantisation.rounding must be one of these (R0.1).
+ROUNDING_MODES = {name: getattr(decimal, name)
+                  for name in ('ROUND_05UP', 'ROUND_CEILING', 'ROUND_DOWN',
+                               'ROUND_FLOOR', 'ROUND_HALF_DOWN',
+                               'ROUND_HALF_EVEN', 'ROUND_HALF_UP',
+                               'ROUND_UP')}
 
 
 def quantise(value, places, rounding='ROUND_HALF_UP'):

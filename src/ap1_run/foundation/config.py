@@ -15,6 +15,7 @@ from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 from ap1_run.foundation.adapter import BODY_FIELDS
+from ap1_run.foundation.numeric import ROUNDING_MODES
 
 
 class ConfigError(Exception):
@@ -100,9 +101,18 @@ def load_config(path):
     q = raw.get('quantisation', {})
     if not isinstance(q, dict):
         raise ConfigError('quantisation must be an object')
+    # Both parts are required: no default places or rounding mode (R0.1).
+    for part in ('places', 'rounding'):
+        if part not in q:
+            raise ConfigError(f'missing required field: quantisation.{part}')
+    rounding = q['rounding']
+    if not isinstance(rounding, str) or rounding not in ROUNDING_MODES:
+        raise ConfigError(
+            f'quantisation.rounding: unknown rounding mode {rounding!r}. '
+            f'Permitted: {", ".join(sorted(ROUNDING_MODES))}')
     config['quantisation'] = {
-        'places': _parse_places(q.get('places', '2')),
-        'rounding': q.get('rounding', 'ROUND_HALF_UP'),
+        'places': _parse_places(q['places']),
+        'rounding': rounding,
     }
 
     # 6. Parse repeat_count
