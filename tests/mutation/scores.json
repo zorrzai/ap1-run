@@ -1,4 +1,10 @@
 {
+  "execution/ap1_texts": {
+    "killed": 46,
+    "mutants": 46,
+    "score": 1.0,
+    "notes": "New in step 5 (seal-verifier-hardening, V12-4). No survivors."
+  },
   "execution/context": {
     "killed": 93,
     "mutants": 93,
@@ -37,8 +43,8 @@
   "execution/sealed_inputs": {
     "killed": 101,
     "mutants": 109,
-    "score": 0.9266,
-    "notes": "New in step 5 (seal-verifier-hardening, T3-48/T3-72). All 8 survivors are equivalent. Two decode the JSON inputs as 'UTF-8', the same codec. Three change the message of the OSError path_stats raises, which importlib catches and never shows. Two pass location None or no location to spec_from_file_location: it then takes the location from the loader's get_filename, the same path. One pops the module from sys.modules without a default: it is always there at that point (load_ground_truth put it there)."
+    "notes": "New in step 5 (seal-verifier-hardening, T3-48/T3-72). All 8 survivors are equivalent. Two decode the JSON inputs as 'UTF-8', the same codec. Three change the message of the OSError path_stats raises, which importlib catches and never shows. Two pass location None or no location to spec_from_file_location: it then takes the location from the loader's get_filename, the same path. One pops the module from sys.modules without a default: it is always there at that point (load_ground_truth put it there).",
+    "score": 0.9266
   },
   "execution/version": {
     "killed": 171,
@@ -83,10 +89,10 @@
     "score": 0.9735
   },
   "run": {
-    "killed": 574,
-    "mutants": 580,
-    "notes": "All 6 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored. One passes ctx=None to the sealed ground-truth compute, which returns the sealed value of the item and ignores the context. (Step 5 seal-verifier-hardening: the inputs are read by execution/sealed_inputs, so the ten survivors on how fixture.json and questions.json were opened are gone.)",
-    "score": 0.9897
+    "killed": 584,
+    "mutants": 590,
+    "notes": "All 6 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored. One passes ctx=None to the sealed ground-truth compute, which returns the sealed value of the item and ignores the context. (Step 5 seal-verifier-hardening: the inputs are read by execution/sealed_inputs, so the ten survivors on how fixture.json and questions.json were opened are gone.) (V12-4: the AP-1 text is resolved from the version table and the sealed text checked against it; no new survivors.)",
+    "score": 0.9898
   },
   "runner/console": {
     "killed": 489,
@@ -113,9 +119,10 @@
     "score": 0.929
   },
   "runner/settings": {
-    "killed": 260,
-    "mutants": 260,
-    "score": 1.0
+    "killed": 258,
+    "mutants": 258,
+    "score": 1.0,
+    "notes": "(Step 5 seal-verifier-hardening, V12-4: --ap1-text has no default path; the text comes from the version table.)"
   },
   "runner/summary": {
     "killed": 656,

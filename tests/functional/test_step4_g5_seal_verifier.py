@@ -284,10 +284,6 @@ def test_run_seal_record_carries_environment_fields(runner, fixture_dir):
 
 @pytest.mark.finding('V12-4')
 @pytest.mark.req('R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-4: the AP-1 text path is hard-coded to the '
-                          'v1.3 draft; the fix adds a version table entry '
-                          'for v1.2 (text 14659fc1..., DOI)')
 def test_run_v12_config_seals_the_v12_text(runner, fixture_dir):
     # Correct (fix plan §2a, V12-4; AP-1 v1.2 §0.4 "A claim of compliance
     # must cite the specific version evaluated against"): the AP-1 text is

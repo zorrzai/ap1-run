@@ -41,6 +41,9 @@ from decimal import Decimal
 from ap1_run.execution.context import (
     build_delivered_context, check_lookup_collision,
 )
+from ap1_run.execution.ap1_texts import (
+    check_ap1_text_version, resolve_ap1_text,
+)
 from ap1_run.execution.engine import execute_item
 from ap1_run.execution.perturbation_guard import HELD_CONSTANT
 from ap1_run.execution.seal import (
@@ -190,8 +193,9 @@ def main(argv=None):
 
     # -- SEAL: R1.1 pre-registration record --
     # The real seal, not a sentinel. A live run without a valid seal
-    # is refused, exactly as R1.1 requires.
-    ap1_text_path = args.ap1_text
+    # is refused, exactly as R1.1 requires. The AP-1 text is the one of
+    # the config's ap1_version unless --ap1-text names it (V12-4).
+    ap1_text_path = resolve_ap1_text(config, args.ap1_text, base_dir)
     seal_inputs = dict(
         config=config,
         fixture_path=inputs.paths['fixture'],
@@ -202,6 +206,7 @@ def main(argv=None):
     seal_record = create_seal(
         **seal_inputs, runner_source_hash=runner_source_hash,
         expected_values=expected_values, loaded=inputs.data)
+    check_ap1_text_version(config, seal_record)
     seal_hash = seal_record['seal_hash']
 
     def check_seal():

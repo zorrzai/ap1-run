@@ -140,8 +140,12 @@ ap1-run --config my/config.json \
 ```
 
 `--fixture-dir` holds `fixture.json`, `questions.json` and
-`ground_truth_example.py`. The AP-1 text must be the one the seal expects. The
-runner still takes its version and source hash from the clone, so run it from
+`ground_truth_example.py`. Without `--ap1-text`, the runner seals the AP-1
+text of the config's `ap1_version` from `reference/`: the v1.3 draft for
+`v1.3` (or `v1.3-<qualifier>`), the v1.2 text for `v1.2`. The config's
+`ap1_text_hash` must be that text's hash, and a run that labels one version's
+text with another version is refused. Another version needs `--ap1-text`.
+The runner still takes its version and source hash from the clone, so run it from
 a clone (an editable install), not from a wheel.
 
 ---
@@ -340,7 +344,9 @@ additionally requires those.
 
 **The standard text is sealed.** `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` is
 hashed into the pre-registration record, and a run declaring a mismatched hash
-is refused.
+is refused. `reference/` also holds the v1.2 text
+(`AP-1_Admissibility_Protocol_v1.2.md`, as published in the standard
+repository), which a run declaring `ap1_version` `v1.2` seals.
 
 AP-1 v1.3: [10.5281/zenodo.21755443](https://doi.org/10.5281/zenodo.21755443) ·
 concept DOI [10.5281/zenodo.21324954](https://doi.org/10.5281/zenodo.21324954) ·
@@ -374,6 +380,7 @@ src/ap1_run/
   execution/                 SPEC Layer 1
     seal.py                  pre-registration: hash and timestamp before any request
     sealed_inputs.py         reads each sealed input once; the expected values
+    ap1_texts.py             the AP-1 text of each version
     seal_constants.py        declared-constant checks on the ground-truth module
     version.py               runner version, source hash and environment
     engine.py                execution loop
@@ -416,7 +423,7 @@ docs/                        build specification (SPEC.md), KNOWN_ISSUES.md,
                              RELATED_WORK_REVIEW.md, REPRODUCING.md, the publisher's comments
 findings/                    FINDINGS.md (generated from FINDINGS.template.md), FINDINGS_ERRATA.md
 example/                     a worked fixture, questions, ground truth and config
-reference/                   the sealed AP-1 text
+reference/                   the sealed AP-1 texts (v1.3 draft, v1.2)
 ```
 
 Instrument modules are kept at or under 300 lines so a reviewer can read
@@ -492,8 +499,8 @@ non-zero.
 ground-truth module are hashed with LF line endings and without a UTF-8
 byte-order mark, so the same text gives the same hash on every platform and
 in every editor (an LF file without a BOM hashes as its raw bytes). The AP-1
-text is hashed as raw bytes: it must equal the publisher's deposit, and
-`.gitattributes` checks `reference/` out unconverted. Seals made before then
+text is hashed as raw bytes: it must equal the publisher's deposit byte for
+byte. Seals made before then
 (the published runs) hashed raw bytes, and their ground-truth module was
 hashed with CRLF line endings (FINDINGS_ERRATA N2); the verifier checks such
 a record under those rules.

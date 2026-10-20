@@ -14,6 +14,6 @@ options:
                         where the transcript, report and summary are written;
                         files of the same name there are replaced (default:
                         output/)
-  --ap1-text AP1_TEXT   the AP-1 text to seal; its hash must match the one the
-                        runner expects (default:
-                        reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md)
+  --ap1-text AP1_TEXT   the AP-1 text to seal; its hash must match the
+                        config's ap1_text_hash (default: the text of the
+                        config's ap1_version under reference/)

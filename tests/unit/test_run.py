@@ -512,6 +512,38 @@ def test_main_runs_the_ground_truth_file_not_a_shadowing_package(r):
         r.fixture_dir / 'ground_truth_example.py')
 
 
+V12_HASH = '14659fc1c2a3357c22081a9109841475861c34f2b315ee7eb546e80fecbb58a5'
+
+
+@pytest.mark.finding('V12-4')
+def test_main_ap1_text_of_the_declared_version(r, monkeypatch):
+    # Without --ap1-text the seal takes the text of the config's version.
+    r.config['ap1_version'] = 'v1.2'
+    monkeypatch.setattr(r, 'create_seal', lambda **kw: r.calls.append(
+        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH})
+    monkeypatch.setattr(run, 'create_seal', r.create_seal)
+    assert run.main(r.argv()[:-2]) == 0
+    assert r.named('seal')[0][0]['ap1_text_path'] == os.path.join(
+        run.BASE_DIR, 'reference', 'AP-1_Admissibility_Protocol_v1.2.md')
+
+
+@pytest.mark.finding('V12-4')
+def test_main_version_label_over_another_text_refused_before_requests(r):
+    # The fake seal records 'TEXTHASH', which is no v1.2 text.
+    r.config['ap1_version'] = 'v1.2'
+    with pytest.raises(SealError, match='not the AP-1 v1.2 text'):
+        r.main()
+    assert r.named('seal') and r.named('execute') == []
+    assert r.named('verify_seal') == []
+
+
+def test_main_unknown_version_without_ap1_text_refused_before_seal(r):
+    r.config['ap1_version'] = 'v7'
+    with pytest.raises(SealError, match="no text is known for ap1_version"):
+        run.main(r.argv()[:-2])
+    assert r.named('seal') == []
+
+
 def test_main_adapter_send_binds_the_key(r, monkeypatch):
     sent = []
     monkeypatch.setattr(run.adapter, 'send',

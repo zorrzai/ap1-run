@@ -193,7 +193,9 @@ def test_parse_args_defaults_are_the_fixed_paths():
         'config': '/repo/example/config.json',
         'fixture_dir': '/repo/example',
         'output_dir': '/repo/output',
-        'ap1_text': '/repo/reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md',
+        # V12-4: no fixed text; the run takes the text of the config's
+        # ap1_version (execution/ap1_texts.py).
+        'ap1_text': None,
     }
 
 
@@ -251,8 +253,8 @@ def test_parse_args_help_text(capsys, monkeypatch):
         f'{pad}where the transcript, report and summary are written; files '
         'of the same name there are replaced (default: output/)\n'
         '  --ap1-text AP1_TEXT   the AP-1 text to seal; its hash must match '
-        'the one the runner expects '
-        '(default: reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md)\n')
+        "the config's ap1_text_hash (default: the text of the config's "
+        'ap1_version under reference/)\n')
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
