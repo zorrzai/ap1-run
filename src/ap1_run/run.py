@@ -268,6 +268,7 @@ def main(argv=None):
                         tools=arm['tools'],
                         transcript_path=transcript_path,
                         seal_hash=seal_hash,
+                        repeat=rep,
                     )
                 except adapter.RateLimitError:
                     print('RATE-LIMITED')

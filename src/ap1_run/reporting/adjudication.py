@@ -140,18 +140,19 @@ def _needs_adjudication(record):
     """Determine whether a transcript record needs adjudication.
 
     An item needs adjudication if its figure identification outcome
-    routes to human review (ADJUDICATE-* or UNMEASURABLE).
+    routes to human review (ADJUDICATE-* or UNMEASURABLE). A record of a
+    transport failure has no response: it is UNMEASURED (AP-1 v1.3 §6.8,
+    response statuses) and never gets a sheet, whatever outcome it holds.
     """
+    error_state = record.get('error_state')
+    if error_state and 'TRANSPORT_FAILURE' in str(error_state):
+        return False  # UNMEASURED, not adjudicated
+
     figure_outcome = record.get('figure_outcome', '')
     if figure_outcome.startswith('ADJUDICATE'):
         return True
     if figure_outcome == 'UNMEASURABLE':
         return True
-
-    # Also check error_state for transport failures
-    error_state = record.get('error_state')
-    if error_state and 'TRANSPORT_FAILURE' in str(error_state):
-        return False  # UNMEASURED, not adjudicated
 
     return False
 
