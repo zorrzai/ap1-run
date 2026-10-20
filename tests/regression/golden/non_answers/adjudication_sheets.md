@@ -1482,6 +1482,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1571,6 +1575,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1662,6 +1670,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1751,6 +1763,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3274,6 +3290,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3363,6 +3383,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3454,6 +3478,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3543,6 +3571,10 @@ Quarterly growth: 777.4125 (that is, $777.41).
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 

@@ -55,6 +55,12 @@ The monthly interest earned on the savings account is $2333.10.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -149,6 +155,12 @@ The monthly interest earned on the savings account is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -245,6 +257,12 @@ The monthly interest earned on the savings account is $2333.10.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -339,6 +357,12 @@ The monthly interest earned on the savings account is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -446,6 +470,12 @@ The net monthly income is $2333.10.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -551,6 +581,12 @@ The net monthly income is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -658,6 +694,12 @@ The net monthly income is $2333.10.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -764,6 +806,12 @@ The net monthly income is $2333.10.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -858,6 +906,12 @@ The monthly interest earned on the savings account is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -954,6 +1008,12 @@ The monthly interest earned on the savings account is $2333.10.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -1049,6 +1109,12 @@ The monthly interest earned on the savings account is $2333.10.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -1143,6 +1209,12 @@ The monthly interest earned on the savings account is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1250,6 +1322,12 @@ The net monthly income is $2333.10.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -1355,6 +1433,12 @@ The net monthly income is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -1462,6 +1546,12 @@ The net monthly income is $2333.10.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -1567,6 +1657,12 @@ The net monthly income is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 

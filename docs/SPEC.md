@@ -1082,6 +1082,7 @@ and the example modules (`example/ground_truth_example.py`,
 | `src/ap1_run/execution/perturbation_guard.py` | Instrument module |
 | `src/ap1_run/scoring/transcription.py` | Instrument module |
 | `src/ap1_run/scoring/release_coverage.py` | Instrument module |
+| `src/ap1_run/scoring/answer_outcome.py` | Instrument module |
 | `src/ap1_run/foundation/transcript.py` | Instrument module |
 | `src/ap1_run/run.py` | Demonstration tooling |
 | `src/ap1_run/runner/console.py` | Demonstration tooling |

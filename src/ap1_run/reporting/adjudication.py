@@ -228,6 +228,20 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
             lines.append(f'- `{opr.get("outcome", "unknown")}`: '
                          f'{opr.get("reason", "")}\n')
 
+    # D7.2(a) operand provenance: the section 6.8 composition rule needs it
+    # (an answer resting on an originated operand is ORIGINATED)
+    prov_results = record.get('provenance_results')
+    if prov_results:
+        lines.append('**Operand provenance (D7.2(a)):**\n')
+        for prov in prov_results:
+            originated = ', '.join(
+                f'`{op.get("literal", op.get("value"))}` in '
+                f'`{op.get("expression")}`'
+                for op in prov.get('originated_operands') or [])
+            lines.append(f'- `{prov.get("outcome", "unknown")}`'
+                         + (f': originated {originated}' if originated
+                            else '') + '\n')
+
     # 5. Reason adjudication is required
     lines.append('### Reason for Adjudication\n')
     figure_outcome = record.get('figure_outcome', 'unknown')

@@ -58,6 +58,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -162,6 +166,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -268,6 +276,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -373,6 +385,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -476,6 +492,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -581,6 +601,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -684,6 +708,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -786,6 +814,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -894,6 +926,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1001,6 +1037,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1105,6 +1145,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1211,6 +1255,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1314,6 +1362,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1416,6 +1468,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1524,6 +1580,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1631,6 +1691,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1736,6 +1800,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1843,6 +1911,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1947,6 +2019,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2053,6 +2129,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2156,6 +2236,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2258,6 +2342,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2366,6 +2454,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2473,6 +2565,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2577,6 +2673,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2683,6 +2783,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2786,6 +2890,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2888,6 +2996,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2994,6 +3106,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3098,6 +3214,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3205,6 +3325,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3311,6 +3435,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3414,6 +3542,10 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3519,6 +3651,10 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3623,6 +3759,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3726,6 +3866,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3832,6 +3976,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3936,6 +4084,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -4042,6 +4194,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4147,6 +4303,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4251,6 +4411,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4354,6 +4518,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -4462,6 +4630,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4569,6 +4741,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4673,6 +4849,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4776,6 +4956,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -4884,6 +5068,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4991,6 +5179,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5096,6 +5288,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5200,6 +5396,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -5314,6 +5514,14 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -5420,6 +5628,14 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -5516,6 +5732,10 @@ The credit card balance after one month, if only the minimum payment of $25.00 i
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -5611,6 +5831,10 @@ The credit card balance after one month, if only the minimum payment of $25.00 i
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -5718,6 +5942,14 @@ After one month, if only the minimum payment of 25.00 is made, the credit card b
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -5823,6 +6055,14 @@ After one month, if only the minimum payment of 25.00 is made, the credit card b
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -5930,6 +6170,14 @@ After one month, if only the minimum payment of $25 is made, the credit card bal
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -6035,6 +6283,14 @@ After one month, if only the minimum payment of $25 is made, the credit card bal
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -6142,6 +6398,14 @@ If only the minimum payment of $25.00 is made after one month, the credit card b
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6248,6 +6512,14 @@ If only the minimum payment of $25.00 is made after one month, the credit card b
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6343,6 +6615,10 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -6440,6 +6716,10 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -6536,6 +6816,10 @@ If only the minimum payment of $25.00 is made after one month, the new credit ca
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -6631,6 +6915,10 @@ If only the minimum payment of $25.00 is made after one month, the new credit ca
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -6737,6 +7025,16 @@ Category: growth
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Response shape unrecognised. Cannot extract a figure for comparison.
@@ -6842,6 +7140,16 @@ Category: growth
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Response shape unrecognised. Cannot extract a figure for comparison.
@@ -6933,6 +7241,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -7026,6 +7338,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -7117,6 +7433,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -7210,6 +7530,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -7301,6 +7625,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -7394,6 +7722,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -7485,6 +7817,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -7578,6 +7914,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -7669,6 +8009,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -7762,6 +8106,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -7853,6 +8201,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -7946,6 +8298,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8037,6 +8393,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -8130,6 +8490,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8221,6 +8585,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -8314,6 +8682,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8405,6 +8777,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -8498,6 +8874,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8589,6 +8969,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -8682,6 +9066,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8773,6 +9161,10 @@ The remaining mortgage balance after the first monthly payment of 1437.00 will b
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -8866,6 +9258,10 @@ The remaining mortgage balance after the first monthly payment of 1437.00 will b
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8957,6 +9353,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -9050,6 +9450,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -9141,6 +9545,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 woul
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -9234,6 +9642,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 woul
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -9325,6 +9737,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -9418,6 +9834,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -9509,6 +9929,10 @@ The remaining mortgage balance after the first monthly payment of 1437.00 will b
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -9602,6 +10026,10 @@ The remaining mortgage balance after the first monthly payment of 1437.00 will b
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -9693,6 +10121,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -9786,6 +10218,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -9877,6 +10313,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -9970,6 +10410,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10061,6 +10505,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -10154,6 +10602,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10245,6 +10697,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -10338,6 +10794,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10429,6 +10889,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -10522,6 +10986,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10613,6 +11081,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -10706,6 +11178,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10797,6 +11273,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -10890,6 +11370,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10981,6 +11465,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -11074,6 +11562,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11165,6 +11657,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -11258,6 +11754,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11349,6 +11849,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -11442,6 +11946,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11533,6 +12041,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -11626,6 +12138,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11717,6 +12233,10 @@ After the first monthly payment of $1437, the remaining mortgage balance would b
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -11810,6 +12330,10 @@ After the first monthly payment of $1437, the remaining mortgage balance would b
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11901,6 +12425,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -11994,6 +12522,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12085,6 +12617,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -12178,6 +12714,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12269,6 +12809,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -12362,6 +12906,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12453,6 +13001,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -12546,6 +13098,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12637,6 +13193,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 is $2
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -12730,6 +13290,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 is $2
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12821,6 +13385,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -12914,6 +13482,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13005,6 +13577,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -13098,6 +13674,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13189,6 +13769,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -13282,6 +13866,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13373,6 +13961,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -13466,6 +14058,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13557,6 +14153,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -13650,6 +14250,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13741,6 +14345,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -13834,6 +14442,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13925,6 +14537,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -14018,6 +14634,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14109,6 +14729,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -14202,6 +14826,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14293,6 +14921,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -14386,6 +15018,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14477,6 +15113,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -14570,6 +15210,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14661,6 +15305,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -14754,6 +15402,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14845,6 +15497,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -14938,6 +15594,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15029,6 +15689,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -15122,6 +15786,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15213,6 +15881,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -15306,6 +15978,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15397,6 +16073,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -15490,6 +16170,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15581,6 +16265,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -15674,6 +16362,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15765,6 +16457,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -15858,6 +16554,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15950,6 +16650,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -16041,6 +16745,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -16155,6 +16863,12 @@ The net monthly income from the savings account after deducting checking account
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -16277,6 +16991,12 @@ The net monthly income from the savings account after deducting checking account
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -16395,6 +17115,12 @@ So, the net monthly income is $3.20.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -16515,6 +17241,12 @@ So, the net monthly income is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -16630,6 +17362,12 @@ The net monthly income from the savings account after deducting checking account
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -16744,6 +17482,12 @@ The net monthly income from the savings account after deducting checking account
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -16864,6 +17608,12 @@ So, the net monthly income is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -16982,6 +17732,12 @@ So, the net monthly income is $3.20.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -17102,6 +17858,12 @@ So, the net monthly income is 3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -17220,6 +17982,12 @@ So, the net monthly income is 3.20.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -17340,6 +18108,12 @@ So, the net monthly income is 3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -17458,6 +18232,12 @@ So, the net monthly income is 3.20.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -17578,6 +18358,12 @@ The net monthly income from the savings account after deducting checking account
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -17696,6 +18482,12 @@ The net monthly income from the savings account after deducting checking account
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -17816,6 +18608,12 @@ So, the net monthly income is 3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -17935,6 +18733,12 @@ So, the net monthly income is 3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -18043,6 +18847,12 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -18144,6 +18954,12 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -18242,6 +19058,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -18349,6 +19169,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -18454,6 +19278,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -18561,6 +19389,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -18666,6 +19498,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -18773,6 +19609,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -18876,6 +19716,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -18978,6 +19822,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -19085,6 +19933,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19191,6 +20043,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19296,6 +20152,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19400,6 +20260,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -19511,6 +20375,12 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19621,6 +20491,12 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19726,6 +20602,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -19833,6 +20713,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19936,6 +20820,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20038,6 +20926,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -20145,6 +21037,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20251,6 +21147,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20354,6 +21254,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20456,6 +21360,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -20562,6 +21470,10 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20667,6 +21579,10 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20769,6 +21685,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -20873,6 +21793,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20976,6 +21900,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21078,6 +22006,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -21184,6 +22116,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21289,6 +22225,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21392,6 +22332,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21494,6 +22438,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -21601,6 +22549,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21706,6 +22658,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -21813,6 +22769,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21918,6 +22878,10 @@ The principal portion of the first mortgage payment is $430.75.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -22037,6 +23001,12 @@ So the correct credit card balance after one month is $2411.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `1.18` in `2400 * 1.18 / 12 - 25`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22155,6 +23125,12 @@ So the correct credit card balance after one month is $2411.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `1.18` in `2400 * 1.18 / 12 - 25`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22268,6 +23244,14 @@ If only the minimum payment of $25 is made after one month, the credit card bala
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22374,6 +23358,14 @@ If only the minimum payment of $25 is made after one month, the credit card bala
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22478,6 +23470,12 @@ The key figure for your question is the balance after interest and payment, whic
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERAND-ORIGINATED`: originated `1.0015` in `2400 * 1.0015`
 
 ### Reason for Adjudication
 
@@ -22584,6 +23582,12 @@ The key figure for your question is the balance after interest and payment, whic
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERAND-ORIGINATED`: originated `1.0015` in `2400 * 1.0015`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22689,6 +23693,12 @@ The credit card balance after one month would be $2411.
 - `WRONG-OPERATION`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -22802,6 +23812,12 @@ The credit card balance after one month would be $2411.
 - `WRONG-OPERATION`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -22921,6 +23937,12 @@ Thus, the new balance is approximately $2,436 after interest accrual, but since 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -23032,6 +24054,12 @@ Thus, the new balance is approximately $2,436 after interest accrual, but since 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -23137,6 +24165,12 @@ The correct balance after one month with the minimum payment considering the ann
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERAND-ORIGINATED`: originated `1.015` in `2400 * 1.015`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23241,6 +24275,12 @@ The correct balance after one month with the minimum payment considering the ann
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERAND-ORIGINATED`: originated `1.015` in `2400 * 1.015`
 
 ### Reason for Adjudication
 
@@ -23348,6 +24388,14 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -23454,6 +24502,14 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -23551,6 +24607,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23647,6 +24709,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -23748,6 +24816,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23848,6 +24922,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23945,6 +25025,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24041,6 +25127,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -24142,6 +25234,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24241,6 +25339,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -24342,6 +25446,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24441,6 +25551,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -24542,6 +25658,12 @@ So, the total annual cost of maintaining the checking account is $144.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24642,6 +25764,12 @@ So, the total annual cost of maintaining the checking account is $144.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24737,6 +25865,12 @@ The total annual cost of maintaining the checking account is $144. This amount c
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24831,6 +25965,12 @@ The total annual cost of maintaining the checking account is $144. This amount c
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -24932,6 +26072,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25032,6 +26178,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25123,6 +26275,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -25216,6 +26372,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -25307,6 +26467,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -25400,6 +26564,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -25492,6 +26660,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -25583,6 +26755,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -25690,6 +26866,12 @@ So, the remaining mortgage balance after the first monthly payment is $287,069.2
 - `WRONG-OPERATION`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -25805,6 +26987,12 @@ So, the remaining mortgage balance after the first monthly payment is $287,069.2
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25904,6 +27092,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -25995,6 +27187,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -26088,6 +27284,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -26179,6 +27379,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -26272,6 +27476,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -26363,6 +27571,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -26456,6 +27668,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -26547,6 +27763,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -26640,6 +27860,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -26731,6 +27955,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -26824,6 +28052,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -26915,6 +28147,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -27008,6 +28244,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -27099,6 +28339,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -27192,6 +28436,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -27283,6 +28531,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -27376,6 +28628,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -27467,6 +28723,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -27560,6 +28820,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -27651,6 +28915,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -27756,6 +29024,12 @@ The remaining mortgage balance after the first monthly payment is $287,069.25.
 - `WRONG-OPERATION`: 
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -27869,6 +29143,12 @@ The remaining mortgage balance after the first monthly payment is $287,069.25.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27968,6 +29248,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -28059,6 +29343,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -28165,6 +29453,12 @@ Therefore, the remaining mortgage balance after the first monthly payment is app
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -28270,6 +29564,12 @@ Therefore, the remaining mortgage balance after the first monthly payment is app
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -28362,6 +29662,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -28453,6 +29757,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -28559,6 +29867,12 @@ So, the remaining mortgage balance after the first monthly payment is $286,069.2
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -28664,6 +29978,12 @@ So, the remaining mortgage balance after the first monthly payment is $286,069.2
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -28755,6 +30075,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 is $
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -28848,6 +30172,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 is $
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -28940,6 +30268,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -29031,6 +30363,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -29131,6 +30467,12 @@ The remaining mortgage balance after the first monthly payment is $287,500.00 - 
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -29230,6 +30572,12 @@ The remaining mortgage balance after the first monthly payment is $287,500.00 - 
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -29321,6 +30669,10 @@ The remaining mortgage balance after the first monthly payment will be $285,056.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -29414,6 +30766,10 @@ The remaining mortgage balance after the first monthly payment will be $285,056.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -29505,6 +30861,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -29598,6 +30958,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -29690,6 +31054,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -29781,6 +31149,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -29881,6 +31253,12 @@ Note: This calculation assumes the payment goes directly toward reducing the pri
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -29980,6 +31358,12 @@ Note: This calculation assumes the payment goes directly toward reducing the pri
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30071,6 +31455,10 @@ The remaining mortgage balance after the first monthly payment is approximately 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -30164,6 +31552,10 @@ The remaining mortgage balance after the first monthly payment is approximately 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30255,6 +31647,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 is $2
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -30348,6 +31744,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 is $2
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30439,6 +31839,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 is $2
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -30532,6 +31936,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 is $2
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30623,6 +32031,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -30716,6 +32128,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30807,6 +32223,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -30900,6 +32320,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30991,6 +32415,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -31084,6 +32512,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31175,6 +32607,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -31268,6 +32704,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31359,6 +32799,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -31452,6 +32896,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31543,6 +32991,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -31636,6 +33088,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31727,6 +33183,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -31820,6 +33280,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31911,6 +33375,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -32004,6 +33472,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -32095,6 +33567,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -32188,6 +33664,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -32279,6 +33759,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -32372,6 +33856,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -32463,6 +33951,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -32556,6 +34048,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -32647,6 +34143,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -32740,6 +34240,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -32831,6 +34335,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 is $
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -32924,6 +34432,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 is $
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -33016,6 +34528,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -33107,6 +34623,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -33219,6 +34739,12 @@ So, the net monthly income is $3.20.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -33339,6 +34865,12 @@ So, the net monthly income is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -33454,6 +34986,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -33568,6 +35106,12 @@ So, the net monthly income from the savings account after deducting checking acc
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -33686,6 +35230,12 @@ So, the net monthly income after fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -33802,6 +35352,12 @@ So, the net monthly income after fees is $3.20.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -33920,6 +35476,12 @@ So, the net monthly income after deducting the checking account fees is 3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -34036,6 +35598,12 @@ So, the net monthly income after deducting the checking account fees is 3.20.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -34154,6 +35722,12 @@ So, the net monthly income after deducting the checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -34270,6 +35844,12 @@ So, the net monthly income after deducting the checking account fees is $3.20.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -34389,6 +35969,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -34507,6 +36093,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -34623,6 +36215,12 @@ So, the net monthly income from the savings account after deducting checking acc
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -34741,6 +36339,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -34858,6 +36462,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -34974,6 +36584,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -35094,6 +36710,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -35213,6 +36835,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -35330,6 +36958,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -35446,6 +37080,12 @@ So, the net monthly income from the savings account after deducting checking acc
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -35567,6 +37207,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -35687,6 +37333,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -35804,6 +37456,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -35920,6 +37578,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -36040,6 +37704,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -36159,6 +37829,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -36276,6 +37952,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -36392,6 +38074,12 @@ So, the net monthly income from the savings account after deducting checking acc
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
