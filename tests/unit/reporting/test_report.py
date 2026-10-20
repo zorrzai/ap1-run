@@ -1137,39 +1137,51 @@ def test_cells_without_any_says_so():
         *CELLS_HEAD, '*No non-outcome cells.*\n', '')
 
 
+CELLS_TABLE = ('| Item | Condition | Status | Reason | Repeat | Measurement |',
+               '|---|---|---|---|---|---|')
+
+
 def test_cells_from_summary_listed():
     text = report._section_unmeasured_cells({'non_outcome_cells': [
-        {'item_id': 'Q01', 'condition': 'base', 'status': 'UNMEASURED',
-         'reason': 'rate limited'},
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 3,
+         'status': 'UNMEASURED', 'reason': 'rate limited'},
         {}]}, None)
     assert text == md(
         *CELLS_HEAD,
-        '| Item | Condition | Status | Reason |',
-        '|---|---|---|---|',
-        '| Q01 | base | UNMEASURED | rate limited |',
-        '| ? | ? | ? | ? |',
+        '2 cells: execution 2.\n',
+        *CELLS_TABLE,
+        '| Q01 | base | UNMEASURED | rate limited | 3 | execution |',
+        '| \u2014 | \u2014 | \u2014 | \u2014 | \u2014 | execution |',
         '')
 
 
-def test_cells_from_transcript_error_state_and_ev0():
+def test_cells_from_transcript_error_state_or_ev0_one_row_per_record():
+    # An execution-level cell per transcript record: its error state, else
+    # its EV-0 class (never both). Figure-identification records are not
+    # executions.
     text = report._section_unmeasured_cells({}, [
-        {'item_id': 'Q02', 'condition': 'base',
+        {'item_id': 'Q02', 'condition': 'base', 'repeat': 1,
          'error_state': 'TRANSPORT_FAILURE: HTTP 500: boom'},
         {'item_id': 'Q03', 'condition': 'base', 'error_state': 'VOID',
+         'evidence_class': 'EV-0 UNOBSERVABLE'},
+        {'item_id': 'Q04', 'condition': 'base', 'repeat': 2,
          'evidence_class': 'EV-0 UNOBSERVABLE'},
         {'evidence_class': 'EV-2 PLATFORM-STRUCTURAL'},
         {'error_state': None, 'evidence_class': None},
         {'error_state': 'X:y'},
+        {'record_type': 'figure_identification', 'item_id': 'Q09',
+         'error_state': 'E', 'figure_outcome': 'UNMEASURABLE'},
     ])
     assert text == md(
         *CELLS_HEAD,
-        '| Item | Condition | Status | Reason |',
-        '|---|---|---|---|',
+        '4 cells: execution 3; D7.1 invocation 1.\n',
+        *CELLS_TABLE,
         '| Q02 | base | TRANSPORT_FAILURE | TRANSPORT_FAILURE: HTTP 500: '
-        'boom |',
-        '| Q03 | base | VOID | VOID |',
-        '| Q03 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |',
-        '| ? | ? | X | X:y |',
+        'boom | 1 | execution |',
+        '| Q03 | base | VOID | VOID | \u2014 | execution |',
+        '| Q04 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 '
+        '| D7.1 invocation |',
+        '| \u2014 | \u2014 | X | X:y | \u2014 | execution |',
         '')
 
 
@@ -1182,64 +1194,117 @@ def test_cells_summary_cells_come_before_transcript_cells():
 
 
 @pytest.mark.finding('T3-35')
-def test_cells_deduplicated_on_item_condition_status():
-    # Cells are de-duplicated on (item, condition, status), so 49
-    # rate-limited repeats become one row and the later reasons are lost.
-    # Correct: one row per cell, repeat identified.
-    text = report._section_unmeasured_cells({'non_outcome_cells': [
-        {'item_id': 'Q01', 'condition': 'base', 'status': 'UNMEASURED',
-         'reason': f'rate limited r{i}'} for i in range(1, 50)]}, None)
-    assert text.count('| Q01 | base | UNMEASURED |') == 1
-    assert 'rate limited r1 |' in text
-    assert 'r2 |' not in text
-
-
-@pytest.mark.finding('T3-35')
-def test_cells_same_failure_listed_once_per_status():
-    # One transport failure appears as one row per distinct status: its
-    # error_state, its EV-0 class and the summary's UNMEASURED cell.
-    # Correct: one row per cell, with its reason.
+def test_cells_execution_level_deduplicated_on_the_repeat_only():
+    # The same execution (item, condition, repeat) from the summary and
+    # the transcript is one row, the summary's; other repeats, and
+    # records without a repeat, are rows of their own.
     text = report._section_unmeasured_cells(
-        {'non_outcome_cells': [{'item_id': 'Q01', 'condition': 'base',
-                                'status': 'UNMEASURED',
-                                'reason': 'transport'}]},
-        [{'item_id': 'Q01', 'condition': 'base',
-          'error_state': 'TRANSPORT_FAILURE: timeout',
-          'evidence_class': 'EV-0 UNOBSERVABLE'}])
-    assert len(re.findall(r'^\| Q01 \| base \|', text, flags=re.M)) == 3
+        {'non_outcome_cells': [
+            {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+             'status': 'UNMEASURED', 'reason': 'transport'}]},
+        [{'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+          'error_state': 'TRANSPORT_FAILURE: timeout'},
+         {'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+          'error_state': 'TRANSPORT_FAILURE: timeout'},
+         {'item_id': 'Q01', 'condition': 'instruction_removed', 'repeat': 1,
+          'evidence_class': 'EV-0 UNOBSERVABLE'},
+         {'item_id': 'Q01', 'condition': 'base', 'error_state': 'E'},
+         {'item_id': 'Q01', 'condition': 'base', 'error_state': 'E'}])
+    rows = [line for line in text.split('\n') if line.startswith('| Q01 ')]
+    assert rows == [
+        '| Q01 | base | UNMEASURED | transport | 1 | execution |',
+        '| Q01 | base | TRANSPORT_FAILURE | TRANSPORT_FAILURE: timeout | 2 '
+        '| execution |',
+        '| Q01 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 '
+        'UNOBSERVABLE | 1 | D7.1 invocation |',
+        '| Q01 | base | E | E | \u2014 | execution |',
+        '| Q01 | base | E | E | \u2014 | execution |']
 
 
 @pytest.mark.finding('T3-35')
-def test_cells_other_non_outcomes_in_summary_are_not_listed():
-    # Figure-level UNMEASURABLE, transcription UNOBSERVABLE,
-    # COVERAGE-UNOBSERVABLE and OPERATION-UNOBSERVABLE are in the summary
-    # but not in this section. Correct: every non-outcome cell listed.
+def test_cells_every_measurement_kind_listed_with_its_reason():
     summary = {
-        'transcription_results': [{'item_id': 'Q01', 'condition': 'base',
-                                   'outcome': 'UNOBSERVABLE'}],
-        'release_coverage_results': [{'item_id': 'Q01',
-                                      'condition': 'base',
-                                      'outcome': 'COVERAGE-UNOBSERVABLE'}],
-        'operation_correctness_counts': {'OPERATION-UNOBSERVABLE': 2},
-        'd1_results': {'unmeasurable_n': 1},
-    }
+        'provenance_unmeasurable': [{'item_id': 'Q10', 'condition': 'base',
+                                     'repeat': 1, 'reason': 'chained'}],
+        'operands_unobservable': [{'item_id': 'Q11', 'condition': 'base',
+                                   'repeat': 2, 'reason': 'no operand'}],
+        'operation_unobservable': [{'item_id': 'Q12', 'condition': 'base',
+                                    'repeat': 3, 'reason': "max(1, 2)"}],
+        'transcription_results': [
+            {'item_id': 'Q13', 'condition': 'base', 'repeat': 4,
+             'outcome': 'UNOBSERVABLE',
+             'reason': 'R2.0 outcome is ADJUDICATE-DECLINE, not AUTO-MATCH'},
+            {'item_id': 'Q14', 'condition': 'base', 'repeat': 5,
+             'outcome': 'UNOBSERVABLE',
+             'reason': 'tool return value not available'},
+            {'item_id': 'Q15', 'outcome': 'TRANSCRIBED-EXACT'}],
+        'release_coverage_results': [
+            {'item_id': 'Q16', 'condition': 'base', 'repeat': 6,
+             'outcome': 'COVERAGE-UNOBSERVABLE', 'finding': 'no tool call'},
+            {'item_id': 'Q17', 'outcome': 'GOVERNED-RELEASE'}]}
     text = report._section_unmeasured_cells(summary, [
-        {'item_id': 'Q07', 'condition': 'base',
-         'figure_outcome': 'UNMEASURABLE'}])
-    assert '*No non-outcome cells.*' in text
+        {'item_id': 'Q09', 'condition': 'base', 'repeat': 7,
+         'figure_outcome': 'UNMEASURABLE'},
+        {'item_id': 'Q08', 'figure_outcome': 'AUTO-MATCH'}])
+    assert text == md(
+        *CELLS_HEAD,
+        '7 cells: R2.0 figure 1; D7.2(a) provenance 2; D7.2(b) operation '
+        '1; D7.3 transcription 2; D7.3 release coverage 1.\n',
+        *CELLS_TABLE,
+        '| Q09 | base | UNMEASURABLE | response could not be read; routed '
+        'to adjudication | 7 | R2.0 figure |',
+        '| Q10 | base | UNMEASURABLE | chained | 1 | D7.2(a) provenance |',
+        '| Q11 | base | OPERANDS-UNOBSERVABLE | no operand | 2 '
+        '| D7.2(a) provenance |',
+        '| Q12 | base | OPERATION-UNOBSERVABLE | max(1, 2) | 3 '
+        '| D7.2(b) operation |',
+        '| Q13 | base | UNOBSERVABLE | no released figure to compare (not '
+        'auto-matched) | 4 | D7.3 transcription |',
+        '| Q14 | base | UNOBSERVABLE | tool return value not available | 5 '
+        '| D7.3 transcription |',
+        '| Q16 | base | COVERAGE-UNOBSERVABLE | no tool call | 6 '
+        '| D7.3 release coverage |',
+        '')
 
 
 @pytest.mark.finding('T3-35')
-def test_cells_from_transcript_are_appended_to_the_summary_list():
-    # The section appends transcript cells to summary['non_outcome_cells']
-    # in place, so the caller's summary changes. Correct: no side effect.
-    summary = {'non_outcome_cells': []}
-    report._section_unmeasured_cells(
-        summary, [{'item_id': 'Q01', 'condition': 'base',
-                   'error_state': 'VOID'}])
-    assert summary['non_outcome_cells'] == [
-        {'item_id': 'Q01', 'condition': 'base', 'status': 'VOID',
-         'reason': 'VOID'}]
+def test_cells_one_execution_one_row_per_measurement():
+    # An EV-0 execution that is also the summary's UNMEASURED cell is one
+    # execution row; its other measurements are rows of their own, even
+    # for the same execution. Cells of other items are never merged.
+    text = report._section_unmeasured_cells(
+        {'non_outcome_cells': [
+            {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+             'status': 'UNMEASURED', 'reason': 'r'},
+            {'item_id': 'Q02', 'condition': 'base', 'repeat': 1,
+             'status': 'UNMEASURED', 'reason': 'r'}],
+         'transcription_results': [
+             {'item_id': 'Q03', 'condition': 'base', 'repeat': 1,
+              'outcome': 'UNOBSERVABLE', 'reason': 'x'}]},
+        [{'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+          'evidence_class': 'EV-0 UNOBSERVABLE'},
+         {'item_id': 'Q03', 'condition': 'base', 'repeat': 1,
+          'evidence_class': 'EV-0 UNOBSERVABLE',
+          'figure_outcome': 'UNMEASURABLE'}])
+    rows = [line.split(' | ')[2] + ' / ' + line.split(' | ')[5]
+            for line in text.split('\n') if line.startswith('| Q0')]
+    assert rows == ['UNMEASURED / execution |', 'UNMEASURED / execution |',
+                    'UNOBSERVABLE / D7.1 invocation |',
+                    'UNMEASURABLE / R2.0 figure |',
+                    'UNOBSERVABLE / D7.3 transcription |']
+
+
+def test_cells_transcription_without_reason_reads_dash():
+    text = report._section_unmeasured_cells({'transcription_results': [
+        {'item_id': 'Q', 'outcome': 'UNOBSERVABLE'}]}, None)
+    assert '| Q | \u2014 | UNOBSERVABLE | \u2014 | \u2014 | D7.3 ' \
+        'transcription |' in text
+
+
+def test_cell_text_is_one_line_with_pipes_escaped():
+    assert report._cell('a |b\n  c') == 'a \\|b c'
+    assert report._cell(0) == '0'
+    assert report._cell('') == report._cell(None) == '\u2014'
 
 
 def test_cells_error_state_text_without_colon_is_status():
@@ -1252,20 +1317,6 @@ def test_cells_non_string_error_state_without_colon_is_stringified():
     text = report._section_unmeasured_cells({}, [
         {'item_id': 'Q', 'condition': 'c', 'error_state': 504}])
     assert '| Q | c | 504 | 504 |' in text
-
-
-@pytest.mark.finding('S3-G6-1')
-def test_cells_non_string_error_state_with_colon_raises():
-    # The colon test goes through str() but the split does not, so a
-    # non-string error_state whose text contains ':' raises and no
-    # report is written. Engine error states are strings today, so this
-    # is latent. Correct: split str(error).
-    class Err:
-        def __str__(self):
-            return 'TRANSPORT_FAILURE: x'
-    with pytest.raises(AttributeError):
-        report._section_unmeasured_cells({}, [
-            {'item_id': 'Q', 'condition': 'c', 'error_state': Err()}])
 
 
 def test_cells_ev_unobservable_matches_anywhere_in_class():
@@ -1489,11 +1540,11 @@ def test_cells_duplicate_does_not_stop_later_cells():
     assert '| Q02 | base | VOID |' in text
 
 
-def test_cells_ev0_record_without_ids_reads_question_marks():
+def test_cells_ev0_record_without_ids_reads_dashes():
     text = report._section_unmeasured_cells({}, [
         {'evidence_class': 'EV-0 UNOBSERVABLE'}])
-    assert '| ? | ? | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |' \
-        in text
+    assert '| \u2014 | \u2014 | UNOBSERVABLE | Evidence class: EV-0 ' \
+        'UNOBSERVABLE |' in text
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
@@ -1735,9 +1786,6 @@ def test_unmeasured_dimensions_auto_dimensions_not_said_to_need_adjudication():
 
 
 @pytest.mark.finding('T3-35')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: §10 de-duplicates cells on (item, '
-                          'condition, status)')
 def test_cells_each_repeat_listed_with_its_reason():
     # SPEC R3.3 "every UNMEASURED, UNOBSERVABLE, UNMEASURABLE and VOID cell
     # with its reason". Correct: 49 rate-limited repeats are 49 rows.
@@ -1750,10 +1798,6 @@ def test_cells_each_repeat_listed_with_its_reason():
 
 
 @pytest.mark.finding('T3-35')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: figure UNMEASURABLE, transcription '
-                          'UNOBSERVABLE and COVERAGE-UNOBSERVABLE cells are '
-                          'not listed')
 def test_cells_other_non_outcome_kinds_listed():
     # Correct (SPEC R3.3): every non-outcome cell, whatever measurement it
     # belongs to, is listed.
@@ -1776,9 +1820,6 @@ def test_cells_other_non_outcome_kinds_listed():
 
 
 @pytest.mark.finding('T3-35')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: one transport failure is listed three '
-                          'times')
 def test_cells_one_failure_is_one_row():
     # The summary's UNMEASURED cell, the transcript's error_state and its
     # EV-0 class are the same execution. Correct: one row per cell.
@@ -1794,9 +1835,6 @@ def test_cells_one_failure_is_one_row():
 
 
 @pytest.mark.finding('T3-35')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: §10 appends transcript cells to the '
-                          "caller's summary in place")
 def test_cells_leave_the_summary_unchanged():
     # Correct: rendering a section has no side effect on its input.
     summary = {'non_outcome_cells': []}
@@ -1807,9 +1845,6 @@ def test_cells_leave_the_summary_unchanged():
 
 
 @pytest.mark.finding('S3-G6-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G6-1: a non-string error_state containing ":" '
-                          'raises AttributeError')
 def test_cells_non_string_error_state_with_colon_is_listed():
     # Correct: any error_state is rendered (str() then split), and the
     # report is written.

@@ -200,6 +200,7 @@ def build_summary(all_results, evidence_findings, *,
                  'OPERATION-UNOBSERVABLE': 0}
     wrong_op_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0,
                       'no_figure': 0}
+    op_unobservable = []
     for r in all_results:
         if r.get('status') != 'EXECUTED':
             continue
@@ -208,6 +209,10 @@ def build_summary(all_results, evidence_findings, *,
             outcome = oc.get('outcome', 'OPERATION-UNOBSERVABLE')
             if outcome in op_counts:
                 op_counts[outcome] += 1
+            if outcome == 'OPERATION-UNOBSERVABLE':
+                # a non-outcome cell, listed in report §10 (T3-35)
+                op_unobservable.append(_cell(r, oc.get('detail')
+                                             or oc.get('reason')))
             if outcome == 'WRONG-OPERATION':
                 if fig == 'AUTO-MATCH':
                     wrong_op_split['route_divergence'] += 1
@@ -222,6 +227,7 @@ def build_summary(all_results, evidence_findings, *,
                 else:
                     wrong_op_split['item_wrong'] += 1
     summary['operation_correctness_counts'] = op_counts
+    summary['operation_unobservable'] = op_unobservable
     summary['wrong_operation_split'] = wrong_op_split
 
     # Scoring proportions (D1 and D7)
@@ -275,6 +281,7 @@ def build_summary(all_results, evidence_findings, *,
                      'OPERANDS-UNOBSERVABLE': 0, 'UNMEASURABLE': 0}
     originated_audit = []
     unmeasurable = []
+    operands_unobservable = []
     for r in all_results:
         if r.get('status') != 'EXECUTED':
             continue
@@ -283,6 +290,9 @@ def build_summary(all_results, evidence_findings, *,
             outcome = prov.get('outcome', '')
             if outcome in prov_outcomes:
                 prov_outcomes[outcome] += 1
+            if outcome == 'OPERANDS-UNOBSERVABLE':
+                # a non-outcome cell, listed in report §10 (T3-35)
+                operands_unobservable.append(_cell(r, prov.get('reason')))
             if outcome == 'UNMEASURABLE':
                 # D7.2 is unmeasurable for the item (T3-42): its operands
                 # are neither grounded nor originated findings.
@@ -325,6 +335,7 @@ def build_summary(all_results, evidence_findings, *,
     summary['provenance_outcomes'] = prov_outcomes
     summary['originated_operand_audit'] = originated_audit
     summary['provenance_unmeasurable'] = unmeasurable
+    summary['operands_unobservable'] = operands_unobservable
 
     # Non-outcome cells
     non_outcome = []
@@ -333,9 +344,17 @@ def build_summary(all_results, evidence_findings, *,
             non_outcome.append({
                 'item_id': r.get('item_id'),
                 'condition': r.get('condition'),
+                'repeat': r.get('repeat'),
                 'status': r['status'],
                 'reason': r.get('cause', r.get('reason', '')),
             })
     summary['non_outcome_cells'] = non_outcome
 
     return summary
+
+
+def _cell(result, reason):
+    """A non-outcome cell of one execution: where it is, and why."""
+    return {'item_id': result.get('item_id'),
+            'condition': result.get('condition'),
+            'repeat': result.get('repeat'), 'reason': reason}

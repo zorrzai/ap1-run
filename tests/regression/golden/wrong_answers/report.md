@@ -339,8 +339,54 @@ Total operands resolved: 152
 
 > Every cell that is not a scoreable outcome is listed with its reason.
 
-*No non-outcome cells.*
+44 cells: D7.3 transcription 22; D7.3 release coverage 22.
 
+| Item | Condition | Status | Reason | Repeat | Measurement |
+|---|---|---|---|---|---|
+| Q01 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q01 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q02 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q02 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q03 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q03 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q06 | base | UNOBSERVABLE | tool return value not available | 1 | D7.3 transcription |
+| Q06 | base | UNOBSERVABLE | tool return value not available | 2 | D7.3 transcription |
+| Q01 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q01 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q02 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q02 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q03 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q03 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | tool return value not available | 1 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | tool return value not available | 2 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q01 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q01 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q02 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q02 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q03 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q03 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q04 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q04 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q06 | base | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q06 | base | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q01 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q01 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q02 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q02 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q03 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q03 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q04 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q04 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q06 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q06 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
 
 ## 11. Quantisation and Near-Miss Findings
 

@@ -119,6 +119,8 @@ EMPTY = {
                             'OPERANDS-UNOBSERVABLE': 0, 'UNMEASURABLE': 0},
     'originated_operand_audit': [],
     'provenance_unmeasurable': [],
+    'operands_unobservable': [],
+    'operation_unobservable': [],
     'non_outcome_cells': [],
 }
 
@@ -415,14 +417,48 @@ def test_summary_non_outcome_cells():
          'reason': 'underivable'},
         {'item_id': 'Q05', 'condition': 'base', 'status': 'VOID'},
     ]
+    # T3-35: each cell names its repeat.
+    results[1]['repeat'] = 7
     assert build_summary(results, [])['non_outcome_cells'] == [
-        {'item_id': 'Q03', 'condition': 'base', 'status': 'UNMEASURED',
-         'reason': 'rate_limited'},
-        {'item_id': 'Q04', 'condition': 'base', 'status': 'VOID',
-         'reason': 'underivable'},
-        {'item_id': 'Q05', 'condition': 'base', 'status': 'VOID',
-         'reason': ''},
+        {'item_id': 'Q03', 'condition': 'base', 'repeat': 7,
+         'status': 'UNMEASURED', 'reason': 'rate_limited'},
+        {'item_id': 'Q04', 'condition': 'base', 'repeat': None,
+         'status': 'VOID', 'reason': 'underivable'},
+        {'item_id': 'Q05', 'condition': 'base', 'repeat': None,
+         'status': 'VOID', 'reason': ''},
     ]
+
+
+@pytest.mark.finding('T3-35')
+def test_summary_lists_unobservable_operation_and_operand_cells():
+    # The non-outcome cells of D7.2(b) and D7.2(a), one per call, with
+    # the execution and the reason, for report §10.
+    results = [
+        {'item_id': 'Q00', 'status': 'VOID', 'operation_correctness': [
+            {'outcome': 'OPERATION-UNOBSERVABLE'}]},
+        executed('Q01', repeat=2, operation_correctness=[
+            {'outcome': 'OPERATION-CORRECT'},
+            {'outcome': 'OPERATION-UNOBSERVABLE', 'detail': 'unparseable'},
+            {'outcome': 'OPERATION-UNOBSERVABLE', 'reason': 'raised'},
+            {'outcome': 'WRONG-OPERATION'}],
+            provenance_results=[
+                {'outcome': 'OPERANDS-GROUNDED'},
+                {'outcome': 'OPERANDS-UNOBSERVABLE', 'reason': 'no operand'}]),
+        executed('Q02', operation_correctness=[
+            {'outcome': 'OPERATION-UNOBSERVABLE'}],
+            provenance_results=[{'outcome': 'OPERANDS-UNOBSERVABLE'}]),
+    ]
+    s = build_summary(results, [])
+    assert s['operation_unobservable'] == [
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+         'reason': 'unparseable'},
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+         'reason': 'raised'},
+        {'item_id': 'Q02', 'condition': 'base', 'repeat': 1, 'reason': None}]
+    assert s['operands_unobservable'] == [
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+         'reason': 'no operand'},
+        {'item_id': 'Q02', 'condition': 'base', 'repeat': 1, 'reason': None}]
 
 
 # -- counting: rows that were not executed come first, and every counter

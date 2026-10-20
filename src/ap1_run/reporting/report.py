@@ -665,54 +665,101 @@ def _section_d2_mechanisms(summary):
 
 
 def _section_unmeasured_cells(summary, transcript_records):
-    """Section 10: Every UNMEASURED/UNOBSERVABLE/UNMEASURABLE/VOID cell."""
+    """Section 10: every UNMEASURED, UNOBSERVABLE, UNMEASURABLE and VOID
+    cell with its reason (SPEC R3.3; T3-35).
+
+    A cell is one execution's result for one measurement. Execution-level
+    cells (UNMEASURED and VOID from the summary, a transcript record's
+    error state, else its EV-0 class) are one row per execution: a
+    transport failure is one row, whatever records it left. Each
+    measurement that has no outcome for an execution adds its own row:
+    the R2.0 figure (UNMEASURABLE), D7.2(a) (OPERANDS-UNOBSERVABLE, or
+    UNMEASURABLE for the execution), D7.2(b) (OPERATION-UNOBSERVABLE,
+    per call), D7.3 transcription (UNOBSERVABLE) and D7.3 release
+    coverage (COVERAGE-UNOBSERVABLE). Nothing is de-duplicated across
+    repeats, and the summary is not changed.
+    """
     lines = ['## 10. Non-Outcome Cells\n']
     lines.append('> Every cell that is not a scoreable outcome is listed '
                  'with its reason.\n')
 
-    cells = summary.get('non_outcome_cells', [])
+    rows = []
+    seen = set()
 
-    # Also extract from transcript if available
-    if transcript_records:
-        for rec in transcript_records:
-            error = rec.get('error_state')
-            if error:
-                cells.append({
-                    'item_id': rec.get('item_id', '?'),
-                    'condition': rec.get('condition', '?'),
-                    'status': error.split(':')[0] if ':' in str(error)
-                              else str(error),
-                    'reason': str(error),
-                })
-            ev = rec.get('evidence_class', '')
-            if ev and 'UNOBSERVABLE' in str(ev):
-                cells.append({
-                    'item_id': rec.get('item_id', '?'),
-                    'condition': rec.get('condition', '?'),
-                    'status': 'UNOBSERVABLE',
-                    'reason': f'Evidence class: {ev}',
-                })
-
-    if cells:
-        lines.append('| Item | Condition | Status | Reason |')
-        lines.append('|---|---|---|---|')
-        seen = set()
-        for cell in cells:
-            key = (cell.get('item_id'), cell.get('condition'),
-                   cell.get('status'))
+    def add(source, status, reason, measurement, execution=False):
+        repeat = source.get('repeat')
+        key = (source.get('item_id'), source.get('condition'), repeat)
+        if execution and repeat is not None:
             if key in seen:
-                continue
+                return
             seen.add(key)
-            lines.append(
-                f'| {cell.get("item_id", "?")} '
-                f'| {cell.get("condition", "?")} '
-                f'| {cell.get("status", "?")} '
-                f'| {cell.get("reason", "?")} |')
-    else:
-        lines.append('*No non-outcome cells.*\n')
+        rows.append((source.get('item_id'), source.get('condition'), status,
+                     reason, repeat, measurement))
 
+    for cell in summary.get('non_outcome_cells', []):
+        add(cell, cell.get('status'), cell.get('reason'), 'execution',
+            execution=True)
+    records = [r for r in transcript_records or []
+               if r.get('record_type') != 'figure_identification']
+    for rec in records:
+        error = rec.get('error_state')
+        evidence = str(rec.get('evidence_class'))
+        if error:
+            text = str(error)
+            add(rec, text.split(':')[0], text, 'execution', execution=True)
+        elif 'UNOBSERVABLE' in evidence:
+            add(rec, 'UNOBSERVABLE', f'Evidence class: {evidence}',
+                'D7.1 invocation', execution=True)
+    for rec in records:
+        if rec.get('figure_outcome') == 'UNMEASURABLE':
+            add(rec, 'UNMEASURABLE', 'response could not be read; routed '
+                'to adjudication', 'R2.0 figure')
+    for cell in summary.get('provenance_unmeasurable', []):
+        add(cell, 'UNMEASURABLE', cell.get('reason'), 'D7.2(a) provenance')
+    for cell in summary.get('operands_unobservable', []):
+        add(cell, 'OPERANDS-UNOBSERVABLE', cell.get('reason'),
+            'D7.2(a) provenance')
+    for cell in summary.get('operation_unobservable', []):
+        add(cell, 'OPERATION-UNOBSERVABLE', cell.get('reason'),
+            'D7.2(b) operation')
+    for r in summary.get('transcription_results', []):
+        if r.get('outcome') == 'UNOBSERVABLE':
+            reason = r.get('reason') or ''
+            if reason.startswith('R2.0 outcome is'):
+                # its figure outcome has its own row or sheet
+                reason = 'no released figure to compare (not auto-matched)'
+            add(r, 'UNOBSERVABLE', reason, 'D7.3 transcription')
+    for r in summary.get('release_coverage_results', []):
+        if r.get('outcome') == 'COVERAGE-UNOBSERVABLE':
+            add(r, 'COVERAGE-UNOBSERVABLE', r.get('finding'),
+                'D7.3 release coverage')
+
+    if not rows:
+        lines.append('*No non-outcome cells.*\n')
+        lines.append('')
+        return '\n'.join(lines)
+
+    counts = {}
+    for row in rows:
+        counts[row[5]] = counts.get(row[5], 0) + 1
+    lines.append(f'{len(rows)} cells: ' + '; '.join(
+        f'{measurement} {count}' for measurement, count in counts.items())
+        + '.\n')
+    lines.append('| Item | Condition | Status | Reason | Repeat | '
+                 'Measurement |')
+    lines.append('|---|---|---|---|---|---|')
+    for row in rows:
+        lines.append('| ' + ' | '.join(_cell(v) for v in row) + ' |')
     lines.append('')
     return '\n'.join(lines)
+
+
+def _cell(value):
+    """A value as a markdown table cell: '—' if missing, on one line,
+    with any '|' escaped."""
+    if value is None or value == '':
+        return '—'
+    return ' '.join(str(value).split()).replace('|', '\\|')
 
 
 def _section_quantisation(summary):

@@ -311,27 +311,23 @@ Total operands resolved: 129
 
 > Every cell that is not a scoreable outcome is listed with its reason.
 
-| Item | Condition | Status | Reason |
-|---|---|---|---|
-| Q03 | base | UNMEASURED | rate limited (HTTP 429): {"error": {"message": "Rate limit reached"}} |
-| Q04 | base | UNMEASURED | HTTP 500: {"error": {"message": "server error"}} |
-| Q05 | base | UNMEASURED | transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')) |
-| Q06 | base | UNMEASURED | response is not valid JSON: this is not json |
-| Q08 | base | UNMEASURED | HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} |
-| Q08 | instruction_removed | UNMEASURED | HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} |
-| Q03 | base | TRANSPORT_FAILURE | TRANSPORT_FAILURE: rate limited (HTTP 429): {"error": {"message": "Rate limit reached"}} |
-| Q03 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q04 | base | TRANSPORT_FAILURE | TRANSPORT_FAILURE: HTTP 500: {"error": {"message": "server error"}} |
-| Q04 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q05 | base | TRANSPORT_FAILURE | TRANSPORT_FAILURE: transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')) |
-| Q05 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q06 | base | TRANSPORT_FAILURE | TRANSPORT_FAILURE: response is not valid JSON: this is not json |
-| Q06 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q07 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q08 | base | TRANSPORT_FAILURE | TRANSPORT_FAILURE: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} |
-| Q08 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q08 | instruction_removed | TRANSPORT_FAILURE | TRANSPORT_FAILURE: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} |
-| Q08 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
+13 cells: execution 9; D7.1 invocation 1; R2.0 figure 1; D7.3 transcription 1; D7.3 release coverage 1.
+
+| Item | Condition | Status | Reason | Repeat | Measurement |
+|---|---|---|---|---|---|
+| Q03 | base | UNMEASURED | rate limited (HTTP 429): {"error": {"message": "Rate limit reached"}} | 1 | execution |
+| Q04 | base | UNMEASURED | HTTP 500: {"error": {"message": "server error"}} | 1 | execution |
+| Q05 | base | UNMEASURED | transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')) | 1 | execution |
+| Q05 | base | UNMEASURED | transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')) | 2 | execution |
+| Q06 | base | UNMEASURED | response is not valid JSON: this is not json | 1 | execution |
+| Q08 | base | UNMEASURED | HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} | 1 | execution |
+| Q08 | base | UNMEASURED | HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} | 2 | execution |
+| Q08 | instruction_removed | UNMEASURED | HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} | 1 | execution |
+| Q08 | instruction_removed | UNMEASURED | HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}} | 2 | execution |
+| Q07 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q07 | base | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q07 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q07 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
 
 ## 11. Quantisation and Near-Miss Findings
 

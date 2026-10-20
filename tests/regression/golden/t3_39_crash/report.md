@@ -296,8 +296,14 @@ Total operands resolved: 84
 
 > Every cell that is not a scoreable outcome is listed with its reason.
 
-*No non-outcome cells.*
+4 cells: D7.2(a) provenance 1; D7.2(b) operation 1; D7.3 transcription 1; D7.3 release coverage 1.
 
+| Item | Condition | Status | Reason | Repeat | Measurement |
+|---|---|---|---|---|---|
+| Q01 | base | OPERANDS-UNOBSERVABLE | no operand could be read from the expression 15.2 | 1 | D7.2(a) provenance |
+| Q01 | base | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: 15.2 | 1 | D7.2(b) operation |
+| Q01 | base | UNOBSERVABLE | tool return value not available | 1 | D7.3 transcription |
+| Q01 | base | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
 
 ## 11. Quantisation and Near-Miss Findings
 

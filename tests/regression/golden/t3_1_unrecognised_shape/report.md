@@ -320,21 +320,114 @@ Total operands resolved: 88
 
 > Every cell that is not a scoreable outcome is listed with its reason.
 
-| Item | Condition | Status | Reason |
-|---|---|---|---|
-| Q01 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q02 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q03 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q01 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q02 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q03 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q04 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q05 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q06 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q07 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q08 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q09 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
-| Q10 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
+104 cells: D7.1 invocation 26; R2.0 figure 26; D7.3 transcription 26; D7.3 release coverage 26.
+
+| Item | Condition | Status | Reason | Repeat | Measurement |
+|---|---|---|---|---|---|
+| Q01 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q01 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q02 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q02 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q03 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q03 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q01 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q01 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q02 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q02 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q03 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q03 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q04 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q04 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q05 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q05 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q06 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q06 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q07 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q07 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q08 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q08 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q09 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q09 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q10 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 1 | D7.1 invocation |
+| Q10 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 | D7.1 invocation |
+| Q01 | base | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q01 | base | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
+| Q02 | base | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q02 | base | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
+| Q03 | base | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q03 | base | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
+| Q01 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q01 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
+| Q02 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q02 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
+| Q03 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q03 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
+| Q04 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q04 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
+| Q05 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q05 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
+| Q06 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q06 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
+| Q07 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q07 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
+| Q08 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q08 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
+| Q09 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q09 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
+| Q10 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 1 | R2.0 figure |
+| Q10 | instruction_removed | UNMEASURABLE | response could not be read; routed to adjudication | 2 | R2.0 figure |
+| Q01 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q01 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q02 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q02 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q03 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q03 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q01 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q01 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q02 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q02 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q03 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q03 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q07 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q07 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q10 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q10 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q01 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q01 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q02 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q02 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q03 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q03 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q01 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q01 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q02 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q02 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q03 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q03 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q04 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q04 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q05 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q05 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q06 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q06 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q07 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q07 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q09 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q09 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q10 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q10 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
 
 ## 11. Quantisation and Near-Miss Findings
 

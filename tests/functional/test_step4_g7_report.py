@@ -244,9 +244,6 @@ def test_run_report_d1_per_category_with_confidence_interval(run):
 
 
 @pytest.mark.finding('T3-35')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: §10 lists the four failed Q08 executions '
-                          'as one row per condition')
 def test_run_report_lists_every_unmeasured_execution(run):
     # Q08 fails (HTTP 401) on both repeats in both conditions: four
     # UNMEASURED cells. Correct (SPEC R3.3 "every UNMEASURED ... cell with
@@ -258,10 +255,6 @@ def test_run_report_lists_every_unmeasured_execution(run):
 
 
 @pytest.mark.finding('T3-35')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: figure UNMEASURABLE, OPERATION-'
-                          'UNOBSERVABLE, transcription and coverage '
-                          'UNOBSERVABLE cells are missing from §10')
 def test_run_report_lists_every_non_outcome_kind(run):
     # Correct (SPEC R3.3): §10 lists Q05's four UNMEASURABLE figures (null
     # content), Q06's four OPERATION-UNOBSERVABLE calls ('max(144, 0)'),

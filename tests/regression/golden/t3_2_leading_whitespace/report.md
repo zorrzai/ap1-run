@@ -379,8 +379,26 @@ Total operands resolved: 180
 
 > Every cell that is not a scoreable outcome is listed with its reason.
 
-*No non-outcome cells.*
+16 cells: D7.3 transcription 8; D7.3 release coverage 8.
 
+| Item | Condition | Status | Reason | Repeat | Measurement |
+|---|---|---|---|---|---|
+| Q01 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q01 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q09 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q09 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q01 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q01 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q01 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q01 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q09 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q09 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q01 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q01 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q09 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q09 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
 
 ## 11. Quantisation and Near-Miss Findings
 

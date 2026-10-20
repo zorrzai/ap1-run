@@ -316,8 +316,62 @@ Total operands resolved: 144
 
 > Every cell that is not a scoreable outcome is listed with its reason.
 
-*No non-outcome cells.*
+52 cells: D7.2(a) provenance 12; D7.2(b) operation 16; D7.3 transcription 12; D7.3 release coverage 12.
 
+| Item | Condition | Status | Reason | Repeat | Measurement |
+|---|---|---|---|---|---|
+| Q01 | base | OPERANDS-UNOBSERVABLE | no operand could be read from the expression None | 1 | D7.2(a) provenance |
+| Q01 | base | OPERANDS-UNOBSERVABLE | no operand could be read from the expression None | 2 | D7.2(a) provenance |
+| Q02 | base | OPERANDS-UNOBSERVABLE | no operand could be read from the expression None | 1 | D7.2(a) provenance |
+| Q02 | base | OPERANDS-UNOBSERVABLE | no operand could be read from the expression None | 2 | D7.2(a) provenance |
+| Q04 | base | OPERANDS-UNOBSERVABLE | no operand could be read from the expression None | 1 | D7.2(a) provenance |
+| Q04 | base | OPERANDS-UNOBSERVABLE | no operand could be read from the expression None | 2 | D7.2(a) provenance |
+| Q01 | instruction_removed | OPERANDS-UNOBSERVABLE | no operand could be read from the expression None | 1 | D7.2(a) provenance |
+| Q01 | instruction_removed | OPERANDS-UNOBSERVABLE | no operand could be read from the expression None | 2 | D7.2(a) provenance |
+| Q02 | instruction_removed | OPERANDS-UNOBSERVABLE | no operand could be read from the expression None | 1 | D7.2(a) provenance |
+| Q02 | instruction_removed | OPERANDS-UNOBSERVABLE | no operand could be read from the expression None | 2 | D7.2(a) provenance |
+| Q04 | instruction_removed | OPERANDS-UNOBSERVABLE | no operand could be read from the expression None | 1 | D7.2(a) provenance |
+| Q04 | instruction_removed | OPERANDS-UNOBSERVABLE | no operand could be read from the expression None | 2 | D7.2(a) provenance |
+| Q01 | base | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: None | 1 | D7.2(b) operation |
+| Q01 | base | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: None | 2 | D7.2(b) operation |
+| Q02 | base | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: None | 1 | D7.2(b) operation |
+| Q02 | base | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: None | 2 | D7.2(b) operation |
+| Q03 | base | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: '2400 * rate / 12' | 1 | D7.2(b) operation |
+| Q03 | base | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: '2400 * rate / 12' | 2 | D7.2(b) operation |
+| Q04 | base | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: None | 1 | D7.2(b) operation |
+| Q04 | base | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: None | 2 | D7.2(b) operation |
+| Q01 | instruction_removed | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: None | 1 | D7.2(b) operation |
+| Q01 | instruction_removed | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: None | 2 | D7.2(b) operation |
+| Q02 | instruction_removed | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: None | 1 | D7.2(b) operation |
+| Q02 | instruction_removed | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: None | 2 | D7.2(b) operation |
+| Q03 | instruction_removed | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: '2400 * rate / 12' | 1 | D7.2(b) operation |
+| Q03 | instruction_removed | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: '2400 * rate / 12' | 2 | D7.2(b) operation |
+| Q04 | instruction_removed | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: None | 1 | D7.2(b) operation |
+| Q04 | instruction_removed | OPERATION-UNOBSERVABLE | expression unparseable or non-numeric: None | 2 | D7.2(b) operation |
+| Q01 | base | UNOBSERVABLE | tool return value not available | 1 | D7.3 transcription |
+| Q01 | base | UNOBSERVABLE | tool return value not available | 2 | D7.3 transcription |
+| Q02 | base | UNOBSERVABLE | tool return value not available | 1 | D7.3 transcription |
+| Q02 | base | UNOBSERVABLE | tool return value not available | 2 | D7.3 transcription |
+| Q03 | base | UNOBSERVABLE | tool return value not available | 1 | D7.3 transcription |
+| Q03 | base | UNOBSERVABLE | tool return value not available | 2 | D7.3 transcription |
+| Q01 | instruction_removed | UNOBSERVABLE | tool return value not available | 1 | D7.3 transcription |
+| Q01 | instruction_removed | UNOBSERVABLE | tool return value not available | 2 | D7.3 transcription |
+| Q02 | instruction_removed | UNOBSERVABLE | tool return value not available | 1 | D7.3 transcription |
+| Q02 | instruction_removed | UNOBSERVABLE | tool return value not available | 2 | D7.3 transcription |
+| Q03 | instruction_removed | UNOBSERVABLE | tool return value not available | 1 | D7.3 transcription |
+| Q03 | instruction_removed | UNOBSERVABLE | tool return value not available | 2 | D7.3 transcription |
+| Q01 | base | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q01 | base | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q02 | base | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q02 | base | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q03 | base | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q03 | base | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q01 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q01 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q02 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q02 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
+| Q03 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 1 | D7.3 release coverage |
+| Q03 | instruction_removed | COVERAGE-UNOBSERVABLE | no tool returns available | 2 | D7.3 release coverage |
 
 ## 11. Quantisation and Near-Miss Findings
 

@@ -1340,9 +1340,314 @@ Total operands resolved: 4860
 
 > Every cell that is not a scoreable outcome is listed with its reason.
 
-| Item | Condition | Status | Reason |
-|---|---|---|---|
-| Q07 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
+304 cells: D7.1 invocation 1; R2.0 figure 1; D7.3 transcription 202; D7.3 release coverage 100.
+
+| Item | Condition | Status | Reason | Repeat | Measurement |
+|---|---|---|---|---|---|
+| Q07 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 44 | D7.1 invocation |
+| Q07 | base | UNMEASURABLE | response could not be read; routed to adjudication | 44 | R2.0 figure |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 4 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 7 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 9 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 12 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 14 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 15 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 18 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 21 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 23 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 24 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 31 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 32 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 36 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 37 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 38 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 39 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 41 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 42 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 43 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 44 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 45 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 46 | D7.3 transcription |
+| Q04 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 48 | D7.3 transcription |
+| Q05 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 4 | D7.3 transcription |
+| Q05 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 15 | D7.3 transcription |
+| Q05 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 22 | D7.3 transcription |
+| Q05 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 28 | D7.3 transcription |
+| Q05 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 30 | D7.3 transcription |
+| Q05 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 34 | D7.3 transcription |
+| Q05 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 36 | D7.3 transcription |
+| Q05 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 41 | D7.3 transcription |
+| Q05 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 46 | D7.3 transcription |
+| Q05 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 49 | D7.3 transcription |
+| Q07 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 44 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 3 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 4 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 5 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 6 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 7 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 8 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 9 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 10 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 11 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 12 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 13 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 14 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 15 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 16 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 17 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 18 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 19 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 20 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 21 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 22 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 23 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 24 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 25 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 26 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 27 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 28 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 29 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 30 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 31 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 32 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 33 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 34 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 35 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 36 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 37 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 38 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 39 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 40 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 41 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 42 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 43 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 44 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 45 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 46 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 47 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 48 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 49 | D7.3 transcription |
+| Q08 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 50 | D7.3 transcription |
+| Q09 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 4 | D7.3 transcription |
+| Q09 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 5 | D7.3 transcription |
+| Q09 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 23 | D7.3 transcription |
+| Q09 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 24 | D7.3 transcription |
+| Q09 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 29 | D7.3 transcription |
+| Q09 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 31 | D7.3 transcription |
+| Q09 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 32 | D7.3 transcription |
+| Q09 | base | UNOBSERVABLE | no released figure to compare (not auto-matched) | 39 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 4 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 10 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 11 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 12 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 13 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 14 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 15 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 16 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 17 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 18 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 19 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 20 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 25 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 26 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 28 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 33 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 38 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 41 | D7.3 transcription |
+| Q04 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 46 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 3 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 5 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 8 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 12 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 16 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 17 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 19 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 20 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 22 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 25 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 28 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 29 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 31 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 35 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 36 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 41 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 42 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 44 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 45 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 47 | D7.3 transcription |
+| Q05 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 49 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 3 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 6 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 7 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 12 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 14 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 23 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 36 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 38 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 39 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 41 | D7.3 transcription |
+| Q06 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 46 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 2 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 3 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 4 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 5 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 6 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 7 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 8 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 9 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 10 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 11 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 12 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 13 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 15 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 17 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 18 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 19 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 20 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 21 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 22 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 23 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 24 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 25 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 27 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 28 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 29 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 30 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 32 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 34 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 35 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 36 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 37 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 38 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 40 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 41 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 42 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 43 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 44 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 45 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 46 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 48 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 49 | D7.3 transcription |
+| Q08 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 50 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 1 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 7 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 10 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 13 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 15 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 23 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 24 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 28 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 33 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 34 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 41 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 43 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 47 | D7.3 transcription |
+| Q09 | instruction_removed | UNOBSERVABLE | no released figure to compare (not auto-matched) | 48 | D7.3 transcription |
+| Q05 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 15 | D7.3 release coverage |
+| Q05 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 22 | D7.3 release coverage |
+| Q05 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 28 | D7.3 release coverage |
+| Q05 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 30 | D7.3 release coverage |
+| Q05 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 41 | D7.3 release coverage |
+| Q05 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 46 | D7.3 release coverage |
+| Q07 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 44 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 3 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 4 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 5 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 6 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 7 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 8 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 9 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 10 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 11 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 12 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 13 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 14 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 15 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 16 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 17 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 18 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 19 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 20 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 21 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 22 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 23 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 24 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 25 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 26 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 27 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 28 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 29 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 30 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 31 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 32 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 33 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 34 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 35 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 36 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 37 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 38 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 39 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 40 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 41 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 42 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 43 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 44 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 45 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 46 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 47 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 48 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 49 | D7.3 release coverage |
+| Q08 | base | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 50 | D7.3 release coverage |
+| Q05 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 31 | D7.3 release coverage |
+| Q05 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 45 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 1 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 2 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 3 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 5 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 6 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 7 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 8 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 9 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 10 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 11 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 12 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 13 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 15 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 18 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 19 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 20 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 21 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 22 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 23 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 24 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 25 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 27 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 28 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 29 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 30 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 32 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 34 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 35 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 36 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 37 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 38 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 40 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 41 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 42 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 43 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 44 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 45 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 46 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 48 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 49 | D7.3 release coverage |
+| Q08 | instruction_removed | COVERAGE-UNOBSERVABLE | no candidate figures matching expected value found in response | 50 | D7.3 release coverage |
 
 ## 11. Quantisation and Near-Miss Findings
 
