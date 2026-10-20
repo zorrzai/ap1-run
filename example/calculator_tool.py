@@ -14,7 +14,7 @@ sandboxed calculator; the interface is string in, string out.
 import ast
 import math
 import operator
-from decimal import Decimal, InvalidOperation
+from decimal import ROUND_HALF_UP, Decimal
 
 
 # -- Allow-lists (explicit, exhaustive) ------------------------------------
@@ -35,8 +35,22 @@ _ALLOWED_UNARYOPS = {
     ast.USub: operator.neg,
 }
 
+def _round_half_up(value, ndigits=None):
+    """round(), but half away from zero (ROUND_HALF_UP), the rounding
+    the example configs declare, not Python's half-to-even: round(2.5)
+    is 3. The value is rounded as its decimal text, so round(2.675, 2)
+    is 2.68. Like round(): an int without ndigits, a float with it."""
+    exact = Decimal(str(value))
+    if not exact.is_finite():
+        raise CalculatorError(f'cannot round {value}')
+    places = 0 if ndigits is None else int(ndigits)
+    rounded = exact.quantize(Decimal(1).scaleb(-places),
+                             rounding=ROUND_HALF_UP)
+    return int(rounded) if ndigits is None else float(rounded)
+
+
 _ALLOWED_FUNCS = {
-    'abs': abs, 'round': round, 'min': min, 'max': max, 'sum': sum,
+    'abs': abs, 'round': _round_half_up, 'min': min, 'max': max, 'sum': sum,
     'pow': pow, 'int': int, 'float': float,
     'sqrt': math.sqrt, 'ceil': math.ceil, 'floor': math.floor,
     'log': math.log, 'log10': math.log10,
@@ -146,7 +160,14 @@ def execute_calculator(expression):
     except SyntaxError as e:
         raise CalculatorError(f'syntax error: {e}') from e
 
-    result = _eval_node(tree)
+    # An arithmetic error (1/0, log(-1), an overflow) is a refusal, like
+    # any other expression the calculator cannot evaluate.
+    try:
+        result = _eval_node(tree)
+    except (ArithmeticError, ValueError, TypeError) as e:
+        raise CalculatorError(str(e)) from e
+    if isinstance(result, complex):
+        raise CalculatorError(f'result is not a real number: {result}')
     return str(result)
 
 

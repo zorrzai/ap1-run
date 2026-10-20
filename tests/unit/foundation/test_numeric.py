@@ -333,6 +333,41 @@ def test_parse_decimal_grammar_refusal_names_digits_and_text():
     assert str(e.value) == "not a number under R0.4.2: '1,23' from '$1,23'"
 
 
+@pytest.mark.finding('S3-G1-3', 'T3-77')
+@pytest.mark.parametrize('text', ['1,23', '1,2,3', '1234,567', ',123',
+                                  '123,', '1,234.5,6', '$1,23'])
+def test_parse_decimal_misplaced_grouping_separator_refused_exact(text):
+    # Groups of three in the integer part only (as extraction's regex
+    # requires); otherwise refused by the R0.4.2 grammar check, naming
+    # the digit string and the token.
+    with pytest.raises(NumericParseError) as e:
+        parse_decimal(text, currency_symbols=['$'])
+    digits = text.lstrip('$')
+    assert str(e.value) == (f'not a number under R0.4.2: {digits!r} '
+                            f'from {text!r}')
+
+
+@pytest.mark.parametrize('text, value', [
+    ('1,780', '1780'), ('12,345,678.90', '12345678.90'), ('-1,000', '-1000'),
+    ('1,000%', '1000')])
+def test_parse_decimal_grouping_in_threes_accepted(text, value):
+    assert parsed(text)[0] == D(value)
+
+
+def test_parse_decimal_grouping_checked_before_the_first_decimal_sep():
+    # Only the first '.' ends the integer part; a second makes the token
+    # unparseable, not misgrouped.
+    with pytest.raises(NumericParseError, match='^cannot parse as Decimal'):
+        parse_decimal('1,234.5.6')
+
+
+def test_parse_decimal_european_grouping_in_threes_accepted():
+    assert parse_decimal('1.780,00', decimal_sep=',', grouping_sep='.')[0] \
+        == D('1780.00')
+    with pytest.raises(NumericParseError, match='^not a number under R0.4.2'):
+        parse_decimal('1.78,00', decimal_sep=',', grouping_sep='.')
+
+
 @pytest.mark.req('R0.4.2')
 @pytest.mark.parametrize('text, decimal_sep, grouping_sep, value', [
     ('1,234,567.5', '.', ',', '1234567.5'),
