@@ -342,3 +342,143 @@ def test_declared_constants_check_passes_example_module():
         (example / name).read_text(encoding='utf-8'))
     assert declared_constants_check(
         gt, load('fixture.json'), load('questions.json')) == []
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# Group g3-seal-guards; see inbox/2026-10-20_step4-g3-seal-guards-report.md.
+# The D("0") exemption (also listed under T3-54) has no test here: whether
+# 0 is a structural constant is the STRUCTURAL_CONSTANTS question awaiting
+# Marcus (step-4 protocol, rule 6).
+
+def refusal_of(mod, qs):
+    """The SealError message, or None if the check passed. (Not
+    pytest.raises, whose DID NOT RAISE is not an AssertionError.)"""
+    try:
+        declared_constants_check(mod, FIXTURE, qs)
+    except SealError as exc:
+        return str(exc)
+    return None
+
+
+@pytest.mark.finding('T3-54')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-54: compute raising skips the item silently')
+def test_declared_constants_check_compute_raises_refused_naming_item(
+        gt_module):
+    # Correct (T3-54; SPEC R3.1, the E3 check fails closed): an item whose
+    # literals cannot be checked because compute raises is a recorded
+    # failure naming the item, not a silent skip.
+    mod = gt_module('''
+        def derive_q01(ctx):
+            D("4")
+            raise ValueError('boom')
+    ''')
+    msg = refusal_of(mod, questions('Q01'))
+    assert msg is not None, 'compute raising passed the check'
+    assert 'Q01' in msg
+
+
+@pytest.mark.finding('T3-54')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-54: no derive_<id> function skips the item '
+                          'silently')
+def test_declared_constants_check_no_derive_function_refused_naming_item(
+        gt_module):
+    # Correct: a derivable item with no derive_<id> to inspect is a
+    # recorded failure naming the item (or its literals are found some
+    # other way: either way the undeclared D("4") does not pass).
+    mod = gt_module('''
+        def compute(item_id, ctx):
+            return result(D("4"))
+    ''')
+    msg = refusal_of(mod, questions('Q01'))
+    assert msg is not None, 'item with no derive function passed'
+    assert 'Q01' in msg
+
+
+@pytest.mark.finding('T3-54')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-54: unreadable derive source skips the item '
+                          'silently')
+def test_declared_constants_check_source_unavailable_refused_naming_items(
+        gt_module):
+    # Correct: a derive function whose source cannot be read (a builtin:
+    # TypeError; code made by exec: OSError) cannot be checked, so each
+    # such item is a recorded failure, named.
+    mod = gt_module('''
+        exec("def derive_q02(ctx):\\n    return result(D('4'))\\n")
+
+        def compute(item_id, ctx):
+            return result(D("4"))
+    ''')
+    mod.derive_q01 = len
+    msg = refusal_of(mod, questions('Q01', 'Q02'))
+    assert msg is not None, 'unreadable derive functions passed'
+    assert 'Q01' in msg and 'Q02' in msg
+
+
+@pytest.mark.finding('T3-54')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-54: indented derive source fails to parse and '
+                          'the item is skipped silently')
+def test_declared_constants_check_indented_source_checked(gt_module):
+    # Correct: a derive function defined in a class or nested has indented
+    # source; it is dedented and checked (or refused). Either way the
+    # undeclared D("4") does not pass. Today ast.parse raises
+    # IndentationError, which is swallowed.
+    mod = gt_module('''
+        class Holder:
+            @staticmethod
+            def derive_q01(ctx):
+                return result(D("4"))
+
+        derive_q01 = Holder.derive_q01
+    ''')
+    msg = refusal_of(mod, questions('Q01'))
+    assert msg is not None, 'indented derive function passed'
+    assert 'Q01' in msg
+
+
+@pytest.mark.finding('S3-G3-1')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G3-1: only D("<str>") calls are inspected')
+@pytest.mark.parametrize('body', [
+    '''
+    def derive_q01(ctx):
+        return result(D(ctx['acct']['balance']) / D(4))
+    ''',
+    '''
+    from decimal import Decimal
+
+    def derive_q01(ctx):
+        return result(D(ctx['acct']['balance']) / Decimal("4"))
+    ''',
+    '''
+    def derive_q01(ctx):
+        return result(D(ctx['acct']['balance']) / 4)
+    ''',
+    '''
+    def helper(x):
+        return x / D("4")
+
+    def derive_q01(ctx):
+        return result(helper(D(ctx['acct']['balance'])))
+    ''',
+], ids=['D-int', 'Decimal-str', 'bare-int', 'in-helper'])
+def test_declared_constants_check_any_undeclared_numeric_literal_refused(
+        gt_module, body):
+    # Correct (the module's own docstring: "every numeric literal in a
+    # derive function's body is a member of the declared constants set";
+    # SPEC R3.1, the E3 defect): an undeclared 4 is refused whatever its
+    # spelling, and also when it sits in a helper the derive function
+    # calls. Today only D("<string>") calls in the derive function's own
+    # source are seen.
+    mod = gt_module(body)
+    msg = refusal_of(mod, questions('Q01'))
+    assert msg is not None, 'undeclared literal 4 passed'
+    assert 'Q01' in msg and '4' in msg
