@@ -108,7 +108,17 @@ def test_minimum_n_d1_is_ten_per_category():
     > No category claim may be made where n < 10.
     (AP-1 v1.3 D1, L204)
     """
-    assert MINIMUM_N['D1'] == {'type': 'per_category', 'min': 10}
+    assert MINIMUM_N['v1.3']['D1']['per_category'] == 10
+
+
+@pytest.mark.finding('T3-12')
+@pytest.mark.req('AP-1 D1', 'R0.1')
+def test_minimum_n_d1_is_forty_in_total():
+    """
+    > Method: a held-out question set (minimum 40 items) with one verifiable correct answer each.
+    (AP-1 v1.3 D1, L204)
+    """
+    assert MINIMUM_N['v1.3']['D1']['total'] == 40
 
 
 @pytest.mark.req('AP-1 D5', 'R0.1')
@@ -117,7 +127,8 @@ def test_minimum_n_d5_is_twenty_in_total():
     > Method: minimum 20 adversarial inputs, reported with per-class n, including:
     (AP-1 v1.3 D5, L279)
     """
-    assert MINIMUM_N['D5'] == {'type': 'total', 'min': 20}
+    assert MINIMUM_N['v1.3']['D5'] == {'eligible': 'adversarial_class',
+                                       'total': 20}
 
 
 @pytest.mark.req('AP-1 D6', 'R0.1')
@@ -126,30 +137,29 @@ def test_minimum_n_d6_is_ten_in_total():
     > Method: minimum 10 items across the taxonomy below, reported per class.
     (AP-1 v1.3 D6, L301)
     """
-    assert MINIMUM_N['D6'] == {'type': 'total', 'min': 10}
+    assert MINIMUM_N['v1.3']['D6'] == {'eligible': 'conflict_class',
+                                       'total': 10}
 
 
 @pytest.mark.finding('T3-12')
 @pytest.mark.req('AP-1 D5', 'R0.1')
-def test_minimum_n_d5_counts_any_twenty_questions():
-    # SPEC §10 says D5 is "refused at load" under 20 adversarial inputs.
-    # validate_minimum_n counts every question, adversarial or not, so 20
-    # ordinary questions satisfy a D5 claim. Correct: count the items of
-    # the claimed dimension only.
+def test_minimum_n_d5_twenty_ordinary_questions_refused():
+    # SPEC §10: D5 is "refused at load" under 20 adversarial inputs.
+    # Twenty ordinary questions are not adversarial inputs.
     from ap1_run.foundation.config import validate_minimum_n
-    validate_minimum_n({'dimensions_claimed': ['D5', 'D6']},
-                       [{'id': f'Q{i}', 'category': 'ordinary'}
-                        for i in range(20)])
+    with pytest.raises(ConfigError, match='^D5: 0 eligible items'):
+        validate_minimum_n({'dimensions_claimed': ['D5'],
+                            'ap1_version': 'v1.3'},
+                           [{'id': f'Q{i}', 'category': 'ordinary'}
+                            for i in range(20)])
 
 
 @pytest.mark.finding('T3-12')
 @pytest.mark.req('R0.1')
-def test_minimum_n_validator_has_no_caller_in_the_runner():
-    # SPEC §10 marks D1/D5/D6 minimum n IMPLEMENTED ("refused at load"),
-    # but nothing in the package calls validate_minimum_n, so a run that
-    # claims D1 on 10 items is not refused. Correct: the runner calls it
-    # before any request is sent.
-    assert callers_in_package('validate_minimum_n') == []
+def test_minimum_n_validator_called_by_the_runner():
+    # SPEC §10 marks D1/D5/D6 minimum n IMPLEMENTED ("refused at load"):
+    # the runner calls the validator before any request is sent.
+    assert callers_in_package('validate_minimum_n') == ['run.py']
 
 
 # =====================================================================
@@ -559,16 +569,14 @@ def test_single_variable_perturbation_with_unchecked_key_is_accepted():
 
 @pytest.mark.finding('S3-G7-2')
 @pytest.mark.req('AP-1 D7.8', 'AP-1 §13.9', 'R1.2')
-def test_perturbation_guard_ignores_a_change_of_model():
-    # The guard compares a fixed list of fields (system_prompt, tools,
-    # tool_choice, sampling, fixture_hash, message_template). A second
-    # changed quantity outside that list, here the model, passes.
-    # Correct: every request field other than the instruction is held
-    # constant and compared.
-    from ap1_run.execution.perturbation_guard import \
-        check_single_variable_perturbation
+def test_perturbation_guard_refuses_a_change_of_model():
+    # Every request field other than the instruction is held constant
+    # and compared, not only a fixed list: a changed model is refused.
+    from ap1_run.execution.perturbation_guard import (
+        PerturbationRefusal, check_single_variable_perturbation)
     changed = dict(PERTURBATION_BASE, model='other', system_prompt='x')
-    assert check_single_variable_perturbation(PERTURBATION_BASE, changed) == []
+    with pytest.raises(PerturbationRefusal, match='model differs'):
+        check_single_variable_perturbation(PERTURBATION_BASE, changed)
 
 
 # =====================================================================

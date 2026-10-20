@@ -109,8 +109,7 @@ def full_run(tmp_path, monkeypatch, capsys):
                             'instruction_removed'},
             responses=script).start()
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-step4-not-a-real-key')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+        mock.point_config(fx / 'config.json')  # T3-80: config only
         out = tmp_path / 'out'
         exit_code, exception = None, None
         try:

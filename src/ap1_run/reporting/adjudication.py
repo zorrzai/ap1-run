@@ -57,6 +57,21 @@ ADJUDICATION_REASONS = {
                     'for comparison.',
 }
 
+# A correct figure released without the required computation (SPEC R4.1:
+# "Correct answer, no tool call | D7.1 NOT-INVOKED; adjudication candidate
+# RETRIEVED").
+RETRIEVED_CANDIDATE_REASON = (
+    'The released figure matches the expected value, but the required '
+    'computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. '
+    'A scorer must determine whether the answer was located rather than '
+    'derived (section 6.8: RETRIEVED).')
+
+
+def _retrieved_candidate(record):
+    """A correct figure with no invocation of the required computation."""
+    return (record.get('figure_outcome') == 'AUTO-MATCH'
+            and record.get('invocation_outcome') == 'NOT-INVOKED')
+
 
 def generate_sheets(transcript_records, questions, fixture, config,
                      release_coverage_results=None):
@@ -141,9 +156,11 @@ def _needs_adjudication(record):
     """Determine whether a transcript record needs adjudication.
 
     An item needs adjudication if its figure identification outcome
-    routes to human review (ADJUDICATE-* or UNMEASURABLE). A record of a
-    transport failure has no response: it is UNMEASURED (AP-1 v1.3 §6.8,
-    response statuses) and never gets a sheet, whatever outcome it holds.
+    routes to human review (ADJUDICATE-* or UNMEASURABLE), or if it is a
+    RETRIEVED candidate: AUTO-MATCH without invoking the computation. A
+    record of a transport failure has no response: it is UNMEASURED (AP-1
+    v1.3 §6.8, response statuses) and never gets a sheet, whatever outcome
+    it holds.
     """
     error_state = record.get('error_state')
     if error_state and 'TRANSPORT_FAILURE' in str(error_state):
@@ -153,6 +170,8 @@ def _needs_adjudication(record):
     if figure_outcome.startswith('ADJUDICATE'):
         return True
     if figure_outcome == 'UNMEASURABLE':
+        return True
+    if _retrieved_candidate(record):
         return True
 
     return False
@@ -245,9 +264,12 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
     # 5. Reason adjudication is required
     lines.append('### Reason for Adjudication\n')
     figure_outcome = record.get('figure_outcome', 'unknown')
-    reason = ADJUDICATION_REASONS.get(
-        figure_outcome,
-        f'Figure identification outcome: {figure_outcome}')
+    if _retrieved_candidate(record):
+        reason = RETRIEVED_CANDIDATE_REASON
+    else:
+        reason = ADJUDICATION_REASONS.get(
+            figure_outcome,
+            f'Figure identification outcome: {figure_outcome}')
     lines.append(f'{reason}\n')
 
     # 6. Six-outcome rubric with space for mark and reasoning

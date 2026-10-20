@@ -323,15 +323,18 @@ def test_identify_figure_negative_token_does_not_match_positive_expected():
 
 
 def test_identify_figure_uses_given_extractor_with_currency_symbols():
+    # T3-41: the extractor also receives the separators (defaults '.'
+    # and ',' when none are given).
     seen = {}
 
-    def extractor(text, currency_symbols=None):
-        seen['args'] = (text, currency_symbols)
+    def extractor(text, currency_symbols=None, decimal_sep=None,
+                  grouping_sep=None):
+        seen['args'] = (text, currency_symbols, decimal_sep, grouping_sep)
         return [token('1'), token('15.20', 'fifteen twenty', 5)]
 
     r = identify(response('anything'), extract_tokens_fn=extractor,
                  currency_symbols=['$'])
-    assert seen['args'] == ('anything', ['$'])
+    assert seen['args'] == ('anything', ['$'], '.', ',')
     assert r['outcome'] == AUTO_MATCH
     assert r['reason'] == "exactly one token matches: 'fifteen twenty'"
     assert r['matched_indices'] == [1]
@@ -383,10 +386,6 @@ def test_identify_figure_percentage_token_does_not_match_money_value():
 
 @pytest.mark.finding('T3-41')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-41: a locale-ambiguous token raises out of '
-                          'identify_figure instead of routing to '
-                          'adjudication')
 def test_identify_figure_locale_ambiguous_token_routes_to_adjudication():
     # SPEC R0.4.2 "Locale ambiguity": where a token admits more than one
     # reading under the configured separators, "the item routes to
@@ -405,3 +404,35 @@ def test_identify_figure_locale_ambiguous_token_routes_to_adjudication():
     except AmbiguousLocaleError as e:
         outcome = f'raised AmbiguousLocaleError: {e}'
     assert outcome.startswith('ADJUDICATE')
+
+
+# --- Step 5 numeric-hardening: the configured separators (T3-41) ---
+
+@pytest.mark.finding('T3-41')
+@pytest.mark.req('R0.4.2')
+def test_identify_figure_default_extractor_uses_configured_separators():
+    r = identify(response('Die Zinsen betragen 1.006,25 $.'), '1006.25',
+                 decimal_separator=',', grouping_separator='.')
+    assert (r['outcome'], r['released_figure']) == (AUTO_MATCH, D('1006.25'))
+
+
+@pytest.mark.finding('T3-41')
+@pytest.mark.req('R0.4.2')
+def test_identify_figure_structured_answer_uses_configured_separators():
+    r = identify(response('', answer='1.006,25'), '1006.25',
+                 structured_answer_field='answer',
+                 decimal_separator=',', grouping_separator='.')
+    assert (r['outcome'], r['released_figure']) == (AUTO_MATCH, D('1006.25'))
+
+
+@pytest.mark.finding('T3-41')
+@pytest.mark.req('R0.4.2', 'R2.0')
+def test_identify_figure_real_locale_ambiguity_routes_to_adjudication():
+    r = identify(response('The answer is 1.780.'), '1.78',
+                 decimal_separator='.', grouping_separator='.')
+    assert r == {
+        'outcome': ADJUDICATE_AMBIGUOUS, 'released_figure': None,
+        'reason': "locale-ambiguous token under the configured separators: "
+                  "'1.780': separator '.' is configured as both decimal "
+                  "and grouping -- cannot disambiguate",
+        'extracted_tokens': None, 'matched_indices': []}

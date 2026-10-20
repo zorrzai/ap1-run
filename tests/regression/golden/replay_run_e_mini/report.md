@@ -49,7 +49,6 @@ Model: mock-model
     "I'm sorry, I cannot"
   ],
   "dimensions_claimed": [
-    "D1",
     "D2",
     "D7"
   ],
@@ -71,8 +70,8 @@ Model: mock-model
   "sampling": {
     "max_completion_tokens": "4096",
     "reasoning_effort": {
-      "detail": "gpt-4.1-mini does not recognize reasoning_effort",
-      "reason": "not-supported",
+      "detail": "gpt-4.1-mini returned HTTP 400: Unrecognized request argument supplied: reasoning_effort",
+      "reason": "platform-unsupported",
       "value": "omitted"
     },
     "temperature": "1",
@@ -112,7 +111,7 @@ Model: mock-model
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | Measured | 1000 | Accuracy: 1 (auto-scored 818; 181 adjudicated not in rate) |
+| D1 | **NOT MEASURED** | — | — |
 | D2 | Measured | N/A | See §9 D2 Mechanism Classes |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -1320,10 +1319,26 @@ Total operands resolved: 4860
 
 ## 9. D2 Reproducibility Mechanism Classes
 
+> **D2.2 cap: reasoning_effort was platform-unsupported. Detail: gpt-4.1-mini returned HTTP 400: Unrecognized request argument supplied: reasoning_effort**
+
+> *The platform-rejection detail above is the verbatim error recorded during config setup. The rejection is model-independent: it applies to any model run under this config.*
+
 > D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
 
 *No per-surface D2 data available.*
 
+
+## 9b. D2.2 Execution Conditions
+
+- Serving stack and version: not disclosed by the endpoint; the runner cannot observe it.
+- Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
+- Concurrency: one request at a time, sequentially, from a single process.
+- Sampling parameters sent:
+  - `max_completion_tokens`: `4096`
+  - `reasoning_effort`: not sent (platform-unsupported)
+  - `temperature`: `1`
+  - `top_p`: not sent (operator-declared)
+- Parameter echo: `UNVERIFIED` (1000 responses checked)
 
 ## 10. Non-Outcome Cells
 
@@ -1343,6 +1358,7 @@ Total operands resolved: 4860
 
 The following dimensions were **not measured** in this evaluation and require human adjudication:
 
+- **D1**: Accuracy — requires item-level scoring
 - **D3**: Completeness of explanation — requires human adjudication
 - **D4**: Appropriate caveats — requires human adjudication
 - **D5**: Source attribution — requires human adjudication

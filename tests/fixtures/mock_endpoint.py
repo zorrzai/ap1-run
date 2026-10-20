@@ -111,6 +111,18 @@ class MockEndpoint:
         host, port = self._server.server_address
         return f'http://{host}:{port}/v1/chat/completions'
 
+    def point_config(self, config_path, model='mock-model'):
+        """Rewrite the run config at config_path so that the run sends
+        to this mock, as model: the runner takes the endpoint and model
+        from the config alone (T3-80). Call after start()."""
+        with open(config_path, encoding='utf-8') as f:
+            config = json.load(f)
+        config['endpoint_url'] = self.url
+        config['model'] = model
+        with open(config_path, 'w', encoding='utf-8') as f:
+            json.dump(config, f, indent=2, ensure_ascii=False)
+            f.write('\n')
+
     def stop(self):
         if self._server:
             self._server.shutdown()

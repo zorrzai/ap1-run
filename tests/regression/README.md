@@ -18,9 +18,11 @@ real adapter and HTTP transport:
   chat-completions API. It serves scripted turns per question, condition,
   repeat and round, or it replays a published transcript.
 - `driver.py`: runs the runner's `main()` from the repository itself. The
-  runner gets the scenario's config with `--config` (a temporary merged copy
-  when the scenario edits it) and a temporary `--output-dir`, so it never
-  writes under the repository; `run_regression.py` checks that `output/` is
+  runner gets the scenario's config with `--config` (a temporary copy, merged
+  when the scenario edits it, with `endpoint_url` and `model` pointed at the
+  mock, since the runner reads both from the config alone) and a temporary
+  `--output-dir`, so it never writes under the repository;
+  `run_regression.py` checks that `output/` is
   unchanged after every real-tree scenario. It imports `smoke_test`, or
   `ap1_run.run` when the tree has no `smoke_test.py`.
 - `run_regression.py`: runs each scenario, normalises the output and compares
@@ -109,9 +111,9 @@ October 2026; `tests/RETIREMENT.md` records where each of their checks went.
 | `t3_39_crash` | **T3-39**: a non-string expression crashes the run |
 | `seal_refused` | AP-1 text hash mismatch: SealError before any request |
 | `config_no_tools` | config without tools: exit 1 |
-| `mini_config` | the shipped `example/config_mini.json` is refused at load today (`model-unsupported` is not a permitted omission reason) |
-| `replay_run_e_mini` | the published gpt-4.1-mini run, 1,000 executions, replayed through today's runner |
-| `replay_run_f_sol` | the published gpt-5.6-sol run, 1,000 executions, replayed |
+| `mini_config` | the shipped `example/config_mini.json`, the mini run's config: temperature 1 sent, `reasoning_effort` omitted as platform-unsupported |
+| `replay_run_e_mini` | the published gpt-4.1-mini run, 1,000 executions, replayed through today's runner with `example/config_mini.json` |
+| `replay_run_f_sol` | the published gpt-5.6-sol run, 1,000 executions, replayed with `example/config_sol.json` |
 | `tool_verify_run_seal` | `verify_run_seal.py` on the four published runs |
 | `tool_verify_run_seal_usage` | `verify_run_seal.py` with no arguments |
 | `tool_generate_findings` | `generate_findings.py`; its output equals the committed `findings/FINDINGS.md` |

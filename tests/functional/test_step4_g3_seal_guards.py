@@ -106,8 +106,7 @@ def run_example(path, tmp_path, monkeypatch, capsys,
         if name.startswith('AP1_SMOKE_'):
             monkeypatch.delenv(name)
     monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-test')
-    monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-    monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+    mock.point_config(path / 'config.json')  # T3-80: config only
     monkeypatch.setattr(run.time, 'sleep', lambda s: None)
     out = tmp_path / 'out'
     code, error = None, None

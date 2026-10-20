@@ -42,9 +42,16 @@ answer:
 against the source values and the legitimate intermediates of a reference
 derivation.
 
-D3, D4, D5 and D6 are all scored by human adjudication. The instrument enforces
-the minimum-item counts for D5 and D6 at load, and generates adjudication sheets
-for all four, but scores none of them.
+D3, D4, D5 and D6 are all scored by human adjudication. The instrument
+generates adjudication sheets for all four, but scores none of them.
+
+**Minimum n is enforced at load.** For each dimension in `dimensions_claimed`,
+the runner counts the eligible items of the question set and refuses the run,
+before any request, where the count is below the declared AP-1 version's
+minimum: D1 needs 40 items and 10 in every category; D5 counts items with an
+`adversarial_class` (v1.3: 20, v1.2: 5) and D6 items with a `conflict_class`
+(v1.3: 10, v1.2: 1). The shipped example has 10 items, so its configs claim
+D2 and D7 only, and the report declares D1 not measured.
 
 ### The finding it exists to surface
 
@@ -119,11 +126,31 @@ python tests/regression/run_regression.py   # the regression baseline, about 30 
 python tests/mutation/run_mutation.py       # mutation scores, against tests/mutation/scores.json
 ```
 
-Then run the worked example against your own endpoint:
+Then run the worked example against your own endpoint. Every setting comes
+from the config file, the endpoint and model included; the environment
+supplies only the API key. `example/config.json` points at
+`http://localhost:8080` with a placeholder model, so set its `endpoint_url`
+and `model` (or give your own config with `--config`). Each published model
+has its own config file:
+
+| config | model | published runs |
+|---|---|---|
+| `example/config.json` | placeholder (`example-model-v1` at `localhost:8080`) | none: the generic example |
+| `example/config_mini.json` | `gpt-4.1-mini`; temperature 1, no `reasoning_effort` | `run_e_mini` |
+| `example/config_sol.json` | `gpt-5.6-sol`; temperature omitted (platform-rejected), `reasoning_effort` none | `run_f_sol` |
+
+The September runs were made with `example/config.json` and environment
+overrides (see [`docs/REPRODUCING.md`](docs/REPRODUCING.md)); the two model
+files hold the settings those runs sealed (their `report.md` §2), except
+`dimensions_claimed`, which is now D2 and D7 (minimum n, above). The August
+runs `run_a_mini` and `run_b_sol` sealed different sampling settings, recorded
+in their own `report.md` §2; no file reproduces them.
 
 ```bash
 export AP1_SMOKE_API_KEY=<key>
 ap1-run                       # or: python smoke_test.py
+ap1-run --config example/config_mini.json
+ap1-run --config example/config_sol.json
 ```
 
 `python smoke_test.py` still works, even without the install step: it is a
@@ -364,7 +391,7 @@ src/ap1_run/
     credentials.py           the API key: environment, or Windows Credential Manager
     executions.py            scores each execution and collects the findings
     outputs.py               writes report.md, the adjudication sheets and the summary
-    settings.py              endpoint, model and sampling overrides; the R1.2 guard
+    settings.py              endpoint, model, the sampling printout; the R1.2 guard
     summary.py               invocation consistency check, D2 per item, the summary report.py reads
   foundation/                SPEC Layer 0
     config.py                configuration; refuses defaults that affect a result
@@ -455,12 +482,12 @@ sealed against, see [`docs/REPRODUCING.md`](docs/REPRODUCING.md).
 
 ## Verifying a run's seal
 
-The pre-registration seal (§5.3) binds the **resolved** configuration —
-after environment variables have been written into the config dict — not
-the config file on disk. The on-disk `example/config.json` and
-`example/config_mini.json` contain placeholder values for `model` and
-`endpoint_url` that are overwritten at runtime by `AP1_SMOKE_MODEL` and
-`AP1_SMOKE_ENDPOINT` (see `src/ap1_run/run.py` L352-370).
+The pre-registration seal (§5.3) binds the configuration the run used, as
+`report.md` §2 records it. The runner now takes every setting from the
+config file it is given, adding only its own version fields. The published
+runs were made before that: the runner wrote the model, the endpoint and
+(for the mini runs) two sampling settings from environment variables into
+the config after loading it, so no file in `example/` matches their seal.
 
 To verify a run's seal:
 
@@ -474,9 +501,9 @@ configuration from `report.md` §2, then recomputes and compares all five
 component hashes and the composite `seal_hash`. It reports each check
 individually and exits non-zero if any check fails.
 
-**Do not** hash `example/config.json` directly — it will not match the
-sealed `config_hash` because it contains the placeholder model, not the
-runtime model. This is expected behaviour, not a failure.
+The verifier never consults a config file on disk. For the published runs,
+hashing `example/config.json` or `example/config_mini.json` directly will
+not match the sealed `config_hash`; that is expected, not a failure.
 
 **Ground truth module.** `example/ground_truth_example.py` has been
 modified since both published runs. The sealed `ground_truth_hash` no
