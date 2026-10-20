@@ -44,7 +44,9 @@ import os
 import sys
 import time
 
-from ap1_run.execution.context import build_delivered_context
+from ap1_run.execution.context import (
+    build_delivered_context, lookup_collisions,
+)
 from ap1_run.execution.ap1_texts import (
     check_ap1_text_version, resolve_ap1_text,
 )
@@ -208,7 +210,10 @@ def main(argv=None):
     )
     seal_record = create_seal(
         **seal_inputs, runner_source_hash=runner_source_hash,
-        expected_values=expected_values, loaded=inputs.data)
+        expected_values=expected_values, loaded=inputs.data,
+        # R3.1: lookup collisions computed at seal and sealed (T3-75)
+        lookup_collisions=lookup_collisions(
+            sealed_compute(expected_values), fixture, questions))
     check_ap1_text_version(config, seal_record)
     seal_hash = seal_record['seal_hash']
 
@@ -226,6 +231,7 @@ def main(argv=None):
         verify_seal(seal_record, **seal_inputs,
                     runner_source_hash=compute_runner_source_hash(base_dir),
                     expected_values=current_values)
+    print(f'Lookup collisions (R3.1): {seal_record["lookup_collisions"]}')
     print(f'Seal hash: {seal_hash}')
     print(f'AP-1 text hash: {seal_record["ap1_text_hash"]}')
     print()

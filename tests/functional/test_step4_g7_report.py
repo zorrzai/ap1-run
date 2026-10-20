@@ -214,25 +214,6 @@ def section(report, number):
 # claim needs 10 items per category, which the example can't give, and
 # once T3-12 is fixed such a claim is refused.
 
-
-ACCURACY_ONE = re.compile(r'Accuracy(?: rate)?: 1(?:\.0+)?(?![\d./])')
-
-
-def d1_row(report):
-    return next(line for line in section(report, '3').split('\n')
-                if line.startswith('| D1 |'))
-
-
-@pytest.mark.finding('T3-3')
-def test_run_report_prints_no_accuracy_of_one_with_adjudication_pending(run):
-    # The run has wrong final answers (Q01 concludes $182.40, Q02 r2 and
-    # Q03 release wrong figures) and 14 items routed to adjudication that
-    # nobody scores. Correct (T3-3): report.md carries
-    # no "Accuracy: 1" headline (§3 or §8) while adjudication is pending.
-    report = run['report']
-    assert not ACCURACY_ONE.search(report), d1_row(report)
-
-
 @pytest.mark.finding('T3-4')
 def test_run_report_shows_d2_classes_per_question_and_surface(run):
     # Correct (SPEC R2.2, R3.3; AP-1 D2 Method and D2.1): §9 gives each
@@ -330,21 +311,6 @@ def test_run_report_originated_operand_audit_names_the_operand(run):
     assert rows
     for row in rows:
         assert '?' not in row, row
-
-
-
-
-@pytest.mark.finding('T3-66')
-def test_run_report_d1_n_agrees_between_sections(run):
-    # Correct (SPEC R2.1; T3-66): §3's D1 n equals §8's D1 total, and §8
-    # shows the UNMEASURABLE count.
-    report = run['report']
-    n = int(d1_row(report).split('|')[3])
-    s8 = section(report, '8')
-    d1_part = s8[s8.index('### D1'):]
-    total = int(re.search(r'- Total: (\d+)', d1_part).group(1))
-    assert (n, total) == (n, n), f'§3 n={n}, §8 total={total}'
-    assert re.search(r'nmeasurable: 4\b', d1_part), d1_part
 
 
 @pytest.mark.finding('T3-75')

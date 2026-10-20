@@ -56,9 +56,11 @@ CONFIG = {
     'currency_symbols': ['$'],
 }
 # Q3, the underivable item, is in the middle: the items after it still run.
-QUESTIONS = {'items': [{'id': 'Q1', 'source_accounts': ['a']},
+QUESTIONS = {'items': [{'id': 'Q1', 'source_accounts': ['a'],
+                        'category': 'interest'},
                        {'id': 'Q3', 'source_accounts': []},
-                       {'id': 'Q2', 'source_accounts': ['b']}]}
+                       {'id': 'Q2', 'source_accounts': ['b'],
+                        'category': 'fees'}]}
 FIXTURE = {'accounts': [{'id': 'a'}, {'id': 'b'}]}
 
 
@@ -94,6 +96,16 @@ class Run:
                      'create_seal', 'verify_seal', 'check_condition_guard',
                      'build_delivered_context', 'write_pre_registration',
                      'execute_item', 'score_run', 'rescore_transcript'):
+
+
+                     'create_seal', 'check_condition_guard',
+                     'build_delivered_context', 'check_lookup_collision',
+                     'execute_item', 'score_execution',
+                     'verify_invocation_consistency', 'print_run_report',
+                     'summarise_accuracy', 'summarise_accuracy_by_category',
+                     'find_d2_cap',
+                     'classify_reproducibility', 'build_summary',
+                     'print_scoring_report', 'write_outputs'):
             monkeypatch.setattr(run, name, getattr(self, name))
 
     def write_inputs(self, config=None):
@@ -194,6 +206,39 @@ class Run:
         self.calls.append(('rescore', transcript_path, kwargs))
         print('(re-scoring)')
         return {'smoke': 'summary'}
+
+
+    def verify_invocation_consistency(self, results):
+        self.calls.append(('consistency', list(results)))
+
+    def print_run_report(self, results, conditions, **kwargs):
+        self.calls.append(('run_report', list(results), conditions, kwargs))
+
+    def summarise_accuracy(self, results):
+        self.calls.append(('summarise', list(results)))
+        return {'d1': True}
+
+    def summarise_accuracy_by_category(self, results, categories):
+        self.calls.append(('by_category', list(results), categories))
+        return {'by': 'category'}
+
+    def find_d2_cap(self, sampling):
+        self.calls.append(('d2_cap', sampling))
+        return 'CAP'
+
+    def classify_reproducibility(self, responses, repeat_count, cap):
+        self.calls.append(('d2', responses, repeat_count, cap))
+        return {'d2': 'results'}
+
+    def build_summary(self, results, evidence, **kwargs):
+        self.calls.append(('summary', list(results), evidence, kwargs))
+        return {'summary': True}
+
+    def print_scoring_report(self, *args):
+        self.calls.append(('scoring_report',) + args)
+
+    def write_outputs(self, output_dir, transcript_path, **kwargs):
+        self.calls.append(('outputs', output_dir, transcript_path, kwargs))
 
 
 @pytest.fixture
@@ -370,6 +415,73 @@ def test_main_full_run_calls(r, capsys):
         'questions': QUESTIONS,
         'ground_truth_compute': kwargs['ground_truth_compute'],
         'output_dir': out})]
+
+
+    # the collected results, in order
+    expected_results = [
+        {'item_id': 'Q1', 'condition': 'base', 'repeat': 1,
+         'status': 'UNMEASURED', 'cause': 'rate_limited'},
+        {'status': 'EXECUTED'},
+        {'item_id': 'Q3', 'condition': 'base', 'repeat': 0,
+         'status': 'VOID'},
+        {'item_id': 'Q2', 'condition': 'base', 'repeat': 1,
+         'status': 'UNMEASURED', 'cause': 'HTTP 500: boom'},
+        {'status': 'EXECUTED'},
+        {'item_id': 'Q1', 'condition': 'instruction_removed', 'repeat': 1,
+         'status': 'VOID', 'cause': 'no figure'},
+        {'status': 'EXECUTED'},
+        {'item_id': 'Q3', 'condition': 'instruction_removed', 'repeat': 0,
+         'status': 'VOID'},
+        {'item_id': 'Q2', 'condition': 'instruction_removed', 'repeat': 1,
+         'status': 'UNMEASURED', 'cause': 'cut off'},
+        {'status': 'EXECUTED'},
+    ]
+    assert r.named('consistency') == [(expected_results,)]
+
+    (results, conditions, kw), = r.named('run_report')
+    assert results == expected_results
+    assert conditions == ['base', 'instruction_removed']
+    assert kw['disclaimer'] == run.DISCLAIMER
+    assert kw['unmeasured_cells'] == [
+        {'item_id': 'Q1', 'condition': 'base', 'repeat': 1,
+         'cause': 'rate_limited'},
+        {'item_id': 'Q2', 'condition': 'base', 'repeat': 1,
+         'cause': 'HTTP 500: boom'}]
+    for name in ('grammar_issues', 'decline_findings', 'tool_call_structures',
+                 'evidence_findings', 'transcription_results',
+                 'release_coverage_results'):
+        assert kw[name] == [], name
+
+    assert r.named('summarise') == [([],)]
+    # T3-32: D1 per category, from questions.json's categories
+    assert r.named('by_category') == [([], {'Q1': 'interest', 'Q2': 'fees'})]
+    assert r.named('d2_cap') == [({'temperature': 0},)]
+    d2_responses = {'d2': [res for res, _ in scores]}
+    assert r.named('d2') == [(d2_responses, 2, 'CAP')]
+    (results, evidence, kw), = r.named('summary')
+    assert results == expected_results and evidence == []
+    d1 = {'d1': True, 'n': 0, 'by_category': {'by': 'category'}}
+    assert kw == {'d1_summary': d1,
+                  'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
+                  'transcription_results': [],
+                  'release_coverage_results': [],
+                  'held_constant': HELD_CONSTANT}
+    assert r.named('scoring_report') == [(
+        d1, {'d2': 'results'}, 'CAP', {'summary': True})]
+
+    (output_dir, transcript_path, kw), = r.named('outputs')
+    assert (output_dir, transcript_path) == (out, transcript)
+    assert kw == {
+        'summary': {'summary': True}, 'config': config,
+        'seal_record': {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'},
+        'questions': QUESTIONS, 'fixture': FIXTURE,
+        'release_coverage_results': [], 'disclaimer': run.DISCLAIMER,
+        'smoke_summary': {
+            'seal_hash': 'SEAL', 'all_results': expected_results,
+            'grammar_issues': [], 'decline_findings': [],
+            'tool_call_structures': [], 'evidence_findings': [],
+            'unmeasured_cells': kw['smoke_summary']['unmeasured_cells']}}
+    assert len(kw['smoke_summary']['unmeasured_cells']) == 2
 
     # the order of the stages
     stages = [c[0] for c in r.calls if c[0] in (
