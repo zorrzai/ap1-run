@@ -415,3 +415,36 @@ def test_reproducibility_with_the_real_classifier_below_minimum():
 
 def test_reproducibility_of_nothing():
     assert classify_reproducibility({}, 3, None) == {}
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-63')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-63: a WRONG-OPERATION call in an UNMEASURABLE '
+                          'execution is counted as "item answer incorrect"')
+def test_summary_wrong_operation_in_unmeasurable_execution_not_item_wrong():
+    # SPEC R2.0 step 0: an unreadable response is UNMEASURABLE, "never
+    # scored as incorrect. The runner does not conclude anything about a
+    # response it could not read." So its WRONG-OPERATION calls are not
+    # counted under "Item answer incorrect" (report.md §7, console 3i).
+    results = [executed(figure_outcome='UNMEASURABLE',
+                        operation_correctness=[{'outcome': 'WRONG-OPERATION'}])]
+    s = build_summary(results, [])
+    assert s['wrong_operation_split']['item_wrong'] == 0
+
+
+@pytest.mark.finding('T3-63')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-63: a WRONG-OPERATION call in an AUTO-NO-FIGURE '
+                          'execution is counted as "item answer incorrect"')
+def test_summary_wrong_operation_in_no_figure_execution_not_item_wrong():
+    # An AUTO-NO-FIGURE execution released no figure: D1 scores it
+    # NO-FIGURE, not INCORRECT (scoring/accuracy.py; SPEC R2.0 step 4 keeps
+    # AUTO-NO-FIGURE a separate automatic outcome), so it has no "item
+    # answer" to be incorrect. Only executions D1 scores INCORRECT belong in
+    # "Item answer incorrect".
+    results = [executed(figure_outcome='AUTO-NO-FIGURE',
+                        operation_correctness=[{'outcome': 'WRONG-OPERATION'}])]
+    s = build_summary(results, [])
+    assert s['wrong_operation_split']['item_wrong'] == 0
