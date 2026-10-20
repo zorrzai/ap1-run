@@ -140,3 +140,26 @@ def test_write_outputs_writes_four_files_and_says_where(
         f'Adjudication sheets written to {tmp_path}/adjudication_sheets.md\n'
         f'\nSummary written to {tmp_path}/smoke_summary.json\n'
         f'Transcript written to {transcript_path}\n')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-9')
+@pytest.mark.req('R3.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-9: figure outcomes are joined to engine '
+                          'records by position, not by repeat')
+def test_attach_joins_figure_outcomes_on_the_repeat_index():
+    # Repeat 1 failed in transport: an engine record, no figure record.
+    # Correct (fix plan §2 branch 6): every record carries its repeat and
+    # the join uses it, so repeats 2 and 3 keep their own outcomes and
+    # repeat 1 gets none. Today repeat 1 takes repeat 2's outcome.
+    records = [engine('Q01', 'base', repeat=1,
+                      error_state='TRANSPORT_FAILURE: HTTP 500'),
+               engine('Q01', 'base', repeat=2),
+               dict(figure('Q01', 'base', 'AUTO-MATCH'), repeat=2),
+               engine('Q01', 'base', repeat=3),
+               dict(figure('Q01', 'base', 'ADJUDICATE-DECLINE'), repeat=3)]
+    result = attach_figure_outcomes(records)
+    assert [(r['repeat'], r.get('figure_outcome')) for r in result] == [
+        (1, None), (2, 'AUTO-MATCH'), (3, 'ADJUDICATE-DECLINE')]

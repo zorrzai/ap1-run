@@ -589,3 +589,105 @@ def test_sheet_sections_in_order():
     assert order == sorted(order)
     assert text.startswith(
         '\n## Item 1: Q01 (Condition: base) \u2014 Scorer 1\n\n### Question')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+def sheets_list(text):
+    """The sheets of a generate_sheets document, one string each."""
+    return re.split(r'\n(?=## Item )', text)[1:]
+
+
+@pytest.mark.finding('T3-9')
+@pytest.mark.req('R3.2', 'AP-1 §6.8')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-9: a transport-failed record given an '
+                          'ADJUDICATE outcome gets a sheet')
+def test_sheets_transport_failure_record_never_gets_a_sheet():
+    # A record with no response is UNMEASURED (AP-1 v1.3 §6.8 "Response
+    # statuses, distinct from outcomes"), whatever figure outcome a join
+    # gave it: no sheet. Today the ADJUDICATE check comes first and the
+    # sheet shows "[no response received]".
+    text = sheets_for([record(error_state='TRANSPORT_FAILURE: HTTP 500',
+                              response_received=None)])
+    assert 'Total items requiring adjudication: 0' in text
+    assert '[no response received]' not in text
+
+
+@pytest.mark.finding('T3-37')
+@pytest.mark.req('R3.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason="T3-37: a sheet's coverage finding lists every "
+                          'repeat of the item and condition')
+def test_sheets_coverage_finding_is_the_sheets_own_repeat():
+    # Correct (SPEC R3.2; fix plan §2 branch 6): coverage joins on the
+    # repeat too. Repeat 1 was GOVERNED-RELEASE, so its two sheets carry
+    # no Release Coverage Finding; repeat 2's two sheets carry its own.
+    text = sheets_for(
+        [record(repeat=1), record(repeat=2)],
+        release_coverage_results=[
+            coverage(1, 'GOVERNED-RELEASE'),
+            coverage(2, finding='rep 2 ungoverned')])
+    assert [('PARTIALLY-GOVERNED' in s, 'rep 2 ungoverned' in s)
+            for s in sheets_list(text)] == [
+        (False, False), (False, False), (True, True), (True, True)]
+
+
+@pytest.mark.finding('T3-37')
+@pytest.mark.req('R3.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-37: a sheet does not say which repeat it is')
+def test_sheets_each_sheet_names_its_repeat():
+    # Correct: a sheet is for one execution and says which repeat it is,
+    # so a scorer's mark can be joined back to it. Today the header names
+    # the item and condition only.
+    text = sheets_for([record(repeat=3), record(repeat=7)])
+    headers = [s.splitlines()[0] for s in sheets_list(text)]
+    assert [bool(re.search(r'\b[Rr]epeat\W{0,3}%d\b' % n, h))
+            for h, n in zip(headers, (3, 3, 7, 7))] == [True] * 4, headers
+
+
+@pytest.mark.finding('T3-36')
+@pytest.mark.req('AP-1 §13.8', 'R3.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-36: every sheet header prints the arm '
+                          '(condition)')
+def test_sheets_do_not_name_the_arm():
+    # AP-1 v1.3 §13.8: "Two scorers, blind to arm identity where the
+    # response text permits". The arm (instructed or instruction-removed)
+    # is the D7.1b contrast being measured; the sheet must not print it.
+    # Today: "## Item 1: Q01 (Condition: instruction_removed) — Scorer 1".
+    text = sheets_for([record(condition='instruction_removed', arm_id=
+                              'instruction_removed'),
+                       record(condition='base', arm_id='base')])
+    assert len(sheets_list(text)) == 4
+    found = [w for w in ('instruction_removed', 'Condition')
+             if w in text] + re.findall(r'\bbase\b', text)
+    assert found == []
+
+
+@pytest.mark.finding('T3-13')
+@pytest.mark.req('AP-1 §6.8', 'R3.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-13: the sheet omits the D7.2(a) result the '
+                          '§6.8 composition rule needs')
+def test_sheet_shows_d72a_operand_result():
+    # AP-1 v1.3 §6.8 Composition: "Where a computed answer rests on an
+    # originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level
+    # outcome is ORIGINATED". A scorer applying it needs the D7.2(a)
+    # result and the originated operands (SPEC R3.2: everything a scorer
+    # needs). The record carries them (engine provenance_results); the
+    # sheet shows operation correctness only.
+    text = one_sheet(provenance_results=[{
+        'outcome': 'OPERAND-ORIGINATED',
+        'operand_resolutions': [
+            {'operand_value': '10.5', 'step': 5, 'resolution': 'originated'},
+            {'operand_value': '7.3', 'step': 5, 'resolution': 'originated'}],
+        'originated_operands': [
+            {'value': '10.5', 'literal': '10.5', 'expression': '10.5 - 7.3',
+             'resolution': 'originated'},
+            {'value': '7.3', 'literal': '7.3', 'expression': '10.5 - 7.3',
+             'resolution': 'originated'}],
+        'quantisation_findings': []}])
+    assert ('D7.2(a)' in text, 'OPERAND-ORIGINATED' in text,
+            '10.5' in text and '7.3' in text) == (True, True, True)
