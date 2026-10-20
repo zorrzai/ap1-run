@@ -427,17 +427,18 @@ def test_rounding_licensed_by_quantisation_is_transcribed_exact():
 
 @pytest.mark.finding('T3-27')
 @pytest.mark.req('AP-1 D7.3', 'R2.5')
-def test_licensed_rounding_uses_half_even_not_the_declared_policy():
+def test_licensed_rounding_uses_the_declared_policy():
     # 15.205 rounds to 15.21 under the declared ROUND_HALF_UP, so 15.21 is
-    # licensed; transcription quantises with the context default
-    # (ROUND_HALF_EVEN, 15.20) and reports ALTERED. Correct: quantise with
-    # the declared rounding mode.
+    # licensed (EXACT) and 15.20 is not (ALTERED). Fixed (T3-27): this
+    # used the context default ROUND_HALF_EVEN and said the opposite.
     from ap1_run.scoring.figure_id import AUTO_MATCH
     from ap1_run.scoring.transcription import check_transcription
-    result = check_transcription(Decimal('15.205'), Decimal('15.21'),
-                                 figure_outcome=AUTO_MATCH,
-                                 quantisation_digits=2)
-    assert result['outcome'] == 'TRANSCRIBED-ALTERED'
+    outcomes = [check_transcription(Decimal('15.205'), Decimal(released),
+                                    figure_outcome=AUTO_MATCH,
+                                    quantisation_digits=2,
+                                    quantisation_rounding='ROUND_HALF_UP')
+                ['outcome'] for released in ('15.21', '15.20')]
+    assert outcomes == ['TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED']
 
 
 # =====================================================================

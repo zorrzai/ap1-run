@@ -215,15 +215,17 @@ def _section_d73(summary):
     """Section: D7.3 Transcription fidelity and Release coverage.
 
     Renders two labelled sub-sections:
-    A. Transcription check  (check_transcription -- AUTO-MATCH items only)
+    A. Transcription check  (check_transcription -- AUTO-MATCH items only),
+       with the count of EXACT results rounded under the declared policy
     B. Release coverage     (check_release_coverage -- ALL items)
     """
     lines = ['## D7.3 Transcription Fidelity\n']
 
     # -- A. Transcription Check --
     lines.append('### A. Transcription Check\n')
-    lines.append('> Compares the LAST tool return value to the single ')
-    lines.append('> figure R2.0 identified as released (AUTO-MATCH items only).\n')
+    lines.append('> Compares EVERY return of the required operation to the single ')
+    lines.append('> figure R2.0 identified as released (AUTO-MATCH items only), ')
+    lines.append('> under the declared quantisation policy (places and rounding mode).\n')
 
     tr_results = summary.get('transcription_results', [])
     if not tr_results:
@@ -240,6 +242,15 @@ def _section_d73(summary):
             pct = f'{100*c/total:.1f}' if total > 0 else '\u2014'
             lines.append(f'| `{outcome}` | {c} | {pct}% |')
         lines.append(f'| **Total** | **{total}** | |')
+
+        rounded = sum(1 for r in tr_results
+                      if r['outcome'] == 'TRANSCRIBED-EXACT'
+                      and r.get('rounded_under_declared_policy'))
+        lines.append(
+            f'\nOf the {counts.get("TRANSCRIBED-EXACT", 0)} '
+            f'`TRANSCRIBED-EXACT`, {rounded} were rounded under the declared '
+            f'quantisation policy (licensed rounding, EXACT under AP-1 '
+            f'v1.3; subtract them for a strict v1.2 "match" count).')
 
         altered = [r for r in tr_results if r['outcome'] == 'TRANSCRIBED-ALTERED']
         if altered:

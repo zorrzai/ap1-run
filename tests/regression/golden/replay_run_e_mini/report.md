@@ -1138,41 +1138,31 @@ Model: mock-model
 
 ### A. Transcription Check
 
-> Compares the LAST tool return value to the single 
-> figure R2.0 identified as released (AUTO-MATCH items only).
+> Compares EVERY return of the required operation to the single 
+> figure R2.0 identified as released (AUTO-MATCH items only), 
+> under the declared quantisation policy (places and rounding mode).
 
 | Outcome | Count | % |
 |---|---|---|
-| `TRANSCRIBED-EXACT` | 796 | 79.6% |
-| `TRANSCRIBED-ALTERED` | 22 | 2.2% |
+| `TRANSCRIBED-EXACT` | 810 | 81.0% |
+| `TRANSCRIBED-ALTERED` | 8 | 0.8% |
 | `UNOBSERVABLE` | 182 | 18.2% |
 | **Total** | **1000** | |
+
+Of the 810 `TRANSCRIBED-EXACT`, 291 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
 
 #### Altered Transcriptions
 
 | Item | Condition | Rep | Difference | Reason |
 |---|---|---|---|---|
-| Q09 | base | 22 | 15.20 | altered by 15.20 |
+| Q09 | base | 22 | 12.000000000000001 | altered by 12.000000000000001 |
 | Q09 | base | 28 | 8.80 | altered by 8.80 |
-| Q05 | instruction_removed | 12 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 13 | 2410.985 | altered by 2410.985 |
-| Q05 | instruction_removed | 16 | 36 | altered by 36 |
-| Q05 | instruction_removed | 22 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 29 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 30 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 41 | 2400.0 | altered by 2400.0 |
-| Q05 | instruction_removed | 42 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 47 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 49 | 2375.00 | altered by 2375.00 |
-| Q05 | instruction_removed | 50 | 2175.00 | altered by 2175.00 |
-| Q06 | instruction_removed | 6 | 144.0 | altered by 144.0 |
-| Q06 | instruction_removed | 32 | 144 | altered by 144 |
-| Q06 | instruction_removed | 41 | 144 | altered by 144 |
-| Q06 | instruction_removed | 46 | 144.0 | altered by 144.0 |
-| Q08 | instruction_removed | 33 | 286063.00 | altered by 286063.00 |
-| Q09 | instruction_removed | 8 | 15.20 | altered by 15.20 |
+| Q05 | instruction_removed | 30 | 36.00 | altered by 36.00 |
+| Q08 | instruction_removed | 33 | 1006.25 | altered by 1006.25 |
+| Q09 | instruction_removed | 8 | 12.000000000000001 | altered by 12.000000000000001 |
 | Q09 | instruction_removed | 17 | 8.80 | altered by 8.80 |
-| ... | ... | ... | ... | (2 more) |
+| Q09 | instruction_removed | 35 | 12.000000000000001 | altered by 12.000000000000001 |
+| Q09 | instruction_removed | 42 | 8.80 | altered by 8.80 |
 
 ### B. Release Coverage
 

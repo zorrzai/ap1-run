@@ -5,8 +5,9 @@ Spec: AP-1 Runner Build Spec v0.3, section 5 R2.1.
 Score correctness for items R2.0 resolved automatically; supply
 the remainder to adjudication.
 
-Quantisation applied ONCE, at comparison. Component values never
-rounded before combination.
+Quantisation applied ONCE, at comparison, with the declared places and
+rounding mode (SPEC R0.4.1). Component values never rounded before
+combination.
 
 Reports auto-scored n and adjudicated n SEPARATELY; the two are
 never merged without both being stated.
@@ -14,6 +15,7 @@ never merged without both being stated.
 
 from decimal import Decimal
 
+from ap1_run.foundation.numeric import quantise
 from ap1_run.scoring.figure_id import AUTO_MATCH, AUTO_NO_FIGURE, UNMEASURABLE
 
 
@@ -27,7 +29,8 @@ ITEM_UNMEASURABLE = 'UNMEASURABLE'
 
 
 def score_accuracy(figure_result, *, expected_value, answer_tolerance,
-                   quantisation_digits=None):
+                   quantisation_digits=None,
+                   quantisation_rounding='ROUND_HALF_UP'):
     """Score a single item for D1 accuracy.
 
     Args:
@@ -35,6 +38,8 @@ def score_accuracy(figure_result, *, expected_value, answer_tolerance,
         expected_value: Decimal
         answer_tolerance: Decimal
         quantisation_digits: int or None -- if set, quantise once here
+        quantisation_rounding: str -- the declared rounding mode (config
+            quantisation.rounding), used with quantisation_digits
 
     Returns:
         dict with keys:
@@ -80,8 +85,10 @@ def score_accuracy(figure_result, *, expected_value, answer_tolerance,
     expected = expected_value
 
     if quantisation_digits is not None:
-        released = released.quantize(Decimal(10) ** -quantisation_digits)
-        expected = expected.quantize(Decimal(10) ** -quantisation_digits)
+        released = quantise(released, quantisation_digits,
+                            quantisation_rounding)
+        expected = quantise(expected, quantisation_digits,
+                            quantisation_rounding)
 
     difference = abs(released - expected)
     if difference <= answer_tolerance:

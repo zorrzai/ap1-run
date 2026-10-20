@@ -4,8 +4,8 @@ for D7.3 transcription (fix branch 8) and numeric parsing (fix branch 9).
 Each test runs the real runner (ap1_run.run.main) in-process against the
 regression mock endpoint (tests/fixtures/mock_endpoint.py), on the shipped
 example with repeat_count 1, and reads the files it writes into tmp_path.
-Every test is marked xfail(strict=True): it fails on today's code and the
-fix turns it green.
+Each test is marked xfail(strict=True) until its fix lands; the D7.3 tests
+(T3-26, T3-27, V12-6) pass since fix branch d73-transcription.
 """
 
 import json
@@ -97,9 +97,6 @@ Q04_SAY = {'say': 'The principal portion of the first mortgage payment is '
 
 @pytest.mark.finding('T3-26')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-26: D7.3 compares only the last tool return; '
-                          'a released earlier return is TRANSCRIBED-ALTERED')
 def test_run_release_of_earlier_calculator_return_is_transcribed_exact(
         tmp_path, monkeypatch, capsys):
     # SPEC R2.5: compare "the value the required operation returned" to
@@ -121,9 +118,6 @@ def test_run_release_of_earlier_calculator_return_is_transcribed_exact(
 
 @pytest.mark.finding('T3-26')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-26: an errored last calculator call makes D7.3 '
-                          'UNOBSERVABLE despite an earlier matching return')
 def test_run_errored_last_call_keeps_earlier_return_transcribed_exact(
         tmp_path, monkeypatch, capsys):
     # T3-26: "If the last call errored, the execution is UNOBSERVABLE even
@@ -140,9 +134,6 @@ def test_run_errored_last_call_keeps_earlier_return_transcribed_exact(
 
 @pytest.mark.finding('T3-27')
 @pytest.mark.req('R2.5', 'R0.4.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-27: transcription quantises with HALF_EVEN, not '
-                          'the declared ROUND_HALF_UP')
 def test_run_transcription_uses_declared_half_up_rounding(
         tmp_path, monkeypatch, capsys):
     # The shipped config declares quantisation ROUND_HALF_UP at 2 places
@@ -162,9 +153,6 @@ def test_run_transcription_uses_declared_half_up_rounding(
 
 @pytest.mark.finding('V12-6')
 @pytest.mark.req('R2.5', 'R3.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-6: report.md does not count the EXACT '
-                          'transcriptions rounded under the declared policy')
 def test_run_report_counts_transcriptions_rounded_under_declared_policy(
         tmp_path, monkeypatch, capsys):
     # Fix plan §2a, V12-6: Q07's calculator returns 777.4125 and the model

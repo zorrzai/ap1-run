@@ -366,8 +366,9 @@ def tr(outcome, i=1, **fields):
 D73_HEAD = (
     '## D7.3 Transcription Fidelity\n',
     '### A. Transcription Check\n',
-    '> Compares the LAST tool return value to the single ',
-    '> figure R2.0 identified as released (AUTO-MATCH items only).\n',
+    '> Compares EVERY return of the required operation to the single ',
+    '> figure R2.0 identified as released (AUTO-MATCH items only), ',
+    '> under the declared quantisation policy (places and rounding mode).\n',
 )
 RC_HEAD = (
     '### B. Release Coverage\n',
@@ -400,8 +401,29 @@ def test_d73_transcription_counts_and_percentages():
         '| `TRANSCRIBED-ALTERED` | 0 | 0.0% |',
         '| `UNOBSERVABLE` | 1 | 25.0% |',
         '| **Total** | **4** | |',
+        '\nOf the 2 `TRANSCRIBED-EXACT`, 0 were rounded under the declared '
+        'quantisation policy (licensed rounding, EXACT under AP-1 v1.3; '
+        'subtract them for a strict v1.2 "match" count).',
         '',
         '### B.'))
+
+
+@pytest.mark.finding('V12-6')
+def test_d73_rounded_count_counts_only_flagged_exact_results():
+    rounded = dict(tr('TRANSCRIBED-EXACT'), rounded_under_declared_policy=True)
+    text = report._section_d73({'transcription_results': [
+        rounded, rounded, tr('TRANSCRIBED-EXACT'),
+        dict(tr('TRANSCRIBED-EXACT'), rounded_under_declared_policy=False),
+        dict(tr('TRANSCRIBED-ALTERED'), rounded_under_declared_policy=True),
+        tr('UNOBSERVABLE')]})
+    assert ('\nOf the 4 `TRANSCRIBED-EXACT`, 2 were rounded under the '
+            'declared quantisation policy (') in text
+
+
+def test_d73_rounded_count_without_exact_results_is_zero_of_zero():
+    text = report._section_d73({'transcription_results': [
+        dict(tr('TRANSCRIBED-ALTERED'), rounded_under_declared_policy=True)]})
+    assert 'Of the 0 `TRANSCRIBED-EXACT`, 0 were rounded' in text
 
 
 def test_d73_transcription_percentage_one_decimal():
@@ -417,6 +439,9 @@ def test_d73_altered_transcriptions_listed():
         tr('TRANSCRIBED-EXACT'), {'outcome': 'TRANSCRIBED-ALTERED'}]})
     assert md(
         '| **Total** | **3** | |',
+        '\nOf the 1 `TRANSCRIBED-EXACT`, 0 were rounded under the declared '
+        'quantisation policy (licensed rounding, EXACT under AP-1 v1.3; '
+        'subtract them for a strict v1.2 "match" count).',
         '\n#### Altered Transcriptions\n',
         '| Item | Condition | Rep | Difference | Reason |',
         '|---|---|---|---|---|',
@@ -1696,10 +1721,6 @@ def test_scoring_proportions_d1_total_is_n_with_unmeasurable_shown():
 
 @pytest.mark.finding('V12-6')
 @pytest.mark.req('R2.5', 'R3.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-6: the D7.3 section does not report how many '
-                          'EXACT results were rounded under the declared '
-                          'policy')
 def test_d73_reports_count_of_exact_rounded_under_declared_policy():
     # Fix plan §2a, V12-6 (in scope, Steven 2026-10-19): keep v1.3's
     # TRANSCRIBED-EXACT and report the count of EXACT results that were

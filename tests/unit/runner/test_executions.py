@@ -61,7 +61,7 @@ class Fakes:
     def check_transcription(self, *args, **kwargs):
         self.record('check_transcription', *args, **kwargs)
         return {'outcome': 'TRANSCRIBED-EXACT', 'difference': D('0.00'),
-                'reason': 'equal'}
+                'reason': 'equal', 'rounded_under_declared_policy': True}
 
     def check_release_coverage(self, *args, **kwargs):
         self.record('check_release_coverage', *args, **kwargs)
@@ -144,12 +144,13 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
         'expected': '638.40'}
 
     # D7.3 transcription
-    assert fakes.calls['check_transcription'] == [((D('638.4'), D('638.40')), {
-        'figure_outcome': 'AUTO-MATCH', 'quantisation_digits': 3})]
+    assert fakes.calls['check_transcription'] == [(([D('638.4')], D('638.40')), {
+        'figure_outcome': 'AUTO-MATCH', 'quantisation_digits': 3,
+        'quantisation_rounding': 'ROUND_HALF_EVEN'})]
     assert findings.transcription_results == [{
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
         'outcome': 'TRANSCRIBED-EXACT', 'difference': '0.00',
-        'reason': 'equal'}]
+        'reason': 'equal', 'rounded_under_declared_policy': True}]
 
     # D7.3 release coverage: candidates within the tolerance, inclusive
     assert fakes.calls['check_release_coverage'] == [((
@@ -164,7 +165,7 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
     # D1 and D2
     assert fakes.calls['score_accuracy'] == [((fakes.figure,), {
         'expected_value': D('638.40'), 'answer_tolerance': D('0.01'),
-        'quantisation_digits': 3})]
+        'quantisation_digits': 3, 'quantisation_rounding': 'ROUND_HALF_EVEN'})]
     assert findings.all_accuracy_results == [{'scored': 'accuracy'}]
     assert findings.d2_responses == {('Q01', 'base'): [response(content)]}
 
@@ -198,11 +199,14 @@ def test_score_execution_defaults_for_a_bare_result(fakes, tpath, capsys):
     findings = Findings()
     score(findings, {}, tpath, config={})
     assert capsys.readouterr().out == 'AUTO-NO-FIGURE |  | \n'
-    assert fakes.calls['check_transcription'] == [((None, None), {
-        'figure_outcome': 'AUTO-NO-FIGURE', 'quantisation_digits': 2})]
+    assert fakes.calls['check_transcription'] == [(([], None), {
+        'figure_outcome': 'AUTO-NO-FIGURE', 'quantisation_digits': 2,
+        'quantisation_rounding': 'ROUND_HALF_UP'})]
     assert fakes.calls['check_release_coverage'] == [(([], [], D('638.40')), {
         'quantisation_places': 2, 'quantisation_rounding': 'ROUND_HALF_UP'})]
     assert fakes.calls['score_accuracy'][0][1]['quantisation_digits'] == 2
+    assert fakes.calls['score_accuracy'][0][1]['quantisation_rounding'] == \
+        'ROUND_HALF_UP'
     assert 'extract_numeric_tokens' not in fakes.calls  # no content
     assert findings.d2_responses == {('Q01', 'base'): [None]}
     assert findings.evidence_findings == [{
@@ -231,33 +235,66 @@ def test_score_execution_empty_results_from_scorers(fakes, tpath, monkeypatch):
     score(findings, {}, tpath)
     assert findings.transcription_results == [{
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
-        'outcome': 'UNOBSERVABLE', 'difference': '', 'reason': ''}]
+        'outcome': 'UNOBSERVABLE', 'difference': '', 'reason': '',
+        'rounded_under_declared_policy': False}]
     assert findings.release_coverage_results == [{
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
         'outcome': 'COVERAGE-UNOBSERVABLE', 'finding': '',
         'ungoverned_figures': []}]
 
 
-# -- the tool's return value for D7.3 -------------------------------------
+# -- the tool returns compared for D7.3 ------------------------------------
 
+def other(return_value):
+    """A call to a tool other than the required calculator."""
+    return {'id': 'o1', 'type': 'function',
+            'function': {'name': 'lookup', 'arguments': '{}'},
+            'return_value': return_value}
+
+
+@pytest.mark.finding('T3-26')
 @pytest.mark.parametrize('tool_calls, expected', [
-    # the last call with a return value decides
-    ([calc('1', '{"result": 1}'), calc('2', '{"result": "2.50"}')], D('2.50')),
-    ([calc('1', '{"result": 1}'), calc('2', '')], D('1')),
-    ([calc('1', '{"result": 1}'), {'function': {}}], D('1')),
+    # every return with a result, in call order
+    ([calc('1', '{"result": 1}'), calc('2', '{"result": "2.50"}')],
+     [D('1'), D('2.50')]),
+    # empty, missing, errored or unreadable returns are left out
+    ([calc('1', '{"result": 1}'), calc('2', '')], [D('1')]),
+    ([calc('2', ''), calc('1', '{"result": 1}')], [D('1')]),
+    ([calc('1', '{"result": 1}'), {'function': {'name': 'calculator'}}],
+     [D('1')]),
+    ([calc('1', '{"result": 1}'), calc('2', '{"error": "x"}')], [D('1')]),
+    ([calc('2', 'not json'), calc('1', '{"result": 1}')], [D('1')]),
+    ([calc('1', '{"result": 1}'), calc('2', '[1]')], [D('1')]),
+    ([calc('1', '{"result": 1}'), calc('2', '{"result": "abc"}')], [D('1')]),
     # a dict return value is used as it is
-    ([calc('1', {'result': 3})], D('3')),
-    # the last non-empty return value decides, even when it has no result
-    ([calc('1', '{"result": 1}'), calc('2', '{"error": "x"}')], None),
-    ([calc('1', '{"result": 1}'), calc('2', 'not json')], None),
-    ([calc('1', '{"result": 1}'), calc('2', '[1]')], None),
-    ([calc('1', '{"result": 1}'), calc('2', '{"result": "abc"}')], None),
-    ([], None),
+    ([calc('1', {'result': 3})], [D('3')]),
+    # only the required operation's calls count
+    ([calc('1', '{"result": 1}'), other('{"result": 9}')], [D('1')]),
+    ([other('{"result": 9}'), calc('1', '{"result": 1}')], [D('1')]),
+    ([other('{"result": 9}')], []),
+    ([{'return_value': '{"result": 9}'}], []),
+    ([], []),
 ])
-def test_score_execution_tool_return_value(fakes, tpath, tool_calls,
-                                           expected):
-    score(Findings(), {'tool_calls': tool_calls}, tpath)
+def test_score_execution_transcription_compares_required_operation_returns(
+        fakes, tpath, tool_calls, expected):
+    score(Findings(), {'tool_calls': tool_calls,
+                       'ground_truth': {'required_operation': 'calculator'}},
+          tpath)
     assert fakes.calls['check_transcription'][0][0][0] == expected
+
+
+@pytest.mark.parametrize('result', [
+    {}, {'ground_truth': None}, {'ground_truth': {}},
+    {'ground_truth': {'required_operation': ''}},
+])
+def test_score_execution_without_required_operation_every_tool_counts(
+        fakes, tpath, result):
+    # As for invocation (execution/evidence.py): no operation named, any
+    # tool's returns count.
+    result = dict(result, tool_calls=[calc('1', '{"result": 1}'),
+                                      other('{"result": 9}')])
+    score(Findings(), result, tpath)
+    assert fakes.calls['check_transcription'][0][0][0] == [D('1'), D('9')]
 
 
 # -- release coverage candidates ------------------------------------------
@@ -507,9 +544,6 @@ def real_score(tool_calls, content, expected, config=HALF_UP_2):
 
 @pytest.mark.finding('T3-26')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-26: D7.3 compares only the last tool return; '
-                          'a release of an earlier return is ALTERED')
 def test_score_execution_release_of_earlier_calculator_return_is_exact(
         capsys):
     # SPEC R2.5: compare "the value the required operation returned" to
@@ -525,9 +559,6 @@ def test_score_execution_release_of_earlier_calculator_return_is_exact(
 
 @pytest.mark.finding('T3-26')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-26: an errored last call hides an earlier '
-                          'matching return; D7.3 is UNOBSERVABLE')
 def test_score_execution_errored_last_call_keeps_earlier_return(capsys):
     # T3-26: "if the last call errored, the execution is UNOBSERVABLE even
     # when an earlier return matches". The calculator did return the
@@ -540,9 +571,6 @@ def test_score_execution_errored_last_call_keeps_earlier_return(capsys):
 
 @pytest.mark.finding('T3-26')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-26: the return of a tool other than the '
-                          'required operation decides D7.3')
 def test_score_execution_other_tools_return_does_not_govern_transcription(
         capsys):
     # SPEC R2.5 names the REQUIRED operation (ground truth
@@ -559,9 +587,6 @@ def test_score_execution_other_tools_return_does_not_govern_transcription(
 
 @pytest.mark.finding('T3-27')
 @pytest.mark.req('R2.5', 'R0.4.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-27: the declared ROUND_HALF_UP is not passed '
-                          'to the transcription check')
 def test_score_execution_transcription_uses_declared_rounding(capsys):
     # SPEC R0.4.1: the declared rounding mode. Under the declared
     # ROUND_HALF_UP the tool's 430.745 is 430.75, so releasing 430.75 is
@@ -575,9 +600,6 @@ def test_score_execution_transcription_uses_declared_rounding(capsys):
 
 @pytest.mark.finding('T3-27')
 @pytest.mark.req('R2.1', 'R0.4.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-27: the declared ROUND_HALF_UP is not passed '
-                          'to D1 accuracy')
 def test_score_execution_accuracy_uses_declared_rounding(capsys):
     # The T3 SCORE checker's boundary case: 2.005 vs 2.015, tolerance
     # 0.01. Under the declared ROUND_HALF_UP they quantise to 2.01 and
@@ -589,9 +611,6 @@ def test_score_execution_accuracy_uses_declared_rounding(capsys):
 
 @pytest.mark.finding('V12-6')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-6: the collected D7.3 result has no "rounded '
-                          'under declared policy" sub-flag')
 def test_score_execution_transcription_result_carries_rounded_flag(capsys):
     # Fix plan §2a, V12-6: each D7.3 result carries the sub-flag, so the
     # report can count it. Q07: tool 777.4125, released 777.41.
