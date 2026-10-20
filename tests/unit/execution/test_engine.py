@@ -747,3 +747,142 @@ def test_build_messages_system_then_user():
     assert engine._build_messages(system_prompt='Use the calculator.',
                                   item=ITEM, fixture=FIXTURE,
                                   config=CONFIG) == INITIAL
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# Group g1-invocation (fix plan branches 1 and 10).
+
+def run_without_raising(tmp_path, adapter_send, **kwargs):
+    """run(), with any exception returned instead of raised, so a test
+    can assert that there was none."""
+    try:
+        return run(tmp_path, adapter_send, **kwargs) + (None,)
+    except Exception as e:
+        return None, transcript.read_all(tmp_path / 'run.jsonl'), e
+
+
+@pytest.mark.finding('T3-10')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-10: empty response scored EXECUTED/NOT-INVOKED')
+@pytest.mark.parametrize('content', ['', None], ids=['empty', 'null'])
+def test_execute_item_empty_response_unmeasured(tmp_path, content):
+    # Correct (SPEC R4.1 "Empty response -> UNMEASURED", R0.2; AP-1 v1.3
+    # §13.2 "an empty response shall never be counted as an answer"): a
+    # response with no content and no tool call is UNMEASURED, out of
+    # every denominator, and still written to the transcript as received.
+    final = answer(content)
+    result, records = run(tmp_path, FakeAdapter(final))
+    assert result['status'] == 'UNMEASURED'
+    assert [r['response_received'] for r in records] == [final]
+
+
+@pytest.mark.finding('T3-67')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-67: tool-loop exhaustion is silent')
+def test_execute_item_tool_loop_exhausted_flagged_in_transcript(
+        tmp_path, calculator):
+    # Correct (T3 review T3-67; SPEC R0.1, R1.3 "the accumulation is
+    # incomplete"): when the 11th response still asks for a tool after
+    # ten turns, the exhaustion is recorded in the transcript record
+    # (error_state) and in the result, not passed off as a completed
+    # loop. Which outcome the item then gets is the fix's choice; here
+    # only the flag is asserted.
+    replies = [calls(tool_call(id=f'c{n}')) for n in range(1, 12)]
+    result, records = run(tmp_path, FakeAdapter(*replies))
+    assert records[0]['error_state'] is not None
+    assert result['status'] != 'EXECUTED' or \
+        result['invocation_outcome'] != 'INVOKED' or \
+        result.get('error_state') is not None, result
+
+
+@pytest.mark.finding('S3-G2-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G2-1: malformed response shape raises out of '
+                          'execute_item')
+@pytest.mark.parametrize('final', [
+    {'choices': [{'message': None}]},
+    {'choices': ['x']},
+    {'choices': [{'message': {'role': 'assistant', 'content': 'x',
+                              'metadata': 'attestation'}}]},
+], ids=['null-message', 'str-choice', 'str-metadata'])
+def test_execute_item_malformed_response_shape_ev0_recorded(tmp_path, final):
+    # Correct (S3-G2-1; SPEC R1.3: an unrecognised shape is EV-0
+    # UNOBSERVABLE): no exception; the execution is recorded in the
+    # transcript and comes back EV-0 (or UNMEASURED).
+    result, records, error = run_without_raising(tmp_path,
+                                                 FakeAdapter(final))
+    assert error is None, f'{type(error).__name__}: {error}'
+    assert len(records) == 1
+    assert result['status'] == 'UNMEASURED' or \
+        result['evidence_class'] == EV_0, result
+
+
+@pytest.mark.finding('S3-G2-2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G2-2: a tool call without an id raises '
+                          'EngineError')
+def test_execute_item_call_without_id_return_attached(tmp_path, calculator):
+    # Correct (S3-G2-2): a call the platform sent without an id is
+    # executed and its return value attached to its own record (by the
+    # same default id, or by position); the run is never aborted.
+    tc = tool_call()
+    del tc['id']
+    result, _, error = run_without_raising(
+        tmp_path, FakeAdapter(calls(tc), answer()))
+    assert error is None, f'{type(error).__name__}: {error}'
+    assert [r.get('return_value') for r in result['tool_calls']] == \
+        ['{"result": "15.2"}']
+    assert result['invocation_outcome'] == 'INVOKED'
+
+
+@pytest.mark.finding('S3-G2-3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G2-3: a repeated call id attaches the return '
+                          'to the first record')
+def test_execute_item_repeated_call_id_return_on_own_record(tmp_path,
+                                                            calculator):
+    # Correct (S3-G2-3; AP-1 v1.3 D7.2(a)(iv) uses prior returns): each
+    # turn's return value is attached to that turn's call, so a reused
+    # id never overwrites an earlier return.
+    send = FakeAdapter(calls(tool_call('1+1', id='x')),
+                       calls(tool_call('boom', id='x')), answer())
+    result, _ = run(tmp_path, send)
+    assert [r.get('return_value') for r in result['tool_calls']] == [
+        '{"result": "15.2"}', '{"error": "cannot evaluate boom"}']
+
+
+@pytest.mark.finding('S3-G2-4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G2-4: non-object JSON arguments raise '
+                          'AttributeError')
+@pytest.mark.parametrize('arguments', ['["1+1"]', '"1+1"', '15.2'])
+def test_extract_calc_expression_non_object_json_none(arguments):
+    # Correct (S3-G2-4): arguments that are valid JSON but not an object
+    # carry no expression: None, as for malformed JSON.
+    try:
+        found = engine._extract_calc_expression(tool_call(arguments=arguments))
+    except Exception as e:
+        found = e
+    assert found is None
+
+
+@pytest.mark.finding('T3-39', 'F6', 'S3-G2-4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-39/F6/S3-G2-4: model-controlled calculator '
+                          'input raises out of execute_item')
+@pytest.mark.parametrize('arguments', [
+    '{"expression": 15.2}', '{"expression": "True * 15.2"}',
+    '{"expression": "True + 1"}', '"1+1"', '["1+1"]',
+], ids=['number', 'true-times', 'true-plus', 'json-string', 'json-list'])
+def test_execute_item_model_controlled_arguments_recorded_no_raise(
+        tmp_path, calculator, arguments):
+    # Correct (T3 review T3-39; Steven's ruling on F6, choices-for-marcus
+    # #9; S3-G2-4): input the model controls never raises out of the
+    # engine; the call is recorded and the execution written to the
+    # transcript, with that call's operands unobservable.
+    send = FakeAdapter(calls(tool_call(arguments=arguments)), answer())
+    result, records, error = run_without_raising(tmp_path, send)
+    assert error is None, f'{type(error).__name__}: {error}'
+    assert len(records) == 1 and len(result['tool_calls']) == 1
+    assert all(p['outcome'] != 'OPERANDS-GROUNDED'
+               for p in result['provenance_results'])
