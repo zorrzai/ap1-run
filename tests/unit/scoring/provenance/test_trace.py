@@ -346,9 +346,10 @@ def test_resolve_step4_ungrounded_prior_return_is_originated():
         5, 'computed_in_session_ungrounded', near_miss_finding=None)
 
 
-def test_resolve_step4_first_matching_prior_return_decides():
-    prior = [{'value': D('7'), 'grounded': False},
-             {'value': D('7'), 'grounded': True}]
+def test_resolve_step4_grounded_non_matching_return_does_not_ground():
+    # T3-57: only grounded returns of the operand's own value count.
+    prior = [{'value': D('1000'), 'grounded': True},
+             {'value': D('7'), 'grounded': False}]
     assert resolve('7', ctx={}, prior=prior)['resolution'] == \
         'computed_in_session_ungrounded'
 
@@ -498,9 +499,6 @@ def test_extract_operands_reads_literal_text_exactly_as_decimal(literal):
 
 
 @pytest.mark.finding('T3-57')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-57: step 4 takes the first matching prior '
-                          'return, so the outcome depends on call order')
 def test_resolve_step4_grounded_matching_prior_return_grounds_in_any_order():
     # SPEC R2.4 step 4: an operand is computed in session when it "exactly
     # equals the return value of a prior invocation ... and that prior

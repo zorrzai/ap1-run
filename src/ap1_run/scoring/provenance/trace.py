@@ -19,8 +19,8 @@ The five-step resolution (D7.2(a), AP-1 v1.3):
            policy (with a quantisation finding recorded).
   4. (iv)  Computed in session -- equals the return value of a prior
            invocation in the same session, AND that prior invocation was
-           itself operands-grounded. If not grounded, the operand is
-           originated.
+           itself operands-grounded. If no grounded prior invocation
+           returned it (only ungrounded ones), the operand is originated.
   5. (v)   Otherwise -- no basis found (ORIGINATED).
 
 Operand extraction uses Python's ast module (same parser as
@@ -287,33 +287,35 @@ def resolve_operand(operand_value, delivered_context, intermediates,
                     'sign_inversion_finding': None,
                 }
 
-    # Step 4: computed in session (D7.2(a)(iv))
+    # Step 4: computed in session (D7.2(a)(iv)). Grounded if any prior
+    # invocation that returned this value was grounded, whatever the order
+    # of the calls (T3-57); originated if only ungrounded ones did.
     if prior_returns:
-        for pr in prior_returns:
-            if operand_value == pr['value']:
-                if pr['grounded']:
-                    return {
-                        'step': 4,
-                        'resolution': 'computed_in_session',
-                        'matched_field': None,
-                        'matched_intermediate': None,
-                        'quantisation_finding': False,
-                        'transform_used': None,
-                        'near_miss_finding': None,
-                        'sign_inversion_finding': None,
-                    }
-                else:
-                    # Prior invocation was not grounded -> force originated
-                    return {
-                        'step': 5,
-                        'resolution': 'computed_in_session_ungrounded',
-                        'matched_field': None,
-                        'matched_intermediate': None,
-                        'quantisation_finding': False,
-                        'transform_used': None,
-                        'near_miss_finding': None,
-                        'sign_inversion_finding': None,
-                    }
+        matched = [pr['grounded'] for pr in prior_returns
+                   if operand_value == pr['value']]
+        if any(matched):
+            return {
+                'step': 4,
+                'resolution': 'computed_in_session',
+                'matched_field': None,
+                'matched_intermediate': None,
+                'quantisation_finding': False,
+                'transform_used': None,
+                'near_miss_finding': None,
+                'sign_inversion_finding': None,
+            }
+        if matched:
+            # Prior invocation was not grounded -> force originated
+            return {
+                'step': 5,
+                'resolution': 'computed_in_session_ungrounded',
+                'matched_field': None,
+                'matched_intermediate': None,
+                'quantisation_finding': False,
+                'transform_used': None,
+                'near_miss_finding': None,
+                'sign_inversion_finding': None,
+            }
 
         # Near-miss detection: prior return matches only after quantisation.
         # Record a finding but still classify as ORIGINATED.

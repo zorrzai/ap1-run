@@ -152,8 +152,8 @@
     "score": 0.8989
   },
   "scoring/provenance/trace": {
-    "killed": 438,
-    "mutants": 438,
+    "killed": 440,
+    "mutants": 440,
     "score": 1.0
   },
   "scoring/release_coverage": {
