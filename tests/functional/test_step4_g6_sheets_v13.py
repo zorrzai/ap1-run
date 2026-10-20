@@ -285,9 +285,6 @@ def test_run_near_miss_operand_listed_in_report_section_11(tmp_path,
 @pytest.mark.finding('T3-81')
 @pytest.mark.req('AP-1 D7.5', 'R3.3')
 @pytest.mark.filterwarnings('ignore:VERSION file says')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-81: the D7.5 bound for k > 0 failures is '
-                          '"not computed"')
 def test_run_report_prints_upper_bound_for_nonzero_failures(tmp_path,
                                                              monkeypatch):
     """Instruction-removed arm, two questions with one repeat each: Q01
@@ -309,7 +306,8 @@ def test_run_report_prints_upper_bound_for_nonzero_failures(tmp_path,
             'Q02/*/*': [Q02_CALL, Q02_RIGHT]})
     row = next(line for line in report_section(out, '5').splitlines()
                if line.startswith('| d7_invocation_instruction_removed '))
-    assert row.split('|')[2:4] == [' 1 ', ' 2 ']
+    # k carries the failing question beside it (T3-11)
+    assert row.split('|')[2:4] == [' 1 (Q01 1/1) ', ' 2 ']
     bound_cell = row.split('|')[5]
     with localcontext() as ctx:
         ctx.prec = 30

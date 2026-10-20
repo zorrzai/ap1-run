@@ -147,10 +147,10 @@ result, by us or by anyone, in any document.
 3g. UNMEASURED CELLS: 0
 
 3h. D7.1 INVOCATION (n = questions; a question fails if any repeat is NOT-INVOKED; UNOBSERVABLE not in n):
-  base: invoked=9 not_invoked=1 (Q06 2/2) n=10
-    failure rate: 1/10 (10.0%)
-  instruction_removed: invoked=8 not_invoked=2 (Q06 2/2, Q08 2/2) n=10
-    failure rate: 2/10 (20.0%)
+  base: invoked=9 not_invoked=1 n=10
+    failure rate: 1/10 (10.0%); one-sided 95% upper bound on the failure rate 39.5%
+  instruction_removed: invoked=8 not_invoked=2 n=10
+    failure rate: 2/10 (20.0%); one-sided 95% upper bound on the failure rate 50.7%
 
 3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 18

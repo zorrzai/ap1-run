@@ -6,7 +6,7 @@ AP-1 Version: v1.3-draft-for-comment-20260730
 
 Version DOI: 10.5281/zenodo.21755443
 
-Model: gpt-5.6-sol
+Model: mock-model
 
 ---
 
@@ -17,7 +17,7 @@ Model: gpt-5.6-sol
 | `ap1_text_hash` | `48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56` |
 | `ap1_version` | `v1.3-draft-for-comment-20260730` |
 | `ap1_version_doi` | `10.5281/zenodo.21755443` |
-| `calculator_hash` | `ae8eae4c313079e401b4a12f7c2fc571cea695b5fe8f9eda5ca808d449303c7d` |
+| `calculator_hash` | `43c836b56e0ccf93dad7f6e7eba7b7e74cdf5c90a78ffcc2942ba11bc4dfb0bc` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
 | `expected_values_hash` | `81d9b435264ddbb032c5744342df577d691e9766fd566dc75632b34bc6dd46ca` |
@@ -62,7 +62,7 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 2933 records.
   ],
   "endpoint_url": "<MOCK>/v1/chat/completions",
   "grouping_separator": ",",
-  "model": "gpt-5.6-sol",
+  "model": "mock-model",
   "permitted_transformations": [
     "percent_to_fraction",
     "fraction_to_percent"
@@ -1174,17 +1174,17 @@ Of the 750 `TRANSCRIBED-EXACT`, 320 were rounded under the declared quantisation
 
 > AP-1 v1.3 D7.5: any invocation figure, including 100%, shall be reported with the exact one-sided 95% upper confidence bound.
 
-> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED; beside k, each failing question with its NOT-INVOKED repeats out of its observed repeats (EV-0 repeats are in neither). UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
+> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
 
 | Metric | k (failures) | n | Rate | 95% Upper Bound | Evidence Class |
 |---|---|---|---|---|---|
 | d7_invocation_base | 0 | 10 | 10/10 (100.0%) | 0.258866 (25.8866%) | `EV-2 PLATFORM-STRUCTURAL` |
-| d7_invocation_instruction_removed | 2 (Q02 48/50, Q06 21/50) | 10 | 8/10 (80.0%) | *not computed (see §Declared Limitations)* | `EV-2 PLATFORM-STRUCTURAL` |
+| d7_invocation_instruction_removed | 2 | 10 | 8/10 (80.0%) | 0.506902 (50.6902%) | `EV-2 PLATFORM-STRUCTURAL` |
 
 **Headline (AP-1 §6.2):**
 
 - Deterministic computation was invoked on 100.0% of computable questions (10/10; 0 not invoked; one-sided 95% upper bound on the failure rate 25.8866%), under base, on evidence class EV-2 PLATFORM-STRUCTURAL.
-- Deterministic computation was invoked on 80.0% of computable questions (8/10; 2 not invoked; upper bound on the failure rate not computed, see §Declared Limitations), under instruction_removed, on evidence class EV-2 PLATFORM-STRUCTURAL.
+- Deterministic computation was invoked on 80.0% of computable questions (8/10; 2 not invoked; one-sided 95% upper bound on the failure rate 50.6902%), under instruction_removed, on evidence class EV-2 PLATFORM-STRUCTURAL.
 
 **Executions by evidence class:**
 
@@ -1337,6 +1337,4 @@ The following dimensions were **not measured** in this evaluation and require hu
 
 ### Clopper-Pearson Bound (k > 0)
 
-An exact confidence bound for non-zero failure counts is not computed; AP-1 v1.3 D7.5 specifies the zero-failure form only. This is an author-identified defect in the standard, noted for resolution in the adopted version.
-
-For non-zero failure counts, the point estimate is reported with n. The full Beta quantile would require an external dependency or a specification extension.
+AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for any invocation figure but states its formula for zero failures only. For k > 0 failures the report gives the exact Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the general form DISPOSITION C-1 adopts for the next version. It is computed in Decimal (bisection on the binomial distribution) and every bound is shown rounded up.

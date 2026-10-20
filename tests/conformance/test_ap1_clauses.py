@@ -184,7 +184,7 @@ def test_measure_invocation_reports_n_and_rate_per_evidence_class():
         'per_class': {EV_2: {
             'evidence_class': EV_2, 'n': 3, 'invoked': 2,
             'not_invoked': 1, 'unobservable': 0,
-            'failure_rate': '1/3 (33.3%)',
+            'failure_rate': '1/3 (33.3%); one-sided 95% upper bound on the failure rate 86.5%',
             'failing_questions': [(None, 1, 1)]}},
         'total_n': 3, 'unobservable_n': 0, 'cross_class_warning': None,
     }
@@ -482,8 +482,9 @@ def test_zero_failure_rate_is_reported_with_n_and_bound():
     # T3-61: the exact bound is 13.91 %; it is shown rounded to nearest,
     # not up. The fix changes the expected text.
     from ap1_run.scoring.invocation import format_rate
+    # 13.91 %, shown rounded up (T3-61).
     assert format_rate(0, 20) == (
-        '0/20 failures; one-sided 95% upper bound on the failure rate 13.9%')
+        '0/20 failures; one-sided 95% upper bound on the failure rate 14.0%')
 
 
 # =====================================================================

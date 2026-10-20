@@ -22,11 +22,11 @@ Contents (SPEC.md R3.3 interface):
   11. Quantisation and near-miss findings
   12. DECLARATION of which dimensions were NOT measured
 
-Clopper-Pearson:
-  k=0 only (closed form): p_upper = 1 - alpha^(1/n), alpha = 0.05.
-  For k>0: point estimate with n, no bound. AP-1 v1.3 D7.5 specifies
-  the zero-failure form only. This is a declared limitation, not a
-  silent omission.
+Clopper-Pearson (AP-1 v1.3 D7.5; scoring/invocation.py):
+  k=0 (closed form): p_upper = 1 - alpha^(1/n), alpha = 0.05.
+  k>0: the exact bound, the 1 - alpha quantile of Beta(k+1, n-k), the
+  general form DISPOSITION C-1 adopts. Computed in Decimal and shown
+  rounded up, so a displayed bound is never below the exact one.
 
 D2 Mechanism Classes:
   D2 is auto-measured. Per surface, report: mechanism class,
@@ -43,7 +43,10 @@ from datetime import datetime, timezone
 from decimal import ROUND_DOWN, ROUND_HALF_UP, Decimal
 
 from ap1_run.foundation.transcript import error_state_text
-from ap1_run.scoring.invocation import format_failing_questions
+from ap1_run.scoring.invocation import (
+    _exact_upper_bound, clopper_pearson_upper, format_failing_questions,
+    round_up,
+)
 
 
 # -- All seven dimensions per AP-1 v1.3 --------------------------------
@@ -361,10 +364,11 @@ def _section_clopper_pearson(summary):
 
     n is the number of computable questions with an observed outcome
     (AP-1 v1.3 D7.1; a question fails if any repeat is NOT-INVOKED).
-    k=0: p_upper = 1 - 0.05^(1/n). k>0: point estimate, no bound, with
-    declared limitation. Beside k, each failing question with its
-    NOT-INVOKED repeats out of its observed repeats ("2 (Q02 48/50, Q06
-    21/50)"). The rate is printed as a percentage with k/n
+    Every figure has its exact one-sided 95% upper bound on the failure
+    rate (k=0: 1 - 0.05^(1/n); k>0: Clopper-Pearson), rounded up. Beside
+    k, each failing question with its NOT-INVOKED repeats out of its
+    observed repeats ("2 (Q02 48/50, Q06 21/50)"). The rate is printed as
+    a percentage with k/n
     and the bound, never "100%" alone (SPEC R2.3), and each condition
     gets the AP-1 \u00a76.2 headline. EV-0 (UNOBSERVABLE) executions are
     listed per evidence class and are in no n (SPEC R1.3.1, R2.3).
@@ -412,18 +416,14 @@ def _section_clopper_pearson(summary):
         pct = _percent(n - k, n)
         rate_str = f'{n - k}/{n} ({pct}%)'
 
-        if k == 0:
-            # Exact closed-form Clopper-Pearson: p_upper = 1 - alpha^(1/n)
-            alpha = 0.05
-            p_upper = 1.0 - alpha ** (1.0 / n)
-            bound_str = f'{p_upper:.6f} ({p_upper*100:.4f}%)'
-            bound_text = (f'one-sided 95% upper bound on the failure rate '
-                          f'{p_upper*100:.4f}%')
-        else:
-            # k > 0: report point estimate only
-            bound_str = '*not computed (see \u00a7Declared Limitations)*'
-            bound_text = ('upper bound on the failure rate not computed, '
-                          'see \u00a7Declared Limitations')
+        # Exact Clopper-Pearson bound in Decimal, rounded up (T3-61,
+        # T3-81): k=0 is 1 - 0.05^(1/n), k>0 the Beta(k+1, n-k) quantile
+        p_upper = clopper_pearson_upper(k, n)
+        bound_pct = round_up(p_upper * 100, Decimal('0.0001'))
+        bound_str = (f'{round_up(p_upper, Decimal("0.000001"))} '
+                     f'({bound_pct}%)')
+        bound_text = (f'one-sided 95% upper bound on the failure rate '
+                      f'{bound_pct}%')
         failing = data.get('failing_questions')
         k_str = f'{k} ({format_failing_questions(failing)})' if failing else k
         lines.append(f'| {metric} | {k_str} | {n} | {rate_str} | {bound_str} '
@@ -832,13 +832,14 @@ def _section_declared_limitations():
     lines = ['## 13. Declared Limitations\n']
 
     lines.append('### Clopper-Pearson Bound (k > 0)\n')
-    lines.append('An exact confidence bound for non-zero failure counts is '
-                 'not computed; AP-1 v1.3 D7.5 specifies the zero-failure '
-                 'form only. This is an author-identified defect in the '
-                 'standard, noted for resolution in the adopted version.\n')
-    lines.append('For non-zero failure counts, the point estimate is '
-                 'reported with n. The full Beta quantile would require '
-                 'an external dependency or a specification extension.\n')
+    lines.append('AP-1 v1.3 D7.5 requires the exact one-sided 95% upper '
+                 'bound for any invocation figure but states its formula '
+                 'for zero failures only. For k > 0 failures the report '
+                 'gives the exact Clopper-Pearson bound, the 0.95 quantile '
+                 'of Beta(k+1, n-k), the general form DISPOSITION C-1 '
+                 'adopts for the next version. It is computed in Decimal '
+                 '(bisection on the binomial distribution) and every bound '
+                 'is shown rounded up.\n')
 
     return '\n'.join(lines)
 
@@ -958,22 +959,24 @@ def _section_operand_provenance(summary):
 
 # -- Helpers -----------------------------------------------------------
 
-def clopper_pearson_upper_k0(n, alpha=0.05):
+def clopper_pearson_upper_k0(n, alpha=Decimal('0.05')):
     """Exact one-sided 95% Clopper-Pearson upper bound for k=0 failures.
 
     Formula: p_upper = 1 - alpha^(1/n)
-    Source: AP-1 v1.3 D7.5.
+    Source: AP-1 v1.3 D7.5. The one Decimal implementation,
+    invocation._exact_upper_bound (T3-61): never float (SPEC R0.4.1).
 
     Args:
         n: int -- total number of trials
-        alpha: float -- significance level (default 0.05 for 95%)
+        alpha: Decimal (or a number, read from its text) -- significance
+            level (default 0.05 for 95%)
 
     Returns:
-        float -- upper bound on failure probability
+        Decimal -- upper bound on failure probability; NaN if n <= 0
     """
     if n <= 0:
-        return float('nan')
-    return 1.0 - alpha ** (1.0 / n)
+        return Decimal(math.nan)  # not a number: no bound without trials
+    return _exact_upper_bound(n, Decimal(str(alpha)))
 
 
 def _format_dim_result(dim, data):
