@@ -433,3 +433,22 @@ def test_score_execution_with_real_scorers(tpath, capsys):
             row['transcription_outcome'],
             row['release_coverage_outcome']) == (
         'AUTO-MATCH', '638.40', 'TRANSCRIBED-EXACT', 'GOVERNED-RELEASE')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# Group g7-report (fix branch 7). xfail(strict=True) until the fix.
+
+@pytest.mark.finding('T3-75')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-75: structured_answer_field is not passed to '
+                          'identify_figure, so R2.0 step 1 never runs live')
+def test_score_execution_passes_structured_answer_field(fakes, tpath):
+    # SPEC R2.0 step 1: "If structured_answer_field is configured and
+    # present, that value is the released figure. Preferred path." The
+    # config loader parses the field (R0.1). Correct: score_execution
+    # passes the configured field to identify_figure.
+    config = dict(CONFIG, structured_answer_field='answer')
+    score(Findings(), {'response': response('It is $638.40.')}, tpath,
+          config=config)
+    (_, kwargs), = fakes.calls['identify_figure']
+    assert kwargs.get('structured_answer_field') == 'answer', kwargs
