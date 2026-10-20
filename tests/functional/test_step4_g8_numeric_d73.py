@@ -54,8 +54,7 @@ def run_example(tmp_path, monkeypatch, responses, **config_changes):
     for name in [n for n in list(os.environ) if n.startswith('AP1_SMOKE_')]:
         monkeypatch.delenv(name)
     monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-step4-not-a-real-key-0000')
-    monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-    monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+    mock.point_config(config_path)  # T3-80: config only
     monkeypatch.setattr(time, 'sleep', lambda seconds: None)
     # main() puts the fixture directory on sys.path and imports the
     # example modules; keep that from leaking into other tests.

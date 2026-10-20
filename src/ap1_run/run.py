@@ -12,11 +12,12 @@ Usage:
     set AP1_SMOKE_API_KEY=<key>       (Windows cmd)
     $env:AP1_SMOKE_API_KEY = '<key>'  (Windows PowerShell)
 
-    Optional:
-    export AP1_SMOKE_ENDPOINT=<url>   (default: https://api.openai.com/v1/chat/completions)
-    export AP1_SMOKE_MODEL=<model>    (default: gpt-4o-mini)
     ap1-run                           (after pip install -e .)
     python smoke_test.py              (the same, from a clone)
+    ap1-run --config example/config_mini.json   (the mini run's config)
+
+    Every setting, the endpoint_url and model included, comes from the
+    config file; the environment supplies only the API key.
 
     Options (ap1-run --help) move the inputs and outputs from example/,
     reference/ and output/: --config, --fixture-dir, --output-dir,
@@ -56,7 +57,7 @@ from ap1_run.runner.executions import (
 )
 from ap1_run.runner.outputs import write_outputs
 from ap1_run.runner.settings import (
-    check_condition_guard, endpoint_and_model, parse_args, print_sampling,
+    check_condition_guard, parse_args, print_sampling,
 )
 from ap1_run.runner.summary import (
     build_summary, classify_reproducibility, find_d2_cap,
@@ -97,19 +98,15 @@ def main(argv=None):
     api_key = get_api_key()
     key_length = len(api_key)
 
-    # Endpoint and model are not secrets -- read from env or defaults
-    endpoint, model = endpoint_and_model()
-
-    print(f'Endpoint: {endpoint}')
-    print(f'Model: {model}')
-    print(f'API key: present ({key_length} chars)')
-    print()
-
     # -- Load configuration --
+    # The endpoint and model, like every other setting, come from the
+    # config file only: it is what gets validated and sealed (T3-80).
     config = load_config(args.config)
 
-    config['endpoint_url'] = endpoint
-    config['model'] = model
+    print(f'Endpoint: {config["endpoint_url"]}')
+    print(f'Model: {config["model"]}')
+    print(f'API key: present ({key_length} chars)')
+    print()
 
     # -- Sampling: exactly as the config declares it (F1) --
     print_sampling(config)

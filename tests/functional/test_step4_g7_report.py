@@ -149,8 +149,7 @@ def run(tmp_path_factory):
                 if name.startswith('AP1_SMOKE_'):
                     mp.delenv(name)
             mp.setenv('AP1_SMOKE_API_KEY', 'sk-step4-not-a-real-key-0000')
-            mp.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-            mp.setenv('AP1_SMOKE_MODEL', 'mock-model')
+            mock.point_config(config_path)  # T3-80: config only
             mp.setattr(time, 'sleep', lambda seconds: None)
             from ap1_run import run as runner
             mp.setattr(runner, 'validate_minimum_n',

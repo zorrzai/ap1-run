@@ -161,8 +161,7 @@ def cli(tmp_path, monkeypatch):
                             'instruction_removed'},
             responses=responses).start()
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-test')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+        mock.point_config(fx / 'config.json')  # T3-80: config only
         if around_execute is not None:
             real = run.execute_item
             monkeypatch.setattr(

@@ -106,8 +106,7 @@ def ap1_run(tmp_path, monkeypatch, capsys):
         for name in ('AP1_SMOKE_TEMPERATURE', 'AP1_SMOKE_REASONING_EFFORT'):
             monkeypatch.delenv(name, raising=False)
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-test-not-a-real-key-0000')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+        mock.point_config(config_path)  # T3-80: config only
         for key, value in (env or {}).items():
             monkeypatch.setenv(key, value)
 

@@ -8,29 +8,19 @@ import pytest
 from ap1_run.execution.perturbation_guard import PerturbationRefusal
 from ap1_run.runner import settings
 from ap1_run.runner.settings import (
-    DEFAULT_ENDPOINT, DEFAULT_MODEL, check_condition_guard,
-    endpoint_and_model, parse_args, print_sampling,
+    check_condition_guard, parse_args, print_sampling,
 )
 
 
-# -- endpoint_and_model ---------------------------------------------------
+# -- endpoint and model: from the config only -----------------------------
 
-def test_endpoint_and_model_defaults():
-    assert DEFAULT_ENDPOINT == 'https://api.openai.com/v1/chat/completions'
-    assert DEFAULT_MODEL == 'gpt-4o-mini'
-    assert endpoint_and_model({}) == (DEFAULT_ENDPOINT, DEFAULT_MODEL)
-
-
-def test_endpoint_and_model_from_environment():
-    env = {'AP1_SMOKE_ENDPOINT': 'http://127.0.0.1:9/v1',
-           'AP1_SMOKE_MODEL': 'mock-model'}
-    assert endpoint_and_model(env) == ('http://127.0.0.1:9/v1', 'mock-model')
-
-
-def test_endpoint_and_model_reads_os_environ_by_default(monkeypatch):
-    monkeypatch.setenv('AP1_SMOKE_MODEL', 'from-os-environ')
-    monkeypatch.delenv('AP1_SMOKE_ENDPOINT', raising=False)
-    assert endpoint_and_model() == (DEFAULT_ENDPOINT, 'from-os-environ')
+@pytest.mark.finding('T3-80')
+def test_no_endpoint_or_model_from_the_environment():
+    # Section B decision (T3-80), following the F1 ruling: model and
+    # endpoint come from the config file only; there is no environment
+    # lookup and no gpt-4o-mini / api.openai.com default.
+    for name in ('endpoint_and_model', 'DEFAULT_ENDPOINT', 'DEFAULT_MODEL'):
+        assert not hasattr(settings, name), name
 
 
 # -- print_sampling -------------------------------------------------------
@@ -197,8 +187,8 @@ def test_parse_args_help_text(capsys, monkeypatch):
         '[--output-dir OUTPUT_DIR] [--ap1-text AP1_TEXT]\n'
         '\n'
         'Run the AP-1 instrument smoke test against a live endpoint. The '
-        'endpoint, model and API key come from the AP1_SMOKE_* environment '
-        'variables.\n'
+        'endpoint, the model and every other setting come from the config; '
+        'only the API key comes from the environment (AP1_SMOKE_API_KEY).\n'
         '\n'
         'options:\n'
         '  -h, --help            show this help message and exit\n'

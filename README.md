@@ -126,11 +126,18 @@ python tests/regression/run_regression.py   # the regression baseline, about 30 
 python tests/mutation/run_mutation.py       # mutation scores, against tests/mutation/scores.json
 ```
 
-Then run the worked example against your own endpoint:
+Then run the worked example against your own endpoint. Every setting comes
+from the config file, the endpoint and model included; the environment
+supplies only the API key. `example/config.json` points at
+`http://localhost:8080` with a placeholder model, so set its `endpoint_url`
+and `model` (or give your own config with `--config`).
+`example/config_mini.json` is the configuration of the published gpt-4.1-mini
+runs (temperature 1, no `reasoning_effort`):
 
 ```bash
 export AP1_SMOKE_API_KEY=<key>
 ap1-run                       # or: python smoke_test.py
+ap1-run --config example/config_mini.json
 ```
 
 `python smoke_test.py` still works, even without the install step: it is a
@@ -453,12 +460,12 @@ sealed against, see [`docs/REPRODUCING.md`](docs/REPRODUCING.md).
 
 ## Verifying a run's seal
 
-The pre-registration seal (§5.3) binds the **resolved** configuration —
-after environment variables have been written into the config dict — not
-the config file on disk. The on-disk `example/config.json` and
-`example/config_mini.json` contain placeholder values for `model` and
-`endpoint_url` that are overwritten at runtime by `AP1_SMOKE_MODEL` and
-`AP1_SMOKE_ENDPOINT` (see `src/ap1_run/run.py` L352-370).
+The pre-registration seal (§5.3) binds the configuration the run used, as
+`report.md` §2 records it. The runner now takes every setting from the
+config file it is given, adding only its own version fields. The published
+runs were made before that: the runner wrote the model, the endpoint and
+(for the mini runs) two sampling settings from environment variables into
+the config after loading it, so no file in `example/` matches their seal.
 
 To verify a run's seal:
 
@@ -472,9 +479,9 @@ configuration from `report.md` §2, then recomputes and compares all five
 component hashes and the composite `seal_hash`. It reports each check
 individually and exits non-zero if any check fails.
 
-**Do not** hash `example/config.json` directly — it will not match the
-sealed `config_hash` because it contains the placeholder model, not the
-runtime model. This is expected behaviour, not a failure.
+The verifier never consults a config file on disk. For the published runs,
+hashing `example/config.json` or `example/config_mini.json` directly will
+not match the sealed `config_hash`; that is expected, not a failure.
 
 **Ground truth module.** `example/ground_truth_example.py` has been
 modified since both published runs. The sealed `ground_truth_hash` no

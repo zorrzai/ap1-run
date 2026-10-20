@@ -35,6 +35,8 @@ def compute(item_id, ctx):
 '''
 
 CONFIG = {
+    'endpoint_url': 'http://mock/v1',
+    'model': 'mock-model',
     'system_prompt_base': 'BASE PROMPT',
     'system_prompt_instruction_removed': 'REMOVED PROMPT',
     'tools': [{'type': 'function', 'function': {'name': 'calculator'}}],
@@ -69,8 +71,6 @@ class Run:
         monkeypatch.delitem(sys.modules, 'ground_truth_example',
                             raising=False)
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-0123456789')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', 'http://mock/v1')
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
         for name in ('AP1_SMOKE_TEMPERATURE', 'AP1_SMOKE_REASONING_EFFORT'):
             monkeypatch.delenv(name, raising=False)
         monkeypatch.setattr(run.time, 'sleep',
@@ -412,6 +412,22 @@ def test_main_creates_a_missing_output_dir(r):
     assert r.output_dir.is_dir()
 
 
+@pytest.mark.finding('T3-80')
+def test_main_endpoint_and_model_from_the_config_only(r, monkeypatch, capsys):
+    # Section B decision (T3-80): the environment supplies only the key.
+    monkeypatch.setenv('AP1_SMOKE_ENDPOINT', 'http://elsewhere/v1')
+    monkeypatch.setenv('AP1_SMOKE_MODEL', 'other-model')
+    r.config.update(endpoint_url='http://from-config/v1', model='cfg-model')
+    assert r.main() == 0
+    out = capsys.readouterr().out
+    assert out.startswith('Endpoint: http://from-config/v1\n'
+                          'Model: cfg-model\n'
+                          'API key: present (13 chars)\n\n')
+    sealed = r.named('seal')[0][0]['config']
+    assert (sealed['endpoint_url'], sealed['model']) == (
+        'http://from-config/v1', 'cfg-model')
+
+
 @pytest.mark.finding('T3-12')
 @pytest.mark.req('R0.1')
 def test_main_under_powered_claim_refused_before_seal_and_requests(r):
@@ -593,8 +609,7 @@ def test_main_end_to_end_against_the_mock_endpoint(tmp_path, monkeypatch,
             if name.startswith('AP1_SMOKE_'):
                 monkeypatch.delenv(name)
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-test')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+        mock.point_config(fx / 'config.json')
         monkeypatch.setattr(run.time, 'sleep', lambda s: None)
         out = tmp_path / 'out'
         code = run.main(['--config', str(fx / 'config.json'),
