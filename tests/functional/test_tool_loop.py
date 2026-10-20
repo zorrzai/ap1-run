@@ -107,8 +107,9 @@ def test_invocation_requires_a_call_to_the_required_operation(name, outcome):
 @pytest.mark.req('R1.3', 'R2.3')
 def test_call_to_an_unknown_tool_is_recorded_and_not_invoked(run_item, turns):
     # The engine answers an unknown tool with an error and scores the
-    # execution NOT-INVOKED with one call recorded; the run's consistency
-    # check then halts on it (T3-38, scenario t3_38_unknown_tool).
+    # execution NOT-INVOKED with one call recorded; since the T3-38 fix
+    # the run's consistency check accepts it (no call to the required
+    # operation; scenario t3_38_unknown_tool).
     result, _ = run_item(script=[turns.calls('1 + 1', name='other_tool'),
                                  turns.text('The answer is $15.20.')])
     assert (result['evidence_class'], result['invocation_outcome']) == \
@@ -116,14 +117,12 @@ def test_call_to_an_unknown_tool_is_recorded_and_not_invoked(run_item, turns):
     assert result['tool_calls'][0]['return_value'] == \
         '{"error": "unknown tool: other_tool"}'
     from ap1_run.runner.summary import verify_invocation_consistency
-    with pytest.raises(RuntimeError, match='^FATAL: invocation consistency '
-                                           'check failed. Q01/base/r1: '
-                                           'NOT-INVOKED but tool_calls_count=1'):
-        verify_invocation_consistency([{
-            'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
-            'status': result['status'],
-            'invocation_outcome': result['invocation_outcome'],
-            'tool_calls_count': len(result['tool_calls'])}])
+    verify_invocation_consistency([{
+        'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+        'status': result['status'],
+        'invocation_outcome': result['invocation_outcome'],
+        'tool_calls_count': len(result['tool_calls']),
+        'other_tool_calls_count': 1}])
 
 
 # -- every scorer reachable from the live path ----------------------------

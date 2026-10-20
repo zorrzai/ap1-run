@@ -369,6 +369,39 @@ def test_score_execution_records_each_calls_raw_arguments(fakes, tpath):
     assert findings.all_results[0]['tool_calls_count'] == 3
 
 
+@pytest.mark.finding('T3-38')
+@pytest.mark.parametrize('gt, other', [
+    ({'required_operation': 'calculator'}, 2),
+    ({'required_operation': 'python'}, 3),
+    ({'required_operation': 'other'}, 4),
+], ids=['calculator', 'python', 'none-matching'])
+def test_score_execution_counts_calls_to_other_tools(fakes, tpath, gt, other):
+    # T3-38: the row counts the calls to tools other than the required
+    # operation, which do not affect D7.1, so the consistency check can
+    # leave them out.
+    calls = [calc('1 + 1', ''), calc('2 + 2', ''),
+             {'function': {'name': 'python'}}, {'id': 'x'}]
+    findings = Findings()
+    score(findings, {'tool_calls': calls, 'ground_truth': gt}, tpath)
+    row = findings.all_results[0]
+    assert (row['tool_calls_count'], row['other_tool_calls_count']) == (
+        4, other)
+
+
+@pytest.mark.finding('T3-38')
+@pytest.mark.parametrize('gt, calls', [
+    ({'required_operation': 'calculator'}, [calc('1 + 1', '')]),
+    ({'required_operation': None}, [calc('1 + 1', ''), {'id': 'x'}]),
+    (None, [{'function': {'name': 'python'}}]),
+], ids=['all-required', 'no-operation', 'no-gt'])
+def test_score_execution_no_other_tool_calls_no_key(fakes, tpath, gt, calls):
+    # With no operation named every call counts (execution/evidence.py);
+    # the key is only written when there are other calls.
+    findings = Findings()
+    score(findings, {'tool_calls': calls, 'ground_truth': gt}, tpath)
+    assert 'other_tool_calls_count' not in findings.all_results[0]
+
+
 # -- operation correctness, read back from the transcript ----------------
 
 def test_score_execution_takes_the_latest_engine_record_of_the_item(

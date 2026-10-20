@@ -245,6 +245,13 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
 
     outcome = fig_result['outcome']
     error_state = result.get('error_state')  # T3-67: loop exhaustion
+    # T3-38: calls to a tool other than the required operation (an
+    # unoffered or hallucinated one) are recorded, and do not count for
+    # D7.1 (with no operation named every call counts, as in
+    # execution/evidence.py)
+    other_calls = sum(
+        1 for tc in tool_calls if _required_op
+        and tc.get('function', {}).get('name') != _required_op)
     print(f'{outcome} | {ev_class} | {inv_outcome}'
           + (f' | {error_state}' if error_state else ''))
 
@@ -280,5 +287,6 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'release_coverage_outcome': coverage_result['outcome'],
         'answer_outcome': section_6_8,
         'answer_outcome_reason': section_6_8_reason,
+        **({'other_tool_calls_count': other_calls} if other_calls else {}),
         **({'error_state': error_state} if error_state else {}),
     })

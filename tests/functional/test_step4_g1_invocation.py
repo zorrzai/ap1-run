@@ -306,9 +306,6 @@ def test_run_round0_transport_errors_listed_as_unmeasured_cells_with_cause(
 # -- T3-38: a call to a tool not offered is a legitimate NOT-INVOKED ------
 
 @pytest.mark.finding('T3-38')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-38: call to an unoffered tool trips the FATAL '
-                          'consistency check after all requests')
 def test_run_call_to_unoffered_tool_recorded_not_invoked_run_completes(
         full_run):
     """Q06/base calls a tool named "python", which was not offered.
