@@ -18,12 +18,10 @@ statement that the figures are not comparable.
 """
 
 import math
-from decimal import Decimal, getcontext
+from decimal import Decimal, localcontext
 
 from ap1_run.execution.evidence import EV_0, EV_1, EV_2, EV_3
-
-# Ensure sufficient precision for Decimal exponentiation
-getcontext().prec = 50
+from ap1_run.foundation.numeric import DECIMAL_CONTEXT
 
 
 class InvocationError(Exception):
@@ -131,7 +129,12 @@ def format_rate(failures, n):
     """
     if n == 0:
         return 'no observations'
+    with localcontext(DECIMAL_CONTEXT):
+        return _format_rate(failures, n)
 
+
+def _format_rate(failures, n):
+    """format_rate's arithmetic, given n > 0."""
     if failures == 0:
         bound = _exact_upper_bound(n)
         bound_pct = (bound * 100).quantize(Decimal('0.1'))
@@ -151,13 +154,14 @@ def _exact_upper_bound(n, alpha=None):
 
     p_upper = 1 - alpha^(1/n)
 
-    Computed in Decimal at the context's precision.  The result is
-    always in (0, 1) for any positive n.
+    Computed in Decimal in DECIMAL_CONTEXT (precision 50).  The result
+    is always in (0, 1) for any positive n.
     """
     if alpha is None:
         alpha = Decimal('0.05')
-    exponent = Decimal(1) / Decimal(n)
-    return 1 - alpha ** exponent
+    with localcontext(DECIMAL_CONTEXT):
+        exponent = Decimal(1) / Decimal(n)
+        return 1 - alpha ** exponent
 
 
 def compute_dpr(invoked_base, invoked_removed, n_base, n_removed):
@@ -181,7 +185,12 @@ def compute_dpr(invoked_base, invoked_removed, n_base, n_removed):
     """
     if n_base == 0:
         return None, 'UNDEFINED (no base observations)'
+    with localcontext(DECIMAL_CONTEXT):
+        return _dpr(invoked_base, invoked_removed, n_base, n_removed)
 
+
+def _dpr(invoked_base, invoked_removed, n_base, n_removed):
+    """compute_dpr's arithmetic, given n_base > 0."""
     rate_base = Decimal(invoked_base) / Decimal(n_base)
 
     if rate_base == 0:

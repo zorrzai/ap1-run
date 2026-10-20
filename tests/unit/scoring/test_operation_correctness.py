@@ -124,16 +124,14 @@ def test_evaluate_expression_floor_division_and_mod_truncate_toward_zero():
 
 
 @pytest.mark.finding('T3-60')
-def test_evaluate_expression_result_depends_on_context_precision():
-    # The module uses whatever global precision is current, which
-    # invocation.py sets to 50 on import. Correct: a fixed, declared
-    # precision.
-    with decimal.localcontext() as ctx:
-        ctx.prec = 28
-        assert len(str(evaluate_expression('1 / 3'))) == 30
-    with decimal.localcontext() as ctx:
-        ctx.prec = 50
-        assert len(str(evaluate_expression('1 / 3'))) == 52
+def test_evaluate_expression_result_does_not_depend_on_context_precision():
+    # T3-60 fixed: the walker runs in numeric.DECIMAL_CONTEXT (precision
+    # 50, as the live runner had through invocation.py's global setting),
+    # whatever the caller's precision.
+    for prec in (28, 50):
+        with decimal.localcontext() as ctx:
+            ctx.prec = prec
+            assert len(str(evaluate_expression('1 / 3'))) == 52
 
 
 def test_evaluate_expression_huge_literal_is_exact_not_infinity():

@@ -82,6 +82,15 @@ position (e.g., requiring groups of three digits).
 
 **File:** `src/ap1_run/foundation/numeric.py`, `parse_decimal`, grouping-separator stripping.
 
+**Fixed** in step 5 of the 2026-10 reorganization: `parse_decimal` checks the
+digit string against the R0.4.2 grammar, so a grouping separator must sit
+between groups of three digits. `'1,23'` is refused (not a number), not read
+as 123. The same check refuses NaN, Infinity, exponents, underscores and a
+doubled sign. The runner also passes the configured `decimal_separator` and
+`grouping_separator` to every extraction (T3-41), so under a `,` decimal
+separator `'1,23'` is 1.23; a token the configured separators leave ambiguous
+routes the item to adjudication (R0.4.2).
+
 ---
 
 ## 6. Rounding mode: HALF_EVEN in code vs ROUND_HALF_UP in configs
