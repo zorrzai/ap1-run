@@ -29,10 +29,10 @@
     "score": 0.9876
   },
   "execution/seal_constants": {
-    "killed": 100,
-    "mutants": 102,
-    "notes": "Both survivors are equivalent: they rename the 'reason' key of a failure dict. The dicts are never observable, because any failure raises SealError (whose message does not use 'reason') and the function only ever returns an empty list. Legacy suites verify_d72b.py + verify_e7_coverage.py score 0.7549 on the same mutants.",
-    "score": 0.9804
+    "killed": 173,
+    "mutants": 173,
+    "notes": "No survivors. (Step 5 seal-gt-guards rewrote the check: failures are message strings, so the old survivors, renames of an unread 'reason' key, are gone. Legacy suites verify_d72b.py + verify_e7_coverage.py scored 0.7549 on the pre-step-5 mutants.)",
+    "score": 1.0
   },
   "execution/version": {
     "killed": 155,
