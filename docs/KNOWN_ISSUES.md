@@ -133,9 +133,11 @@ overwritten on each loop iteration).
 transcript record now has a `rounds` list: every round of the tool loop, in
 order, with the request as the adapter sent it and the raw response (or, for
 a request that failed, the messages it sent and the error). A run can be
-replayed from its transcript. The published runs in `output/` were written
-before the fix and still lack the intermediate responses; they are sealed
-and are not edited.
+replayed from its transcript. Scoring is a separate pass that only reads the
+transcript (T3-21), and `ap1-run --rescore` runs it alone on a run's
+transcript (README, "Scoring a transcript again"). The published runs in
+`output/` were written before the fix and still lack the intermediate
+responses; they are sealed and are not edited.
 
 ---
 

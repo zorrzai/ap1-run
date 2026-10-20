@@ -30,7 +30,10 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
     executed = [r for r in all_results if r['status'] == 'EXECUTED']
     unmeasured = [r for r in all_results if r['status'] == 'UNMEASURED']
     void = [r for r in all_results if r['status'] == 'VOID']
-    print(f'\n3a. COMPLETION: {len(executed)} executed, {len(unmeasured)} unmeasured, {len(void)} void')
+    not_run = [r for r in all_results if r['status'] == 'NOT-RUN']
+    print(f'\n3a. COMPLETION: {len(executed)} executed, {len(unmeasured)} unmeasured, {len(void)} void'
+          + (f', {len(not_run)} not run (the transcript ends before them)'
+             if not_run else ''))
 
     # 3b. Figure identification
     print('\n3b. FIGURE IDENTIFICATION:')

@@ -5,6 +5,13 @@ Spec: AP-1 Runner Build Spec v0.3, section 4 R1.2.
 Iterate items and conditions; call R0.2; drive the tool loop;
 write to R0.3. PERFORM NO SCORING.
 
+This is the execution pass (SPEC §2): execute_item writes one transcript
+record per execution, with every round's request and raw response, the
+structural tool-call record, the evidence class (R1.3) and the execution's
+status (EXECUTED, UNMEASURED or VOID). Scoring (figure identification, D1,
+D2, D7.2, D7.3) is a separate pass over the transcript
+(runner/scoring_pass.py), which never writes to it.
+
 Conditions in v1.0: 'base' and 'instruction_removed' (D7.1b).
 
 Item selection (normative):
@@ -19,11 +26,6 @@ from ap1_run.execution.context import build_delivered_context, format_fixture_co
 from ap1_run.execution.evidence import (
     classify_invocation, classify_attestation,
     extract_attestation, check_ev3_guard, EV_0, _extract_content,
-)
-from ap1_run.scoring.operation_correctness import classify_operation, reclassify_session
-from ap1_run.scoring.provenance.classify import (
-    classify_invocations_sequential, is_calculator_call,
-    mark_unmeasurable_item,
 )
 
 
@@ -60,7 +62,7 @@ def execute_item(item, *, condition, config, fixture,
             response_received=None, tool_calls=[],
             evidence_class=None, error_state='VOID',
             seal_hash=seal_hash, void_reason='underivable',
-            repeat=repeat,
+            repeat=repeat, status='VOID',
         )
         return {
             'item_id': item_id, 'condition': condition,
@@ -99,7 +101,7 @@ def execute_item(item, *, condition, config, fixture,
             evidence_class=EV_0,
             error_state=f'TRANSPORT_FAILURE: {e}',
             seal_hash=seal_hash, repeat=repeat,
-            rounds=rounds,
+            rounds=rounds, status='UNMEASURED',
         )
         return {
             'item_id': item_id, 'condition': condition,
@@ -130,7 +132,8 @@ def execute_item(item, *, condition, config, fixture,
                           'request_record': request_record},
             response_received=final_response, tool_calls=[],
             evidence_class=None, error_state='UNMEASURED: empty response',
-            seal_hash=seal_hash, rounds=rounds,
+            seal_hash=seal_hash, repeat=repeat, rounds=rounds,
+            status='UNMEASURED',
         )
         return {
             'item_id': item_id, 'condition': condition,
@@ -156,33 +159,6 @@ def execute_item(item, *, condition, config, fixture,
         _, att_reason = classify_attestation(
             attestation, {'ev3_implemented': False})
 
-    # D7.2(a): sequential operand provenance (D22 transitivity guard);
-    # a chained item without declared intermediates is UNMEASURABLE (T3-42)
-    provenance_results = mark_unmeasurable_item(
-        classify_invocations_sequential(tool_calls_record, ctx, gt, config),
-        gt)
-
-    # D7.2(b): evaluate operation correctness for each calculator call.
-    # A call without a readable expression is OPERATION-UNOBSERVABLE,
-    # counted, not dropped (T3-16); one result per calculator call, so
-    # results and expressions stay aligned for the reclassification.
-    exprs = [_extract_calc_expression(tc)
-             for tc in tool_calls_record if is_calculator_call(tc)]
-    op_correctness_results = []
-    for expr in exprs:
-        try:
-            oc = classify_operation(expr, gt, config)
-            op_correctness_results.append(oc)
-        except Exception as e:
-            op_correctness_results.append({
-                'outcome': 'OPERATION-UNOBSERVABLE',
-                'reason': f'evaluation failed: '
-                          f'{type(e).__name__}: {e}',
-            })
-
-    # Session-level reclassification (forward-dependency rule)
-    op_correctness_results = reclassify_session(op_correctness_results, exprs)
-
     # Write transcript
     transcript.append(
         transcript_path,
@@ -199,9 +175,7 @@ def execute_item(item, *, condition, config, fixture,
         attestation_reason=att_reason,
         ground_truth_final=str(gt['final']),
         required_operation=gt['required_operation'],
-        operation_correctness=op_correctness_results,
-        provenance_results=provenance_results,
-        rounds=rounds,
+        rounds=rounds, status='EXECUTED',
     )
 
     return {
@@ -211,7 +185,6 @@ def execute_item(item, *, condition, config, fixture,
         'self_report': self_report,
         'tool_calls': tool_calls_record,
         'response': final_response, 'ground_truth': gt,
-        'provenance_results': provenance_results,
     }
 
 
@@ -343,7 +316,8 @@ def _record_shape(response, round_shapes):
 # -- Expression extraction -------------------------------------------
 
 def _extract_calc_expression(tool_call_record):
-    """Extract calculator expression from a tool-call record.
+    """Extract calculator expression from a tool-call record (used by the
+    scoring pass, runner/executions.py, for D7.2(b)).
 
     Returns the 'expression' argument, or None if not a calculator call
     or the arguments are not a JSON object with that key.

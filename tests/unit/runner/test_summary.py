@@ -411,6 +411,8 @@ def test_summary_non_outcome_cells():
         {'item_id': 'Q04', 'condition': 'base', 'status': 'VOID',
          'reason': 'underivable'},
         {'item_id': 'Q05', 'condition': 'base', 'status': 'VOID'},
+        {'item_id': 'Q06', 'condition': 'base', 'status': 'NOT-RUN',
+         'cause': 'not reached'},
     ]
     assert build_summary(results, [])['non_outcome_cells'] == [
         {'item_id': 'Q03', 'condition': 'base', 'status': 'UNMEASURED',
@@ -419,6 +421,9 @@ def test_summary_non_outcome_cells():
          'reason': 'underivable'},
         {'item_id': 'Q05', 'condition': 'base', 'status': 'VOID',
          'reason': ''},
+        # T3-52 / R0.3: an interrupted run's unreached execution
+        {'item_id': 'Q06', 'condition': 'base', 'status': 'NOT-RUN',
+         'reason': 'not reached'},
     ]
 
 

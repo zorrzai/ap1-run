@@ -1,7 +1,8 @@
 """The live tool loop end to end through engine.execute_item, against a
 scripted endpoint on 127.0.0.1: adapter, tool loop, evidence, provenance,
 operation correctness and transcript together (from legacy
-verify_integration.py).
+verify_integration.py). Provenance and operation correctness are scored
+from the transcript record, as the scoring pass does (T3-21).
 
 Legacy verify_integration drove its own copy of the tool loop for its first
 two tests; these drive the runner's engine instead.
@@ -12,15 +13,20 @@ from decimal import Decimal
 
 import pytest
 
+from ap1_run.execution.context import build_delivered_context
 from ap1_run.execution.engine import execute_item
 from ap1_run.execution.evidence import EV_0, EV_2, classify_invocation
 from ap1_run.foundation import adapter
 from ap1_run.foundation.transcript import read_all
+from ap1_run.runner.executions import result_from_record
 
 
 @pytest.fixture
 def run_item(example, endpoint, tmp_path):
-    """Execute one example item against the scripted endpoint."""
+    """Execute one example item against the scripted endpoint; the
+    engine's result, with an executed item's D7.2 scored from its
+    transcript record (provenance_results, operation_correctness), and
+    the transcript."""
     def run(item_id='Q01', *, script, condition='base'):
         endpoint.queue[:] = script
         config = dict(example['config'], endpoint_url=endpoint.url,
@@ -35,7 +41,16 @@ def run_item(example, endpoint, tmp_path):
             system_prompt=config['system_prompt_base'],
             tools=config['tools'], transcript_path=transcript,
             seal_hash='test-seal')
-        return result, read_all(transcript)
+        records = read_all(transcript)
+        if result['status'] == 'EXECUTED':
+            ctx = build_delivered_context(example['fixture'],
+                                          item['source_accounts'])
+            scored = result_from_record(records[-1],
+                                        gt=result['ground_truth'], ctx=ctx,
+                                        config=config)
+            result['provenance_results'] = scored['provenance_results']
+            result['operation_correctness'] = scored['operation_correctness']
+        return result, records
     return run
 
 
@@ -142,8 +157,8 @@ def test_live_path_result_feeds_every_scorer(run_item, turns, example):
             for p in result['provenance_results']
             for r in p['operand_resolutions']] == \
         [('15.200', 3, 'intermediate'), ('1', 1, 'constant')]
-    # D7.2(b): written to the transcript
-    assert [o['outcome'] for o in transcript[0]['operation_correctness']] == \
+    # D7.2(b): scored from the transcript record
+    assert [o['outcome'] for o in result['operation_correctness']] == \
         ['OPERATION-CORRECT']
     # D1
     config = example['config']

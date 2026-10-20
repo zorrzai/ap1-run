@@ -1,15 +1,19 @@
 """Unit tests for run.py's main(): the orchestration of a live run.
 
-main()'s collaborators (the engine, the seal, the scoring, the reports)
-have their own tests. Here they are replaced by recording fakes, so that
-the order of the run, what main() passes to each, and what it prints are
-checked exactly. The inputs are small files in a temporary directory,
-reached through the command-line options. The last test runs main() end
-to end, with nothing replaced, against the mock endpoint.
+main() runs the execution pass, then hands the transcript to the scoring
+pass (runner/scoring_pass.py, tested in tests/unit/runner/
+test_scoring_pass.py). Its collaborators (the engine, the seal, the
+scoring pass, the re-scorer) have their own tests. Here they are replaced
+by recording fakes, so that the order of the run, what main() passes to
+each, and what it prints are checked exactly. The inputs are small files
+in a temporary directory, reached through the command-line options. The
+last tests run main() end to end, with nothing replaced, against the mock
+endpoint, and re-score its transcript.
 """
 
 import json
 import os
+import re
 import shutil
 import sys
 from decimal import Decimal
@@ -17,9 +21,7 @@ from decimal import Decimal
 import pytest
 
 from ap1_run import run
-from ap1_run.execution.perturbation_guard import HELD_CONSTANT
 from ap1_run.execution.seal import SealError
-from ap1_run.foundation import adapter
 
 D = Decimal
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(
@@ -64,7 +66,7 @@ class Run:
         self.config = json.loads(json.dumps(CONFIG))
         self.write_inputs()
         self.calls = []
-        self.results = {}     # (item, condition, rep) -> result or exception
+        self.results = {}     # (item, condition, rep) -> result
         self.refuse = set()   # R3.1 guards that raise SealError
         self.version = {'version_tag': 'v9.9.9',
                         'version_commit': '0123456789abcdef0123'}
@@ -83,12 +85,8 @@ class Run:
                      'perturbation_check', 'source_fields_check',
                      'declared_constants_check',
                      'create_seal', 'check_condition_guard',
-                     'build_delivered_context', 'check_lookup_collision',
-                     'execute_item', 'score_execution',
-                     'verify_invocation_consistency', 'print_run_report',
-                     'summarise_accuracy', 'find_d2_cap',
-                     'classify_reproducibility', 'build_summary',
-                     'print_scoring_report', 'write_outputs'):
+                     'build_delivered_context', 'write_pre_registration',
+                     'execute_item', 'score_run', 'rescore_transcript'):
             monkeypatch.setattr(run, name, getattr(self, name))
 
     def write_inputs(self, config=None):
@@ -158,53 +156,25 @@ class Run:
         self.calls.append(('context', fixture, accounts))
         return {'accounts': list(accounts)}
 
-    def check_lookup_collision(self, expected, ctx):
-        self.calls.append(('collision', expected, ctx))
-        return 'COLLISION', 'field'
+    def write_pre_registration(self, output_dir, **kwargs):
+        self.calls.append(('pre_registration', output_dir, kwargs))
 
     def execute_item(self, item, **kwargs):
-        rep = sum(1 for c in self.calls if c[0] == 'execute'
-                  and c[1]['id'] == item['id']
-                  and c[2]['condition'] == kwargs['condition']) + 1
         self.calls.append(('execute', item, kwargs))
-        outcome = self.results.get((item['id'], kwargs['condition'], rep),
-                                   {'status': 'EXECUTED', 'n': rep})
-        if isinstance(outcome, Exception):
-            raise outcome
-        return outcome
+        return self.results.get(
+            (item['id'], kwargs['condition'], kwargs['repeat']),
+            {'status': 'EXECUTED', 'evidence_class': 'EV-2',
+             'invocation_outcome': 'INVOKED'})
 
-    def score_execution(self, findings, result, **kwargs):
-        self.calls.append(('score', result, kwargs))
-        findings.all_results.append({'status': 'EXECUTED'})
-        findings.d2_responses.setdefault('d2', []).append(result)
+    def score_run(self, transcript_path, **kwargs):
+        self.calls.append(('score_run', transcript_path, kwargs))
+        print('(scoring pass)')
+        return {'smoke': 'summary'}
 
-    def verify_invocation_consistency(self, results):
-        self.calls.append(('consistency', list(results)))
-
-    def print_run_report(self, results, conditions, **kwargs):
-        self.calls.append(('run_report', list(results), conditions, kwargs))
-
-    def summarise_accuracy(self, results):
-        self.calls.append(('summarise', list(results)))
-        return {'d1': True}
-
-    def find_d2_cap(self, sampling):
-        self.calls.append(('d2_cap', sampling))
-        return 'CAP'
-
-    def classify_reproducibility(self, responses, repeat_count, cap):
-        self.calls.append(('d2', responses, repeat_count, cap))
-        return {'d2': 'results'}
-
-    def build_summary(self, results, evidence, **kwargs):
-        self.calls.append(('summary', list(results), evidence, kwargs))
-        return {'summary': True}
-
-    def print_scoring_report(self, *args):
-        self.calls.append(('scoring_report',) + args)
-
-    def write_outputs(self, output_dir, transcript_path, **kwargs):
-        self.calls.append(('outputs', output_dir, transcript_path, kwargs))
+    def rescore_transcript(self, transcript_path, **kwargs):
+        self.calls.append(('rescore', transcript_path, kwargs))
+        print('(re-scoring)')
+        return {'smoke': 'summary'}
 
 
 @pytest.fixture
@@ -215,19 +185,23 @@ def r(tmp_path, monkeypatch):
 RULE = '=' * 60
 
 
-def script_failures(r):
-    # Each failure is on a first repeat, so the second still runs.
-    r.results[('Q1', 'base', 1)] = adapter.RateLimitError('slow down')
-    r.results[('Q2', 'base', 1)] = adapter.AdapterError('HTTP 500: boom')
+def script_statuses(r):
+    # Each not-executed status is on a first repeat; the second still runs.
+    r.results[('Q1', 'base', 1)] = {'status': 'UNMEASURED',
+                                    'error': 'rate limited'}
+    r.results[('Q2', 'base', 1)] = {'status': 'UNMEASURED',
+                                    'error': 'HTTP 500: boom'}
     r.results[('Q1', 'instruction_removed', 1)] = {'status': 'VOID',
-                                                  'error': 'no figure'}
-    r.results[('Q2', 'instruction_removed', 1)] = {'status': 'UNMEASURED',
-                                                  'reason': 'cut off'}
+                                                  'reason': 'underivable'}
+    r.results[('Q2', 'instruction_removed', 1)] = {
+        'status': 'EXECUTED', 'evidence_class': 'EV-0 UNOBSERVABLE',
+        'invocation_outcome': None}
 
 
 def test_main_full_run_console(r, capsys):
-    script_failures(r)
+    script_statuses(r)
     assert r.main() == 0
+    out = os.path.join(str(r.output_dir), 'smoke_run.jsonl')
     assert capsys.readouterr().out == (
         'Endpoint: http://mock/v1\n'
         'Model: mock-model\n'
@@ -247,19 +221,27 @@ def test_main_full_run_console(r, capsys):
         'Running 3 items x 2 conditions x 2 repeats\n'
         'Total requests: 12\n'
         f'{RULE}\n'
-        '  Q1/base/r1: RATE-LIMITED\n'
-        '  Q1/base/r2:   Q3/base: VOID (underivable)\n'
-        '  Q2/base/r1: TRANSPORT_ERROR: HTTP 500: boom\n'
-        '  Q2/base/r2:   Q1/instruction_removed/r1: VOID\n'
-        '  Q1/instruction_removed/r2:   '
-        'Q3/instruction_removed: VOID (underivable)\n'
-        '  Q2/instruction_removed/r1: UNMEASURED\n'
-        '  Q2/instruction_removed/r2:   '
-        'Invocation consistency check: PASSED (0 mismatches)\n')
+        '  Q1/base/r1: UNMEASURED\n'
+        '  Q1/base/r2: EXECUTED | EV-2 | INVOKED\n'
+        '  Q3/base: VOID (underivable)\n'
+        '  Q2/base/r1: UNMEASURED\n'
+        '  Q2/base/r2: EXECUTED | EV-2 | INVOKED\n'
+        '  Q1/instruction_removed/r1: VOID\n'
+        '  Q1/instruction_removed/r2: EXECUTED | EV-2 | INVOKED\n'
+        '  Q3/instruction_removed: VOID (underivable)\n'
+        '  Q2/instruction_removed/r1: EXECUTED | EV-0 UNOBSERVABLE | None\n'
+        '  Q2/instruction_removed/r2: EXECUTED | EV-2 | INVOKED\n'
+        '\n'
+        'SCORING THE TRANSCRIPT (scoring pass: reads it, writes nothing '
+        'back)\n'
+        f'{RULE}\n'
+        '(scoring pass)\n'
+        f'Transcript written to {out}\n')
 
 
+@pytest.mark.finding('T3-21')
 def test_main_full_run_calls(r, capsys):
-    script_failures(r)
+    script_statuses(r)
     assert r.main() == 0
     fx = str(r.fixture_dir)
     out = str(r.output_dir)
@@ -291,12 +273,15 @@ def test_main_full_run_calls(r, capsys):
         config, os.path.join(fx, 'fixture.json'), 'BASE PROMPT',
         'REMOVED PROMPT', CONFIG['tools'], {'temperature': 0})]
 
-    # contexts and collisions: per item and condition, Q3 has no collision
+    # the pre-registration record, beside the transcript
+    seal_record = {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}
+    assert r.named('pre_registration') == [(
+        out, {'seal_record': seal_record, 'config': config})]
+
+    # contexts: per item and condition
     assert [c[1] for c in r.named('context')] == [
         ['a'], [], ['b'], ['a'], [], ['b']]
     assert all(c[0] == FIXTURE for c in r.named('context'))
-    assert r.named('collision') == [(D('10.00'), {'accounts': ['a']}),
-                                    (D('10.00'), {'accounts': ['b']})] * 2
 
     executes = r.named('execute')
     assert [(i['id'], k['condition'], k['system_prompt'])
@@ -326,95 +311,24 @@ def test_main_full_run_calls(r, capsys):
     assert kwargs['transcript_path'] == transcript
     assert kwargs['seal_hash'] == 'SEAL'
 
-    # only executed results are scored, each followed by the pause
-    scores = r.named('score')
-    assert [res for res, _ in scores] == [{'status': 'EXECUTED', 'n': 2}] * 4
-    assert [(k['item_id'], k['condition'], k['rep']) for _, k in scores] == [
-        ('Q1', 'base', 2), ('Q2', 'base', 2),
-        ('Q1', 'instruction_removed', 2), ('Q2', 'instruction_removed', 2)]
-    assert scores[1][1]['ctx'] == {'accounts': ['b']}
-    kw = scores[0][1]
-    assert kw == {
-        'item_id': 'Q1', 'condition': 'base', 'rep': 2,
-        'expected': D('10.00'), 'ctx': {'accounts': ['a']},
-        'collision': 'COLLISION', 'config': config,
-        'answer_tolerance': D('0.05'), 'decline_markers': ['cannot'],
-        'currency_symbols': ['$'], 'transcript_path': transcript,
-        'seal_hash': 'SEAL'}
-    assert r.named('sleep') == [(0.5,)] * 4
+    # each executed result is followed by the pause; nothing is scored
+    # during the execution pass
+    assert r.named('sleep') == [(0.5,)] * 5
 
-    # the collected results, in order
-    expected_results = [
-        {'item_id': 'Q1', 'condition': 'base', 'repeat': 1,
-         'status': 'UNMEASURED', 'cause': 'rate_limited'},
-        {'status': 'EXECUTED'},
-        {'item_id': 'Q3', 'condition': 'base', 'repeat': 0,
-         'status': 'VOID'},
-        {'item_id': 'Q2', 'condition': 'base', 'repeat': 1,
-         'status': 'UNMEASURED', 'cause': 'HTTP 500: boom'},
-        {'status': 'EXECUTED'},
-        {'item_id': 'Q1', 'condition': 'instruction_removed', 'repeat': 1,
-         'status': 'VOID', 'cause': 'no figure'},
-        {'status': 'EXECUTED'},
-        {'item_id': 'Q3', 'condition': 'instruction_removed', 'repeat': 0,
-         'status': 'VOID'},
-        {'item_id': 'Q2', 'condition': 'instruction_removed', 'repeat': 1,
-         'status': 'UNMEASURED', 'cause': 'cut off'},
-        {'status': 'EXECUTED'},
-    ]
-    assert r.named('consistency') == [(expected_results,)]
-
-    (results, conditions, kw), = r.named('run_report')
-    assert results == expected_results
-    assert conditions == ['base', 'instruction_removed']
-    assert kw['disclaimer'] == run.DISCLAIMER
-    assert kw['unmeasured_cells'] == [
-        {'item_id': 'Q1', 'condition': 'base', 'repeat': 1,
-         'cause': 'rate_limited'},
-        {'item_id': 'Q2', 'condition': 'base', 'repeat': 1,
-         'cause': 'HTTP 500: boom'}]
-    for name in ('grammar_issues', 'decline_findings', 'tool_call_structures',
-                 'evidence_findings', 'transcription_results',
-                 'release_coverage_results'):
-        assert kw[name] == [], name
-
-    assert r.named('summarise') == [([],)]
-    assert r.named('d2_cap') == [({'temperature': 0},)]
-    d2_responses = {'d2': [res for res, _ in scores]}
-    assert r.named('d2') == [(d2_responses, 2, 'CAP')]
-    (results, evidence, kw), = r.named('summary')
-    assert results == expected_results and evidence == []
-    assert kw == {'d1_summary': {'d1': True, 'n': 0},
-                  'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
-                  'transcription_results': [],
-                  'release_coverage_results': [],
-                  'held_constant': HELD_CONSTANT}
-    assert r.named('scoring_report') == [(
-        {'d1': True, 'n': 0}, {'d2': 'results'}, 'CAP', {'summary': True})]
-
-    (output_dir, transcript_path, kw), = r.named('outputs')
-    assert (output_dir, transcript_path) == (out, transcript)
-    assert kw == {
-        'summary': {'summary': True}, 'config': config,
-        'seal_record': {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'},
-        'questions': QUESTIONS, 'fixture': FIXTURE,
-        'release_coverage_results': [], 'disclaimer': run.DISCLAIMER,
-        'smoke_summary': {
-            'seal_hash': 'SEAL', 'all_results': expected_results,
-            'grammar_issues': [], 'decline_findings': [],
-            'tool_call_structures': [], 'evidence_findings': [],
-            'unmeasured_cells': kw['smoke_summary']['unmeasured_cells']}}
-    assert len(kw['smoke_summary']['unmeasured_cells']) == 2
+    # then the scoring pass, once, on the transcript
+    assert r.named('score_run') == [(transcript, {
+        'config': config, 'seal_record': seal_record, 'fixture': FIXTURE,
+        'questions': QUESTIONS,
+        'gt_module': sys.modules['ground_truth_example'],
+        'output_dir': out})]
 
     # the order of the stages
     stages = [c[0] for c in r.calls if c[0] in (
-        'version', 'source_hash', 'gt_guard', 'seal', 'guard', 'consistency',
-        'run_report', 'summarise', 'd2_cap', 'd2', 'summary',
-        'scoring_report', 'outputs')]
+        'version', 'source_hash', 'gt_guard', 'seal', 'guard',
+        'pre_registration', 'execute', 'score_run')]
     assert stages == ['version', 'source_hash', 'gt_guard', 'gt_guard',
-                      'gt_guard', 'seal', 'guard',
-                      'consistency', 'run_report', 'summarise', 'd2_cap',
-                      'd2', 'summary', 'scoring_report', 'outputs']
+                      'gt_guard', 'seal', 'guard', 'pre_registration'] + [
+        'execute'] * 8 + ['score_run']
 
 
 @pytest.mark.finding('T3-7')
@@ -432,6 +346,7 @@ def test_main_ground_truth_guard_refusal_stops_before_seal_and_requests(
         r.main()
     assert [g[0] for g in r.named('gt_guard')] == ran
     assert r.named('seal') == [] and r.named('execute') == []
+    assert r.named('pre_registration') == []
     assert 'Ground-truth guards' not in capsys.readouterr().out
 
 
@@ -457,10 +372,13 @@ def test_main_creates_the_output_dir_and_removes_an_old_transcript(r):
     os.makedirs(r.output_dir)
     old = r.output_dir / 'smoke_run.jsonl'
     old.write_text('{"old": true}\n')
+    old_record = r.output_dir / 'pre_registration.json'
+    old_record.write_text('{"old": true}\n')
     other = r.output_dir / 'keep.txt'
     other.write_text('kept')
     assert r.main() == 0
     assert not old.exists()
+    assert not old_record.exists()   # the fake did not write a new one
     assert other.read_text() == 'kept'
 
 
@@ -469,30 +387,25 @@ def test_main_creates_a_missing_output_dir(r):
     assert r.output_dir.is_dir()
 
 
-def test_main_defaults_without_tolerance_markers_or_symbols(r):
-    for key in ('answer_tolerance', 'decline_markers', 'currency_symbols',
-                'sampling', 'repeat_count'):
+def test_main_defaults_without_sampling_or_repeat_count(r):
+    for key in ('sampling', 'repeat_count'):
         del r.config[key]
     assert r.main() == 0
-    kw = r.named('score')[0][1]
-    assert (kw['answer_tolerance'], kw['decline_markers'],
-            kw['currency_symbols']) == (D('0.01'), [], [])
     assert len(r.named('execute')) == 2 * 2 * 3   # repeat_count 3
-    assert r.named('d2_cap') == [({},)]
     assert r.named('guard')[0][-1] == {}
 
 
-def test_main_numeric_tolerance_is_kept_as_given(r):
-    r.config['answer_tolerance'] = 0.5   # not a string: not converted
-    r.main()
-    tolerance = r.named('score')[0][1]['answer_tolerance']
-    assert tolerance == 0.5 and isinstance(tolerance, float)
-
-
-def test_main_execution_with_no_status_is_scored(r):
+def test_main_execution_with_no_status_unknown_and_no_pause(r, capsys):
     r.results[('Q1', 'base', 1)] = {'no': 'status'}
     r.main()
-    assert r.named('score')[0][0] == {'no': 'status'}
+    assert '  Q1/base/r1: UNKNOWN\n' in capsys.readouterr().out
+    assert len(r.named('sleep')) == 7
+
+
+def test_main_executed_without_evidence_prints_empty_fields(r, capsys):
+    r.results[('Q1', 'base', 1)] = {'status': 'EXECUTED'}
+    r.main()
+    assert '  Q1/base/r1: EXECUTED |  | \n' in capsys.readouterr().out
 
 
 def test_main_modified_runner_warning(r, capsys):
@@ -545,7 +458,30 @@ def test_main_puts_the_fixture_dir_first_on_the_path(r, tmp_path,
 def test_main_reads_sys_argv_without_argv(r, monkeypatch):
     monkeypatch.setattr(sys, 'argv', ['ap1-run'] + r.argv())
     assert run.main() == 0
-    assert r.named('outputs')[0][0] == str(r.output_dir)
+    assert r.named('score_run')[0][1]['output_dir'] == str(r.output_dir)
+
+
+# -- ap1-run --rescore: the scoring pass alone ------------------------------
+
+@pytest.mark.finding('T3-21')
+def test_main_rescore_scores_the_transcript_without_a_key(r, monkeypatch,
+                                                          capsys):
+    monkeypatch.delenv('AP1_SMOKE_API_KEY')
+    transcript = r.tmp / 'run1' / 'smoke_run.jsonl'
+    argv = ['--rescore', str(transcript),
+            '--config', str(r.fixture_dir / 'config.json'),
+            '--fixture-dir', str(r.fixture_dir),
+            '--output-dir', str(r.tmp / 'rescored')]
+    assert run.main(argv) == 0
+    assert r.calls == [('rescore', str(transcript), {
+        'config_path': str(r.fixture_dir / 'config.json'),
+        'fixture_dir': str(r.fixture_dir),
+        'output_dir': str(r.tmp / 'rescored')})]
+    assert capsys.readouterr().out == (
+        f'Re-scoring transcript: {transcript}\n'
+        f'{RULE}\n'
+        '(re-scoring)\n'
+        f'Transcript scored (not changed): {transcript}\n')
 
 
 def test_main_help_exits_before_the_key_is_read(r, monkeypatch, capsys):
@@ -646,9 +582,35 @@ def test_main_end_to_end_against_the_mock_endpoint(tmp_path, monkeypatch,
         mock.stop()
     console = capsys.readouterr().out
     assert code == 0
+    # the execution pass, then the scoring pass
+    assert '  Q01/base/r1: EXECUTED | EV-2 PLATFORM-STRUCTURAL | ' \
+        'INVOKED\n' in console
     assert '  Q01/base/r1: AUTO-MATCH | ' in console
+    assert console.index('EXECUTED | ') < console.index('SCORING THE '
+                                                       'TRANSCRIPT') \
+        < console.index('AUTO-MATCH | ')
     assert '  Q02/instruction_removed/r1: AUTO-MATCH | ' in console
     assert sorted(os.listdir(out)) == [
-        'DISCLAIMER.txt', 'adjudication_sheets.md', 'report.md',
-        'smoke_run.jsonl', 'smoke_summary.json']
+        'DISCLAIMER.txt', 'adjudication_sheets.md', 'pre_registration.json',
+        'report.md', 'smoke_run.jsonl', 'smoke_summary.json']
     assert len(mock.log) == 8   # 2 items x 2 conditions x 2 rounds
+
+    # ap1-run --rescore on its transcript: the same summary and report,
+    # elsewhere, with no endpoint or key; the transcript is unchanged
+    monkeypatch.delenv('AP1_SMOKE_API_KEY')
+    before = (out / 'smoke_run.jsonl').read_bytes()
+    again = tmp_path / 'again'
+    assert run.main(['--rescore', str(out / 'smoke_run.jsonl'),
+                     '--config', str(fx / 'config.json'),
+                     '--fixture-dir', str(fx),
+                     '--output-dir', str(again)]) == 0
+    assert (out / 'smoke_run.jsonl').read_bytes() == before
+    assert sorted(os.listdir(again)) == [
+        'DISCLAIMER.txt', 'adjudication_sheets.md', 'report.md',
+        'smoke_summary.json']
+    def text(path):   # the report's own generation time aside
+        return re.sub(r'(Generated: \S+?)T[\d:.+]+', r'\1',
+                      path.read_text('utf-8'))
+    for name in ('smoke_summary.json', 'report.md', 'adjudication_sheets.md',
+                 'DISCLAIMER.txt'):
+        assert text(again / name) == text(out / name), name

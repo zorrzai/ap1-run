@@ -28,6 +28,22 @@ def run_report(capsys, all_results, conditions=('base',), **lists):
 HEADER = f'\n{RULE}\nSMOKE TEST REPORT\n{RULE}\n\nDISCLAIMER TEXT\n\n'
 
 
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.3')
+def test_run_report_completion_counts_not_run(capsys):
+    # A partial transcript's unreached executions are reported not run
+    # (SPEC R0.3), and are not counted as unmeasured.
+    out = run_report(capsys, [
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+         'status': 'NOT-RUN'},
+        {'item_id': 'Q02', 'condition': 'base', 'repeat': 1,
+         'status': 'NOT-RUN'},
+        {'item_id': 'Q03', 'condition': 'base', 'repeat': 1,
+         'status': 'UNMEASURED'}], conditions=['base'])
+    assert '\n3a. COMPLETION: 0 executed, 1 unmeasured, 0 void, 2 not run ' \
+        '(the transcript ends before them)\n' in out
+
+
 def test_run_report_with_no_results(capsys):
     assert run_report(capsys, [], conditions=['base', 'instruction_removed']) \
         == (HEADER +

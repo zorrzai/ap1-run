@@ -151,13 +151,17 @@ def ap1_run(tmp_path, monkeypatch, capsys):
 
 def engine_records(result, item_id=None):
     return [r for r in result.transcript
-            if r.get('record_type') != 'figure_identification'
-            and (item_id is None or r['item_id'] == item_id)]
+            if item_id is None or r['item_id'] == item_id]
 
 
 def figure_records(result, item_id=None):
-    return [r for r in result.transcript
-            if r.get('record_type') == 'figure_identification'
+    """The scored executions (the scoring pass's results in
+    smoke_summary.json): figure outcome, released figure, D7.2."""
+    path = result.output_dir / 'smoke_summary.json'
+    if not path.exists():
+        return []
+    rows = json.loads(path.read_text('utf-8'))['all_results']
+    return [r for r in rows if r.get('status') == 'EXECUTED'
             and (item_id is None or r['item_id'] == item_id)]
 
 
@@ -192,10 +196,17 @@ def raw_turn(message, **top_level):
 
 
 def base_record(result, item_id):
+    """The first base execution of the item: its transcript record, with
+    its D7.2 results from the scoring pass (T3-21: not in the transcript)."""
     records = [r for r in engine_records(result, item_id)
                if r['condition'] == 'base']
     assert records, f'no engine record for {item_id}/base: {result.out[-800:]}'
-    return records[0]
+    record = dict(records[0])
+    for row in figure_records(result, item_id):
+        if (row['condition'], row['repeat']) == ('base', record['repeat']):
+            record['provenance_results'] = row['provenance_results']
+            record['operation_correctness'] = row['operation_correctness']
+    return record
 
 
 def base_figure(result, item_id):

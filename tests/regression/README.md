@@ -46,11 +46,15 @@ real adapter and HTTP transport:
 
 What is compared for each scenario:
 - the console output, stderr and exit code (or the exception);
-- `report.md`, `adjudication_sheets.md`, `smoke_summary.json`, `smoke_run.jsonl`
-  and `DISCLAIMER.txt`, plus the list of files written;
+- `report.md`, `adjudication_sheets.md`, `smoke_summary.json`, `smoke_run.jsonl`,
+  `DISCLAIMER.txt` and `pre_registration.json`, plus the list of files written;
 - every request the mock received;
 - `outcomes.jsonl`, a per-execution table of what the runner decided about each
-  execution.
+  execution: the execution from the transcript record, its scores (figure,
+  provenance, operation) from `smoke_summary.json`, joined on item, condition
+  and repeat. (Before the two passes were separated, T3-21, the scores were read
+  from the transcript and joined on position, which shifted them after a
+  transport failure.) A run that stops before its summary has no scores.
 
 For the two replays, the large files are kept as a digest only, and
 `outcomes.jsonl` carries the detail. Storing them in full would add about

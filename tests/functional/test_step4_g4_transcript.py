@@ -1,7 +1,7 @@
 """Step 4, group g4-transcript: the transcript and the two-pass design,
 end to end (fix plan branch 4: raw-response preservation).
 
-Correct behaviour, failing on today's code (each test is a strict xfail
+Correct behaviour, written failing in step 4 (each test was a strict xfail
 with its finding):
 
 - T3-21: SPEC §2 ("Two passes ... The separation is a conformance
@@ -24,16 +24,18 @@ mock endpoint (tests/fixtures/mock_endpoint.py) on 127.0.0.1, with a copy
 of the shipped example in tmp_path; nothing is written into the
 repository.
 
-The re-scorer does not exist yet. The tests that need it import it in one
-place, _rescore() below, which names the API the fix must provide:
+The tests that need the re-scorer import it in one place, _rescore()
+below:
 
     ap1_run.scoring.rescore.rescore_transcript(
         transcript_path, *, config_path, fixture_dir, output_dir) -> dict
 
 It scores a finished (or partial) transcript, opening it read-only, and
 returns the run summary: the same content as the run's smoke_summary.json
-(without its '_disclaimer' line). The fix may choose another name or
-shape; it then updates _rescore() and nothing else.
+(without its '_disclaimer' line).
+
+All of these were strict xfails written in step 4; the step-5 fix branch
+raw-response-preservation turned them green.
 """
 
 import importlib.util
@@ -63,10 +65,6 @@ AP1_TEXT = ROOT / 'reference' / 'AP-1_v1.3_DRAFT_FOR_COMMENT.md'
 SCORING_FIELDS = ('operation_correctness', 'provenance_results',
                   'figure_outcome', 'figure_reason', 'released_figure')
 
-RESCORE_RAISES = (AttributeError, ImportError, TypeError, AssertionError)
-RESCORE_API = ('the fix must provide ap1_run.scoring.rescore.'
-               'rescore_transcript(transcript_path, *, config_path, '
-               'fixture_dir, output_dir) -> summary dict')
 
 
 def _mock_endpoint_class():
@@ -115,7 +113,7 @@ def _read_jsonl(path):
 
 def _rescore(transcript_path, *, config_path, fixture_dir, output_dir):
     """The scoring pass over a transcript (T3-21). See the module
-    docstring: this API does not exist yet."""
+    docstring."""
     from ap1_run.scoring.rescore import rescore_transcript
     return rescore_transcript(transcript_path, config_path=config_path,
                               fixture_dir=fixture_dir, output_dir=output_dir)
@@ -210,10 +208,6 @@ MULTI_ROUND = {
 
 @pytest.mark.finding('T3-21')
 @pytest.mark.req('R1.2', 'R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-21: the run writes scoring into the transcript '
-                          '(operation_correctness, provenance_results, '
-                          'figure_identification records)')
 def test_run_transcript_contains_no_scoring(cli):
     # Correct (SPEC §2 diagram "R1 EXECUTE: no scoring occurs here", R1.2
     # "Perform no scoring", R0.3's record fields): the transcript holds
@@ -230,9 +224,6 @@ def test_run_transcript_contains_no_scoring(cli):
 
 @pytest.mark.finding('T3-21')
 @pytest.mark.req('R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-21: the scoring in the run appends '
-                          'figure_identification records to the transcript')
 def test_run_transcript_is_only_what_the_execution_wrote(cli):
     # Correct (SPEC §2 "R2 SCORE: reads only; never writes back"): every
     # byte of the transcript is written by the execution pass
@@ -259,9 +250,6 @@ def test_run_transcript_is_only_what_the_execution_wrote(cli):
 
 @pytest.mark.finding('T3-21')
 @pytest.mark.req('R0.3', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=RESCORE_RAISES,
-                   reason='T3-21: no scoring pass over a transcript; '
-                          + RESCORE_API)
 def test_rescore_of_finished_run_reproduces_its_summary(cli, tmp_path):
     # Correct (Steven's ruling, choices-for-marcus.md entry 1; SPEC §2 "A
     # single-pass design makes re-scoring impossible"): re-scoring a
@@ -385,9 +373,6 @@ def test_adapter_redirect_to_other_host_not_followed():
 
 @pytest.mark.finding('T3-52')
 @pytest.mark.req('R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-52: the scoring opens the transcript for '
-                          'writing (it fails on a read-only transcript)')
 def test_run_scoring_with_read_only_transcript_completes(cli):
     # Correct (SPEC R0.3 verification contract: "The scorer opens the
     # transcript read-only"): once an execution's record is written, the
@@ -411,10 +396,6 @@ def test_run_scoring_with_read_only_transcript_completes(cli):
 
 @pytest.mark.finding('T3-52')
 @pytest.mark.req('R0.3')
-@pytest.mark.xfail(strict=True, raises=RESCORE_RAISES,
-                   reason='T3-52: an interrupted run has no report and '
-                          'nothing reports its unreached items not-run; '
-                          + RESCORE_API)
 def test_interrupted_run_partial_transcript_scored_unreached_not_run(
         cli, tmp_path):
     # Correct (SPEC R0.3 verification contract: "An interrupted run leaves

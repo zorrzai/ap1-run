@@ -194,6 +194,7 @@ def test_parse_args_defaults_are_the_fixed_paths():
         'fixture_dir': '/repo/example',
         'output_dir': '/repo/output',
         'ap1_text': '/repo/reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md',
+        'rescore': None,
     }
 
 
@@ -202,21 +203,29 @@ def test_parse_args_absolute_paths_kept():
                        '--output-dir', '/c/out', '--ap1-text', '/d/ap1.md'],
                       BASE)
     assert vars(args) == {'config': '/a/c.json', 'fixture_dir': '/b',
-                          'output_dir': '/c/out', 'ap1_text': '/d/ap1.md'}
+                          'output_dir': '/c/out', 'ap1_text': '/d/ap1.md',
+                          'rescore': None}
+
+
+def test_parse_args_rescore_absolute_path_kept():
+    args = parse_args(['--rescore', '/r/smoke_run.jsonl'], BASE)
+    assert args.rescore == '/r/smoke_run.jsonl'
 
 
 def test_parse_args_relative_paths_resolve_against_the_working_directory(
         tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     args = parse_args(['--config', 'c.json', '--fixture-dir', 'in',
-                       '--output-dir', 'out/x', '--ap1-text', '../t.md'],
+                       '--output-dir', 'out/x', '--ap1-text', '../t.md',
+                       '--rescore', 'run/t.jsonl'],
                       BASE)
     root = str(tmp_path.resolve())
     parent = str(tmp_path.resolve().parent)
     assert vars(args) == {'config': f'{root}/c.json',
                           'fixture_dir': f'{root}/in',
                           'output_dir': f'{root}/out/x',
-                          'ap1_text': f'{parent}/t.md'}
+                          'ap1_text': f'{parent}/t.md',
+                          'rescore': f'{root}/run/t.jsonl'}
 
 
 def test_parse_args_rejects_unknown_options(capsys):
@@ -234,7 +243,8 @@ def test_parse_args_help_text(capsys, monkeypatch):
     pad = ' ' * 24
     assert capsys.readouterr().out == (
         'usage: ap1-run [-h] [--config CONFIG] [--fixture-dir FIXTURE_DIR] '
-        '[--output-dir OUTPUT_DIR] [--ap1-text AP1_TEXT]\n'
+        '[--output-dir OUTPUT_DIR] [--ap1-text AP1_TEXT] '
+        '[--rescore TRANSCRIPT]\n'
         '\n'
         'Run the AP-1 instrument smoke test against a live endpoint. The '
         'endpoint, model and API key come from the AP1_SMOKE_* environment '
@@ -252,7 +262,10 @@ def test_parse_args_help_text(capsys, monkeypatch):
         'of the same name there are replaced (default: output/)\n'
         '  --ap1-text AP1_TEXT   the AP-1 text to seal; its hash must match '
         'the one the runner expects '
-        '(default: reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md)\n')
+        '(default: reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md)\n'
+        "  --rescore TRANSCRIPT  instead of running, score a run's transcript "
+        "again (no endpoint, no key), with the run's --config and "
+        '--fixture-dir, into another --output-dir\n')
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---

@@ -5,10 +5,10 @@
     "score": 1.0
   },
   "execution/engine": {
-    "killed": 621,
-    "mutants": 645,
-    "notes": "All 24 survivors are equivalent or unreachable. Three pass tool_calls=None instead of [] in the VOID, transport-failure and empty-response (T3-10) records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Two drop the f'call_{turn}' default for a missing tool-call id and three change the '' default of tool_call_id in the tool message: a call without an id raises EngineError on the return-value lookup right after (S3-G2-2), so neither default is ever observed. Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). Two change the [] default of choices in _extract_tool_calls to None: both falsy, both give [].",
-    "score": 0.9628
+    "killed": 595,
+    "mutants": 619,
+    "notes": "All 24 survivors are equivalent or unreachable. Three pass tool_calls=None instead of [] in the VOID, transport-failure and empty-response (T3-10) records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Two drop the f'call_{turn}' default for a missing tool-call id and three change the '' default of tool_call_id in the tool message: a call without an id raises EngineError on the return-value lookup right after (S3-G2-2), so neither default is ever observed. Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). Two change the [] default of choices in _extract_tool_calls to None: both falsy, both give []. (Step 5 raw-response-preservation, T3-21: D7.2 scoring moved out of the engine, to runner/executions.py score_d72, with its killed mutants, and the rounds and EV-0 cause were added; the score went from 621/645 = 0.9628 to 595/619 = 0.9612 with the same 24 survivors.)",
+    "score": 0.9612
   },
   "execution/evidence": {
     "killed": 216,
@@ -77,14 +77,14 @@
     "score": 0.9745
   },
   "run": {
-    "killed": 581,
-    "mutants": 596,
-    "notes": "All 15 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored.",
-    "score": 0.9748
+    "killed": 432,
+    "mutants": 443,
+    "notes": "All 11 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. (Step 5 raw-response-preservation, T3-21: the scoring half of main() moved to runner/scoring_pass.py, with the four 'UNKNOWN' status-default survivors.)",
+    "score": 0.9752
   },
   "runner/console": {
-    "killed": 523,
-    "mutants": 524,
+    "killed": 533,
+    "mutants": 534,
     "notes": "The one survivor is equivalent: it changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
     "score": 0.9981
   },
@@ -95,27 +95,33 @@
     "score": 0.9915
   },
   "runner/executions": {
-    "killed": 594,
-    "mutants": 596,
-    "notes": "Both survivors are equivalent. tool_calls=None in the figure record: transcript.append writes None as []. 'and' to 'or' in _operation_returns' result check only lets values through that then raise inside the try (a dict without 'result' raises KeyError), which the except turns into the same skipped call.",
-    "score": 0.9966
+    "killed": 663,
+    "mutants": 664,
+    "notes": "The one survivor is equivalent: 'and' to 'or' in _operation_returns' result check only lets values through that then raise inside the try (a dict without 'result' raises KeyError), which the except turns into the same skipped call. (Step 5 raw-response-preservation, T3-21: the figure record and its tool_calls=None survivor are gone; score_d72, result_from_record, record_not_run and as_recorded added, all their mutants killed.)",
+    "score": 0.9985
   },
   "runner/outputs": {
-    "killed": 170,
-    "mutants": 183,
+    "killed": 182,
+    "mutants": 195,
     "notes": "All 13 survivors are equivalent here. Twelve drop or change encoding='utf-8' on the four files written: 'UTF-8' is the same codec, and None or no argument means the locale's encoding, which is UTF-8 on macOS and Linux (the CI's Windows runs would differ; the regression baseline is made on macOS). One passes ensure_ascii=None, falsy like False.",
-    "score": 0.929
+    "score": 0.9333
+  },
+  "runner/scoring_pass": {
+    "killed": 316,
+    "mutants": 316,
+    "notes": "No survivors. (New in step 5 raw-response-preservation, T3-21: the scoring pass, moved out of run.py main().)",
+    "score": 1.0
   },
   "runner/settings": {
-    "killed": 260,
-    "mutants": 260,
+    "killed": 279,
+    "mutants": 279,
     "score": 1.0
   },
   "runner/summary": {
-    "killed": 709,
-    "mutants": 720,
+    "killed": 711,
+    "mutants": 722,
     "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default. [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
-    "score": 0.9847
+    "score": 0.9848
   },
   "scoring/accuracy": {
     "killed": 149,
@@ -172,6 +178,12 @@
     "mutants": 215,
     "notes": "All 8 survivors are equivalent. Each is in _extract_surface_values and replaces a .get() default with None or drops it (also None): r.get('choices', []) on the figures and the prose surface (4), and .get('content', '') on both surfaces (4). None is falsy like [] and '', and every use is guarded by 'if choices:' or followed by \"or ''\", so the value is the same.",
     "score": 0.9628
+  },
+  "scoring/rescore": {
+    "killed": 156,
+    "mutants": 171,
+    "notes": "All 15 survivors are equivalent here. Twelve drop or change encoding='utf-8' when pre_registration.json is written or read and when fixture.json and questions.json are read: 'UTF-8' is the same codec, and None or no argument means the locale's, UTF-8 on macOS and Linux. One passes ensure_ascii=None, falsy like False. Two upper-case 'fixture.json' and 'questions.json', which macOS's case-insensitive file system finds anyway. (New in step 5 raw-response-preservation, T3-21.)",
+    "score": 0.9123
   },
   "scoring/transcription": {
     "killed": 124,

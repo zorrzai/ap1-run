@@ -1,24 +1,38 @@
-"""The live runner's scoring of each execution.
+"""The scoring of each execution, in the scoring pass.
 
-score_execution scores one executed response, as the runner always has:
-figure identification (recorded in the transcript), D7.3 transcription
-and release coverage, D1 accuracy, the response kept for D2, evidence,
-tool-call structures, numeric grammar and decline checks. Each part of
-the result is appended to a Findings collector, which also records the
-executions that could not be scored.
+result_from_record reads one execution back from its transcript record and
+scores its D7.2 (score_d72: operand provenance and operation correctness).
+score_execution scores the rest of an executed response: figure
+identification, D7.3 transcription and release coverage, D1 accuracy, the
+response kept for D2, evidence, tool-call structures, numeric grammar and
+decline checks. Each part of the result is appended to a Findings
+collector, which also records the executions that could not be scored and
+those the run never reached. Nothing here writes to the transcript.
 """
 
 import json
 from dataclasses import dataclass, field
 from decimal import Decimal
 
-from ap1_run.foundation import transcript
+from ap1_run.execution.engine import _extract_calc_expression
 from ap1_run.foundation.numeric import extract_numeric_tokens
 from ap1_run.scoring.accuracy import score_accuracy
 from ap1_run.scoring.answer_outcome import answer_outcome
 from ap1_run.scoring.figure_id import identify_figure
+from ap1_run.scoring.operation_correctness import (
+    classify_operation, reclassify_session,
+)
+from ap1_run.scoring.provenance.classify import (
+    classify_invocations_sequential, is_calculator_call,
+    mark_unmeasurable_item,
+)
 from ap1_run.scoring.release_coverage import check_release_coverage
 from ap1_run.scoring.transcription import check_transcription
+
+# The status of an execution the run planned but never reached (SPEC R0.3:
+# an interrupted run's unreached items are reported not-run, never as
+# failures).
+NOT_RUN = 'NOT-RUN'
 
 
 @dataclass
@@ -44,16 +58,13 @@ def record_underivable(findings, item_id, condition):
     })
 
 
-def record_transport_failure(findings, item_id, condition, rep, cause):
-    """The request failed (rate limit or transport error): UNMEASURED."""
-    findings.unmeasured_cells.append({
-        'item_id': item_id, 'condition': condition,
-        'repeat': rep, 'cause': cause,
-    })
+def record_not_run(findings, item_id, condition, rep):
+    """The transcript has no record of this execution: the run ended
+    before it. NOT-RUN, never a failure, in no denominator."""
     findings.all_results.append({
         'item_id': item_id, 'condition': condition,
-        'repeat': rep, 'status': 'UNMEASURED',
-        'cause': cause,
+        'repeat': rep, 'status': NOT_RUN,
+        'cause': 'not reached: the transcript has no record of it',
     })
 
 
@@ -64,6 +75,84 @@ def record_not_scored(findings, item_id, condition, rep, status, result):
         'repeat': rep, 'status': status,
         'cause': result.get('error', result.get('reason', '')),
     })
+
+
+def as_recorded(value):
+    """value as a JSON round trip with sorted keys and str() for anything
+    else (Decimal): the form scoring results had when the engine wrote
+    them into the transcript, so the outputs keep their exact shape."""
+    return json.loads(json.dumps(value, default=str, sort_keys=True))
+
+
+def score_d72(tool_calls, ctx, gt, config):
+    """D7.2 of one execution: (provenance_results, operation_correctness).
+
+    D7.2(a): sequential operand provenance (D22 transitivity guard); a
+    chained item without declared intermediates is UNMEASURABLE (T3-42).
+    D7.2(b): operation correctness of each calculator call. A call
+    without a readable expression is OPERATION-UNOBSERVABLE, counted, not
+    dropped (T3-16); one result per calculator call, so results and
+    expressions stay aligned for the session-level reclassification
+    (forward-dependency rule).
+    """
+    provenance_results = mark_unmeasurable_item(
+        classify_invocations_sequential(tool_calls, ctx, gt, config), gt)
+
+    exprs = [_extract_calc_expression(tc)
+             for tc in tool_calls if is_calculator_call(tc)]
+    op_correctness = []
+    for expr in exprs:
+        try:
+            op_correctness.append(classify_operation(expr, gt, config))
+        except Exception as e:
+            op_correctness.append({
+                'outcome': 'OPERATION-UNOBSERVABLE',
+                'reason': f'evaluation failed: {type(e).__name__}: {e}',
+            })
+    op_correctness = reclassify_session(op_correctness, exprs)
+    return provenance_results, op_correctness
+
+
+def _cause(record):
+    """Why a record is not scored: its error state after the status
+    prefix ('TRANSPORT_FAILURE: <error>', 'UNMEASURED: empty response')."""
+    error_state = str(record.get('error_state') or '')
+    return error_state.split(': ', 1)[1] if ': ' in error_state \
+        else error_state
+
+
+def result_from_record(record, *, gt, ctx, config):
+    """One execution, read back from its transcript record (not changed),
+    as the engine returned it, with its D7.2 scored: what
+    record_not_scored and score_execution take.
+
+    gt is the item's ground truth, computed again from the sealed module.
+    An executed result gets provenance_results and operation_correctness
+    (the latter in its recorded form, see as_recorded); one that was not
+    executed gets its cause.
+    """
+    result = {'item_id': record.get('item_id'),
+              'condition': record.get('condition'),
+              'status': record.get('status'), 'ground_truth': gt}
+    if record.get('status') == 'VOID':
+        result['reason'] = record.get('void_reason', '')
+        return result
+    if record.get('status') != 'EXECUTED':
+        result['error'] = _cause(record)
+        return result
+    tool_calls = record.get('tool_calls') or []
+    provenance_results, op_correctness = score_d72(tool_calls, ctx, gt,
+                                                   config)
+    result.update({
+        'evidence_class': record.get('evidence_class'),
+        'invocation_outcome': record.get('invocation_outcome'),
+        'self_report': record.get('self_report'),
+        'tool_calls': tool_calls,
+        'response': record.get('response_received'),
+        'provenance_results': provenance_results,
+        'operation_correctness': as_recorded(op_correctness),
+    })
+    return result
 
 
 def _operation_returns(tool_calls, operation):
@@ -92,10 +181,13 @@ def _operation_returns(tool_calls, operation):
 
 def score_execution(findings, result, *, item_id, condition, rep, expected,
                     ctx, collision, config, answer_tolerance,
-                    decline_markers, currency_symbols, transcript_path,
-                    seal_hash):
-    """Score one executed response and print its outcome line."""
-    # -- Figure identification (after execute_item) --
+                    decline_markers, currency_symbols):
+    """Score one executed response and print its outcome line.
+
+    result is an executed result from result_from_record, with its D7.2
+    (provenance_results, operation_correctness) already scored.
+    """
+    # -- Figure identification --
     final_response = result.get('response')
     fig_result = identify_figure(
         final_response,
@@ -105,24 +197,6 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         answer_tolerance=answer_tolerance,
         decline_markers=decline_markers,
         currency_symbols=currency_symbols,
-    )
-
-    # Append figure_outcome to the transcript record
-    transcript.append(
-        transcript_path, item_id=item_id,
-        arm_id=condition, condition=condition,
-        request_sent=None,  # already in engine's record
-        response_received=None,
-        tool_calls=[],
-        evidence_class=result.get('evidence_class'),
-        error_state=None,
-        seal_hash=seal_hash,
-        record_type='figure_identification',
-        repeat=rep,
-        figure_outcome=fig_result['outcome'],
-        figure_reason=fig_result.get('reason', ''),
-        released_figure=str(fig_result.get('released_figure', '')),
-        expected=str(expected),
     )
 
     # -- D7.3: Transcription check (E7 fix; T3-26, T3-27, V12-6) --
@@ -246,16 +320,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
     outcome = fig_result['outcome']
     print(f'{outcome} | {ev_class} | {inv_outcome}')
 
-    # Collect operation_correctness from engine result
-    op_correctness = []
-    # Read from the transcript (engine wrote it)
-    tr_records = transcript.read_all(transcript_path)
-    for tr in reversed(tr_records):
-        if (tr.get('item_id') == item_id and
-                tr.get('condition') == condition and
-                tr.get('record_type') != 'figure_identification'):
-            op_correctness = tr.get('operation_correctness', [])
-            break
+    op_correctness = result.get('operation_correctness', [])
 
     # AP-1 v1.3 section 6.8: the answer-level outcome, where it is decided
     section_6_8, section_6_8_reason = answer_outcome(

@@ -62,7 +62,7 @@ _SKIP_TOP = {'.git', '.venv', 'output', 'graphify-out', 'review_output',
 
 # Files the runner writes to output/.
 _OUTPUTS = ['report.md', 'adjudication_sheets.md', 'smoke_summary.json',
-            'smoke_run.jsonl', 'DISCLAIMER.txt']
+            'smoke_run.jsonl', 'DISCLAIMER.txt', 'pre_registration.json']
 
 
 # -- inputs ----------------------------------------------------------
@@ -320,7 +320,8 @@ def collect(proc, result_dir, output_dir, roots, default_output=None):
         raw['default_output.txt'] = ''.join(
             f'{n}\n' for n in sorted(os.listdir(default_output)))
     if 'smoke_run.jsonl' in raw:
-        raw['outcomes.jsonl'] = outcome_table(raw['smoke_run.jsonl'])
+        raw['outcomes.jsonl'] = outcome_table(raw['smoke_run.jsonl'],
+                                              raw.get('smoke_summary.json'))
 
     seals = json.loads(_read(os.path.join(result_dir, 'seal.json')))
     return {k: normalise(v, roots, seals) for k, v in raw.items()}
@@ -338,25 +339,30 @@ def digest_large(scenario, produced):
     return out
 
 
-def outcome_table(transcript_text):
-    """One line per execution: what the runner decided about it."""
-    engine, figures = [], {}
+def outcome_table(transcript_text, summary_text=None):
+    """One line per execution: what the runner decided about it.
+
+    The execution (evidence class, error state, tool calls) comes from the
+    transcript; the scores (provenance, operation, figure) from the
+    scoring pass's results in smoke_summary.json, matched on item,
+    condition and repeat. A run that stopped before writing its summary
+    has no scores.
+    """
+    scored = {}
+    if summary_text:
+        for r in json.loads(summary_text).get('all_results', []):
+            if r.get('status') == 'EXECUTED':
+                scored[(r.get('item_id'), r.get('condition'),
+                        r.get('repeat'))] = r
+    rows, seen = [], {}
     for line in transcript_text.splitlines():
         if not line.strip():
             continue
         rec = json.loads(line)
         key = (rec.get('item_id'), rec.get('condition'))
-        if rec.get('record_type') == 'figure_identification':
-            figures.setdefault(key, []).append(rec)
-        else:
-            engine.append(rec)
-    rows, seen = [], {}
-    for rec in engine:
-        key = (rec.get('item_id'), rec.get('condition'))
         n = seen.get(key, 0)
         seen[key] = n + 1
-        fig = (figures.get(key) or [None] * (n + 1))
-        fig = fig[n] if n < len(fig) else None
+        score = scored.get(key + (rec.get('repeat'),), {})
         rows.append({
             'item': key[0], 'condition': key[1], 'n': n + 1,
             'error_state': rec.get('error_state'),
@@ -364,11 +370,11 @@ def outcome_table(transcript_text):
             'invocation': rec.get('invocation_outcome'),
             'tool_calls': len(rec.get('tool_calls') or []),
             'provenance': [p.get('outcome') for p in
-                           rec.get('provenance_results') or []],
+                           score.get('provenance_results') or []],
             'operation': [o.get('outcome') for o in
-                          rec.get('operation_correctness') or []],
-            'figure': fig.get('figure_outcome') if fig else None,
-            'released': fig.get('released_figure') if fig else None,
+                          score.get('operation_correctness') or []],
+            'figure': score.get('figure_outcome'),
+            'released': score.get('released_figure'),
         })
     return ''.join(json.dumps(r, sort_keys=True) + '\n' for r in rows)
 

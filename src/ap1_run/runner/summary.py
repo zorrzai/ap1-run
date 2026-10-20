@@ -311,10 +311,11 @@ def build_summary(all_results, evidence_findings, *,
     summary['originated_operand_audit'] = originated_audit
     summary['provenance_unmeasurable'] = unmeasurable
 
-    # Non-outcome cells
+    # Non-outcome cells (NOT-RUN: a partial transcript's unreached
+    # executions, R0.3)
     non_outcome = []
     for r in all_results:
-        if r['status'] in ('UNMEASURED', 'VOID'):
+        if r['status'] in ('UNMEASURED', 'VOID', 'NOT-RUN'):
             non_outcome.append({
                 'item_id': r.get('item_id'),
                 'condition': r.get('condition'),
