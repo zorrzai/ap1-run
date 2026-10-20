@@ -394,6 +394,7 @@ def test_main_full_run_calls(r, capsys):
                   'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
                   'transcription_results': [],
                   'release_coverage_results': [],
+                  'parameter_echo': [],
                   'held_constant': HELD_CONSTANT}
     assert r.named('scoring_report') == [(
         {'d1': True, 'n': 0}, {'d2': 'results'}, 'CAP', {'summary': True})]

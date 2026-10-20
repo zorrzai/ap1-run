@@ -331,6 +331,7 @@ def main(argv=None):
         d2_cap_reason=d2_cap_reason,
         transcription_results=findings.transcription_results,
         release_coverage_results=findings.release_coverage_results,
+        parameter_echo=findings.parameter_echo,
         held_constant=HELD_CONSTANT)
 
     # 3j-3l. D1, D2, operand provenance

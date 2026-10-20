@@ -17,10 +17,10 @@
     "score": 0.9643
   },
   "execution/perturbation_guard": {
-    "killed": 178,
-    "mutants": 210,
-    "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is returned only when it holds nothing but the identical-prompt entry (S3-G3-4). _summarise itself is tested directly.",
-    "score": 0.8476
+    "killed": 164,
+    "mutants": 196,
+    "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is only ever returned empty. _summarise itself is tested directly. (Step 5 seal-gt-guards, T3-46: identical prompts now raise, and the identical-prompt diff entry is gone; its 14 mutants were all killed, so removing them lowered the score from 163/195 = 0.8359 to 149/181 = 0.8232 with the same 32 survivors.)",
+    "score": 0.8367
   },
   "execution/seal": {
     "killed": 397,
@@ -47,16 +47,16 @@
     "score": 0.983
   },
   "foundation/config": {
-    "killed": 253,
-    "mutants": 261,
+    "killed": 272,
+    "mutants": 280,
     "notes": "All 8 survivors are equivalent. Four change how config.json is opened: 'UTF-8' is the same codec, no 'r' is the default mode, and encoding None or no encoding means the locale's, which is UTF-8 on macOS and Linux (the tests load a non-ASCII config; on Windows these would be killed). Four change the .get() default for 'sampling' and 'quantisation' ({} to None or no default): both are required fields, checked present just before, so the default is never used.",
-    "score": 0.9693
+    "score": 0.9714
   },
   "foundation/numeric": {
-    "killed": 320,
-    "mutants": 344,
-    "notes": "All 24 survivors are equivalent or unkillable. parse_decimal (7): is_neg=None is falsy like False; decimal_sep != 'XX.XX' only replaces '.' by '.'; the inner sign test 'XX-\\u2212XX' only differs for 'X', which the outer test never lets through; sorting leading currency symbols by key=None or no key (4) is reverse alphabetical, and for startswith a symbol can only shadow another it is a prefix of, which sorts first either way. _build_extraction_re (2): key=None or no key for the alternation order is likewise equivalent (the regex backtracks; only a prefix can shadow). extract_numeric_tokens (9): currency_symbols=None reaches the same empty handling; finditer returns non-overlapping matches in order, so the dedup sort key (5 mutants) and last_end=-2 change nothing; every match contains a digit, so the 'no digits' guard and its continue->break (2) are unreachable. canonical_json ensure_ascii=None is falsy like False; canonical_hash 'UTF-8' is the same codec. file_hash (4): read(None) and read(8193) give the same digest; sentinel None or b'XXXX' never matches b'' and loops forever, which mutmut reports as a timeout.",
-    "score": 0.9302
+    "killed": 432,
+    "mutants": 456,
+    "notes": "All 24 survivors are equivalent or unkillable. parse_decimal (7): is_neg=None is falsy like False; decimal_sep != 'XX.XX' only replaces '.' by '.'; the inner sign test 'XX-\\u2212XX' only differs for 'X', which the outer test never lets through; sorting leading currency symbols by key=None or no key (4) is reverse alphabetical, and for startswith a symbol can only shadow another it is a prefix of, which sorts first either way. _build_extraction_re (2): key=None or no key for the alternation order is likewise equivalent (the regex backtracks; only a prefix can shadow). extract_numeric_tokens (9): currency_symbols=None reaches the same empty handling; finditer returns non-overlapping matches in order, so the dedup sort key (5 mutants) and last_end=-2 change nothing; every match contains a digit, so the 'no digits' guard and its continue->break (2) are unreachable. canonical_json ensure_ascii=None is falsy like False; canonical_hash 'UTF-8' is the same codec. file_hash (4): read(None) and read(8193) give the same digest; sentinel None or b'XXXX' never matches b'' and loops forever, which mutmut reports as a timeout. (Step 5 numeric-hardening: parse_decimal's R0.4.2 grammar check, quantise's places check, DECIMAL_CONTEXT, the operator reading of a sign after a number and _matches_inside_words added 132 mutants, all killed; the 'no digits' guard stays unreachable, as the token left after an operator always has digits.)",
+    "score": 0.9474
   },
   "foundation/transcript": {
     "killed": 78,
@@ -65,28 +65,28 @@
     "score": 0.907
   },
   "reporting/adjudication": {
-    "killed": 492,
-    "mutants": 518,
-    "notes": "All 26 survivors are equivalent. Nine are in _needs_adjudication's TRANSPORT_FAILURE guard, which returns False where the fall-through also returns False, so it is dead code (T3-9: it comes after the ADJUDICATE check); one more there changes the figure_outcome default '' to 'XXXX', which is neither ADJUDICATE* nor UNMEASURABLE either. Two pass fixture=None and config=None to _generate_one_sheet, which never reads either parameter. Fourteen replace a .get() default ([] or {} or '') by None or no default, falsy alike: the release-coverage lookup, account_map, tool_calls, operation_correctness, ungoverned_figures, choices and message content.",
-    "score": 0.9498
+    "killed": 547,
+    "mutants": 562,
+    "notes": "All 15 survivors are equivalent. One changes _needs_adjudication's figure_outcome default '' to 'XXXX', which is neither ADJUDICATE* nor UNMEASURABLE either. Two pass fixture=None and config=None to _generate_one_sheet, which never reads either parameter. Twelve replace a .get() default ([] or {} or '') by None or no default, falsy alike: account_map, tool_calls, operation_correctness, ungoverned_figures, choices and message content.",
+    "score": 0.9733
   },
   "reporting/report": {
-    "killed": 1758,
-    "mutants": 1804,
-    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Re-recorded after combining the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after combining.] [Re-recorded on the combination of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
-    "score": 0.9745
+    "killed": 1845,
+    "mutants": 1891,
+    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Integrator, step 5: re-recorded after merging the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after the merge.] [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.] [spec-conformance-claims merge: 46 survivors, none in the new section 9b (_section_d2_conditions).]",
+    "score": 0.9757
   },
   "run": {
-    "killed": 525,
-    "mutants": 540,
-    "notes": "All 15 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored.",
-    "score": 0.9722
+    "killed": 555,
+    "mutants": 570,
+    "notes": "All 15 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored. [spec-conformance-claims merge: 555/570; the same 15 survivors. The score is below the integration branch's 581/596 only because 26 killed mutants went with the code the branch deleted (sampling overrides, environment endpoint and model, defaults).]",
+    "score": 0.9737
   },
   "runner/console": {
-    "killed": 470,
-    "mutants": 473,
-    "notes": "All 3 survivors are equivalent. Two let n = 0 reach format_rate, which itself returns 'no observations' for n = 0. One changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
-    "score": 0.9937
+    "killed": 526,
+    "mutants": 527,
+    "notes": "The one survivor is equivalent: it changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
+    "score": 0.9981
   },
   "runner/credentials": {
     "killed": 116,
@@ -95,10 +95,10 @@
     "score": 0.9915
   },
   "runner/executions": {
-    "killed": 531,
-    "mutants": 535,
-    "notes": "All 4 survivors are equivalent. tool_calls=None in the figure record: transcript.append writes None as []. A None default for return_value is falsy like ''. 'and' to 'or' in the result check only lets values through that then raise inside the try, which the except turns into the same None.",
-    "score": 0.9925
+    "killed": 650,
+    "mutants": 652,
+    "notes": "Both survivors are equivalent. tool_calls=None in the figure record: transcript.append writes None as []. 'and' to 'or' in _operation_returns' result check only lets values through that then raise inside the try (a dict without 'result' raises KeyError), which the except turns into the same skipped call.",
+    "score": 0.9969
   },
   "runner/outputs": {
     "killed": 170,
@@ -107,15 +107,15 @@
     "score": 0.929
   },
   "runner/settings": {
-    "killed": 186,
-    "mutants": 186,
+    "killed": 198,
+    "mutants": 198,
     "score": 1.0
   },
   "runner/summary": {
-    "killed": 709,
-    "mutants": 720,
-    "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default. [Re-recorded on the combination of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
-    "score": 0.9847
+    "killed": 743,
+    "mutants": 754,
+    "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default. [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
+    "score": 0.9854
   },
   "scoring/accuracy": {
     "killed": 149,
@@ -140,10 +140,10 @@
     "score": 0.9948
   },
   "scoring/operation_correctness": {
-    "killed": 344,
-    "mutants": 365,
+    "killed": 365,
+    "mutants": 386,
     "notes": "All 21 non-killed mutants are equivalent or message-only. 11 change the text of a ValueError raised in _eval_decimal, which evaluate_expression always swallows (returns None). 4 are in evaluate_expression's 'if not isinstance(result, Decimal)' branch, which is unreachable (every evaluator path returns Decimal; converting a Decimal through str keeps value and exponent). In classify_operation: 'and' to 'or' in the expected-value conversion (None becomes Decimal('None'), which fails and gives None again), and two quantisation defaults ({} vs None, both falsy). In reclassify_session: 'er is not None or True' (Decimal('None') fails and gives None again), changed = None (falsy like False), and changed = True, an endless loop that mutmut reports as a timeout (the tests hang, so it is detected, but the score counts only kills).",
-    "score": 0.9425
+    "score": 0.9456
   },
   "scoring/provenance/audit": {
     "killed": 51,
