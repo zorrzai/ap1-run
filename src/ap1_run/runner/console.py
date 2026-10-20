@@ -81,6 +81,9 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
 
     # 3g. Unmeasured cells
     print(f'\n3g. UNMEASURED CELLS: {len(unmeasured_cells)}')
+    for c in unmeasured_cells:
+        print(f"  {c['item_id']}/{c['condition']}/r{c['repeat']}: "
+              f"{c['cause']}")
 
     # 3h. Invocation under both conditions. n counts computable questions
     # with an observed outcome; a question fails if any repeat is

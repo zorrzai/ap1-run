@@ -238,22 +238,22 @@ def test_execute_item_no_system_prompt_user_message_only(tmp_path, prompt):
 # -- round-0 transport failure -----------------------------------------
 
 @pytest.mark.finding('F4', 'T3-65')
-@pytest.mark.parametrize('error', [
-    adapter.RateLimitError('Rate limit reached'),
-    adapter.HTTPError('HTTP 500: server error', 500, '{}'),
-    adapter.AdapterError('connection dropped'),
-    RuntimeError('anything'),
+@pytest.mark.parametrize('error, cause', [
+    (adapter.RateLimitError('Rate limit reached'), 'rate_limited'),
+    (adapter.HTTPError('HTTP 500: server error', 500, '{}'),
+     'transport_error'),
+    (adapter.AdapterError('connection dropped'), 'transport_error'),
+    (RuntimeError('anything'), 'transport_error'),
 ], ids=['rate-limit', 'http', 'adapter', 'other'])
-def test_execute_item_first_send_fails_unmeasured(tmp_path, error):
-    # F4 / T3-65: every exception from the first send is caught here and
-    # returned as UNMEASURED, so run.py's RateLimitError/AdapterError
-    # handlers never fire on this path. Correct: either let adapter
-    # errors reach the runner, or drop the dead handlers and keep the
-    # transport-failure record (needs a ruling, TASKS T21).
+def test_execute_item_first_send_fails_unmeasured(tmp_path, error, cause):
+    # F4 / T3-65 (Steven, choices-for-marcus #7): every exception from the
+    # first send is caught here, written to the transcript and returned
+    # as UNMEASURED with its cause (a rate limit or a transport error);
+    # the runner lists the cell (runner/executions.record_not_scored).
     result, records = run(tmp_path, FakeAdapter(error))
     assert result == {'item_id': 'Q01', 'condition': 'base',
                       'status': 'UNMEASURED', 'error': str(error),
-                      'ground_truth': GT}
+                      'cause': cause, 'ground_truth': GT}
     assert [without_timestamp(r) for r in records] == [{
         'item_id': 'Q01', 'arm_id': 'base', 'condition': 'base',
         'request_sent': {'messages': INITIAL}, 'response_received': None,

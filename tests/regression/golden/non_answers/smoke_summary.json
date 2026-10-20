@@ -2826,5 +2826,54 @@
       "invocation_outcome": "INVOKED"
     }
   ],
-  "unmeasured_cells": []
+  "unmeasured_cells": [
+    {
+      "item_id": "Q01",
+      "condition": "base",
+      "repeat": 1,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q01",
+      "condition": "base",
+      "repeat": 2,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q05",
+      "condition": "base",
+      "repeat": 1,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q05",
+      "condition": "base",
+      "repeat": 2,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q01",
+      "condition": "instruction_removed",
+      "repeat": 1,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q01",
+      "condition": "instruction_removed",
+      "repeat": 2,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q05",
+      "condition": "instruction_removed",
+      "repeat": 1,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q05",
+      "condition": "instruction_removed",
+      "repeat": 2,
+      "cause": "empty response"
+    }
+  ]
 }

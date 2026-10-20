@@ -44,26 +44,26 @@ def record_underivable(findings, item_id, condition):
     })
 
 
-def record_transport_failure(findings, item_id, condition, rep, cause):
-    """The request failed (rate limit or transport error): UNMEASURED."""
-    findings.unmeasured_cells.append({
-        'item_id': item_id, 'condition': condition,
-        'repeat': rep, 'cause': cause,
-    })
-    findings.all_results.append({
-        'item_id': item_id, 'condition': condition,
-        'repeat': rep, 'status': 'UNMEASURED',
-        'cause': cause,
-    })
-
-
 def record_not_scored(findings, item_id, condition, rep, status, result):
-    """The engine returned VOID or UNMEASURED: recorded, not scored."""
+    """The engine returned VOID or UNMEASURED: recorded, not scored.
+
+    An UNMEASURED cell (a failed request, rate limited or a transport
+    error, or an empty response) is also listed among the unmeasured
+    cells with its cause (F4, T3-65); it is in no denominator.
+    """
+    cause = result.get('error', result.get('reason', ''))
+    if result.get('cause'):
+        cause = f"{result['cause']}: {cause}"
     findings.all_results.append({
         'item_id': item_id, 'condition': condition,
         'repeat': rep, 'status': status,
-        'cause': result.get('error', result.get('reason', '')),
+        'cause': cause,
     })
+    if status == 'UNMEASURED':
+        findings.unmeasured_cells.append({
+            'item_id': item_id, 'condition': condition,
+            'repeat': rep, 'cause': cause,
+        })
 
 
 def _operation_returns(tool_calls, operation):

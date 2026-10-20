@@ -99,7 +99,11 @@ def test_run_report_with_results(capsys):
         evidence_findings=[{'evidence_class': 'EV-2'},
                            {'evidence_class': 'EV-0'},
                            {'evidence_class': 'EV-2'}],
-        unmeasured_cells=[1, 2],
+        unmeasured_cells=[
+            {'item_id': 'Q04', 'condition': 'base', 'repeat': 1,
+             'cause': 'rate_limited: rate limited (HTTP 429)'},
+            {'item_id': 'Q06', 'condition': 'instruction_removed',
+             'repeat': 2, 'cause': 'empty response'}],
         transcription_results=[{'outcome': 'TRANSCRIBED-EXACT'},
                                {'outcome': 'TRANSCRIBED-EXACT'},
                                {'outcome': 'UNOBSERVABLE'},
@@ -136,6 +140,8 @@ def test_run_report_with_results(capsys):
         '  EV-0: 1\n'
         '  EV-2: 2\n'
         '\n3g. UNMEASURED CELLS: 2\n'
+        '  Q04/base/r1: rate_limited: rate limited (HTTP 429)\n'
+        '  Q06/instruction_removed/r2: empty response\n'
         '\n3h. D7.1 INVOCATION (n = questions; a question fails if any '
         'repeat is NOT-INVOKED; UNOBSERVABLE not in n):\n'
         # T3-1, T3-11: n counts questions (Q01 twice is one); Q06 and Q09
@@ -367,8 +373,6 @@ def test_run_report_3h_rate_counts_questions_not_repeats(capsys):
 
 
 @pytest.mark.finding('T3-65', 'F4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-65/F4: console 3g prints only a count')
 def test_run_report_3g_lists_each_unmeasured_cell_with_cause(capsys):
     # Correct (Steven's ruling on F4, choices-for-marcus #7): section 3g
     # names each unmeasured cell with its cause.

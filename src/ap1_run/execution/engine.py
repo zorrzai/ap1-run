@@ -14,7 +14,7 @@ Item selection (normative):
 
 import copy, json
 
-from ap1_run.foundation import transcript
+from ap1_run.foundation import adapter, transcript
 from ap1_run.execution.context import build_delivered_context, format_fixture_context
 from ap1_run.execution.evidence import (
     classify_invocation, classify_attestation,
@@ -97,9 +97,12 @@ def execute_item(item, *, condition, config, fixture,
             error_state=f'TRANSPORT_FAILURE: {e}',
             seal_hash=seal_hash, repeat=repeat,
         )
+        # F4/T3-65: the runner lists the cell with its cause
         return {
             'item_id': item_id, 'condition': condition,
             'status': 'UNMEASURED', 'error': str(e),
+            'cause': ('rate_limited' if isinstance(e, adapter.RateLimitError)
+                      else 'transport_error'),
             'ground_truth': gt,
         }
 

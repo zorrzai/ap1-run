@@ -263,9 +263,6 @@ def test_run_report_states_invocation_headline_with_k_n_and_bound(full_run):
 # -- T3-65 / F4: round-0 transport errors fill the unmeasured cells -------
 
 @pytest.mark.finding('T3-65', 'F4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-65/F4: unmeasured-cells list empty after '
-                          'round-0 transport errors')
 def test_run_round0_transport_errors_listed_as_unmeasured_cells_with_cause(
         full_run):
     """Round 0 of Q03/base/r1 is rate limited (429), of Q04/base/r1 an

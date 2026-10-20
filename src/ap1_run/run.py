@@ -56,8 +56,7 @@ from ap1_run.foundation.config import load_config
 from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.credentials import get_api_key
 from ap1_run.runner.executions import (
-    Findings, record_not_scored, record_transport_failure, record_underivable,
-    score_execution,
+    Findings, record_not_scored, record_underivable, score_execution,
 )
 from ap1_run.runner.outputs import write_outputs
 from ap1_run.runner.settings import (
@@ -253,30 +252,21 @@ def main(argv=None):
                 print(f'  {item_id}/{condition}/r{rep}: ', end='', flush=True)
 
                 # === CALL engine.execute_item — THE TESTED PATH ===
-                try:
-                    result = execute_item(
-                        item,
-                        condition=condition,
-                        config=config,
-                        fixture=fixture,
-                        ground_truth_compute=gt_module.compute,
-                        adapter_send=adapter_send,
-                        system_prompt=arm['system_prompt'],
-                        tools=arm['tools'],
-                        transcript_path=transcript_path,
-                        seal_hash=seal_hash,
-                        repeat=rep,
-                    )
-                except adapter.RateLimitError:
-                    print('RATE-LIMITED')
-                    record_transport_failure(findings, item_id, condition,
-                                             rep, 'rate_limited')
-                    continue
-                except adapter.AdapterError as e:
-                    print(f'TRANSPORT_ERROR: {e}')
-                    record_transport_failure(findings, item_id, condition,
-                                             rep, str(e))
-                    continue
+                # A failed request (rate limit or transport error) comes
+                # back UNMEASURED with its cause (F4, T3-65).
+                result = execute_item(
+                    item,
+                    condition=condition,
+                    config=config,
+                    fixture=fixture,
+                    ground_truth_compute=gt_module.compute,
+                    adapter_send=adapter_send,
+                    system_prompt=arm['system_prompt'],
+                    tools=arm['tools'],
+                    transcript_path=transcript_path,
+                    seal_hash=seal_hash,
+                    repeat=rep,
+                )
 
                 status = result.get('status', 'UNKNOWN')
                 if status in ('VOID', 'UNMEASURED'):
