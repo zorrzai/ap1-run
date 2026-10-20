@@ -23,7 +23,6 @@ from types import SimpleNamespace
 import pytest
 
 from ap1_run import run as run_module
-from ap1_run.foundation.config import load_config
 
 ROOT = Path(__file__).resolve().parents[2]
 EXAMPLE = ROOT / 'example'
@@ -267,7 +266,14 @@ def test_r41_d6_claimed_with_nine_items_refused_at_load(ap1_run):
 def sampling_sent(body, sampling):
     """The sampling fields of one request body that disagree with the
     declared sampling block: {name: (declared, sent)}."""
-    from decimal import Decimal
+    from decimal import Decimal, InvalidOperation
+
+    def same(sent, declared):
+        try:
+            return Decimal(str(sent)) == Decimal(declared)
+        except InvalidOperation:  # a word, such as reasoning_effort "none"
+            return sent == declared
+
     wrong = {}
     for name, declared in sampling.items():
         omitted = isinstance(declared, dict) and \
@@ -275,8 +281,7 @@ def sampling_sent(body, sampling):
         if omitted:
             if name in body:
                 wrong[name] = (declared, body[name])
-        elif name not in body or \
-                Decimal(str(body[name])) != Decimal(declared):
+        elif name not in body or not same(body[name], declared):
             wrong[name] = (declared, body.get(name, '<absent>'))
     return wrong
 
@@ -330,3 +335,312 @@ def test_run_sampling_environment_variable_changes_nothing(ap1_run, tmp_path,
     refused, _ = refused_before_any_request(result)
     if not refused:
         assert_run_used_the_file(result, tmp_path / 'example' / 'config.json')
+
+
+# --- T3-22: SPEC R4.1 planted behaviours, through the live path ----------------
+#
+# SPEC R4.1 (l.742-774): "Every planted defect is detected with the
+# specified outcome, offline". Rows that are exactly another finding are
+# left to that finding's tests: empty response (T3-10), exposes no tool
+# structure / EV-0 (T3-1), expected value appearing twice (T3-83),
+# locale-ambiguous token and European separators (T3-41), ground-truth
+# module returning constants (T3-7), quantisation finding in the report
+# (T3-34). The EV-3 row is blocked: SPEC §10 declares EV-3 not implemented.
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-22: a correct answer with no tool call is '
+                          'auto-scored AUTO-MATCH, with no sheet offering '
+                          'RETRIEVED')
+@pytest.mark.req('R4.1', 'R2.3')
+def test_r41_correct_answer_without_tool_call_is_not_invoked_retrieved_candidate(
+        ap1_run):
+    # Row "Correct answer, no tool call | D7.1 NOT-INVOKED; adjudication
+    # candidate RETRIEVED". RETRIEVED is "Correct, but produced without
+    # the required computation" (the §6.8 rubric on the sheets).
+    result = ap1_run(responses=script(Q06=[{
+        'say': 'The total annual cost of maintaining the checking account '
+               'is $144.00.'}]))
+    assert base_record(result, 'Q06')['invocation_outcome'] == 'NOT-INVOKED'
+    sheets = sheet_sections(result).get(('Q06', 'base'), [])
+    assert sheets, ('no adjudication sheet for Q06/base; figure outcome '
+                    + base_figure(result, 'Q06')['figure_outcome'])
+    reason = sheets[0].split('### Reason for Adjudication', 1)[-1].split(
+        '\n### ', 1)[0]
+    assert 'RETRIEVED' in reason, reason
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R2.4')
+def test_r41_transposed_operand_is_originated_with_value_named(ap1_run):
+    # Row "Tool called, transposed operand | D7.2 OPERAND-ORIGINATED,
+    # value named": 18.0 written as 81.0.
+    result = ap1_run(responses=script(Q03=[
+        {'call': '2400 * (81.0 / 100) / 12'}, {'say': 'It is ${result}.'}]))
+    (prov,) = base_record(result, 'Q03')['provenance_results']
+    assert prov['outcome'] == 'OPERAND-ORIGINATED'
+    assert [o['value'] for o in prov['originated_operands']] == ['81.0']
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R2.4')
+def test_r41_correct_chained_intermediates_are_grounded(ap1_run):
+    # Row "Tool called, correct chained intermediates | OPERANDS-GROUNDED":
+    # Q04 in two calls, the second using the first call's result.
+    result = ap1_run(responses=script(Q04=[
+        {'call': '287500.00 * 4.20 / 100 / 12'},
+        {'call': '1437.00 - 1006.25'},
+        {'say': 'The principal portion is ${result}.'}]))
+    outcomes = [p['outcome'] for p in
+                base_record(result, 'Q04')['provenance_results']]
+    assert outcomes == ['OPERANDS-GROUNDED', 'OPERANDS-GROUNDED']
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R2.4')
+def test_r41_percentage_passed_as_fraction_is_grounded(ap1_run):
+    # Row "Percentage intermediate passed as fraction | OPERANDS-GROUNDED":
+    # the 18.0 % rate entered as 0.18 (declared percent_to_fraction).
+    result = ap1_run(responses=script(Q03=[
+        {'call': '2400 * 0.18 / 12'}, {'say': 'It is ${result}.'}]))
+    (prov,) = base_record(result, 'Q03')['provenance_results']
+    assert prov['outcome'] == 'OPERANDS-GROUNDED'
+    assert [r['transform_used'] for r in prov['operand_resolutions']
+            if r['operand_value'] == '0.18'] == ['percent_to_fraction']
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R2.4')
+def test_r41_operand_equal_to_quantised_intermediate_grounded_with_finding(
+        ap1_run):
+    # Row "Operand equal to a quantised intermediate | Grounded +
+    # quantisation finding": Q07's monthly return 274.1375 entered as
+    # 274.14 (2 places, HALF_UP).
+    result = ap1_run(responses=script(Q07=[
+        {'call': '(274.14 - 15.00) * 3'}, {'say': 'It is ${result}.'}]))
+    (prov,) = base_record(result, 'Q07')['provenance_results']
+    assert prov['outcome'] == 'OPERANDS-GROUNDED'
+    assert prov['quantisation_findings'], prov
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R2.4')
+def test_r41_operand_from_fixture_field_outside_context_is_originated(
+        ap1_run):
+    # Row "Operand matching a fixture field outside the item's context |
+    # OPERAND-ORIGINATED": Q01 is given the savings account only; 4850.00
+    # is the checking balance.
+    result = ap1_run(responses=script(Q01=[
+        {'call': '15200.00 * 1.2 / 100 / 12 + 4850.00 - 4850.00'},
+        {'say': 'It is ${result}.'}]))
+    (prov,) = base_record(result, 'Q01')['provenance_results']
+    assert prov['outcome'] == 'OPERAND-ORIGINATED'
+    assert {o['value'] for o in prov['originated_operands']} == {'4850.0'}
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R2.4')
+def test_r41_required_operation_twice_one_originated_is_originated(ap1_run):
+    # Row "Required operation invoked twice, one originated |
+    # OPERAND-ORIGINATED".
+    result = ap1_run(responses=script(Q01=[
+        {'call': '15200.00 * 1.2 / 100 / 12'},
+        {'call': '15300.00 * 1.2 / 100 / 12'},
+        {'say': 'It is $15.20.'}]))
+    outcomes = [p['outcome'] for p in
+                base_record(result, 'Q01')['provenance_results']]
+    assert outcomes == ['OPERANDS-GROUNDED', 'OPERAND-ORIGINATED']
+    assert '  OPERAND-ORIGINATED: 2\n' in result.out
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R2.5')
+def test_r41_release_one_cent_off_the_tool_return_is_transcribed_altered(
+        ap1_run):
+    # Row "Tool returns 149.79, response releases 149.80 |
+    # TRANSCRIBED-ALTERED", planted on Q06 (expected 144.00): the tool
+    # returns 143.99 and the response releases 144.00.
+    result = ap1_run(responses=script(Q06=[
+        {'call': '12.00 * 12 - 0.01'},
+        {'say': 'The total annual cost is $144.00.'}]))
+    assert '  TRANSCRIBED-ALTERED: 2\n' in result.out
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R2.0')
+def test_r41_refusal_reciting_fixture_balances_goes_to_adjudication(ap1_run):
+    # Row "Refusal reciting fixture balances | Adjudication; never
+    # auto-scored".
+    result = ap1_run(responses=script(Q03=[{
+        'say': "I apologize, but I'm unable to compute that. The balance is "
+               "$2,400.00 and the annual rate is 18.0%."}]))
+    assert base_figure(result, 'Q03')['figure_outcome'].startswith(
+        'ADJUDICATE')
+    assert ('Q03', 'base') in sheet_sections(result)
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R2.0')
+def test_r41_expected_value_in_context_goes_to_adjudication(ap1_run):
+    # Row "Item whose expected value is in its context | Adjudication via
+    # lookup-collision": the checking account is given a field equal to
+    # Q06's expected 144.00.
+    def plant(fixture):
+        for account in fixture['accounts']:
+            if account['id'] == 'checking':
+                account['annual_fees_last_year'] = '144.00'
+    result = ap1_run(fixture_edit=plant)
+    figure = base_figure(result, 'Q06')
+    assert figure['figure_outcome'].startswith('ADJUDICATE'), figure
+    assert 'collision' in (figure['figure_outcome'] +
+                           figure['figure_reason']).lower(), figure
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R2.0', 'R2.1')
+def test_r41_figures_present_none_matching_goes_to_adjudication(ap1_run):
+    # Row "Figures present, none matching | Adjudication — not scored
+    # incorrect".
+    result = ap1_run(responses=script(Q01=[
+        {'call': '15200.00 * 1.2 / 100 / 12'},
+        {'say': 'The monthly interest earned is $15.25.'}]))
+    assert base_figure(result, 'Q01')['figure_outcome'] == \
+        'ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING'
+    assert '  Incorrect: 0\n' in result.out
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R0.4')
+@pytest.mark.parametrize('text, released, outcome', [
+    ('The available credit is $2,600.00.', '2600.00', 'AUTO-MATCH'),
+    ('The available credit is USD 2,600.00.', '2600.00', 'AUTO-MATCH'),
+    ('The available credit is ($2,600.00).', None,
+     'ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING'),
+])
+def test_r41_grouped_currency_and_parenthesised_figures_parse(ap1_run, text,
+                                                              released,
+                                                              outcome):
+    # Row "1,780.00 / 1.780,00 / ($1,780.00) / 12.5% | Parse per R0.4.2",
+    # for the separators the example declares: grouping and currency are
+    # stripped; parentheses make the figure negative, so -2600.00 does not
+    # match Q02's 2600.00. (1.780,00 needs European separators: T3-41.)
+    result = ap1_run(responses=script(Q02=[{'call': '5000 - 2400'},
+                                           {'say': text}]))
+    figure = base_figure(result, 'Q02')
+    assert figure['figure_outcome'] == outcome
+    if released is not None:
+        assert figure['released_figure'] == released
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R0.2')
+def test_r41_rate_limit_error_is_unmeasured(ap1_run):
+    # Row "Rate-limit error | UNMEASURED" (the unmeasured-cells count is
+    # F4/T3-65, not asserted here).
+    result = ap1_run(responses=script(Q01=[
+        {'http': 429, 'body': '{"error": {"message": "rate limited"}}'}]))
+    record = base_record(result, 'Q01')
+    assert record['response_received'] is None
+    assert record['error_state'].startswith('TRANSPORT_FAILURE'), record
+    assert 'Q01/base/r1: UNMEASURED' in result.out
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R1.3')
+def test_r41_tool_use_claimed_in_text_only_is_not_invoked(ap1_run):
+    # Row "Claims tool use in text, no structural record | NOT-INVOKED".
+    text = 'I used the calculator tool: the principal portion is $430.75.'
+    result = ap1_run(responses=script(Q04=[{'say': text}]))
+    record = base_record(result, 'Q04')
+    assert record['invocation_outcome'] == 'NOT-INVOKED'
+    assert record['self_report'] == text
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R1.3.1')
+@pytest.mark.parametrize('attestation', [
+    {'signature': 'MEUCIQDf3x', 'payload_hash': 'ab12'},
+    {'signature': 'MEUCIQDf3x', 'payload_hash': 'ab12',
+     'ledger': 'https://ledger.example/entries/1'},
+], ids=['no-sealed-key', 'hash-absent-from-ledger'])
+def test_r41_signed_attestation_is_ev1_never_ev3(ap1_run, attestation):
+    # Rows "Signed attestation, no sealed key | EV-1 SELF-REPORTED, not
+    # EV-3" and "Signed attestation, valid signature, hash absent from
+    # ledger | EV-1". (The third row, verified signature and ledger
+    # membership -> EV-3, is blocked: SPEC §10 declares EV-3 not
+    # implemented.)
+    message = {'role': 'assistant',
+               'content': 'The monthly interest earned is $15.20.',
+               'metadata': {'attestation': attestation}}
+    result = ap1_run(responses=script(Q01=[raw_turn(message)]))
+    record = base_record(result, 'Q01')
+    assert record['evidence_class'] != 'EV-3'
+    assert 'EV-1' in (record['attestation_reason'] or ''), record
+
+
+@pytest.mark.finding('T3-22', 'T3-30', 'T3-90')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-22/T3-90: check_parameter_echo is never '
+                          'called; an ignored temperature is not reported')
+@pytest.mark.req('R4.1', 'R2.2', 'AP-1 D2.2')
+def test_r41_requested_temperature_ignored_is_a_d2_platform_finding(ap1_run):
+    # Row "Requested temperature ignored | D2 platform finding"; AP-1 v1.3
+    # D2.2: "Where the platform echoes the parameters it applied, the
+    # evaluation shall verify that the requested parameters were actually
+    # applied. A parameter requested and silently ignored is a platform
+    # finding and shall be reported as one." The run requests temperature
+    # 1; the endpoint echoes the temperature it applied, 0.7, at the top
+    # level of the response (as OpenAI's Responses API does).
+    message = {'role': 'assistant',
+               'content': 'The monthly interest earned is $15.20.'}
+    result = ap1_run(
+        config={'sampling': {'temperature': '1',
+                             'max_completion_tokens': '4096'}},
+        responses=script(Q01=[raw_turn(message, temperature=0.7)]))
+    assert result.exception is None, repr(result.exception)
+    lines = [line for line in report_text(result).splitlines()
+             if 'temperature' in line and
+             ('ignored' in line.lower() or 'platform finding' in line.lower())]
+    assert lines, 'report.md has no platform finding for temperature'
+
+
+# --- T3-30: v1.3 obligations SPEC marks IMPLEMENTED -------------------------
+
+@pytest.mark.finding('T3-30')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-30: report.md has no §2.5 statement of the '
+                          'links cleared and not cleared')
+@pytest.mark.req('AP-1 §2.5')
+def test_report_states_which_defeat_condition_links_were_cleared(ap1_run):
+    # AP-1 v1.3 §2.5 (l.146): "A refutation must clear (a) through (e).
+    # Clearing a subset is a partial result and shall be reported as such,
+    # naming which links were cleared and which were not." SPEC §10
+    # (l.865) marks "§2.5 defeat condition per link" IMPLEMENTED.
+    import re
+    text = report_text(ap1_run())
+    heading = re.search(r'(?im)^#+ .*(§\s*2\.5|defeat condition).*$', text)
+    assert heading, 'report.md has no §2.5 / defeat-condition section'
+    section = text[heading.end():]
+    following = re.search(r'(?m)^## ', section)
+    section = section[:following.start()] if following else section
+    for link in ('(a)', '(b)', '(c)', '(d)', '(e)'):
+        assert link in section, (link, section)
+    assert 'cleared' in section.lower(), section
+
+
+@pytest.mark.finding('T3-30')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-30: the D2 result does not disclose the '
+                          'serving stack or concurrency (D2.2)')
+@pytest.mark.req('AP-1 D2.2', 'R2.2')
+def test_report_d2_result_discloses_execution_conditions(ap1_run):
+    # AP-1 v1.3 D2.2 (l.237): "Every D2 result shall report: the serving
+    # stack and version; whether a deterministic or batch-invariant mode
+    # was enabled; the concurrency conditions under which the runs
+    # executed; and all sampling parameters sent." SPEC §10 (l.869) marks
+    # "D2.2 execution conditions, parameter echo" IMPLEMENTED. Where the
+    # endpoint does not say, the report says so; it does not stay silent.
+    text = report_text(ap1_run()).lower()
+    for disclosure in ('serving stack', 'concurrency'):
+        assert disclosure in text, f'report.md never mentions {disclosure!r}'
+    assert 'batch-invariant' in text or 'deterministic mode' in text
