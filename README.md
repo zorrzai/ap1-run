@@ -42,9 +42,16 @@ answer:
 against the source values and the legitimate intermediates of a reference
 derivation.
 
-D3, D4, D5 and D6 are all scored by human adjudication. The instrument enforces
-the minimum-item counts for D5 and D6 at load, and generates adjudication sheets
-for all four, but scores none of them.
+D3, D4, D5 and D6 are all scored by human adjudication. The instrument
+generates adjudication sheets for all four, but scores none of them.
+
+**Minimum n is enforced at load.** For each dimension in `dimensions_claimed`,
+the runner counts the eligible items of the question set and refuses the run,
+before any request, where the count is below the declared AP-1 version's
+minimum: D1 needs 40 items and 10 in every category; D5 counts items with an
+`adversarial_class` (v1.3: 20, v1.2: 5) and D6 items with a `conflict_class`
+(v1.3: 10, v1.2: 1). The shipped example has 10 items, so its configs claim
+D2 and D7 only, and the report declares D1 not measured.
 
 ### The finding it exists to surface
 
@@ -119,11 +126,31 @@ python tests/regression/run_regression.py   # the regression baseline, about 30 
 python tests/mutation/run_mutation.py       # mutation scores, against tests/mutation/scores.json
 ```
 
-Then run the worked example against your own endpoint:
+Then run the worked example against your own endpoint. Every setting comes
+from the config file, the endpoint and model included; the environment
+supplies only the API key. `example/config.json` points at
+`http://localhost:8080` with a placeholder model, so set its `endpoint_url`
+and `model` (or give your own config with `--config`). Each published model
+has its own config file:
+
+| config | model | published runs |
+|---|---|---|
+| `example/config.json` | placeholder (`example-model-v1` at `localhost:8080`) | none: the generic example |
+| `example/config_mini.json` | `gpt-4.1-mini`; temperature 1, no `reasoning_effort` | `run_e_mini` |
+| `example/config_sol.json` | `gpt-5.6-sol`; temperature omitted (platform-rejected), `reasoning_effort` none | `run_f_sol` |
+
+The September runs were made with `example/config.json` and environment
+overrides (see [`docs/REPRODUCING.md`](docs/REPRODUCING.md)); the two model
+files hold the settings those runs sealed (their `report.md` §2), except
+`dimensions_claimed`, which is now D2 and D7 (minimum n, above). The August
+runs `run_a_mini` and `run_b_sol` sealed different sampling settings, recorded
+in their own `report.md` §2; no file reproduces them.
 
 ```bash
 export AP1_SMOKE_API_KEY=<key>
 ap1-run                       # or: python smoke_test.py
+ap1-run --config example/config_mini.json
+ap1-run --config example/config_sol.json
 ```
 
 `python smoke_test.py` still works, even without the install step: it is a
@@ -140,8 +167,12 @@ ap1-run --config my/config.json \
 ```
 
 `--fixture-dir` holds `fixture.json`, `questions.json` and
-`ground_truth_example.py`. The AP-1 text must be the one the seal expects. The
-runner still takes its version and source hash from the clone, so run it from
+`ground_truth_example.py`. Without `--ap1-text`, the runner seals the AP-1
+text of the config's `ap1_version` from `reference/`: the v1.3 draft for
+`v1.3` (or `v1.3-<qualifier>`), the v1.2 text for `v1.2`. The config's
+`ap1_text_hash` must be that text's hash, and a run that labels one version's
+text with another version is refused. Another version needs `--ap1-text`.
+The runner still takes its version and source hash from the clone, so run it from
 a clone (an editable install), not from a wheel.
 
 ### Two passes: running, then scoring
@@ -169,9 +200,11 @@ ap1-run --rescore runs/today/smoke_run.jsonl \
 ```
 
 Give the run's own config and fixture directory; `pre_registration.json` must
-be beside the transcript. The re-scorer refuses inputs that do not hash to the
-values sealed for the run, naming the mismatch, and a transcript of another
-run. It writes the four scoring outputs to `--output-dir`, which must not be
+be beside the transcript. Before scoring, the re-scorer verifies the run's seal
+against the inputs given (the config, the fixture, questions and ground-truth
+files, and the expected values, computed again), and refuses any mismatch,
+naming it, as well as a transcript of another run. It scores against the
+sealed expected values, as the run does. It writes the four scoring outputs to `--output-dir`, which must not be
 the transcript's directory. Re-scoring a finished run gives back its
 `smoke_summary.json`, `report.md` and adjudication sheets. Re-scoring the
 partial transcript of an interrupted run reports the executions it never
@@ -380,7 +413,9 @@ additionally requires those.
 
 **The standard text is sealed.** `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` is
 hashed into the pre-registration record, and a run declaring a mismatched hash
-is refused.
+is refused. `reference/` also holds the v1.2 text
+(`AP-1_Admissibility_Protocol_v1.2.md`, as published in the standard
+repository), which a run declaring `ap1_version` `v1.2` seals.
 
 AP-1 v1.3: [10.5281/zenodo.21755443](https://doi.org/10.5281/zenodo.21755443) ·
 concept DOI [10.5281/zenodo.21324954](https://doi.org/10.5281/zenodo.21324954) ·
@@ -405,7 +440,7 @@ src/ap1_run/
     scoring_pass.py          the scoring pass: scores a run from its transcript, read-only
     executions.py            scores each execution and collects the findings
     outputs.py               writes report.md, the adjudication sheets and the summary
-    settings.py              endpoint, model and sampling overrides; the R1.2 guard
+    settings.py              endpoint, model, the sampling printout; the R1.2 guard
     summary.py               invocation consistency check, D2 per item, the summary report.py reads
   foundation/                SPEC Layer 0
     config.py                configuration; refuses defaults that affect a result
@@ -414,8 +449,10 @@ src/ap1_run/
     numeric.py               Decimal arithmetic, token grammar, canonical hashing
   execution/                 SPEC Layer 1
     seal.py                  pre-registration: hash and timestamp before any request
+    sealed_inputs.py         reads each sealed input once; the expected values
+    ap1_texts.py             the AP-1 text of each version
     seal_constants.py        declared-constant checks on the ground-truth module
-    version.py               runner version and source hash
+    version.py               runner version, source hash and environment
     engine.py                execution loop; writes every round to the transcript, scores nothing
     context.py               delivered-context construction
     perturbation_guard.py    refuses a condition that varies more than one quantity
@@ -457,7 +494,7 @@ docs/                        build specification (SPEC.md), KNOWN_ISSUES.md,
                              RELATED_WORK_REVIEW.md, REPRODUCING.md, the publisher's comments
 findings/                    FINDINGS.md (generated from FINDINGS.template.md), FINDINGS_ERRATA.md
 example/                     a worked fixture, questions, ground truth and config
-reference/                   the sealed AP-1 text
+reference/                   the sealed AP-1 texts (v1.3 draft, v1.2)
 ```
 
 Instrument modules are kept at or under 300 lines so a reviewer can read
@@ -497,12 +534,12 @@ sealed against, see [`docs/REPRODUCING.md`](docs/REPRODUCING.md).
 
 ## Verifying a run's seal
 
-The pre-registration seal (§5.3) binds the **resolved** configuration —
-after environment variables have been written into the config dict — not
-the config file on disk. The on-disk `example/config.json` and
-`example/config_mini.json` contain placeholder values for `model` and
-`endpoint_url` that are overwritten at runtime by `AP1_SMOKE_MODEL` and
-`AP1_SMOKE_ENDPOINT` (see `src/ap1_run/run.py` L352-370).
+The pre-registration seal (§5.3) binds the configuration the run used, as
+`report.md` §2 records it. The runner now takes every setting from the
+config file it is given, adding only its own version fields. The published
+runs were made before that: the runner wrote the model, the endpoint and
+(for the mini runs) two sampling settings from environment variables into
+the config after loading it, so no file in `example/` matches their seal.
 
 To verify a run's seal:
 
@@ -512,13 +549,30 @@ python tools/verify_run_seal.py output/run_b_sol
 ```
 
 This reads the seal record from `report.md` §1 and the resolved
-configuration from `report.md` §2, then recomputes and compares all five
-component hashes and the composite `seal_hash`. It reports each check
-individually and exits non-zero if any check fails.
+configuration from `report.md` §2, then recomputes and compares the
+component hashes and the composite `seal_hash`, checks that every line of the
+transcript (`smoke_run.jsonl`, which must be there) carries that `seal_hash`,
+and that the seal is dated no later than the first transcript record. For a
+record with `seal_format` it also checks that the record holds every sealed
+field, recomputes the expected values by running the ground-truth module, and
+compares `runner_source_hash` with this checkout's code (so verify a run from a
+checkout of its `runner_version_commit`). It reports each comparison
+individually, PASS or FAIL; what it cannot check, or should tell you (a record
+made before October 2026, `runner_modified: true`), is a WARN, never a PASS.
+It exits non-zero if any check fails.
 
-**Do not** hash `example/config.json` directly — it will not match the
-sealed `config_hash` because it contains the placeholder model, not the
-runtime model. This is expected behaviour, not a failure.
+The inputs are read from `example/` and the AP-1 text from `reference/` (the
+text of the run's `ap1_version`). For a run made with other inputs, give the
+verifier the runner's own options: `--fixture-dir` and `--ap1-text`. Paths
+are taken from the working directory.
+
+**Verifying a run executes the operator's ground-truth module**
+(`ground_truth_example.py` in the fixture directory), as the run did, to
+recompute the expected values; verify only runs whose inputs you would run.
+
+The verifier never consults a config file on disk. For the published runs,
+hashing `example/config.json` or `example/config_mini.json` directly will
+not match the sealed `config_hash`; that is expected, not a failure.
 
 **Ground truth module.** `example/ground_truth_example.py` has been
 modified since both published runs. The sealed `ground_truth_hash` no
@@ -527,11 +581,28 @@ longer matches the current file. Erratum E3 in
 declared in Q07's derivation metadata but never used in the computation.
 The correction was made for cause; the sealed state is not restored.
 The verifier reports this mismatch with the E3 reference and exits
-non-zero.
+non-zero. For the September seals the cause is line endings only
+(FINDINGS_ERRATA N2), and the verifier says so. Any other ground-truth
+mismatch is reported without a note.
 
-**Line endings.** `file_hash()` hashes raw bytes. `.gitattributes` forces
-LF on all sealed files; the sealed hashes were computed against LF bytes
-and reproduce on any platform.
+**Line endings.** Since October 2026 the fixture, the questions and the
+ground-truth module are hashed with LF line endings and without a UTF-8
+byte-order mark, so the same text gives the same hash on every platform and
+in every editor (an LF file without a BOM hashes as its raw bytes). The AP-1
+text is hashed as raw bytes: it must equal the publisher's deposit byte for
+byte. Seals made before then
+(the published runs) hashed raw bytes, and their ground-truth module was
+hashed with CRLF line endings (FINDINGS_ERRATA N2); the verifier checks such
+a record under those rules.
+
+**What a seal binds.** Since October 2026 a record (`seal_format` 2) also
+binds the run's timestamp, the expected values (what the ground-truth module
+returned for each item, computed before the seal and scored against), and
+the environment: `python_version`, `platform` and `package_versions`, which
+are outside `runner_source_hash`. A run refuses to seal without the AP-1 text
+and a declared hash for it. Before the first request, and again before it
+reports, the run verifies its seal against its inputs and refuses, naming the
+input, if any has changed.
 
 | Hash | Source | Proves |
 |------|--------|--------|
@@ -539,6 +610,7 @@ and reproduce on any platform.
 | `fixture_hash` | `example/fixture.json` | Financial data unchanged |
 | `questions_hash` | `example/questions.json` | Question set unchanged |
 | `ground_truth_hash` | `example/ground_truth_example.py` | Ground-truth module unchanged (see E3) |
+| `expected_values_hash` | the ground-truth module's results | Expected values as scored (records with `seal_format` only) |
 | `ap1_text_hash` | `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` | AP-1 standard text unchanged |
 | `seal_hash` | All of the above | Composite integrity |
 

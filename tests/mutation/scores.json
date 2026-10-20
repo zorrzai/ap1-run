@@ -1,32 +1,38 @@
 {
+  "execution/ap1_texts": {
+    "killed": 46,
+    "mutants": 46,
+    "notes": "New in step 5 (seal-verifier-hardening, V12-4). No survivors.",
+    "score": 1.0
+  },
   "execution/context": {
     "killed": 93,
     "mutants": 93,
     "score": 1.0
   },
   "execution/engine": {
-    "killed": 595,
-    "mutants": 619,
-    "notes": "All 24 survivors are equivalent or unreachable. Three pass tool_calls=None instead of [] in the VOID, transport-failure and empty-response (T3-10) records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Two drop the f'call_{turn}' default for a missing tool-call id and three change the '' default of tool_call_id in the tool message: a call without an id raises EngineError on the return-value lookup right after (S3-G2-2), so neither default is ever observed. Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). Two change the [] default of choices in _extract_tool_calls to None: both falsy, both give []. (Step 5 raw-response-preservation, T3-21: D7.2 scoring moved out of the engine, to runner/executions.py score_d72, with its killed mutants, and the rounds and EV-0 cause were added; the score went from 621/645 = 0.9628 to 595/619 = 0.9612 with the same 24 survivors.)",
-    "score": 0.9612
+    "killed": 610,
+    "mutants": 627,
+    "notes": "All 17 survivors are equivalent or unreachable. Three pass tool_calls=None instead of [] in the VOID, transport-failure and empty-response (T3-10) records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so its shape was read and choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). [Re-recorded on the merge of raw-response-preservation with sjl/step5/integration 4ed5045: the same 17 survivors.]",
+    "score": 0.9729
   },
   "execution/evidence": {
-    "killed": 216,
-    "mutants": 224,
-    "notes": "All 8 survivors are equivalent. Six replace a .get() default by None or no default where the value is then only tested for truth or replaced by '' when falsy: 'content' in _extract_content, 'choices' and 'metadata' in extract_attestation (two mutants each). One makes the accumulated_tool_calls test always true: tc is then None instead of [], both falsy, so the final-response fallback and NOT-INVOKED follow the same way. One changes ranks_above's default rank for an unknown first argument from -1 to -2; an unknown first argument never ranks above anything either way.",
-    "score": 0.9643
+    "killed": 201,
+    "mutants": 205,
+    "notes": "All 4 survivors are equivalent. Two replace the 'content' default of message.get in _extract_content by None or no default: the value is replaced by '' when falsy. One makes the accumulated_tool_calls test always true: tc is then None instead of [], both falsy, so the final-response fallback and NOT-INVOKED follow the same way. One changes ranks_above's default rank for an unknown first argument from -1 to -2; an unknown first argument never ranks above anything either way.",
+    "score": 0.9805
   },
   "execution/perturbation_guard": {
-    "killed": 149,
-    "mutants": 181,
+    "killed": 164,
+    "mutants": 196,
     "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is only ever returned empty. _summarise itself is tested directly. (Step 5 seal-gt-guards, T3-46: identical prompts now raise, and the identical-prompt diff entry is gone; its 14 mutants were all killed, so removing them lowered the score from 163/195 = 0.8359 to 149/181 = 0.8232 with the same 32 survivors.)",
-    "score": 0.8232
+    "score": 0.8367
   },
   "execution/seal": {
-    "killed": 397,
-    "mutants": 402,
-    "notes": "All 5 survivors are equivalent. 1 sets perturbed_any = None instead of False in perturbation_check: both are falsy, and the flag is only ever tested for truth. 4 replace the '' default of ap1_version_doi in verify_seal with None or no default, which is falsy like '' and skips the DOI check the same way. (Step 5 seal-gt-guards: the failure dicts no longer carry a 'field' key, which nothing read; every failure's item and reason are in the SealError message, S3-G3-3.)",
-    "score": 0.9876
+    "killed": 485,
+    "mutants": 486,
+    "notes": "The 1 survivor is equivalent: it sets perturbed_any = None instead of False in perturbation_check: both are falsy, and the flag is only ever tested for truth. (Step 5 seal-gt-guards: the failure dicts no longer carry a 'field' key, which nothing read; every failure's item and reason are in the SealError message, S3-G3-3.) (Step 5 seal-verifier-hardening: seal() and verify_seal() rewritten for the format-2 record (T3-15, T3-17, T3-47, T3-48, T3-50, T3-68, T3-72, F2); the 4 old DOI-default survivors are killed by test_verify_seal_record_without_doi_named_once.)",
+    "score": 0.9979
   },
   "execution/seal_constants": {
     "killed": 173,
@@ -34,59 +40,65 @@
     "notes": "No survivors. (Step 5 seal-gt-guards rewrote the check: failures are message strings, so the old survivors, renames of an unread 'reason' key, are gone. Legacy suites verify_d72b.py + verify_e7_coverage.py scored 0.7549 on the pre-step-5 mutants.)",
     "score": 1.0
   },
+  "execution/sealed_inputs": {
+    "killed": 100,
+    "mutants": 107,
+    "notes": "New in step 5 (seal-verifier-hardening, T3-48/T3-72). All 7 survivors are equivalent. One decodes the JSON inputs as 'UTF-8-SIG', the same codec. Three change the message of the OSError path_stats raises, which importlib catches and never shows. Two pass location None or no location to spec_from_file_location: it then takes the location from the loader's get_filename, the same path. One pops the module from sys.modules without a default: it is always there at that point (load_ground_truth put it there).",
+    "score": 0.9346
+  },
   "execution/version": {
-    "killed": 155,
-    "mutants": 167,
-    "notes": "All 12 survivors are equivalent. Three touch dead code: the local 'modified' (False to None or True) and the first 'result = {}' are assigned and never read. Three change the unreachable else of 'parts[0] if parts else ...' (a stripped non-empty line always splits into at least one part). Five change how VERSION is opened or a path is encoded: 'UTF-8' is the same codec; no 'r', no encoding or encoding=None mean the locale's, UTF-8 on macOS and Linux. One opens 'version' instead of 'VERSION', which macOS's case-insensitive file system finds anyway. No legacy suite imports version.py (0 % legacy coverage); the regression scenarios run it end to end.",
-    "score": 0.9281
+    "killed": 171,
+    "mutants": 183,
+    "notes": "All 12 survivors are equivalent. Three touch dead code: the local 'modified' (False to None or True) and the first 'result = {}' are assigned and never read. Three change the unreachable else of 'parts[0] if parts else ...' (a stripped non-empty line always splits into at least one part). Five change how VERSION is opened or a path is encoded: 'UTF-8' is the same codec; no 'r', no encoding or encoding=None mean the locale's, UTF-8 on macOS and Linux. One opens 'version' instead of 'VERSION', which macOS's case-insensitive file system finds anyway. (Step 5 seal-verifier-hardening: the source hash covers src/ap1_run/ and VERSION only, F2/T3-70, and a VERSION commit under 7 characters marks the runner modified, S3-G3-2; the 12 survivors are the same ones; runner_environment, F2, has none.) No legacy suite imports version.py (0 % legacy coverage); the regression scenarios run it end to end.",
+    "score": 0.9344
   },
   "foundation/adapter": {
-    "killed": 167,
-    "mutants": 173,
-    "notes": "All 6 survivors are unobservable: they change the two request_record['attempts'] stores made just before raising (after the last transport failure, and the unreachable 'exhausted retries' path). That record is never returned or attached to the exception, so no caller can see it (finding S3-G1-18); the fix will make these mutants killable. The tests replace requests.post, time.sleep and time.time with fakes; the real HTTP path is covered by the regression scenarios against the mock endpoint.",
-    "score": 0.9653
+    "killed": 180,
+    "mutants": 183,
+    "notes": "All 3 survivors change the request_record['attempts'] store on the unreachable 'exhausted retries' path after the loop (every iteration returns or raises). Step 5 numeric-hardening (S3-G1-18): the record of a transport failure on every attempt is now attached to the AdapterError as request_record, so the mutants of that store, survivors before, are killed. The tests replace requests.post, time.sleep and time.time with fakes; the real HTTP path is covered by the regression scenarios against the mock endpoint.",
+    "score": 0.9836
   },
   "foundation/config": {
-    "killed": 215,
-    "mutants": 223,
+    "killed": 272,
+    "mutants": 280,
     "notes": "All 8 survivors are equivalent. Four change how config.json is opened: 'UTF-8' is the same codec, no 'r' is the default mode, and encoding None or no encoding means the locale's, which is UTF-8 on macOS and Linux (the tests load a non-ASCII config; on Windows these would be killed). Four change the .get() default for 'sampling' and 'quantisation' ({} to None or no default): both are required fields, checked present just before, so the default is never used.",
-    "score": 0.9641
+    "score": 0.9714
   },
   "foundation/numeric": {
-    "killed": 299,
-    "mutants": 323,
-    "notes": "All 24 survivors are equivalent or unkillable. parse_decimal (7): is_neg=None is falsy like False; decimal_sep != 'XX.XX' only replaces '.' by '.'; the inner sign test 'XX-\\u2212XX' only differs for 'X', which the outer test never lets through; sorting leading currency symbols by key=None or no key (4) is reverse alphabetical, and for startswith a symbol can only shadow another it is a prefix of, which sorts first either way. _build_extraction_re (2): key=None or no key for the alternation order is likewise equivalent (the regex backtracks; only a prefix can shadow). extract_numeric_tokens (9): currency_symbols=None reaches the same empty handling; finditer returns non-overlapping matches in order, so the dedup sort key (5 mutants) and last_end=-2 change nothing; every match contains a digit, so the 'no digits' guard and its continue->break (2) are unreachable. canonical_json ensure_ascii=None is falsy like False; canonical_hash 'UTF-8' is the same codec. file_hash (4): read(None) and read(8193) give the same digest; sentinel None or b'XXXX' never matches b'' and loops forever, which mutmut reports as a timeout.",
-    "score": 0.9257
+    "killed": 432,
+    "mutants": 456,
+    "notes": "All 24 survivors are equivalent or unkillable. parse_decimal (7): is_neg=None is falsy like False; decimal_sep != 'XX.XX' only replaces '.' by '.'; the inner sign test 'XX-\\u2212XX' only differs for 'X', which the outer test never lets through; sorting leading currency symbols by key=None or no key (4) is reverse alphabetical, and for startswith a symbol can only shadow another it is a prefix of, which sorts first either way. _build_extraction_re (2): key=None or no key for the alternation order is likewise equivalent (the regex backtracks; only a prefix can shadow). extract_numeric_tokens (9): currency_symbols=None reaches the same empty handling; finditer returns non-overlapping matches in order, so the dedup sort key (5 mutants) and last_end=-2 change nothing; every match contains a digit, so the 'no digits' guard and its continue->break (2) are unreachable. canonical_json ensure_ascii=None is falsy like False; canonical_hash 'UTF-8' is the same codec. file_hash (4): read(None) and read(8193) give the same digest; sentinel None or b'XXXX' never matches b'' and loops forever, which mutmut reports as a timeout. (Step 5 numeric-hardening: parse_decimal's R0.4.2 grammar check, quantise's places check, DECIMAL_CONTEXT, the operator reading of a sign after a number and _matches_inside_words added 132 mutants, all killed; the 'no digits' guard stays unreachable, as the token left after an operator always has digits.)",
+    "score": 0.9474
   },
   "foundation/transcript": {
-    "killed": 67,
-    "mutants": 75,
+    "killed": 78,
+    "mutants": 86,
     "notes": "All 8 survivors are equivalent. Seven change how run.jsonl is opened ('UTF-8' is the same codec; no 'r' is the default mode; encoding None or none given means the locale's, UTF-8 on macOS and Linux, so the non-ASCII round trip passes; on Windows these would be killed). One passes ensure_ascii=None, falsy like False.",
-    "score": 0.8933
+    "score": 0.907
   },
   "reporting/adjudication": {
-    "killed": 530,
-    "mutants": 545,
+    "killed": 557,
+    "mutants": 572,
     "notes": "All 15 survivors are equivalent. One changes _needs_adjudication's figure_outcome default '' to 'XXXX', which is neither ADJUDICATE* nor UNMEASURABLE either. Two pass fixture=None and config=None to _generate_one_sheet, which never reads either parameter. Twelve replace a .get() default ([] or {} or '') by None or no default, falsy alike: account_map, tool_calls, operation_correctness, ungoverned_figures, choices and message content.",
-    "score": 0.9725
+    "score": 0.9738
   },
   "reporting/report": {
-    "killed": 1758,
-    "mutants": 1804,
-    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Integrator, step 5: re-recorded after merging the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after the merge.] [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
-    "score": 0.9745
+    "killed": 1845,
+    "mutants": 1891,
+    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Integrator, step 5: re-recorded after merging the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after the merge.] [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.] [spec-conformance-claims merge: 46 survivors, none in the new section 9b (_section_d2_conditions).]",
+    "score": 0.9757
   },
   "run": {
-    "killed": 432,
-    "mutants": 443,
-    "notes": "All 11 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. (Step 5 raw-response-preservation, T3-21: the scoring half of main() moved to runner/scoring_pass.py, with the four 'UNKNOWN' status-default survivors.)",
-    "score": 0.9752
+    "killed": 429,
+    "mutants": 431,
+    "notes": "Both survivors are equivalent. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. One passes ctx=None to the sealed ground-truth compute, which returns the sealed value of the item and ignores the context. (Step 5 raw-response-preservation, T3-21: the scoring half of main() moved to runner/scoring_pass.py, with the four 'UNKNOWN' status-default survivors; re-recorded on the merge with sjl/step5/integration 4ed5045.)",
+    "score": 0.9954
   },
   "runner/console": {
-    "killed": 533,
-    "mutants": 534,
+    "killed": 557,
+    "mutants": 558,
     "notes": "The one survivor is equivalent: it changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
-    "score": 0.9981
+    "score": 0.9982
   },
   "runner/credentials": {
     "killed": 116,
@@ -95,10 +107,10 @@
     "score": 0.9915
   },
   "runner/executions": {
-    "killed": 663,
-    "mutants": 664,
-    "notes": "The one survivor is equivalent: 'and' to 'or' in _operation_returns' result check only lets values through that then raise inside the try (a dict without 'result' raises KeyError), which the except turns into the same skipped call. (Step 5 raw-response-preservation, T3-21: the figure record and its tool_calls=None survivor are gone; score_d72, result_from_record, record_not_run and as_recorded added, all their mutants killed.)",
-    "score": 0.9985
+    "killed": 794,
+    "mutants": 796,
+    "notes": "Both survivors are equivalent. 'and' to 'or' in _operation_returns' result check only lets values through that then raise inside the try (a dict without 'result' raises KeyError), which the except turns into the same skipped call. In result_from_record, the '' default of a missing error_state changed to 'XXXX' does not start with TOOL_LOOP_EXHAUSTED either. (Step 5 raw-response-preservation, T3-21: the figure record is gone; score_d72, result_from_record, record_not_run and as_recorded added. Re-recorded on the merge with sjl/step5/integration 4ed5045.)",
+    "score": 0.9975
   },
   "runner/outputs": {
     "killed": 182,
@@ -107,21 +119,22 @@
     "score": 0.9333
   },
   "runner/scoring_pass": {
-    "killed": 316,
-    "mutants": 316,
+    "killed": 293,
+    "mutants": 293,
     "notes": "No survivors. (New in step 5 raw-response-preservation, T3-21: the scoring pass, moved out of run.py main().)",
     "score": 1.0
   },
   "runner/settings": {
-    "killed": 279,
-    "mutants": 279,
+    "killed": 214,
+    "mutants": 214,
+    "notes": "(Step 5 seal-verifier-hardening, V12-4: --ap1-text has no default path; the text comes from the version table.) [Merge with spec-conformance-claims, which removed the environment endpoint/model and the sampling overrides: 196/196.]",
     "score": 1.0
   },
   "runner/summary": {
-    "killed": 711,
-    "mutants": 722,
+    "killed": 753,
+    "mutants": 764,
     "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default. [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
-    "score": 0.9848
+    "score": 0.9856
   },
   "scoring/accuracy": {
     "killed": 149,
@@ -134,22 +147,22 @@
     "score": 1.0
   },
   "scoring/figure_id": {
-    "killed": 144,
-    "mutants": 158,
+    "killed": 165,
+    "mutants": 179,
     "notes": "All 14 survivors are in unreachable code: the defensive 'if len(matched) == 0 and len(tokens) == 0' block after the match loop (two mutants of the condition, twelve of the returned dict). An empty token list already returns AUTO-NO-FIGURE above, so tokens is never empty there; the legacy suites do not reach it either.",
-    "score": 0.9114
+    "score": 0.9218
   },
   "scoring/invocation": {
-    "killed": 178,
-    "mutants": 179,
-    "notes": "The one survivor is equivalent: it changes the '#' in the key ('#', i) that _summarise_class gives a record without an item_id; any tuple key is distinct from every item_id string and from the other records' keys. The module-level getcontext().prec = 50 is not mutated by mutmut; test_invocation_import_sets_global_decimal_precision_to_50 pins it (T3-60).",
-    "score": 0.9944
+    "killed": 193,
+    "mutants": 194,
+    "notes": "The one survivor is equivalent: it changes the '#' in the key ('#', i) that _summarise_class gives a record without an item_id; any tuple key is distinct from every item_id string and from the other records' keys. (Step 5 numeric-hardening, T3-60: the module no longer sets the global Decimal precision on import; format_rate, _exact_upper_bound and compute_dpr compute in numeric.DECIMAL_CONTEXT, and the mutants replacing it are killed.)",
+    "score": 0.9948
   },
   "scoring/operation_correctness": {
-    "killed": 361,
-    "mutants": 382,
+    "killed": 365,
+    "mutants": 386,
     "notes": "All 21 non-killed mutants are equivalent or message-only. 11 change the text of a ValueError raised in _eval_decimal, which evaluate_expression always swallows (returns None). 4 are in evaluate_expression's 'if not isinstance(result, Decimal)' branch, which is unreachable (every evaluator path returns Decimal; converting a Decimal through str keeps value and exponent). In classify_operation: 'and' to 'or' in the expected-value conversion (None becomes Decimal('None'), which fails and gives None again), and two quantisation defaults ({} vs None, both falsy). In reclassify_session: 'er is not None or True' (Decimal('None') fails and gives None again), changed = None (falsy like False), and changed = True, an endless loop that mutmut reports as a timeout (the tests hang, so it is detected, but the score counts only kills).",
-    "score": 0.945
+    "score": 0.9456
   },
   "scoring/provenance/audit": {
     "killed": 51,
@@ -168,26 +181,26 @@
     "score": 1.0
   },
   "scoring/release_coverage": {
-    "killed": 109,
-    "mutants": 112,
+    "killed": 110,
+    "mutants": 113,
     "notes": "All 3 survivors are equivalent. They change the default of tc.get('return_value', '') to None, to no default (also None) or to 'XXXX': None is falsy like '' and is skipped by the same 'if not rv', and 'XXXX' fails json.loads, whose JSONDecodeError is caught, so the call is skipped either way.",
-    "score": 0.9732
+    "score": 0.9735
   },
   "scoring/reproducibility": {
-    "killed": 207,
-    "mutants": 215,
-    "notes": "All 8 survivors are equivalent. Each is in _extract_surface_values and replaces a .get() default with None or drops it (also None): r.get('choices', []) on the figures and the prose surface (4), and .get('content', '') on both surfaces (4). None is falsy like [] and '', and every use is guarded by 'if choices:' or followed by \"or ''\", so the value is the same.",
-    "score": 0.9628
+    "killed": 182,
+    "mutants": 186,
+    "notes": "All 4 survivors are equivalent. Each is in _extract_surface_values and replaces the .get('content', '') default by None or drops it (also None), on the figures and the prose surface: the value is followed by \"or ''\", so it is the same.",
+    "score": 0.9785
   },
   "scoring/rescore": {
-    "killed": 156,
-    "mutants": 171,
-    "notes": "All 15 survivors are equivalent here. Twelve drop or change encoding='utf-8' when pre_registration.json is written or read and when fixture.json and questions.json are read: 'UTF-8' is the same codec, and None or no argument means the locale's, UTF-8 on macOS and Linux. One passes ensure_ascii=None, falsy like False. Two upper-case 'fixture.json' and 'questions.json', which macOS's case-insensitive file system finds anyway. (New in step 5 raw-response-preservation, T3-21.)",
-    "score": 0.9123
+    "killed": 110,
+    "mutants": 117,
+    "notes": "All 7 survivors are equivalent here. Six drop or change encoding='utf-8' when pre_registration.json is written or read: 'UTF-8' is the same codec, and None or no argument means the locale's, UTF-8 on macOS and Linux. One passes ensure_ascii=None, falsy like False. (New in step 5 raw-response-preservation, T3-21; on the merge with sjl/step5/integration 4ed5045 the seal check became verify_seal with sealed_inputs, which removed the file-name and encoding survivors of the inputs.)",
+    "score": 0.9402
   },
   "scoring/transcription": {
-    "killed": 124,
-    "mutants": 124,
+    "killed": 128,
+    "mutants": 128,
     "score": 1.0
   }
 }

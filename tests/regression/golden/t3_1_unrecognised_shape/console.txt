@@ -155,7 +155,8 @@ result, by us or by anyone, in any document.
   instruction_removed: invoked=0 not_invoked=0 n=0
     EV-0 UNOBSERVABLE executions: 20 UNOBSERVABLE, not in n
     failure rate: no observations
-\n3h2. D7.3 TRANSCRIPTION:
+
+3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 14
   TRANSCRIBED-ALTERED: 0
   UNOBSERVABLE: 26

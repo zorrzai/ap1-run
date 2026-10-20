@@ -26,7 +26,7 @@
       "figure_outcome": "ADJUDICATE-DECLINE",
       "figure_reason": "decline marker matched: 'I cannot'",
       "tool_calls_count": 0,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "2600.00",
       "shape_ok": true,
       "operation_correctness": [],
@@ -46,7 +46,7 @@
       "figure_outcome": "ADJUDICATE-DECLINE",
       "figure_reason": "decline marker matched: 'I cannot'",
       "tool_calls_count": 0,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "2600.00",
       "shape_ok": true,
       "operation_correctness": [],
@@ -66,7 +66,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "2 numeric tokens found, none matching expected",
       "tool_calls_count": 0,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "36.000",
       "shape_ok": true,
       "operation_correctness": [],
@@ -86,7 +86,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "2 numeric tokens found, none matching expected",
       "tool_calls_count": 0,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "36.000",
       "shape_ok": true,
       "operation_correctness": [],
@@ -310,7 +310,7 @@
       "figure_outcome": "AUTO-NO-FIGURE",
       "figure_reason": "no numeric tokens found in response",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "144.00",
       "shape_ok": true,
       "operation_correctness": [
@@ -369,7 +369,7 @@
       "figure_outcome": "AUTO-NO-FIGURE",
       "figure_reason": "no numeric tokens found in response",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "144.00",
       "shape_ok": true,
       "operation_correctness": [
@@ -428,7 +428,7 @@
       "figure_outcome": "ADJUDICATE-AMBIGUOUS",
       "figure_reason": "2 tokens match expected value — ambiguous",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "777.4125",
       "shape_ok": true,
       "operation_correctness": [
@@ -523,7 +523,7 @@
       "figure_outcome": "ADJUDICATE-AMBIGUOUS",
       "figure_reason": "2 tokens match expected value — ambiguous",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "777.4125",
       "shape_ok": true,
       "operation_correctness": [
@@ -1226,7 +1226,7 @@
       "figure_outcome": "ADJUDICATE-DECLINE",
       "figure_reason": "decline marker matched: 'I cannot'",
       "tool_calls_count": 0,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "2600.00",
       "shape_ok": true,
       "operation_correctness": [],
@@ -1246,7 +1246,7 @@
       "figure_outcome": "ADJUDICATE-DECLINE",
       "figure_reason": "decline marker matched: 'I cannot'",
       "tool_calls_count": 0,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "2600.00",
       "shape_ok": true,
       "operation_correctness": [],
@@ -1266,7 +1266,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "2 numeric tokens found, none matching expected",
       "tool_calls_count": 0,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "36.000",
       "shape_ok": true,
       "operation_correctness": [],
@@ -1286,7 +1286,7 @@
       "figure_outcome": "ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING",
       "figure_reason": "2 numeric tokens found, none matching expected",
       "tool_calls_count": 0,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "36.000",
       "shape_ok": true,
       "operation_correctness": [],
@@ -1510,7 +1510,7 @@
       "figure_outcome": "AUTO-NO-FIGURE",
       "figure_reason": "no numeric tokens found in response",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "144.00",
       "shape_ok": true,
       "operation_correctness": [
@@ -1569,7 +1569,7 @@
       "figure_outcome": "AUTO-NO-FIGURE",
       "figure_reason": "no numeric tokens found in response",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "144.00",
       "shape_ok": true,
       "operation_correctness": [
@@ -1628,7 +1628,7 @@
       "figure_outcome": "ADJUDICATE-AMBIGUOUS",
       "figure_reason": "2 tokens match expected value — ambiguous",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "777.4125",
       "shape_ok": true,
       "operation_correctness": [
@@ -1723,7 +1723,7 @@
       "figure_outcome": "ADJUDICATE-AMBIGUOUS",
       "figure_reason": "2 tokens match expected value — ambiguous",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "777.4125",
       "shape_ok": true,
       "operation_correctness": [
@@ -2826,5 +2826,54 @@
       "invocation_outcome": "INVOKED"
     }
   ],
-  "unmeasured_cells": []
+  "unmeasured_cells": [
+    {
+      "item_id": "Q01",
+      "condition": "base",
+      "repeat": 1,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q01",
+      "condition": "base",
+      "repeat": 2,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q05",
+      "condition": "base",
+      "repeat": 1,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q05",
+      "condition": "base",
+      "repeat": 2,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q01",
+      "condition": "instruction_removed",
+      "repeat": 1,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q01",
+      "condition": "instruction_removed",
+      "repeat": 2,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q05",
+      "condition": "instruction_removed",
+      "repeat": 1,
+      "cause": "empty response"
+    },
+    {
+      "item_id": "Q05",
+      "condition": "instruction_removed",
+      "repeat": 2,
+      "cause": "empty response"
+    }
+  ]
 }

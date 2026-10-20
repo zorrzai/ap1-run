@@ -204,22 +204,22 @@ def test_execute_item_no_system_prompt_user_message_only(tmp_path, prompt):
 # -- round-0 transport failure -----------------------------------------
 
 @pytest.mark.finding('F4', 'T3-65')
-@pytest.mark.parametrize('error', [
-    adapter.RateLimitError('Rate limit reached'),
-    adapter.HTTPError('HTTP 500: server error', 500, '{}'),
-    adapter.AdapterError('connection dropped'),
-    RuntimeError('anything'),
+@pytest.mark.parametrize('error, cause', [
+    (adapter.RateLimitError('Rate limit reached'), 'rate_limited'),
+    (adapter.HTTPError('HTTP 500: server error', 500, '{}'),
+     'transport_error'),
+    (adapter.AdapterError('connection dropped'), 'transport_error'),
+    (RuntimeError('anything'), 'transport_error'),
 ], ids=['rate-limit', 'http', 'adapter', 'other'])
-def test_execute_item_first_send_fails_unmeasured(tmp_path, error):
-    # F4 / T3-65: every exception from the first send is caught here and
-    # returned as UNMEASURED, so run.py's RateLimitError/AdapterError
-    # handlers never fire on this path. Correct: either let adapter
-    # errors reach the runner, or drop the dead handlers and keep the
-    # transport-failure record (needs a ruling, TASKS T21).
+def test_execute_item_first_send_fails_unmeasured(tmp_path, error, cause):
+    # F4 / T3-65 (Steven, choices-for-marcus #7): every exception from the
+    # first send is caught here, written to the transcript and returned
+    # as UNMEASURED with its cause (a rate limit or a transport error);
+    # the runner lists the cell (runner/executions.record_not_scored).
     result, records = run(tmp_path, FakeAdapter(error))
     assert result == {'item_id': 'Q01', 'condition': 'base',
                       'status': 'UNMEASURED', 'error': str(error),
-                      'ground_truth': GT}
+                      'cause': cause, 'ground_truth': GT}
     assert [without_timestamp(r) for r in records] == [{
         'item_id': 'Q01', 'arm_id': 'base', 'condition': 'base',
         'request_sent': {'messages': INITIAL}, 'response_received': None,
@@ -229,7 +229,21 @@ def test_execute_item_first_send_fails_unmeasured(tmp_path, error):
         # V12-3: the failed round, with the messages it sent
         'rounds': [{'round': 0, 'request': {'messages': INITIAL},
                     'error': str(error)}],
-        'status': 'UNMEASURED'}]
+        # the cause is recorded, so the scoring pass reads it (T3-21)
+        'status': 'UNMEASURED', 'cause': cause}]
+
+
+@pytest.mark.finding('V12-3', 'S3-G1-18')
+def test_execute_item_failed_round_keeps_the_adapter_attempt_log(tmp_path):
+    # A failed round records the adapter's request record with its
+    # attempt log where the error carries one (numeric-hardening,
+    # S3-G1-18), not just the messages.
+    error = adapter.AdapterError('transport failure after 3 attempts: x')
+    error.request_record = {'messages': INITIAL, 'attempts': [1, 2, 3]}
+    _, records = run(tmp_path, FakeAdapter(error))
+    assert records[0]['rounds'] == [{
+        'round': 0, 'error': str(error),
+        'request': {'messages': INITIAL, 'attempts': [1, 2, 3]}}]
 
 
 # -- the repeat index (T3-9) --------------------------------------------
@@ -465,34 +479,6 @@ def test_execute_item_call_without_function_unknown_tool(tmp_path,
     assert result['invocation_outcome'] == 'NOT-INVOKED'
 
 
-@pytest.mark.finding('S3-G2-2')
-def test_execute_item_call_without_id_raises(tmp_path, calculator):
-    # S3-G2-2: the record's id defaults to 'call_<turn>', but the return
-    # value is looked up by tc.get('id', ''), so a call without an id
-    # raises EngineError and the whole run stops. Correct: match by the
-    # same default (or by position), never abort on a platform omission.
-    tc = tool_call()
-    del tc['id']
-    with pytest.raises(EngineError) as exc:
-        run(tmp_path, FakeAdapter(calls(tc), answer()))
-    assert str(exc.value) == ("tool_call_id '' not found in all_tool_calls; "
-                              "cannot attach return_value")
-
-
-@pytest.mark.finding('S3-G2-3')
-def test_execute_item_repeated_call_id_return_on_first_record(
-        tmp_path, calculator):
-    # S3-G2-3: return values are attached to the first record with the
-    # same id, so a repeated id (here across turns) overwrites the first
-    # call's return and leaves the second without one. Correct: attach
-    # to the record of this turn's call.
-    send = FakeAdapter(calls(tool_call('1+1', id='x')),
-                       calls(tool_call('boom', id='x')), answer())
-    result, _ = run(tmp_path, send)
-    assert [r.get('return_value') for r in result['tool_calls']] == [
-        '{"error": "cannot evaluate boom"}', None]
-
-
 @pytest.mark.finding('T3-38')
 def test_execute_item_hallucinated_tool_not_invoked_with_calls(
         tmp_path, calculator):
@@ -506,12 +492,11 @@ def test_execute_item_hallucinated_tool_not_invoked_with_calls(
 
 
 @pytest.mark.finding('T3-67')
-def test_execute_item_tool_loop_stops_after_ten_turns_silently(
+def test_execute_item_tool_loop_stops_after_ten_turns_flagged(
         tmp_path, calculator):
-    # T3-67: after 10 turns the 11th response's calls are neither
-    # executed nor flagged; the item is EXECUTED/INVOKED as usual.
-    # Correct: the exhaustion is recorded (and the item not scored as
-    # complete).
+    # After 10 turns the 11th response's calls are not executed; the
+    # execution is still EXECUTED/INVOKED (the calls made were observed),
+    # and the exhaustion is recorded in the transcript and the result.
     replies = [calls(tool_call(id=f'c{n}')) for n in range(1, 12)]
     send = FakeAdapter(*replies)
     result, records = run(tmp_path, send)
@@ -521,7 +506,32 @@ def test_execute_item_tool_loop_stops_after_ten_turns_silently(
     assert result['response'] == replies[10]
     assert (result['status'], result['invocation_outcome']) == (
         'EXECUTED', 'INVOKED')
+    flag = ('TOOL_LOOP_EXHAUSTED: the response after 10 tool turns still '
+            'asked for 1 tool call(s), which were not executed')
+    assert records[0]['error_state'] == flag
+    assert result['error_state'] == flag
+
+
+@pytest.mark.finding('T3-67')
+def test_execute_item_loop_ending_at_turn_limit_not_flagged(tmp_path,
+                                                           calculator):
+    # Ten tool turns followed by an answer: the loop completed.
+    replies = [calls(tool_call(id=f'c{n}')) for n in range(1, 11)]
+    result, records = run(tmp_path, FakeAdapter(*replies, answer()))
+    assert len(result['tool_calls']) == 10
     assert records[0]['error_state'] is None
+    assert 'error_state' not in result
+
+
+def test_loop_exhaustion_counts_pending_calls():
+    final = calls(tool_call(id='a'), tool_call(id='b'))
+    assert engine._loop_exhaustion(final, [(True, None)]) == (
+        'TOOL_LOOP_EXHAUSTED: the response after 10 tool turns still '
+        'asked for 2 tool call(s), which were not executed')
+    assert engine._loop_exhaustion(final, [(True, None), (False, 'x')]) \
+        is None
+    assert engine._loop_exhaustion(final, []) is None
+    assert engine._loop_exhaustion(answer(), [(True, None)]) is None
 
 
 # -- unrecognised shapes and mid-loop failures -------------------------
@@ -664,23 +674,6 @@ def test_drive_tool_loop_round_shapes_one_per_response(calculator):
         response=calls(tool_call(id='a')), messages=[], config=CONFIG,
         tools=TOOLS, adapter_send=send, sampling={})
     assert shapes == [(True, None)] * 3
-
-
-@pytest.mark.finding('S3-G2-1')
-@pytest.mark.parametrize('final, error', [
-    ({'choices': [{'message': None}]}, AttributeError),
-    ({'choices': ['x']}, AttributeError),
-    ({'choices': [{'message': {'role': 'assistant', 'content': 'x',
-                               'metadata': 'attestation'}}]}, TypeError),
-], ids=['null-message', 'str-choice', 'str-metadata'])
-def test_execute_item_malformed_response_shape_raises(tmp_path, final, error):
-    # S3-G2-1: shapes the evidence code reports as unrecognised (EV-0)
-    # make _extract_tool_calls or extract_attestation raise, and
-    # execute_item does not catch it: the run stops. Correct: EV-0 (or
-    # UNMEASURED), the run continues.
-    with pytest.raises(error):
-        run(tmp_path, FakeAdapter(final))
-    assert transcript.read_all(tmp_path / 'run.jsonl') == []
 
 
 # -- no scoring (T3-21) -------------------------------------------------
@@ -902,8 +895,6 @@ def test_execute_item_empty_response_unmeasured(tmp_path, content):
 
 
 @pytest.mark.finding('T3-67')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-67: tool-loop exhaustion is silent')
 def test_execute_item_tool_loop_exhausted_flagged_in_transcript(
         tmp_path, calculator):
     # Correct (T3 review T3-67; SPEC R0.1, R1.3 "the accumulation is
@@ -921,9 +912,6 @@ def test_execute_item_tool_loop_exhausted_flagged_in_transcript(
 
 
 @pytest.mark.finding('S3-G2-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-1: malformed response shape raises out of '
-                          'execute_item')
 @pytest.mark.parametrize('final', [
     {'choices': [{'message': None}]},
     {'choices': ['x']},
@@ -942,10 +930,45 @@ def test_execute_item_malformed_response_shape_ev0_recorded(tmp_path, final):
         result['evidence_class'] == EV_0, result
 
 
+@pytest.mark.finding('S3-G2-1')
+@pytest.mark.parametrize('message', [
+    {'content': None, 'tool_calls': {'id': 'c1'}},
+    {'content': None, 'tool_calls': ['calculator']},
+    {'content': None, 'tool_calls': [{'id': 'c1', 'function': 'calc'}]},
+    {'content': [{'type': 'text', 'text': '15.20'}]},
+], ids=['dict-tool-calls', 'str-call', 'str-function', 'list-content'])
+def test_execute_item_unreadable_message_part_ev0_no_tool_run(
+        tmp_path, calculator, message):
+    # Step 5 (run-robustness): a message part the evidence code cannot
+    # read is an unrecognised shape: EV-0 with outcome None, nothing is
+    # executed, the execution is recorded.
+    final = {'choices': [{'message': {'role': 'assistant', **message}}]}
+    send = FakeAdapter(final)
+    result, records = run(tmp_path, send)
+    assert (result['status'], result['evidence_class'],
+            result['invocation_outcome']) == ('EXECUTED', EV_0, None)
+    assert (result['tool_calls'], calculator.seen, len(send.calls)) == (
+        [], [], 1)
+    assert [r['response_received'] for r in records] == [final]
+
+
+@pytest.mark.finding('S3-G2-2', 'S3-G2-3')
+def test_execute_item_two_calls_without_id_in_one_turn_each_own_return(
+        tmp_path, calculator):
+    # Two calls of one turn without ids share the default id 'call_1';
+    # each return still goes on its own record, in order.
+    a, b = tool_call('1+1'), tool_call('boom')
+    del a['id'], b['id']
+    send = FakeAdapter(calls(a, b), answer())
+    result, _ = run(tmp_path, send)
+    assert [(r['id'], r['return_value']) for r in result['tool_calls']] == [
+        ('call_1', '{"result": "15.2"}'),
+        ('call_1', '{"error": "cannot evaluate boom"}')]
+    assert [m.get('tool_call_id') for m in send.calls[1]['messages']
+            if m['role'] == 'tool'] == ['call_1', 'call_1']
+
+
 @pytest.mark.finding('S3-G2-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-2: a tool call without an id raises '
-                          'EngineError')
 def test_execute_item_call_without_id_return_attached(tmp_path, calculator):
     # Correct (S3-G2-2): a call the platform sent without an id is
     # executed and its return value attached to its own record (by the
@@ -961,9 +984,6 @@ def test_execute_item_call_without_id_return_attached(tmp_path, calculator):
 
 
 @pytest.mark.finding('S3-G2-3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-3: a repeated call id attaches the return '
-                          'to the first record')
 def test_execute_item_repeated_call_id_return_on_own_record(tmp_path,
                                                             calculator):
     # Correct (S3-G2-3; AP-1 v1.3 D7.2(a)(iv) uses prior returns): each

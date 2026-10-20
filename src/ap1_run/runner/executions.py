@@ -27,12 +27,16 @@ from ap1_run.scoring.provenance.classify import (
     mark_unmeasurable_item,
 )
 from ap1_run.scoring.release_coverage import check_release_coverage
+from ap1_run.scoring.reproducibility import check_parameter_echo
 from ap1_run.scoring.transcription import check_transcription
 
 # The status of an execution the run planned but never reached (SPEC R0.3:
 # an interrupted run's unreached items are reported not-run, never as
 # failures).
 NOT_RUN = 'NOT-RUN'
+
+# The error state of a tool loop the turn limit stopped (engine, T3-67)
+LOOP_EXHAUSTED = 'TOOL_LOOP_EXHAUSTED'
 
 
 @dataclass
@@ -48,6 +52,7 @@ class Findings:
     transcription_results: list = field(default_factory=list)  # D7.3
     release_coverage_results: list = field(default_factory=list)  # D7.3
     unmeasured_cells: list = field(default_factory=list)
+    parameter_echo: list = field(default_factory=list)  # D2.2
 
 
 def record_underivable(findings, item_id, condition):
@@ -69,12 +74,47 @@ def record_not_run(findings, item_id, condition, rep):
 
 
 def record_not_scored(findings, item_id, condition, rep, status, result):
-    """The engine returned VOID or UNMEASURED: recorded, not scored."""
+    """The engine returned VOID or UNMEASURED: recorded, not scored.
+
+    An UNMEASURED cell (a failed request, rate limited or a transport
+    error, or an empty response) is also listed among the unmeasured
+    cells with its cause (F4, T3-65); it is in no denominator.
+    """
+    cause = result.get('error', result.get('reason', ''))
+    if result.get('cause'):
+        cause = f"{result['cause']}: {cause}"
     findings.all_results.append({
         'item_id': item_id, 'condition': condition,
         'repeat': rep, 'status': status,
-        'cause': result.get('error', result.get('reason', '')),
+        'cause': cause,
     })
+    if status == 'UNMEASURED':
+        findings.unmeasured_cells.append({
+            'item_id': item_id, 'condition': condition,
+            'repeat': rep, 'cause': cause,
+        })
+
+
+def echo_check(sampling, response):
+    """check_parameter_echo for one response (AP-1 v1.3 D2.2).
+
+    The requested parameters are the sampling values sent (omissions are
+    not sent). The endpoint echoes a parameter by returning it at the top
+    level of its response body; a response that echoes none of them is
+    UNVERIFIED.
+    """
+    requested = {name: value for name, value in sampling.items()
+                 if not isinstance(value, dict)}
+    body = response if isinstance(response, dict) else {}
+    echoed = {name: body[name] for name in requested if name in body}
+    return check_parameter_echo(requested, echoed or None)
+
+
+def _figure_text(fig_result):
+    """The released figure as recorded: its text, or None (JSON null)
+    where no figure was released."""
+    figure = fig_result.get('released_figure')
+    return None if figure is None else str(figure)
 
 
 def as_recorded(value):
@@ -139,6 +179,8 @@ def result_from_record(record, *, gt, ctx, config):
         return result
     if record.get('status') != 'EXECUTED':
         result['error'] = _cause(record)
+        if record.get('cause'):   # rate_limited or transport_error (T3-65)
+            result['cause'] = record['cause']
         return result
     tool_calls = record.get('tool_calls') or []
     provenance_results, op_correctness = score_d72(tool_calls, ctx, gt,
@@ -152,6 +194,10 @@ def result_from_record(record, *, gt, ctx, config):
         'provenance_results': provenance_results,
         'operation_correctness': as_recorded(op_correctness),
     })
+    # T3-67: a loop stopped by the turn limit (an EV-0 cause is not
+    # carried: it is in the transcript and the report)
+    if str(record.get('error_state') or '').startswith(LOOP_EXHAUSTED):
+        result['error_state'] = record['error_state']
     return result
 
 
@@ -187,6 +233,11 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
     result is an executed result from result_from_record, with its D7.2
     (provenance_results, operation_correctness) already scored.
     """
+    # The configured separators (R0.1, sealed) govern every extraction
+    # (R0.4.2, T3-41).
+    separators = {'decimal_sep': config.get('decimal_separator', '.'),
+                  'grouping_sep': config.get('grouping_separator', ',')}
+
     # -- Figure identification --
     final_response = result.get('response')
     fig_result = identify_figure(
@@ -197,6 +248,8 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         answer_tolerance=answer_tolerance,
         decline_markers=decline_markers,
         currency_symbols=currency_symbols,
+        decimal_separator=separators['decimal_sep'],
+        grouping_separator=separators['grouping_sep'],
     )
 
     # -- D7.3: Transcription check (E7 fix; T3-26, T3-27, V12-6) --
@@ -231,7 +284,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         try:
             _rc_tokens = extract_numeric_tokens(
                 _rc_content,
-                currency_symbols=currency_symbols)
+                currency_symbols=currency_symbols, **separators)
             _rc_candidates = [t.value for t in _rc_tokens
                               if abs(t.value - expected)
                               <= answer_tolerance]
@@ -269,6 +322,11 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
     findings.d2_responses.setdefault(d2_key, []).append(
         result.get('response'))
 
+    # -- D2.2: were the requested sampling parameters applied? --
+    findings.parameter_echo.append(dict(
+        item_id=item_id, condition=condition, repeat=rep,
+        **echo_check(config.get('sampling', {}), final_response)))
+
     ev_class = result.get('evidence_class', '')
     inv_outcome = result.get('invocation_outcome', '')
     tool_calls = result.get('tool_calls', [])
@@ -293,7 +351,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
     if content:
         try:
             tokens = extract_numeric_tokens(
-                content, currency_symbols=currency_symbols)
+                content, currency_symbols=currency_symbols, **separators)
         except Exception as e:
             findings.grammar_issues.append({
                 'item_id': item_id, 'condition': condition,
@@ -318,7 +376,16 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         })
 
     outcome = fig_result['outcome']
-    print(f'{outcome} | {ev_class} | {inv_outcome}')
+    error_state = result.get('error_state')  # T3-67: loop exhaustion
+    # T3-38: calls to a tool other than the required operation (an
+    # unoffered or hallucinated one) are recorded, and do not count for
+    # D7.1 (with no operation named every call counts, as in
+    # execution/evidence.py)
+    other_calls = sum(
+        1 for tc in tool_calls if _required_op
+        and tc.get('function', {}).get('name') != _required_op)
+    print(f'{outcome} | {ev_class} | {inv_outcome}'
+          + (f' | {error_state}' if error_state else ''))
 
     op_correctness = result.get('operation_correctness', [])
 
@@ -334,7 +401,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'figure_outcome': outcome,
         'figure_reason': fig_result.get('reason', ''),
         'tool_calls_count': len(tool_calls),
-        'released_figure': str(fig_result.get('released_figure', '')),
+        'released_figure': _figure_text(fig_result),
         'expected': str(expected),
         'shape_ok': shape_ok,
         'operation_correctness': op_correctness,
@@ -343,4 +410,6 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'release_coverage_outcome': coverage_result['outcome'],
         'answer_outcome': section_6_8,
         'answer_outcome_reason': section_6_8_reason,
+        **({'other_tool_calls_count': other_calls} if other_calls else {}),
+        **({'error_state': error_state} if error_state else {}),
     })

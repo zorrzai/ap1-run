@@ -14,10 +14,16 @@ _OUTCOME_OBSERVED = {'INVOKED': True, 'NOT-INVOKED': False}
 
 
 def verify_invocation_consistency(results):
-    """INVARIANT: INVOKED implies tool_calls present; NOT-INVOKED implies none.
+    """INVARIANT: INVOKED implies a call to the required operation;
+    NOT-INVOKED implies none.
 
     A scoring outcome that contradicts its own evidence is not a finding,
     it is a defect. The instrument must refuse to report it.
+
+    Calls to other tools (unoffered or hallucinated ones) are recorded and
+    reported but do not affect D7.1 (SPEC R0.3, R2.3; T3-38): the row
+    counts them in other_tool_calls_count (absent when there are none),
+    and they are left out of the count checked here.
 
     Raises RuntimeError (FATAL) on the first mismatch, naming the item.
     """
@@ -25,7 +31,8 @@ def verify_invocation_consistency(results):
         if r.get('status') != 'EXECUTED':
             continue
         outcome = r.get('invocation_outcome', '')
-        tc_count = r.get('tool_calls_count', 0)
+        tc_count = r.get('tool_calls_count', 0) - \
+            r.get('other_tool_calls_count', 0)
         item_id = r.get('item_id', '?')
         condition = r.get('condition', '?')
         repeat = r.get('repeat', '?')
@@ -34,7 +41,7 @@ def verify_invocation_consistency(results):
             raise RuntimeError(
                 f'FATAL: invocation consistency check failed. '
                 f'{item_id}/{condition}/r{repeat}: '
-                f'INVOKED but tool_calls_count=0. '
+                f'INVOKED but no call to the required operation. '
                 f'A scoring outcome that contradicts its own evidence '
                 f'is a defect, not a finding.')
 
@@ -42,7 +49,8 @@ def verify_invocation_consistency(results):
             raise RuntimeError(
                 f'FATAL: invocation consistency check failed. '
                 f'{item_id}/{condition}/r{repeat}: '
-                f'NOT-INVOKED but tool_calls_count={tc_count}. '
+                f'NOT-INVOKED but {tc_count} call(s) to the required '
+                f'operation. '
                 f'A scoring outcome that contradicts its own evidence '
                 f'is a defect, not a finding.')
 
@@ -128,11 +136,33 @@ def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason):
     return d2_results
 
 
+def summarise_parameter_echo(checks):
+    """The run's D2.2 parameter-echo result: MISMATCH if any response
+    shows a requested parameter not applied, VERIFIED if every response
+    echoed and matched, UNVERIFIED otherwise (including no responses);
+    with each distinct finding once, in first-seen order."""
+    statuses = {c['status'] for c in checks}
+    if 'MISMATCH' in statuses:
+        status = 'MISMATCH'
+    elif statuses == {'VERIFIED'}:
+        status = 'VERIFIED'
+    else:
+        status = 'UNVERIFIED'
+    findings = []
+    for c in checks:
+        for f in c['findings']:
+            if f not in findings:
+                findings.append(f)
+    return {'status': status, 'responses': len(checks),
+            'findings': findings}
+
+
 def build_summary(all_results, evidence_findings, *,
                   d1_summary=None, d2_results=None,
                   d2_cap_reason=None,
                   transcription_results=None,
                   release_coverage_results=None,
+                  parameter_echo=None,
                   held_constant=None):
     """Build the summary dict that report.generate_report() expects.
 
@@ -249,6 +279,7 @@ def build_summary(all_results, evidence_findings, *,
         summary['d2_results'] = d2_results
     if d2_cap_reason:
         summary['d2_cap_reason'] = d2_cap_reason
+    summary['parameter_echo'] = summarise_parameter_echo(parameter_echo or [])
 
     # Operand provenance step counts (D7.2(a))
     step_counts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}

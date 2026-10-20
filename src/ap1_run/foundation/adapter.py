@@ -15,7 +15,7 @@ followed (a 3xx is an HTTP error), so no request reaches another host.
 import copy
 import re
 import time
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 import requests as _requests
 
@@ -47,7 +47,12 @@ def _mask_credentials(text):
 
 
 class AdapterError(Exception):
-    """Transport or HTTP failure."""
+    """Transport or HTTP failure, or a request that may not be sent.
+
+    After a transport failure on every attempt, request_record is the
+    request record with its attempt log (S3-G1-18); otherwise None.
+    """
+    request_record = None
 
 
 class RateLimitError(AdapterError):
@@ -66,6 +71,9 @@ class HTTPError(AdapterError):
 MAX_RETRIES = 3     # on transport failure only, per R0.2
 RETRY_DELAY = 1.0   # seconds between transport-failure retries
 
+# Request body fields a sampling parameter may not set (S3-G1-21).
+BODY_FIELDS = ('model', 'messages', 'tools')
+
 
 def send(endpoint_url, *, messages, tools=None, sampling=None,
          model=None, api_key=None, timeout=120):
@@ -82,7 +90,10 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
             sampling parameter with its value or explicit omission.
 
     Raises:
-        AdapterError: Unrecoverable transport failure after all retries.
+        AdapterError: Unrecoverable transport failure after all retries
+            (carrying request_record); or, before anything is sent, a
+            sampling parameter that names a body field or whose value is
+            a non-finite number.
         RateLimitError: HTTP 429.
         HTTPError: Non-200, non-429 status.
     """
@@ -94,6 +105,9 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
     sampling_as_sent = {}
     if sampling:
         for k, v in sampling.items():
+            if k in BODY_FIELDS:
+                raise AdapterError(
+                    f'sampling.{k}: names a request body field; not sent')
             # Structured omission: {"value": "omitted", "reason": "...", "detail": "..."}
             if isinstance(v, dict) and v.get('value') == 'omitted':
                 sampling_as_sent[k] = {
@@ -108,12 +122,19 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
             else:
                 try:
                     d = Decimal(str(v))
-                    if d == d.to_integral_value():
-                        body[k] = int(d)
-                    else:
-                        body[k] = float(d)
-                except Exception:
+                except InvalidOperation:
+                    d = None
+                if d is None:
                     body[k] = v
+                elif not d.is_finite():
+                    # NaN would go out as the non-JSON token NaN, and
+                    # Infinity as a string (S3-G1-19)
+                    raise AdapterError(
+                        f'sampling.{k}: not a finite number: {v!r}; not sent')
+                elif d == d.to_integral_value():
+                    body[k] = int(d)
+                else:
+                    body[k] = float(d)
                 sampling_as_sent[k] = str(v)
 
     headers = {"Content-Type": "application/json"}
@@ -146,19 +167,22 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
                 "timestamp": time.time(),
             })
         except _requests.RequestException as e:
+            error_text = _mask_credentials(str(e))
             attempts.append({
                 "attempt": attempt,
                 "status_code": None,
-                "error": str(e),
+                "error": error_text,
                 "timestamp": time.time(),
             })
             if attempt < MAX_RETRIES:
                 time.sleep(RETRY_DELAY)
                 continue
             request_record["attempts"] = attempts
-            raise AdapterError(
-                f"transport failure after {MAX_RETRIES} attempts: {e}"
-            ) from e
+            failure = AdapterError(
+                f"transport failure after {MAX_RETRIES} attempts: "
+                f"{error_text}")
+            failure.request_record = request_record
+            raise failure from e
 
         request_record["attempts"] = attempts
 

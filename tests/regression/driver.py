@@ -12,7 +12,10 @@ runner will use: --config and --fixture-dir in the scenario's args, or the
 defaults under <code_dir>/example/.
 
 The runner's console output is this process's stdout. Driver messages go
-to stderr. The result directory receives:
+to stderr. The runner gets a copy of that config, in the result directory, with its
+endpoint_url and model pointed at the mock (the runner reads both from the
+config alone). The result directory receives:
+    config.json     that copy
     exit.json       exit code, or the exception type and message
     seal.json       the seal record(s) the run created
     requests.jsonl  every request the mock endpoint received
@@ -21,6 +24,7 @@ to stderr. The result directory receives:
 import argparse
 import json
 import os
+import shutil
 import sys
 import time
 
@@ -37,6 +41,22 @@ def input_paths(code_dir, args):
     known.config = os.path.join(code_dir, known.config)
     known.fixture_dir = os.path.join(code_dir, known.fixture_dir)
     return known
+
+
+def with_config(args, config_path):
+    """args with --config replaced by (or, if absent, given as)
+    config_path."""
+    out, i = [], 0
+    while i < len(args):
+        if args[i] == '--config':
+            i += 2
+            continue
+        if args[i].startswith('--config='):
+            i += 1
+            continue
+        out.append(args[i])
+        i += 1
+    return ['--config', config_path] + out
 
 
 def main():
@@ -73,9 +93,15 @@ def main():
         if name.startswith('AP1_SMOKE_'):
             del os.environ[name]
     os.environ['AP1_SMOKE_API_KEY'] = 'sk-regression-not-a-real-key-0000'
-    os.environ['AP1_SMOKE_ENDPOINT'] = mock.url
-    os.environ['AP1_SMOKE_MODEL'] = 'mock-model'
     os.environ.update(scenario.get('env', {}))
+
+    # The runner takes the endpoint and model from the config alone
+    # (T3-80): run it on a copy of the scenario's config, in the result
+    # directory, pointed at the mock as 'mock-model'.
+    run_config = os.path.join(result_dir, 'config.json')
+    shutil.copyfile(paths.config, run_config)
+    mock.point_config(run_config)
+    args = with_config(scenario.get('args', []), run_config)
 
     # The runner sleeps 0.5 s per execution, and the adapter 1 s between
     # transport retries. Neither changes behaviour; skip them.
@@ -108,7 +134,7 @@ def main():
 
         # The runner reads its options from sys.argv; give it the
         # scenario's, not this driver's.
-        sys.argv = ['ap1-run'] + scenario.get('args', [])
+        sys.argv = ['ap1-run'] + args
         outcome['exit_code'] = smoke_test.main()
     except SystemExit as e:
         outcome['exit_code'] = e.code

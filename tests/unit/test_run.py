@@ -39,6 +39,8 @@ def compute(item_id, ctx):
 '''
 
 CONFIG = {
+    'endpoint_url': 'http://mock/v1',
+    'model': 'mock-model',
     'system_prompt_base': 'BASE PROMPT',
     'system_prompt_instruction_removed': 'REMOVED PROMPT',
     'tools': [{'type': 'function', 'function': {'name': 'calculator'}}],
@@ -68,14 +70,13 @@ class Run:
         self.calls = []
         self.results = {}     # (item, condition, rep) -> result
         self.refuse = set()   # R3.1 guards that raise SealError
+        self.verify_refusals = []  # verify_seal calls that raise, by index
         self.version = {'version_tag': 'v9.9.9',
                         'version_commit': '0123456789abcdef0123'}
         monkeypatch.setattr(sys, 'path', list(sys.path))
         monkeypatch.delitem(sys.modules, 'ground_truth_example',
                             raising=False)
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-0123456789')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', 'http://mock/v1')
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
         for name in ('AP1_SMOKE_TEMPERATURE', 'AP1_SMOKE_REASONING_EFFORT'):
             monkeypatch.delenv(name, raising=False)
         monkeypatch.setattr(run.time, 'sleep',
@@ -84,7 +85,7 @@ class Run:
                      'compute_runner_source_hash',
                      'perturbation_check', 'source_fields_check',
                      'declared_constants_check',
-                     'create_seal', 'check_condition_guard',
+                     'create_seal', 'verify_seal', 'check_condition_guard',
                      'build_delivered_context', 'write_pre_registration',
                      'execute_item', 'score_run', 'rescore_transcript'):
             monkeypatch.setattr(run, name, getattr(self, name))
@@ -111,9 +112,13 @@ class Run:
     # -- fakes ---------------------------------------------------------
     def load_config(self, path):
         # The real load_config validates every field; main() is tested
-        # here with whatever config it is given.
+        # here with whatever config it is given, with answer_tolerance
+        # parsed to Decimal as load_config does.
         self.config_path = path
-        return json.loads(json.dumps(self.config))
+        config = json.loads(json.dumps(self.config))
+        if isinstance(config.get('answer_tolerance'), str):
+            config['answer_tolerance'] = D(config['answer_tolerance'])
+        return config
 
     def resolve_runner_version(self, base_dir):
         self.calls.append(('version', base_dir))
@@ -141,6 +146,12 @@ class Run:
     def create_seal(self, **kwargs):
         self.calls.append(('seal', kwargs))
         return {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}
+
+    def verify_seal(self, record, **kwargs):
+        self.calls.append(('verify_seal', record, kwargs))
+        if len(self.named('verify_seal')) in self.verify_refusals:
+            raise SealError('seal verification failed:\n  fixture: changed')
+        return True
 
     def check_condition_guard(self, *args):
         self.calls.append(('guard',) + args)
@@ -187,10 +198,14 @@ RULE = '=' * 60
 
 def script_statuses(r):
     # Each not-executed status is on a first repeat; the second still runs.
+    # A failed request comes back from the engine UNMEASURED with its
+    # cause (F4, T3-65); nothing is raised.
     r.results[('Q1', 'base', 1)] = {'status': 'UNMEASURED',
-                                    'error': 'rate limited'}
+                                    'error': 'slow down',
+                                    'cause': 'rate_limited'}
     r.results[('Q2', 'base', 1)] = {'status': 'UNMEASURED',
-                                    'error': 'HTTP 500: boom'}
+                                    'error': 'HTTP 500: boom',
+                                    'cause': 'transport_error'}
     r.results[('Q1', 'instruction_removed', 1)] = {'status': 'VOID',
                                                   'reason': 'underivable'}
     r.results[('Q2', 'instruction_removed', 1)] = {
@@ -257,12 +272,33 @@ def test_main_full_run_calls(r, capsys):
                and g[2] == FIXTURE and g[3] == QUESTIONS for g in guards)
     (seal,), = r.named('seal')
     config = seal.pop('config')
+    # T3-48: the expected values of every item, computed before the seal;
+    # T3-72: the bytes read are the bytes sealed.
+    expected_values = {'Q1': {'final': D('10.00'), 'derivable': True},
+                       'Q3': {'derivable': False},
+                       'Q2': {'final': D('10.00')}}
     assert seal == {
         'fixture_path': os.path.join(fx, 'fixture.json'),
         'questions_path': os.path.join(fx, 'questions.json'),
         'ground_truth_path': os.path.join(fx, 'ground_truth_example.py'),
         'ap1_text_path': str(r.tmp / 'ap1.md'),
-        'runner_source_hash': 'feedfacecafebeef' + '0' * 48}
+        'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
+        'expected_values': expected_values,
+        'loaded': {'fixture': json.dumps(FIXTURE).encode(),
+                   'questions': json.dumps(QUESTIONS).encode(),
+                   'ground_truth': GROUND_TRUTH.encode()}}
+    # T3-17: the seal is verified, the whole record and every input,
+    # before the first request and again before anything is reported.
+    verified = {
+        'config': config,
+        'fixture_path': os.path.join(fx, 'fixture.json'),
+        'questions_path': os.path.join(fx, 'questions.json'),
+        'ground_truth_path': os.path.join(fx, 'ground_truth_example.py'),
+        'ap1_text_path': str(r.tmp / 'ap1.md'),
+        'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
+        'expected_values': expected_values}
+    assert r.named('verify_seal') == [
+        ({'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}, verified)] * 2
     assert config['endpoint_url'] == 'http://mock/v1'
     assert config['model'] == 'mock-model'
     assert (config['runner_version_tag'], config['runner_version_commit'],
@@ -319,16 +355,19 @@ def test_main_full_run_calls(r, capsys):
     assert r.named('score_run') == [(transcript, {
         'config': config, 'seal_record': seal_record, 'fixture': FIXTURE,
         'questions': QUESTIONS,
-        'gt_module': sys.modules['ground_truth_example'],
+        'ground_truth_compute': kwargs['ground_truth_compute'],
         'output_dir': out})]
 
     # the order of the stages
     stages = [c[0] for c in r.calls if c[0] in (
         'version', 'source_hash', 'gt_guard', 'seal', 'guard',
-        'pre_registration', 'execute', 'score_run')]
+        'verify_seal', 'pre_registration', 'execute', 'score_run')]
+    # the seal is verified before the first request and again before the
+    # scoring pass reports anything (T3-17)
     assert stages == ['version', 'source_hash', 'gt_guard', 'gt_guard',
-                      'gt_guard', 'seal', 'guard', 'pre_registration'] + [
-        'execute'] * 8 + ['score_run']
+                      'gt_guard', 'seal', 'guard', 'verify_seal',
+                      'pre_registration'] + ['execute'] * 8 + [
+        'verify_seal', 'score_run']
 
 
 @pytest.mark.finding('T3-7')
@@ -348,6 +387,87 @@ def test_main_ground_truth_guard_refusal_stops_before_seal_and_requests(
     assert r.named('seal') == [] and r.named('execute') == []
     assert r.named('pre_registration') == []
     assert 'Ground-truth guards' not in capsys.readouterr().out
+
+
+@pytest.mark.finding('T3-17')
+@pytest.mark.req('R1.1')
+def test_main_seal_verification_refused_before_any_request(r, capsys):
+    r.verify_refusals = [1]
+    with pytest.raises(SealError, match='fixture: changed'):
+        r.main()
+    assert r.named('execute') == [] and r.named('outputs') == []
+
+
+@pytest.mark.finding('T3-17')
+@pytest.mark.req('R1.1')
+def test_main_seal_verification_refused_before_anything_is_reported(r):
+    r.verify_refusals = [2]
+    with pytest.raises(SealError, match='fixture: changed'):
+        r.main()
+    assert len(r.named('execute')) == 8
+    assert r.named('consistency') == [] and r.named('outputs') == []
+
+
+@pytest.mark.finding('T3-48', 'T3-72')
+def test_main_scores_against_the_sealed_expected_values(r):
+    # The module is not called again after the seal: a module whose
+    # answer changes between calls cannot change the expected values.
+    real_seal = r.create_seal
+
+    def seal_then_change(**kwargs):
+        record = real_seal(**kwargs)
+        sys.modules['ground_truth_example'].compute = \
+            lambda item_id, ctx: {'final': D('99')}
+        return record
+    r.create_seal = seal_then_change
+    run.create_seal = seal_then_change
+    assert r.main() == 0
+    compute = r.named('execute')[0][1]['ground_truth_compute']
+    assert compute('Q1', {}) == {'final': D('10.00'), 'derivable': True}
+    # the scoring pass gets the same sealed values
+    assert r.named('score_run')[0][1]['ground_truth_compute'] is compute
+
+
+@pytest.mark.finding('T3-72')
+def test_main_runs_the_ground_truth_file_not_a_shadowing_package(r):
+    package = r.fixture_dir / 'ground_truth_example'
+    package.mkdir()
+    (package / '__init__.py').write_text('raise ImportError("shadow")\n')
+    assert r.main() == 0
+    assert sys.modules['ground_truth_example'].__file__ == str(
+        r.fixture_dir / 'ground_truth_example.py')
+
+
+V12_HASH = '14659fc1c2a3357c22081a9109841475861c34f2b315ee7eb546e80fecbb58a5'
+
+
+@pytest.mark.finding('V12-4')
+def test_main_ap1_text_of_the_declared_version(r, monkeypatch):
+    # Without --ap1-text the seal takes the text of the config's version.
+    r.config['ap1_version'] = 'v1.2'
+    monkeypatch.setattr(r, 'create_seal', lambda **kw: r.calls.append(
+        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH})
+    monkeypatch.setattr(run, 'create_seal', r.create_seal)
+    assert run.main(r.argv()[:-2]) == 0
+    assert r.named('seal')[0][0]['ap1_text_path'] == os.path.join(
+        run.BASE_DIR, 'reference', 'AP-1_Admissibility_Protocol_v1.2.md')
+
+
+@pytest.mark.finding('V12-4')
+def test_main_version_label_over_another_text_refused_before_requests(r):
+    # The fake seal records 'TEXTHASH', which is no v1.2 text.
+    r.config['ap1_version'] = 'v1.2'
+    with pytest.raises(SealError, match='not the AP-1 v1.2 text'):
+        r.main()
+    assert r.named('seal') and r.named('execute') == []
+    assert r.named('verify_seal') == []
+
+
+def test_main_unknown_version_without_ap1_text_refused_before_seal(r):
+    r.config['ap1_version'] = 'v7'
+    with pytest.raises(SealError, match="no text is known for ap1_version"):
+        run.main(r.argv()[:-2])
+    assert r.named('seal') == []
 
 
 def test_main_adapter_send_binds_the_key(r, monkeypatch):
@@ -387,12 +507,57 @@ def test_main_creates_a_missing_output_dir(r):
     assert r.output_dir.is_dir()
 
 
-def test_main_defaults_without_sampling_or_repeat_count(r):
-    for key in ('sampling', 'repeat_count'):
-        del r.config[key]
+@pytest.mark.finding('T3-80')
+def test_main_endpoint_and_model_from_the_config_only(r, monkeypatch, capsys):
+    # Section B decision (T3-80): the environment supplies only the key.
+    monkeypatch.setenv('AP1_SMOKE_ENDPOINT', 'http://elsewhere/v1')
+    monkeypatch.setenv('AP1_SMOKE_MODEL', 'other-model')
+    r.config.update(endpoint_url='http://from-config/v1', model='cfg-model')
     assert r.main() == 0
-    assert len(r.named('execute')) == 2 * 2 * 3   # repeat_count 3
-    assert r.named('guard')[0][-1] == {}
+    out = capsys.readouterr().out
+    assert out.startswith('Endpoint: http://from-config/v1\n'
+                          'Model: cfg-model\n'
+                          'API key: present (13 chars)\n\n')
+    sealed = r.named('seal')[0][0]['config']
+    assert (sealed['endpoint_url'], sealed['model']) == (
+        'http://from-config/v1', 'cfg-model')
+
+
+@pytest.mark.finding('T3-12')
+@pytest.mark.req('R0.1')
+def test_main_under_powered_claim_refused_before_seal_and_requests(r):
+    # R0.1: the minimum-n refusal comes before the seal and any request.
+    from ap1_run.foundation.config import ConfigError
+    r.config.update(dimensions_claimed=['D6'], ap1_version='v1.3')
+    with pytest.raises(ConfigError, match=r'^D6: 0 eligible items'):
+        r.main()
+    assert (r.named('seal'), r.named('execute')) == ([], [])
+
+
+@pytest.mark.finding('T3-12', 'V12-7')
+def test_main_minimum_n_counts_the_question_items(r, monkeypatch):
+    # Under v1.2, D6 needs one item with a conflict_class: Q2 has one.
+    r.config.update(dimensions_claimed=['D6'], ap1_version='v1.2')
+    # V12-4: a v1.2 run must seal the v1.2 text.
+    monkeypatch.setattr(run, 'create_seal', lambda **kw: r.calls.append(
+        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH})
+    questions = json.loads(json.dumps(QUESTIONS))
+    questions['items'][2]['conflict_class'] = 'stated twice'
+    (r.fixture_dir / 'questions.json').write_text(json.dumps(questions))
+    assert r.main() == 0
+    assert r.named('seal')
+
+
+@pytest.mark.finding('T3-51')
+@pytest.mark.parametrize('key', ['sampling', 'repeat_count'])
+def test_main_result_affecting_field_has_no_default(r, key):
+    # R0.1: no defaults for anything affecting a result. load_config
+    # refuses a config without these; main() never invents one. (The
+    # scoring settings are the scoring pass's: test_scoring_pass.py.)
+    del r.config[key]
+    with pytest.raises(KeyError, match=key):
+        r.main()
+    assert r.named('execute') == []
 
 
 def test_main_execution_with_no_status_unknown_and_no_pause(r, capsys):
@@ -571,8 +736,7 @@ def test_main_end_to_end_against_the_mock_endpoint(tmp_path, monkeypatch,
             if name.startswith('AP1_SMOKE_'):
                 monkeypatch.delenv(name)
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-test')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+        mock.point_config(fx / 'config.json')
         monkeypatch.setattr(run.time, 'sleep', lambda s: None)
         out = tmp_path / 'out'
         code = run.main(['--config', str(fx / 'config.json'),
@@ -614,3 +778,12 @@ def test_main_end_to_end_against_the_mock_endpoint(tmp_path, monkeypatch,
     for name in ('smoke_summary.json', 'report.md', 'adjudication_sheets.md',
                  'DISCLAIMER.txt'):
         assert text(again / name) == text(out / name), name
+
+# Step 5 (run-robustness): removing the runner's dead transport handlers
+# (F4, T3-65) removed the code whose mutants they killed, so the ratchet
+# needs these mutants of main() killed instead.
+
+# (test_main_reads_fixture_and_questions_as_utf8_text was removed on the
+# merge with seal-verifier-hardening: main() no longer opens these files;
+# execution/sealed_inputs.py reads every input once, as UTF-8, and
+# tests/unit/execution/test_sealed_inputs.py covers that.)

@@ -1,7 +1,19 @@
 {
-  "description": "Replay of the published run output/run_f_sol (gpt-5.6-sol, 1,000 executions) through today's runner.",
-  "exercises": ["re-scoring a published run end to end", "real model output", "T3-1 in published data (Q08 r1)"],
+  "description": "Replay of the published run output/run_f_sol (gpt-5.6-sol, 1,000 executions) through today's runner, configured with example/config_sol.json, the sol run's own config (its sampling block is the one the run sealed).",
+  "exercises": [
+    "re-scoring a published run end to end",
+    "real model output",
+    "T3-1 in published data (Q08 r1)"
+  ],
   "replay": "output/run_f_sol/smoke_run.jsonl",
-  "config": {"repeat_count": "50"},
-  "digest_only": ["smoke_run.jsonl", "smoke_summary.json", "requests.jsonl", "console.txt"]
+  "config_file": "example/config_sol.json",
+  "config": {
+    "repeat_count": "50"
+  },
+  "digest_only": [
+    "smoke_run.jsonl",
+    "smoke_summary.json",
+    "requests.jsonl",
+    "console.txt"
+  ]
 }

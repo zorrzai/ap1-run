@@ -1569,7 +1569,347 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 9: Q01, repeat 1 — Scorer 1
+## Item 9: Q06, repeat 1 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144.00.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 9: Q06, repeat 1 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144.00.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 10: Q06, repeat 2 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144.00.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 10: Q06, repeat 2 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144.00.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 11: Q01, repeat 1 — Scorer 1
 
 ### Question
 
@@ -1663,7 +2003,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 9: Q01, repeat 1 — Scorer 2
+## Item 11: Q01, repeat 1 — Scorer 2
 
 ### Question
 
@@ -1757,7 +2097,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 10: Q01, repeat 2 — Scorer 1
+## Item 12: Q01, repeat 2 — Scorer 1
 
 ### Question
 
@@ -1851,7 +2191,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 10: Q01, repeat 2 — Scorer 2
+## Item 12: Q01, repeat 2 — Scorer 2
 
 ### Question
 
@@ -1945,7 +2285,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 11: Q02, repeat 1 — Scorer 1
+## Item 13: Q02, repeat 1 — Scorer 1
 
 ### Question
 
@@ -2045,7 +2385,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 11: Q02, repeat 1 — Scorer 2
+## Item 13: Q02, repeat 1 — Scorer 2
 
 ### Question
 
@@ -2145,7 +2485,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 12: Q02, repeat 2 — Scorer 1
+## Item 14: Q02, repeat 2 — Scorer 1
 
 ### Question
 
@@ -2245,7 +2585,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 12: Q02, repeat 2 — Scorer 2
+## Item 14: Q02, repeat 2 — Scorer 2
 
 ### Question
 
@@ -2345,7 +2685,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 13: Q03, repeat 1 — Scorer 1
+## Item 15: Q03, repeat 1 — Scorer 1
 
 ### Question
 
@@ -2445,7 +2785,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 13: Q03, repeat 1 — Scorer 2
+## Item 15: Q03, repeat 1 — Scorer 2
 
 ### Question
 
@@ -2545,7 +2885,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 14: Q03, repeat 2 — Scorer 1
+## Item 16: Q03, repeat 2 — Scorer 1
 
 ### Question
 
@@ -2645,7 +2985,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 14: Q03, repeat 2 — Scorer 2
+## Item 16: Q03, repeat 2 — Scorer 2
 
 ### Question
 
@@ -2745,7 +3085,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 15: Q04, repeat 1 — Scorer 1
+## Item 17: Q04, repeat 1 — Scorer 1
 
 ### Question
 
@@ -2841,7 +3181,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 15: Q04, repeat 1 — Scorer 2
+## Item 17: Q04, repeat 1 — Scorer 2
 
 ### Question
 
@@ -2937,7 +3277,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 16: Q04, repeat 2 — Scorer 1
+## Item 18: Q04, repeat 2 — Scorer 1
 
 ### Question
 
@@ -3033,7 +3373,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 16: Q04, repeat 2 — Scorer 2
+## Item 18: Q04, repeat 2 — Scorer 2
 
 ### Question
 
@@ -3129,7 +3469,347 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 17: Q08, repeat 1 — Scorer 1
+## Item 19: Q06, repeat 1 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144.00.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 19: Q06, repeat 1 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144.00.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 20: Q06, repeat 2 — Scorer 1
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144.00.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 20: Q06, repeat 2 — Scorer 2
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144.00.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 21: Q08, repeat 1 — Scorer 1
 
 ### Question
 
@@ -3216,7 +3896,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 17: Q08, repeat 1 — Scorer 2
+## Item 21: Q08, repeat 1 — Scorer 2
 
 ### Question
 
@@ -3303,7 +3983,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 18: Q08, repeat 2 — Scorer 1
+## Item 22: Q08, repeat 2 — Scorer 1
 
 ### Question
 
@@ -3390,7 +4070,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 18: Q08, repeat 2 — Scorer 2
+## Item 22: Q08, repeat 2 — Scorer 2
 
 ### Question
 
@@ -3479,6 +4159,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ---
 
-Total items requiring adjudication: 18
+Total items requiring adjudication: 22
 
-Total sheets: 36 (2 per item, for 2 scorers)
+Total sheets: 44 (2 per item, for 2 scorers)

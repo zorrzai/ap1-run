@@ -105,14 +105,6 @@ def test_pct_zero_denominator_is_unquantised_zero(gf):
     assert str(gf.pct(5, 0)) == '0'
 
 
-@pytest.mark.finding('S3-G8-6')
-def test_pct_rounds_half_to_even(gf):
-    # quantize() uses the context's rounding, ROUND_HALF_EVEN; the module
-    # imports ROUND_HALF_UP and never uses it. Correct: half up, 6.3.
-    assert str(gf.pct(1, 16)) == '6.2'
-    assert str(gf.pct(3, 16)) == '18.8'
-
-
 def test_import_sets_decimal_precision_50(gf):
     from decimal import getcontext
     assert getcontext().prec == 50
@@ -443,14 +435,6 @@ def test_compute_b_ops_per_exec_is_a_rounded_float(figures):
     assert isinstance(v['b_ops_per_exec'], float)
 
 
-@pytest.mark.finding('S3-G8-8')
-def test_compute_empty_run_b_raises_zero_division(figures):
-    # Run A guards its Q10 average against zero; run B's ops-per-execution
-    # does not. Correct: a clear error naming the empty run (or 0).
-    with pytest.raises(ZeroDivisionError):
-        figures(b=[])
-
-
 def test_compute_q10_calls_per_execution_of_run_a(figures):
     v = figures(a=[result('Q10', ops=['OPERATION-CORRECT'] * 3),
                    result('Q10', ops=['OPERATION-CORRECT'] * 2),
@@ -508,22 +492,30 @@ def test_compute_wrong_operation_ratio_uses_thousands_separator(figures):
     assert v['a_wo_item_wrong_cp'] == '1000/1,000'
 
 
-@pytest.mark.finding('S3-G8-7')
-def test_compute_base_noninvocation_bound_assumes_500_base_executions(
-        figures):
-    # The denominator is fixed at 500 (10 items x 50 repeats), whatever
-    # the run holds: here a single base execution. Correct: the run's own
-    # count of base executions.
-    v = figures(a=[result('Q01')])
-    assert v['a_base_noninvoke_cp'] == (
-        '0/500 (p_upper < %.4f, 95%% Clopper–Pearson)'
-        % clopper_pearson_upper_k0(500))
-
-
 def test_compute_base_noninvocation_ratio_when_some(figures):
     v = figures(b=[result('Q01', invocation='NOT-INVOKED'),
-                   result('Q02', invocation='NOT-INVOKED')])
-    assert v['b_base_noninvoke_cp'] == '2/500'
+                   result('Q02', invocation='NOT-INVOKED'),
+                   result('Q03'), result('Q01', condition=IR)])
+    assert v['b_base_noninvoke_cp'] == '2/3'
+
+
+def test_pct_rounds_below_half_down_and_ties_up(gf):
+    assert str(gf.pct(1, 3)) == '33.3'
+    assert str(gf.pct(2, 3)) == '66.7'
+    assert str(gf.pct(3, 16)) == '18.8'
+    assert str(gf.pct(1, 16, places=0)) == '6'
+    assert str(gf.pct(1, 8, places=1)) == '12.5'
+    assert str(gf.pct(1, 80, places=2)) == '1.25'
+
+
+def test_compute_empty_run_b_gives_zero_ops_per_execution(figures):
+    assert figures(b=[])['b_ops_per_exec'] == 0
+
+
+def test_compute_base_noninvocation_without_base_executions(figures):
+    # No base execution at all: no bound, the ratio 0/0.
+    v = figures(a=[result('Q01', condition=IR)])
+    assert v['a_base_noninvoke_cp'] == '0/0'
 
 
 def test_compute_superseded_run_counts(figures):
@@ -710,9 +702,6 @@ def test_paths_are_fixed_under_the_repository_root(gf):
 @pytest.mark.finding('S3-G8-6')
 @pytest.mark.parametrize('num, denom, shown', [(1, 16, '6.3'), (5, 16, '31.3'),
                                                (9, 16, '56.3')])
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G8-6: pct rounds half to even; ROUND_HALF_UP is '
-                          'imported and never used')
 def test_pct_rounds_half_up(gf, num, denom, shown):
     # Correct: the module imports ROUND_HALF_UP for pct, and the example
     # config's quantisation declares "rounding": "ROUND_HALF_UP", so
@@ -722,9 +711,6 @@ def test_pct_rounds_half_up(gf, num, denom, shown):
 
 
 @pytest.mark.finding('S3-G8-7')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G8-7: the base non-invocation bound uses a '
-                          'fixed n = 500')
 def test_compute_base_noninvocation_bound_uses_the_runs_base_count(figures):
     # Correct: n is the run's own count of base executions: here 2 (the
     # instruction_removed result does not count).
@@ -735,8 +721,6 @@ def test_compute_base_noninvocation_bound_uses_the_runs_base_count(figures):
 
 
 @pytest.mark.finding('S3-G8-8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G8-8: an empty run B raises ZeroDivisionError')
 def test_compute_empty_run_b_no_zero_division(figures):
     # Correct: like run A's guarded average, an empty run B gives 0 ops per
     # execution, or a clear error that names the empty run; never a bare

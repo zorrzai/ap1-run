@@ -73,9 +73,11 @@ class Fakes:
         self.record('score_accuracy', *args, **kwargs)
         return {'scored': 'accuracy'}
 
-    def extract_numeric_tokens(self, content, *, currency_symbols):
+    def extract_numeric_tokens(self, content, *, currency_symbols,
+                               decimal_sep, grouping_sep):
         self.record('extract_numeric_tokens', content,
-                    currency_symbols=currency_symbols)
+                    currency_symbols=currency_symbols,
+                    decimal_sep=decimal_sep, grouping_sep=grouping_sep)
         found = self.tokens.get(content, [])
         if isinstance(found, Exception):
             raise found
@@ -122,7 +124,8 @@ def test_score_execution_collects_every_record(fakes, capsys):
         'expected_value': D('638.40'),
         'delivered_context': {'savings': {'balance': '1'}},
         'lookup_collision': False, 'answer_tolerance': D('0.01'),
-        'decline_markers': ['cannot'], 'currency_symbols': ['$']})]
+        'decline_markers': ['cannot'], 'currency_symbols': ['$'],
+        'decimal_separator': '.', 'grouping_separator': ','})]
 
     # D7.3 transcription
     assert fakes.calls['check_transcription'] == [(([D('638.4')], D('638.40')), {
@@ -157,8 +160,11 @@ def test_score_execution_collects_every_record(fakes, capsys):
     assert findings.tool_call_structures == [{
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
         'raw_arguments': '{"expression": "15200 * 0.042"}'}]
+    # T3-41: every extraction gets the configured separators (the US
+    # defaults when the config names none, as CONFIG here)
     assert fakes.calls['extract_numeric_tokens'] == [
-        ((content,), {'currency_symbols': ['$']})] * 2
+        ((content,), {'currency_symbols': ['$'], 'decimal_sep': '.',
+                      'grouping_sep': ','})] * 2
     assert findings.grammar_issues == []
     assert findings.decline_findings == []
     assert findings.unmeasured_cells == []
@@ -201,7 +207,7 @@ def test_score_execution_defaults_for_a_bare_result(fakes, capsys):
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
         'status': 'EXECUTED', 'evidence_class': '', 'invocation_outcome': '',
         'figure_outcome': 'AUTO-NO-FIGURE', 'figure_reason': '',
-        'tool_calls_count': 0, 'released_figure': '', 'expected': '638.40',
+        'tool_calls_count': 0, 'released_figure': None, 'expected': '638.40',
         'shape_ok': False, 'operation_correctness': [],
         'provenance_results': [], 'transcription_outcome':
         'TRANSCRIBED-EXACT', 'release_coverage_outcome': 'PARTIALLY-GOVERNED',
@@ -279,6 +285,19 @@ def test_score_execution_without_required_operation_every_tool_counts(
     assert fakes.calls['check_transcription'][0][0][0] == [D('1'), D('9')]
 
 
+@pytest.mark.finding('T3-41')
+def test_score_execution_passes_configured_separators_everywhere(fakes):
+    content = 'Die Zinsen betragen 1.006,25 $.'
+    config = dict(CONFIG, decimal_separator=',', grouping_separator='.')
+    score(Findings(), {'response': response(content)}, config=config)
+    kwargs = fakes.calls['identify_figure'][0][1]
+    assert (kwargs['decimal_separator'], kwargs['grouping_separator']) == \
+        (',', '.')
+    assert [kw for _, kw in fakes.calls['extract_numeric_tokens']] == [
+        {'currency_symbols': ['$'], 'decimal_sep': ',',
+         'grouping_sep': '.'}] * 2
+
+
 # -- release coverage candidates ------------------------------------------
 
 def test_score_execution_coverage_without_tokens_when_extraction_fails(
@@ -346,6 +365,39 @@ def test_score_execution_records_each_calls_raw_arguments(fakes):
     assert findings.all_results[0]['tool_calls_count'] == 3
 
 
+@pytest.mark.finding('T3-38')
+@pytest.mark.parametrize('gt, other', [
+    ({'required_operation': 'calculator'}, 2),
+    ({'required_operation': 'python'}, 3),
+    ({'required_operation': 'other'}, 4),
+], ids=['calculator', 'python', 'none-matching'])
+def test_score_execution_counts_calls_to_other_tools(fakes, gt, other):
+    # T3-38: the row counts the calls to tools other than the required
+    # operation, which do not affect D7.1, so the consistency check can
+    # leave them out.
+    calls = [calc('1 + 1', ''), calc('2 + 2', ''),
+             {'function': {'name': 'python'}}, {'id': 'x'}]
+    findings = Findings()
+    score(findings, {'tool_calls': calls, 'ground_truth': gt})
+    row = findings.all_results[0]
+    assert (row['tool_calls_count'], row['other_tool_calls_count']) == (
+        4, other)
+
+
+@pytest.mark.finding('T3-38')
+@pytest.mark.parametrize('gt, calls', [
+    ({'required_operation': 'calculator'}, [calc('1 + 1', '')]),
+    ({'required_operation': None}, [calc('1 + 1', ''), {'id': 'x'}]),
+    (None, [{'function': {'name': 'python'}}]),
+], ids=['all-required', 'no-operation', 'no-gt'])
+def test_score_execution_no_other_tool_calls_no_key(fakes, gt, calls):
+    # With no operation named every call counts (execution/evidence.py);
+    # the key is only written when there are other calls.
+    findings = Findings()
+    score(findings, {'tool_calls': calls, 'ground_truth': gt})
+    assert 'other_tool_calls_count' not in findings.all_results[0]
+
+
 # -- operation correctness, from the result ------------------------------
 
 def test_score_execution_operation_correctness_taken_from_the_result(fakes):
@@ -392,6 +444,28 @@ def test_record_not_run():
     assert findings.unmeasured_cells == []
 
 
+@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.parametrize('result, cause', [
+    ({'error': 'rate limited (HTTP 429): x', 'cause': 'rate_limited'},
+     'rate_limited: rate limited (HTTP 429): x'),
+    ({'error': 'HTTP 500: boom', 'cause': 'transport_error'},
+     'transport_error: HTTP 500: boom'),
+    ({'error': 'empty response'}, 'empty response'),
+], ids=['rate-limited', 'transport', 'empty'])
+def test_record_not_scored_unmeasured_cell_cause(result, cause):
+    # F4/T3-65 (Steven, choices-for-marcus #7): every UNMEASURED cell is
+    # listed with its cause, the engine's kind first where it gives one.
+    findings = Findings()
+    record_not_scored(findings, 'Q05', 'base', 3, 'UNMEASURED',
+                      dict(result, status='UNMEASURED'))
+    assert findings.unmeasured_cells == [{'item_id': 'Q05',
+                                          'condition': 'base', 'repeat': 3,
+                                          'cause': cause}]
+    assert findings.all_results == [{'item_id': 'Q05', 'condition': 'base',
+                                     'repeat': 3, 'status': 'UNMEASURED',
+                                     'cause': cause}]
+
+
 @pytest.mark.parametrize('result, cause', [
     ({'error': 'E', 'reason': 'R'}, 'E'),
     ({'reason': 'R'}, 'R'),
@@ -403,6 +477,7 @@ def test_record_not_scored(result, cause):
     assert findings.all_results == [{'item_id': 'Q06', 'condition': 'removed',
                                      'repeat': 1, 'status': 'VOID',
                                      'cause': cause}]
+    assert findings.unmeasured_cells == []
 
 
 def test_findings_start_empty_and_separate():
@@ -415,7 +490,7 @@ def test_findings_start_empty_and_separate():
         'grammar_issues': [], 'decline_findings': [],
         'tool_call_structures': [], 'evidence_findings': [],
         'transcription_results': [], 'release_coverage_results': [],
-        'unmeasured_cells': []}
+        'unmeasured_cells': [], 'parameter_echo': []}
 
 
 # -- the real scoring modules, on a realistic response --------------------
@@ -630,6 +705,36 @@ def test_result_from_record_unmeasured_with_its_cause(recorders, error_state,
     assert recorders.calls == {}
 
 
+@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.parametrize('cause', ['rate_limited', 'transport_error'])
+def test_result_from_record_unmeasured_carries_the_recorded_cause(
+        recorders, cause):
+    # The engine records the kind of a round-0 failure; the scoring pass
+    # passes it on, so record_not_scored lists the cell with it.
+    result = result_from_record(
+        engine_record(status='UNMEASURED', cause=cause,
+                      error_state='TRANSPORT_FAILURE: HTTP 500: x'),
+        gt=GT_D72, ctx=CTX_D72, config=CONFIG_D72)
+    assert (result['cause'], result['error']) == (cause, 'HTTP 500: x')
+
+
+@pytest.mark.finding('T3-67')
+def test_result_from_record_loop_exhaustion_carried(recorders):
+    # A loop the turn limit stopped is flagged on the result, as the
+    # engine returned it; an EV-0 cause is not (it is in the transcript
+    # and the report).
+    state = 'TOOL_LOOP_EXHAUSTED: the response after 10 tool turns ...'
+    result = result_from_record(
+        engine_record(status='EXECUTED', error_state=state), gt=GT_D72,
+        ctx=CTX_D72, config=CONFIG_D72)
+    assert result['error_state'] == state
+    for other in ('UNOBSERVABLE: round 1: request failed: x', None):
+        result = result_from_record(
+            engine_record(status='EXECUTED', error_state=other), gt=GT_D72,
+            ctx=CTX_D72, config=CONFIG_D72)
+        assert 'error_state' not in result
+
+
 @pytest.mark.parametrize('record, reason', [
     (engine_record(status='VOID', void_reason='underivable'), 'underivable'),
     (engine_record(status='VOID'), ''),
@@ -808,9 +913,6 @@ EUROPEAN = {'quantisation': {'places': 2, 'rounding': 'ROUND_HALF_UP'},
 
 @pytest.mark.finding('T3-41')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-41: the configured separators are not passed '
-                          'to figure identification')
 def test_score_execution_figure_parsed_with_configured_separators(capsys):
     # SPEC R0.4.2: a token is grouped by the configured grouping_separator
     # and has the configured decimal_separator. Under ',' decimal and '.'
@@ -824,9 +926,6 @@ def test_score_execution_figure_parsed_with_configured_separators(capsys):
 
 @pytest.mark.finding('T3-41')
 @pytest.mark.req('R0.4.2', 'R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-41: the configured separators are not passed '
-                          'to release-coverage extraction')
 def test_score_execution_coverage_candidates_parsed_with_configured_separators(
         capsys):
     # T3-41: under European separators coverage "silently becomes
@@ -840,10 +939,6 @@ def test_score_execution_coverage_candidates_parsed_with_configured_separators(
 
 @pytest.mark.finding('T3-41')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-41: a token ambiguous under the configured '
-                          'separators is read with the US defaults and '
-                          'auto-scored')
 def test_score_execution_locale_ambiguous_figure_routes_to_adjudication(
         capsys):
     # SPEC R0.4.2: where the configuration does not disambiguate (here '.'
@@ -866,23 +961,6 @@ NO_FIGURE = {'outcome': 'ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING',
 
 
 @pytest.mark.finding('S4-G9-1')
-def test_score_execution_no_released_figure_written_as_string_none(fakes):
-    # Current behaviour: identify_figure gives released_figure None for
-    # every outcome that releases no figure, and score_execution writes
-    # str(None), so smoke_summary.json says "None" (the no-key case
-    # writes ''). Correct: no figure is recorded as null. (Since T3-21 the
-    # figure is no longer written to the transcript.)
-    fakes.figure = dict(NO_FIGURE)
-    findings = Findings()
-    score(findings, {'response': response('It is $15.25.'),
-                     'tool_calls': []})
-    assert findings.all_results[0]['released_figure'] == 'None'
-
-
-@pytest.mark.finding('S4-G9-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="S4-G9-1: no released figure is written as the "
-                          "string 'None'")
 def test_score_execution_no_released_figure_recorded_as_null(fakes):
     # R0.3: the record of what happened says a figure that was not
     # released is null, not the text "None" (since T3-21 that record is
@@ -896,9 +974,6 @@ def test_score_execution_no_released_figure_recorded_as_null(fakes):
 # Group g1-invocation (fix plan branch 10).
 
 @pytest.mark.finding('T3-65', 'F4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-65/F4: engine UNMEASURED results never reach '
-                          'unmeasured_cells')
 @pytest.mark.parametrize('error, word', [
     ('rate limited (HTTP 429): {"error": "Rate limit"}', 'rate'),
     ('transport failure after 3 attempts: reset', 'transport'),
@@ -915,3 +990,64 @@ def test_record_not_scored_unmeasured_listed_with_cause(error, word):
             for c in findings.unmeasured_cells] == [('Q03', 'base', 1)]
     assert word in findings.unmeasured_cells[0]['cause'].lower()
     assert [r['status'] for r in findings.all_results] == ['UNMEASURED']
+
+
+# Step 5 (run-robustness): an execution the engine flagged is flagged in
+# the runner too (T3-67).
+
+@pytest.mark.finding('T3-67')
+def test_score_execution_engine_error_state_printed_and_kept(fakes, capsys):
+    flag = 'TOOL_LOOP_EXHAUSTED: the response after 10 tool turns ...'
+    findings = Findings()
+    score(findings, {'response': response(None), 'tool_calls': [],
+                     'evidence_class': 'EV-2', 'invocation_outcome': 'INVOKED',
+                     'error_state': flag})
+    assert capsys.readouterr().out == f'AUTO-MATCH | EV-2 | INVOKED | {flag}\n'
+    assert findings.all_results[0]['error_state'] == flag
+
+
+@pytest.mark.finding('T3-67')
+def test_score_execution_no_error_state_no_key(fakes, capsys):
+    findings = Findings()
+    score(findings, {'response': response('x'), 'tool_calls': []})
+    assert 'error_state' not in findings.all_results[0]
+
+
+# -- echo_check (D2.2 parameter echo) --------------------------------------
+
+@pytest.mark.finding('T3-22', 'T3-90')
+def test_echo_check_ignored_temperature_is_a_finding():
+    sampling = {'temperature': '1',
+                'top_p': {'value': 'omitted', 'reason': 'operator-declared'}}
+    assert executions.echo_check(sampling, {'temperature': 0.7,
+                                            'top_p': 0.9}) == {
+        'verified': False, 'status': 'MISMATCH',
+        'findings': ["parameter 'temperature': requested='1', applied=0.7 "
+                     '— silently ignored']}
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+@pytest.mark.parametrize('response', [{'choices': []}, None, 'text'])
+def test_echo_check_nothing_echoed_is_unverified(response):
+    assert executions.echo_check({'temperature': '1'}, response)[
+        'status'] == 'UNVERIFIED'
+
+
+def test_echo_check_applied_values_verified():
+    assert executions.echo_check({'temperature': '1', 'seed': '7'},
+                                 {'temperature': '1', 'seed': 7})[
+        'status'] == 'VERIFIED'
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+def test_score_execution_records_the_echo_check(fakes):
+    findings = Findings()
+    score(findings, {'response': dict(response('It is $15.20.'),
+                                      temperature=0.5),
+                     'tool_calls': []},
+          config=dict(CONFIG, sampling={'temperature': '0'}))
+    assert findings.parameter_echo == [{
+        'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+        'verified': False, 'status': 'MISMATCH',
+        'findings': ["parameter 'temperature': requested='0', applied=0.5 "
+                     '— silently ignored']}]

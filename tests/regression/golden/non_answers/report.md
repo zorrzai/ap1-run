@@ -19,12 +19,17 @@ Model: mock-model
 | `ap1_version_doi` | `10.5281/zenodo.21755443` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
+| `expected_values_hash` | `5b5f7c1d0a5c638692c2bd7b334f38989dee50c8ccba6956048290a3c078dc36` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
-| `ground_truth_hash` | `080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812` |
+| `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
+| `package_versions` | `<ENVIRONMENT>` |
+| `platform` | `<ENVIRONMENT>` |
+| `python_version` | `<ENVIRONMENT>` |
 | `questions_hash` | `5f6aa97714e2b0f7e3039ae6018f6566e811354c4a904d210964beac54172af9` |
 | `runner_source_hash` | `<RUNNER_SOURCE_HASH>` |
 | `runner_version_commit` | `e0d9ec9` |
 | `runner_version_tag` | `v1.3.1` |
+| `seal_format` | `2` |
 | `seal_hash` | `<SEAL_HASH>` |
 | `timestamp` | `<TIMESTAMP>` |
 | `verification_keys` | `[]` |
@@ -49,7 +54,6 @@ Model: mock-model
     "I'm sorry, I cannot"
   ],
   "dimensions_claimed": [
-    "D1",
     "D2",
     "D7"
   ],
@@ -112,7 +116,7 @@ Model: mock-model
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | Measured | 32 | Accuracy: 1 (auto-scored 20; 12 adjudicated not in rate) |
+| D1 | **NOT MEASURED** | — | — |
 | D2 | Measured | N/A | See §9 D2 Mechanism Classes |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -293,6 +297,18 @@ Total operands resolved: 112
 *No per-surface D2 data available.*
 
 
+## 9b. D2.2 Execution Conditions
+
+- Serving stack and version: not disclosed by the endpoint; the runner cannot observe it.
+- Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
+- Concurrency: one request at a time, sequentially, from a single process.
+- Sampling parameters sent:
+  - `max_completion_tokens`: `4096`
+  - `reasoning_effort`: `none`
+  - `temperature`: not sent (platform-rejected)
+  - `top_p`: not sent (operator-declared)
+- Parameter echo: `UNVERIFIED` (32 responses checked)
+
 ## 10. Non-Outcome Cells
 
 > Every cell that is not a scoreable outcome is listed with its reason.
@@ -314,6 +330,7 @@ Total operands resolved: 112
 
 The following dimensions were **not measured** in this evaluation and require human adjudication:
 
+- **D1**: Accuracy — requires item-level scoring
 - **D3**: Completeness of explanation — requires human adjudication
 - **D4**: Appropriate caveats — requires human adjudication
 - **D5**: Source attribution — requires human adjudication

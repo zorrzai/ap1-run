@@ -32,7 +32,7 @@ QUESTIONS = {'items': [{'id': 'Q1', 'source_accounts': ['a']},
                        {'id': 'Q2', 'source_accounts': ['b']}]}
 FIXTURE = {'accounts': [{'id': 'a'}, {'id': 'b'}]}
 CONFIG = {'repeat_count': 2, 'sampling': {'temperature': '0'},
-          'answer_tolerance': '0.05', 'decline_markers': ['cannot'],
+          'answer_tolerance': D('0.05'), 'decline_markers': ['cannot'],
           'currency_symbols': ['$']}
 SEAL = {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}
 
@@ -82,7 +82,8 @@ class Pass:
     def run(self):
         return score_run(self.transcript, config=self.config,
                          seal_record=dict(SEAL), fixture=FIXTURE,
-                         questions=QUESTIONS, gt_module=self.gt,
+                         questions=QUESTIONS,
+                         ground_truth_compute=self.gt.compute,
                          output_dir='OUT')
 
     def named(self, name):
@@ -249,9 +250,11 @@ def test_score_run_calls(p, capsys):
     (results, conditions, kw), = p.named('run_report')
     assert results == expected_results
     assert conditions == ['base', 'instruction_removed']
+    unmeasured = [{'item_id': 'Q1', 'condition': 'base', 'repeat': 1,
+                   'cause': 'cause of UNMEASURED'}]
     assert kw == {'disclaimer': DISCLAIMER, 'grammar_issues': [],
                   'decline_findings': [], 'tool_call_structures': [],
-                  'evidence_findings': [], 'unmeasured_cells': [],
+                  'evidence_findings': [], 'unmeasured_cells': unmeasured,
                   'transcription_results': [],
                   'release_coverage_results': []}
 
@@ -265,6 +268,7 @@ def test_score_run_calls(p, capsys):
                   'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
                   'transcription_results': [],
                   'release_coverage_results': [],
+                  'parameter_echo': [],
                   'held_constant': HELD_CONSTANT}
     assert p.named('scoring_report') == [(
         {'d1': True, 'n': 3}, {'d2': 'results'}, 'CAP', {'summary': True})]
@@ -274,7 +278,7 @@ def test_score_run_calls(p, capsys):
         'seal_hash': 'SEAL', 'all_results': expected_results,
         'grammar_issues': [], 'decline_findings': [],
         'tool_call_structures': [], 'evidence_findings': [],
-        'unmeasured_cells': []}
+        'unmeasured_cells': unmeasured}
     assert p.named('outputs') == [('OUT', {
         'records': ['SCORED RECORDS'], 'summary': {'summary': True},
         'config': p.config, 'seal_record': SEAL, 'questions': QUESTIONS,
@@ -289,18 +293,19 @@ def test_score_run_calls(p, capsys):
                       'd2', 'summary', 'scoring_report', 'attach', 'outputs']
 
 
-def test_score_run_defaults_without_tolerance_markers_or_symbols(p):
-    p.config = {}
+@pytest.mark.finding('T3-51')
+@pytest.mark.parametrize('key', ['answer_tolerance', 'decline_markers',
+                                 'currency_symbols', 'sampling',
+                                 'repeat_count'])
+def test_score_run_result_affecting_field_has_no_default(p, key):
+    # R0.1: no defaults for anything affecting a result; load_config
+    # refuses a config without these, and the scoring pass never invents
+    # one.
+    del p.config[key]
     write(p.transcript, 'Q1', 'base', 1, 'EXECUTED')
-    p.run()
-    kw = p.named('score')[0][1]
-    assert (kw['answer_tolerance'], kw['decline_markers'],
-            kw['currency_symbols']) == (D('0.01'), [], [])
-    # repeat_count 3: 2 items x 2 conditions x 3, one record
-    assert sum(1 for r in p.named('consistency')[0][0]
-               if r['status'] == 'NOT-RUN') == 11
-    assert p.named('d2_cap') == [({},)]
-    assert p.named('d2')[0][1] == 3
+    with pytest.raises(KeyError, match=key):
+        p.run()
+    assert p.named('outputs') == []
 
 
 def test_score_run_numeric_tolerance_is_kept_as_given(p):

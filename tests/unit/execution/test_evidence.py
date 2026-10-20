@@ -359,6 +359,41 @@ def test_extract_content_missing_or_null_content_empty(msg):
         '', True, None)
 
 
+# Step 5 (run-robustness): message parts the evidence code cannot read make
+# the round unrecognised (EV-0) instead of an exception further on (S3-G2-1).
+
+TOOL_CALLS_REASON = ('choices[0].message.tool_calls is not a list of '
+                     'objects with an object "function"')
+
+
+@pytest.mark.finding('S3-G2-1')
+@pytest.mark.parametrize('message, reason', [
+    ({'content': ['x']}, 'choices[0].message.content is not a string'),
+    ({'content': 15.2}, 'choices[0].message.content is not a string'),
+    ({'content': 'x', 'metadata': 'attestation'},
+     'choices[0].message.metadata is not an object'),
+    ({'content': 'x', 'metadata': ['attestation']},
+     'choices[0].message.metadata is not an object'),
+    ({'tool_calls': {'id': 'c1'}}, TOOL_CALLS_REASON),
+    ({'tool_calls': 'calculator'}, TOOL_CALLS_REASON),
+    ({'tool_calls': ['calculator']}, TOOL_CALLS_REASON),
+    ({'tool_calls': [{'id': 'c1', 'function': 'calculator'}]},
+     TOOL_CALLS_REASON),
+], ids=['list-content', 'number-content', 'str-metadata', 'list-metadata',
+        'dict-tool-calls', 'str-tool-calls', 'str-call', 'str-function'])
+def test_extract_shape_unreadable_message_part_unrecognised(message, reason):
+    resp = {'choices': [{'message': {'role': 'assistant', **message}}]}
+    assert evidence._extract_model_tool_calls(resp) == ([], False, reason)
+    assert evidence._extract_content(resp) == ('', False, reason)
+    assert extract_attestation(resp) is None
+
+
+def test_extract_shape_call_without_function_recognised():
+    resp = response(tool_calls=[{'id': 'c1'}])
+    assert evidence._extract_model_tool_calls(resp) == (
+        [{'id': 'c1'}], True, None)
+
+
 # -- extract_attestation ----------------------------------------------
 
 def test_extract_attestation_in_message_metadata_returned():
@@ -377,28 +412,10 @@ def test_extract_attestation_absent_none(resp):
     assert extract_attestation(resp) is None
 
 
-@pytest.mark.finding('S3-G2-1')
-@pytest.mark.parametrize('resp, error', [
-    ({'choices': ['x']}, AttributeError),
-    ({'choices': [{'message': None}]}, AttributeError),
-    ({'choices': {'a': 1}}, KeyError),
-    ({'choices': [{'message': {'metadata': 'attestation'}}]}, TypeError),
-], ids=['str-choice', 'null-message', 'dict-choices', 'str-metadata'])
-def test_extract_attestation_malformed_shape_raises(resp, error):
-    # S3-G2-1: shapes that _extract_model_tool_calls reports as
-    # unrecognised (EV-0) make extract_attestation raise; in execute_item
-    # that is uncaught. Correct: None for any shape it cannot read.
-    with pytest.raises(error):
-        extract_attestation(resp)
-
-
 # --- Step 4: correct behaviour (failing until fixed) ---
 # Group g1-invocation (fix plan branch 10).
 
 @pytest.mark.finding('S3-G2-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-1: extract_attestation raises on malformed '
-                          'shapes')
 @pytest.mark.parametrize('resp', [
     {'choices': ['x']}, {'choices': [{'message': None}]},
     {'choices': {'a': 1}},

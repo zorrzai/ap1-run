@@ -53,6 +53,13 @@ python run_all_tests.py
   URL. The key goes in `AP1_SMOKE_API_KEY` (see SECURITY.md).
 - Then run `python smoke_test.py`.
 
+These environment variables belong to the code of the published runs. The
+current runner takes the endpoint, the model and every sampling setting from
+the config file alone (only `AP1_SMOKE_API_KEY` is read from the
+environment). Each published model has its own configuration:
+`example/config_mini.json` (gpt-4.1-mini) and `example/config_sol.json`
+(gpt-5.6-sol), e.g. `ap1-run --config example/config_sol.json`.
+
 **Keep virtual environments outside the clone, or name them so that they are
 excluded.** `compute_runner_source_hash` hashes every `.py` file under the
 repository root except `output/`, `review_output*` and `__pycache__/`. A
@@ -68,6 +75,12 @@ python verify_run_seal.py output/run_f_sol
 ```
 
 On the current layout, the same script is `python tools/verify_run_seal.py`.
+Since October 2026 it checks a record without a `seal_format` field, as the
+published runs' are, under the rules it was made with (raw bytes, a
+`seal_hash` without the timestamp), and says so in a warning. It also checks
+every transcript line and the time of the seal. It cannot recompute those
+records' `runner_source_hash` (it covered every `.py` file of the clone); that
+is a warning too.
 
 **Expected mismatch.** `ground_truth_hash` fails on a clean clone, and only
 because of line endings. The repository checks `.py` files out with LF; the
@@ -80,7 +93,10 @@ seals, restore the module from `203fef4` with CRLF; see FINDINGS_ERRATA,
 
 - **`runner_source_hash` is different.** The hash covers the path and content
   of every `.py` file, and the files moved. That is expected. It is not a
-  change in behaviour.
+  change in behaviour. Since October 2026 it also covers less: only the code
+  that runs, the `.py` files of `src/ap1_run/` and the `VERSION` file. Tests,
+  `tools/`, an in-tree venv and scratch files no longer change it, and a
+  VERSION commit shorter than 7 characters no longer counts as naming HEAD.
 - **Behaviour is unchanged by the move.** The regression baseline
   (`tests/regression/`) pins the runner's behaviour end to end and gave
   identical output before and after it. It includes both September runs

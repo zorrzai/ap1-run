@@ -140,7 +140,16 @@ result, by us or by anyone, in any document.
   EV-0 UNOBSERVABLE: 1
   EV-2 PLATFORM-STRUCTURAL: 30
 
-3g. UNMEASURED CELLS: 0
+3g. UNMEASURED CELLS: 9
+  Q03/base/r1: rate_limited: rate limited (HTTP 429): {"error": {"message": "Rate limit reached"}}
+  Q04/base/r1: transport_error: HTTP 500: {"error": {"message": "server error"}}
+  Q05/base/r1: transport_error: transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+  Q05/base/r2: transport_error: transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+  Q06/base/r1: transport_error: response is not valid JSON: this is not json
+  Q08/base/r1: transport_error: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}}
+  Q08/base/r2: transport_error: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}}
+  Q08/instruction_removed/r1: transport_error: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}}
+  Q08/instruction_removed/r2: transport_error: HTTP 401: {"error": {"message": "Incorrect API key provided: [REDACTED]"}}
 
 3h. D7.1 INVOCATION (n = questions; a question fails if any repeat is NOT-INVOKED; UNOBSERVABLE not in n):
   base: invoked=8 not_invoked=0 n=8
@@ -149,7 +158,8 @@ result, by us or by anyone, in any document.
     failure rate: 0/8 failures; one-sided 95% upper bound on the failure rate 31.2%
   instruction_removed: invoked=9 not_invoked=0 n=9
     failure rate: 0/9 failures; one-sided 95% upper bound on the failure rate 28.3%
-\n3h2. D7.3 TRANSCRIPTION:
+
+3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 30
   TRANSCRIBED-ALTERED: 0
   UNOBSERVABLE: 1

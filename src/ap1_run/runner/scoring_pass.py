@@ -14,8 +14,6 @@ The live run calls it after its execution pass; the re-scorer
 give the same results for the same transcript.
 """
 
-from decimal import Decimal
-
 from ap1_run.execution.context import (
     build_delivered_context, check_lookup_collision,
 )
@@ -79,32 +77,34 @@ def index_records(records, seal_hash):
 
 
 def score_run(transcript_path, *, config, seal_record, fixture, questions,
-              gt_module, output_dir):
+              ground_truth_compute, output_dir):
     """Score the run in transcript_path; write the output files to
     output_dir; return the content of smoke_summary.json after its
     '_disclaimer' line.
 
     config is the run's resolved configuration and seal_record its
-    pre-registration record (R1.1); fixture, questions and gt_module are
-    the sealed inputs. The transcript is only read.
+    pre-registration record (R1.1); fixture and questions are the sealed
+    inputs, and ground_truth_compute(item_id, ctx) gives the sealed
+    expected values (sealed_inputs.sealed_compute, T3-48). The transcript
+    is only read.
     """
     records = transcript.read_all(transcript_path)
     seal_hash = seal_record['seal_hash']
     by_execution = index_records(records, seal_hash)
 
-    repeat_count = config.get('repeat_count', 3)
-    answer_tolerance = config.get('answer_tolerance', Decimal('0.01'))
-    if isinstance(answer_tolerance, str):
-        answer_tolerance = Decimal(answer_tolerance)
-    decline_markers = config.get('decline_markers', [])
-    currency_symbols = config.get('currency_symbols', [])
+    # Every one of these is a required field, validated by load_config
+    # (repeat_count an int, answer_tolerance a Decimal): no defaults (R0.1).
+    repeat_count = config['repeat_count']
+    answer_tolerance = config['answer_tolerance']
+    decline_markers = config['decline_markers']
+    currency_symbols = config['currency_symbols']
 
     findings = Findings()
     for condition in CONDITIONS:
         for item in questions['items']:
             item_id = item['id']
             ctx = build_delivered_context(fixture, item['source_accounts'])
-            gt = gt_module.compute(item_id, ctx)
+            gt = ground_truth_compute(item_id, ctx)
 
             # Check derivability
             if not gt.get('derivable', True):
@@ -159,7 +159,7 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
     d1_summary['n'] = len(findings.all_accuracy_results)
 
     # -- D2 classification per (item, condition) per surface --
-    d2_cap_reason = find_d2_cap(config.get('sampling', {}))
+    d2_cap_reason = find_d2_cap(config['sampling'])
     d2_results = classify_reproducibility(findings.d2_responses, repeat_count,
                                           d2_cap_reason)
 
@@ -169,6 +169,7 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
         d2_cap_reason=d2_cap_reason,
         transcription_results=findings.transcription_results,
         release_coverage_results=findings.release_coverage_results,
+        parameter_echo=findings.parameter_echo,
         held_constant=HELD_CONSTANT)
 
     # 3j-3l. D1, D2, operand provenance

@@ -61,8 +61,7 @@ def test_run_report_with_no_results(capsys):
             '    failure rate: no observations\n'
             '  instruction_removed: invoked=0 not_invoked=0 n=0\n'
             '    failure rate: no observations\n'
-            # F3: a literal backslash-n, pinned as it is today
-            '\\n3h2. D7.3 TRANSCRIPTION:\n'
+            '\n3h2. D7.3 TRANSCRIPTION:\n'
             '  TRANSCRIBED-EXACT: 0\n'
             '  TRANSCRIBED-ALTERED: 0\n'
             '  UNOBSERVABLE: 0\n'
@@ -115,7 +114,11 @@ def test_run_report_with_results(capsys):
         evidence_findings=[{'evidence_class': 'EV-2'},
                            {'evidence_class': 'EV-0'},
                            {'evidence_class': 'EV-2'}],
-        unmeasured_cells=[1, 2],
+        unmeasured_cells=[
+            {'item_id': 'Q04', 'condition': 'base', 'repeat': 1,
+             'cause': 'rate_limited: rate limited (HTTP 429)'},
+            {'item_id': 'Q06', 'condition': 'instruction_removed',
+             'repeat': 2, 'cause': 'empty response'}],
         transcription_results=[{'outcome': 'TRANSCRIBED-EXACT'},
                                {'outcome': 'TRANSCRIBED-EXACT'},
                                {'outcome': 'UNOBSERVABLE'},
@@ -152,6 +155,8 @@ def test_run_report_with_results(capsys):
         '  EV-0: 1\n'
         '  EV-2: 2\n'
         '\n3g. UNMEASURED CELLS: 2\n'
+        '  Q04/base/r1: rate_limited: rate limited (HTTP 429)\n'
+        '  Q06/instruction_removed/r2: empty response\n'
         '\n3h. D7.1 INVOCATION (n = questions; a question fails if any '
         'repeat is NOT-INVOKED; UNOBSERVABLE not in n):\n'
         # T3-1, T3-11: n counts questions (Q01 twice is one); Q06 and Q09
@@ -161,7 +166,7 @@ def test_run_report_with_results(capsys):
         '    failure rate: 2/3 (66.7%)\n'
         '  instruction_removed: invoked=1 not_invoked=1 n=2\n'
         '    failure rate: 1/2 (50.0%)\n'
-        '\\n3h2. D7.3 TRANSCRIPTION:\n'
+        '\n3h2. D7.3 TRANSCRIPTION:\n'
         '  TRANSCRIBED-EXACT: 2\n'
         '  TRANSCRIBED-ALTERED: 0\n'
         '  UNOBSERVABLE: 1\n'
@@ -336,8 +341,6 @@ import pytest  # noqa: E402
 
 
 @pytest.mark.finding('F3', 'T3-80')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F3: section 3h2 prints a literal backslash-n')
 def test_run_report_section_3h2_heading_starts_after_a_blank_line(capsys):
     # Steven's ruling (choices-for-marcus entry 4): the literal "\n" is
     # fixed; 3h2 is laid out like every other section heading.
@@ -383,8 +386,6 @@ def test_run_report_3h_rate_counts_questions_not_repeats(capsys):
 
 
 @pytest.mark.finding('T3-65', 'F4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-65/F4: console 3g prints only a count')
 def test_run_report_3g_lists_each_unmeasured_cell_with_cause(capsys):
     # Correct (Steven's ruling on F4, choices-for-marcus #7): section 3g
     # names each unmeasured cell with its cause.
@@ -438,3 +439,17 @@ def test_run_report_3h_two_observed_classes_rate_per_class(capsys):
         '    failure rate (EV-1 SELF-REPORTED): 1/1 (100.0%)\n'
         '    failure rate (EV-2 PLATFORM-STRUCTURAL): 0/1 failures; '
         'one-sided 95% upper bound on the failure rate 95.0%\n') in out
+
+
+# Step 5 (run-robustness): executions the engine flagged are named under 3a
+# (T3-67).
+
+@pytest.mark.finding('T3-67')
+def test_run_report_3a_names_flagged_executions(capsys):
+    out = run_report(capsys, [
+        executed('Q01', 'base', 1, 'AUTO-MATCH'),
+        executed('Q02', 'base', 3, 'AUTO-NO-FIGURE',
+                 error_state='TOOL_LOOP_EXHAUSTED: x')])
+    assert ('\n3a. COMPLETION: 2 executed, 0 unmeasured, 0 void\n'
+            '  Q02/base/r3: TOOL_LOOP_EXHAUSTED: x\n'
+            '\n3b. ') in out

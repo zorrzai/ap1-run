@@ -72,6 +72,10 @@ is refused.
   expression evaluator itself; this is the guarded path described above.
 - `importlib` in `verify.py` — loads the operator’s ground-truth module by
   name. The module path is read from the sealed configuration.
+- `importlib` in `src/ap1_run/execution/sealed_inputs.py` — loads the
+  operator's ground-truth module, `ground_truth_example.py` in the fixture
+  directory, from the bytes the run read and sealed. Like an import, this runs
+  the module's code.
 - `subprocess` in `run_all_tests.py` — runs pytest.
 
 **Network.** `verify_integration.py` starts a local mock HTTP server on
@@ -139,9 +143,12 @@ sha256sum reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md
 ```
 
 **Every input is sealed before execution.** Fixture, question set, ground-truth
-module and resolved configuration are hashed and timestamped, and the record’s
-hash appears on every transcript line. A transcript cannot be silently paired
-with a different fixture.
+module, expected values and resolved configuration are hashed and timestamped,
+and the record’s hash appears on every transcript line. A transcript cannot be
+silently paired with a different fixture. Each input is read once, and the
+bytes sealed are the bytes the run executes; the run verifies its seal again
+before its first request and before it reports, and refuses if an input has
+changed.
 
 ---
 

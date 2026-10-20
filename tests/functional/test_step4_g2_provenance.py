@@ -69,8 +69,7 @@ def full_run(tmp_path, monkeypatch):
         for name in ('AP1_SMOKE_TEMPERATURE', 'AP1_SMOKE_REASONING_EFFORT'):
             monkeypatch.delenv(name, raising=False)
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-step4-not-a-real-key-0000')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+        mock.point_config(config_path)  # T3-80: config only
         # The runner sleeps between executions and retries; skip it.
         monkeypatch.setattr(time, 'sleep', lambda seconds: None)
         # The runner puts the fixture directory on sys.path and imports

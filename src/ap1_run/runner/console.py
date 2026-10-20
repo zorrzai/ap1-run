@@ -2,8 +2,7 @@
 
 print_run_report prints sections 3a to 3i once every execution has run;
 print_scoring_report prints 3j to 3l once D1 and D2 are aggregated and
-the summary is built. The text is pinned by the regression baseline,
-including its known flaws (the literal backslash-n before 3h2).
+the summary is built. The text is pinned by the regression baseline.
 """
 
 from collections import Counter
@@ -34,6 +33,12 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
     print(f'\n3a. COMPLETION: {len(executed)} executed, {len(unmeasured)} unmeasured, {len(void)} void'
           + (f', {len(not_run)} not run (the transcript ends before them)'
              if not_run else ''))
+    # T3-67: executions flagged by the engine (a tool loop the turn limit
+    # stopped), named so they are not silent
+    for r in executed:
+        if r.get('error_state'):
+            print(f"  {r['item_id']}/{r['condition']}/r{r['repeat']}: "
+                  f"{r['error_state']}")
 
     # 3b. Figure identification
     print('\n3b. FIGURE IDENTIFICATION:')
@@ -78,6 +83,9 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
 
     # 3g. Unmeasured cells
     print(f'\n3g. UNMEASURED CELLS: {len(unmeasured_cells)}')
+    for c in unmeasured_cells:
+        print(f"  {c['item_id']}/{c['condition']}/r{c['repeat']}: "
+              f"{c['cause']}")
 
     # 3h. Invocation under both conditions. n counts computable questions
     # with an observed outcome; a question fails if any repeat is
@@ -106,7 +114,7 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
             print(f'    failure rate: {rate_str}')
 
     # 3h2. D7.3 Transcription
-    print(f'\\n3h2. D7.3 TRANSCRIPTION:')
+    print('\n3h2. D7.3 TRANSCRIPTION:')
     tr_counts = Counter(r['outcome'] for r in transcription_results)
     for outcome in ['TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED', 'UNOBSERVABLE']:
         print(f'  {outcome}: {tr_counts.get(outcome, 0)}')

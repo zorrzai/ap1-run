@@ -154,6 +154,48 @@ def test_needs_adjudication_other_outcomes_are_false(outcome):
         record(figure_outcome=outcome))
 
 
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1')
+def test_needs_adjudication_correct_without_invocation_is_true():
+    # SPEC R4.1: "Correct answer, no tool call | D7.1 NOT-INVOKED;
+    # adjudication candidate RETRIEVED".
+    assert adjudication._needs_adjudication(record(
+        figure_outcome='AUTO-MATCH', invocation_outcome='NOT-INVOKED'))
+
+
+@pytest.mark.finding('T3-22')
+@pytest.mark.parametrize('figure, invocation', [
+    ('AUTO-MATCH', 'INVOKED'), ('AUTO-MATCH', None),
+    ('AUTO-MATCH', 'not-invoked'), ('AUTO-NO-FIGURE', 'NOT-INVOKED'),
+    ('auto-match', 'NOT-INVOKED')])
+def test_needs_adjudication_not_a_retrieved_candidate_is_false(figure,
+                                                               invocation):
+    assert not adjudication._needs_adjudication(record(
+        figure_outcome=figure, invocation_outcome=invocation))
+
+
+@pytest.mark.finding('T3-22')
+def test_sheet_reason_for_a_retrieved_candidate():
+    text = one_sheet(figure_outcome='AUTO-MATCH',
+                     invocation_outcome='NOT-INVOKED')
+    assert section(text, 'Reason for Adjudication') == (
+        '\n' + adjudication.RETRIEVED_CANDIDATE_REASON + '\n')
+    assert adjudication.RETRIEVED_CANDIDATE_REASON == (
+        'The released figure matches the expected value, but the required '
+        'computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED '
+        'candidate. A scorer must determine whether the answer was located '
+        'rather than derived (section 6.8: RETRIEVED).')
+
+
+@pytest.mark.finding('T3-22')
+def test_sheet_reason_auto_match_invoked_is_the_outcome_fallback():
+    # Not a candidate (never routed); the sheet falls back to naming the
+    # outcome, as for any outcome without a listed reason.
+    text = one_sheet(figure_outcome='AUTO-MATCH', invocation_outcome='INVOKED')
+    assert section(text, 'Reason for Adjudication') == (
+        '\nFigure identification outcome: AUTO-MATCH\n')
+
+
 def test_needs_adjudication_without_figure_outcome_is_false():
     assert not adjudication._needs_adjudication({'item_id': 'Q01'})
 
@@ -703,3 +745,20 @@ def test_sheet_shows_d72a_operand_result():
         'quantisation_findings': []}])
     assert ('D7.2(a)' in text, 'OPERAND-ORIGINATED' in text,
             '10.5' in text and '7.3' in text) == (True, True, True)
+
+
+# Step 5 (run-robustness): a response shape the evidence code cannot read
+# is named on the sheet, never an exception (S3-G2-1).
+
+@pytest.mark.finding('S3-G2-1')
+@pytest.mark.parametrize('response, reason', [
+    ({'choices': ['x']}, 'choices[0] is not a dict'),
+    ({'choices': [{'message': None}]},
+     'choices[0].message is missing or not a dict'),
+    ({'choices': {'a': 1}}, 'choices is empty or not a list'),
+    ({'choices': [{'message': {'content': ['x']}}]},
+     'choices[0].message.content is not a string'),
+], ids=['str-choice', 'null-message', 'dict-choices', 'list-content'])
+def test_extract_response_unreadable_shape_named(response, reason):
+    assert adjudication._extract_response_content(response) == \
+        f'[unrecognised response shape: {reason}]'

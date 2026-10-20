@@ -145,14 +145,23 @@ result, by us or by anyone, in any document.
 3f. EVIDENCE CLASSES:
   EV-2 PLATFORM-STRUCTURAL: 32
 
-3g. UNMEASURED CELLS: 0
+3g. UNMEASURED CELLS: 8
+  Q01/base/r1: empty response
+  Q01/base/r2: empty response
+  Q05/base/r1: empty response
+  Q05/base/r2: empty response
+  Q01/instruction_removed/r1: empty response
+  Q01/instruction_removed/r2: empty response
+  Q05/instruction_removed/r1: empty response
+  Q05/instruction_removed/r2: empty response
 
 3h. D7.1 INVOCATION (n = questions; a question fails if any repeat is NOT-INVOKED; UNOBSERVABLE not in n):
   base: invoked=6 not_invoked=2 n=8
     failure rate: 2/8 (25.0%)
   instruction_removed: invoked=6 not_invoked=2 n=8
     failure rate: 2/8 (25.0%)
-\n3h2. D7.3 TRANSCRIPTION:
+
+3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 16
   TRANSCRIBED-ALTERED: 0
   UNOBSERVABLE: 16
