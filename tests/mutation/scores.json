@@ -59,10 +59,10 @@
     "score": 0.9474
   },
   "foundation/transcript": {
-    "killed": 67,
-    "mutants": 75,
+    "killed": 78,
+    "mutants": 86,
     "notes": "All 8 survivors are equivalent. Seven change how run.jsonl is opened ('UTF-8' is the same codec; no 'r' is the default mode; encoding None or none given means the locale's, UTF-8 on macOS and Linux, so the non-ASCII round trip passes; on Windows these would be killed). One passes ensure_ascii=None, falsy like False.",
-    "score": 0.8933
+    "score": 0.907
   },
   "reporting/adjudication": {
     "killed": 530,

@@ -98,16 +98,6 @@ def test_append_extra_fields_added(tmp_path):
     assert rec['repeat'] == 2
 
 
-@pytest.mark.finding('S3-G1-16')
-def test_append_extra_timestamp_overrides_the_clock(tmp_path, fixed_time):
-    # Current behaviour: extras are merged last, so a caller's
-    # 'timestamp' replaces the store's own. Correct: the store owns the
-    # timestamp; refuse or rename a colliding extra.
-    p = tmp_path / 'run.jsonl'
-    append(p, **FIELDS, timestamp='1999-01-01')
-    assert json.loads(lines(p)[0])['timestamp'] == '1999-01-01'
-
-
 def test_append_non_json_values_written_with_str(tmp_path):
     p = tmp_path / 'run.jsonl'
     append(p, **dict(FIELDS, response_received={'v': Decimal('1.50')}))
@@ -188,25 +178,10 @@ def test_read_all_invalid_line_raises_with_line_number(tmp_path):
     assert isinstance(e.value.__cause__, json.JSONDecodeError)
 
 
-@pytest.mark.finding('S3-G1-17')
-def test_read_all_interrupted_last_line_raises(tmp_path):
-    # Current behaviour: a run killed mid-write leaves a truncated last
-    # line, and read_all refuses the whole transcript. Correct (per its
-    # docstring, "an interrupted run leaves a valid partial transcript"):
-    # report the torn final line and return the complete records.
-    p = tmp_path / 'run.jsonl'
-    p.write_text('{"a": 1}\n{"a": 2', encoding='utf-8')
-    with pytest.raises(TranscriptError, match='^invalid JSON at line 2'):
-        read_all(p)
-
-
 # --- Step 4: correct behaviour (failing until fixed) ---
 
 @pytest.mark.finding('S3-G1-16')
 @pytest.mark.req('R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-16: an extra timestamp= replaces the '
-                          "store's own clock")
 def test_append_store_owns_the_timestamp(tmp_path, fixed_time):
     # The transcript store stamps each record (R0.3); a caller cannot
     # backdate it. A colliding extra is refused, or the store's time wins.
@@ -221,9 +196,7 @@ def test_append_store_owns_the_timestamp(tmp_path, fixed_time):
 
 @pytest.mark.finding('S3-G1-17')
 @pytest.mark.req('R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-17: a torn last line makes read_all refuse '
-                          'the whole transcript')
+@pytest.mark.filterwarnings('ignore:transcript .* is incomplete')
 def test_read_all_interrupted_last_line_keeps_complete_records(tmp_path):
     # read_all's docstring: "An interrupted run leaves a valid partial
     # transcript; unreached items are not-run, never failures." A run
@@ -236,3 +209,43 @@ def test_read_all_interrupted_last_line_keeps_complete_records(tmp_path):
     except TranscriptError as e:
         records = f'raised TranscriptError: {e}'
     assert records[:1] == [{'a': 1}], records
+
+
+# --- Step 5 numeric-hardening ---
+
+@pytest.mark.finding('S3-G1-16')
+def test_append_timestamp_extra_refused_and_nothing_written(tmp_path):
+    p = tmp_path / 'run.jsonl'
+    with pytest.raises(TranscriptError) as e:
+        append(p, **FIELDS, timestamp='1999-01-01')
+    assert str(e.value) == ('timestamp is set by the transcript store, not '
+                            'by the caller')
+    assert not p.exists()
+
+
+@pytest.mark.finding('S3-G1-17')
+def test_read_all_torn_last_line_warns_with_line_number(tmp_path):
+    p = tmp_path / 'run.jsonl'
+    p.write_text('{"a": 1}\n\n{"a": 2', encoding='utf-8')
+    with pytest.warns(UserWarning) as w:
+        assert read_all(p) == [{'a': 1}]
+    assert len(w) == 1
+    assert str(w[0].message).startswith(
+        f'transcript {p}: line 3 is incomplete (interrupted write) and was '
+        f'left out: ')
+
+
+@pytest.mark.finding('S3-G1-17')
+def test_read_all_complete_last_line_without_newline_is_read(tmp_path):
+    p = tmp_path / 'run.jsonl'
+    p.write_text('{"a": 1}\n{"a": 2}', encoding='utf-8')
+    assert read_all(p) == [{'a': 1}, {'a': 2}]
+
+
+@pytest.mark.finding('S3-G1-17')
+def test_read_all_invalid_last_line_with_newline_still_raises(tmp_path):
+    # Only a line cut off before its newline is an interrupted write.
+    p = tmp_path / 'run.jsonl'
+    p.write_text('{"a": 1}\n{"a": 2\n', encoding='utf-8')
+    with pytest.raises(TranscriptError, match='^invalid JSON at line 2'):
+        read_all(p)
