@@ -165,9 +165,6 @@ def test_run_transcript_records_carry_their_repeat_index(tmp_path,
 @pytest.mark.finding('T3-37')
 @pytest.mark.req('R3.2')
 @pytest.mark.filterwarnings('ignore:VERSION file says')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-37: the sheet of repeat 2 shows repeat 1's "
-                          'PARTIALLY-GOVERNED finding')
 def test_run_sheet_coverage_finding_is_its_own_executions(tmp_path,
                                                           monkeypatch):
     """Repeat 1 releases 2600.00 from a call that returned 2601

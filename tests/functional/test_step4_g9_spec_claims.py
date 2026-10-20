@@ -216,7 +216,8 @@ def sheet_sections(result):
     text = (result.output_dir / 'adjudication_sheets.md').read_text('utf-8')
     sheets = {}
     for chunk in re.split(r'(?m)^## Item ', text)[1:]:
-        m = re.match(r'\d+: (\S+) \(Condition: (\S+)\)', chunk)
+        m = re.match(r'\d+: ([^\s,]+)(?:, repeat \d+)? \(Condition: (\S+)\)',
+                     chunk)
         if m:
             sheets.setdefault((m.group(1), m.group(2)), []).append(chunk)
     return sheets

@@ -9,7 +9,7 @@ Version DOI: 10.5281/zenodo.21755443
 ---
 
 
-## Item 1: Q07 (Condition: base) — Scorer 1
+## Item 1: Q07, repeat 1 (Condition: base) — Scorer 1
 
 ### Question
 
@@ -99,7 +99,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 1: Q07 (Condition: base) — Scorer 2
+## Item 1: Q07, repeat 1 (Condition: base) — Scorer 2
 
 ### Question
 

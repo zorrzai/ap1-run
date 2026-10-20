@@ -9,7 +9,7 @@ Version DOI: 10.5281/zenodo.21755443
 ---
 
 
-## Item 1: Q01 (Condition: base) — Scorer 1
+## Item 1: Q01, repeat 1 (Condition: base) — Scorer 1
 
 ### Question
 
@@ -104,7 +104,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 1: Q01 (Condition: base) — Scorer 2
+## Item 1: Q01, repeat 1 (Condition: base) — Scorer 2
 
 ### Question
 
@@ -199,7 +199,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 2: Q01 (Condition: base) — Scorer 1
+## Item 2: Q01, repeat 2 (Condition: base) — Scorer 1
 
 ### Question
 
@@ -294,7 +294,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 2: Q01 (Condition: base) — Scorer 2
+## Item 2: Q01, repeat 2 (Condition: base) — Scorer 2
 
 ### Question
 
@@ -389,7 +389,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 3: Q09 (Condition: base) — Scorer 1
+## Item 3: Q09, repeat 1 (Condition: base) — Scorer 1
 
 ### Question
 
@@ -495,7 +495,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 3: Q09 (Condition: base) — Scorer 2
+## Item 3: Q09, repeat 1 (Condition: base) — Scorer 2
 
 ### Question
 
@@ -601,7 +601,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 4: Q09 (Condition: base) — Scorer 1
+## Item 4: Q09, repeat 2 (Condition: base) — Scorer 1
 
 ### Question
 
@@ -707,7 +707,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 4: Q09 (Condition: base) — Scorer 2
+## Item 4: Q09, repeat 2 (Condition: base) — Scorer 2
 
 ### Question
 
@@ -813,7 +813,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 5: Q01 (Condition: instruction_removed) — Scorer 1
+## Item 5: Q01, repeat 1 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -908,7 +908,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 5: Q01 (Condition: instruction_removed) — Scorer 2
+## Item 5: Q01, repeat 1 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -1003,7 +1003,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 6: Q01 (Condition: instruction_removed) — Scorer 1
+## Item 6: Q01, repeat 2 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -1098,7 +1098,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 6: Q01 (Condition: instruction_removed) — Scorer 2
+## Item 6: Q01, repeat 2 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -1193,7 +1193,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 7: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 7: Q09, repeat 1 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -1299,7 +1299,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 7: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 7: Q09, repeat 1 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 
@@ -1405,7 +1405,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 8: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 8: Q09, repeat 2 (Condition: instruction_removed) — Scorer 1
 
 ### Question
 
@@ -1511,7 +1511,7 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 8: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 8: Q09, repeat 2 (Condition: instruction_removed) — Scorer 2
 
 ### Question
 

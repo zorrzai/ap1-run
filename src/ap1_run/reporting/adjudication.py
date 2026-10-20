@@ -76,10 +76,11 @@ def generate_sheets(transcript_records, questions, fixture, config,
     question_map = {q['id']: q for q in questions.get('items', [])}
     account_map = {a['id']: a for a in fixture.get('accounts', [])}
 
-    # Build release coverage lookup: (item_id, condition) -> list of results
+    # Build release coverage lookup: (item_id, condition, repeat) -> results.
+    # A sheet is for one execution and carries that execution's coverage.
     _rc_lookup = {}
     for rc in (release_coverage_results or []):
-        _rc_key = (rc.get('item_id'), rc.get('condition'))
+        _rc_key = (rc.get('item_id'), rc.get('condition'), rc.get('repeat'))
         _rc_lookup.setdefault(_rc_key, []).append(rc)
 
     sheets = []
@@ -111,7 +112,7 @@ def generate_sheets(transcript_records, questions, fixture, config,
 
         # Generate TWO sheets for this item (two scorers per section 13.8)
         for scorer_num in (1, 2):
-            _rc_key = (item_id, condition)
+            _rc_key = (item_id, condition, record.get('repeat'))
             _rc_for_item = _rc_lookup.get(_rc_key, [])
             sheet = _generate_one_sheet(
                 record=record,
@@ -163,9 +164,12 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
     """Generate a single adjudication sheet for one scorer."""
     item_id = record.get('item_id', 'unknown')
     condition = record.get('condition', 'unknown')
+    repeat = record.get('repeat')
+    # The sheet names its execution's repeat, so a mark joins back to it.
+    execution = item_id if repeat is None else f'{item_id}, repeat {repeat}'
 
     lines = []
-    lines.append(f'\n## Item {item_num}: {item_id} '
+    lines.append(f'\n## Item {item_num}: {execution} '
                  f'(Condition: {condition}) \u2014 Scorer {scorer_num}\n')
 
     # 1. Question

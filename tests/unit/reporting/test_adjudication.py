@@ -112,6 +112,17 @@ def test_sheets_two_copies_per_item_with_shared_item_number():
     ]
 
 
+@pytest.mark.finding('T3-37')
+def test_sheets_heading_names_the_repeat():
+    text = sheets_for([record(repeat=3), record(repeat=0)])
+    assert re.findall(r'\n## (.*)\n', text) == [
+        'Item 1: Q01, repeat 3 (Condition: base) \u2014 Scorer 1',
+        'Item 1: Q01, repeat 3 (Condition: base) \u2014 Scorer 2',
+        'Item 2: Q01, repeat 0 (Condition: base) \u2014 Scorer 1',
+        'Item 2: Q01, repeat 0 (Condition: base) \u2014 Scorer 2',
+    ]
+
+
 def test_sheets_scorer_copies_are_identical_apart_from_heading():
     text = sheets_for([record()])
     body = text.split('\n---\n\nTotal items')[0]
@@ -512,40 +523,36 @@ def test_sheet_without_coverage_has_no_finding():
     assert 'Release Coverage Finding' not in one_sheet(coverage_records=[])
 
 
-def test_sheets_coverage_joined_on_item_and_condition():
+def test_sheets_coverage_joined_on_item_condition_and_repeat():
     text = sheets_for(
-        [record()],
+        [record(repeat=1)],
         release_coverage_results=[
             coverage(1, finding='mine'),
             coverage(1, finding='other item', item_id='Q02'),
             coverage(1, finding='other condition',
-                     condition='instruction_removed')])
+                     condition='instruction_removed'),
+            coverage(2, finding='other repeat')])
     assert 'mine' in text
     assert 'other item' not in text
     assert 'other condition' not in text
+    assert 'other repeat' not in text
+
+
+@pytest.mark.finding('T3-37')
+def test_sheets_record_without_repeat_gets_no_coverage_finding():
+    # Every runner record carries its repeat; one without (an older
+    # transcript) cannot be joined to its own execution's coverage.
+    text = sheets_for([record()], release_coverage_results=[
+        coverage(1, finding='mine')])
+    assert 'Release Coverage Finding' not in text
 
 
 def test_sheets_coverage_on_record_without_condition_joins_unknown():
-    rec = record()
+    rec = record(repeat=1)
     del rec['condition']
     text = sheets_for([rec], release_coverage_results=[
         coverage(1, condition='unknown', finding='joined')])
     assert text.count('- Repeat 1: joined') == 2
-
-
-@pytest.mark.finding('T3-37')
-def test_sheets_coverage_lists_every_repeat_of_the_item():
-    # The join is on (item_id, condition) only, so the sheet of repeat 1
-    # (which was GOVERNED-RELEASE) shows repeat 2's PARTIALLY-GOVERNED
-    # finding, and the sheet does not say which repeat it is for.
-    # Correct: join on the repeat too and name the repeat on the sheet.
-    text = sheets_for(
-        [record(), record()],
-        release_coverage_results=[
-            coverage(1, 'GOVERNED-RELEASE'),
-            coverage(2, finding='rep 2 ungoverned')])
-    assert text.count('- Repeat 2: rep 2 ungoverned') == 4
-    assert 'Repeat 1' not in text
 
 
 # -- One sheet: reference values ------------------------------------------
@@ -604,9 +611,6 @@ def test_sheets_transport_failure_record_never_gets_a_sheet():
 
 @pytest.mark.finding('T3-37')
 @pytest.mark.req('R3.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-37: a sheet's coverage finding lists every "
-                          'repeat of the item and condition')
 def test_sheets_coverage_finding_is_the_sheets_own_repeat():
     # Correct (SPEC R3.2; fix plan §2 branch 6): coverage joins on the
     # repeat too. Repeat 1 was GOVERNED-RELEASE, so its two sheets carry
@@ -623,8 +627,6 @@ def test_sheets_coverage_finding_is_the_sheets_own_repeat():
 
 @pytest.mark.finding('T3-37')
 @pytest.mark.req('R3.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-37: a sheet does not say which repeat it is')
 def test_sheets_each_sheet_names_its_repeat():
     # Correct: a sheet is for one execution and says which repeat it is,
     # so a scorer's mark can be joined back to it. Today the header names
