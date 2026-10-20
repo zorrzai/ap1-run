@@ -452,3 +452,27 @@ def test_score_execution_passes_structured_answer_field(fakes, tpath):
           config=config)
     (_, kwargs), = fakes.calls['identify_figure']
     assert kwargs.get('structured_answer_field') == 'answer', kwargs
+
+
+@pytest.mark.finding('T3-21', 'T3-52')
+@pytest.mark.req('R0.3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-21: score_execution appends a '
+                          'figure_identification record to the transcript')
+def test_score_execution_transcript_left_byte_identical(fakes, tpath, capsys):
+    # Correct (SPEC §2 "R2 SCORE: reads only; never writes back"; R0.3
+    # "The scorer opens the transcript read-only"; Steven's ruling,
+    # choices-for-marcus.md entry 1): scoring an execution leaves the
+    # transcript as the engine wrote it.
+    transcript.append(tpath, item_id='Q01', arm_id='base', condition='base',
+                      request_sent={}, response_received={}, tool_calls=[],
+                      evidence_class='EV-2', error_state=None,
+                      seal_hash='seal-1')
+    with open(tpath, 'rb') as f:
+        before = f.read()
+    score(Findings(), {'response': response('The total is $638.40.'),
+                       'evidence_class': 'EV-2',
+                       'invocation_outcome': 'NOT-INVOKED'}, tpath)
+    with open(tpath, 'rb') as f:
+        after = f.read()
+    assert (len(after.splitlines()), after) == (1, before)
