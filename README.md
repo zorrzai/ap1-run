@@ -42,9 +42,16 @@ answer:
 against the source values and the legitimate intermediates of a reference
 derivation.
 
-D3, D4, D5 and D6 are all scored by human adjudication. The instrument enforces
-the minimum-item counts for D5 and D6 at load, and generates adjudication sheets
-for all four, but scores none of them.
+D3, D4, D5 and D6 are all scored by human adjudication. The instrument
+generates adjudication sheets for all four, but scores none of them.
+
+**Minimum n is enforced at load.** For each dimension in `dimensions_claimed`,
+the runner counts the eligible items of the question set and refuses the run,
+before any request, where the count is below the declared AP-1 version's
+minimum: D1 needs 40 items and 10 in every category; D5 counts items with an
+`adversarial_class` (v1.3: 20, v1.2: 5) and D6 items with a `conflict_class`
+(v1.3: 10, v1.2: 1). The shipped example has 10 items, so its configs claim
+D2 and D7 only, and the report declares D1 not measured.
 
 ### The finding it exists to surface
 

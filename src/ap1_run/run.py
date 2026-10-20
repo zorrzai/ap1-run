@@ -47,7 +47,7 @@ from ap1_run.execution.version import (
     compute_runner_source_hash, resolve_runner_version,
 )
 from ap1_run.foundation import adapter
-from ap1_run.foundation.config import load_config
+from ap1_run.foundation.config import load_config, validate_minimum_n
 from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.credentials import get_api_key
 from ap1_run.runner.executions import (
@@ -120,6 +120,9 @@ def main(argv=None):
 
     with open(os.path.join(fixture_dir, 'questions.json'), 'r', encoding='utf-8') as f:
         questions = json.load(f)
+
+    # -- Minimum-n (R0.1): refuse an under-powered claim before any request --
+    validate_minimum_n(config, questions['items'])
 
     # -- Load ground-truth module --
     sys.path.insert(0, fixture_dir)

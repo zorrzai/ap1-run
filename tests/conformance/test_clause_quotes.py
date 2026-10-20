@@ -57,7 +57,7 @@ QUOTED = list(quoted_tests())
 
 
 def test_every_clause_test_module_quote_is_found():
-    assert len(QUOTED) == 23
+    assert len(QUOTED) == 24
 
 
 @pytest.mark.parametrize('name, segments, lo, hi', QUOTED)

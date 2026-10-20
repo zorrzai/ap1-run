@@ -412,6 +412,28 @@ def test_main_creates_a_missing_output_dir(r):
     assert r.output_dir.is_dir()
 
 
+@pytest.mark.finding('T3-12')
+@pytest.mark.req('R0.1')
+def test_main_under_powered_claim_refused_before_seal_and_requests(r):
+    # R0.1: the minimum-n refusal comes before the seal and any request.
+    from ap1_run.foundation.config import ConfigError
+    r.config.update(dimensions_claimed=['D6'], ap1_version='v1.3')
+    with pytest.raises(ConfigError, match=r'^D6: 0 eligible items'):
+        r.main()
+    assert (r.named('seal'), r.named('execute')) == ([], [])
+
+
+@pytest.mark.finding('T3-12', 'V12-7')
+def test_main_minimum_n_counts_the_question_items(r):
+    # Under v1.2, D6 needs one item with a conflict_class: Q2 has one.
+    r.config.update(dimensions_claimed=['D6'], ap1_version='v1.2')
+    questions = json.loads(json.dumps(QUESTIONS))
+    questions['items'][2]['conflict_class'] = 'stated twice'
+    (r.fixture_dir / 'questions.json').write_text(json.dumps(questions))
+    assert r.main() == 0
+    assert r.named('seal')
+
+
 @pytest.mark.finding('T3-51')
 @pytest.mark.parametrize('key', ['answer_tolerance', 'decline_markers',
                                  'currency_symbols', 'sampling',

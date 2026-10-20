@@ -39,11 +39,31 @@ OPTIONAL_FIELDS = [
     'runner_modified',
 ]
 
-# Minimum-n per dimension (AP-1 v1.3 section 4.5, 4.6)
+# The dimensions AP-1 defines (v1.2 and v1.3 alike).
+DIMENSIONS = ('D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7')
+
+# Minimum-n per dimension, per AP-1 version (SPEC R0.1). A dimension
+# with no entry has no minimum the loader can check (D2's 10 x 50 is
+# not in SPEC R0.1 yet).
+#   per_category  every category of the question set has at least this
+#   total         the eligible items number at least this
+#   eligible      the item field that makes an item eligible: D5 counts
+#                 items with an adversarial_class (AP-1 v1.3 §11.5), D6
+#                 items with a conflict_class (§11.6); D1 counts every item
+# v1.3: D1 l.204 and §11.1 (40 items, no category claim under 10), D5
+# l.279 (20), D6 l.301 (10). v1.2: D1 l.111 and §11.1 (the same), D5
+# l.149 (5), D6 §11.6 l.292 ("at least one item").
 MINIMUM_N = {
-    'D1': {'type': 'per_category', 'min': 10},
-    'D5': {'type': 'total', 'min': 20},
-    'D6': {'type': 'total', 'min': 10},
+    'v1.3': {
+        'D1': {'per_category': 10, 'total': 40},
+        'D5': {'eligible': 'adversarial_class', 'total': 20},
+        'D6': {'eligible': 'conflict_class', 'total': 10},
+    },
+    'v1.2': {
+        'D1': {'per_category': 10, 'total': 40},
+        'D5': {'eligible': 'adversarial_class', 'total': 5},
+        'D6': {'eligible': 'conflict_class', 'total': 1},
+    },
 }
 
 # Fields whose values are parsed from string to Decimal
@@ -84,6 +104,9 @@ def load_config(path):
 
     # 1b. Refuse unknown top-level keys
     _refuse_unknown_fields(raw)
+
+    # 1c. Every claimed dimension is one AP-1 defines
+    _validate_dimensions(raw['dimensions_claimed'])
 
     # 2. Validate sampling omission reasons (before bare-numeric check)
     _validate_sampling(raw.get('sampling', {}))
@@ -232,37 +255,75 @@ def _parse_decimal_field(raw, field):
         raise ConfigError(f'{field}: cannot parse as Decimal: {val!r}')
 
 
+def _validate_dimensions(dims):
+    """Refuse a dimensions_claimed that is not a list of D1-D7 (R0.1: a
+    claim no fixture can support is refused at load)."""
+    if not isinstance(dims, list):
+        raise ConfigError(
+            f'dimensions_claimed: expected a list, got {type(dims).__name__}')
+    for dim in dims:
+        if dim not in DIMENSIONS:
+            raise ConfigError(
+                f'dimensions_claimed: {dim!r} is not an AP-1 dimension. '
+                f'Defined: {", ".join(DIMENSIONS)}')
+
+
+def minimum_n_table(ap1_version):
+    """The minimum-n table of the declared AP-1 version: 'v1.3' and
+    'v1.2', alone or followed by '-' and a qualifier (as in
+    'v1.3-draft-for-comment-20260730')."""
+    for version, table in MINIMUM_N.items():
+        if ap1_version == version or (
+                isinstance(ap1_version, str)
+                and ap1_version.startswith(version + '-')):
+            return table
+    raise ConfigError(
+        f'ap1_version {ap1_version!r}: no minimum-n table for this version. '
+        f'Known: {", ".join(MINIMUM_N)}')
+
+
 def validate_minimum_n(config, question_set):
     """Enforce minimum-n requirements per R0.1.
 
     For each entry in dimensions_claimed, count eligible items and
-    refuse the run where the count falls below the minimum.
-    Names the dimension, count found, and minimum required.
+    refuse the run where the count falls below the minimum of the
+    declared AP-1 version. Names the dimension, count found, and
+    minimum required.
     """
     dims = config.get('dimensions_claimed', [])
+    _validate_dimensions(dims)
+    if not dims:
+        return
+    table = minimum_n_table(config.get('ap1_version'))
 
     for dim in dims:
-        if dim not in MINIMUM_N:
+        rule = table.get(dim)
+        if rule is None:
             continue
 
-        rule = MINIMUM_N[dim]
-
-        if rule['type'] == 'per_category':
-            # D1: count per category, each must meet minimum
+        if 'per_category' in rule:
+            # D1: each category must meet the minimum
             categories = {}
             for q in question_set:
                 cat = q.get('category', 'default')
                 categories.setdefault(cat, 0)
                 categories[cat] += 1
             for cat, count in categories.items():
-                if count < rule['min']:
+                if count < rule['per_category']:
                     raise ConfigError(
                         f'{dim} category {cat!r}: {count} items, '
-                        f'minimum {rule["min"]} required')
+                        f'minimum {rule["per_category"]} required')
 
-        elif rule['type'] == 'total':
+        field = rule.get('eligible')
+        if field is None:
             count = len(question_set)
-            if count < rule['min']:
+            if count < rule['total']:
                 raise ConfigError(
                     f'{dim}: {count} items, '
-                    f'minimum {rule["min"]} required')
+                    f'minimum {rule["total"]} required')
+        else:
+            count = sum(1 for q in question_set if q.get(field))
+            if count < rule['total']:
+                raise ConfigError(
+                    f'{dim}: {count} eligible items ({field} set), '
+                    f'minimum {rule["total"]} required')

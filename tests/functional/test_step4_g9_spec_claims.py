@@ -225,29 +225,39 @@ def sheet_sections(result):
 # --- T3-12 / R0.1 minimum-n, end to end ------------------------------------
 
 @pytest.mark.finding('T3-12')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-12: minimum-n is never enforced live; the '
-                          'shipped D1 claim on 10 items runs')
 @pytest.mark.req('R0.1')
-def test_run_shipped_config_d1_claim_on_ten_items_refused_before_any_request(
-        ap1_run):
+def test_run_d1_claim_on_ten_items_refused_before_any_request(ap1_run):
     # SPEC R0.1 (l.148-152): for each claimed dimension "the loader counts
     # eligible items and refuses the run" below the minimum (D1: >= 10 per
     # category; AP-1 v1.3 D1: minimum 40 items), naming the dimension, the
     # count and the minimum; "Incomplete configuration halts before any
-    # request is sent." The shipped example claims D1, D2, D7 over 10
-    # items in 6 categories (2, 2, 2, 2, 1, 1).
-    shipped = json.loads((EXAMPLE / 'config.json').read_text('utf-8'))
-    result = ap1_run(config={'dimensions_claimed':
-                             shipped['dimensions_claimed']})
+    # request is sent." The example claimed D1, D2, D7 over its 10 items
+    # in 6 categories (2, 2, 2, 2, 1, 1) until minimum-n was enforced.
+    result = ap1_run(config={'dimensions_claimed': ['D1', 'D2', 'D7']})
     refused, why = refused_before_any_request(result)
     assert refused, why
     assert 'D1' in f'{result.exception} {result.out[-500:]}'
+    assert not result.seals
+
+
+@pytest.mark.finding('T3-12')
+@pytest.mark.req('R0.1')
+@pytest.mark.parametrize('config_file', ['config.json', 'config_mini.json'])
+def test_run_shipped_config_claims_only_what_ten_items_support(ap1_run,
+                                                               config_file):
+    # The shipped example configs claim D2 and D7 (no minimum the loader
+    # can check), so the example still runs; report.md then declares D1
+    # not measured.
+    shipped = json.loads((EXAMPLE / config_file).read_text('utf-8'))
+    assert shipped['dimensions_claimed'] == ['D2', 'D7']
+    result = ap1_run(config={'dimensions_claimed':
+                             shipped['dimensions_claimed']})
+    assert result.exception is None, repr(result.exception)
+    assert result.requests
+    assert '| D1 | **NOT MEASURED** |' in report_text(result)
 
 
 @pytest.mark.finding('T3-12', 'T3-22')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-12: a D6 claim on nine items runs')
 @pytest.mark.req('R4.1', 'R0.1')
 def test_r41_d6_claimed_with_nine_items_refused_at_load(ap1_run):
     # SPEC R4.1 row "D6 claimed with nine items | Refused at load"; R0.1

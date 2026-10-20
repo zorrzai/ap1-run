@@ -49,7 +49,6 @@ Model: mock-model
     "I'm sorry, I cannot"
   ],
   "dimensions_claimed": [
-    "D1",
     "D2",
     "D7"
   ],
@@ -112,7 +111,7 @@ Model: mock-model
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | Measured | 1000 | Accuracy: 1 (auto-scored 818; 181 adjudicated not in rate) |
+| D1 | **NOT MEASURED** | — | — |
 | D2 | Measured | N/A | See §9 D2 Mechanism Classes |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -1325,6 +1324,7 @@ Total operands resolved: 4860
 
 The following dimensions were **not measured** in this evaluation and require human adjudication:
 
+- **D1**: Accuracy — requires item-level scoring
 - **D3**: Completeness of explanation — requires human adjudication
 - **D4**: Appropriate caveats — requires human adjudication
 - **D5**: Source attribution — requires human adjudication

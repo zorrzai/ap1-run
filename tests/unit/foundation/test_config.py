@@ -13,9 +13,10 @@ from pathlib import Path
 import pytest
 
 from ap1_run.foundation.config import (
-    DECIMAL_FIELDS, KNOWN_SAMPLING_PARAMS, MINIMUM_N, OPTIONAL_FIELDS,
+    DECIMAL_FIELDS, DIMENSIONS, KNOWN_SAMPLING_PARAMS, MINIMUM_N,
+    OPTIONAL_FIELDS,
     PERMITTED_OMISSION_REASONS, REQUIRED_FIELDS, ConfigError,
-    _refuse_bare_numerics, load_config, validate_minimum_n,
+    _refuse_bare_numerics, load_config, minimum_n_table, validate_minimum_n,
 )
 
 REPO = Path(__file__).resolve().parents[3]
@@ -102,12 +103,6 @@ def test_optional_fields():
         'system_prompt_instruction_removed', 'fixture_hash',
         'message_template', 'runner_version_tag', 'runner_version_commit',
         'runner_modified']
-
-
-def test_minimum_n_table():
-    assert MINIMUM_N == {'D1': {'type': 'per_category', 'min': 10},
-                         'D5': {'type': 'total', 'min': 20},
-                         'D6': {'type': 'total', 'min': 10}}
 
 
 def test_decimal_fields_and_known_sampling_params():
@@ -535,79 +530,167 @@ def test_load_config_repeat_count_zero_and_negative_accepted(load):
 # -- load_config: dimensions ----------------------------------------------
 
 @pytest.mark.finding('T3-12')
-def test_load_config_unknown_dimension_loads(load):
-    # Current behaviour: 'D99' is accepted at load. Correct: refuse a
-    # dimension AP-1 does not define.
-    assert load(dimensions_claimed=['D99'])['dimensions_claimed'] == ['D99']
+def test_load_config_undefined_dimension_refused_exact(load):
+    assert refused(load, dimensions_claimed=['D2', 'D8']) == (
+        "dimensions_claimed: 'D8' is not an AP-1 dimension. "
+        'Defined: D1, D2, D3, D4, D5, D6, D7')
+
+
+@pytest.mark.finding('T3-12')
+def test_load_config_dimensions_not_a_list_refused(load):
+    assert refused(load, dimensions_claimed='D1') == \
+        'dimensions_claimed: expected a list, got str'
+
+
+def test_load_config_every_defined_dimension_loads(load):
+    dims = ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7']
+    assert DIMENSIONS == tuple(dims)
+    assert load(dimensions_claimed=dims)['dimensions_claimed'] == dims
 
 
 # -- validate_minimum_n ---------------------------------------------------
 
-def questions(n, category=None):
-    qs = [{'id': f'Q{i}'} for i in range(n)]
+def questions(n, category=None, **fields):
+    qs = [dict({'id': f'Q{i}'}, **fields) for i in range(n)]
     if category is not None:
         for q in qs:
             q['category'] = category
     return qs
 
 
+def claim(*dims, version='v1.3-draft-for-comment-20260730'):
+    return {'dimensions_claimed': list(dims), 'ap1_version': version}
+
+
+def test_minimum_n_tables_per_version():
+    assert MINIMUM_N == {
+        'v1.3': {'D1': {'per_category': 10, 'total': 40},
+                 'D5': {'eligible': 'adversarial_class', 'total': 20},
+                 'D6': {'eligible': 'conflict_class', 'total': 10}},
+        'v1.2': {'D1': {'per_category': 10, 'total': 40},
+                 'D5': {'eligible': 'adversarial_class', 'total': 5},
+                 'D6': {'eligible': 'conflict_class', 'total': 1}}}
+
+
+@pytest.mark.finding('V12-7')
+@pytest.mark.parametrize('version, table', [
+    ('v1.3', 'v1.3'), ('v1.3-draft-for-comment-20260730', 'v1.3'),
+    ('v1.2', 'v1.2'), ('v1.2-final', 'v1.2')])
+def test_minimum_n_table_of_the_declared_version(version, table):
+    assert minimum_n_table(version) is MINIMUM_N[table]
+
+
+@pytest.mark.finding('V12-7')
+@pytest.mark.parametrize('version', ['v1.4', 'v1.30', 'v1.2x', '1.3', None])
+def test_minimum_n_table_unknown_version_refused(version):
+    with pytest.raises(ConfigError) as e:
+        minimum_n_table(version)
+    assert str(e.value) == (f'ap1_version {version!r}: no minimum-n table '
+                            f'for this version. Known: v1.3, v1.2')
+
+
 @pytest.mark.req('R0.1')
 def test_minimum_n_d6_below_minimum_refused():
     with pytest.raises(ConfigError) as e:
-        validate_minimum_n({'dimensions_claimed': ['D6']}, questions(9))
-    assert str(e.value) == 'D6: 9 items, minimum 10 required'
+        validate_minimum_n(claim('D6'), questions(9, conflict_class='x'))
+    assert str(e.value) == ('D6: 9 eligible items (conflict_class set), '
+                            'minimum 10 required')
 
 
 def test_minimum_n_d6_at_minimum_accepted():
-    assert validate_minimum_n({'dimensions_claimed': ['D6']},
-                              questions(10)) is None
+    assert validate_minimum_n(claim('D6'),
+                              questions(10, conflict_class='x')) is None
+
+
+@pytest.mark.finding('T3-12')
+def test_minimum_n_d6_counts_only_items_with_a_conflict_class():
+    qs = (questions(9, conflict_class='stated twice') + questions(5)
+          + questions(3, conflict_class='') + questions(2, adversarial_class='x'))
+    with pytest.raises(ConfigError, match='^D6: 9 eligible items'):
+        validate_minimum_n(claim('D6'), qs)
 
 
 def test_minimum_n_d5_below_minimum_refused():
-    with pytest.raises(ConfigError, match='^D5: 19 items, minimum 20 '
-                                          'required$'):
-        validate_minimum_n({'dimensions_claimed': ['D5']}, questions(19))
+    with pytest.raises(ConfigError, match=r'^D5: 19 eligible items '
+                                          r'\(adversarial_class set\), '
+                                          'minimum 20 required$'):
+        validate_minimum_n(claim('D5'), questions(19, adversarial_class='x'))
 
 
 def test_minimum_n_d5_at_minimum_accepted():
-    validate_minimum_n({'dimensions_claimed': ['D5']}, questions(20))
+    validate_minimum_n(claim('D5'), questions(20, adversarial_class='x'))
+
+
+@pytest.mark.finding('V12-7')
+def test_minimum_n_v12_minimums_accept_what_v13_refuses():
+    qs = questions(5, adversarial_class='x') + questions(1, conflict_class='y')
+    validate_minimum_n(claim('D5', 'D6', version='v1.2'), qs)
+    with pytest.raises(ConfigError, match='^D5: 5 eligible items'):
+        validate_minimum_n(claim('D5', version='v1.3'), qs)
+    with pytest.raises(ConfigError, match='^D6: 1 eligible items'):
+        validate_minimum_n(claim('D6', version='v1.3'), qs)
+
+
+@pytest.mark.finding('V12-7')
+def test_minimum_n_v12_d5_below_five_refused():
+    with pytest.raises(ConfigError, match=r'^D5: 4 eligible items .*'
+                                          'minimum 5 required$'):
+        validate_minimum_n(claim('D5', version='v1.2'),
+                           questions(4, adversarial_class='x'))
 
 
 @pytest.mark.req('R0.1')
 def test_minimum_n_d1_small_category_refused():
-    qs = questions(10, 'A') + questions(9, 'B')
+    qs = questions(30, 'A') + questions(9, 'B') + questions(10, 'C')
     with pytest.raises(ConfigError) as e:
-        validate_minimum_n({'dimensions_claimed': ['D1']}, qs)
+        validate_minimum_n(claim('D1'), qs)
     assert str(e.value) == "D1 category 'B': 9 items, minimum 10 required"
 
 
-def test_minimum_n_d1_every_category_at_minimum_accepted():
-    validate_minimum_n({'dimensions_claimed': ['D1']},
-                       questions(10, 'A') + questions(10, 'B'))
+@pytest.mark.finding('T3-12')
+def test_minimum_n_d1_total_below_forty_refused_exact():
+    with pytest.raises(ConfigError) as e:
+        validate_minimum_n(claim('D1'), questions(10, 'A') + questions(29, 'B'))
+    assert str(e.value) == 'D1: 39 items, minimum 40 required'
+
+
+def test_minimum_n_d1_every_category_at_minimum_and_forty_accepted():
+    validate_minimum_n(claim('D1'), questions(10, 'A') + questions(10, 'B')
+                       + questions(10, 'C') + questions(10, 'D'))
+
+
+@pytest.mark.finding('V12-7')
+def test_minimum_n_d1_same_under_v12():
+    with pytest.raises(ConfigError, match='^D1: 20 items, minimum 40'):
+        validate_minimum_n(claim('D1', version='v1.2'),
+                           questions(10, 'A') + questions(10, 'B'))
 
 
 def test_minimum_n_d1_uncategorised_items_share_default_category():
     with pytest.raises(ConfigError, match="category 'default': 9 items"):
-        validate_minimum_n({'dimensions_claimed': ['D1']}, questions(9))
-    validate_minimum_n({'dimensions_claimed': ['D1']}, questions(10))
+        validate_minimum_n(claim('D1'), questions(9) + questions(40, 'A'))
+    validate_minimum_n(claim('D1'), questions(40))
 
 
 def test_minimum_n_d1_first_failing_category_reported():
     qs = questions(3, 'A') + questions(4, 'B')
     with pytest.raises(ConfigError, match="category 'A': 3 items"):
-        validate_minimum_n({'dimensions_claimed': ['D1']}, qs)
+        validate_minimum_n(claim('D1'), qs)
 
 
 def test_minimum_n_checks_every_claimed_dimension():
     with pytest.raises(ConfigError, match='^D5:'):
-        validate_minimum_n({'dimensions_claimed': ['D6', 'D5']},
-                           questions(10))
+        validate_minimum_n(claim('D6', 'D5'),
+                           questions(10, conflict_class='x'))
 
 
-def test_minimum_n_unlisted_dimension_does_not_stop_the_check():
+def test_minimum_n_dimension_without_minimum_does_not_stop_the_check():
     with pytest.raises(ConfigError, match='^D6:'):
-        validate_minimum_n({'dimensions_claimed': ['D2', 'D6']},
-                           questions(9))
+        validate_minimum_n(claim('D2', 'D6'), questions(9))
+
+
+def test_minimum_n_dimensions_without_minimum_accepted():
+    validate_minimum_n(claim('D2', 'D3', 'D4', 'D7'), [])
 
 
 def test_minimum_n_no_claims_accepted():
@@ -616,28 +699,15 @@ def test_minimum_n_no_claims_accepted():
 
 
 @pytest.mark.finding('T3-12')
-def test_minimum_n_unknown_or_unlisted_dimensions_skipped():
-    # Current behaviour: dimensions without a MINIMUM_N entry (D2, D7,
-    # D99) are skipped. Correct: refuse an undefined dimension.
-    validate_minimum_n({'dimensions_claimed': ['D2', 'D7', 'D99']}, [])
+def test_minimum_n_undefined_dimension_refused():
+    with pytest.raises(ConfigError, match="'D99' is not an AP-1 dimension"):
+        validate_minimum_n(claim('D2', 'D7', 'D99'), [])
 
 
-@pytest.mark.finding('T3-12')
-def test_minimum_n_d1_total_not_checked():
-    # Current behaviour: 2 categories of 10 (20 items) satisfy D1. Correct
-    # (AP-1 v1.3 D1): at least 40 items in total as well.
-    validate_minimum_n({'dimensions_claimed': ['D1']},
-                       questions(10, 'A') + questions(10, 'B'))
-
-
-@pytest.mark.finding('T3-12')
-def test_minimum_n_d5_counts_every_question():
-    # Current behaviour: D5 and D6 count all questions, not the
-    # adversarial or conflicting-input items. Correct: count eligible
-    # items only.
-    validate_minimum_n({'dimensions_claimed': ['D5', 'D6']},
-                       questions(20, 'ordinary'))
-
+@pytest.mark.finding('V12-7')
+def test_minimum_n_unknown_version_refused():
+    with pytest.raises(ConfigError, match="^ap1_version 'v9': "):
+        validate_minimum_n(claim('D2', version='v9'), [])
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
@@ -760,8 +830,6 @@ def numbers_in(message):
 
 
 @pytest.mark.finding('T3-12')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-12: a dimension AP-1 does not define loads')
 @pytest.mark.req('R0.1')
 def test_load_config_undefined_dimension_refused(load):
     # SPEC R0.1 verification contract: "A dimensions_claimed entry the
@@ -772,8 +840,6 @@ def test_load_config_undefined_dimension_refused(load):
 
 
 @pytest.mark.finding('T3-12')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-12: no D1 total of 40 is checked')
 @pytest.mark.req('R0.1')
 def test_minimum_n_d1_under_forty_items_refused():
     # AP-1 v1.3 D1 Method (l.204): "a held-out question set (minimum 40
@@ -788,9 +854,6 @@ def test_minimum_n_d1_under_forty_items_refused():
 
 
 @pytest.mark.finding('T3-12')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-12: D5/D6 count every question, not the '
-                          'adversarial or conflict items')
 @pytest.mark.req('R0.1')
 @pytest.mark.parametrize('dim, minimum', [('D5', '20'), ('D6', '10')])
 def test_minimum_n_d5_d6_ordinary_items_not_counted_refused(dim, minimum):
@@ -807,9 +870,6 @@ def test_minimum_n_d5_d6_ordinary_items_not_counted_refused(dim, minimum):
 
 
 @pytest.mark.finding('V12-7', 'T3-12')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-7: minimum-n ignores ap1_version; v1.2 '
-                          'minimums are D5 5 and D6 1')
 @pytest.mark.req('R0.1')
 @pytest.mark.parametrize('dim, v12_min, v13_min', [('D5', '5', '20'),
                                                     ('D6', '1', '10')])
