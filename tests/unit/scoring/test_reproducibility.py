@@ -323,3 +323,37 @@ def test_parameter_echo_numerically_equal_values_can_mismatch():
     assert r['status'] == 'MISMATCH'
     assert r['findings'] == [
         "parameter 'temperature': requested=0, applied=0.0 — silently ignored"]
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('S3-G5-3')
+@pytest.mark.req('R2.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G5-3: an unknown surface is classified '
+                          'OBSERVED-ONLY from no values')
+def test_classify_mechanism_unknown_surface_is_refused():
+    # The surfaces are 'figures' and 'prose' (docstring). Any other name
+    # is a caller error: refuse it with ReproducibilityError (defined for
+    # this, never raised), rather than classify zero values.
+    try:
+        r = classify_mechanism([response('a')] * 3, surface='Figures',
+                               minimum_runs=3)
+        outcome = r['mechanism']
+    except ReproducibilityError:
+        outcome = 'refused'
+    assert outcome == 'refused'
+
+
+@pytest.mark.finding('S3-G5-3')
+@pytest.mark.req('R2.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G5-3: no observations with minimum_runs=0 are '
+                          'OBSERVED-ONLY')
+def test_classify_mechanism_no_observations_is_unmeasured():
+    # Zero successful runs say nothing about the mechanism: UNMEASURED,
+    # whatever the minimum. SPEC R2.2: the runner tells OBSERVED-ONLY from
+    # UNMEASURED "from evidence"; its contract case (49 rate-limited runs
+    # and one success is UNMEASURED) is the same rule with one run.
+    r = classify_mechanism([], surface='prose', minimum_runs=0)
+    assert r['mechanism'] == UNMEASURED
