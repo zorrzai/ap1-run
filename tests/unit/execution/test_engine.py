@@ -747,3 +747,98 @@ def test_build_messages_system_then_user():
     assert engine._build_messages(system_prompt='Use the calculator.',
                                   item=ITEM, fixture=FIXTURE,
                                   config=CONFIG) == INITIAL
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+import re  # noqa: E402  (kept in this section to ease merging)
+
+
+def _contains(tree, target):
+    """True if target is tree or any value nested in it."""
+    if tree == target:
+        return True
+    if isinstance(tree, dict):
+        return any(_contains(v, target) for v in tree.values())
+    if isinstance(tree, list):
+        return any(_contains(v, target) for v in tree)
+    return False
+
+
+@pytest.mark.finding('T3-21')
+@pytest.mark.req('R1.2', 'R0.3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-21: the engine writes D7.2(a)/(b) scoring '
+                          '(provenance_results, operation_correctness) into '
+                          'the transcript record')
+def test_execute_item_record_has_no_scoring_fields(tmp_path, calculator):
+    # Correct (SPEC §2 "R1 EXECUTE: no scoring occurs here"; R1.2 "Perform
+    # no scoring"; Steven's ruling, choices-for-marcus.md entry 1): the
+    # record holds what happened; D7.2 is scored by the separate pass.
+    _, records = run(tmp_path, FakeAdapter(calls(tool_call()), answer()))
+    assert sorted(set(records[0]) & {'operation_correctness',
+                                     'provenance_results'}) == []
+
+
+@pytest.mark.finding('V12-3', 'T3-52')
+@pytest.mark.req('R0.2', 'R0.3', 'AP-1 §5.6')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='V12-3: only the first request and the final '
+                          'response of a tool loop reach the transcript')
+def test_execute_item_every_round_request_and_response_recorded(
+        tmp_path, calculator):
+    # Correct (SPEC R0.2 "Every request and response is written to the
+    # transcript before any other processing"; AP-1 §5.6): each of the
+    # three rounds' request records (as the adapter returned them) and
+    # raw responses is in the transcript. Today: request 1 and response 3.
+    replies = [calls(tool_call(id='a')), calls(tool_call(id='b')), answer()]
+    send = FakeAdapter(*copy.deepcopy(replies))
+    _, records = run(tmp_path, send)
+    assert len(send.calls) == 3
+    missing = ([f'request {n}' for n in (1, 2, 3)
+                if not _contains(records, {'request_no': n})]
+               + [f'response {n}' for n, reply in enumerate(replies, 1)
+                  if not _contains(records, reply)])
+    assert missing == []
+
+
+@pytest.mark.finding('T3-35')
+@pytest.mark.req('R1.3', 'AP-1 D7.9')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-35: a mid-loop send failure gives EV-0 with '
+                          'error_state None; cause and round only in the '
+                          'unwritten round_shapes')
+def test_execute_item_later_send_fails_error_state_names_cause_and_round(
+        tmp_path, calculator):
+    # Correct (SPEC R1.3 "EV-0 UNOBSERVABLE with the round identified";
+    # R0.3 "error state" field): the record says what failed and in which
+    # round (the second request, round 1 counting the first as round 0).
+    # Today's round_shapes reason "adapter_send failed on turn 1: Rate
+    # limit reached" written into error_state would pass.
+    send = FakeAdapter(calls(tool_call()),
+                       adapter.RateLimitError('Rate limit reached'))
+    _, records = run(tmp_path, send)
+    assert records[0]['evidence_class'] == EV_0
+    error_state = records[0]['error_state']
+    assert error_state is not None
+    text = json.dumps(error_state).lower()
+    assert 'rate limit' in text
+    assert re.search(r'\b(round|turn)\D{0,3}[12]\b', text)
+
+
+@pytest.mark.finding('T3-35')
+@pytest.mark.req('R1.3', 'AP-1 D7.9')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-35: an unrecognised later response gives EV-0 '
+                          'with error_state None and the round unidentified')
+def test_execute_item_unrecognised_later_response_error_state_names_round(
+        tmp_path, calculator):
+    # Correct (SPEC R1.3, as above): the record names the unrecognised
+    # shape and the round it came in (round 1).
+    _, records = run(tmp_path, FakeAdapter(calls(tool_call()), ANTHROPIC))
+    assert records[0]['evidence_class'] == EV_0
+    error_state = records[0]['error_state']
+    assert error_state is not None
+    text = json.dumps(error_state).lower()
+    assert 'shape' in text
+    assert re.search(r'\b(round|turn)\D{0,3}[12]\b', text)
