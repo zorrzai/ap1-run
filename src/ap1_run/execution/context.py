@@ -59,6 +59,30 @@ def check_lookup_collision(final_value, delivered_context):
     return False, None
 
 
+def lookup_collisions(compute, fixture, questions):
+    """Every item whose expected value appears in its delivered context,
+    computed at seal time (R3.1: "computed by the runner at seal time ...
+    reported at seal"; T3-75). Underivable items have no expected value
+    and are skipped.
+
+    Args:
+        compute: the ground-truth module's compute(item_id, ctx)
+        fixture, questions: as loaded (questions['items'])
+
+    Returns: list of (item_id, colliding 'account.field'), in item order.
+    """
+    found = []
+    for item in questions['items']:
+        ctx = build_delivered_context(fixture, item['source_accounts'])
+        gt = compute(item['id'], ctx)
+        if not gt.get('derivable', True):
+            continue
+        collision, field = check_lookup_collision(gt['final'], ctx)
+        if collision:
+            found.append((item['id'], field))
+    return found
+
+
 def format_fixture_context(fixture, item):
     """Format the fixture context for the user message.
 

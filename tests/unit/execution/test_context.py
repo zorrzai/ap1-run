@@ -13,7 +13,7 @@ import pytest
 
 from ap1_run.execution.context import (
     ContextError, TrackingAccount, TrackingContext, build_delivered_context,
-    check_lookup_collision, format_fixture_context,
+    check_lookup_collision, format_fixture_context, lookup_collisions,
 )
 
 D = Decimal
@@ -285,3 +285,28 @@ def test_tracking_account_setdefault_without_default_inserts_none():
     tc, acct = tracked()
     assert acct.setdefault('nope') is None
     assert dict.__getitem__(acct, 'nope') is None
+
+
+# -- lookup_collisions (seal time, R3.1; T3-75) --------------------------
+
+@pytest.mark.finding('T3-75')
+@pytest.mark.req('R3.1')
+def test_lookup_collisions_every_derivable_item_in_order():
+    expected = {'Q1': {'final': D('12.00')},              # checking fee
+                'Q2': {'final': D('99'), 'derivable': True},
+                'Q3': {'final': D('12'), 'derivable': False},
+                'Q4': {'final': D('25.0')}}               # card minimum
+    seen = []
+
+    def compute(item_id, ctx):
+        seen.append((item_id, sorted(ctx)))
+        return expected[item_id]
+    questions = {'items': [
+        {'id': 'Q4', 'source_accounts': ['credit_card']},
+        {'id': 'Q3', 'source_accounts': ['checking']},
+        {'id': 'Q1', 'source_accounts': ['savings', 'checking']},
+        {'id': 'Q2', 'source_accounts': ['checking']}]}
+    assert lookup_collisions(compute, fixture(), questions) == [
+        ('Q4', 'credit_card.min_payment'), ('Q1', 'checking.monthly_fee')]
+    assert seen == [('Q4', ['credit_card']), ('Q3', ['checking']),
+                    ('Q1', ['checking', 'savings']), ('Q2', ['checking'])]

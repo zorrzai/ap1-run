@@ -131,7 +131,8 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
         'expected_value': D('638.40'),
         'delivered_context': {'savings': {'balance': '1'}},
         'lookup_collision': False, 'answer_tolerance': D('0.01'),
-        'decline_markers': ['cannot'], 'currency_symbols': ['$']})]
+        'decline_markers': ['cannot'], 'structured_answer_field': None,
+        'currency_symbols': ['$']})]
     records = transcript.read_all(tpath)
     figure_record = records[-1]
     del figure_record['timestamp']
@@ -483,9 +484,6 @@ def test_score_execution_with_real_scorers(tpath, capsys):
 # Group g7-report (fix branch 7). xfail(strict=True) until the fix.
 
 @pytest.mark.finding('T3-75')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-75: structured_answer_field is not passed to '
-                          'identify_figure, so R2.0 step 1 never runs live')
 def test_score_execution_passes_structured_answer_field(fakes, tpath):
     # SPEC R2.0 step 1: "If structured_answer_field is configured and
     # present, that value is the released figure. Preferred path." The

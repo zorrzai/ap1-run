@@ -40,7 +40,7 @@ import time
 from decimal import Decimal
 
 from ap1_run.execution.context import (
-    build_delivered_context, check_lookup_collision,
+    build_delivered_context, check_lookup_collision, lookup_collisions,
 )
 from ap1_run.execution.engine import execute_item
 from ap1_run.execution.perturbation_guard import HELD_CONSTANT
@@ -195,8 +195,12 @@ def main(argv=None):
         ground_truth_path=os.path.join(fixture_dir, 'ground_truth_example.py'),
         ap1_text_path=ap1_text_path,
         runner_source_hash=runner_source_hash,
+        # R3.1: lookup collisions computed at seal and sealed (T3-75)
+        lookup_collisions=lookup_collisions(gt_module.compute, fixture,
+                                            questions),
     )
     seal_hash = seal_record['seal_hash']
+    print(f'Lookup collisions (R3.1): {seal_record["lookup_collisions"]}')
     print(f'Seal hash: {seal_hash}')
     print(f'AP-1 text hash: {seal_record["ap1_text_hash"]}')
     print()

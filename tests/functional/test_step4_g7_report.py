@@ -301,9 +301,6 @@ def test_run_report_d1_n_agrees_between_sections(run):
 
 
 @pytest.mark.finding('T3-75')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-75: structured_answer_field not used live; Q04 '
-                          'is ADJUDICATE-AMBIGUOUS')
 def test_run_structured_answer_field_releases_the_figure(run):
     # The config sets structured_answer_field 'answer'; Q04's final
     # response carries answer '430.75' and prose with two figures within
@@ -317,9 +314,6 @@ def test_run_structured_answer_field_releases_the_figure(run):
 
 
 @pytest.mark.finding('T3-75')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-75: the lookup collision is computed at run '
-                          'time; the seal does not record it')
 def test_run_seal_records_the_lookup_collision(run):
     # Q09's expected 3.20 appears in its delivered context (checking
     # account atm_fee). SPEC R3.1: "lookup_collision is computed by the

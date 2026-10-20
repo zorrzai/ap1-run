@@ -52,7 +52,8 @@ QUESTIONS = {'items': [{'id': 'Q1', 'source_accounts': ['a'],
                        {'id': 'Q3', 'source_accounts': []},
                        {'id': 'Q2', 'source_accounts': ['b'],
                         'category': 'fees'}]}
-FIXTURE = {'accounts': [{'id': 'a'}, {'id': 'b'}]}
+# b.fee equals Q2's expected 10.00: a lookup collision found at seal
+FIXTURE = {'accounts': [{'id': 'a'}, {'id': 'b', 'fee': '10.00'}]}
 
 
 class Run:
@@ -145,7 +146,8 @@ class Run:
 
     def create_seal(self, **kwargs):
         self.calls.append(('seal', kwargs))
-        return {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}
+        return {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH',
+                'lookup_collisions': 'COLLISIONS'}
 
     def check_condition_guard(self, *args):
         self.calls.append(('guard',) + args)
@@ -248,6 +250,7 @@ def test_main_full_run_console(r, capsys):
         'Ground-truth guards (R3.1): PASSED (perturbation, source fields, '
         'declared constants)\n'
         '\n'
+        'Lookup collisions (R3.1): COLLISIONS\n'
         'Seal hash: SEAL\n'
         'AP-1 text hash: TEXTHASH\n'
         '\n'
@@ -287,7 +290,9 @@ def test_main_full_run_calls(r, capsys):
         'questions_path': os.path.join(fx, 'questions.json'),
         'ground_truth_path': os.path.join(fx, 'ground_truth_example.py'),
         'ap1_text_path': str(r.tmp / 'ap1.md'),
-        'runner_source_hash': 'feedfacecafebeef' + '0' * 48}
+        'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
+        # T3-75: computed from the real contexts at seal (Q3 underivable)
+        'lookup_collisions': [('Q2', 'b.fee')]}
     assert config['endpoint_url'] == 'http://mock/v1'
     assert config['model'] == 'mock-model'
     assert (config['runner_version_tag'], config['runner_version_commit'],
@@ -406,7 +411,8 @@ def test_main_full_run_calls(r, capsys):
     assert (output_dir, transcript_path) == (out, transcript)
     assert kw == {
         'summary': {'summary': True}, 'config': config,
-        'seal_record': {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'},
+        'seal_record': {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH',
+                        'lookup_collisions': 'COLLISIONS'},
         'questions': QUESTIONS, 'fixture': FIXTURE,
         'release_coverage_results': [], 'disclaimer': run.DISCLAIMER,
         'smoke_summary': {

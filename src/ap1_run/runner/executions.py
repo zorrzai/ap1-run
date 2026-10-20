@@ -104,6 +104,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         lookup_collision=collision,
         answer_tolerance=answer_tolerance,
         decline_markers=decline_markers,
+        structured_answer_field=config.get('structured_answer_field'),
         currency_symbols=currency_symbols,
     )
 

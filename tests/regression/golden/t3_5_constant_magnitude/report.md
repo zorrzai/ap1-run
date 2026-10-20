@@ -23,6 +23,7 @@ Model: mock-model
 | `ev3_implemented` | `False` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
 | `ground_truth_hash` | `080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812` |
+| `lookup_collisions` | `none` |
 | `questions_hash` | `5f6aa97714e2b0f7e3039ae6018f6566e811354c4a904d210964beac54172af9` |
 | `runner_source_hash` | `<RUNNER_SOURCE_HASH>` |
 | `runner_version_commit` | `e0d9ec9` |

@@ -21,11 +21,15 @@ class SealError(Exception):
 
 def seal(*, config, fixture_path, questions_path, ground_truth_path,
          ap1_text_path=None, verification_keys=None,
-         runner_source_hash=None):
+         runner_source_hash=None, lookup_collisions=None):
     """Create a pre-registration record. R1.1.
 
     Hashes all inputs and timestamps the record. The seal_hash
     appears on every transcript line.
+
+    lookup_collisions, if given (a list of (item_id, field), from
+    context.lookup_collisions), is recorded in the sealed record as text,
+    'none' if empty: R3.1 reports collisions at seal (T3-75).
 
     If ap1_text_path is provided and its hash does not match
     config['ap1_text_hash'], raises SealError.
@@ -62,6 +66,11 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
         record['ap1_text_hash'] = computed
     else:
         record['ap1_text_hash'] = declared_hash
+
+    if lookup_collisions is not None:
+        record['lookup_collisions'] = '; '.join(
+            f'{item_id} ({field})'
+            for item_id, field in lookup_collisions) or 'none'
 
     # Verification keys for EV-3 (not implemented in v1.0)
     record['verification_keys'] = verification_keys or []
