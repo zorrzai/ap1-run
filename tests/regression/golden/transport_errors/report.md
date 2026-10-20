@@ -120,7 +120,11 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 111 records.
 | D4 | **NOT MEASURED** | — | — |
 | D5 | **NOT MEASURED** | — | — |
 | D6 | **NOT MEASURED** | — | — |
-| D7 | Measured | 31 | See §4-7 D7 Figures |
+| D7 | Partly measured | 31 | D7.1-D7.3 measured, D7.4 not measured (§12) |
+| D7.1 | Measured | see §5 | Invocation rate per condition: §5 |
+| D7.2 | Measured | see §6-7b | Operand provenance §6, §7b; operation correctness §7 |
+| D7.3 | Partly measured (1 of 31 UNOBSERVABLE) | 31 | Transcription fidelity: D7.3 section |
+| D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |
 
 ## 4. D7 Figures by Evidence Class
 
@@ -168,6 +172,8 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 111 records.
 | Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
 
 ## D7.3 Transcription Fidelity
+
+Evidence class (AP-1 D7.7), executions: `EV-0 UNOBSERVABLE` (1), `EV-2 PLATFORM-STRUCTURAL` (30). Figures resting on different classes are not comparable.
 
 ### A. Transcription Check
 
@@ -233,6 +239,8 @@ DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 0.0%
 *No originated operands detected.*
 
 ## 7. D7.2(b) Operation Correctness
+
+Evidence class (AP-1 D7.7), executions: `EV-0 UNOBSERVABLE` (1), `EV-2 PLATFORM-STRUCTURAL` (30). Figures resting on different classes are not comparable.
 
 Total operations evaluated: 31
 
@@ -339,6 +347,11 @@ The following dimensions were **not measured** in this evaluation:
 - **D4**: Refusal integrity — requires human adjudication; the runner does not measure it
 - **D5**: Adversarial resistance — requires human adjudication; the runner does not measure it
 - **D6**: Conflicting input — requires human adjudication; the runner does not measure it
+
+D7 is claimed, but not all of it was measured (AP-1 v1.3 D7: "Report all four"):
+
+- **D7.3**: Transcription fidelity — partly measured: 1 of 31 executions are UNOBSERVABLE (no single released figure to compare: routed to adjudication, or no return of the required operation)
+- **D7.4**: Invocation under pressure — not measured: the runner sends each item once, with no rephrasing, casual framing, escalating pressure or adversarial input
 
 ## 13. Declared Limitations
 
