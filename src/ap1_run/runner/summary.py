@@ -133,14 +133,17 @@ def build_summary(all_results, evidence_findings, *,
                   d2_cap_reason=None,
                   transcription_results=None,
                   release_coverage_results=None,
-                  held_constant=None):
+                  held_constant=None, served=None):
     """Build the summary dict that report.generate_report() expects.
 
     Aggregates per-item results into the structure report.py reads.
     held_constant names what the R1.2 guard held constant between the
-    conditions (AP-1 D7.8), for the report.
+    conditions (AP-1 D7.8), for the report. served counts the models and
+    backend fingerprints the responses report (V12-8).
     """
     summary = {}
+    if served is not None:
+        summary['served'] = served
     summary['transcription_results'] = transcription_results or []
     summary['release_coverage_results'] = release_coverage_results or []
 

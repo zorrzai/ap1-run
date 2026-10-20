@@ -326,9 +326,6 @@ def test_run_seal_records_the_lookup_collision(run):
 
 
 @pytest.mark.finding('V12-8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-8: report.md records neither the served model '
-                          'snapshot nor the backend fingerprints')
 def test_run_report_records_served_model_and_fingerprints(run):
     # AP-1 §5.2: "Confirmation that the system under test was frozen for
     # the duration, with a version or commit identifier." The mock serves

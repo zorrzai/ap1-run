@@ -88,6 +88,8 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
     sections.append(f'AP-1 Version: {config.get("ap1_version", "unknown")}\n')
     sections.append(f'Version DOI: {config.get("ap1_version_doi", "unknown")}\n')
     sections.append(f'Model: {config.get("model", "unknown")}\n')
+    if 'served' in summary:
+        sections.append(_served_lines(summary['served']))
     sections.append(DEMONSTRATION_STATEMENT)
     sections.append('---\n')
 
@@ -143,6 +145,25 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
 
 
 # -- Section generators ------------------------------------------------
+
+def _served_lines(served):
+    """What the responses say served them: model snapshots and backend
+    fingerprints, with how many responses each (V12-8; AP-1 §5.2 asks
+    for confirmation that the system was frozen for the run)."""
+    def listed(counts):
+        return ', '.join(f'{value} ({n})' for value, n in
+                         sorted(counts.items())) or 'not reported'
+    models, fingerprints = served['models'], served['fingerprints']
+    text = (f'Served model (as the responses report it, with responses): '
+            f'{listed(models)}\n\n'
+            f'Backend fingerprints (system_fingerprint): '
+            f'{listed(fingerprints)}\n')
+    if len(models) > 1 or len(fingerprints) > 1:
+        text += ('\n> More than one served model or backend fingerprint: '
+                 'the run does not show that the system under test was '
+                 'frozen for its duration (AP-1 §5.2).\n')
+    return text
+
 
 def _section_preregistration(seal_record):
     """Section 1: Pre-registration record."""

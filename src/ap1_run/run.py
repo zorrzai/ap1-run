@@ -56,8 +56,8 @@ from ap1_run.foundation.config import load_config
 from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.credentials import get_api_key
 from ap1_run.runner.executions import (
-    Findings, record_not_scored, record_transport_failure, record_underivable,
-    score_execution,
+    Findings, record_not_scored, record_served, record_transport_failure,
+    record_underivable, score_execution,
 )
 from ap1_run.runner.outputs import write_outputs
 from ap1_run.runner.settings import (
@@ -217,22 +217,25 @@ def main(argv=None):
     decline_markers = config.get('decline_markers', [])
     currency_symbols = config.get('currency_symbols', [])
 
-    # -- Adapter wrapper (binds api_key) --
+    # -- Collector for all findings --
+    findings = Findings()
+
+    # -- Adapter wrapper (binds api_key; records what served each
+    #    response, V12-8) --
     def adapter_send(endpoint_url, *, messages, tools=None,
                      sampling=None, model=None, timeout=120):
-        return adapter.send(
+        response, request_record = adapter.send(
             endpoint_url, messages=messages, tools=tools,
             sampling=sampling, model=model, api_key=api_key,
             timeout=timeout)
+        record_served(findings, response)
+        return response, request_record
 
     # -- Perturbation guard (R1.2): refuse the run unless the system prompt,
     # and only it, differs. Each condition then runs with what was checked.
     arms = check_condition_guard(
         config, os.path.join(fixture_dir, 'fixture.json'),
         system_prompt_base, system_prompt_removed, tools, sampling)
-
-    # -- Collector for all findings --
-    findings = Findings()
 
     print(f'Running {len(items)} items x {len(conditions)} conditions x {repeat_count} repeats')
     print(f'Total requests: {len(items) * len(conditions) * repeat_count}')
@@ -337,7 +340,7 @@ def main(argv=None):
         d2_cap_reason=d2_cap_reason,
         transcription_results=findings.transcription_results,
         release_coverage_results=findings.release_coverage_results,
-        held_constant=HELD_CONSTANT)
+        held_constant=HELD_CONSTANT, served=findings.served)
 
     # 3j-3l. D1, D2, operand provenance
     print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary)

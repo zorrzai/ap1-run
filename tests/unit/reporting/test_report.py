@@ -1987,3 +1987,42 @@ def test_clopper_pearson_section_rate_as_percentage_with_k_n_and_bound():
     assert rows, text
     assert re.search(r'\b100(\.0+)?\s?%', rows[0]), rows[0]
     assert re.search(r'25\.8[89]|25\.9', rows[0]), rows[0]
+
+
+# -- Step 5 (report-honesty): served model and fingerprints (V12-8) -------
+
+@pytest.mark.finding('V12-8')
+@pytest.mark.req('AP-1 §5.2')
+def test_report_header_records_served_model_and_fingerprints():
+    text = generate_report(summary={'served': {
+        'models': {'m-2026-01-01': 4},
+        'fingerprints': {'fp_b': 1, 'fp_a': 3}}},
+        config=CONFIG, seal_record={})
+    head = text[:text.index('## 1.')]
+    assert ('Model: test-model\n\n'
+            'Served model (as the responses report it, with responses): '
+            'm-2026-01-01 (4)\n\n'
+            'Backend fingerprints (system_fingerprint): fp_a (3), '
+            'fp_b (1)\n\n'
+            '> More than one served model or backend fingerprint: the run '
+            'does not show that the system under test was frozen for its '
+            'duration (AP-1 §5.2).\n\n'
+            '> **Demonstration run') in head
+
+
+@pytest.mark.finding('V12-8')
+@pytest.mark.parametrize('served, warned', [
+    ({'models': {'a': 1, 'b': 1}, 'fingerprints': {}}, True),
+    ({'models': {'a': 2}, 'fingerprints': {'f': 2}}, False),
+    ({'models': {}, 'fingerprints': {}}, False)])
+def test_served_lines_warn_only_when_more_than_one(served, warned):
+    text = report._served_lines(served)
+    assert ('frozen' in text) is warned
+    if not served['fingerprints']:
+        assert 'Backend fingerprints (system_fingerprint): not reported\n' \
+            in text
+
+
+def test_report_header_without_served_data_has_no_served_lines():
+    text = generate_report(summary={}, config=CONFIG, seal_record={})
+    assert 'Served model' not in text

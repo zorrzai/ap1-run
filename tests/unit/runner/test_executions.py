@@ -459,7 +459,7 @@ def test_findings_start_empty_and_separate():
         'grammar_issues': [], 'decline_findings': [],
         'tool_call_structures': [], 'evidence_findings': [],
         'transcription_results': [], 'release_coverage_results': [],
-        'unmeasured_cells': []}
+        'unmeasured_cells': [], 'served': {'models': {}, 'fingerprints': {}}}
 
 
 # -- the real scoring modules, on a realistic response --------------------
@@ -741,3 +741,22 @@ def test_record_not_scored_unmeasured_listed_with_cause(error, word):
             for c in findings.unmeasured_cells] == [('Q03', 'base', 1)]
     assert word in findings.unmeasured_cells[0]['cause'].lower()
     assert [r['status'] for r in findings.all_results] == ['UNMEASURED']
+
+
+# -- record_served (V12-8) ---------------------------------------------------
+
+@pytest.mark.finding('V12-8')
+def test_record_served_counts_models_and_fingerprints():
+    from ap1_run.runner.executions import record_served
+    findings = Findings()
+    for response in [
+            {'model': 'm-2026-01-01', 'system_fingerprint': 'fp_a'},
+            {'model': 'm-2026-01-01', 'system_fingerprint': 'fp_b'},
+            {'model': 'm-2026-01-01', 'system_fingerprint': None},
+            {'model': '', 'choices': []}, {}, None, 'not a dict',
+            {'model': 7, 'system_fingerprint': 'fp_a'}]:
+        record_served(findings, response)
+    assert findings.served == {
+        'models': {'m-2026-01-01': 3, '7': 1},
+        'fingerprints': {'fp_a': 2, 'fp_b': 1}}
+    assert Findings().served is not Findings().served

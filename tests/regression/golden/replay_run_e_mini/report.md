@@ -8,6 +8,12 @@ Version DOI: 10.5281/zenodo.21755443
 
 Model: mock-model
 
+Served model (as the responses report it, with responses): gpt-4.1-mini-2025-04-14 (1000), mock-model (1415)
+
+Backend fingerprints (system_fingerprint): fp_50915ebef8 (41), fp_5eb9ee8319 (1), fp_6d15e4ed70 (454), fp_a035767cd3 (16), fp_a8d92733a0 (442), fp_dfe5abd468 (41), fp_ee38530f4a (5)
+
+> More than one served model or backend fingerprint: the run does not show that the system under test was frozen for its duration (AP-1 §5.2).
+
 > **Demonstration run, not a conformance result.** ap1-run implements the AP-1 v1.3 Draft for Comment; v1.2 remains the version in force. A run of this instrument is a demonstration run, not a conformance result under either version (README, "Which version of AP-1").
 
 ---

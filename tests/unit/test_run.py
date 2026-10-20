@@ -403,7 +403,8 @@ def test_main_full_run_calls(r, capsys):
                   'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
                   'transcription_results': [],
                   'release_coverage_results': [],
-                  'held_constant': HELD_CONSTANT}
+                  'held_constant': HELD_CONSTANT,
+                  'served': {'models': {}, 'fingerprints': {}}}
     assert r.named('scoring_report') == [(
         d1, {'d2': 'results'}, 'CAP', {'summary': True})]
 
@@ -453,13 +454,20 @@ def test_main_ground_truth_guard_refusal_stops_before_seal_and_requests(
 
 def test_main_adapter_send_binds_the_key(r, monkeypatch):
     sent = []
-    monkeypatch.setattr(run.adapter, 'send',
-                        lambda url, **kw: sent.append((url, kw)) or 'RESP')
+    monkeypatch.setattr(
+        run.adapter, 'send', lambda url, **kw: sent.append((url, kw)) or (
+            {'model': 'served-M', 'system_fingerprint': 'fp'}, 'REC'))
+    served = []
+    monkeypatch.setattr(run, 'record_served',
+                        lambda findings, response: served.append(response))
     r.main()
     adapter_send = r.named('execute')[0][1]['adapter_send']
-    assert adapter_send('http://x', messages=['m']) == 'RESP'
+    resp = ({'model': 'served-M', 'system_fingerprint': 'fp'}, 'REC')
+    assert adapter_send('http://x', messages=['m']) == resp
     assert adapter_send('http://y', messages=['n'], tools=['t'],
-                        sampling={'s': 1}, model='M', timeout=7) == 'RESP'
+                        sampling={'s': 1}, model='M', timeout=7) == resp
+    # V12-8: every response's served model is recorded
+    assert served == [resp[0]] * 2
     assert sent == [
         ('http://x', {'messages': ['m'], 'tools': None, 'sampling': None,
                       'model': None, 'api_key': 'sk-0123456789',

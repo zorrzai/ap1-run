@@ -805,3 +805,10 @@ def test_summary_findings_carry_the_execution_and_skip_unmeasurable():
         dict(where, operand='259.14', finding='grounded via intermediate n '
              'only after quantisation, in `259.14 * 3`')]
     assert s['near_miss_findings'] == [dict(where, **near)]
+
+
+@pytest.mark.finding('V12-8')
+def test_summary_carries_served_only_when_given():
+    served = {'models': {'m': 1}, 'fingerprints': {}}
+    assert build_summary([], [], served=served)['served'] is served
+    assert 'served' not in build_summary([], [])

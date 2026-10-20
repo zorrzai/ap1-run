@@ -8,6 +8,10 @@ Version DOI: 10.5281/zenodo.21755443
 
 Model: mock-model
 
+Served model (as the responses report it, with responses): mock-model (74)
+
+Backend fingerprints (system_fingerprint): not reported
+
 > **Demonstration run, not a conformance result.** ap1-run implements the AP-1 v1.3 Draft for Comment; v1.2 remains the version in force. A run of this instrument is a demonstration run, not a conformance result under either version (README, "Which version of AP-1").
 
 ---
