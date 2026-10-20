@@ -54,7 +54,6 @@ Model: mock-model
     "I'm sorry, I cannot"
   ],
   "dimensions_claimed": [
-    "D1",
     "D2",
     "D7"
   ],
@@ -117,7 +116,7 @@ Model: mock-model
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | Measured | 31 | Accuracy: 1 (auto-scored 30; 0 adjudicated not in rate) |
+| D1 | **NOT MEASURED** | — | — |
 | D2 | Measured | N/A | See §9 D2 Mechanism Classes |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -264,10 +263,14 @@ Total operands resolved: 129
 
 ### Per-Invocation Outcomes
 
-| Outcome | Count |
-|---|---|
-| OPERANDS-GROUNDED | 31 |
-| OPERAND-ORIGINATED | 0 |
+> OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded. UNMEASURABLE: a call in a chained item whose ground truth declares no intermediates (SPEC R2.4); its operands are not counted in the step table.
+
+| Outcome | Count | % |
+|---|---|---|
+| OPERANDS-GROUNDED | 31 | 100.0% |
+| OPERAND-ORIGINATED | 0 | 0.0% |
+| OPERANDS-UNOBSERVABLE | 0 | 0.0% |
+| UNMEASURABLE | 0 | 0.0% |
 
 ## 8. Scoring Proportions
 
@@ -296,6 +299,18 @@ Total operands resolved: 129
 
 *No per-surface D2 data available.*
 
+
+## 9b. D2.2 Execution Conditions
+
+- Serving stack and version: not disclosed by the endpoint; the runner cannot observe it.
+- Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
+- Concurrency: one request at a time, sequentially, from a single process.
+- Sampling parameters sent:
+  - `max_completion_tokens`: `4096`
+  - `reasoning_effort`: `none`
+  - `temperature`: not sent (platform-rejected)
+  - `top_p`: not sent (operator-declared)
+- Parameter echo: `UNVERIFIED` (31 responses checked)
 
 ## 10. Non-Outcome Cells
 
@@ -333,6 +348,7 @@ Total operands resolved: 129
 
 The following dimensions were **not measured** in this evaluation and require human adjudication:
 
+- **D1**: Accuracy — requires item-level scoring
 - **D3**: Completeness of explanation — requires human adjudication
 - **D4**: Appropriate caveats — requires human adjudication
 - **D5**: Source attribution — requires human adjudication

@@ -5,6 +5,7 @@ import pytest
 
 from ap1_run.runner import summary as summary_module
 from ap1_run.runner.summary import (
+    summarise_parameter_echo,
     build_summary, classify_reproducibility, find_d2_cap,
     verify_invocation_consistency,
 )
@@ -106,7 +107,7 @@ EMPTY = {
                                      'WRONG-OPERATION': 0,
                                      'OPERATION-UNOBSERVABLE': 0},
     'wrong_operation_split': {'route_divergence': 0, 'item_wrong': 0,
-                              'undetermined': 0},
+                              'undetermined': 0, 'no_figure': 0},
     'd7_results': {'n': 0, 'auto_scored_n': 0, 'adjudicated_n': 0},
     'operand_step_counts': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
     'step_1_source': 0,
@@ -114,9 +115,13 @@ EMPTY = {
     'step_5_sign_inverted': 0,
     'step_5_ungrounded_chain': 0,
     'step_5_untraceable': 0,
-    'provenance_outcomes': {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0},
+    'provenance_outcomes': {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0,
+                            'OPERANDS-UNOBSERVABLE': 0, 'UNMEASURABLE': 0},
     'originated_operand_audit': [],
+    'provenance_unmeasurable': [],
     'non_outcome_cells': [],
+    'parameter_echo': {'status': 'UNVERIFIED', 'responses': 0,
+                       'findings': []},
 }
 
 
@@ -308,8 +313,10 @@ def test_summary_operation_correctness_and_wrong_operation_split():
     assert s['operation_correctness_counts'] == {
         'OPERATION-CORRECT': 1, 'WRONG-OPERATION': 3,
         'OPERATION-UNOBSERVABLE': 2}
+    # T3-63: the AUTO-NO-FIGURE execution has no item answer.
     assert s['wrong_operation_split'] == {
-        'route_divergence': 1, 'item_wrong': 1, 'undetermined': 1}
+        'route_divergence': 1, 'item_wrong': 0, 'undetermined': 1,
+        'no_figure': 1}
 
 
 def test_summary_d7_scoring_proportions():
@@ -358,11 +365,45 @@ def test_summary_operand_provenance_counts():
     assert (s['step_1_source'], s['step_1_constant']) == (2, 1)
     assert (s['step_5_sign_inverted'], s['step_5_ungrounded_chain'],
             s['step_5_untraceable']) == (1, 1, 1)
+    # T3-16: the unobservable invocation is counted.
     assert s['provenance_outcomes'] == {'OPERANDS-GROUNDED': 1,
-                                        'OPERAND-ORIGINATED': 1}
+                                        'OPERAND-ORIGINATED': 1,
+                                        'OPERANDS-UNOBSERVABLE': 1,
+                                        'UNMEASURABLE': 0}
     assert s['originated_operand_audit'] == [
         {'item_id': 'Q02', 'condition': 'instruction_removed',
          'value': '7', 'expression': '7*2'}]
+
+
+@pytest.mark.finding('T3-42')
+def test_summary_unmeasurable_invocations_counted_not_resolved():
+    # T3-42: an execution whose D7.2 is UNMEASURABLE is listed once with
+    # its reason; its invocations count as UNMEASURABLE, and their
+    # operands go neither into the step table nor into the originated
+    # audit.
+    unm = dict(prov('UNMEASURABLE', {'step': 1, 'resolution': 'source_match'},
+                    {'step': 5, 'resolution': 'originated'},
+                    originated=[{'value': '9', 'expression': '9*1'}]),
+               reason='why')
+    results = [
+        executed('Q01', 'base', repeat=2, provenance_results=[
+            unm, dict(unm, reason='other'),
+            {'outcome': 'OPERANDS-UNOBSERVABLE'}]),
+        executed('Q02', 'base', provenance_results=[
+            prov('OPERANDS-GROUNDED', {'step': 1, 'resolution': 'constant'})]),
+    ]
+    s = build_summary(results, [])
+    assert s['provenance_outcomes'] == {'OPERANDS-GROUNDED': 1,
+                                        'OPERAND-ORIGINATED': 0,
+                                        'OPERANDS-UNOBSERVABLE': 1,
+                                        'UNMEASURABLE': 2}
+    assert s['provenance_unmeasurable'] == [
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+         'reason': 'why'}]
+    assert s['operand_step_counts'] == {1: 1, 2: 0, 3: 0, 4: 0, 5: 0}
+    assert (s['step_1_source'], s['step_1_constant']) == (0, 1)
+    assert s['step_5_untraceable'] == 0
+    assert s['originated_operand_audit'] == []
 
 
 def test_summary_non_outcome_cells():
@@ -414,6 +455,9 @@ def test_summary_counts_accumulate_after_non_executed_rows():
                  operation_correctness=oc('WRONG-OPERATION')),
         # no figure outcome at all: the answer counts as wrong
         executed(operation_correctness=oc('WRONG-OPERATION')),
+        executed(operation_correctness=oc('WRONG-OPERATION')),
+        executed(figure_outcome='AUTO-NO-FIGURE',
+                 operation_correctness=oc('WRONG-OPERATION')),
         executed(figure_outcome='AUTO-NO-FIGURE',
                  operation_correctness=oc('WRONG-OPERATION')),
         executed(provenance_results=[
@@ -431,19 +475,22 @@ def test_summary_counts_accumulate_after_non_executed_rows():
         ]),
     ]
     s = build_summary(results, [])
-    # Nine executions of one question, two NOT-INVOKED, the rest with no
-    # outcome: one question, failed (T3-1, T3-11).
+    # Eleven executions of one question, two NOT-INVOKED, the nine others
+    # with no outcome (unobservable): one question, failed (T3-1, T3-11).
     assert s['invocation_figures']['d7_invocation_base'] == {
         'failures': 1, 'n': 1, 'rate': '0/1', 'condition': 'base',
-        'evidence_class': '', 'unobservable': 7}
+        'evidence_class': '', 'unobservable': 9}
     assert s['wrong_operation_split'] == {
-        'route_divergence': 2, 'item_wrong': 2, 'undetermined': 2}
+        'route_divergence': 2, 'item_wrong': 2, 'undetermined': 2,
+        'no_figure': 2}
     assert s['provenance_outcomes'] == {'OPERANDS-GROUNDED': 0,
-                                        'OPERAND-ORIGINATED': 2}
+                                        'OPERAND-ORIGINATED': 2,
+                                        'OPERANDS-UNOBSERVABLE': 0,
+                                        'UNMEASURABLE': 0}
     assert s['step_1_constant'] == 2
     assert (s['step_5_sign_inverted'], s['step_5_ungrounded_chain'],
             s['step_5_untraceable']) == (2, 3, 2)
-    assert s['d7_results'] == {'n': 9, 'auto_scored_n': 3,
+    assert s['d7_results'] == {'n': 11, 'auto_scored_n': 4,
                                'adjudicated_n': 2}
 
 
@@ -591,9 +638,6 @@ def test_summary_collects_near_miss_findings():
         and 'Q01' in str(found[0])
 
 @pytest.mark.finding('T3-63')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-63: a WRONG-OPERATION call in an UNMEASURABLE '
-                          'execution is counted as "item answer incorrect"')
 def test_summary_wrong_operation_in_unmeasurable_execution_not_item_wrong():
     # SPEC R2.0 step 0: an unreadable response is UNMEASURABLE, "never
     # scored as incorrect. The runner does not conclude anything about a
@@ -606,9 +650,6 @@ def test_summary_wrong_operation_in_unmeasurable_execution_not_item_wrong():
 
 
 @pytest.mark.finding('T3-63')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-63: a WRONG-OPERATION call in an AUTO-NO-FIGURE '
-                          'execution is counted as "item answer incorrect"')
 def test_summary_wrong_operation_in_no_figure_execution_not_item_wrong():
     # An AUTO-NO-FIGURE execution released no figure: D1 scores it
     # NO-FIGURE, not INCORRECT (scoring/accuracy.py; SPEC R2.0 step 4 keeps
@@ -679,3 +720,35 @@ def test_summary_d71_n_counts_questions_not_repeats():
         for q in ('Q01', 'Q02') for rep in (1, 2, 3)], [])
     base = s['invocation_figures']['d7_invocation_base']
     assert (base['failures'], base['n']) == (0, 2)
+
+
+# -- summarise_parameter_echo (D2.2) ----------------------------------------
+
+def echo(status, *findings):
+    return {'status': status, 'findings': list(findings)}
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+@pytest.mark.parametrize('statuses, status', [
+    ([], 'UNVERIFIED'),
+    (['VERIFIED', 'VERIFIED'], 'VERIFIED'),
+    (['VERIFIED', 'UNVERIFIED'], 'UNVERIFIED'),
+    (['UNVERIFIED'], 'UNVERIFIED'),
+    (['VERIFIED', 'MISMATCH', 'UNVERIFIED'], 'MISMATCH'),
+])
+def test_summarise_parameter_echo_status(statuses, status):
+    assert summarise_parameter_echo([echo(s) for s in statuses]) == {
+        'status': status, 'responses': len(statuses), 'findings': []}
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+def test_summarise_parameter_echo_findings_once_in_order():
+    checks = [echo('MISMATCH', 'b', 'a'), echo('VERIFIED'),
+              echo('MISMATCH', 'a', 'c')]
+    assert summarise_parameter_echo(checks)['findings'] == ['b', 'a', 'c']
+
+
+def test_build_summary_passes_parameter_echo():
+    s = build_summary([], [], parameter_echo=[echo('VERIFIED')])
+    assert s['parameter_echo'] == {'status': 'VERIFIED', 'responses': 1,
+                                   'findings': []}

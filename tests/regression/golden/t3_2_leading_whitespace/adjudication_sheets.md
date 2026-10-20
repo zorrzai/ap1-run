@@ -57,9 +57,9 @@ The monthly interest earned on the savings account is $2333.10.
 
 **Operand provenance (D7.2(a)):**
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -158,9 +158,9 @@ The monthly interest earned on the savings account is $2333.10.
 
 **Operand provenance (D7.2(a)):**
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -259,9 +259,9 @@ The monthly interest earned on the savings account is $2333.10.
 
 **Operand provenance (D7.2(a)):**
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -360,9 +360,9 @@ The monthly interest earned on the savings account is $2333.10.
 
 **Operand provenance (D7.2(a)):**
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -909,9 +909,9 @@ The monthly interest earned on the savings account is $2333.10.
 
 **Operand provenance (D7.2(a)):**
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -1010,9 +1010,9 @@ The monthly interest earned on the savings account is $2333.10.
 
 **Operand provenance (D7.2(a)):**
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -1111,9 +1111,9 @@ The monthly interest earned on the savings account is $2333.10.
 
 **Operand provenance (D7.2(a)):**
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -1212,9 +1212,9 @@ The monthly interest earned on the savings account is $2333.10.
 
 **Operand provenance (D7.2(a)):**
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 

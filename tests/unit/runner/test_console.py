@@ -45,8 +45,7 @@ def test_run_report_with_no_results(capsys):
             '    failure rate: no observations\n'
             '  instruction_removed: invoked=0 not_invoked=0 n=0\n'
             '    failure rate: no observations\n'
-            # F3: a literal backslash-n, pinned as it is today
-            '\\n3h2. D7.3 TRANSCRIPTION:\n'
+            '\n3h2. D7.3 TRANSCRIPTION:\n'
             '  TRANSCRIBED-EXACT: 0\n'
             '  TRANSCRIBED-ALTERED: 0\n'
             '  UNOBSERVABLE: 0\n'
@@ -145,7 +144,7 @@ def test_run_report_with_results(capsys):
         '    failure rate: 2/3 (66.7%)\n'
         '  instruction_removed: invoked=1 not_invoked=1 n=2\n'
         '    failure rate: 1/2 (50.0%)\n'
-        '\\n3h2. D7.3 TRANSCRIPTION:\n'
+        '\n3h2. D7.3 TRANSCRIPTION:\n'
         '  TRANSCRIBED-EXACT: 2\n'
         '  TRANSCRIBED-ALTERED: 0\n'
         '  UNOBSERVABLE: 1\n'
@@ -162,8 +161,9 @@ def test_run_report_with_results(capsys):
         '  OPERATION-UNOBSERVABLE: 1\n'
         '    of which:\n'
         '      route divergence (item answer correct):      3\n'
-        '      item answer incorrect:                       3\n'
-        '      item answer undetermined (adjudicated):      2\n')
+        '      item answer incorrect:                       1\n'
+        '      item answer undetermined (adjudicated):      2\n'
+        '      no figure released (no item answer):         2\n')
 
 
 def test_run_report_percentages_round_to_whole_numbers(capsys):
@@ -189,7 +189,9 @@ SUMMARY = {
     'step_5_sign_inverted': 1, 'step_5_ungrounded_chain': 2,
     'step_5_untraceable': 3,
     'provenance_outcomes': {'OPERANDS-GROUNDED': 11,
-                            'OPERAND-ORIGINATED': 4},
+                            'OPERAND-ORIGINATED': 4,
+                            'OPERANDS-UNOBSERVABLE': 6,
+                            'UNMEASURABLE': 2},
 }
 
 PROVENANCE = (
@@ -203,7 +205,9 @@ PROVENANCE = (
     '  step 5 (originated, computed from ungrounded invocation): 2\n'
     '  step 5 (originated, no traceable basis):                  3\n'
     '  OPERANDS-GROUNDED: 11\n'
-    '  OPERAND-ORIGINATED: 4\n')
+    '  OPERAND-ORIGINATED: 4\n'
+    '  OPERANDS-UNOBSERVABLE: 6\n'
+    '  UNMEASURABLE: 2\n')
 
 
 def test_scoring_report_full(capsys):
@@ -248,7 +252,9 @@ def test_scoring_report_defaults_when_values_are_missing(capsys):
         '  step 5 (originated, computed from ungrounded invocation): 0\n'
         '  step 5 (originated, no traceable basis):                  0\n'
         '  OPERANDS-GROUNDED: 0\n'
-        '  OPERAND-ORIGINATED: 0\n')
+        '  OPERAND-ORIGINATED: 0\n'
+        '  OPERANDS-UNOBSERVABLE: 0\n'
+        '  UNMEASURABLE: 0\n')
 
 
 def test_scoring_report_without_d1_summary(capsys):
@@ -274,16 +280,28 @@ def test_run_report_single_execution(capsys):
         '    of which:\n'
         '      route divergence (item answer correct):      0\n'
         '      item answer incorrect:                       0\n'
-        '      item answer undetermined (adjudicated):      1\n')
+        '      item answer undetermined (adjudicated):      1\n'
+        '      no figure released (no item answer):         0\n')
+
+
+def test_run_report_wrong_operation_split_counts_accumulate(capsys):
+    # Two executions in each population, so every count must add up.
+    out = run_report(capsys, [
+        executed('Q01', 'base', r, figure, operation_correctness=wrong_op())
+        for figure in ('AUTO-MATCH', 'ADJUDICATE-DECLINE', 'UNMEASURABLE',
+                       'AUTO-NO-FIGURE', '')
+        for r in (1, 2)])
+    assert out.endswith(
+        '    of which:\n'
+        '      route divergence (item answer correct):      2\n'
+        '      item answer incorrect:                       2\n'
+        '      item answer undetermined (adjudicated):      4\n'
+        '      no figure released (no item answer):         2\n')
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
 
 @pytest.mark.finding('T3-63')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-63: the console counts WRONG-OPERATION calls in '
-                          'UNMEASURABLE and AUTO-NO-FIGURE executions as '
-                          '"item answer incorrect"')
 def test_run_report_wrong_operation_in_unreadable_or_no_figure_not_item_wrong(
         capsys):
     # SPEC R2.0 step 0 (an UNMEASURABLE response is never scored incorrect)
@@ -301,8 +319,6 @@ import pytest  # noqa: E402
 
 
 @pytest.mark.finding('F3', 'T3-80')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F3: section 3h2 prints a literal backslash-n')
 def test_run_report_section_3h2_heading_starts_after_a_blank_line(capsys):
     # Steven's ruling (choices-for-marcus entry 4): the literal "\n" is
     # fixed; 3h2 is laid out like every other section heading.

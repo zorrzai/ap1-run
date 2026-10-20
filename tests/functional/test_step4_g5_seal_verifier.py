@@ -88,8 +88,7 @@ def runner(tmp_path, monkeypatch, capsys):
             if name.startswith('AP1_SMOKE_'):
                 monkeypatch.delenv(name)
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-g5-not-a-real-key-0000')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+        mock.point_config(config_path)  # T3-80: config only
         monkeypatch.setattr(run_mod.time, 'sleep', lambda seconds: None)
         # As the regression driver does: git fails, so the version check
         # is the same on every checkout (no "runner may be modified").

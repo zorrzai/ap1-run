@@ -190,7 +190,7 @@ def test_score_accuracy_unsupported_rounding_mode_raises():
     with pytest.raises(ValueError, match='unsupported rounding mode'):
         score_accuracy(figure(AUTO_MATCH, D('2.5')), expected_value=D('2.9'),
                        answer_tolerance=D('0'), quantisation_digits=0,
-                       quantisation_rounding='ROUND_DOWN')
+                       quantisation_rounding='ROUND_SIDEWAYS')
 
 
 # -- score_accuracy with identify_figure (the live chain) ---------------------

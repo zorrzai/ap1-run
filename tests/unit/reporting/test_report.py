@@ -101,6 +101,7 @@ def test_report_sections_in_order():
         '7b. D7.2(a) Operand Provenance Step Counts',
         '8. Scoring Proportions',
         '9. D2 Reproducibility Mechanism Classes',
+        '9b. D2.2 Execution Conditions',
         '10. Non-Outcome Cells',
         '11. Quantisation and Near-Miss Findings',
         '12. Unmeasured Dimensions Declaration',
@@ -129,6 +130,7 @@ def test_report_is_header_and_sections_joined_by_newlines():
         report._section_operand_provenance(summary),
         report._section_scoring_proportions(summary),
         report._section_d2_mechanisms(summary),
+        report._section_d2_conditions(summary, CONFIG),
         report._section_unmeasured_cells({}, [
             {'item_id': 'Q09', 'condition': 'base',
              'error_state': 'VOID: x'}]),
@@ -724,7 +726,7 @@ def test_d72b_wrong_operation_split_shown_when_non_zero():
     text = report._section_d72b_counts({
         'operation_correctness_counts': {'WRONG-OPERATION': 3},
         'wrong_operation_split': {'route_divergence': 1, 'item_wrong': 0,
-                                  'undetermined': 2}})
+                                  'undetermined': 2, 'no_figure': 4}})
     assert text.endswith(md(
         '| OPERATION-UNOBSERVABLE | 0 |',
         '',
@@ -734,6 +736,7 @@ def test_d72b_wrong_operation_split_shown_when_non_zero():
         '| Route divergence (item answer correct) | 1 |',
         '| Item answer incorrect | 0 |',
         '| Item answer undetermined (adjudicated) | 2 |',
+        '| No figure released (no item answer) | 4 |',
         ''))
 
 
@@ -743,6 +746,7 @@ def test_d72b_wrong_operation_split_missing_keys_read_zero():
         'wrong_operation_split': {'item_wrong': 1}})
     assert '| Route divergence (item answer correct) | 0 |' in text
     assert '| Item answer incorrect | 1 |' in text
+    assert '| No figure released (no item answer) | 0 |' in text
     assert '| Item answer undetermined (adjudicated) | 0 |' in text
 
 
@@ -838,24 +842,40 @@ def test_provenance_outcomes_only_shows_dashes_for_percentages():
         '| 5 | Originated, no traceable basis | 0 | \u2014% |',
         '',
         '### Per-Invocation Outcomes\n',
-        '| Outcome | Count |',
-        '|---|---|',
-        '| OPERANDS-GROUNDED | 2 |',
-        '| OPERAND-ORIGINATED | 0 |',
+        '> OPERANDS-UNOBSERVABLE: a calculator call whose operands could not '
+        'be read (malformed arguments or an unreadable expression); '
+        'declared, never grounded. UNMEASURABLE: a call in a chained item '
+        'whose ground truth declares no intermediates (SPEC R2.4); its '
+        'operands are not counted in the step table.\n',
+        '| Outcome | Count | % |',
+        '|---|---|---|',
+        '| OPERANDS-GROUNDED | 2 | 100.0% |',
+        '| OPERAND-ORIGINATED | 0 | 0.0% |',
+        '| OPERANDS-UNOBSERVABLE | 0 | 0.0% |',
+        '| UNMEASURABLE | 0 | 0.0% |',
         '')
 
 
 @pytest.mark.finding('T3-42')
-def test_provenance_outcomes_other_than_grounded_or_originated_not_shown():
-    # Only OPERANDS-GROUNDED and OPERAND-ORIGINATED get rows; an
-    # UNMEASURABLE count (which R2.4 asks for when intermediates are
-    # absent, and which is never produced, T3-42) would count towards
-    # the total and not be shown. Correct: every outcome listed.
+def test_provenance_unmeasurable_count_and_executions_shown():
+    # SPEC R2.4/R3.3: UNMEASURABLE invocations get their row, and each
+    # execution for which D7.2 is UNMEASURABLE is listed with its reason.
     text = report._section_operand_provenance({
-        'provenance_outcomes': {'UNMEASURABLE': 3}})
-    assert '### Per-Invocation Outcomes' in text
-    assert 'UNMEASURABLE' not in text
-    assert '| OPERANDS-GROUNDED | 0 |\n| OPERAND-ORIGINATED | 0 |' in text
+        'provenance_outcomes': {'OPERANDS-GROUNDED': 1, 'UNMEASURABLE': 3},
+        'provenance_unmeasurable': [
+            {'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+             'reason': 'chained'}, {}]})
+    assert ('| OPERANDS-GROUNDED | 1 | 25.0% |\n'
+            '| OPERAND-ORIGINATED | 0 | 0.0% |\n'
+            '| OPERANDS-UNOBSERVABLE | 0 | 0.0% |\n'
+            '| UNMEASURABLE | 3 | 75.0% |\n') in text
+    assert text.endswith(md(
+        '### D7.2 UNMEASURABLE Executions\n',
+        '| Item | Condition | Repeat | Reason |',
+        '|---|---|---|---|',
+        '| Q01 | base | 2 | chained |',
+        '| ? | ? | ? | ? |',
+        ''))
 
 
 def test_provenance_outcomes_all_zero_are_omitted():
@@ -1836,3 +1856,41 @@ def test_clopper_pearson_section_rate_as_percentage_with_k_n_and_bound():
     assert rows, text
     assert re.search(r'\b100(\.0+)?\s?%', rows[0]), rows[0]
     assert re.search(r'25\.8[89]|25\.9', rows[0]), rows[0]
+
+
+# -- 9b. D2.2 execution conditions -----------------------------------------
+
+@pytest.mark.finding('T3-30', 'T3-22')
+@pytest.mark.req('AP-1 D2.2', 'R2.2')
+def test_d2_conditions_section_exact():
+    config = {'sampling': {
+        'temperature': '1', 'max_completion_tokens': '4096',
+        'reasoning_effort': {'value': 'omitted',
+                             'reason': 'platform-unsupported', 'detail': 'x'}}}
+    summary = {'parameter_echo': {
+        'status': 'MISMATCH', 'responses': 40,
+        'findings': ["parameter 'temperature': requested='1', applied=0.7 "
+                     '— silently ignored']}}
+    assert report._section_d2_conditions(summary, config) == (
+        '## 9b. D2.2 Execution Conditions\n\n'
+        '- Serving stack and version: not disclosed by the endpoint; the '
+        'runner cannot observe it.\n'
+        '- Deterministic or batch-invariant mode: none requested by the '
+        'runner; whether the endpoint enables one is not disclosed.\n'
+        '- Concurrency: one request at a time, sequentially, from a single '
+        'process.\n'
+        '- Sampling parameters sent:\n'
+        '  - `max_completion_tokens`: `4096`\n'
+        '  - `reasoning_effort`: not sent (platform-unsupported)\n'
+        '  - `temperature`: `1`\n'
+        '- Parameter echo: `MISMATCH` (40 responses checked)\n'
+        "  - Platform finding (D2.2): parameter 'temperature': "
+        "requested='1', applied=0.7 — silently ignored\n")
+
+
+@pytest.mark.finding('T3-30')
+def test_d2_conditions_section_without_sampling_or_echo():
+    text = report._section_d2_conditions({}, {})
+    assert text.endswith('- Sampling parameters sent:\n  - none\n'
+                         '- Parameter echo: `UNVERIFIED` '
+                         '(0 responses checked)\n')

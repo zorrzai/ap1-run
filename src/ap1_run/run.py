@@ -12,11 +12,12 @@ Usage:
     set AP1_SMOKE_API_KEY=<key>       (Windows cmd)
     $env:AP1_SMOKE_API_KEY = '<key>'  (Windows PowerShell)
 
-    Optional:
-    export AP1_SMOKE_ENDPOINT=<url>   (default: https://api.openai.com/v1/chat/completions)
-    export AP1_SMOKE_MODEL=<model>    (default: gpt-4o-mini)
     ap1-run                           (after pip install -e .)
     python smoke_test.py              (the same, from a clone)
+    ap1-run --config example/config_mini.json   (the mini run's config)
+
+    Every setting, the endpoint_url and model included, comes from the
+    config file; the environment supplies only the API key.
 
     Options (ap1-run --help) move the inputs and outputs from example/,
     reference/ and output/: --config, --fixture-dir, --output-dir,
@@ -36,7 +37,6 @@ NOTE ON REASONING MODELS:
 import os
 import sys
 import time
-from decimal import Decimal
 
 from ap1_run.execution.context import (
     build_delivered_context, check_lookup_collision,
@@ -58,7 +58,7 @@ from ap1_run.execution.version import (
     compute_runner_source_hash, resolve_runner_version,
 )
 from ap1_run.foundation import adapter
-from ap1_run.foundation.config import load_config
+from ap1_run.foundation.config import load_config, validate_minimum_n
 from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.credentials import get_api_key
 from ap1_run.runner.executions import (
@@ -67,8 +67,7 @@ from ap1_run.runner.executions import (
 )
 from ap1_run.runner.outputs import write_outputs
 from ap1_run.runner.settings import (
-    apply_sampling_overrides, check_condition_guard, endpoint_and_model,
-    parse_args,
+    check_condition_guard, parse_args, print_sampling,
 )
 from ap1_run.runner.summary import (
     build_summary, classify_reproducibility, find_d2_cap,
@@ -109,22 +108,18 @@ def main(argv=None):
     api_key = get_api_key()
     key_length = len(api_key)
 
-    # Endpoint and model are not secrets -- read from env or defaults
-    endpoint, model = endpoint_and_model()
+    # -- Load configuration --
+    # The endpoint and model, like every other setting, come from the
+    # config file only: it is what gets validated and sealed (T3-80).
+    config = load_config(args.config)
 
-    print(f'Endpoint: {endpoint}')
-    print(f'Model: {model}')
+    print(f'Endpoint: {config["endpoint_url"]}')
+    print(f'Model: {config["model"]}')
     print(f'API key: present ({key_length} chars)')
     print()
 
-    # -- Load configuration --
-    config = load_config(args.config)
-
-    config['endpoint_url'] = endpoint
-    config['model'] = model
-
-    # -- Sampling overrides: AP1_SMOKE_TEMPERATURE, AP1_SMOKE_REASONING_EFFORT --
-    apply_sampling_overrides(config)
+    # -- Sampling: exactly as the config declares it (F1) --
+    print_sampling(config)
 
     # -- Load the inputs: each file is read once; the bytes read are the
     # bytes sealed and executed (T3-72). The ground-truth module is loaded
@@ -135,6 +130,9 @@ def main(argv=None):
     fixture = inputs.fixture
     questions = inputs.questions
     gt_module = inputs.ground_truth
+
+    # -- Minimum-n (R0.1): refuse an under-powered claim before any request --
+    validate_minimum_n(config, questions['items'])
 
     # -- Output directory --
     output_dir = args.output_dir
@@ -221,16 +219,16 @@ def main(argv=None):
     print()
 
     # -- Run configuration --
-    repeat_count = config.get('repeat_count', 3)
+    # Every one of these is a required field, validated by load_config
+    # (repeat_count an int, answer_tolerance a Decimal): no defaults (R0.1).
+    repeat_count = config['repeat_count']
     conditions = ['base', 'instruction_removed']
     items = questions['items']
 
-    sampling = config.get('sampling', {})
-    answer_tolerance = config.get('answer_tolerance', Decimal('0.01'))
-    if isinstance(answer_tolerance, str):
-        answer_tolerance = Decimal(answer_tolerance)
-    decline_markers = config.get('decline_markers', [])
-    currency_symbols = config.get('currency_symbols', [])
+    sampling = config['sampling']
+    answer_tolerance = config['answer_tolerance']
+    decline_markers = config['decline_markers']
+    currency_symbols = config['currency_symbols']
 
     # -- Adapter wrapper (binds api_key) --
     def adapter_send(endpoint_url, *, messages, tools=None,
@@ -344,7 +342,7 @@ def main(argv=None):
     d1_summary['n'] = len(findings.all_accuracy_results)
 
     # -- D2 classification per (item, condition) per surface --
-    d2_cap_reason = find_d2_cap(config.get('sampling', {}))
+    d2_cap_reason = find_d2_cap(sampling)
     d2_results = classify_reproducibility(findings.d2_responses, repeat_count,
                                           d2_cap_reason)
 
@@ -354,6 +352,7 @@ def main(argv=None):
         d2_cap_reason=d2_cap_reason,
         transcription_results=findings.transcription_results,
         release_coverage_results=findings.release_coverage_results,
+        parameter_echo=findings.parameter_echo,
         held_constant=HELD_CONSTANT)
 
     # 3j-3l. D1, D2, operand provenance

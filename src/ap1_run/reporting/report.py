@@ -17,6 +17,7 @@ Contents (SPEC.md R3.3 interface):
   7.  D7.2(b) operation-correctness counts
   8.  Proportion auto-scored vs adjudicated, per dimension
   9.  D2 mechanism classes per surface
+  9b. D2.2 execution conditions, sampling parameters sent, parameter echo
   10. Every UNMEASURED, UNOBSERVABLE, UNMEASURABLE and VOID cell with reason
   11. Quantisation and near-miss findings
   12. DECLARATION of which dimensions were NOT measured
@@ -111,6 +112,9 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
 
     # 9. D2 mechanism classes per surface
     sections.append(_section_d2_mechanisms(summary))
+
+    # 9b. D2.2 execution conditions and parameter echo
+    sections.append(_section_d2_conditions(summary, config))
 
     # 10. UNMEASURED / UNOBSERVABLE / UNMEASURABLE / VOID cells
     sections.append(_section_unmeasured_cells(summary, transcript_records))
@@ -493,6 +497,8 @@ def _section_d72b_counts(summary):
         lines.append(f'| Route divergence (item answer correct) | {rd} |')
         lines.append(f'| Item answer incorrect | {iw} |')
         lines.append(f'| Item answer undetermined (adjudicated) | {ud} |')
+        lines.append(f'| No figure released (no item answer) | '
+                     f'{wo_split.get("no_figure", 0)} |')
 
     lines.append('')
     return '\n'.join(lines)
@@ -588,6 +594,42 @@ def _section_d2_mechanisms(summary):
     else:
         lines.append('*No per-surface D2 data available.*\n')
 
+    lines.append('')
+    return '\n'.join(lines)
+
+
+def _section_d2_conditions(summary, config):
+    """Section 9b: the D2.2 disclosures.
+
+    AP-1 v1.3 D2.2: every D2 result reports the serving stack and
+    version, whether a deterministic or batch-invariant mode was enabled,
+    the concurrency conditions, and all sampling parameters sent; where
+    the platform echoes the parameters it applied, a parameter requested
+    and silently ignored is a platform finding. What the endpoint does not
+    disclose is said, not left out.
+    """
+    lines = ['## 9b. D2.2 Execution Conditions\n']
+    lines.append('- Serving stack and version: not disclosed by the '
+                 'endpoint; the runner cannot observe it.')
+    lines.append('- Deterministic or batch-invariant mode: none requested '
+                 'by the runner; whether the endpoint enables one is not '
+                 'disclosed.')
+    lines.append('- Concurrency: one request at a time, sequentially, from '
+                 'a single process.')
+    lines.append('- Sampling parameters sent:')
+    sampling = config.get('sampling') or {}
+    for name, value in sorted(sampling.items()):
+        if isinstance(value, dict) and value.get('value') == 'omitted':
+            lines.append(f'  - `{name}`: not sent ({value.get("reason")})')
+        else:
+            lines.append(f'  - `{name}`: `{value}`')
+    if not sampling:
+        lines.append('  - none')
+    echo = summary.get('parameter_echo') or {}
+    lines.append(f'- Parameter echo: `{echo.get("status", "UNVERIFIED")}` '
+                 f'({echo.get("responses", 0)} responses checked)')
+    for finding in echo.get('findings', []):
+        lines.append(f'  - Platform finding (D2.2): {finding}')
     lines.append('')
     return '\n'.join(lines)
 
@@ -714,6 +756,10 @@ def _section_declared_limitations():
 
 
 
+PROVENANCE_OUTCOMES = ['OPERANDS-GROUNDED', 'OPERAND-ORIGINATED',
+                       'OPERANDS-UNOBSERVABLE', 'UNMEASURABLE']
+
+
 def _section_operand_provenance(summary):
     """Section 7b: D7.2(a) operand provenance step counts."""
     lines = ['## 7b. D7.2(a) Operand Provenance Step Counts\n']
@@ -769,15 +815,37 @@ def _section_operand_provenance(summary):
 
     lines.append('')
 
-    # Invocation-level outcomes
+    # Invocation-level outcomes, each with its proportion: the
+    # unobservable case is declared and its proportion reported (AP-1 v1.3
+    # D7.2(a); T3-16).
     total_inv = sum(prov_outcomes.values())
     if total_inv > 0:
         lines.append('### Per-Invocation Outcomes\n')
-        lines.append('| Outcome | Count |')
-        lines.append('|---|---|')
-        for outcome in ['OPERANDS-GROUNDED', 'OPERAND-ORIGINATED']:
+        lines.append('> OPERANDS-UNOBSERVABLE: a calculator call whose '
+                     'operands could not be read (malformed arguments or an '
+                     'unreadable expression); declared, never grounded. '
+                     'UNMEASURABLE: a call in a chained item whose ground '
+                     'truth declares no intermediates (SPEC R2.4); its '
+                     'operands are not counted in the step table.\n')
+        lines.append('| Outcome | Count | % |')
+        lines.append('|---|---|---|')
+        for outcome in PROVENANCE_OUTCOMES:
             count = prov_outcomes.get(outcome, 0)
-            lines.append(f'| {outcome} | {count} |')
+            lines.append(f'| {outcome} | {count} | '
+                         f'{100*count/total_inv:.1f}% |')
+        lines.append('')
+
+    # Executions for which D7.2 is UNMEASURABLE, with the reason (R3.3)
+    unmeasurable = summary.get('provenance_unmeasurable')
+    if unmeasurable:
+        lines.append('### D7.2 UNMEASURABLE Executions\n')
+        lines.append('| Item | Condition | Repeat | Reason |')
+        lines.append('|---|---|---|---|')
+        for entry in unmeasurable:
+            lines.append(f'| {entry.get("item_id", "?")} '
+                         f'| {entry.get("condition", "?")} '
+                         f'| {entry.get("repeat", "?")} '
+                         f'| {entry.get("reason", "?")} |')
         lines.append('')
 
     # Originated operand audit

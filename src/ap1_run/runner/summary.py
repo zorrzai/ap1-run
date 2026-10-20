@@ -128,11 +128,33 @@ def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason):
     return d2_results
 
 
+def summarise_parameter_echo(checks):
+    """The run's D2.2 parameter-echo result: MISMATCH if any response
+    shows a requested parameter not applied, VERIFIED if every response
+    echoed and matched, UNVERIFIED otherwise (including no responses);
+    with each distinct finding once, in first-seen order."""
+    statuses = {c['status'] for c in checks}
+    if 'MISMATCH' in statuses:
+        status = 'MISMATCH'
+    elif statuses == {'VERIFIED'}:
+        status = 'VERIFIED'
+    else:
+        status = 'UNVERIFIED'
+    findings = []
+    for c in checks:
+        for f in c['findings']:
+            if f not in findings:
+                findings.append(f)
+    return {'status': status, 'responses': len(checks),
+            'findings': findings}
+
+
 def build_summary(all_results, evidence_findings, *,
                   d1_summary=None, d2_results=None,
                   d2_cap_reason=None,
                   transcription_results=None,
                   release_coverage_results=None,
+                  parameter_echo=None,
                   held_constant=None):
     """Build the summary dict that report.generate_report() expects.
 
@@ -198,7 +220,8 @@ def build_summary(all_results, evidence_findings, *,
     # Operation correctness counts
     op_counts = {'OPERATION-CORRECT': 0, 'WRONG-OPERATION': 0,
                  'OPERATION-UNOBSERVABLE': 0}
-    wrong_op_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0}
+    wrong_op_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0,
+                      'no_figure': 0}
     for r in all_results:
         if r.get('status') != 'EXECUTED':
             continue
@@ -210,8 +233,14 @@ def build_summary(all_results, evidence_findings, *,
             if outcome == 'WRONG-OPERATION':
                 if fig == 'AUTO-MATCH':
                     wrong_op_split['route_divergence'] += 1
-                elif fig.startswith('ADJUDICATE'):
+                elif fig.startswith('ADJUDICATE') or fig == 'UNMEASURABLE':
+                    # UNMEASURABLE goes to adjudication and is never scored
+                    # incorrect (SPEC R2.0 step 0; T3-63)
                     wrong_op_split['undetermined'] += 1
+                elif fig == 'AUTO-NO-FIGURE':
+                    # no figure released: D1 scores NO-FIGURE, not
+                    # INCORRECT, so there is no item answer (T3-63)
+                    wrong_op_split['no_figure'] += 1
                 else:
                     wrong_op_split['item_wrong'] += 1
     summary['operation_correctness_counts'] = op_counts
@@ -242,6 +271,7 @@ def build_summary(all_results, evidence_findings, *,
         summary['d2_results'] = d2_results
     if d2_cap_reason:
         summary['d2_cap_reason'] = d2_cap_reason
+    summary['parameter_echo'] = summarise_parameter_echo(parameter_echo or [])
 
     # Operand provenance step counts (D7.2(a))
     step_counts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
@@ -250,15 +280,23 @@ def build_summary(all_results, evidence_findings, *,
     step_5_sign_inverted = 0
     step_5_ungrounded_chain = 0
     step_5_untraceable = 0
-    prov_outcomes = {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0}
+    prov_outcomes = {'OPERANDS-GROUNDED': 0, 'OPERAND-ORIGINATED': 0,
+                     'OPERANDS-UNOBSERVABLE': 0, 'UNMEASURABLE': 0}
     originated_audit = []
+    unmeasurable = []
     for r in all_results:
         if r.get('status') != 'EXECUTED':
             continue
+        reasons = []
         for prov in r.get('provenance_results', []):
             outcome = prov.get('outcome', '')
             if outcome in prov_outcomes:
                 prov_outcomes[outcome] += 1
+            if outcome == 'UNMEASURABLE':
+                # D7.2 is unmeasurable for the item (T3-42): its operands
+                # are neither grounded nor originated findings.
+                reasons.append(prov.get('reason'))
+                continue
             for res in prov.get('operand_resolutions', []):
                 step = res.get('step')
                 if step in step_counts:
@@ -281,6 +319,11 @@ def build_summary(all_results, evidence_findings, *,
                     'condition': r.get('condition'),
                     **orig,
                 })
+        if reasons:
+            unmeasurable.append({'item_id': r.get('item_id'),
+                                 'condition': r.get('condition'),
+                                 'repeat': r.get('repeat'),
+                                 'reason': reasons[0]})
     summary['operand_step_counts'] = step_counts
     summary['step_1_source'] = step_1_source
     summary['step_1_constant'] = step_1_constant
@@ -289,6 +332,7 @@ def build_summary(all_results, evidence_findings, *,
     summary['step_5_untraceable'] = step_5_untraceable
     summary['provenance_outcomes'] = prov_outcomes
     summary['originated_operand_audit'] = originated_audit
+    summary['provenance_unmeasurable'] = unmeasurable
 
     # Non-outcome cells
     non_outcome = []

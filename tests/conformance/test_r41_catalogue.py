@@ -142,7 +142,7 @@ def test_r41_b25_operand_equal_to_grounded_prior_return_is_grounded(savings):
         '182.40 / 12', savings, SAVINGS_GT, CONFIG,
         prior_returns=[{'value': Decimal('182.40'), 'grounded': True}])
     assert result['outcome'] == 'OPERANDS-GROUNDED'
-    assert steps(result)[0] == ('182.4', 4, 'computed_in_session')
+    assert steps(result)[0] == ('182.40', 4, 'computed_in_session')
 
 
 def test_r41_b26_operand_equal_to_ungrounded_prior_return_is_originated(
@@ -201,4 +201,4 @@ def test_r41_b30_sequential_classification_carries_grounded_returns(savings):
         savings, SAVINGS_GT, CONFIG)
     assert [r['outcome'] for r in results] == \
         ['OPERANDS-GROUNDED', 'OPERANDS-GROUNDED']
-    assert steps(results[1])[0] == ('182.4', 4, 'computed_in_session')
+    assert steps(results[1])[0] == ('182.40', 4, 'computed_in_session')

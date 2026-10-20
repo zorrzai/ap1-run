@@ -37,6 +37,8 @@ def compute(item_id, ctx):
 '''
 
 CONFIG = {
+    'endpoint_url': 'http://mock/v1',
+    'model': 'mock-model',
     'system_prompt_base': 'BASE PROMPT',
     'system_prompt_instruction_removed': 'REMOVED PROMPT',
     'tools': [{'type': 'function', 'function': {'name': 'calculator'}}],
@@ -73,8 +75,6 @@ class Run:
         monkeypatch.delitem(sys.modules, 'ground_truth_example',
                             raising=False)
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-0123456789')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', 'http://mock/v1')
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
         for name in ('AP1_SMOKE_TEMPERATURE', 'AP1_SMOKE_REASONING_EFFORT'):
             monkeypatch.delenv(name, raising=False)
         monkeypatch.setattr(run.time, 'sleep',
@@ -114,9 +114,13 @@ class Run:
     # -- fakes ---------------------------------------------------------
     def load_config(self, path):
         # The real load_config validates every field; main() is tested
-        # here with whatever config it is given.
+        # here with whatever config it is given, with answer_tolerance
+        # parsed to Decimal as load_config does.
         self.config_path = path
-        return json.loads(json.dumps(self.config))
+        config = json.loads(json.dumps(self.config))
+        if isinstance(config.get('answer_tolerance'), str):
+            config['answer_tolerance'] = D(config['answer_tolerance'])
+        return config
 
     def resolve_runner_version(self, base_dir):
         self.calls.append(('version', base_dir))
@@ -416,6 +420,7 @@ def test_main_full_run_calls(r, capsys):
                   'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
                   'transcription_results': [],
                   'release_coverage_results': [],
+                  'parameter_echo': [],
                   'held_constant': HELD_CONSTANT}
     assert r.named('scoring_report') == [(
         {'d1': True, 'n': 0}, {'d2': 'results'}, 'CAP', {'summary': True})]
@@ -578,24 +583,58 @@ def test_main_creates_a_missing_output_dir(r):
     assert r.output_dir.is_dir()
 
 
-def test_main_defaults_without_tolerance_markers_or_symbols(r):
-    for key in ('answer_tolerance', 'decline_markers', 'currency_symbols',
-                'sampling', 'repeat_count'):
-        del r.config[key]
+@pytest.mark.finding('T3-80')
+def test_main_endpoint_and_model_from_the_config_only(r, monkeypatch, capsys):
+    # Section B decision (T3-80): the environment supplies only the key.
+    monkeypatch.setenv('AP1_SMOKE_ENDPOINT', 'http://elsewhere/v1')
+    monkeypatch.setenv('AP1_SMOKE_MODEL', 'other-model')
+    r.config.update(endpoint_url='http://from-config/v1', model='cfg-model')
     assert r.main() == 0
-    kw = r.named('score')[0][1]
-    assert (kw['answer_tolerance'], kw['decline_markers'],
-            kw['currency_symbols']) == (D('0.01'), [], [])
-    assert len(r.named('execute')) == 2 * 2 * 3   # repeat_count 3
-    assert r.named('d2_cap') == [({},)]
-    assert r.named('guard')[0][-1] == {}
+    out = capsys.readouterr().out
+    assert out.startswith('Endpoint: http://from-config/v1\n'
+                          'Model: cfg-model\n'
+                          'API key: present (13 chars)\n\n')
+    sealed = r.named('seal')[0][0]['config']
+    assert (sealed['endpoint_url'], sealed['model']) == (
+        'http://from-config/v1', 'cfg-model')
 
 
-def test_main_numeric_tolerance_is_kept_as_given(r):
-    r.config['answer_tolerance'] = 0.5   # not a string: not converted
-    r.main()
-    tolerance = r.named('score')[0][1]['answer_tolerance']
-    assert tolerance == 0.5 and isinstance(tolerance, float)
+@pytest.mark.finding('T3-12')
+@pytest.mark.req('R0.1')
+def test_main_under_powered_claim_refused_before_seal_and_requests(r):
+    # R0.1: the minimum-n refusal comes before the seal and any request.
+    from ap1_run.foundation.config import ConfigError
+    r.config.update(dimensions_claimed=['D6'], ap1_version='v1.3')
+    with pytest.raises(ConfigError, match=r'^D6: 0 eligible items'):
+        r.main()
+    assert (r.named('seal'), r.named('execute')) == ([], [])
+
+
+@pytest.mark.finding('T3-12', 'V12-7')
+def test_main_minimum_n_counts_the_question_items(r, monkeypatch):
+    # Under v1.2, D6 needs one item with a conflict_class: Q2 has one.
+    r.config.update(dimensions_claimed=['D6'], ap1_version='v1.2')
+    # V12-4: a v1.2 run must seal the v1.2 text.
+    monkeypatch.setattr(run, 'create_seal', lambda **kw: r.calls.append(
+        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH})
+    questions = json.loads(json.dumps(QUESTIONS))
+    questions['items'][2]['conflict_class'] = 'stated twice'
+    (r.fixture_dir / 'questions.json').write_text(json.dumps(questions))
+    assert r.main() == 0
+    assert r.named('seal')
+
+
+@pytest.mark.finding('T3-51')
+@pytest.mark.parametrize('key', ['answer_tolerance', 'decline_markers',
+                                 'currency_symbols', 'sampling',
+                                 'repeat_count'])
+def test_main_result_affecting_field_has_no_default(r, key):
+    # R0.1: no defaults for anything affecting a result. load_config
+    # refuses a config without these; main() never invents one.
+    del r.config[key]
+    with pytest.raises(KeyError, match=key):
+        r.main()
+    assert r.named('execute') == []
 
 
 def test_main_execution_with_no_status_is_scored(r):
@@ -744,8 +783,7 @@ def test_main_end_to_end_against_the_mock_endpoint(tmp_path, monkeypatch,
             if name.startswith('AP1_SMOKE_'):
                 monkeypatch.delenv(name)
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-test')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+        mock.point_config(fx / 'config.json')
         monkeypatch.setattr(run.time, 'sleep', lambda s: None)
         out = tmp_path / 'out'
         code = run.main(['--config', str(fx / 'config.json'),

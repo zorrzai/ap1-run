@@ -4,8 +4,8 @@ They pin what the tool does today, defects included. The seal record is
 made by the runner's own seal() and rendered as report.py renders
 sections 1 and 2, so a passing case is what a real run would give.
 
-The tool reads the fixture, questions, ground truth, AP-1 text and on-disk
-configs from fixed paths under its BASE_DIR (the repository root). Each
+The tool reads the fixture, questions, ground truth and AP-1 text from
+fixed paths under its BASE_DIR (the repository root). Each
 test points BASE_DIR at a small tree under tmp_path.
 """
 
@@ -57,8 +57,7 @@ AP1_TEXT = os.path.join('reference', 'AP-1_v1.3_DRAFT_FOR_COMMENT.md')
 
 @pytest.fixture
 def base(tmp_path, vrs, monkeypatch):
-    """BASE_DIR: the example inputs, the AP-1 text and the two on-disk
-    configs, with placeholder model and endpoint."""
+    """BASE_DIR: the example inputs and the AP-1 text."""
     root = tmp_path / 'repo'
     (root / 'example').mkdir(parents=True)
     (root / 'reference').mkdir()
@@ -66,9 +65,6 @@ def base(tmp_path, vrs, monkeypatch):
     (root / 'example' / 'questions.json').write_text('{"items": []}\n')
     (root / 'example' / 'ground_truth_example.py').write_text('X = 1\n')
     (root / AP1_TEXT).write_text('# AP-1 text\n')
-    for name in ('config.json', 'config_mini.json'):
-        (root / 'example' / name).write_text(json.dumps(
-            {'model': 'REPLACE', 'endpoint_url': 'REPLACE'}))
     monkeypatch.setattr(vrs, 'BASE_DIR', str(root))
     return root
 
@@ -147,20 +143,11 @@ def run(tmp_path, base):
     return write_run(tmp_path / 'run', record, config), record, config
 
 
-ON_DISK_EXPECTED = ('does NOT match seal -- EXPECTED. The on-disk config '
-                    'contains placeholder model/endpoint that differ from '
-                    'the runtime values. Use the RESOLVED config from '
-                    'report.md section 2, not the on-disk file.')
-
-
 def all_checks(record, lines=2):
-    """Every check of a run that matches, in order. The on-disk notices are
-    removed on the spec-conformance-claims branch (F1)."""
+    """Every check of a run that matches, in order."""
     return [
         ('seal record fields', 'all 18 sealed fields present'),
         ('config_hash', 'MATCH'),
-        ('on-disk config.json', ON_DISK_EXPECTED),
-        ('on-disk config_mini.json', ON_DISK_EXPECTED),
         ('fixture_hash', 'MATCH'),
         ('questions_hash', 'MATCH'),
         ('ground_truth_hash', 'MATCH'),
@@ -393,8 +380,6 @@ def test_verify_run_reads_these_paths(vrs, run, base, monkeypatch):
               os.path.join(b, 'example', 'ground_truth_example.py')]
     assert looked_up == [
         os.path.join(str(run_dir), 'report.md'),
-        os.path.join(b, 'example', 'config.json'),
-        os.path.join(b, 'example', 'config_mini.json'),
         *inputs,
         os.path.join(b, 'reference', 'AP-1_v1.3_DRAFT_FOR_COMMENT.md'),
         *inputs,
@@ -416,21 +401,21 @@ def test_verify_run_reads_text_files_as_utf8(vrs, run, monkeypatch):
     monkeypatch.setattr(vrs, 'open', recording_open, raising=False)
     vrs.verify_run(str(run_dir))
     assert opened == [
-        ('report.md', (), 'utf-8'), ('config.json', (), 'utf-8'),
-        ('config_mini.json', (), 'utf-8'), ('fixture.json', ('rb',), None),
+        ('report.md', (), 'utf-8'), ('fixture.json', ('rb',), None),
         ('questions.json', ('rb',), None),
         ('ground_truth_example.py', ('rb',), None),
         ('smoke_run.jsonl', (), 'utf-8')]
 
 
-def test_verify_run_missing_on_disk_configs_are_not_mentioned(vrs, run, base):
-    run_dir, record, _ = run
-    os.remove(base / 'example' / 'config.json')
-    os.remove(base / 'example' / 'config_mini.json')
+@pytest.mark.finding('F1', 'T3-79')
+def test_verify_run_ignores_config_files_on_disk(vrs, run, base):
+    # The sealed config is checked against report.md section 2 only; a
+    # config file in example/, matching or not, changes nothing.
+    run_dir, record, config = run
+    (base / 'example' / 'config.json').write_text(json.dumps(config))
+    (base / 'example' / 'config_mini.json').write_text('{"model": "x"}')
     checks, failures = vrs.verify_run(str(run_dir))
-    assert failures == []
-    assert names(checks) == [n for n in names(all_checks(record))
-                             if not n.startswith('on-disk')]
+    assert (checks, failures) == (all_checks(record), [])
 
 
 # -- verify_run: what is compared ------------------------------------------
@@ -976,17 +961,6 @@ def test_verify_run_unreadable_timestamps_fail(vrs, tmp_path, base,
     assert failures == [('seal timestamp', detail)]
 
 
-def test_verify_run_on_disk_config_matching_seal_is_a_pass(vrs, tmp_path,
-                                                           base):
-    # The on-disk notices are reported as passed checks, whichever way
-    # they go. They are removed on the spec-conformance-claims branch (F1).
-    config = resolved_config()
-    (base / 'example' / 'config.json').write_text(json.dumps(config))
-    record = make_record(base, config)
-    run_dir = write_run(tmp_path / 'run', record, config)
-    checks, failures = vrs.verify_run(str(run_dir))
-    assert failures == []
-    assert ('on-disk config.json', 'matches seal (unexpected)') in checks
 
 
 # -- main -------------------------------------------------------------------
@@ -1011,7 +985,7 @@ def test_main_without_arguments_prints_usage_and_returns_1(vrs, monkeypatch,
 def test_main_argv_argument(vrs, run, capsys):
     run_dir, _, _ = run
     assert vrs.main([str(run_dir)]) == 0
-    assert capsys.readouterr().out.endswith('RESULT: PASS (13 checks)\n')
+    assert capsys.readouterr().out.endswith('RESULT: PASS (11 checks)\n')
 
 
 def test_main_passing_run_prints_each_check_and_counts_them(vrs, run,
@@ -1022,7 +996,7 @@ def test_main_passing_run_prints_each_check_and_counts_them(vrs, run,
     assert code == 0
     expected = ['=== Verifying: %s ===' % run_dir, '']
     expected += ['  PASS  %s: %s' % c for c in all_checks(record)]
-    expected += ['', '  13 passed, 0 failed', '', 'RESULT: PASS (13 checks)',
+    expected += ['', '  11 passed, 0 failed', '', 'RESULT: PASS (11 checks)',
                  '']
     assert out == '\n'.join(expected)
 
@@ -1040,8 +1014,8 @@ def test_main_prints_warnings_and_counts_them(vrs, tmp_path, base,
             if line.startswith('  WARN')] == [
         '  WARN  seal_format', '  WARN  runner_source_hash',
         '  WARN  runner_modified'] * 2
-    assert '  10 passed, 0 failed, 3 warnings' in lines
-    assert lines[-1] == 'RESULT: PASS (20 checks, 6 warnings)'
+    assert '  8 passed, 0 failed, 3 warnings' in lines
+    assert lines[-1] == 'RESULT: PASS (16 checks, 6 warnings)'
 
 
 def test_main_failures_print_after_checks_and_warnings(vrs, tmp_path, base,
@@ -1059,8 +1033,8 @@ def test_main_failures_print_after_checks_and_warnings(vrs, tmp_path, base,
               and line.split()[0] in ('PASS', 'WARN', 'FAIL')]
     # Every PASS first, then every WARN, then every FAIL (the fixture,
     # the expected values computed from it, the transcript).
-    assert status == ['PASS'] * 10 + ['WARN'] + ['FAIL'] * 3
-    assert lines[-3:] == ['  10 passed, 3 failed, 1 warnings', '',
+    assert status == ['PASS'] * 8 + ['WARN'] + ['FAIL'] * 3
+    assert lines[-3:] == ['  8 passed, 3 failed, 1 warnings', '',
                           'RESULT: FAIL (3 failures, 1 warnings)']
 
 
@@ -1082,7 +1056,7 @@ def test_main_totals_passes_over_passing_runs(vrs, run, monkeypatch,
     code, out = run_main(vrs, [str(run_dir), str(run_dir)], monkeypatch,
                          capsys)
     assert code == 0
-    assert out.endswith('RESULT: PASS (26 checks)\n')
+    assert out.endswith('RESULT: PASS (22 checks)\n')
 
 
 def test_main_totals_failures_over_failing_runs(vrs, tmp_path, base,
@@ -1228,10 +1202,6 @@ def test_verify_run_any_transcript_line_with_other_seal_hash_fails(
 
 
 @pytest.mark.finding('T3-18')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-18: partly fixed (parse steps are no longer '
-                          'checks); blocked on F1: the two on-disk notices '
-                          'are removed on spec-conformance-claims')
 def test_verify_run_passes_count_only_real_comparisons(vrs, good_run):
     # Correct (T3-18; Steven's F1 ruling, choices-for-marcus.md entry 5:
     # "verify_run_seal.py drops its two non-checks against on-disk
@@ -1246,10 +1216,6 @@ def test_verify_run_passes_count_only_real_comparisons(vrs, good_run):
 
 
 @pytest.mark.finding('T3-18')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-18: partly fixed (parse steps are no longer '
-                          'checks); blocked on F1: the two on-disk notices '
-                          'are removed on spec-conformance-claims')
 def test_main_result_line_counts_only_real_comparisons(vrs, good_run, monkeypatch,
                                                        capsys):
     # The same at the command line: no PASS line for a parse step or an
@@ -1487,9 +1453,6 @@ def test_verify_run_same_text_other_line_endings_verifies(vrs, good_run, base,
 
 
 @pytest.mark.finding('F1', 'T3-79')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F1: verify_run reports two non-checks against '
-                          'the on-disk configs')
 def test_verify_run_makes_no_check_against_on_disk_configs(vrs, run):
     # Steven's ruling (choices-for-marcus entry 5; decisions file, F1,
     # "Steven's Response 2"): verify_run_seal.py drops its two non-checks

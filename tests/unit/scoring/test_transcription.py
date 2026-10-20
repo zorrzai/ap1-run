@@ -241,14 +241,14 @@ def test_transcription_unsupported_rounding_mode_raises():
     with pytest.raises(ValueError, match='unsupported rounding mode'):
         check_transcription(D('430.745'), D('430.74'),
                             figure_outcome=AUTO_MATCH, quantisation_digits=2,
-                            quantisation_rounding='ROUND_DOWN')
+                            quantisation_rounding='ROUND_SIDEWAYS')
 
 
 def test_transcription_rounding_mode_unused_for_an_exact_match():
     # The quantisation is only reached when no return matches exactly.
     r = check_transcription(D('430.74'), D('430.74'), figure_outcome=AUTO_MATCH,
                             quantisation_digits=2,
-                            quantisation_rounding='ROUND_DOWN')
+                            quantisation_rounding='ROUND_SIDEWAYS')
     assert (r['outcome'], r['reason']) == (TRANSCRIBED_EXACT, 'exact match')
 
 

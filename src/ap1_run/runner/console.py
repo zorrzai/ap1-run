@@ -2,8 +2,7 @@
 
 print_run_report prints sections 3a to 3i once every execution has run;
 print_scoring_report prints 3j to 3l once D1 and D2 are aggregated and
-the summary is built. The text is pinned by the regression baseline,
-including its known flaws (the literal backslash-n before 3h2).
+the summary is built. The text is pinned by the regression baseline.
 """
 
 from collections import Counter
@@ -103,7 +102,7 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
             print(f'    failure rate: {rate_str}')
 
     # 3h2. D7.3 Transcription
-    print(f'\\n3h2. D7.3 TRANSCRIPTION:')
+    print('\n3h2. D7.3 TRANSCRIPTION:')
     tr_counts = Counter(r['outcome'] for r in transcription_results)
     for outcome in ['TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED', 'UNOBSERVABLE']:
         print(f'  {outcome}: {tr_counts.get(outcome, 0)}')
@@ -125,7 +124,8 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
     print(f'\n3i. D7.2(b) OPERATION CORRECTNESS:')
     op_counts = {'OPERATION-CORRECT': 0, 'WRONG-OPERATION': 0,
                  'OPERATION-UNOBSERVABLE': 0}
-    wo_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0}
+    wo_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0,
+                'no_figure': 0}
     for r in executed:
         fig = r.get('figure_outcome', '')
         for oc in r.get('operation_correctness', []):
@@ -135,8 +135,14 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
             if outcome == 'WRONG-OPERATION':
                 if fig == 'AUTO-MATCH':
                     wo_split['route_divergence'] += 1
-                elif fig.startswith('ADJUDICATE'):
+                elif fig.startswith('ADJUDICATE') or fig == 'UNMEASURABLE':
+                    # UNMEASURABLE goes to adjudication and is never scored
+                    # incorrect (SPEC R2.0 step 0; T3-63)
                     wo_split['undetermined'] += 1
+                elif fig == 'AUTO-NO-FIGURE':
+                    # no figure released: D1 scores NO-FIGURE, not
+                    # INCORRECT, so there is no item answer (T3-63)
+                    wo_split['no_figure'] += 1
                 else:
                     wo_split['item_wrong'] += 1
     for outcome in ['OPERATION-CORRECT', 'WRONG-OPERATION', 'OPERATION-UNOBSERVABLE']:
@@ -147,6 +153,7 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
         print(f'      route divergence (item answer correct):      {wo_split["route_divergence"]}')
         print(f'      item answer incorrect:                       {wo_split["item_wrong"]}')
         print(f'      item answer undetermined (adjudicated):      {wo_split["undetermined"]}')
+        print(f'      no figure released (no item answer):         {wo_split["no_figure"]}')
 
 
 def print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary):
@@ -196,3 +203,6 @@ def print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary):
     prov_out = summary.get('provenance_outcomes', {})
     print(f'  OPERANDS-GROUNDED: {prov_out.get("OPERANDS-GROUNDED", 0)}')
     print(f'  OPERAND-ORIGINATED: {prov_out.get("OPERAND-ORIGINATED", 0)}')
+    print(f'  OPERANDS-UNOBSERVABLE: '
+          f'{prov_out.get("OPERANDS-UNOBSERVABLE", 0)}')
+    print(f'  UNMEASURABLE: {prov_out.get("UNMEASURABLE", 0)}')

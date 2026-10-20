@@ -1,8 +1,9 @@
 usage: ap1-run [-h] [--config CONFIG] [--fixture-dir FIXTURE_DIR]
                [--output-dir OUTPUT_DIR] [--ap1-text AP1_TEXT]
 
-Run the AP-1 instrument smoke test against a live endpoint. The endpoint,
-model and API key come from the AP1_SMOKE_* environment variables.
+Run the AP-1 instrument smoke test against a live endpoint. The endpoint, the
+model and every other setting come from the config; only the API key comes
+from the environment (AP1_SMOKE_API_KEY).
 
 options:
   -h, --help            show this help message and exit

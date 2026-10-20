@@ -1,8 +1,6 @@
 === Verifying: <RUNDIR>/output/run_a_mini ===
 
   PASS  config_hash: MATCH
-  PASS  on-disk config.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
-  PASS  on-disk config_mini.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
   PASS  fixture_hash: MATCH
   PASS  questions_hash: MATCH
   PASS  ap1_text_hash: MATCH
@@ -13,13 +11,11 @@
   FAIL  ground_truth_hash: sealed=dd3434bc62c4976af928798024d1446993ce59dd473e78cf4002832630314715, recomputed=080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812
           NOTE: August seals. E3: constant '4' declared but never used in Q07's computation; removed in commit 85e8eeb. D7.2(a) figures withdrawn. F10/Q05: sign negation removed (commit 6be2d7b). The seal hashed the module of commit 203fef4 with CRLF line endings. See findings/FINDINGS_ERRATA.md.
 
-  9 passed, 1 failed, 1 warnings
+  7 passed, 1 failed, 1 warnings
 
 === Verifying: <RUNDIR>/output/run_b_sol ===
 
   PASS  config_hash: MATCH
-  PASS  on-disk config.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
-  PASS  on-disk config_mini.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
   PASS  fixture_hash: MATCH
   PASS  questions_hash: MATCH
   PASS  ap1_text_hash: MATCH
@@ -30,13 +26,11 @@
   FAIL  ground_truth_hash: sealed=dd3434bc62c4976af928798024d1446993ce59dd473e78cf4002832630314715, recomputed=080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812
           NOTE: August seals. E3: constant '4' declared but never used in Q07's computation; removed in commit 85e8eeb. D7.2(a) figures withdrawn. F10/Q05: sign negation removed (commit 6be2d7b). The seal hashed the module of commit 203fef4 with CRLF line endings. See findings/FINDINGS_ERRATA.md.
 
-  9 passed, 1 failed, 1 warnings
+  7 passed, 1 failed, 1 warnings
 
 === Verifying: <RUNDIR>/output/run_e_mini ===
 
   PASS  config_hash: MATCH
-  PASS  on-disk config.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
-  PASS  on-disk config_mini.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
   PASS  fixture_hash: MATCH
   PASS  questions_hash: MATCH
   PASS  ap1_text_hash: MATCH
@@ -49,13 +43,11 @@
   FAIL  ground_truth_hash: sealed=033ce73d933d6e52a7d4f63b3888bdccfa492ce49cf49228ed2f3dda0d27a643, recomputed=080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812
           NOTE: September seals: the module is unchanged since them (last commit ff8c051), but the seal hashed it with CRLF line endings; with CRLF restored the hash matches. See findings/FINDINGS_ERRATA.md, N2.
 
-  9 passed, 1 failed, 3 warnings
+  7 passed, 1 failed, 3 warnings
 
 === Verifying: <RUNDIR>/output/run_f_sol ===
 
   PASS  config_hash: MATCH
-  PASS  on-disk config.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
-  PASS  on-disk config_mini.json: does NOT match seal -- EXPECTED. The on-disk config contains placeholder model/endpoint that differ from the runtime values. Use the RESOLVED config from report.md section 2, not the on-disk file.
   PASS  fixture_hash: MATCH
   PASS  questions_hash: MATCH
   PASS  ap1_text_hash: MATCH
@@ -68,6 +60,6 @@
   FAIL  ground_truth_hash: sealed=033ce73d933d6e52a7d4f63b3888bdccfa492ce49cf49228ed2f3dda0d27a643, recomputed=080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812
           NOTE: September seals: the module is unchanged since them (last commit ff8c051), but the seal hashed it with CRLF line endings; with CRLF restored the hash matches. See findings/FINDINGS_ERRATA.md, N2.
 
-  9 passed, 1 failed, 3 warnings
+  7 passed, 1 failed, 3 warnings
 
 RESULT: FAIL (4 failures, 8 warnings)

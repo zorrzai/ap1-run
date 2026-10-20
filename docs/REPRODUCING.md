@@ -53,6 +53,13 @@ python run_all_tests.py
   URL. The key goes in `AP1_SMOKE_API_KEY` (see SECURITY.md).
 - Then run `python smoke_test.py`.
 
+These environment variables belong to the code of the published runs. The
+current runner takes the endpoint, the model and every sampling setting from
+the config file alone (only `AP1_SMOKE_API_KEY` is read from the
+environment). Each published model has its own configuration:
+`example/config_mini.json` (gpt-4.1-mini) and `example/config_sol.json`
+(gpt-5.6-sol), e.g. `ap1-run --config example/config_sol.json`.
+
 **Keep virtual environments outside the clone, or name them so that they are
 excluded.** `compute_runner_source_hash` hashes every `.py` file under the
 repository root except `output/`, `review_output*` and `__pycache__/`. A

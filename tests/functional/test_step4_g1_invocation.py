@@ -109,8 +109,7 @@ def full_run(tmp_path, monkeypatch, capsys):
                             'instruction_removed'},
             responses=script).start()
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-step4-not-a-real-key')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+        mock.point_config(fx / 'config.json')  # T3-80: config only
         out = tmp_path / 'out'
         exit_code, exception = None, None
         try:
@@ -335,15 +334,18 @@ def test_run_call_to_unoffered_tool_recorded_not_invoked_run_completes(
 
 # -- T3-39, F6, S3-G2-4: model-controlled input never aborts the run ------
 
+_ABORTS = pytest.mark.xfail(
+    strict=True, raises=AssertionError,
+    reason='T3-39: model-controlled calculator input aborts the run')
+
+
 @pytest.mark.finding('T3-39', 'F6', 'S3-G2-4', 'S3-G4-5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39/F6/S3-G2-4/S3-G4-5: model-controlled '
-                          'calculator input aborts the run')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}',             # T3-39: not a string
     '{"expression": "True * 15.2"}',    # T3-39: boolean literal
     '{"expression": "True + 1"}',       # F6
-    '{"expression": "1e308*10"}',       # T3-39: the calculator returns inf
+    pytest.param('{"expression": "1e308*10"}',   # T3-39: calculator inf
+                 marks=_ABORTS),
     '"15200 * 1.2 / 100 / 12"',         # S3-G2-4: JSON, not an object
     '["15200 * 1.2 / 100 / 12"]',       # S3-G2-4
 ], ids=['number', 'true-times', 'true-plus', 'overflow', 'json-string',

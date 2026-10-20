@@ -6,6 +6,7 @@ Owns run.jsonl: append-only, one line per interaction, never rewritten.
 """
 
 import json
+import warnings
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -23,8 +24,12 @@ def append(path, *, item_id, arm_id, condition, request_sent,
     Each record carries all fields required by R0.3.
 
     If the transcript cannot be written, raises TranscriptError
-    and the run must halt.
+    and the run must halt. The store stamps the record: a 'timestamp'
+    extra is refused (S3-G1-16).
     """
+    if 'timestamp' in extra:
+        raise TranscriptError(
+            'timestamp is set by the transcript store, not by the caller')
     record = {
         'timestamp': datetime.now(timezone.utc).isoformat(),
         'item_id': item_id,
@@ -53,7 +58,11 @@ def read_all(path):
 
     Returns list of dicts. The scorer opens this read-only.
     An interrupted run leaves a valid partial transcript;
-    unreached items are not-run, never failures.
+    unreached items are not-run, never failures. A run killed during a
+    write can leave a last line without its newline that is not valid
+    JSON: that torn line is left out with a warning, and the complete
+    records before it are returned (S3-G1-17). Invalid JSON anywhere
+    else raises TranscriptError.
     """
     path = Path(path)
     if not path.exists():
@@ -61,13 +70,18 @@ def read_all(path):
 
     records = []
     with open(path, 'r', encoding='utf-8') as f:
-        for line_num, line in enumerate(f, 1):
-            line = line.strip()
+        for line_num, raw_line in enumerate(f, 1):
+            line = raw_line.strip()
             if not line:
                 continue
             try:
                 records.append(json.loads(line))
             except json.JSONDecodeError as e:
+                if not raw_line.endswith('\n'):
+                    warnings.warn(
+                        f'transcript {path}: line {line_num} is incomplete '
+                        f'(interrupted write) and was left out: {e}')
+                    break
                 raise TranscriptError(
                     f'invalid JSON at line {line_num}: {e}') from e
 

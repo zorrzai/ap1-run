@@ -128,7 +128,8 @@ result, by us or by anyone, in any document.
     failure rate: 1/10 (10.0%)
   instruction_removed: invoked=9 not_invoked=1 n=10
     failure rate: 1/10 (10.0%)
-\n3h2. D7.3 TRANSCRIPTION:
+
+3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 56
   TRANSCRIBED-ALTERED: 0
   UNOBSERVABLE: 4
@@ -146,6 +147,7 @@ result, by us or by anyone, in any document.
       route divergence (item answer correct):      0
       item answer incorrect:                       0
       item answer undetermined (adjudicated):      2
+      no figure released (no item answer):         0
 
 3j. D1 ACCURACY:
   Auto-scored: 58
@@ -170,6 +172,8 @@ result, by us or by anyone, in any document.
   step 5 (originated, no traceable basis):                  0
   OPERANDS-GROUNDED: 58
   OPERAND-ORIGINATED: 0
+  OPERANDS-UNOBSERVABLE: 0
+  UNMEASURABLE: 0
 
 ============================================================
 GENERATING FORMAL REPORT (report.py)

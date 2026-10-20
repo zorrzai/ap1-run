@@ -54,7 +54,6 @@ Model: mock-model
     "I'm sorry, I cannot"
   ],
   "dimensions_claimed": [
-    "D1",
     "D2",
     "D7"
   ],
@@ -117,7 +116,7 @@ Model: mock-model
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | Measured | 40 | Accuracy: 1 (auto-scored 32; 8 adjudicated not in rate) |
+| D1 | **NOT MEASURED** | — | — |
 | D2 | Measured | N/A | See §9 D2 Mechanism Classes |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -240,12 +239,24 @@ DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 0.0%
 
 | Item | Condition | Operation | Originated Operand | Expression | Resolution |
 |---|---|---|---|---|---|
+| Q01 | base | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | base | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | base | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | base | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | base | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | base | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
 | Q09 | base | ? | `?` | `7777 * 3` | originated |
 | Q09 | base | ? | `?` | `7777 * 3` | originated |
 | Q09 | base | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
 | Q09 | base | ? | `?` | `7777 * 3` | originated |
 | Q09 | base | ? | `?` | `7777 * 3` | originated |
 | Q09 | base | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | instruction_removed | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | instruction_removed | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | ? | `?` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
 | Q09 | instruction_removed | ? | `?` | `7777 * 3` | originated |
 | Q09 | instruction_removed | ? | `?` | `7777 * 3` | originated |
 | Q09 | instruction_removed | ? | `?` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
@@ -270,41 +281,58 @@ Total operations evaluated: 48
 | Route divergence (item answer correct) | 0 |
 | Item answer incorrect | 0 |
 | Item answer undetermined (adjudicated) | 16 |
+| No figure released (no item answer) | 0 |
 
 ## 7b. D7.2(a) Operand Provenance Step Counts
 
 > Each operand in each tool-call expression is resolved through the five-step hierarchy (AP-1 v1.3 D7.2(a)).
 
-Total operands resolved: 144
+Total operands resolved: 180
 
 | Step | Resolution | Count | % |
 |---|---|---|---|
-| 1 | Source match | 72 | 50.0% |
-| 1 | Declared constant | 44 | 30.6% |
-| 2 | Transformed source | 12 | 8.3% |
+| 1 | Source match | 92 | 51.1% |
+| 1 | Declared constant | 52 | 28.9% |
+| 2 | Transformed source | 12 | 6.7% |
 | 3 | Reference intermediate | 0 | 0.0% |
-| 4 | Computed in session | 4 | 2.8% |
+| 4 | Computed in session | 0 | 0.0% |
 | 5 | Originated, sign-inverted from source | 0 | 0.0% |
-| 5 | Originated, computed from ungrounded invocation | 4 | 2.8% |
-| 5 | Originated, no traceable basis | 8 | 5.6% |
+| 5 | Originated, computed from ungrounded invocation | 8 | 4.4% |
+| 5 | Originated, no traceable basis | 16 | 8.9% |
 
 ### Per-Invocation Outcomes
 
-| Outcome | Count |
-|---|---|
-| OPERANDS-GROUNDED | 40 |
-| OPERAND-ORIGINATED | 8 |
+> OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded. UNMEASURABLE: a call in a chained item whose ground truth declares no intermediates (SPEC R2.4); its operands are not counted in the step table.
+
+| Outcome | Count | % |
+|---|---|---|
+| OPERANDS-GROUNDED | 32 | 66.7% |
+| OPERAND-ORIGINATED | 16 | 33.3% |
+| OPERANDS-UNOBSERVABLE | 0 | 0.0% |
+| UNMEASURABLE | 0 | 0.0% |
 
 ### Originated Operand Audit
 
 | Item | Condition | Value | Expression | Resolution |
 |---|---|---|---|---|
+| Q01 | base | `7777` | ` 7777 * 3` | originated |
+| Q01 | base | `3` | ` 7777 * 3` | originated |
+| Q01 | base | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | base | `7777` | ` 7777 * 3` | originated |
+| Q01 | base | `3` | ` 7777 * 3` | originated |
+| Q01 | base | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
 | Q09 | base | `7777` | `7777 * 3` | originated |
 | Q09 | base | `3` | `7777 * 3` | originated |
 | Q09 | base | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
 | Q09 | base | `7777` | `7777 * 3` | originated |
 | Q09 | base | `3` | `7777 * 3` | originated |
 | Q09 | base | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | instruction_removed | `7777` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | `3` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
+| Q01 | instruction_removed | `7777` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | `3` | ` 7777 * 3` | originated |
+| Q01 | instruction_removed | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
 | Q09 | instruction_removed | `7777` | `7777 * 3` | originated |
 | Q09 | instruction_removed | `3` | `7777 * 3` | originated |
 | Q09 | instruction_removed | `23331` | `23331 * 1.2 / 12` | computed_in_session_ungrounded |
@@ -340,6 +368,18 @@ Total operands resolved: 144
 *No per-surface D2 data available.*
 
 
+## 9b. D2.2 Execution Conditions
+
+- Serving stack and version: not disclosed by the endpoint; the runner cannot observe it.
+- Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
+- Concurrency: one request at a time, sequentially, from a single process.
+- Sampling parameters sent:
+  - `max_completion_tokens`: `4096`
+  - `reasoning_effort`: `none`
+  - `temperature`: not sent (platform-rejected)
+  - `top_p`: not sent (operator-declared)
+- Parameter echo: `UNVERIFIED` (40 responses checked)
+
 ## 10. Non-Outcome Cells
 
 > Every cell that is not a scoreable outcome is listed with its reason.
@@ -357,6 +397,7 @@ Total operands resolved: 144
 
 The following dimensions were **not measured** in this evaluation and require human adjudication:
 
+- **D1**: Accuracy — requires item-level scoring
 - **D3**: Completeness of explanation — requires human adjudication
 - **D4**: Appropriate caveats — requires human adjudication
 - **D5**: Source attribution — requires human adjudication

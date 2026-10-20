@@ -127,7 +127,8 @@ result, by us or by anyone, in any document.
     failure rate: 0/10 failures; one-sided 95% upper bound on the failure rate 25.9%
   instruction_removed: invoked=10 not_invoked=0 n=10
     failure rate: 0/10 failures; one-sided 95% upper bound on the failure rate 25.9%
-\n3h2. D7.3 TRANSCRIPTION:
+
+3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 60
   TRANSCRIBED-ALTERED: 0
   UNOBSERVABLE: 0
@@ -165,6 +166,8 @@ result, by us or by anyone, in any document.
   step 5 (originated, no traceable basis):                  0
   OPERANDS-GROUNDED: 60
   OPERAND-ORIGINATED: 0
+  OPERANDS-UNOBSERVABLE: 0
+  UNMEASURABLE: 0
 
 ============================================================
 GENERATING FORMAL REPORT (report.py)
