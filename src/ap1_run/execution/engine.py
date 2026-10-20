@@ -18,7 +18,7 @@ from ap1_run.foundation import transcript
 from ap1_run.execution.context import build_delivered_context, format_fixture_context
 from ap1_run.execution.evidence import (
     classify_invocation, classify_attestation,
-    extract_attestation, check_ev3_guard, EV_0,
+    extract_attestation, check_ev3_guard, EV_0, _extract_content,
 )
 from ap1_run.scoring.operation_correctness import classify_operation, reclassify_session
 from ap1_run.scoring.provenance.classify import classify_invocations_sequential
@@ -98,6 +98,27 @@ def execute_item(item, *, condition, config, fixture,
         tools=tools, adapter_send=adapter_send,
         sampling=sampling,
     )
+
+    # Empty response -> UNMEASURED, excluded from every denominator
+    # (SPEC R4.1 "Empty response", R0.2; AP-1 v1.3 §13.2): a readable
+    # response with no text and no tool call in any round is not an
+    # answer and not a NOT-INVOKED.
+    if not tool_calls_record and _is_empty_response(final_response):
+        transcript.append(
+            transcript_path,
+            item_id=item_id, arm_id=condition,
+            condition=condition,
+            request_sent={'messages': initial_messages,
+                          'request_record': request_record},
+            response_received=final_response, tool_calls=[],
+            evidence_class=None, error_state='UNMEASURED: empty response',
+            seal_hash=seal_hash,
+        )
+        return {
+            'item_id': item_id, 'condition': condition,
+            'status': 'UNMEASURED', 'error': 'empty response',
+            'ground_truth': gt,
+        }
 
     # Classify evidence from ACCUMULATED records (R1.3 normative)
     ev_class, outcome, self_report = classify_invocation(
@@ -288,6 +309,13 @@ def _build_messages(*, system_prompt, item, fixture, config):
         'content': f'{context_text}\n\nQuestion: {item["text"]}',
     })
     return messages
+
+
+def _is_empty_response(response):
+    """True for a recognised chat-completion response whose message has no
+    text content (empty or null). The caller checks for tool calls."""
+    content, recognised, _ = _extract_content(response)
+    return recognised and not content
 
 
 def _extract_tool_calls(response):
