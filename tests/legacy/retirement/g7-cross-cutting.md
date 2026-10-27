@@ -1,6 +1,6 @@
 # Legacy check map: group G7 (cross-cutting suites)
 
-Step 3 of the restructure (`notes/ap1-run-organization/restructure-plan.md` §4).
+Step 3 of the restructure: tests of today's behaviour, so the legacy suites can be retired.
 Every check of the seven non-module suites, mapped to the new tests that cover
 the same behaviour, or dropped on purpose with the reason.
 
@@ -147,9 +147,9 @@ regression scenarios.
 
 ## verify_spec.py (2 functions, 62 checks): dropped on purpose, pending Steven's ruling
 
-Not reproduced as new tests, by instruction. Options for Steven are in the G7
-report (`inbox/2026-10-15_step3-g7-cross-cutting-report.md`): drop entirely;
-keep only the §12.9 ≤300-line constraint as a test; or keep the full table.
+Not reproduced as new tests, by instruction. The options G7 put to Steven:
+drop entirely; keep only the §12.9 ≤300-line constraint as a test; or keep
+the full table.
 
 | suite | function | check | new test(s) | note |
 |---|---|---|---|---|
@@ -226,4 +226,5 @@ the new tests (plus `U/runner/test_summary.py`, mapped above): legacy 2241
 lines / 2912 arcs, new 2759 lines / 3619 arcs. The only lines legacy executes
 and the new tests do not are `scoring/provenance/audit.py` lines 1 and 10,
 executed by legacy verify_r41's unused import of `build_audit_listing` (module
-definition only, no behaviour). Per-suite tables are in the G7 report.
+definition only, no behaviour). Per-suite numbers, measured again by G9, are in
+`tests/legacy/RETIREMENT.md` (section "Coverage").

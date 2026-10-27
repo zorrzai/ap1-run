@@ -11,7 +11,7 @@ step 3's groups G1–G7 wrote, adds the rows that G9 (the retirement audit) sett
 named test does not exist in `tests/{unit,conformance,functional,inspect}/` or if a suite's count
 differs from `run_all_tests.py`'s `SUITES`.
 
-## The criteria (restructure plan §4)
+## The criteria
 
 A legacy suite is retired (deleted, removed from `run_all_tests.py`, noted in the changelog) when:
 
