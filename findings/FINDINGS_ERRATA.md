@@ -1298,3 +1298,12 @@ run_b_sol 0 resolutions in 0 invocations of 0 records {} []
 ```
 
 The README, docstring and test lines are read from the seal (`203fef4`). `ee8957e` is the last commit before Run A started. `203fef4` holds the module bound by the original seals (see the note of 3 October 2026). `85e8eeb` is the last change to the module before E3. The two counts of non-comment lines added to `provenance.py` are for `4f737ce` and `ff8c051`.
+
+---
+
+## Note by addition - 26 October 2026: this file moved to `findings/`
+
+**Date:** 26 October 2026
+**Affects:** No figure, verdict or withdrawal. Nothing above is edited.
+
+With the repository's reorganisation, this file moved from the repository root to `findings/FINDINGS_ERRATA.md`, beside `FINDINGS.md`. Its content was not changed by the move. Links to the root path still resolve at every commit before the move, including the tags `paper-2026-10` (`b4d41e2`), the repository state the AP-1 paper cites, and `pre-reorg` (`c8df9ca`). File paths and commands in the entries above refer to the layout at their own date; the README section "Where the files used to be" gives each file's current location.
