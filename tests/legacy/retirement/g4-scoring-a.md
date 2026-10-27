@@ -1,8 +1,8 @@
 # Legacy checks mapped to unit tests: group G4 (scoring-a)
 
 Modules: `scoring/invocation.py`, `scoring/accuracy.py`, `scoring/figure_id.py`,
-`scoring/operation_correctness.py`. Suites mapped here (step-3 protocol, rule 5): the
-module-level suites `verify_phase_c.py`, `verify_d72b.py` and `verify_e7_coverage.py`, for the
+`scoring/operation_correctness.py`. Suites mapped here (G1–G6 each map the module-level suites
+for their own modules): `verify_phase_c.py`, `verify_d72b.py` and `verify_e7_coverage.py`, for the
 checks about these modules. No other module-level suite (`verify.py`, `verify_phase_b.py`,
 `verify_phase_d.py`, `verify_phase_e.py`, `verify_hashes.py`) calls them. Checks in those suites
 about other modules (reproducibility, transcription, seal, release coverage, ...) are left to

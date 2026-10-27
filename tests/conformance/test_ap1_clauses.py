@@ -8,8 +8,9 @@ gives the lines. test_clause_quotes.py checks that every quote is verbatim
 at the lines cited.
 
 The tests pin what the runner does today. Where SPEC §10 claims more than
-the code does, the test pins today's behaviour and carries the finding ID
-(T3-n from notes/ap1-run/2026-10-11_T3_review.md, or S3-G7-n for new ones).
+the code does, the test pins today's behaviour and carries the finding ID:
+T3-n for a finding of the review of SPEC claims against the code that came
+before step 3, S3-G7-n for one first found by these tests.
 """
 
 import ast

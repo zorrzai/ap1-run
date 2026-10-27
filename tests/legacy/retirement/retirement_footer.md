@@ -65,9 +65,8 @@ as unreachable).
 Score = killed / mutants (mutmut 3, `tests/mutation/run_mutation.py`). "New" is the recorded score
 in `tests/mutation/scores.json`; "legacy" is the score of the legacy suites that import the module,
 run with `--tests` (or, where marked, G1's wrapper that fails on a non-zero `main()`, because the
-`check()` suites never raise under pytest). Source: the step-3 group reports
-(`inbox/2026-10-15_step3-g<n>-…-report.md`); G9 measured the provenance modules and
-`runner/summary`.
+`check()` suites never raise under pytest). Each group measured its own modules during step 3
+(column "measured by"); G9 measured the provenance modules and `runner/summary`.
 
 | module | new | legacy | legacy suites | measured by |
 |---|---|---|---|---|
@@ -110,7 +109,7 @@ legacy numbers from being exact, both test-infrastructure issues, not runner def
 
 ## Blockers to deleting the suites
 
-- **All suites:** Marcus's approval (plan, decision 16: the gate before step 5).
+- **All suites:** Marcus's approval, the gate before step 5 (the fixes).
 - **`verify_spec.py`:** Steven's ruling on the 62 SPEC §12.10 checks (drop; keep the ≤300-line
   constraint as a test; or keep the table). Nothing else blocks it.
 - **`verify_hashes.py`:** `.github/workflows/hashes.yml` runs it; switch the workflow to
@@ -118,7 +117,7 @@ legacy numbers from being exact, both test-infrastructure issues, not runner def
   suite) in the same change that deletes it.
 - **`run_all_tests.py` and the docs:** the registry, `.github/workflows/full_suite.yml` (runs
   `run_all_tests.py`), and the docs that cite "14 offline suites" (README, SPEC, the paper's next
-  revision) change with the deletion, as plan §4 says.
+  revision) change with the deletion.
 - **`verify_inspect.py`:** not a blocker, but note that its replacement tests in `tests/inspect/`
   need inspect-ai and skip without it, as the legacy agreement test did. CI installs `.[dev]`
   only, so in CI both skip; run them in an environment with inspect-ai (`ap1-run-inspect`).
