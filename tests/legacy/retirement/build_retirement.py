@@ -546,7 +546,9 @@ def join(inv, groups):
             x = next(x for x in groups if x['suite'] == 'verify_spec'
                      and x['check'].startswith(pat))
             new_text, note, src = '', x['note'], x['group']
-            status = 'pending'
+            # Proposed for dropping; the maintainer decides with the
+            # legacy-suite retirement. No replacement test, as for 'dropped'.
+            status = 'proposed'
         elif suite == 'test_findings_mutation.py':
             name = row['check'].strip('`')
             x = next(x for x in groups if x['suite'] == 'test_findings_mutation'
@@ -585,14 +587,15 @@ def write(rows, header_path):
     lines = [open(header_path, encoding='utf-8').read().rstrip('\n'), '']
     lines += ['## Summary', '',
               '| suite | checks (run_all_tests) | checks found | mapped | '
-              'dropped on purpose | pending ruling |',
-              '|---|---|---|---|---|---|']
-    totals = [0, 0, 0, 0, 0]
+              'dropped on purpose | proposed drop | pending |',
+              '|---|---|---|---|---|---|---|']
+    totals = [0, 0, 0, 0, 0, 0]
     for suite in ORDER:
         rs = [r for r in rows if r['suite'] == suite]
         n = [expected[suite], len(rs),
              sum(r['status'] == 'mapped' for r in rs),
              sum(r['status'] == 'dropped' for r in rs),
+             sum(r['status'] == 'proposed' for r in rs),
              sum(r['status'] == 'pending' for r in rs)]
         assert n[0] == n[1], (suite, n)
         totals = [a + b for a, b in zip(totals, n)]
@@ -608,7 +611,8 @@ def write(rows, header_path):
                   '|---|---|---|---|---|']
         for r in rs:
             status = {'mapped': '', 'dropped': '**dropped**: ',
-                      'pending': '**pending ruling**: '}[r['status']]
+                      'proposed': '**proposed drop**: ',
+                      'pending': '**pending**: '}[r['status']]
             src = f' ({r["src"]})' if r['src'] else ''
             lines.append(
                 f'| {r["function"]} | {r["line"]} | {md_escape(r["check"])} | '
@@ -626,7 +630,7 @@ def main():
     rows = join(inventory(), group_rows())
     totals = write(rows, os.path.join(HERE, 'retirement_header.md'))
     print(f'{OUT}: {totals[1]} checks, {totals[2]} mapped, {totals[3]} dropped, '
-          f'{totals[4]} pending')
+          f'{totals[4]} proposed drops, {totals[5]} pending')
 
 
 if __name__ == '__main__':
