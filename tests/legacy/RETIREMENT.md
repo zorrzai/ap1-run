@@ -548,14 +548,16 @@ What still blocks deleting each suite is listed at the end ("Blockers").
 
 ## verify_hashes.py (CI only; 3 checks, not counted by run_all_tests.py)
 
-`.github/workflows/hashes.yml` runs it on three operating systems and compares the digest it writes
-to `hash_digest.txt` (in the repository root, untracked).
+`.github/workflows/hashes.yml` runs it on three operating systems. On each it asserts that the digest
+of a known input equals the pinned `EXPECTED_DIGEST`, so every platform is checked against the same
+value; it also writes the digest to `hash_digest.txt` (in the repository root, untracked), which
+nothing reads back.
 
 | function | line | check | new test(s) | note |
 |---|---|---|---|---|
-| main | 46 | canonical JSON and digest of the known input, written for the CI comparison | `unit/foundation/test_numeric.py::test_canonical_hash_known_digest_of_verify_hashes_input` | the unit test pins the canonical text and the digest `831709b2…` itself, so a cross-platform difference fails on any OS without comparing files (G1) |
-| main | 51 | same input gives the same digest | `unit/foundation/test_numeric.py::test_canonical_hash_known_digest_of_verify_hashes_input` | (G1) |
-| main | 66 | key order does not change the digest | `unit/foundation/test_numeric.py::test_canonical_hash_key_order_irrelevant` | (G1) |
+| main | 49 | digest of the known input equals the pinned `EXPECTED_DIGEST` | `unit/foundation/test_numeric.py::test_canonical_hash_known_digest_of_verify_hashes_input` | the unit test pins the canonical text as well as the same digest `831709b2…`, so a cross-platform difference fails on any OS the unit tests run on (G1) |
+| main | 61 | same input gives the same digest | `unit/foundation/test_numeric.py::test_canonical_hash_known_digest_of_verify_hashes_input` | (G1) |
+| main | 76 | key order does not change the digest | `unit/foundation/test_numeric.py::test_canonical_hash_key_order_irrelevant` | (G1) |
 
 ## Not counted, not mapped
 
