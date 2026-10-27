@@ -17,14 +17,16 @@ responses.
 | `output/run_e_mini`, `output/run_f_sol` | 8 September 2026 | tag **`e7-quantise-fix`** (pre-split commit `93d4014`; the seals record `runner_version_commit` `dd4c3e8` from the VERSION file) | `da0739eb396e65468d33adb7953aa828fdde9bee6ec1c78e56c83c345defd795` |
 
 Other references you may meet:
-- **`4cfe283`** is the commit that shipped the September run artifacts. The
-  paper cites it. Its Python files are the same code as `e7-quantise-fix`
-  apart from line endings, so they hash differently. Use the tag to
-  reproduce the seal.
+- **`4cfe283`** is the commit that shipped the September run artifacts. Its
+  Python files are the same code as `e7-quantise-fix` apart from line
+  endings, so they hash differently. Use the tag to reproduce the seal.
 - **`ap1-runner-v1.0.0`** (29 August 2026) is the first licensed release. It
   precedes the September runs and is not the code of any published run.
-- **`pre-reorg`** marks the last commit in the flat layout, `77514b4`. It is a
-  local tag until the maintainers publish it.
+- **`paper-2026-10`** marks `b4d41e2`, the repository state the AP-1 paper
+  cites (October 2026). It is in the flat layout.
+- **`pre-reorg`** marks the last commit in the flat layout, `c8df9ca`: `main`
+  just before the reorganisation. It differs from `paper-2026-10` only in the
+  README.
 
 A clean checkout of `e7-quantise-fix` reproduces the September seals'
 `runner_source_hash` byte for byte (checked again on 13 October 2026).
