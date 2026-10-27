@@ -63,6 +63,9 @@ second, taken from a live run against a frontier model.
 **One dependency:** `requests`. Everything else is standard library.
 The optional Inspect integration (`ap1_inspect/`) additionally requires
 `inspect-ai` and is not needed to run AP-1 directly.
+The Inspect wrapper is unsupported for now: its scoring differs from the
+runner's and it cannot seal against the AP-1 v1.3 text, so nothing it
+produces is an AP-1 result.
 
 **Operating system:** Linux, macOS or Windows. The instrument and all thirteen test
 suites are platform-independent — no OS-specific calls exist in any instrument
