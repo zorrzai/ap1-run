@@ -145,22 +145,27 @@ regression scenarios.
 | verify_r41 | test_b29_multi_invocation_all_grounded | item GROUNDED | test_r41_b29_all_invocations_grounded_makes_item_grounded | |
 | verify_r41 | test_b30_sequential_classification_accumulates | 2 results, call 2 GROUNDED (2 asserts) | test_r41_b30_sequential_classification_carries_grounded_returns; R: multi_round | |
 
-## verify_spec.py (2 functions, 62 checks): dropped on purpose, pending Steven's ruling
+## verify_spec.py (2 functions, 62 checks): proposed for dropping
 
-Not reproduced as new tests, by instruction. The options G7 put to Steven:
-drop entirely; keep only the §12.9 ≤300-line constraint as a test; or keep
-the full table.
+Not reproduced as new tests. Every check is about SPEC §12.10's line-count
+table or §12.9's ≤300-line limit per instrument module. Line counts are not
+behaviour, and a check per module would force a SPEC edit with every code
+change, so the proposal is no line-count tests and no ≤300-line limit. (Of
+the three options, drop entirely, keep only the ≤300-line constraint as a
+test, or keep the full table, the first is proposed.) The maintainer
+decides with the legacy-suite retirement; until then `verify_spec.py` keeps
+running the checks.
 
 | suite | function | check | new test(s) | note |
 |---|---|---|---|---|
-| verify_spec | test_spec_line_counts_match_files | spec-table-not-empty | none | dropped on purpose, pending Steven's ruling |
-| verify_spec | test_spec_line_counts_match_files | spec-count-&lt;file&gt; for the 35 files of SPEC §12.10 (src/ap1_run/reporting/report.py, scoring/provenance/{trace,classify,audit}.py, foundation/{numeric,config,adapter,transcript}.py, execution/{engine,evidence,seal,seal_constants,context,perturbation_guard}.py, scoring/{operation_correctness,reproducibility,figure_id,invocation,accuracy,transcription,release_coverage}.py, reporting/adjudication.py, run.py, runner/{console,credentials,executions,outputs,settings,summary}.py, example/{ground_truth_example,calculator_tool}.py, tests/legacy/{verify_findings,test_findings_mutation}.py, tools/generate_findings.py, run_all_tests.py) | none | dropped on purpose, pending Steven's ruling (35 checks) |
-| verify_spec | test_spec_line_counts_match_files | spec-no-stale-counts | none | dropped on purpose, pending Steven's ruling |
-| verify_spec | test_spec_constraint_holds | instrument-modules-found | none | dropped on purpose, pending Steven's ruling |
-| verify_spec | test_spec_constraint_holds | exception-still-breaches-&lt;file&gt; for report.py and provenance/trace.py | none | dropped on purpose, pending Steven's ruling (2 checks) |
-| verify_spec | test_spec_constraint_holds | constraint-&lt;file&gt; for the 20 other instrument modules (provenance/classify, provenance/audit, numeric, engine, evidence, operation_correctness, adjudication, seal, seal_constants, config, reproducibility, figure_id, adapter, invocation, accuracy, context, perturbation_guard, transcription, release_coverage, transcript) | none | dropped on purpose, pending Steven's ruling (20 checks) |
-| verify_spec | test_spec_constraint_holds | no-undeclared-breaches | none | dropped on purpose, pending Steven's ruling |
-| verify_spec | test_spec_constraint_holds | no-stale-exceptions | none | dropped on purpose, pending Steven's ruling |
+| verify_spec | test_spec_line_counts_match_files | spec-table-not-empty | none | line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them |
+| verify_spec | test_spec_line_counts_match_files | spec-count-&lt;file&gt; for the 35 files of SPEC §12.10 (src/ap1_run/reporting/report.py, scoring/provenance/{trace,classify,audit}.py, foundation/{numeric,config,adapter,transcript}.py, execution/{engine,evidence,seal,seal_constants,context,perturbation_guard}.py, scoring/{operation_correctness,reproducibility,figure_id,invocation,accuracy,transcription,release_coverage}.py, reporting/adjudication.py, run.py, runner/{console,credentials,executions,outputs,settings,summary}.py, example/{ground_truth_example,calculator_tool}.py, tests/legacy/{verify_findings,test_findings_mutation}.py, tools/generate_findings.py, run_all_tests.py) | none | line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) |
+| verify_spec | test_spec_line_counts_match_files | spec-no-stale-counts | none | line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them |
+| verify_spec | test_spec_constraint_holds | instrument-modules-found | none | line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them |
+| verify_spec | test_spec_constraint_holds | exception-still-breaches-&lt;file&gt; for report.py and provenance/trace.py | none | line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (2 checks) |
+| verify_spec | test_spec_constraint_holds | constraint-&lt;file&gt; for the 20 other instrument modules (provenance/classify, provenance/audit, numeric, engine, evidence, operation_correctness, adjudication, seal, seal_constants, config, reproducibility, figure_id, adapter, invocation, accuracy, context, perturbation_guard, transcription, release_coverage, transcript) | none | line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) |
+| verify_spec | test_spec_constraint_holds | no-undeclared-breaches | none | line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them |
+| verify_spec | test_spec_constraint_holds | no-stale-exceptions | none | line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them |
 
 ## verify_integration.py (10 functions, 10 checks)
 

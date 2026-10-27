@@ -110,8 +110,11 @@ legacy numbers from being exact, both test-infrastructure issues, not runner def
 ## Blockers to deleting the suites
 
 - **All suites:** Marcus's approval, the gate before step 5 (the fixes).
-- **`verify_spec.py`:** Steven's ruling on the 62 SPEC §12.10 checks (drop; keep the ≤300-line
-  constraint as a test; or keep the table). Nothing else blocks it.
+- **`verify_spec.py`:** the maintainer's decision on its 62 checks, which this map proposes to
+  drop: line counts are not behaviour, and the ≤300-line limit would go with them. If they are
+  dropped, what they check, SPEC §12.9 (the limit) and the §12.10 line-count table, should go in
+  the same change (with README's sentence on the limit), or they go stale unchecked. Nothing else
+  blocks it.
 - **`verify_hashes.py`:** `.github/workflows/hashes.yml` runs it; switch the workflow to
   `pytest tests/unit/foundation/test_numeric.py -k verify_hashes_input` (or to the whole unit
   suite) in the same change that deletes it.

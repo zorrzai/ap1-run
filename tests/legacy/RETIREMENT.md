@@ -16,7 +16,10 @@ differs from `run_all_tests.py`'s `SUITES`.
 A legacy suite is retired (deleted, removed from `run_all_tests.py`, noted in the changelog) when:
 
 1. **Every check is mapped** to a new test, or dropped on purpose with a reason. *Status:* 410 of
-   410 checks accounted for; the 62 `verify_spec.py` checks wait for Steven's ruling (summary below).
+   410 checks accounted for: 347 mapped and 63 with no replacement, each with its reason; none
+   pending (summary below). One is dropped. The other 62, `verify_spec.py`'s SPEC line-count
+   checks, are proposed drops: the maintainer decides on them with the legacy-suite retirement,
+   and until then `verify_spec.py` keeps running them.
 2. **No coverage is lost**: the new tests execute every line and branch the suite did. *Status:* met
    for every suite, with no exception (section "Coverage" at the end).
 3. **Strength is not lost**: on the modules the suite covers, the new tests' mutation score is at
@@ -41,28 +44,29 @@ What still blocks deleting each suite is listed at the end ("Blockers").
   type; "test defect" marks a legacy check that passes for a reason other than the one it states (a
   test-infrastructure issue, not a runner defect); finding IDs (`T3-n`, `S3-…`) are pinned as
   today's behaviour, to be fixed in step 5.
-- **dropped**: no new test on purpose, with the reason. **pending ruling**: `verify_spec.py`,
-  deliberately not reproduced until Steven decides (options in the G7 report).
+- **dropped**: no new test on purpose, with the reason. **proposed drop**: no new test, with the
+  reason, proposed to the maintainer and not yet decided; the legacy check still runs.
+  **pending**: no mapping or proposal yet; none at present.
 
 ## Summary
 
-| suite | checks (run_all_tests) | checks found | mapped | dropped on purpose | pending ruling |
-|---|---|---|---|---|---|
-| verify.py | 79 | 79 | 79 | 0 | 0 |
-| verify_phase_b.py | 25 | 25 | 24 | 1 | 0 |
-| verify_phase_c.py | 28 | 28 | 28 | 0 | 0 |
-| verify_phase_d.py | 25 | 25 | 25 | 0 | 0 |
-| verify_phase_e.py | 29 | 29 | 29 | 0 | 0 |
-| verify_d72b.py | 16 | 16 | 16 | 0 | 0 |
-| verify_e7_coverage.py | 15 | 15 | 15 | 0 | 0 |
-| verify_integration.py | 10 | 10 | 10 | 0 | 0 |
-| verify_r41.py | 30 | 30 | 30 | 0 | 0 |
-| verify_conformance.py | 79 | 79 | 79 | 0 | 0 |
-| verify_spec.py | 62 | 62 | 0 | 0 | 62 |
-| verify_findings.py | 1 | 1 | 1 | 0 | 0 |
-| test_findings_mutation.py | 7 | 7 | 7 | 0 | 0 |
-| verify_inspect.py | 4 | 4 | 4 | 0 | 0 |
-| **total** | **410** | **410** | **347** | **1** | **62** |
+| suite | checks (run_all_tests) | checks found | mapped | dropped on purpose | proposed drop | pending |
+|---|---|---|---|---|---|---|
+| verify.py | 79 | 79 | 79 | 0 | 0 | 0 |
+| verify_phase_b.py | 25 | 25 | 24 | 1 | 0 | 0 |
+| verify_phase_c.py | 28 | 28 | 28 | 0 | 0 | 0 |
+| verify_phase_d.py | 25 | 25 | 25 | 0 | 0 | 0 |
+| verify_phase_e.py | 29 | 29 | 29 | 0 | 0 | 0 |
+| verify_d72b.py | 16 | 16 | 16 | 0 | 0 | 0 |
+| verify_e7_coverage.py | 15 | 15 | 15 | 0 | 0 | 0 |
+| verify_integration.py | 10 | 10 | 10 | 0 | 0 | 0 |
+| verify_r41.py | 30 | 30 | 30 | 0 | 0 | 0 |
+| verify_conformance.py | 79 | 79 | 79 | 0 | 0 | 0 |
+| verify_spec.py | 62 | 62 | 0 | 0 | 62 | 0 |
+| verify_findings.py | 1 | 1 | 1 | 0 | 0 | 0 |
+| test_findings_mutation.py | 7 | 7 | 7 | 0 | 0 | 0 |
+| verify_inspect.py | 4 | 4 | 4 | 0 | 0 | 0 |
+| **total** | **410** | **410** | **347** | **1** | **62** | **0** |
 
 `verify_hashes.py` (run by CI only, not by run_all_tests.py) is in its own section at the end.
 
@@ -456,68 +460,68 @@ What still blocks deleting each suite is listed at the end ("Blockers").
 
 | function | line | check | new test(s) | note |
 |---|---|---|---|---|
-| test_spec_line_counts_match_files | 89 | `spec-table-not-empty` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/reporting/report.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/provenance/trace.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/provenance/classify.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/provenance/audit.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/foundation/numeric.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/execution/engine.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/execution/evidence.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/operation_correctness.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/reporting/adjudication.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/execution/seal.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/execution/seal_constants.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/foundation/config.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/reproducibility.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/figure_id.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/foundation/adapter.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/invocation.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/accuracy.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/execution/context.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/execution/perturbation_guard.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/transcription.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/release_coverage.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/foundation/transcript.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/run.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/runner/console.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/runner/credentials.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/runner/executions.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/runner/outputs.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/runner/settings.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/runner/summary.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-example/ground_truth_example.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-example/calculator_tool.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-tests/legacy/verify_findings.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-tools/generate_findings.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-tests/legacy/test_findings_mutation.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 107 | `spec-count-run_all_tests.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (35 checks) (G7) |
-| test_spec_line_counts_match_files | 109 | `spec-no-stale-counts` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (G7) |
-| test_spec_constraint_holds | 127 | `instrument-modules-found` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (G7) |
-| test_spec_constraint_holds | 150 | `exception-still-breaches-src/ap1_run/reporting/report.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (2 checks) (G7) |
-| test_spec_constraint_holds | 150 | `exception-still-breaches-src/ap1_run/scoring/provenance/trace.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (2 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/provenance/classify.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/provenance/audit.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/foundation/numeric.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/execution/engine.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/execution/evidence.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/operation_correctness.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/reporting/adjudication.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/execution/seal.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/execution/seal_constants.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/foundation/config.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/reproducibility.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/figure_id.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/foundation/adapter.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/invocation.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/accuracy.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/execution/context.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/execution/perturbation_guard.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/transcription.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/release_coverage.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/foundation/transcript.py` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (20 checks) (G7) |
-| test_spec_constraint_holds | 160 | `no-undeclared-breaches` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (G7) |
-| test_spec_constraint_holds | 162 | `no-stale-exceptions` | none | **pending ruling**: dropped on purpose, pending Steven's ruling (G7) |
+| test_spec_line_counts_match_files | 89 | `spec-table-not-empty` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/reporting/report.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/provenance/trace.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/provenance/classify.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/provenance/audit.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/foundation/numeric.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/execution/engine.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/execution/evidence.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/operation_correctness.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/reporting/adjudication.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/execution/seal.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/execution/seal_constants.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/foundation/config.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/reproducibility.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/figure_id.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/foundation/adapter.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/invocation.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/accuracy.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/execution/context.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/execution/perturbation_guard.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/transcription.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/scoring/release_coverage.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/foundation/transcript.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/run.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/runner/console.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/runner/credentials.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/runner/executions.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/runner/outputs.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/runner/settings.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-src/ap1_run/runner/summary.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-example/ground_truth_example.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-example/calculator_tool.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-tests/legacy/verify_findings.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-tools/generate_findings.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-tests/legacy/test_findings_mutation.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 107 | `spec-count-run_all_tests.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (35 checks) (G7) |
+| test_spec_line_counts_match_files | 109 | `spec-no-stale-counts` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (G7) |
+| test_spec_constraint_holds | 127 | `instrument-modules-found` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (G7) |
+| test_spec_constraint_holds | 150 | `exception-still-breaches-src/ap1_run/reporting/report.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (2 checks) (G7) |
+| test_spec_constraint_holds | 150 | `exception-still-breaches-src/ap1_run/scoring/provenance/trace.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (2 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/provenance/classify.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/provenance/audit.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/foundation/numeric.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/execution/engine.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/execution/evidence.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/operation_correctness.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/reporting/adjudication.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/execution/seal.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/execution/seal_constants.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/foundation/config.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/reproducibility.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/figure_id.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/foundation/adapter.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/invocation.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/accuracy.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/execution/context.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/execution/perturbation_guard.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/transcription.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/scoring/release_coverage.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 158 | `constraint-src/ap1_run/foundation/transcript.py` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (20 checks) (G7) |
+| test_spec_constraint_holds | 160 | `no-undeclared-breaches` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (G7) |
+| test_spec_constraint_holds | 162 | `no-stale-exceptions` | none | **proposed drop**: line counts are not behaviour, and a check per module would force a SPEC edit with every code change; the ≤300-line limit (SPEC §12.9) would be dropped with them (G7) |
 
 ## verify_findings.py (1 check)
 
@@ -658,8 +662,11 @@ legacy numbers from being exact, both test-infrastructure issues, not runner def
 ## Blockers to deleting the suites
 
 - **All suites:** Marcus's approval, the gate before step 5 (the fixes).
-- **`verify_spec.py`:** Steven's ruling on the 62 SPEC §12.10 checks (drop; keep the ≤300-line
-  constraint as a test; or keep the table). Nothing else blocks it.
+- **`verify_spec.py`:** the maintainer's decision on its 62 checks, which this map proposes to
+  drop: line counts are not behaviour, and the ≤300-line limit would go with them. If they are
+  dropped, what they check, SPEC §12.9 (the limit) and the §12.10 line-count table, should go in
+  the same change (with README's sentence on the limit), or they go stale unchecked. Nothing else
+  blocks it.
 - **`verify_hashes.py`:** `.github/workflows/hashes.yml` runs it; switch the workflow to
   `pytest tests/unit/foundation/test_numeric.py -k verify_hashes_input` (or to the whole unit
   suite) in the same change that deletes it.
