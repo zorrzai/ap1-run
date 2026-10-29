@@ -35,10 +35,12 @@ real adapter and HTTP transport:
   (published runs copied into the copy's `output/`) need a scratch copy.
 - **Scratch copy.** A scenario that sets `"scratch_copy"` (its value says
   why) runs in a scratch copy of the repository, without `.git` and
-  `output/`, instead of the real tree. Two do: `cli_paths` (it checks that
-  the default `output/` stays empty, which needs a disposable one) and
+  `output/`, instead of the real tree. Three do: `cli_paths` (it checks that
+  the default `output/` stays empty, which needs a disposable one),
   `tool_generate_findings` (the tool writes `findings/FINDINGS.md` at a
-  fixed path).
+  fixed path) and `clean_no_options` (with no options the runner reads
+  `example/config.json` and writes to the default `output/`, so the config
+  edit and the outputs need a disposable tree).
 - **No git.** Every run gets `GIT_DIR` pointing nowhere. The runner
   cross-checks `VERSION` against git `HEAD` and records `runner_modified`;
   the golden output pins a run without git (as in a copy without `.git`),
@@ -121,6 +123,7 @@ and `run_all_tests.py` records the new count in the same commit.
 | `tool_generate_findings` | `generate_findings.py`; its output equals the committed `findings/FINDINGS.md` |
 | `smoke_no_api_key` | `python -m ap1_run.run` with no key: instructions, exit 1 |
 | `smoke_test_shim_no_api_key` | the root `smoke_test.py` shim with no key: the same golden output as `smoke_no_api_key` |
+| `clean_no_options` | `clean` with a bare `ap1-run`, no `--config` or `--output-dir`: the runner's default config and output paths, end to end; the same golden output as `clean` |
 | `cli_paths` | `clean` with `--config`, `--fixture-dir`, `--output-dir` and `--ap1-text` pointing at copies: every output equals `clean`'s, only the printed paths differ |
 | `cli_help` | `ap1-run --help`: the options and their defaults |
 
