@@ -1,4 +1,81 @@
 {
+  "execution/context": {
+    "killed": 76,
+    "mutants": 76,
+    "score": 1.0
+  },
+  "execution/engine": {
+    "killed": 490,
+    "mutants": 513,
+    "notes": "All 23 survivors are equivalent or unreachable. Two pass tool_calls=None instead of [] in the VOID and transport-failure records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Two drop the f'call_{turn}' default for a missing tool-call id and three change the '' default of tool_call_id in the tool message: a call without an id raises EngineError on the return-value lookup right after (S3-G2-2), so neither default is ever observed. Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). Two change the [] default of choices in _extract_tool_calls to None: both falsy, both give [].",
+    "score": 0.9552
+  },
+  "execution/evidence": {
+    "killed": 216,
+    "mutants": 224,
+    "notes": "All 8 survivors are equivalent. Six replace a .get() default by None or no default where the value is then only tested for truth or replaced by '' when falsy: 'content' in _extract_content, 'choices' and 'metadata' in extract_attestation (two mutants each). One makes the accumulated_tool_calls test always true: tc is then None instead of [], both falsy, so the final-response fallback and NOT-INVOKED follow the same way. One changes ranks_above's default rank for an unknown first argument from -1 to -2; an unknown first argument never ranks above anything either way.",
+    "score": 0.9643
+  },
+  "execution/perturbation_guard": {
+    "killed": 163,
+    "mutants": 195,
+    "notes": "All 32 survivors are equivalent: each changes the 'base' or 'removed' detail of a tools, tool_choice or sampling diff (key name, or the value looked up). Those details are never observable: a violation always raises PerturbationRefusal, whose message uses only each diff's 'field' and 'issue', and the diff list is returned only when it holds nothing but the identical-prompt entry (S3-G3-4). _summarise itself is tested directly.",
+    "score": 0.8359
+  },
+  "execution/seal": {
+    "killed": 336,
+    "mutants": 361,
+    "notes": "All 25 survivors are equivalent. 21 rename a key ('item_id', 'reason', 'declared_fields') or change the exception type name inside the failure dicts of perturbation_check and source_fields_check. Those dicts are never observable: any failure raises SealError, whose message uses only 'field' (perturbation) or 'item_id' and 'undeclared_fields' (source fields), and the functions only ever return an empty list (S3-G3-3). 4 replace the '' default of ap1_version_doi in verify_seal with None or no default, which is falsy like '' and skips the DOI check the same way.",
+    "score": 0.9307
+  },
+  "execution/seal_constants": {
+    "killed": 100,
+    "mutants": 102,
+    "notes": "Both survivors are equivalent: they rename the 'reason' key of a failure dict. The dicts are never observable, because any failure raises SealError (whose message does not use 'reason') and the function only ever returns an empty list. Legacy suites verify_d72b.py + verify_e7_coverage.py score 0.7549 on the same mutants.",
+    "score": 0.9804
+  },
+  "execution/version": {
+    "killed": 155,
+    "mutants": 167,
+    "notes": "All 12 survivors are equivalent. Three touch dead code: the local 'modified' (False to None or True) and the first 'result = {}' are assigned and never read. Three change the unreachable else of 'parts[0] if parts else ...' (a stripped non-empty line always splits into at least one part). Five change how VERSION is opened or a path is encoded: 'UTF-8' is the same codec; no 'r', no encoding or encoding=None mean the locale's, UTF-8 on macOS and Linux. One opens 'version' instead of 'VERSION', which macOS's case-insensitive file system finds anyway. No legacy suite imports version.py (0 % legacy coverage); the regression scenarios run it end to end.",
+    "score": 0.9281
+  },
+  "foundation/adapter": {
+    "killed": 160,
+    "mutants": 166,
+    "notes": "All 6 survivors are unobservable: they change the two request_record['attempts'] stores made just before raising (after the last transport failure, and the unreachable 'exhausted retries' path). That record is never returned or attached to the exception, so no caller can see it (finding S3-G1-18); the fix will make these mutants killable. The tests replace requests.post, time.sleep and time.time with fakes; the real HTTP path is covered by the regression scenarios against the mock endpoint.",
+    "score": 0.9639
+  },
+  "foundation/config": {
+    "killed": 215,
+    "mutants": 223,
+    "notes": "All 8 survivors are equivalent. Four change how config.json is opened: 'UTF-8' is the same codec, no 'r' is the default mode, and encoding None or no encoding means the locale's, which is UTF-8 on macOS and Linux (the tests load a non-ASCII config; on Windows these would be killed). Four change the .get() default for 'sampling' and 'quantisation' ({} to None or no default): both are required fields, checked present just before, so the default is never used.",
+    "score": 0.9641
+  },
+  "foundation/numeric": {
+    "killed": 299,
+    "mutants": 323,
+    "notes": "All 24 survivors are equivalent or unkillable. parse_decimal (7): is_neg=None is falsy like False; decimal_sep != 'XX.XX' only replaces '.' by '.'; the inner sign test 'XX-\\u2212XX' only differs for 'X', which the outer test never lets through; sorting leading currency symbols by key=None or no key (4) is reverse alphabetical, and for startswith a symbol can only shadow another it is a prefix of, which sorts first either way. _build_extraction_re (2): key=None or no key for the alternation order is likewise equivalent (the regex backtracks; only a prefix can shadow). extract_numeric_tokens (9): currency_symbols=None reaches the same empty handling; finditer returns non-overlapping matches in order, so the dedup sort key (5 mutants) and last_end=-2 change nothing; every match contains a digit, so the 'no digits' guard and its continue->break (2) are unreachable. canonical_json ensure_ascii=None is falsy like False; canonical_hash 'UTF-8' is the same codec. file_hash (4): read(None) and read(8193) give the same digest; sentinel None or b'XXXX' never matches b'' and loops forever, which mutmut reports as a timeout.",
+    "score": 0.9257
+  },
+  "foundation/transcript": {
+    "killed": 67,
+    "mutants": 75,
+    "notes": "All 8 survivors are equivalent. Seven change how run.jsonl is opened ('UTF-8' is the same codec; no 'r' is the default mode; encoding None or none given means the locale's, UTF-8 on macOS and Linux, so the non-ASCII round trip passes; on Windows these would be killed). One passes ensure_ascii=None, falsy like False.",
+    "score": 0.8933
+  },
+  "reporting/adjudication": {
+    "killed": 475,
+    "mutants": 501,
+    "notes": "All 26 survivors are equivalent. Nine are in _needs_adjudication's TRANSPORT_FAILURE guard, which returns False where the fall-through also returns False, so it is dead code (T3-9: it comes after the ADJUDICATE check); one more there changes the figure_outcome default '' to 'XXXX', which is neither ADJUDICATE* nor UNMEASURABLE either. Two pass fixture=None and config=None to _generate_one_sheet, which never reads either parameter. Fourteen replace a .get() default ([] or {} or '') by None or no default, falsy alike: the release-coverage lookup, account_map, tool_calls, operation_correctness, ungoverned_figures, choices and message content.",
+    "score": 0.9481
+  },
+  "reporting/report": {
+    "killed": 1518,
+    "mutants": 1569,
+    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan').",
+    "score": 0.9675
+  },
   "run": {
     "killed": 553,
     "mutants": 568,
@@ -40,6 +117,29 @@
     "notes": "All 12 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One changes n > 0 to n >= 0 where n is always at least 1. One drops operator_declared=None, which is classify_mechanism's default.",
     "score": 0.9783
   },
+  "scoring/accuracy": {
+    "killed": 145,
+    "mutants": 145,
+    "score": 1.0
+  },
+  "scoring/figure_id": {
+    "killed": 144,
+    "mutants": 158,
+    "notes": "All 14 survivors are in unreachable code: the defensive 'if len(matched) == 0 and len(tokens) == 0' block after the match loop (two mutants of the condition, twelve of the returned dict). An empty token list already returns AUTO-NO-FIGURE above, so tokens is never empty there; the legacy suites do not reach it either.",
+    "score": 0.9114
+  },
+  "scoring/invocation": {
+    "killed": 166,
+    "mutants": 167,
+    "notes": "The one survivor is equivalent: 'n > 0' to 'n >= 0' in the cross-class warning, where every class in per_class has at least one item, so n is always at least 1. The module-level getcontext().prec = 50 is not mutated by mutmut; test_invocation_import_sets_global_decimal_precision_to_50 pins it (T3-60).",
+    "score": 0.994
+  },
+  "scoring/operation_correctness": {
+    "killed": 341,
+    "mutants": 362,
+    "notes": "All 21 non-killed mutants are equivalent or message-only. 11 change the text of a ValueError raised in _eval_decimal, which evaluate_expression always swallows (returns None). 4 are in evaluate_expression's 'if not isinstance(result, Decimal)' branch, which is unreachable (every evaluator path returns Decimal; converting a Decimal through str keeps value and exponent). In classify_operation: 'and' to 'or' in the expected-value conversion (None becomes Decimal('None'), which fails and gives None again), and two quantisation defaults ({} vs None, both falsy). In reclassify_session: 'er is not None or True' (Decimal('None') fails and gives None again), changed = None (falsy like False), and changed = True, an endless loop that mutmut reports as a timeout (the tests hang, so it is detected, but the score counts only kills).",
+    "score": 0.942
+  },
   "scoring/provenance/audit": {
     "killed": 51,
     "mutants": 51,
@@ -54,6 +154,23 @@
   "scoring/provenance/trace": {
     "killed": 417,
     "mutants": 417,
+    "score": 1.0
+  },
+  "scoring/release_coverage": {
+    "killed": 110,
+    "mutants": 113,
+    "notes": "All 3 survivors are equivalent. They change the default of tc.get('return_value', '') to None, to no default (also None) or to 'XXXX': None is falsy like '' and is skipped by the same 'if not rv', and 'XXXX' fails json.loads, whose JSONDecodeError is caught, so the call is skipped either way.",
+    "score": 0.9735
+  },
+  "scoring/reproducibility": {
+    "killed": 188,
+    "mutants": 196,
+    "notes": "All 8 survivors are equivalent. Each is in _extract_surface_values and replaces a .get() default with None or drops it (also None): r.get('choices', []) on the figures and the prose surface (4), and .get('content', '') on both surfaces (4). None is falsy like [] and '', and every use is guarded by 'if choices:' or followed by \"or ''\", so the value is the same.",
+    "score": 0.9592
+  },
+  "scoring/transcription": {
+    "killed": 91,
+    "mutants": 91,
     "score": 1.0
   }
 }

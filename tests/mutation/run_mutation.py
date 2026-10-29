@@ -47,7 +47,7 @@ _SKIP_TOP = {'.git', '.venv', 'output', 'mutants', '.pytest_cache',
 _CONFIG = '''
 [tool.mutmut]
 source_paths = [{source}]
-also_copy = ["src/", "example/", "reference/", "VERSION", "tests/fixtures/"]
+also_copy = ["src/", "example/", "reference/", "docs/", "VERSION", "tests/fixtures/"]
 pytest_add_cli_args_test_selection = [{tests}]
 '''
 
@@ -96,7 +96,10 @@ def measure(module, tests, show_survivors=False):
                 source=json.dumps(source),
                 tests=', '.join(json.dumps(t) for t in tests)))
         env = dict(os.environ, PYTHONPATH='src')
-        run = subprocess.run([sys.executable, '-m', 'mutmut', 'run'],
+        cmd = [sys.executable, '-m', 'mutmut', 'run']
+        if os.environ.get('AP1_MUTMUT_MAX_CHILDREN'):
+            cmd += ['--max-children', os.environ['AP1_MUTMUT_MAX_CHILDREN']]
+        run = subprocess.run(cmd,
                              cwd=tree, env=env, capture_output=True,
                              text=True)
         results = subprocess.run(
@@ -141,7 +144,13 @@ def main(argv=None):
                         help='write the measured scores to scores.json')
     parser.add_argument('--survivors', action='store_true',
                         help="print each surviving mutant's diff")
+    parser.add_argument('--tests', action='append', metavar='FILE',
+                        help='run this test file (repeatable) instead of the recorded '
+                             'ones, e.g. legacy suites, to compare their '
+                             'strength; cannot be combined with --record')
     args = parser.parse_args(argv)
+    if args.tests and args.record:
+        parser.error('--tests cannot be combined with --record')
 
     scores = load_scores()
     modules = args.modules or sorted(scores)
@@ -152,12 +161,18 @@ def main(argv=None):
     fell = []
     for module in modules:
         entry = scores.get(module)
-        tests = tests_for(module, entry)
+        tests = args.tests or tests_for(module, entry)
         result = measure(module, tests, show_survivors=args.survivors)
         recorded = entry.get('score') if entry else None
         line = (f'{module}: {result["killed"]}/{result["mutants"]} killed, '
                 f'score {result["score"]}')
-        if recorded is not None:
+        unchecked = result['counts'].get('not checked', 0)
+        if unchecked:
+            line += (f' [{unchecked} not checked: no test reached the '
+                     f'mutated code, or the tests failed in the copy]')
+        if recorded is not None and args.tests:
+            line += f' (its own tests: {recorded})'
+        elif recorded is not None:
             line += f' (recorded {recorded})'
             if result['score'] < recorded:
                 line += '  FELL'

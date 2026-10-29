@@ -15,12 +15,16 @@ python tests/mutation/run_mutation.py                  # check every recorded mo
 python tests/mutation/run_mutation.py scoring/accuracy # check one
 python tests/mutation/run_mutation.py --record scoring/accuracy
 python tests/mutation/run_mutation.py --survivors scoring/accuracy
+python tests/mutation/run_mutation.py --tests tests/legacy/verify_phase_c.py scoring/accuracy
+                                                       # another test set's strength, not recorded
 ```
 
 A module is named by its path under `src/ap1_run/`, without `.py`. Its
 tests are the mirrored `tests/unit/<layer>/test_<name>.py`, unless its
 entry lists others under `"tests"`. The run happens in a scratch copy, so
 the repository is never modified. It needs the `[dev]` extra.
+Set `AP1_MUTMUT_MAX_CHILDREN=N` to limit mutmut to N worker processes
+(by default it uses one per CPU), for example when several runs share a machine.
 
 **Target:** at least 80 % for a module that is being changed. Every
 surviving mutant of such a module is reviewed: either a test is added, or
