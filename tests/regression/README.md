@@ -25,7 +25,11 @@ real adapter and HTTP transport:
   it exactly with `golden/<scenario>/`.
 - `scenarios/*.json`: one scenario per file. A scenario can `extend` another
   and override its config, environment or scripted responses. A command
-  scenario runs one entry point instead of the runner.
+  scenario runs one entry point instead of the runner. A scenario can also
+  give the runner command-line `args`, make `copy_paths` inside the copy
+  (`{"from": "to"}`, after the config edits), and name the `output_dir` the
+  outputs are read from; the default `output/` must then stay empty
+  (`default_output.txt`).
 
 What is compared for each scenario:
 - the console output, stderr and exit code (or the exception);
@@ -70,8 +74,11 @@ Python 3.11 and 3.12 (`regression.yml`). A full comparison of all scenarios
 takes about 30 seconds.
 
 The harness is deliberately **not** registered in `run_all_tests.py`, so the
-legacy suite counts (226 test functions, 406 checks) stay the same across the
-restructure.
+legacy suite counts stay the same across the restructure: 226 test functions
+and 406 checks in step 1. In step 2 only `verify_spec.py`'s check count moves,
+because it checks each file listed in SPEC §12.10 (one check per file, and
+one more per instrument module): files deleted, renamed or split change it,
+and `run_all_tests.py` records the new count in the same commit.
 
 ## Scenarios
 
@@ -99,6 +106,8 @@ restructure.
 | `tool_generate_findings` | `generate_findings.py`; its output equals the committed `findings/FINDINGS.md` |
 | `smoke_no_api_key` | `python -m ap1_run.run` with no key: instructions, exit 1 |
 | `smoke_test_shim_no_api_key` | the root `smoke_test.py` shim with no key: the same golden output as `smoke_no_api_key` |
+| `cli_paths` | `clean` with `--config`, `--fixture-dir`, `--output-dir` and `--ap1-text` pointing at copies: every output equals `clean`'s, only the printed paths differ |
+| `cli_help` | `ap1-run --help`: the options and their defaults |
 
 **About the replays:** the recorded final responses are served as they were.
 The intermediate rounds survive only as assistant messages (V12-3), so each
@@ -119,5 +128,5 @@ differs: model name, endpoint, hashes, timestamps and runner commit.
 
 Every production module is executed, except that the Inspect wrapper
 (`ap1_inspect/compare, metrics, scorer, solver, task`) is only imported:
-`check_imports.py` covers it at import level. `perturbation.py` is dead code
-(8 %).
+`check_imports.py` covers it at import level. `perturbation.py` was dead code
+(8 %) and was deleted in step 2.

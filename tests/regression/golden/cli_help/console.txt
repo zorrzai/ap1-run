@@ -1,0 +1,19 @@
+usage: ap1-run [-h] [--config CONFIG] [--fixture-dir FIXTURE_DIR]
+               [--output-dir OUTPUT_DIR] [--ap1-text AP1_TEXT]
+
+Run the AP-1 instrument smoke test against a live endpoint. The endpoint,
+model and API key come from the AP1_SMOKE_* environment variables.
+
+options:
+  -h, --help            show this help message and exit
+  --config CONFIG       the run configuration (default: example/config.json)
+  --fixture-dir FIXTURE_DIR
+                        the directory holding fixture.json, questions.json and
+                        ground_truth_example.py (default: example/)
+  --output-dir OUTPUT_DIR
+                        where the transcript, report and summary are written;
+                        files of the same name there are replaced (default:
+                        output/)
+  --ap1-text AP1_TEXT   the AP-1 text to seal; its hash must match the one the
+                        runner expects (default:
+                        reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md)

@@ -1,0 +1,59 @@
+{
+  "run": {
+    "killed": 553,
+    "mutants": 568,
+    "notes": "All 15 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Ten change how fixture.json and questions.json are opened: 'UTF-8', the locale default (UTF-8 on macOS and Linux) or no 'r' mode, and the upper-cased names, which macOS's case-insensitive file system finds anyway. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored.",
+    "score": 0.9736
+  },
+  "runner/console": {
+    "killed": 467,
+    "mutants": 470,
+    "notes": "All 3 survivors are equivalent. Two let n = 0 reach format_rate, which itself returns 'no observations' for n = 0. One changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
+    "score": 0.9936
+  },
+  "runner/credentials": {
+    "killed": 116,
+    "mutants": 117,
+    "notes": "The one survivor is equivalent: decode('UTF-16-LE') names the same codec as 'utf-16-le'. read_credential_windows is tested against a fake ctypes, so its Windows API use is checked by shape, not on Windows.",
+    "score": 0.9915
+  },
+  "runner/executions": {
+    "killed": 537,
+    "mutants": 541,
+    "notes": "All 4 survivors are equivalent. tool_calls=None in the figure record: transcript.append writes None as []. A None default for return_value is falsy like ''. 'and' to 'or' in the result check only lets values through that then raise inside the try, which the except turns into the same None.",
+    "score": 0.9926
+  },
+  "runner/outputs": {
+    "killed": 174,
+    "mutants": 189,
+    "notes": "All 15 survivors are equivalent here. Twelve drop or change encoding='utf-8' on the four files written: 'UTF-8' is the same codec, and None or no argument means the locale's encoding, which is UTF-8 on macOS and Linux (the CI's Windows runs would differ; the regression baseline is made on macOS). Two give fig_lookup.get() a None default, which is falsy like []. One passes ensure_ascii=None, falsy like False.",
+    "score": 0.9206
+  },
+  "runner/settings": {
+    "killed": 248,
+    "mutants": 248,
+    "score": 1.0
+  },
+  "runner/summary": {
+    "killed": 542,
+    "mutants": 554,
+    "notes": "All 12 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One changes n > 0 to n >= 0 where n is always at least 1. One drops operator_declared=None, which is classify_mechanism's default.",
+    "score": 0.9783
+  },
+  "scoring/provenance/audit": {
+    "killed": 51,
+    "mutants": 51,
+    "score": 1.0
+  },
+  "scoring/provenance/classify": {
+    "killed": 226,
+    "mutants": 253,
+    "notes": "All 27 survivors are equivalent mutants. 23 are in classify_item's dead code: is_chained is computed but never used, and the 'if not intermediates and derivable: pass' block does nothing; any_originated=None behaves as False. The other 4 change a default that behaves the same: quantisation {} vs None (both skip quantisation), and arguments '{}' vs None or an invalid string (all give no expression).",
+    "score": 0.8933
+  },
+  "scoring/provenance/trace": {
+    "killed": 417,
+    "mutants": 417,
+    "score": 1.0
+  }
+}

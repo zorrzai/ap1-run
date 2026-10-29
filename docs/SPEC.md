@@ -862,7 +862,7 @@ per R1.1.
 | §1.5.1 declared execution environment | numeric.py, config.py, seal.py | IMPLEMENTED |
 | §1.5.2 excluded by construction | see §6.3(b) | NOT ENFORCEABLE |
 | §1.5.3 model under test | definitional | IMPLEMENTED |
-| §2.5 defeat condition per link | invocation.py, provenance.py, transcription.py | IMPLEMENTED |
+| §2.5 defeat condition per link | invocation.py, provenance/trace.py, transcription.py | IMPLEMENTED |
 | §3.2.1 link-to-measurement mapping | all four links covered | IMPLEMENTED |
 | D1 accuracy, n>=10 per category | config.py MINIMUM_N, accuracy.py | IMPLEMENTED |
 | D2.1 mechanism classes per surface | reproducibility.py | IMPLEMENTED |
@@ -874,8 +874,8 @@ per R1.1.
 | D6 minimum 10 across taxonomy | config.py, refused at load | IMPLEMENTED |
 | D7.1 invocation rate with n | invocation.py | IMPLEMENTED |
 | D7.1b instruction removal | engine.py conditions | IMPLEMENTED |
-| D7.2(a) operand admissibility (i)-(iii) | provenance.py | IMPLEMENTED |
-| D7.2(a)(iv) computed in session | provenance_classify.py | IMPLEMENTED |
+| D7.2(a) operand admissibility (i)-(iii) | provenance/trace.py | IMPLEMENTED |
+| D7.2(a)(iv) computed in session | provenance/classify.py | IMPLEMENTED |
 | D7.2(b) operation correctness | operation_correctness.py, engine.py | IMPLEMENTED |
 | D7.3 transcription | transcription.py | IMPLEMENTED |
 | D7.5 exact Clopper-Pearson bound | invocation.py | IMPLEMENTED |
@@ -889,7 +889,7 @@ per R1.1.
 | §6.3(b) structural evidence | evidence.py EV-3 gated False | PARTIAL |
 | §6.6.1 agreement statistic | sheets generated, agreement external | NOT BUILT by design |
 | §6.8 six-outcome vocabulary | figure_id.py | IMPLEMENTED |
-| §6.8 composition | provenance.py | IMPLEMENTED |
+| §6.8 composition | provenance/trace.py | IMPLEMENTED |
 | §6.8 UNMEASURED / VOID | engine.py | IMPLEMENTED |
 | §6.9 single quantisation point | numeric.py | IMPLEMENTED |
 | §9.1 runner scope limits | design property, declares UNOBSERVABLE | IMPLEMENTED |
@@ -1035,7 +1035,8 @@ including blank lines.  Earlier figures in this specification were measured by
 lower numbers.  Those figures were wrong and have been corrected.
 
 Test suites (`tests/legacy/verify_*.py`, `run_all_tests.py`), demonstration tooling
-(`src/ap1_run/run.py` and its `smoke_test.py` shim), and the example ground-truth module
+(`src/ap1_run/run.py`, the parts it drives in `src/ap1_run/runner/`, and its
+`smoke_test.py` shim), and the example ground-truth module
 (`example/ground_truth_example.py`) are **not** instrument modules and are
 **excluded** from this constraint.
 
@@ -1044,7 +1045,7 @@ renderer with thirteen sections.  Fragmenting it would make the rendering flow
 harder to follow without improving auditability.  This exception is documented,
 not implicit.
 
-**Declared exception — `src/ap1_run/scoring/provenance/provenance.py` (371 lines).**  The expansion
+**Declared exception — `src/ap1_run/scoring/provenance/trace.py` (371 lines).**  The expansion
 adds `STRUCTURAL_CONSTANTS` (the additive and multiplicative identities 0 and
 1) to the provenance classifier.  These are structural in standard financial
 formulae and their addition was established by the first 1000-execution live
@@ -1058,9 +1059,9 @@ a module-level constant definition, not added logic.
 | File | Lines | Classification |
 |---|---|---|
 | `src/ap1_run/reporting/report.py` | 768 | Instrument module (excepted §12.9) |
-| `src/ap1_run/scoring/provenance/provenance.py` | 371 | Instrument module (excepted §12.9) |
-| `src/ap1_run/scoring/provenance/provenance_classify.py` | 232 | Instrument module |
-| `src/ap1_run/scoring/provenance/provenance_audit.py` | 38 | Instrument module |
+| `src/ap1_run/scoring/provenance/trace.py` | 371 | Instrument module (excepted §12.9) |
+| `src/ap1_run/scoring/provenance/classify.py` | 232 | Instrument module |
+| `src/ap1_run/scoring/provenance/audit.py` | 38 | Instrument module |
 | `src/ap1_run/foundation/numeric.py` | 300 | Instrument module |
 | `src/ap1_run/execution/engine.py` | 300 | Instrument module |
 | `src/ap1_run/execution/evidence.py` | 296 | Instrument module |
@@ -1074,13 +1075,18 @@ a module-level constant definition, not added logic.
 | `src/ap1_run/foundation/adapter.py` | 180 | Instrument module |
 | `src/ap1_run/scoring/invocation.py` | 171 | Instrument module |
 | `src/ap1_run/scoring/accuracy.py` | 142 | Instrument module |
-| `src/ap1_run/execution/perturbation.py` | 128 | Instrument module |
 | `src/ap1_run/execution/context.py` | 121 | Instrument module |
 | `src/ap1_run/execution/perturbation_guard.py` | 116 | Instrument module |
 | `src/ap1_run/scoring/transcription.py` | 110 | Instrument module |
 | `src/ap1_run/scoring/release_coverage.py` | 169 | Instrument module |
 | `src/ap1_run/foundation/transcript.py` | 74 | Instrument module |
-| `src/ap1_run/run.py` | 1098 | Demonstration tooling |
+| `src/ap1_run/run.py` | 336 | Demonstration tooling |
+| `src/ap1_run/runner/console.py` | 185 | Demonstration tooling |
+| `src/ap1_run/runner/credentials.py` | 98 | Demonstration tooling |
+| `src/ap1_run/runner/executions.py` | 259 | Demonstration tooling |
+| `src/ap1_run/runner/outputs.py` | 99 | Demonstration tooling |
+| `src/ap1_run/runner/settings.py` | 134 | Demonstration tooling |
+| `src/ap1_run/runner/summary.py` | 242 | Demonstration tooling |
 | `example/ground_truth_example.py` | 571 | Example / demonstration |
 | `example/calculator_tool.py` | 224 | Example / demonstration |
 | `tests/legacy/verify_*.py` | varies | Verification test suites |
