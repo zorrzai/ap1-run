@@ -1,5 +1,5 @@
 {
-  "description": "smoke_test.py run directly with no API key: setup instructions, exit 1, no request sent.",
-  "exercises": ["smoke_test.py entry point", "_get_api_key"],
-  "command": ["smoke_test.py"]
+  "description": "The runner run as a module (python -m ap1_run.run) with no API key: setup instructions, exit 1, no request sent.",
+  "exercises": ["ap1_run.run entry point", "_get_api_key"],
+  "command": ["-m", "ap1_run.run"]
 }

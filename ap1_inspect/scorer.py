@@ -13,23 +13,23 @@ import os
 
 from inspect_ai.scorer import Score, Target, scorer, CORRECT, INCORRECT
 
-# Ensure the runner modules are importable
+# The runner is the installed ap1_run package. The example's modules are
+# imported by name from example/.
 _RUNNER_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 _EXAMPLE_DIR = os.path.join(_RUNNER_DIR, 'example')
-for p in [_RUNNER_DIR, _EXAMPLE_DIR]:
-    if p not in sys.path:
-        sys.path.insert(0, p)
+if _EXAMPLE_DIR not in sys.path:
+    sys.path.insert(0, _EXAMPLE_DIR)
 
 # Runner imports - every classification call goes here
-from evidence import classify_invocation, check_ev3_guard, EV_0, EV_2
-from figure_id import identify_figure, AUTO_MATCH
-from context import check_lookup_collision
-from accuracy import score_accuracy
-from operation_correctness import classify_operation, reclassify_session
-from provenance_classify import classify_invocations_sequential
-from release_coverage import check_release_coverage
-from numeric import extract_numeric_tokens
-from evidence import _extract_content
+from ap1_run.execution.evidence import classify_invocation, check_ev3_guard, EV_0, EV_2
+from ap1_run.scoring.figure_id import identify_figure, AUTO_MATCH
+from ap1_run.execution.context import check_lookup_collision
+from ap1_run.scoring.accuracy import score_accuracy
+from ap1_run.scoring.operation_correctness import classify_operation, reclassify_session
+from ap1_run.scoring.provenance.provenance_classify import classify_invocations_sequential
+from ap1_run.scoring.release_coverage import check_release_coverage
+from ap1_run.foundation.numeric import extract_numeric_tokens
+from ap1_run.execution.evidence import _extract_content
 
 
 @scorer(metrics=[])

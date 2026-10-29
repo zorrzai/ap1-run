@@ -162,6 +162,9 @@ def run_command(name, scenario, tree, result_dir, coverage_dir):
            if not k.startswith('AP1_SMOKE_')}
     env.update(PYTHONHASHSEED='0', PYTHONIOENCODING='utf-8',
                PYTHONDONTWRITEBYTECODE='1')
+    if os.path.isdir(os.path.join(tree, 'src')):
+        # The copy's package, not an installed one.
+        env['PYTHONPATH'] = os.path.join(tree, 'src')
     env.update(scenario.get('env', {}))
     proc = subprocess.run(cmd + args, cwd=tree, env=env, capture_output=True,
                           text=True, encoding='utf-8', timeout=3600)
