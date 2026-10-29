@@ -1,0 +1,52 @@
+{
+  "description": "T3-2 (critical): a leading space or tab in a calculator expression makes D7.2(a) see no operands and score the call OPERANDS-GROUNDED; chained, the fabricated return is laundered through step 4 (Q01, the review's example). The same chain without the space on Q09 for contrast (ORIGINATED, ORIGINATED). Single calls with a leading space (Q04) and a tab (Q06).",
+  "exercises": [
+    "T3-2",
+    "D7.2(a) vacuous grounding",
+    "step 4 laundering"
+  ],
+  "extends": "clean",
+  "config": {
+    "repeat_count": "2"
+  },
+  "responses": {
+    "Q01/*/*": [
+      {
+        "call": " 7777 * 3"
+      },
+      {
+        "call": "23331 * 1.2 / 12"
+      },
+      {
+        "say": "The monthly interest earned on the savings account is ${result}."
+      }
+    ],
+    "Q09/*/*": [
+      {
+        "call": "7777 * 3"
+      },
+      {
+        "call": "23331 * 1.2 / 12"
+      },
+      {
+        "say": "The net monthly income is ${result}."
+      }
+    ],
+    "Q04/*/*": [
+      {
+        "call": " 1437.00 - (287500.00 * (4.20 / 100) / 12)"
+      },
+      {
+        "say": "The principal portion is ${result}."
+      }
+    ],
+    "Q06/*/*": [
+      {
+        "call": "\t12.00 * 12"
+      },
+      {
+        "say": "The total annual cost is ${result}."
+      }
+    ]
+  }
+}

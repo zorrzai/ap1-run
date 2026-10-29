@@ -1,0 +1,14 @@
+{
+  "description": "Wrong final figure, wrong operation, transposed operand, no tool call, and an unchanged question for contrast.",
+  "exercises": ["D1", "D7.2(a) originated operand", "D7.2(b) WRONG-OPERATION", "D7.3 TRANSCRIBED-ALTERED", "D7.1 NOT-INVOKED", "figure identification"],
+  "extends": "clean",
+  "config": {"repeat_count": "2"},
+  "responses": {
+    "Q01/*/*": [{"call": "15200.00 * 1.2 / 100 / 12"}, {"say": "The monthly interest earned on the savings account is $15.25."}],
+    "Q02/*/*": [{"call": "5000 + 2400"}, {"say": "The available credit remaining on the credit card is ${result}."}],
+    "Q03/*/*": [{"call": "2400 * (81.0 / 100) / 12"}, {"say": "The monthly interest charge on the credit card is ${result}."}],
+    "Q04/*/*": [{"call": "287500.00 * (4.20 / 100) / 12"}, {"say": "The principal portion of the first mortgage payment is ${result}."}],
+    "Q06/*/*": [{"say": "The total annual cost of maintaining the checking account is $144.00."}],
+    "Q08/instruction_removed/*": [{"say": "The remaining mortgage balance is approximately $287,069."}]
+  }
+}

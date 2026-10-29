@@ -1,0 +1,17 @@
+{
+  "description": "Every question answered correctly, with grounded calculator calls, under both conditions.",
+  "exercises": ["main path", "every scorer", "report", "adjudication sheets", "D7.2(a) source match"],
+  "config": {"repeat_count": "3"},
+  "responses": {
+    "Q01/*/*": [{"call": "15200.00 * 1.2 / 100 / 12"}, {"say": "The monthly interest earned on the savings account is ${result}."}],
+    "Q02/*/*": [{"call": "5000 - 2400"}, {"say": "The available credit remaining on the credit card is ${result}."}],
+    "Q03/*/*": [{"call": "2400 * (18.0 / 100) / 12"}, {"say": "The monthly interest charge on the credit card is ${result}."}],
+    "Q04/*/*": [{"call": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}, {"say": "The principal portion of the first mortgage payment is ${result}."}],
+    "Q05/*/*": [{"call": "2400*(1+0.18/12)+0-25"}, {"say": "The balance after one month is ${result}."}],
+    "Q06/*/*": [{"call": "12.00 * 12"}, {"say": "The total annual cost of the checking account is ${result}."}],
+    "Q07/*/*": [{"call": "42175 * (0.078 / 4) - (15 * 3)"}, {"say": "The quarterly net growth after fees is ${result}."}],
+    "Q08/*/*": [{"call": "287500 * (1 + 0.042 / 12) + 0 - 1437"}, {"say": "The remaining mortgage balance is ${result}."}],
+    "Q09/*/*": [{"call": "15200 * (1.2 / 100) / 12 - 12"}, {"say": "The net monthly income is ${result}."}],
+    "Q10/*/*": [{"call": "42175.00 * (7.8 / 100) - (15.00 * 12)"}, {"say": "The annual net growth after all fees is ${result}."}]
+  }
+}

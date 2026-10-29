@@ -1,0 +1,6 @@
+{
+  "description": "A config without a tools array is refused with exit code 1 before any request.",
+  "exercises": ["config validation in the runner"],
+  "extends": "clean",
+  "config": {"repeat_count": "1", "tools": []}
+}

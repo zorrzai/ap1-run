@@ -1,0 +1,41 @@
+name: Regression Baseline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  regression:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run regression baseline
+        shell: bash
+        run: |
+          log="$RUNNER_TEMP/regression.log"
+          python tests/regression/run_regression.py 2>&1 | tee "$log"
+          # The harness exits 0 when it runs no scenarios, so also require
+          # the summary line to show at least one run and every run matching.
+          summary=$(grep -E '^[0-9]+/[0-9]+ scenario runs match golden output' "$log" | tail -n 1 || true)
+          if [[ "$summary" =~ ^([0-9]+)/([0-9]+)\  ]] \
+              && (( BASH_REMATCH[2] >= 1 && BASH_REMATCH[1] == BASH_REMATCH[2] )); then
+            echo "OK: $summary"
+          else
+            echo "::error::Regression summary missing, empty or failing: '$summary'"
+            exit 1
+          fi

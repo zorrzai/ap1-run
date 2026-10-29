@@ -1,0 +1,15 @@
+{
+  "description": "Responses that are not a single clear answer: empty content, a configured decline, an unrecognised decline, a refusal reciting balances, two candidate figures, null content, no figure at all.",
+  "exercises": ["figure identification routing", "ADJUDICATE-* outcomes", "decline markers", "unrecognised declines", "adjudication sheets"],
+  "extends": "clean",
+  "config": {"repeat_count": "2"},
+  "responses": {
+    "Q01/*/*": [{"say": ""}],
+    "Q02/*/*": [{"say": "I cannot determine the available credit from this information."}],
+    "Q03/*/*": [{"say": "I apologize, but I'm unable to compute that. The balance is $2,400.00 and the annual rate is 18.0%."}],
+    "Q04/*/*": [{"call": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}, {"say": "The principal portion is either $430.75 or $1,006.25, depending on the convention."}],
+    "Q05/*/*": [{"raw": {"id": "chatcmpl-null", "object": "chat.completion", "created": 0, "model": "mock-model", "choices": [{"index": 0, "message": {"role": "assistant", "content": null}, "finish_reason": "stop"}]}}],
+    "Q06/*/*": [{"call": "12.00 * 12"}, {"say": "The checking account costs a modest amount each year."}],
+    "Q07/*/*": [{"call": "42175 * (0.078 / 4) - (15 * 3)"}, {"say": "Quarterly growth: 777.4125 (that is, $777.41)."}]
+  }
+}

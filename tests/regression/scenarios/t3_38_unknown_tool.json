@@ -1,0 +1,9 @@
+{
+  "description": "T3-38: a call to a tool that was not offered trips the FATAL consistency check after every request is spent, and no report is written.",
+  "exercises": ["T3-38", "unknown tool", "_verify_invocation_consistency"],
+  "extends": "clean",
+  "config": {"repeat_count": "1"},
+  "responses": {
+    "Q06/base/*": [{"calls": [{"name": "python", "arguments": "{\"code\": \"print(12 * 12)\"}"}]}, {"say": "The total annual cost is $144.00."}]
+  }
+}
