@@ -15,6 +15,14 @@ production code there is byte-identical to `77514b4`, the commit the October 202
 The exception is the REORG series, which concerns code that does not exist at `c8df9ca`; each of
 its entries gives its location at the head of the pull request that adds the code.
 
+**After the reorg.** Each entry that points into code also gives, under "After the reorg", where
+that code is once the reorganisation is complete: `file.py:line` in the `src/ap1_run/` layout (or
+`tools/`, `tests/legacy/`, `ap1_inspect/`, `example/`), with the function or module-level name.
+It holds from the end of the last reorganisation pull request that moves code; later changes are
+not tracked in it, so the function name is the better guide once lines shift. The location at
+`c8df9ca` stays the anchor. Once a finding is fixed, its "Addressed by" field takes over, and its
+"After the reorg" location may be left blank.
+
 ## ID schemes
 
 | prefix | meaning |
@@ -127,6 +135,10 @@ Grouped by severity, in ID order.
   unobservable records in n (S3-G7-1).
 - Where: `smoke_test.py:216-233` (`_build_summary`); `report.py:318-335` (report §5);
   `evidence.py:93-106`; `smoke_test.py:161-192` (consistency check ignores `None`)
+- After the reorg: `src/ap1_run/runner/summary.py:116-133` (`build_summary`);
+  `src/ap1_run/reporting/report.py:318-335` (`_section_clopper_pearson`);
+  `src/ap1_run/execution/evidence.py:93-106` (`classify_invocation`);
+  `src/ap1_run/runner/summary.py:12-43` (`verify_invocation_consistency`)
 - Breaks: AP-1 v1.3 D7.7, D7.9, D7.5; SPEC R2.3
 
 **T3-2 · critical · Leading whitespace in a calculator expression makes D7.2(a) vacuously grounded, and step 4 then launders the return**
@@ -139,6 +151,9 @@ Grouped by severity, in ID order.
   grounded the same way. None of the 5,639 calculator expressions in the published runs has leading
   whitespace, so the published figures are unaffected.
 - Where: `provenance.py:62-65`; `provenance_classify.py:76-79`, `:223-229`
+- After the reorg: `src/ap1_run/scoring/provenance/trace.py:62-65` (`extract_operands`);
+  `src/ap1_run/scoring/provenance/classify.py:76-79` (`classify_invocation`), `:223-229`
+  (`classify_invocations_sequential`)
 - Breaks: AP-1 v1.3 D7.2(a)(iv) ("fails closed at the first unresolved link") and D7.2(a) ("the
   unobservable case is declared, never silently skipped"); SPEC R2.4
 
@@ -156,6 +171,10 @@ Grouped by severity, in ID order.
   changing it needs a SPEC change.
 - Where: `figure_id.py:142-176` (structured path `:80-92`); `accuracy.py:80-102`, `:129-132`;
   `report.py:427-430`, `:736-737`
+- After the reorg: `src/ap1_run/scoring/figure_id.py:142-176`, `:80-92` (`identify_figure`);
+  `src/ap1_run/scoring/accuracy.py:80-102` (`score_accuracy`), `:129-132` (`summarise_accuracy`);
+  `src/ap1_run/reporting/report.py:427-430` (`_section_scoring_proportions`), `:736-737`
+  (`_format_dim_result`)
 - Breaks: AP-1 v1.3 D1; SPEC R2.1
 
 **T3-4 · high · D2 is reported "Measured", but the per-surface D2 results never reach the report**
@@ -170,6 +189,10 @@ Grouped by severity, in ID order.
   configured repeat count.
 - Where: `smoke_test.py:954-968` (`operator_declared=None` at `:962`); `report.py:478-497`,
   `:162-167`; `reproducibility.py:70-101`, `:166-189`
+- After the reorg: `src/ap1_run/runner/summary.py:77-91`, `:85` (`classify_reproducibility`);
+  `src/ap1_run/reporting/report.py:478-497` (`_section_d2_mechanisms`), `:162-167`
+  (`_section_dimension_results`); `src/ap1_run/scoring/reproducibility.py:70-101`
+  (`classify_mechanism`), `:166-189` (`_extract_surface_values`)
 - Breaks: AP-1 v1.3 D2 Method, D2.1, D2.2; SPEC R2.2, R3.3
 
 **T3-6 · high · A pass-through calculator call that echoes the answer gets a fully clean D7 signature**
@@ -183,6 +206,10 @@ Grouped by severity, in ID order.
   a reference intermediate, is too permissive.
 - Where: `provenance.py:193-212`; `example/ground_truth_example.py:68-84`;
   `operation_correctness.py:149-156`; `release_coverage.py:130-143`
+- After the reorg: `src/ap1_run/scoring/provenance/trace.py:193-212` (`resolve_operand`);
+  `example/ground_truth_example.py:68-84` (`derive_q01`);
+  `src/ap1_run/scoring/operation_correctness.py:149-156` (`classify_operation`);
+  `src/ap1_run/scoring/release_coverage.py:130-143` (`check_release_coverage`)
 - Breaks: AP-1 v1.3 §3.2 link 2, §3.2.1, D7.2 ("Why a membership check is insufficient"), D7.2(b)
 
 **T3-7 · high · The seal-time ground-truth guards are never called live, and pass vacuously when called**
@@ -195,6 +222,9 @@ Grouped by severity, in ID order.
   10 items, so the published runs are unaffected.
 - Where: `seal.py:124-225` (`perturbation_check`; silent `continue`s at `:170-171`, `:177`,
   `:183-187`, `:195-196`), `seal.py:228-282` (`source_fields_check`), `seal_constants.py:16`
+- After the reorg: `src/ap1_run/execution/seal.py:124-225`, `:170-171`, `:177`, `:183-187`,
+  `:195-196` (`perturbation_check`), `:228-282` (`source_fields_check`);
+  `src/ap1_run/execution/seal_constants.py:16` (`declared_constants_check`)
 - Breaks: SPEC R3.1 ("A constant-returning module is refused, perturbation named") and the SPEC §10
   rows for AP-1 v1.3 §11.9, §13.4, §13.5 marked IMPLEMENTED; README ("the run is refused")
 
@@ -204,6 +234,8 @@ Grouped by severity, in ID order.
   `savings.balance` and reads `savings.annual_rate` that way passes both guards. Latent: the guards
   have no live caller (T3-7) and the example module uses subscripts throughout.
 - Where: `context.py:111-121`; used by `seal.py:228-282`
+- After the reorg: `src/ap1_run/execution/context.py:111-121` (`TrackingAccount`);
+  `src/ap1_run/execution/seal.py:228-282` (`source_fields_check`)
 - Breaks: `source_fields_check`'s own contract (`seal.py:232-233`: "A module reading a field NOT
   in source_fields_consumed is refused, with the field named"); SPEC R3.1
 
@@ -215,6 +247,9 @@ Grouped by severity, in ID order.
   `smoke_summary.json` are unaffected, so the artifacts disagree silently. The published runs have
   no transport failures.
 - Where: `smoke_test.py:1030-1048`; `engine.py:78-93`; `adjudication.py:145-154`
+- After the reorg: `src/ap1_run/runner/outputs.py:23-40` (`attach_figure_outcomes`);
+  `src/ap1_run/execution/engine.py:78-93` (`execute_item`);
+  `src/ap1_run/reporting/adjudication.py:145-154` (`_needs_adjudication`)
 - Breaks: SPEC R3.2; AP-1 v1.3 §13.1, §13.8
 
 **T3-10 · high · An empty response is scored EXECUTED / NOT-INVOKED and enters the D7.1 denominator as a failure**
@@ -223,6 +258,8 @@ Grouped by severity, in ID order.
   empty content when they hit `max_completion_tokens`. The scoring-proportion count also lumps it
   with adjudicated responses. Under AP-1 v1.2, which has no empty-response rule, this is medium.
 - Where: `engine.py:94-108`; `smoke_test.py:218-231`, `:261-264`
+- After the reorg: `src/ap1_run/execution/engine.py:94-108` (`execute_item`);
+  `src/ap1_run/runner/summary.py:118-131`, `:161-164` (`build_summary`)
 - Breaks: AP-1 v1.3 §13.2 ("An empty … response shall never be counted as an answer"); SPEC R0.2;
   SPEC R4.1 row "Empty response → UNMEASURED"
 
@@ -233,6 +270,7 @@ Grouped by severity, in ID order.
   narrower than either, in the optimistic direction. Under AP-1 v1.2, which has no D7 bound, this
   is medium.
 - Where: `smoke_test.py:218-231`; SPEC R2.3 (`SPEC.md:540`, n undefined); report §5
+- After the reorg: `src/ap1_run/runner/summary.py:118-131` (`build_summary`)
 - Breaks: AP-1 v1.3 D7.1 ("proportion of computable *questions*"), D7.5; the same point is comment
   GH-5 in the AP-1 v1.3 disposition record (`DISPOSITION_RECORD_v1.3.md`, admissibility-protocol
   repository), accepted for v1.4
@@ -243,6 +281,8 @@ Grouped by severity, in ID order.
   are skipped (`dimensions_claimed: ['D99']` loads), D5 and D6 count every question (20 ordinary
   questions satisfy a D5+D6 claim), and no D1 total of 40 is checked.
 - Where: `config.py:224-257` (`:234-235` skip, `:253` count)
+- After the reorg: `src/ap1_run/foundation/config.py:224-257`, `:234-235`, `:253`
+  (`validate_minimum_n`)
 - Breaks: SPEC R0.1 and the SPEC §9 threat "Under-powered claim reported as a result"; AP-1 D1, D5, D6
   minimums; README ("enforces the minimum-item counts for D5 and D6 at load")
 
@@ -254,6 +294,8 @@ Grouped by severity, in ID order.
   not D7.2(a). AP-1 §6.8 exists only in v1.3, so this is not a defect against AP-1 v1.2; the false
   IMPLEMENTED rows in SPEC §10 remain a SPEC finding.
 - Where: `SPEC.md:891-892`; `adjudication.py:217-223`; `verify_conformance.py:466-497`
+- After the reorg: `src/ap1_run/reporting/adjudication.py:217-223` (`_generate_one_sheet`);
+  `tests/legacy/verify_conformance.py:466-497` (`test_6_8_six_outcome_vocabulary`)
 - Breaks: AP-1 v1.3 §6.8 and its composition rule; SPEC §10
 
 **T3-14 · high · FINDINGS.md finding F7's "0/468 (p_upper < 0.0064)" bounds a count that can never be non-zero, and the related claim in the publisher's comment is false**
@@ -267,6 +309,8 @@ Grouped by severity, in ID order.
   either self-contradictory (547 were auto-scored) or vacuous.
 - Where: `generate_findings.py:144`, `:348`; `FINDINGS.md:356-362`;
   `docs/AP-1_v1.3_PUBLISHERS_COMMENT.md:92`
+- After the reorg: `tools/generate_findings.py:150` (`compute_figures.run_core`), `:354`
+  (`compute_figures`)
 - Breaks: AP-1 v1.3 D7.5, §6.5
 
 **T3-16 · high · OPERANDS-UNOBSERVABLE is never emitted live; malformed calls count as INVOKED and vanish from D7.2**
@@ -282,6 +326,10 @@ Grouped by severity, in ID order.
   missing unobservable count, not an unobservable case reported as a success.
 - Where: `provenance_classify.py:213-216`, `:76-79`, `:111-117` (`classify_item`, no live caller);
   `engine.py:122-135`; `report.py:688-690`
+- After the reorg: `src/ap1_run/scoring/provenance/classify.py:213-216`
+  (`classify_invocations_sequential`), `:76-79` (`classify_invocation`), `:111-117`
+  (`classify_item`); `src/ap1_run/execution/engine.py:122-135` (`execute_item`);
+  `src/ap1_run/reporting/report.py:688-690` (`_section_operand_provenance`)
 - Breaks: AP-1 v1.3 D7.2(a) ("never silently skipped, and its proportion reported"), D7.2(b)
   OPERATION-UNOBSERVABLE; AP-1 v1.2 7.1; SPEC R2.4
 
@@ -292,6 +340,8 @@ Grouped by severity, in ID order.
   round recorded is demonstrated by a test, and the single-host egress claim rests on a library
   default that follows redirects.
 - Where: `adapter.py:11`; `engine.py:172-236` (`_drive_tool_loop`)
+- After the reorg: `src/ap1_run/foundation/adapter.py:11` (module docstring);
+  `src/ap1_run/execution/engine.py:172-236` (`_drive_tool_loop`)
 - Breaks: SPEC R0.2, R0.3 verification contracts; AP-1 v1.3 §5.6
 
 ### Disputed (high or medium)
@@ -307,6 +357,8 @@ Grouped by severity, in ID order.
   built today, because inputs are loaded before sealing and there is no second-process scorer (the
   real window is T3-72).
 - Where: `seal.py:79-119` (`:97-100`, `:105`, docstring `:83`); only caller `verify.py:366-374`
+- After the reorg: `src/ap1_run/execution/seal.py:79-119`, `:97-100`, `:105`, `:83` (`verify_seal`);
+  `tests/legacy/verify.py:365-373` (`test_r11_seal`)
 - Breaks: SPEC R1.1 verification contract ("Modifying any sealed input causes the scorer to refuse,
   naming the mismatch"); SPEC §9 threat "Fixture altered after sealing"
 
@@ -324,6 +376,7 @@ Grouped by severity, in ID order.
   `15.2 + (-12)`, which are the right inputs, so `run_e_mini`'s published "5 originated" is not
   inflated; what remains is an undocumented rule that grounds by coincidence.
 - Where: `provenance.py:153-168` (added in `ff8c051`); step 5 at `provenance.py:300-320`
+- After the reorg: `src/ap1_run/scoring/provenance/trace.py:153-168`, `:300-320` (`resolve_operand`)
 - Breaks: AP-1 v1.3 D7.2(a)(i)–(ii) (transformations declared in advance; negation is not among
   `permitted_transformations`); SPEC R2.4 steps 1–2
 
@@ -333,6 +386,8 @@ Grouped by severity, in ID order.
   `ap1_version`, `runner_version_*`, `runner_source_hash` and `verification_keys` can be dropped
   unseen. The code is correct today, so this is rated like the other test gaps.
 - Where: `seal.py:70-74`; `verify.py:342-344`
+- After the reorg: `src/ap1_run/execution/seal.py:70-74` (`seal`); `tests/legacy/verify.py:341-343`
+  (`test_r11_seal`)
 - Breaks: SPEC R1.1; AP-1 v1.3 §5.3
 
 **T3-18 · medium (high arguable) · `verify_run_seal.py` reports PASS when the transcript is missing, compares only line 1, and counts non-checks as passes**
@@ -342,6 +397,7 @@ Grouped by severity, in ID order.
   non-comparisons. The script is not in `run_all_tests.py` `SUITES` and has 0 % coverage.
 - Where: `verify_run_seal.py:218-235` (`:221-222` reads line 1 only), `:270` (`n_passed =
   len(checks)`)
+- After the reorg: `tools/verify_run_seal.py:221-238`, `:224-225` (`verify_run`), `:273` (`main`)
 - Breaks: SPEC R1.1 ("The record's hash appears on every transcript line"); README seal-verification
   section
 
@@ -354,6 +410,8 @@ Grouped by severity, in ID order.
   tag that reproduces it), but no tool performs it. The README speaks of "five component hashes";
   a sixth is sealed and never compared.
 - Where: `version.py:84-109`; `seal.py:47`; `README.md:385-386`
+- After the reorg: `src/ap1_run/execution/version.py:84-109` (`compute_runner_source_hash`);
+  `src/ap1_run/execution/seal.py:47` (`seal`)
 - Breaks: `version.py`'s own claim ("so that a modified instrument is detectable"), which holds only
   out of band; AP-1 v1.3 §13.11 requires disclosure only
 
@@ -365,6 +423,9 @@ Grouped by severity, in ID order.
   `canonical_json`.
 - Where: `.github/workflows/hashes.yml` (three platforms); `verify_hashes.py:3-5`, `:43-48`;
   `numeric.py:286-287`; `operation_correctness.py:40-41`, `:61`
+- After the reorg: `tests/legacy/verify_hashes.py:1-7` (module docstring), `:52-57` (`main`);
+  `src/ap1_run/foundation/numeric.py:286-287` (`canonical_json`);
+  `src/ap1_run/scoring/operation_correctness.py:40-41` (`_ALLOWED_NAMES`), `:61` (`_eval_decimal`)
 - Breaks: SPEC R0.4.3 verification items 1 and 2; SPEC Phase A exit criterion (`SPEC.md:794`)
 
 **T3-21 · medium · The two-pass architecture SPEC calls a conformance requirement is not realised**
@@ -374,6 +435,8 @@ Grouped by severity, in ID order.
   For the D7 evidence class this is impossible, because round shapes and intermediate rounds are not
   recorded.
 - Where: `engine.py:118-160`; `smoke_test.py:612-642`
+- After the reorg: `src/ap1_run/execution/engine.py:118-160` (`execute_item`);
+  `src/ap1_run/runner/executions.py:72-99` (`score_execution`)
 - Breaks: SPEC §2 ("The separation is a conformance requirement"), SPEC §5, R0.2, R0.3 ("opens the
   transcript read-only"); SPEC §10 rows for AP-1 v1.3 §13.1, §13.10
 
@@ -387,6 +450,8 @@ Grouped by severity, in ID order.
   R4.1 table lags the tests, and the EV-3 row is listed as required although EV-3 is declared
   unimplemented.
 - Where: `verify_r41.py`; `evidence.py:146-153`
+- After the reorg: `tests/legacy/verify_r41.py`; `src/ap1_run/execution/evidence.py:146-153`
+  (`classify_attestation`)
 - Breaks: SPEC R4.1 ("Every planted defect is detected with the specified outcome, offline")
 
 **T3-23 · medium · Inter-rater agreement is specified and claimed, but nothing implements it**
@@ -396,12 +461,15 @@ Grouped by severity, in ID order.
   so the 18–31 % of executions per published run that are routed to adjudication never become
   measured outcomes.
 - Where: `SPEC.md:729-734`, `:798`, `:890`; `verify_phase_e.py:10`; `adjudication.py:236`
+- After the reorg: `tests/legacy/verify_phase_e.py:10` (module docstring);
+  `src/ap1_run/reporting/adjudication.py:236` (`_generate_one_sheet`)
 - Breaks: AP-1 v1.3 §6.6.1, §13.8; SPEC internal consistency
 
 **T3-24 · medium · The live report §6 originated-operand listing is untested and can be emptied with every suite green**
 - What's wrong: the mutant `prov.get('originated_operands')` → `prov.get('XX')` makes report §6
   print "No originated operands detected" and passes `run_all_tests.py`.
 - Where: `smoke_test.py:300-330` (`:315`)
+- After the reorg: `src/ap1_run/runner/summary.py:200-230`, `:215` (`build_summary`)
 - Breaks: SPEC R2.4, R3.3 (originated-operand listing)
 
 **T3-25 · medium · D7.2(a)(iii) step 3b (intermediate under a permitted transformation) is never exercised**
@@ -409,6 +477,8 @@ Grouped by severity, in ID order.
   `abs_value` can return None, and step numbers can be misreported, all with green suites.
   `transformed_intermediate` and `fraction_to_percent` never occur in the published runs.
 - Where: `provenance.py:214-228` (`:219`); `TRANSFORMATIONS` at `provenance.py:38-42`
+- After the reorg: `src/ap1_run/scoring/provenance/trace.py:214-228`, `:219` (`resolve_operand`),
+  `:38-42` (`TRANSFORMATIONS`)
 - Breaks: AP-1 v1.3 D7.2(a)(ii)/(iii); SPEC R2.4
 
 **T3-26 · medium · D7.3 transcription compares the last return of any tool, and the production wiring is untested**
@@ -421,6 +491,9 @@ Grouped by severity, in ID order.
   FINDINGS_ERRATA.md N1 says "last calculator return"; the code takes the last return of any tool.
 - Where: `smoke_test.py:644-674` (untested `:644-708`); `verify_inspect.py:430-447`;
   `ap1_inspect/scorer.py:119-143`
+- After the reorg: `src/ap1_run/runner/executions.py:101-131`, `:101-165` (`score_execution`);
+  `tests/legacy/verify_inspect.py:431-448` (`_classify`); `ap1_inspect/scorer.py:119-143`
+  (`ap1_scorer.score`)
 - Breaks: AP-1 v1.3 D7.3; SPEC R2.5
 
 **T3-27 · medium · Default HALF_EVEN quantisation in `transcription.py` and `accuracy.py` contradicts the declared HALF_UP policy**
@@ -430,6 +503,9 @@ Grouped by severity, in ID order.
   (`2.005` vs `2.015`, tolerance 0.01). `release_coverage.py` uses the declared mode. KNOWN_ISSUES
   #6 names only the calculator and `operation_correctness.py`.
 - Where: `transcription.py:81-85`; `accuracy.py:82-87`; compare `release_coverage.py:127-128`
+- After the reorg: `src/ap1_run/scoring/transcription.py:81-85` (`check_transcription`);
+  `src/ap1_run/scoring/accuracy.py:82-87` (`score_accuracy`);
+  `src/ap1_run/scoring/release_coverage.py:127-128` (`check_release_coverage._q`)
 - Breaks: AP-1 v1.3 D7.3 ("rounding not licensed by the declared quantisation policy"), AP-1 v1.3
   §6.9; SPEC R0.4.1
 
@@ -444,6 +520,9 @@ Grouped by severity, in ID order.
   (T3-37).
 - Where: `smoke_test.py:641-708`; `release_coverage.py`; `adjudication.py:246-258`;
   `ap1_inspect/scorer.py`
+- After the reorg: `src/ap1_run/runner/executions.py:98-165` (`score_execution`);
+  `src/ap1_run/scoring/release_coverage.py`; `src/ap1_run/reporting/adjudication.py:246-258`
+  (`_generate_one_sheet`); `ap1_inspect/scorer.py`
 - Breaks: AP-1 v1.3 D7.3, AP-1 v1.3 §3.2.1 link 4; SPEC R2.5, R4.1
 
 **T3-29 · medium · The report says "D7 Measured", but D7.4 is not measured, the unmeasured part of D7.3 is not declared, and D7.2/D7.3 tables carry no evidence class**
@@ -451,6 +530,9 @@ Grouped by severity, in ID order.
   invocation-under-pressure measurement exists, and report §12 declares only unclaimed dimensions.
   SPEC §1.1 lists D7.1–D7.3 honestly; the generated report does not.
 - Where: `report.py:153-175`, `:580-605`, `:214-297`, `:625-708`
+- After the reorg: `src/ap1_run/reporting/report.py:153-175` (`_section_dimension_results`),
+  `:580-605` (`_section_unmeasured_dimensions`), `:214-297` (`_section_d73`), `:625-708`
+  (`_section_operand_provenance`)
 - Breaks: AP-1 v1.3 D7 ("Report all four"), D7.7
 
 **T3-30 · medium · SPEC omits AP-1 v1.3 obligations the instrument could at least declare, and SPEC §10 marks several IMPLEMENTED**
@@ -468,11 +550,16 @@ Grouped by severity, in ID order.
   clause can be marked IMPLEMENTED with unreachable code (minimum-n, AP-1 §13.1/§13.10, D2.2, §6.8
   composition).
 - Where: `verify_conformance.py:129-177`, `:469-499`, `:803-832`
+- After the reorg: `tests/legacy/verify_conformance.py:129-177` (`test_d1_accuracy_minimum_n`,
+  `test_d5_minimum_20_adversarial`, `test_d6_minimum_10_taxonomy`), `:469-499`
+  (`test_6_8_six_outcome_vocabulary`), `:803-832` (`test_conformance_table_consistency`)
 - Breaks: SPEC §10 ("normative")
 
 **T3-32 · medium · D1 is not reported per category or with a 95 % CI, yet SPEC lists D1 as IMPLEMENTED**
 - What's wrong: the report gives one pooled rate and no interval.
 - Where: `report.py:153-174`, `:729-738`; `accuracy.summarise_accuracy`; `SPEC.md:867`
+- After the reorg: `src/ap1_run/reporting/report.py:153-174` (`_section_dimension_results`),
+  `:729-738` (`_format_dim_result`); `src/ap1_run/scoring/accuracy.py:105` (`summarise_accuracy`)
 - Breaks: AP-1 D1 ("per category, with 95 % confidence intervals, and with n stated"), same in v1.2
   and v1.3
 
@@ -482,6 +569,8 @@ Grouped by severity, in ID order.
   Computation invocation), and cites "§6.4" where AP-1 D7.7 is meant. The test asserts only `'D3' in
   report`.
 - Where: `report.py:747-756`, `:435`, `:177-185`
+- After the reorg: `src/ap1_run/reporting/report.py:747-756` (`_unmeasured_reason`), `:435`
+  (`_section_scoring_proportions`), `:177-185` (`_section_d7_figures`)
 - Breaks: AP-1 v1.3 §4; SPEC R3.3
 
 **T3-34 · medium · D7.2(a) quantisation and near-miss findings are computed and then dropped**
@@ -489,6 +578,8 @@ Grouped by severity, in ID order.
   findings": quantised groundings are counted grounded and never disclosed, and the near-miss
   findings that would explain T3-59 are lost. AP-1 v1.2 does not require these findings; SPEC does.
 - Where: `provenance_classify.py:69-74`; `report.py:554-578`
+- After the reorg: `src/ap1_run/scoring/provenance/classify.py:69-74` (`classify_invocation`);
+  `src/ap1_run/reporting/report.py:554-578` (`_section_quantisation`)
 - Breaks: AP-1 v1.3 D7.2(a)(iii) ("records a quantisation finding"), AP-1 v1.3 §6.9; SPEC R2.4, R3.3
 
 **T3-35 · medium · Report §10 "Non-Outcome Cells" does not list every non-outcome cell, and the cause of an EV-0 is never recorded**
@@ -499,6 +590,8 @@ Grouped by severity, in ID order.
   HTTP failure, a timeout and an unknown shape produce identical records with `error_state: None`
   and no round identified.
 - Where: `report.py:503-551`; `engine.py:228-234`, `:141-157`
+- After the reorg: `src/ap1_run/reporting/report.py:503-551` (`_section_unmeasured_cells`);
+  `src/ap1_run/execution/engine.py:228-234` (`_drive_tool_loop`), `:141-157` (`execute_item`)
 - Breaks: SPEC R3.3 ("every UNMEASURED, UNOBSERVABLE, UNMEASURABLE and VOID cell with its reason");
   SPEC R1.3; AP-1 v1.3 D7.9 ("with the round identified")
 
@@ -507,6 +600,7 @@ Grouped by severity, in ID order.
   response came from the instructed or the instruction-removed arm, which is the D7.1b contrast
   being measured. AP-1 v1.2 asks only for blindness to the system, which is met.
 - Where: `adjudication.py:167-168`
+- After the reorg: `src/ap1_run/reporting/adjudication.py:167-168` (`_generate_one_sheet`)
 - Breaks: AP-1 v1.3 §13.8 ("blind to arm identity where the response text permits")
 
 **T3-37 · medium · A sheet's Release Coverage Finding lists every repeat of that item and condition**
@@ -515,6 +609,8 @@ Grouped by severity, in ID order.
   its own execution was GOVERNED-RELEASE, and the sheet does not say which repeat it is. Same root
   cause as T3-9.
 - Where: `adjudication.py:79-83`, `:111-124`, `:246-258`; `engine.py:141-157`
+- After the reorg: `src/ap1_run/reporting/adjudication.py:79-83`, `:111-124` (`generate_sheets`),
+  `:246-258` (`_generate_one_sheet`); `src/ap1_run/execution/engine.py:141-157` (`execute_item`)
 - Breaks: SPEC R3.2
 
 **T3-38 · medium · Calling an unoffered or hallucinated tool trips the FATAL consistency check after all requests are spent, and no report is written**
@@ -523,6 +619,9 @@ Grouped by severity, in ID order.
   request with no `report.md`, sheets or summary, and a previous run's `report.md` stays beside the
   new transcript.
 - Where: `evidence.py:119-128`; `smoke_test.py:161-192`, called at `:808`
+- After the reorg: `src/ap1_run/execution/evidence.py:119-128` (`classify_invocation`);
+  `src/ap1_run/runner/summary.py:12-43` (`verify_invocation_consistency`); `src/ap1_run/run.py:283`
+  (`main`)
 - Breaks: SPEC R2.3 (NOT-INVOKED is a legitimate outcome)
 
 **T3-39 · medium · Model-controlled input can abort the run through unhandled exceptions in provenance and coverage**
@@ -532,6 +631,11 @@ Grouped by severity, in ID order.
   spent requests with no report.
 - Where: `provenance.py:62-65`, `:84-85`; `release_coverage.py:127-132`; `transcription.py:83`;
   `engine.py:118`; `smoke_test.py:694`
+- After the reorg: `src/ap1_run/scoring/provenance/trace.py:62-65` (`extract_operands`), `:84-85`
+  (`_walk_for_operands`); `src/ap1_run/scoring/release_coverage.py:127-132`
+  (`check_release_coverage`); `src/ap1_run/scoring/transcription.py:83` (`check_transcription`);
+  `src/ap1_run/execution/engine.py:118` (`execute_item`); `src/ap1_run/runner/executions.py:151`
+  (`score_execution`)
 - Same family (model or endpoint input ends the run with no report): S3-G2-1, S3-G2-2, S3-G2-4,
   S3-G4-4, S3-G4-5.
 
@@ -540,6 +644,9 @@ Grouped by severity, in ID order.
   never assessed for the more complex formulae, including the calculator's own self-test loan
   expression. Latent: no such outcome occurs in the published runs.
 - Where: `operation_correctness.py:41-49` vs `example/calculator_tool.py:38-45`, `:165` (self-test)
+- After the reorg: `src/ap1_run/scoring/operation_correctness.py:41-49` (`_ALLOWED_NAMES`,
+  `_ALLOWED_FUNCS`); `example/calculator_tool.py:38-45` (`_ALLOWED_FUNCS`, `_ALLOWED_NAMES`), `:165`
+  (`selftest`)
 - Breaks: AP-1 v1.3 D7.2(b) ("Where the computation … is recoverable … the assessor evaluates it")
 
 **T3-41 · medium · The configured `decimal_separator` and `grouping_separator` are never used**
@@ -548,6 +655,10 @@ Grouped by severity, in ID order.
   tokens, coverage silently becomes UNOBSERVABLE, and the locale-ambiguity route cannot fire.
 - Where: `figure_id.py:132`; `smoke_test.py:684-686`, `:748-749`; `ap1_inspect/scorer.py:126-128`;
   `config.py:26`
+- After the reorg: `src/ap1_run/scoring/figure_id.py:132` (`identify_figure`);
+  `src/ap1_run/runner/executions.py:141-143`, `:205-206` (`score_execution`);
+  `ap1_inspect/scorer.py:126-128` (`ap1_scorer.score`); `src/ap1_run/foundation/config.py:26`
+  (`REQUIRED_FIELDS`)
 - Breaks: SPEC R0.4.2
 
 **T3-42 · medium · SPEC R2.4 "absent intermediates yield UNMEASURABLE" is a no-op**
@@ -555,6 +666,7 @@ Grouped by severity, in ID order.
   does), so a chained item with no intermediates is classified GROUNDED or ORIGINATED, never
   UNMEASURABLE. Latent: the shipped module declares intermediates everywhere.
 - Where: `provenance_classify.py:119-135`
+- After the reorg: `src/ap1_run/scoring/provenance/classify.py:119-135` (`classify_item`)
 - Breaks: SPEC R2.4 Failure Modes and Verification Contract; AP-1 v1.3 §11.9
 
 **T3-43 · medium · The Inspect scoring path diverges from the runner, and its agreement test cannot see it**
@@ -567,6 +679,10 @@ Grouped by severity, in ID order.
   not executed.
 - Where: `ap1_inspect/scorer.py:71-77`, `:148`, `:163-164`; `ap1_inspect/metrics.py:21-26`,
   `:38-42`; `verify_inspect.py:358-481`, `:600-660`
+- After the reorg: `ap1_inspect/scorer.py:71-77`, `:148`, `:163-164` (`ap1_scorer.score`);
+  `ap1_inspect/metrics.py:21-26` (`clopper_pearson_zero_bound.compute`), `:38-42`
+  (`invocation_rate.compute`); `tests/legacy/verify_inspect.py:359-482` (`_build_step4_scenarios`,
+  `_classify`), `:601-661` (`TestInspectWrapperAgreement.test_inspect_wrapper_agrees_with_runner`)
 - Breaks: SPEC R2.0 step 2; AP-1 D7.5
 
 **T3-44 · medium · The Inspect integration seals SPEC.md as the AP-1 text, refuses with every shipped config, and drops the seal**
@@ -576,6 +692,8 @@ Grouped by severity, in ID order.
   (T3-68). The record is discarded either way, and Inspect samples carry no `seal_hash`.
   `test_seal_refusal_on_wrong_hash` passes for the wrong reason and is skipped without inspect-ai.
 - Where: `ap1_inspect/task.py:53-70`, `:136`, `:154`
+- After the reorg: `ap1_inspect/task.py:52-69` (`_create_seal`), `:135` (`ap1_base`), `:153`
+  (`ap1_instruction_removed`)
 - Breaks: SPEC R1.1
 
 **T3-45 · medium · `report.md` carries no non-conformance disclaimer**
@@ -585,6 +703,8 @@ Grouped by severity, in ID order.
   demonstration-run results", which is consistent with that.)
 - Where: `report.py:71`; `smoke_test.py:40-47`; `output/run_e_mini/` and `output/run_f_sol/`
   `DISCLAIMER.txt`
+- After the reorg: `src/ap1_run/reporting/report.py:71` (`generate_report`);
+  `src/ap1_run/run.py:72-79` (`DISCLAIMER`)
 - Breaks: the instrument's own DISCLAIMER
 
 **T3-46 · medium · The live perturbation guard is tautological, what is held constant is never reported, and DPR is never computed**
@@ -594,6 +714,9 @@ Grouped by severity, in ID order.
   identically while being reported as a contrast. `invocation.compute_dpr` has no live caller.
   Today what is sent is single-variable by construction, so there is no live defect yet.
 - Where: `smoke_test.py:509-525`; `perturbation_guard.py:34-40`, `:87-88`; `invocation.py:140`
+- After the reorg: `src/ap1_run/runner/settings.py:116-134` (`check_condition_guard`, called at
+  `run.py:207`); `src/ap1_run/execution/perturbation_guard.py:34-40`, `:87-88`
+  (`check_single_variable_perturbation`); `src/ap1_run/scoring/invocation.py:140` (`compute_dpr`)
 - Breaks: AP-1 v1.3 D7.8 ("vary the instruction and nothing else … what is held constant shall be
   reported"; DPR), D7.6; SPEC R1.2, R2.3
 
@@ -601,12 +724,15 @@ Grouped by severity, in ID order.
 - What's wrong: editing the timestamp in `report.md` adds no failure to `verify_run_seal.py`, and
   nothing compares it with the first transcript record's timestamp.
 - Where: `seal.py:70-74`; `verify_run_seal.py:196-199`
+- After the reorg: `src/ap1_run/execution/seal.py:70-74` (`seal`);
+  `tools/verify_run_seal.py:199-202` (`verify_run`)
 - Breaks: AP-1 v1.3 §5.3 ("hashed and timestamped before execution"), AP-1 v1.3 §11.7; SPEC R1.1
 
 **T3-48 · medium · The seal has no expected-values component; expected values are computed after sealing**
 - What's wrong: a nondeterministic ground-truth module would produce values that no sealed artifact
   fixes, and nothing detects it.
 - Where: `seal.py:37-48`; `smoke_test.py:549`
+- After the reorg: `src/ap1_run/execution/seal.py:37-48` (`seal`); `src/ap1_run/run.py:224` (`main`)
 - Breaks: SPEC R1.1 ("… expected values …"), R3.1 ("Intermediates reproducible across two
   executions"); AP-1 v1.3 §13.4
 
@@ -616,6 +742,8 @@ Grouped by severity, in ID order.
   not in the history. Every published run already exits 1 on this field, which trains readers to
   ignore it.
 - Where: `verify_run_seal.py:179-190`, `:42-49`
+- After the reorg: `tools/verify_run_seal.py:182-193` (`verify_run`), `:45-52`
+  (`GROUND_TRUTH_ERRATA`)
 
 **T3-50 · medium · The README said sealed hashes are LF and reproduce on any platform, but all four published seals bind the ground-truth module with CRLF line endings**
 - What's wrong: `6dbf9da` ("fix false line-ending claims") replaced a correct README paragraph with
@@ -625,6 +753,7 @@ Grouped by severity, in ID order.
   produces seals that do not reproduce.
 - Where: `numeric.py:294-300`; the README "Line endings" paragraph at `77514b4` (`README.md:403-405`
   there; `c8df9ca` rewrote that paragraph, so this entry cites the reviewed commit)
+- After the reorg: `src/ap1_run/foundation/numeric.py:294-300` (`file_hash`)
 - Breaks: SPEC R0.4.3 ("on two platforms, yields identical digests")
 
 **T3-51 · medium · SPEC R0.1 "no defaults for anything affecting a result" is violated for quantisation**
@@ -633,6 +762,9 @@ Grouped by severity, in ID order.
   tolerance, but `load_config` requires both fields, so those are never reached.
 - Where: `config.py:97-104`; fallbacks `smoke_test.py:490`, `:495` (required at `config.py:23-28`,
   `:78-81`)
+- After the reorg: `src/ap1_run/foundation/config.py:97-104` (`load_config`);
+  `src/ap1_run/run.py:187`, `:192` (`main`); `src/ap1_run/foundation/config.py:23-28`
+  (`REQUIRED_FIELDS`), `:78-81` (`load_config`)
 - Breaks: SPEC R0.1; AP-1 v1.3 §6.9 ("Every evaluation shall declare its rounding policy")
 
 **T3-53 · medium · The zero-field, exception and skip paths of `seal.perturbation_check` are untested**
@@ -640,6 +772,7 @@ Grouped by severity, in ID order.
   `InvalidOperation` (zero fields silently skipped), and `continue` → `break` after `final is None`
   (later items unchecked) all pass.
 - Where: `seal.py:158-208`
+- After the reorg: `src/ap1_run/execution/seal.py:158-208` (`perturbation_check`)
 - Breaks: SPEC R3.1
 
 **T3-54 · medium · `declared_constants_check` fails open on several paths, none tested**
@@ -647,6 +780,8 @@ Grouped by severity, in ID order.
   fails, the item is skipped with no failure recorded, and `'0'` is exempt; `continue` → `break` at
   each skip passes. Fail-open may be deliberate, but it is undocumented.
 - Where: `seal_constants.py:32-35`, `:47-51`, `:53-61`, `:72-73`
+- After the reorg: `src/ap1_run/execution/seal_constants.py:32-35`, `:47-51`, `:53-61`, `:72-73`
+  (`declared_constants_check`)
 - Breaks: SPEC R3.1 (the check for the FINDINGS_ERRATA.md E3 defect)
 
 **T3-55 · medium · Gaps in `numeric.py` parsing and extraction tests: signs, parentheses, currency position, adjacency**
@@ -654,6 +789,8 @@ Grouped by severity, in ID order.
   currency symbols are configured, drop `-3` from `"5-3"`, or end extraction early all pass. (Whether
   `-3` in `"5-3"` should be kept is contested by S3-G1-5.)
 - Where: `numeric.py:64-99`, `:143-231`
+- After the reorg: `src/ap1_run/foundation/numeric.py:64-99` (`parse_decimal`), `:143-231`
+  (`_build_extraction_re`, `extract_numeric_tokens`)
 - Breaks: SPEC R0.4.2
 
 **T3-56 · medium · No test checks what the model is actually shown**
@@ -661,6 +798,8 @@ Grouped by severity, in ID order.
   names but no numbers, pass. Provenance resolves against `build_delivered_context` (a dict) while
   the model reads text, and nothing checks that the two agree.
 - Where: `context.py:62-80` (called from `engine.py:285`)
+- After the reorg: `src/ap1_run/execution/context.py:62-80` (`format_fixture_context`);
+  `src/ap1_run/execution/engine.py:285` (`_build_messages`)
 - Breaks: SPEC R2.4 (provenance resolved against the delivered context)
 
 ### Low
@@ -670,6 +809,7 @@ Grouped by severity, in ID order.
   GROUNDED. The error is in the conservative direction. KNOWN_ISSUES #3 describes this as
   attribution order; the outcome actually flips.
 - Where: `provenance.py:247-272`
+- After the reorg: `src/ap1_run/scoring/provenance/trace.py:247-272` (`resolve_operand`)
 - Breaks: AP-1 v1.3 D7.2(a)(iv)
 
 **T3-58 · low · Operand extraction goes through `float`, contrary to its docstring**
@@ -679,6 +819,8 @@ Grouped by severity, in ID order.
   `0.12345678901234567890` → `0.12345678901234568`), and the recorded literal text loses trailing
   zeros (`53.20` → `53.2`).
 - Where: `provenance.py:80`, `:85`; `operation_correctness.py:62`, `:250`
+- After the reorg: `src/ap1_run/scoring/provenance/trace.py:80`, `:85` (`_walk_for_operands`);
+  `src/ap1_run/scoring/operation_correctness.py:62` (`_eval_decimal`), `:250` (`reclassify_session`)
 - Breaks: SPEC R0.4.1, R0.4.2
 
 **T3-59 · low · Step 4 compares exactly against float-noisy calculator returns, unlike release coverage**
@@ -686,6 +828,8 @@ Grouped by severity, in ID order.
   near-miss finding is dropped, T3-34), a false origination caused by the reference tool. The strict
   reading is defensible.
 - Where: `provenance.py:248-249`, `:274-298`; compare `release_coverage.py:123-132`
+- After the reorg: `src/ap1_run/scoring/provenance/trace.py:248-249`, `:274-298`
+  (`resolve_operand`); `src/ap1_run/scoring/release_coverage.py:123-132` (`check_release_coverage`)
 - Breaks: AP-1 v1.3 D7.2(a)(iv)
 
 **T3-60 · low · `invocation.py` sets global Decimal precision to 50 on import, so arithmetic depends on import order**
@@ -694,6 +838,7 @@ Grouped by severity, in ID order.
   at Python's default 28, so non-terminating values and the `quantise` overflow threshold differ.
   Latent: all example values terminate.
 - Where: `invocation.py:26`
+- After the reorg: `src/ap1_run/scoring/invocation.py:26` (module level, `getcontext().prec = 50`)
 - Breaks: SPEC R0.4 (DETERMINISTIC)
 
 **T3-61 · low · The D7.5 bound is computed in float in `report.py`, duplicating `invocation.py`, and the one-decimal bound is rounded to nearest, not up**
@@ -702,6 +847,9 @@ Grouped by severity, in ID order.
   rounding mode, so n=49 shows the exact 5.93 % as "5.9 %", below the bound it reports. AP-1 v1.2
   has no D7 bound; the SPEC finding remains.
 - Where: `report.py:330-335`, `:711-726`; `invocation.py:113-114`
+- After the reorg: `src/ap1_run/reporting/report.py:330-335` (`_section_clopper_pearson`),
+  `:711-726` (`clopper_pearson_upper_k0`); `src/ap1_run/scoring/invocation.py:113-114`
+  (`format_rate`)
 - Breaks: SPEC R0.4.1; AP-1 v1.3 D7.5
 
 **T3-62 · low · FINDINGS_ERRATA.md E7's release-coverage semantics differ from the code, and GOVERNED-RELEASE says nothing about the governing call**
@@ -709,11 +857,16 @@ Grouped by severity, in ID order.
   defines COVERAGE-UNOBSERVABLE differently. Any equal return governs, including an echo or an
   ORIGINATED call (T3-6), and any tool's return counts, not only the calculator's (S3-G5-2).
 - Where: `release_coverage.py:12-17`, `:103-132`
+- After the reorg: `src/ap1_run/scoring/release_coverage.py:12-17` (module docstring), `:103-132`
+  (`check_release_coverage`)
 - Breaks: the instrument's own claims (FINDINGS_ERRATA.md E7)
 
 **T3-63 · low · The WRONG-OPERATION split labels UNMEASURABLE and NO-FIGURE executions "Item answer incorrect"**
 - What's wrong: a WRONG-OPERATION call in an unreadable execution is reported as a wrong answer.
 - Where: `smoke_test.py:246-253`, `:913-920`; `report.py:401-402`
+- After the reorg: `src/ap1_run/runner/summary.py:146-153` (`build_summary`);
+  `src/ap1_run/runner/console.py:121-128` (`print_run_report`);
+  `src/ap1_run/reporting/report.py:401-402` (`_section_d72b_counts`)
 - Breaks: SPEC R2.0 step 0 (UNMEASURABLE is never incorrect)
 
 **T3-64 · low · The report §6 originated-operand audit renders `?` in the Operation and Operand columns**
@@ -721,6 +874,7 @@ Grouped by severity, in ID order.
   `value`/`literal`, so the table the README calls the reviewer's artifact is blank in two columns
   (report §7b repeats it correctly).
 - Where: `report.py:356-366`
+- After the reorg: `src/ap1_run/reporting/report.py:356-366` (`_section_d72a_audit`)
 - Breaks: SPEC R3.3
 
 **T3-65 · low · The rate-limit and adapter-error handlers in `smoke_test.py` are dead, so `unmeasured_cells` is always empty**
@@ -728,12 +882,16 @@ Grouped by severity, in ID order.
   the console prints "3g. UNMEASURED CELLS: 0" beside "3a. … 1 unmeasured", and
   `smoke_summary.json` is empty here while report §10 does list them.
 - Where: `smoke_test.py:567-603`; `engine.py:72-93`
+- After the reorg: `src/ap1_run/run.py:239-261` (`main`); `src/ap1_run/runner/executions.py:45-55`
+  (`record_transport_failure`); `src/ap1_run/execution/engine.py:72-93` (`execute_item`)
 - Breaks: AP-1 v1.3 §13.2
 
 **T3-66 · low · D1 n disagrees between report §3 and §8, and UNMEASURABLE drops out of D1**
 - What's wrong: `run_e_mini` gives report §3 n=1000 and report §8 818+181=999; the UNMEASURABLE
   Q07/base/r44 appears in neither bucket.
 - Where: `smoke_test.py:932`; `report.py:411-430`; `accuracy.py:117-123`
+- After the reorg: `src/ap1_run/run.py:299` (`main`); `src/ap1_run/reporting/report.py:411-430`
+  (`_section_scoring_proportions`); `src/ap1_run/scoring/accuracy.py:117-123` (`summarise_accuracy`)
 - Breaks: SPEC R2.1
 
 **T3-67 · low · Tool-loop exhaustion is silent, and environment overrides bypass config validation**
@@ -743,18 +901,24 @@ Grouped by severity, in ID order.
   `AP1_SMOKE_REASONING_EFFORT=omit` writes the omission reason `not-supported`, which `load_config`
   would refuse, into the sealed config.
 - Where: `engine.py:172-236` (`max_turns=10`); `smoke_test.py:404-411`
+- After the reorg: `src/ap1_run/execution/engine.py:172-236` (`_drive_tool_loop`);
+  `src/ap1_run/runner/settings.py:99-106` (`apply_sampling_overrides`)
 - Breaks: SPEC R0.1
 
 **T3-68 · low · `seal()` accepts an empty or `"placeholder"` AP-1 text hash, or no text path at all**
 - What's wrong: refusal depends on the caller; the live path passes the real file and hash, but
   `"placeholder"` would pass, and `verify.py` asserts that it does.
 - Where: `seal.py:50-64`; `config.py:23-29`
+- After the reorg: `src/ap1_run/execution/seal.py:50-64` (`seal`);
+  `src/ap1_run/foundation/config.py:23-29` (`REQUIRED_FIELDS`)
 - Breaks: SPEC R1.1 verification item 3
 
 **T3-69 · low · The seal verifier rebuilds composite types lossily**
 - What's wrong: only `'False'`, `'True'` and `'[]'` are mapped back, so a genuine seal with non-empty
   `verification_keys` would fail the composite check falsely. Today keys are always `[]`.
 - Where: `verify_run_seal.py:196-208`; `report.py:134`
+- After the reorg: `tools/verify_run_seal.py:199-211` (`verify_run`);
+  `src/ap1_run/reporting/report.py:134` (`_section_preregistration`)
 
 **T3-70 · low · The scope of `compute_runner_source_hash` is fragile**
 - What's wrong: it hashes every `.py` file under the clone's root. So an in-tree venv, untracked
@@ -763,11 +927,14 @@ Grouped by severity, in ID order.
   or changing a test changes the sealed hash with no change to the code that runs. A top-level
   `output*.py` is excluded; `VERSION` is not hashed.
 - Where: `version.py:84-109`
+- After the reorg: `src/ap1_run/execution/version.py:84-109` (`compute_runner_source_hash`)
 
 **T3-71 · low · Canonical JSON loses type information and does not check dict keys for floats**
 - What's wrong: `Decimal('0.01')` and `'0.01'` hash identically, as do a tuple and a list;
   `{0.1: 'x'}` is accepted; no Unicode normalisation is applied. Not exploitable on current paths.
 - Where: `numeric.py:255-292`
+- After the reorg: `src/ap1_run/foundation/numeric.py:255-292` (`_check_no_float`, `canonical_json`,
+  `canonical_hash`)
 - Breaks: SPEC R0.4.1 (R0.4.3 is met to the letter)
 
 **T3-72 · low · Sealed inputs are read separately from the inputs actually executed**
@@ -775,6 +942,8 @@ Grouped by severity, in ID order.
   window between load and hash, and `gt_module.__file__` is never compared with the sealed path.
   This, not the absence of `verify_seal`, is the real exposure (see T3-17).
 - Where: `smoke_test.py:420-428` vs `:476-483` vs `:511-512`
+- After the reorg: `src/ap1_run/run.py:119-127`, `:172-180` (`main`);
+  `src/ap1_run/runner/settings.py:120-121` (`check_condition_guard`)
 - Breaks: SPEC R1.1 (seal what is executed)
 
 **T3-73 · low · SPEC lags the code**
@@ -796,12 +965,16 @@ Grouped by severity, in ID order.
   `verify_r41.py:5` "33 checks" (runs 30); `verify_phase_d.py:4-23`. `verify_spec` parses the SPEC
   §12.9 counts but never compares them.
 - Where: as listed
+- After the reorg: `tests/legacy/verify_r41.py:5` (module docstring);
+  `tests/legacy/verify_phase_d.py:4-23` (module docstring)
 
 **T3-75 · low · Vocabulary drift (UNMEASURED vs UNMEASURABLE) and unwired R2.0 paths**
 - What's wrong: two terms name different things, and T3-10 shows the confusion has consequences. The
   live path passes no `structured_answer_field`, so R2.0 step 1 is never exercised, and a lookup
   collision is detected at run time rather than at seal.
 - Where: SPEC R4.1; `smoke_test.py:617-625`, `:561`
+- After the reorg: `src/ap1_run/runner/executions.py:74-82` (`score_execution`);
+  `src/ap1_run/run.py:233` (`main`)
 - Breaks: SPEC R2.0, R3.1, R4.1; AP-1 v1.3 §6.8
 
 **T3-76 · low · KNOWN_ISSUES.md is stale**
@@ -816,11 +989,15 @@ Grouped by severity, in ID order.
 - What's wrong: `1/0` raises out of `execute_calculator` (the engine catches it); π and e are built
   from float; `'1,23'` → 123 and `'12,5'` → 125; `round(2.5)` → 2.
 - Where: `example/calculator_tool.py`; `operation_correctness.py:41-44`, `:48`; `numeric.py:108-110`
+- After the reorg: `example/calculator_tool.py`;
+  `src/ap1_run/scoring/operation_correctness.py:41-44` (`_ALLOWED_NAMES`), `:48` (`_ALLOWED_FUNCS`);
+  `src/ap1_run/foundation/numeric.py:108-110` (`parse_decimal`)
 - Breaks: SPEC R0.4
 
 **T3-78 · low · The shipped tolerance cannot detect the Q07 round-each defect**
 - What's wrong: 777.42 vs 777.41 is within the inclusive tolerance of 0.01.
 - Where: `example/config.json:17`; `accuracy.py:87`
+- After the reorg: `src/ap1_run/scoring/accuracy.py:87` (`score_accuracy`)
 - Breaks: SPEC R0.4.1 (round once)
 
 **T3-79 · low · `config_mini.json` is never loaded by the runner and does not load anyway**
@@ -830,11 +1007,17 @@ Grouped by severity, in ID order.
   with `config_mini.json` is misled; report §2 is the only record of what was sent.
   `config.demo.json` is read by nothing.
 - Where: `smoke_test.py:368`, `:373-416`; `example/config_mini.json:17`; `config.py:179-182`
+- After the reorg: `src/ap1_run/run.py:111` (`main`; the path is now the `--config` option, default
+  at `settings.py:36-38`); `src/ap1_run/runner/settings.py:68-111` (`apply_sampling_overrides`);
+  `src/ap1_run/foundation/config.py:179-182` (`_validate_sampling`)
 
 **T3-80 · low · Cosmetic and stale items on the live path**
 - What's wrong: a literal `\n` is printed in console section 3h2 (`print(f'\\n3h2. ...')`); the
   module docstring still names `ap1-runner/output/`; the default model is `gpt-4o-mini`.
 - Where: `smoke_test.py:884`, `:7`, `:357`
+- After the reorg: `src/ap1_run/runner/console.py:93` (`print_run_report`); `src/ap1_run/run.py:7`
+  (module docstring; the move rewrote it, and it now names `output/`);
+  `src/ap1_run/runner/settings.py:18` (`DEFAULT_MODEL`, read at `:61` in `endpoint_and_model`)
 
 ### Info
 
@@ -845,6 +1028,8 @@ Grouped by severity, in ID order.
   `run_b_sol` instruction_removed, 92/500). The limitation is declared. Not a defect under AP-1 v1.2,
   which asks for no bound.
 - Where: `report.py:336-341`, `:612-619`
+- After the reorg: `src/ap1_run/reporting/report.py:336-341` (`_section_clopper_pearson`),
+  `:612-619` (`_section_declared_limitations`)
 - Breaks: AP-1 v1.3 D7.5 (a bound is required for any figure)
 
 **T3-82 · info · The AP-1 v1.3 §6.8 rubric has no outcome for a computed, operand-grounded answer from the wrong formula, and the sheet abridges two definitions**
@@ -852,11 +1037,14 @@ Grouped by severity, in ID order.
   agreement; MODEL-DECLINED and WRONG-SCOPE definitions are abridged and the composition rule is
   omitted. This reproduces a gap in the standard.
 - Where: `adjudication.py:30-37`, `:48-52`
+- After the reorg: `src/ap1_run/reporting/adjudication.py:30-37` (`RUBRIC_TABLE`), `:48-52`
+  (`ADJUDICATION_REASONS`)
 - Breaks: AP-1 v1.3 §6.8
 
 **T3-83 · info · AMBIGUOUS still fires on the same value written twice**
 - What's wrong: figure identification does not de-duplicate equal values; release coverage does.
 - Where: `figure_id.py` (step 4 of identification)
+- After the reorg: `src/ap1_run/scoring/figure_id.py`
 
 **T3-84 · info · D7.2(b) scores OPERATION-CORRECT for a calculation that stopped one step short**
 - What's wrong: correctness is matched per invocation against intermediates, with no item-level
@@ -864,6 +1052,7 @@ Grouped by severity, in ID order.
   question asks for principal) scores OPERATION-CORRECT. That outcome says nothing about the answer,
   which D1 scores.
 - Where: `operation_correctness.py:158-179`
+- After the reorg: `src/ap1_run/scoring/operation_correctness.py:158-179` (`classify_operation`)
 
 **T3-85 · info · Three test scripts write into the repository tree**
 - What's wrong: `verify.py` writes temp files in the repo directory, `verify_hashes.py` rewrites
@@ -872,6 +1061,10 @@ Grouped by severity, in ID order.
   writes into it.
 - Where: `verify.py:387-393`, `:544`; `verify_hashes.py:44-48`; `test_findings_mutation.py:78-88`,
   `:136-153`
+- After the reorg: `tests/legacy/verify.py:386-392` (`test_r11_ap1_hash`), `:543`
+  (`_test_config_error`); `tests/legacy/verify_hashes.py:53-57` (`main`);
+  `tests/legacy/test_findings_mutation.py:78-88` (`test_doc_mutation`), `:136-153`
+  (`test_artifact_mutation`)
 
 **T3-86 · info (low under AP-1 v1.2) · SPEC binds only to the unadopted v1.3 draft, and v1.2/v1.3 conflicts are not stated**
 - What's wrong: minimums conflict (v1.2 D5 5 / D6 1; v1.3 20 / 10), as do D2 count vs mechanism
@@ -900,6 +1093,8 @@ Grouped by severity, in ID order.
   reasons they built (S3-G3-3), so the tests can only grep the exception text, and SPEC R3.1's
   "with the field named" is checked only where a test does.
 - Where: seal-guard tests; `seal.py:219-225`, `:274-282`
+- After the reorg: `src/ap1_run/execution/seal.py:219-225` (`perturbation_check`), `:274-282`
+  (`source_fields_check`)
 - Breaks: SPEC R3.1 (verification wording)
 
 **T3-90 · info · Functions the instrument describes are still not run live**
@@ -910,6 +1105,14 @@ Grouped by severity, in ID order.
   earlier (September 2026) coverage check also found. Transcription is now wired (T3-28), and the
   perturbation guard is wired but vacuous (T3-46).
 - Where: as listed
+- After the reorg: `src/ap1_run/scoring/invocation.py:140` (`compute_dpr`);
+  `src/ap1_run/scoring/reproducibility.py:103` (`check_parameter_echo`);
+  `src/ap1_run/execution/seal.py:79` (`verify_seal`); `src/ap1_run/execution/evidence.py:168`
+  (`ranks_above`), `:173` (`classes_comparable`); `src/ap1_run/scoring/provenance/audit.py:10`
+  (`build_audit_listing`); `src/ap1_run/foundation/config.py:224` (`validate_minimum_n`);
+  `src/ap1_run/execution/seal.py:124` (`perturbation_check`), `:228` (`source_fields_check`);
+  `src/ap1_run/execution/seal_constants.py:16` (`declared_constants_check`); `perturbation.py` was
+  removed in the move
 
 **T3-91 · info · Not an instrument finding: a note on a document outside this repository**
 - What's wrong: nothing in this repository. The ID was used in the review for a note on a document
@@ -923,6 +1126,9 @@ Grouped by severity, in ID order.
   `4` resolving. How this relates to the figures E3 withdrew was not checked.
 - Where: `example/ground_truth_example.py:289-293`; `verify_e7_coverage.py:299`
   (`test_e3_q07_constant_4_resolves`), `:340-342`
+- After the reorg: `example/ground_truth_example.py:289-293` (`derive_q07`);
+  `tests/legacy/verify_e7_coverage.py:298` (`test_e3_q07_constant_4_resolves`), `:339-341`
+  (`test_e3b_ast_check_allows_unused_constants`)
 
 ---
 
@@ -942,6 +1148,9 @@ does not arise under v1.3. V12-9 to V12-12 were candidates that passed and are n
   D4 item at all. Excluding them from the D7.1 denominator is correct; not running them is the
   defect. D4 is declared NOT MEASURED, so no false claim is made.
 - Where: `smoke_test.py:550-557`; `engine.py:47-61`; `adjudication.py:97-101`
+- After the reorg: `src/ap1_run/run.py:226-230` (`main`); `src/ap1_run/runner/executions.py:37-42`
+  (`record_underivable`); `src/ap1_run/execution/engine.py:47-61` (`execute_item`);
+  `src/ap1_run/reporting/adjudication.py:97-101` (`generate_sheets`)
 - Breaks: AP-1 v1.2 §11.2 (non-computable items are the D4 instrument), D4 Method, AP-1 v1.2 §11.4;
   README
   ("generates adjudication sheets for all four" of D3–D6, `README.md:39-41`)
@@ -953,6 +1162,8 @@ does not arise under v1.3. V12-9 to V12-12 were candidates that passed and are n
   presents D3–D6 as human adjudication, but the runner cannot produce the transcripts humans would
   score. The report declares these dimensions NOT MEASURED. Same requirement in v1.3.
 - Where: `engine.py:280-290`, `:172-235`
+- After the reorg: `src/ap1_run/execution/engine.py:280-290` (`_build_messages`), `:172-235`
+  (`_drive_tool_loop`)
 - Breaks: AP-1 v1.2 D3 Method, D4 Method and Report, AP-1 v1.2 §11.4, D5, D7.4, AP-1 v1.2 §4 ("A
   system may not claim AP-1 compliance having omitted any dimension"); README `README.md:39-41`
 
@@ -967,6 +1178,8 @@ does not arise under v1.3. V12-9 to V12-12 were candidates that passed and are n
   §5 item makes a claim of AP-1 evaluation invalid. Same clause in v1.3; KNOWN_ISSUES #7 discloses
   the gap.
 - Where: `engine.py:172-235` (`current` overwritten each round), `engine.py:140-157`
+- After the reorg: `src/ap1_run/execution/engine.py:172-235` (`_drive_tool_loop`), `:140-157`
+  (`execute_item`)
 - Breaks: AP-1 v1.2 §5.6 ("All raw responses, preserved and published") with the AP-1 §5 preamble;
   same in AP-1 v1.3 §5.6; SPEC R0.2 ("Every request and response is written to the transcript"), R0.3
 
@@ -976,6 +1189,10 @@ does not arise under v1.3. V12-9 to V12-12 were candidates that passed and are n
   the seal and report say "v1.2" while `ap1_text_hash` is the v1.3 draft's and every rule applied is
   v1.3's. No field binds `ap1_version` to the sealed text.
 - Where: `smoke_test.py:474-481`; `seal.py:43`, `:50-63`; `report.py:73`; `adjudication.py:88`
+- After the reorg: `src/ap1_run/run.py:172-180` (`main`; the path is now the `--ap1-text` option,
+  default `AP1_TEXT` at `settings.py:21`); `src/ap1_run/execution/seal.py:43`, `:50-63` (`seal`);
+  `src/ap1_run/reporting/report.py:73` (`generate_report`);
+  `src/ap1_run/reporting/adjudication.py:88` (`generate_sheets`)
 - Breaks: AP-1 v1.2 §0.4 ("A claim of compliance must cite the specific version evaluated
   against")
 
@@ -984,6 +1201,8 @@ does not arise under v1.3. V12-9 to V12-12 were candidates that passed and are n
   never a percentage headline. SPEC bans only a bare "100%", so a combined form would satisfy both
   versions. v1.3 §6.2 keeps the same template, so this is not v1.2-only.
 - Where: `smoke_test.py:226-233`; `report.py:300-343`
+- After the reorg: `src/ap1_run/runner/summary.py:126-133` (`build_summary`);
+  `src/ap1_run/reporting/report.py:300-343` (`_section_clopper_pearson`)
 - Breaks: AP-1 v1.2 §6.2 (and v1.3 §6.2)
 
 **V12-6 · low (arguable) · v1.2 only · D7.3 counts rounding under the declared quantisation as TRANSCRIBED-EXACT**
@@ -993,6 +1212,9 @@ does not arise under v1.3. V12-9 to V12-12 were candidates that passed and are n
   other rounded cases are float noise. Whether rounding to presentation precision fails v1.2's
   "match" is a reading.
 - Where: `transcription.py:80-93`; `smoke_test.py:660-674`; `report.py:214-259`
+- After the reorg: `src/ap1_run/scoring/transcription.py:80-93` (`check_transcription`);
+  `src/ap1_run/runner/executions.py:117-131` (`score_execution`);
+  `src/ap1_run/reporting/report.py:214-259` (`_section_d73`)
 - Breaks: AP-1 v1.2 D7.3 ("did the figure the system reported match the figure the computation
   returned?")
 
@@ -1001,6 +1223,8 @@ does not arise under v1.3. V12-9 to V12-12 were candidates that passed and are n
   refuse v1.2 evaluations with 5–19 D5 items or 1–9 D6 items. Nothing inadmissible passes; today it
   is never called live (T3-12).
 - Where: `config.py:40-45`, `:224-257`
+- After the reorg: `src/ap1_run/foundation/config.py:40-45` (`MINIMUM_N`), `:224-257`
+  (`validate_minimum_n`)
 - Breaks: AP-1 v1.2 D5 ("minimum 5 adversarial inputs"), AP-1 v1.2 §11.6 (D6 "At least one item")
 
 **V12-8 · low · No AP-1 §5.2 freeze confirmation, and the served model snapshot is not recorded in the seal or report**
@@ -1010,6 +1234,8 @@ does not arise under v1.3. V12-9 to V12-12 were candidates that passed and are n
   frozen. The served model is recorded only inside each final raw response in the transcript; the
   instrument neither extracts it nor confirms or flags the freeze. Same clause in v1.3.
 - Where: `report.py:55-120`; `seal.py:37-48`
+- After the reorg: `src/ap1_run/reporting/report.py:55-120` (`generate_report`);
+  `src/ap1_run/execution/seal.py:37-48` (`seal`)
 - Breaks: AP-1 v1.2 §5.2 ("Confirmation that the system under test was frozen for the duration")
 
 V12-9 (D6 declared resolution policy), V12-10 (AP-1 v1.2 §5.9 class claims), V12-11 (§5.10 VOID
@@ -1035,19 +1261,23 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - What's wrong: the "digits + separators only" step checks only for an empty string. Reachable
   through `figure_id`'s structured-answer path, where a NaN figure then breaks Decimal comparisons.
 - Where: `numeric.py:101-118`
+- After the reorg: `src/ap1_run/foundation/numeric.py:101-118` (`parse_decimal`)
 
 **S3-G1-2 · low · Doubled signs are accepted**
 - What's wrong: `--5` → 5, `+-5` → -5, `(-5)` → 5; they should be refused.
 - Where: `numeric.py:63-78`
+- After the reorg: `src/ap1_run/foundation/numeric.py:63-78` (`parse_decimal`)
 
 **S3-G1-3 · low · Grouping positions are not checked when parsing**
 - What's wrong: `1,23` → 123 and `1,2,3` → 123 (extraction's regex does check positions).
 - Where: `numeric.py:108-110`
+- After the reorg: `src/ap1_run/foundation/numeric.py:108-110` (`parse_decimal`)
 
 **S3-G1-4 · low · Percent before a trailing currency fails**
 - What's wrong: the percent step runs before the trailing-currency step, so `5%$` fails to parse and
   `10%USD` is dropped from extraction without notice.
 - Where: `numeric.py:88-99`
+- After the reorg: `src/ap1_run/foundation/numeric.py:88-99` (`parse_decimal`)
 
 **S3-G1-5 · medium · The minus of a subtraction is extracted as a negative number**
 - What's wrong: `1437.00 - 1006.25 = 430.75` extracts **-1006.25**, and `5-3` gives `5` and `-3`. It
@@ -1057,64 +1287,78 @@ also hold there; the G7 Inspect and G8 tool files do not.
   -430.75; it should route ADJUDICATE-AMBIGUOUS. This reads a `-` right after a number as an
   operator; T3-55 had treated keeping `-3` as expected, and SPEC does not settle it.
 - Where: `numeric.py:179` (sign-led pattern)
+- After the reorg: `src/ap1_run/foundation/numeric.py:179` (`_build_extraction_re`)
 - Breaks: SPEC R2.0 (the expected value twice routes to adjudication), on the operator reading
 
 **S3-G1-6 · low · Digits inside identifiers produce numeric tokens**
 - What's wrong: `Q04` → 4, `v2.0.1` → 2.0 and 1, `1e5` → 1 and 5; there is no word boundary.
 - Where: `numeric.py:143-184`
+- After the reorg: `src/ap1_run/foundation/numeric.py:143-184` (`_build_extraction_re`)
 
 **S3-G1-7 · low · Arabic-Indic and full-width digits parse and extract**
 - What's wrong: undeclared behaviour that R0.4.2 should decide.
 - Where: `numeric.py`
+- After the reorg: `src/ap1_run/foundation/numeric.py`
 - Breaks: SPEC R0.4.2 (undeclared)
 
 **S3-G1-8 · low · `(12.5%)` extracts as +12.5 %**
 - What's wrong: the parenthesised-negative pattern has no `%`.
 - Where: `numeric.py:172`
+- After the reorg: `src/ap1_run/foundation/numeric.py:172` (`_build_extraction_re`)
 
 **S3-G1-9 · low (very low) · `quantise(x, -2)` rounds to units, not hundreds**
 - What's wrong: `Decimal(10)**2` has exponent 0.
 - Where: `numeric.py:251`
+- After the reorg: `src/ap1_run/foundation/numeric.py:251` (`quantise`)
 
 **S3-G1-10 · low · `quantisation.places` is badly validated**
 - What's wrong: `"abc"` raises `ValueError`, not `ConfigError`; `true` loads as 1; `"-2"` loads
   (see S3-G1-9). Booleans get past the bare-numeric check.
 - Where: `config.py:101-104`
+- After the reorg: `src/ap1_run/foundation/config.py:101-104` (`load_config`)
 
 **S3-G1-11 · low (medium-low) · `answer_tolerance` `"NaN"` and `"-1"` load**
 - What's wrong: a tolerance must be finite and at least 0.
 - Where: `config.py:212-221`
+- After the reorg: `src/ap1_run/foundation/config.py:212-221` (`_parse_decimal_field`)
 
 **S3-G1-12 · low · `repeat_count` `"0"` and `"-3"` load**
 - What's wrong: it should be at least 1.
 - Where: `config.py:107-114`
+- After the reorg: `src/ap1_run/foundation/config.py:107-114` (`load_config`)
 
 **S3-G1-13 · low · Any `{value: omitted, reason: …}` object skips the bare-numeric check**
 - What's wrong: the skip applies anywhere and with any reason (`detail: 5` is accepted), not only to
   validated sampling omissions.
 - Where: `config.py:202-204`
+- After the reorg: `src/ap1_run/foundation/config.py:202-204` (`_refuse_bare_numerics`)
 
 **S3-G1-14 · low · A non-object `sampling` loads**
 - What's wrong: inconsistent with `quantisation`, which is refused.
 - Where: `config.py:169-170`
+- After the reorg: `src/ap1_run/foundation/config.py:169-170` (`_validate_sampling`)
 
 **S3-G1-15 · low (very low) · The unknown-field message lists only the required fields**
 - What's wrong: the optional fields are accepted but not listed.
 - Where: `config.py:148-153`
+- After the reorg: `src/ap1_run/foundation/config.py:148-153` (`_refuse_unknown_fields`)
 
 **S3-G1-16 · low · An extra `timestamp=` overrides the transcript store's clock**
 - What's wrong: the store should own the timestamp.
 - Where: `transcript.py:40`
+- After the reorg: `src/ap1_run/foundation/transcript.py:40` (`append`)
 
 **S3-G1-17 · low · A torn last line makes `read_all` refuse the whole transcript**
 - What's wrong: contradicts the docstring ("an interrupted run leaves a valid partial transcript").
 - Where: `transcript.py:62-72`
+- After the reorg: `src/ap1_run/foundation/transcript.py:62-72` (`read_all`)
 - Breaks: the module's own docstring
 
 **S3-G1-18 · low · The attempt log is lost when all transport attempts fail**
 - What's wrong: the docstring says "every attempt logged", but the record is neither returned nor
   attached to the exception.
 - Where: `adapter.py:149-155`
+- After the reorg: `src/ap1_run/foundation/adapter.py:149-155` (`send`)
 
 **S3-G1-19 · low · Sampling `"NaN"` loads and becomes `float('nan')` in the request body**
 - What's wrong: non-finite values should be refused at load. Instead the adapter builds a body
@@ -1122,15 +1366,18 @@ also hold there; the G7 Inspect and G8 tool files do not.
   request fails as a transport error and nothing is sent. A client that serialises NaN would send
   invalid JSON.
 - Where: `adapter.py:107-114`
+- After the reorg: `src/ap1_run/foundation/adapter.py:107-114` (`send`)
 
 **S3-G1-20 · low · The transport exception text goes into the AdapterError message unmasked**
 - What's wrong: HTTP bodies are masked but this text is not, so a URL carrying a key would leak.
 - Where: `adapter.py:153-155`
+- After the reorg: `src/ap1_run/foundation/adapter.py:153-155` (`send`)
 
 **S3-G1-21 · low · A sampling key such as `model` overwrites the request body field**
 - What's wrong: the request record still shows the configured model, so it no longer matches what
   was sent.
 - Where: `adapter.py:94-115`
+- After the reorg: `src/ap1_run/foundation/adapter.py:94-115` (`send`)
 
 ### G2: execution core
 
@@ -1141,18 +1388,22 @@ also hold there; the G7 Inspect and G8 tool files do not.
   as unrecognised (EV-0), but in the engine they are uncaught, the run stops and no record is
   written. The trigger is an unusual but valid JSON body.
 - Where: `engine.py:300`; `evidence.py:292-295`
+- After the reorg: `src/ap1_run/execution/engine.py:300` (`_extract_tool_calls`);
+  `src/ap1_run/execution/evidence.py:292-295` (`extract_attestation`)
 
 **S3-G2-2 · medium · A tool call without an `id` aborts the run**
 - What's wrong: the engine gives the record a default id `call_{turn}` but looks up the return value
   by `tc.get('id', '')`, so the lookup misses and an uncaught `EngineError` stops the run after
   requests have been spent, with no report. Not all OpenAI-compatible servers send an id.
 - Where: `engine.py:194`, `:208-216`
+- After the reorg: `src/ap1_run/execution/engine.py:194`, `:208-216` (`_drive_tool_loop`)
 
 **S3-G2-3 · low · A repeated tool-call id attaches the return value to the wrong record**
 - What's wrong: the return is attached to the first record with that id, so a reused id overwrites
   the earlier call's `return_value` and leaves the later call without one; step 4 of D7.2(a) can then
   use the wrong return.
 - Where: `engine.py:212-216`
+- After the reorg: `src/ap1_run/execution/engine.py:212-216` (`_drive_tool_loop`)
 - Breaks: AP-1 v1.3 D7.2(a)(iv)
 
 **S3-G2-4 · low (medium-low) · Valid-JSON but non-object arguments raise `AttributeError`**
@@ -1160,6 +1411,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
   `'["1+1"]'`, `'"1+1"'` or `'15.2'` raise. The arguments are model-controlled, and provenance's copy
   of the function has the same defect and is reached first on the live path. Same class as T3-39.
 - Where: `engine.py:263-277`; `provenance_classify.py:159-172`
+- After the reorg: `src/ap1_run/execution/engine.py:263-277` (`_extract_calc_expression`);
+  `src/ap1_run/scoring/provenance/classify.py:159-172` (`_extract_expression`)
 
 ### G3: seal
 
@@ -1169,22 +1422,28 @@ also hold there; the G7 Inspect and G8 tool files do not.
   the defect class of FINDINGS_ERRATA.md E3, which the check exists for. Rated like T3-8, the
   same kind of latent R3.1 guard bypass.
 - Where: `seal_constants.py:63-80`
+- After the reorg: `src/ap1_run/execution/seal_constants.py:63-80` (`declared_constants_check`)
 
 **S3-G3-2 · low · `resolve_runner_version` matches VERSION against HEAD with a bare `startswith`**
 - What's wrong: a one-character commit (`v1 a`) accepts any HEAD beginning with `a`.
 - Where: `version.py:59`
+- After the reorg: `src/ap1_run/execution/version.py:59` (`resolve_runner_version`)
 
 **S3-G3-3 · low · The R3.1 guards build failure reasons and then drop them**
 - What's wrong: the guards collect failure dicts with reasons, then raise a `SealError` without
   them; they only ever return an empty list. A `compute` that raises inside `source_fields_check` is
   reported as "module reads undeclared fields … accessed []".
 - Where: `seal.py:124-225`, `:228-282`
+- After the reorg: `src/ap1_run/execution/seal.py:124-225` (`perturbation_check`), `:228-282`
+  (`source_fields_check`)
 
 **S3-G3-4 · info · `check_single_variable_perturbation` computes per-diff summaries and discards them**
 - What's wrong: the `base`/`removed` summaries are neither in the message nor returned: a violation
   raises `PerturbationRefusal`, whose message uses only each diff's `field` and `issue`, and the
   list is returned only when it holds nothing but the identical-prompt entry, which has no summaries.
 - Where: `perturbation_guard.py:44-68` (summaries built), `:86-103`
+- After the reorg: `src/ap1_run/execution/perturbation_guard.py:44-68`, `:86-103`
+  (`check_single_variable_perturbation`)
 - Addressed by: not a defect; reason: info; note: no test, because it changes no output, so no
   test can observe it; it becomes testable, and gets a `finding` mark, if the refusal message is
   made to include the values.
@@ -1195,16 +1454,20 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - What's wrong: `compute_dpr(10, 5, 10, 0)` returns `(Decimal(1), '100.0%')`, because the removed
   rate is taken as 0; it should be UNDEFINED, like the zero-base case. No live caller (T3-46).
 - Where: `invocation.py:140-170` (`:166-167`)
+- After the reorg: `src/ap1_run/scoring/invocation.py:140-170`, `:166-167` (`compute_dpr`)
 
 **S3-G4-2 · medium (the finder rated it low) · `identify_figure` ignores the token's percent flag**
 - What's wrong: "The rate is 15.20%." against an expected $15.20 is AUTO-MATCH, then CORRECT; a
   percentage is not the released money figure. A false AUTO-MATCH from model output, like S3-G1-5.
 - Where: `figure_id.py:142-176`
+- After the reorg: `src/ap1_run/scoring/figure_id.py:142-176` (`identify_figure`)
 
 **S3-G4-3 · low (latent) · `evaluate_expression` truncates `//` and `%` toward zero; the calculator floors**
 - What's wrong: `'-7 // 2'` is -3 and `'-7 % 3'` is -1 under Decimal, while the reference calculator
   gives -4 and 2, so D7.2(b) judges a different value from the one the model was returned.
 - Where: `operation_correctness.py:30-31` (applied at `:66-72`)
+- After the reorg: `src/ap1_run/scoring/operation_correctness.py:30-31` (`_ALLOWED_BINOPS`),
+  `:66-72` (`_eval_decimal`)
 
 **S3-G4-4 · low · `evaluate_expression` raises instead of returning None on overflow or deep nesting**
 - What's wrong: `'10 ** 10 ** 10'` raises `decimal.Overflow` and `'-' * 5000 + '1'` raises
@@ -1212,6 +1475,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
   overflow ends OPERATION-UNOBSERVABLE but under a `reason` key with no `detail`/`evaluated_result`;
   deep nesting never gets this far, because `extract_operands` raises first, uncaught (T3-39).
 - Where: `operation_correctness.py:98-119` (`:117-118`)
+- After the reorg: `src/ap1_run/scoring/operation_correctness.py:98-119`, `:117-118`
+  (`evaluate_expression`)
 
 **S3-G4-5 · medium · `reclassify_session` raises on `True + 1` or deep nesting, uncaught in the engine**
 - What's wrong: `Decimal('True')` raises `InvalidOperation` (a bool is an int, and only
@@ -1222,6 +1487,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
   `test_reclassify_session_deep_nesting_raises`, uses 100,000). Today the provenance code crashes
   first on the same input (T3-39).
 - Where: `operation_correctness.py:245-252` (`:250`); `engine.py:138`
+- After the reorg: `src/ap1_run/scoring/operation_correctness.py:245-252`, `:250`
+  (`reclassify_session`); `src/ap1_run/execution/engine.py:138` (`execute_item`)
 
 ### G5: scoring B
 
@@ -1230,12 +1497,14 @@ also hold there; the G7 Inspect and G8 tool files do not.
   (with token count 0), while the no-candidates branch lists none, so an unobservable item carries
   "ungoverned" figures in the findings. It should be an empty list.
 - Where: `release_coverage.py:103-111`
+- After the reorg: `src/ap1_run/scoring/release_coverage.py:103-111` (`check_release_coverage`)
 
 **S3-G5-2 · medium · Any tool's return counts as governing a figure, not only the required operation's**
 - What's wrong: `_parse_tool_returns` takes the return of any tool, whatever its name, so a
   non-calculator tool that returns the figure governs its release. Latent while only `calculator` is
   wired. Same family as T3-26.
 - Where: `release_coverage.py:49-69`
+- After the reorg: `src/ap1_run/scoring/release_coverage.py:49-69` (`_parse_tool_returns`)
 - Breaks: AP-1 v1.3 D7.3 (concerns the required operation)
 
 **S3-G5-3 · low (latent) · `reproducibility` accepts an unknown surface and an empty pool**
@@ -1243,11 +1512,14 @@ also hold there; the G7 Inspect and G8 tool files do not.
   0 distinct values; an empty pool with `minimum_runs=0` is OBSERVED-ONLY from 0 runs. It should
   refuse an unknown surface and treat no observations as UNMEASURED.
 - Where: `reproducibility.py:59`, `:70-71`, `:168-196`
+- After the reorg: `src/ap1_run/scoring/reproducibility.py:59`, `:70-71` (`classify_mechanism`),
+  `:168-196` (`_extract_surface_values`)
 
 **S3-G5-4 · info (low/info) · `check_parameter_echo` compares `str()` forms**
 - What's wrong: temperature `0` requested and `0.0` echoed is reported "silently ignored". No live
   caller (T3-90).
 - Where: `reproducibility.py:133`
+- After the reorg: `src/ap1_run/scoring/reproducibility.py:133` (`check_parameter_echo`)
 
 ### G6: reporting
 
@@ -1255,11 +1527,13 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - What's wrong: the colon test uses `str(error)` but the split calls `error.split(':')`, so
   `AttributeError` is raised and no report is written. Engine error states are strings today.
 - Where: `report.py:519`
+- After the reorg: `src/ap1_run/reporting/report.py:519` (`_section_unmeasured_cells`)
 
 **S3-G6-2 · low · Report §12 says every unclaimed dimension "require[s] human adjudication", including D1, D2 and D7**
 - What's wrong: those three are measured automatically by the runner (their own reasons say
   "item-level scoring", "repeated runs", "tool-call observation"). Close to T3-33.
 - Where: `report.py:596-597`
+- After the reorg: `src/ap1_run/reporting/report.py:596-597` (`_section_unmeasured_dimensions`)
 
 ### G7: cross-cutting and Inspect
 
@@ -1267,23 +1541,30 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - What's wrong: records with `invoked` missing or None stay in n, so three unobservable items print
   "0/3 failures; … bound 63.2%". No live caller.
 - Where: `invocation.py:33-95`
+- After the reorg: `src/ap1_run/scoring/invocation.py:33-95` (`measure_invocation`,
+  `_summarise_class`)
 
 **S3-G7-2 · low (latent) · The perturbation guard compares a fixed field list**
 - What's wrong: a change of `model`, or of any other request key, alongside the prompt passes. The
   live caller builds the removed condition from the base one (see T3-46).
 - Where: `perturbation_guard.py:20-100`
+- After the reorg: `src/ap1_run/execution/perturbation_guard.py:20-100`
+  (`check_single_variable_perturbation`)
 - Breaks: AP-1 v1.3 D7.8 ("all other request content" held constant)
 
 **S3-G7-3 · info (low/info) · The Inspect scorer is declared with `metrics=[]`**
 - What's wrong: the custom `clopper_pearson_zero_bound` and `invocation_rate` metrics are never
   computed in an eval, which makes T3-43's metric defects latent.
 - Where: `ap1_inspect/scorer.py:35`
+- After the reorg: `ap1_inspect/scorer.py:35` (`ap1_scorer`)
 
 **S3-G7-4 · medium · The two Inspect tasks build identical samples**
 - What's wrong: `ap1_base` and `ap1_instruction_removed` build the same samples, use the same solver
   and send no system prompt; only the condition label differs, so the Inspect D7.1b contrast
   measures nothing.
 - Where: `ap1_inspect/task.py:73-101`, `:129-162`
+- After the reorg: `ap1_inspect/task.py:72-100` (`_build_dataset`), `:128-161` (`ap1_base`,
+  `ap1_instruction_removed`)
 
 **S3-G7-5 · medium · The Inspect solver calls the model once and never runs a tool**
 - What's wrong: it calls `get_model().generate` once, not a tool loop (the docstring says
@@ -1291,6 +1572,7 @@ also hold there; the G7 Inspect and G8 tool files do not.
   result goes back to the model, and the final text is that first response's content, which may
   be empty or may accompany the tool call. The Inspect path cannot measure a tool-using model.
 - Where: `ap1_inspect/solver.py:32-36`, `:47-55`
+- After the reorg: `ap1_inspect/solver.py:32-36`, `:47-55` (`ap1_solver.solve`)
 
 ### G8: regression tools
 
@@ -1298,39 +1580,47 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - What's wrong: with no JSON block in report §2 it reads the first JSON block of any later section,
   so the "resolved config" can come from elsewhere in the report.
 - Where: `verify_run_seal.py:74-93`
+- After the reorg: `tools/verify_run_seal.py:77-96` (`parse_resolved_config`)
 
 **S3-G8-2 · low (low-medium) · A blank first transcript line, or an empty transcript, makes the transcript check disappear**
 - What's wrong: neither PASS nor FAIL is reported, so a damaged transcript goes unreported. Extends
   T3-18.
 - Where: `verify_run_seal.py:221-232`
+- After the reorg: `tools/verify_run_seal.py:224-235` (`verify_run`)
 
 **S3-G8-3 · low · An unparseable first transcript line, or a JSON number with a fraction in report §2, crashes the verifier**
 - What's wrong: a traceback (`canonical_hash` refuses floats) where a FAIL with a reason is due.
 - Where: `verify_run_seal.py:224`, `:130`
+- After the reorg: `tools/verify_run_seal.py:227`, `:133` (`verify_run`)
 
 **S3-G8-4 · low (low-medium) · The verifier always hashes the repository's `example/` and `reference/` files**
 - What's wrong: there is no option to name a run's inputs, so a run made with other inputs
   (`--fixture-dir`, `--ap1-text` in the `src/ap1_run/` layout) cannot be verified. It fails; it
   never falsely passes.
 - Where: `verify_run_seal.py:139-168`
+- After the reorg: `tools/verify_run_seal.py:142-171` (`verify_run`)
 
 **S3-G8-5 · low · A relative run path is joined to the repository root, not the working directory**
 - What's wrong: from another directory, an existing path is reported as "report.md not found".
 - Where: `verify_run_seal.py:256-258`
+- After the reorg: `tools/verify_run_seal.py:259-261` (`main`)
 
 **S3-G8-6 · low · `generate_findings.pct` rounds half-to-even**
 - What's wrong: it uses the context default; `ROUND_HALF_UP` is imported and never used, so 6.25 %
   prints as 6.2. No published figure is a tie, so FINDINGS.md is unaffected.
 - Where: `generate_findings.py:19`, `:35-40`
+- After the reorg: `tools/generate_findings.py:19` (imports), `:41-46` (`pct`)
 
 **S3-G8-7 · low · The base non-invocation Clopper–Pearson bound uses a fixed n = 500**
 - What's wrong: true for the published runs (10 × 50), wrong for any other run.
 - Where: `generate_findings.py:360-370`
+- After the reorg: `tools/generate_findings.py:366-376` (`compute_figures`)
 
 **S3-G8-8 · low · An empty run B raises `ZeroDivisionError`**
 - What's wrong: `b_ops_per_exec` divides unguarded, while run A's equivalent is guarded; it should
   be a clear error.
 - Where: `generate_findings.py:322`
+- After the reorg: `tools/generate_findings.py:328` (`compute_figures`)
 
 ---
 
@@ -1347,6 +1637,8 @@ are the test author's estimate.
   correct. Nothing is lost, but the request record misstates what was sent in round 0; it is also
   why the published runs keep the intermediate assistant messages at all.
 - Where: `adapter.py:121-127`; `engine.py:199-216` (appends to the same list)
+- After the reorg: `src/ap1_run/foundation/adapter.py:121-127` (`send`);
+  `src/ap1_run/execution/engine.py:199-216` (`_drive_tool_loop`)
 - Breaks: SPEC R0.2 ("The request as sent — not as constructed — is recorded")
 
 **S4-G9-1 · low · A missing released figure is written as the string `"None"`**
@@ -1355,6 +1647,7 @@ are the test author's estimate.
   `figure_identification` records and `smoke_summary.json` say `"None"`; when the key is absent they
   say `''` instead.
 - Where: `smoke_test.py:640`, `:795`
+- After the reorg: `src/ap1_run/runner/executions.py:97`, `:252` (`score_execution`)
 
 ---
 
@@ -1372,6 +1665,8 @@ location is given at the head of the pull request that adds the code, with the f
   baseline checks the summary line as well as the exit code.
 - Where: `tests/regression/run_regression.py:341-372` (`main`), at the head of the pull request
   that adds the regression baseline
+- After the reorg: `tests/regression/run_regression.py` (`main`; the file does not move, but its
+  lines shift as the harness grows)
 - Breaks: no AP-1 or SPEC clause; the harness's own purpose, that a change in behaviour is
   detected (`tests/regression/README.md`)
 
