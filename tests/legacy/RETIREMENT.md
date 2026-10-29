@@ -7,7 +7,7 @@ rebuild, rather than editing this file:
     PYTHONPATH=src python tests/legacy/retirement/build_retirement.py
 
 The build takes an inventory of every legacy check (see below), joins it to the group maps that
-step 3's groups G1–G7 wrote, adds the rows that G9 (the retirement audit) settled, and stops if a
+the test groups G1–G7 wrote, adds the rows that G9 (the retirement audit) settled, and stops if a
 named test does not exist in `tests/{unit,conformance,functional,inspect}/` or if a suite's count
 differs from `run_all_tests.py`'s `SUITES`.
 
@@ -42,11 +42,13 @@ What still blocks deleting each suite is listed at the end ("Blockers").
 - **note**: the group's note, then in parentheses the group whose map the row comes from (G9: this
   audit). "Stronger" means the new test pins exact values where the legacy check tested presence or
   type; "test defect" marks a legacy check that passes for a reason other than the one it states (a
-  test-infrastructure issue, not a runner defect); finding IDs (`T3-n`, `S3-…`) are pinned as
-  today's behaviour, to be fixed in step 5.
+  test-infrastructure issue, not a runner defect); finding IDs (`T3-n`, `S3-…`, listed in
+  `docs/REVIEW_FINDINGS.md`) are pinned as today's behaviour, to be fixed in later PRs.
 - **dropped**: no new test on purpose, with the reason. **proposed drop**: no new test, with the
   reason, proposed to the maintainer and not yet decided; the legacy check still runs.
   **pending**: no mapping or proposal yet; none at present.
+- **Steps**: step 2 is the reorganisation that moved the code into `src/ap1_run/` and added its
+  first unit tests; step 3 is the work that wrote the tests mapped here, in groups G1–G9.
 
 ## Summary
 
@@ -661,7 +663,7 @@ legacy numbers from being exact, both test-infrastructure issues, not runner def
 
 ## Blockers to deleting the suites
 
-- **All suites:** Marcus's approval, the gate before step 5 (the fixes).
+- **All suites:** the maintainer's approval, the gate before the fixes.
 - **`verify_spec.py`:** the maintainer's decision on its 62 checks, which this map proposes to
   drop: line counts are not behaviour, and the ≤300-line limit would go with them. If they are
   dropped, what they check, SPEC §12.9 (the limit) and the §12.10 line-count table, should go in
@@ -672,8 +674,10 @@ legacy numbers from being exact, both test-infrastructure issues, not runner def
   suite) in the same change that deletes it.
 - **`run_all_tests.py` and the docs:** the registry, `.github/workflows/full_suite.yml` (runs
   `run_all_tests.py`), and the docs that cite "14 offline suites" (README, SPEC, the paper's next
-  revision) change with the deletion.
+  revision) change with the deletion. The regression baseline also runs in CI (`regression.yml`,
+  Ubuntu, Python 3.11 and 3.12); it is not registered in `run_all_tests.py`, so it is unaffected.
 - **`verify_inspect.py`:** not a blocker, but note that its replacement tests in `tests/inspect/`
-  need inspect-ai and skip without it, as the legacy agreement test did. CI installs `.[dev]`
-  only, so in CI both skip; run them in an environment with inspect-ai (`ap1-run-inspect`).
+  need inspect-ai and skip without it, as the legacy agreement test did. The full-suite workflow
+  installs `.[dev]`, without the `inspect` extra, so in CI both skip; run them in an environment
+  with inspect-ai (`ap1-run-inspect`).
 - None of the suites is blocked by a missing test, a coverage gap or a lower mutation score.
