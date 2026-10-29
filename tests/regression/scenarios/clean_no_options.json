@@ -1,0 +1,6 @@
+{
+  "description": "The clean run with a bare ap1-run: no --config, no --output-dir, so the runner reads example/config.json (edited as clean edits it) and writes to output/, its defaults. The golden output equals clean's.",
+  "exercises": ["ap1-run with no options", "default --config", "default --output-dir"],
+  "scratch_copy": "Runs in a scratch copy: with no options the runner reads example/config.json, which this scenario edits as clean does, and writes to the default output/; in the real tree that would change a tracked file and write into the published output/. It is the one full run of the defaults, which the real-tree scenarios replace with --config and --output-dir.",
+  "extends": "clean"
+}
