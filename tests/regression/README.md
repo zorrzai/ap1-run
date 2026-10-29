@@ -63,8 +63,9 @@ python tests/regression/coverage_report.py OUTDIR      # legacy suites + scenari
 ```
 
 It needs `requests`, and `coverage` for the coverage report. The golden files
-were made with Python 3.11, which is in the CI matrix. A full comparison of
-all scenarios takes about 30 seconds.
+were made on macOS with Python 3.11; CI runs this harness on Ubuntu with
+Python 3.11 and 3.12 (`regression.yml`). A full comparison of all scenarios
+takes about 30 seconds.
 
 The harness is deliberately **not** registered in `run_all_tests.py`, so the
 legacy suite counts (226 test functions, 406 checks) stay the same across the
