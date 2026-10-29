@@ -7,7 +7,7 @@ rebuild, rather than editing this file:
     PYTHONPATH=src python tests/legacy/retirement/build_retirement.py
 
 The build takes an inventory of every legacy check (see below), joins it to the group maps that
-step 3's groups G1–G7 wrote, adds the rows that G9 (the retirement audit) settled, and stops if a
+the test groups G1–G7 wrote, adds the rows that G9 (the retirement audit) settled, and stops if a
 named test does not exist in `tests/{unit,conformance,functional,inspect}/` or if a suite's count
 differs from `run_all_tests.py`'s `SUITES`.
 
@@ -42,8 +42,10 @@ What still blocks deleting each suite is listed at the end ("Blockers").
 - **note**: the group's note, then in parentheses the group whose map the row comes from (G9: this
   audit). "Stronger" means the new test pins exact values where the legacy check tested presence or
   type; "test defect" marks a legacy check that passes for a reason other than the one it states (a
-  test-infrastructure issue, not a runner defect); finding IDs (`T3-n`, `S3-…`) are pinned as
-  today's behaviour, to be fixed in step 5.
+  test-infrastructure issue, not a runner defect); finding IDs (`T3-n`, `S3-…`, listed in
+  `docs/REVIEW_FINDINGS.md`) are pinned as today's behaviour, to be fixed in later PRs.
 - **dropped**: no new test on purpose, with the reason. **proposed drop**: no new test, with the
   reason, proposed to the maintainer and not yet decided; the legacy check still runs.
   **pending**: no mapping or proposal yet; none at present.
+- **Steps**: step 2 is the reorganisation that moved the code into `src/ap1_run/` and added its
+  first unit tests; step 3 is the work that wrote the tests mapped here, in groups G1–G9.

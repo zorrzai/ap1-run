@@ -109,7 +109,7 @@ legacy numbers from being exact, both test-infrastructure issues, not runner def
 
 ## Blockers to deleting the suites
 
-- **All suites:** Marcus's approval, the gate before step 5 (the fixes).
+- **All suites:** the maintainer's approval, the gate before the fixes.
 - **`verify_spec.py`:** the maintainer's decision on its 62 checks, which this map proposes to
   drop: line counts are not behaviour, and the ≤300-line limit would go with them. If they are
   dropped, what they check, SPEC §12.9 (the limit) and the §12.10 line-count table, should go in
@@ -120,8 +120,10 @@ legacy numbers from being exact, both test-infrastructure issues, not runner def
   suite) in the same change that deletes it.
 - **`run_all_tests.py` and the docs:** the registry, `.github/workflows/full_suite.yml` (runs
   `run_all_tests.py`), and the docs that cite "14 offline suites" (README, SPEC, the paper's next
-  revision) change with the deletion.
+  revision) change with the deletion. The regression baseline also runs in CI (`regression.yml`,
+  Ubuntu, Python 3.11 and 3.12); it is not registered in `run_all_tests.py`, so it is unaffected.
 - **`verify_inspect.py`:** not a blocker, but note that its replacement tests in `tests/inspect/`
-  need inspect-ai and skip without it, as the legacy agreement test did. CI installs `.[dev]`
-  only, so in CI both skip; run them in an environment with inspect-ai (`ap1-run-inspect`).
+  need inspect-ai and skip without it, as the legacy agreement test did. The full-suite workflow
+  installs `.[dev]`, without the `inspect` extra, so in CI both skip; run them in an environment
+  with inspect-ai (`ap1-run-inspect`).
 - None of the suites is blocked by a missing test, a coverage gap or a lower mutation score.

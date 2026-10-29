@@ -9,8 +9,8 @@ at the lines cited.
 
 The tests pin what the runner does today. Where SPEC §10 claims more than
 the code does, the test pins today's behaviour and carries the finding ID:
-T3-n for a finding of the review of SPEC claims against the code that came
-before step 3, S3-G7-n for one first found by these tests.
+T3-n for a finding of the earlier review of SPEC claims against the code,
+S3-G7-n for one first found by these tests (both listed in docs/REVIEW_FINDINGS.md).
 """
 
 import ast
