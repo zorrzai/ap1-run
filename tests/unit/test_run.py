@@ -60,6 +60,7 @@ class Run:
         self.fixture_dir.mkdir()
         self.output_dir = tmp_path / 'out' / 'run1'
         self.config = json.loads(json.dumps(CONFIG))
+        self.config_path = None
         self.write_inputs()
         self.calls = []
         self.results = {}     # (item, condition, rep) -> result or exception
@@ -93,11 +94,12 @@ class Run:
         (fx / 'questions.json').write_text(json.dumps(QUESTIONS))
         (fx / 'ground_truth_example.py').write_text(GROUND_TRUTH)
 
-    def argv(self):
-        return ['--config', str(self.fixture_dir / 'config.json'),
-                '--fixture-dir', str(self.fixture_dir),
-                '--output-dir', str(self.output_dir),
-                '--ap1-text', str(self.tmp / 'ap1.md')]
+    def argv(self, output_dir=True):
+        return (['--config', str(self.fixture_dir / 'config.json'),
+                 '--fixture-dir', str(self.fixture_dir)]
+                + (['--output-dir', str(self.output_dir)] if output_dir
+                   else [])
+                + ['--ap1-text', str(self.tmp / 'ap1.md')])
 
     def main(self):
         return run.main(self.argv())
@@ -392,15 +394,54 @@ def test_main_adapter_send_binds_the_key(r, monkeypatch):
                       'api_key': 'sk-0123456789', 'timeout': 7})]
 
 
-def test_main_creates_the_output_dir_and_removes_an_old_transcript(r):
-    os.makedirs(r.output_dir)
-    old = r.output_dir / 'smoke_run.jsonl'
+def test_main_default_output_dir_removes_an_old_transcript(r, monkeypatch):
+    # Without --output-dir the run goes to output/ under the repository
+    # root, and an earlier run's files there are replaced, as always.
+    monkeypatch.setattr(run, 'BASE_DIR', str(r.tmp))
+    default = r.tmp / 'output'
+    default.mkdir()
+    old = default / 'smoke_run.jsonl'
     old.write_text('{"old": true}\n')
-    other = r.output_dir / 'keep.txt'
+    (default / 'report.md').write_text('earlier report')
+    other = default / 'keep.txt'
     other.write_text('kept')
-    assert r.main() == 0
+    assert run.main(r.argv(output_dir=False)) == 0
     assert not old.exists()
     assert other.read_text() == 'kept'
+    assert r.named('outputs')[0][0] == str(default)
+
+
+@pytest.mark.parametrize('name', ['smoke_run.jsonl', 'report.md',
+                                  'smoke_summary.json'])
+def test_main_refuses_an_explicit_output_dir_holding_a_run(r, capsys, name):
+    os.makedirs(r.output_dir)
+    held = r.output_dir / name
+    held.write_bytes(b'published \x00 bytes\n')
+    other = r.output_dir / 'keep.txt'
+    other.write_bytes(b'kept')
+    assert r.main() == 2
+    captured = capsys.readouterr()
+    assert captured.out == ''
+    assert captured.err == (
+        f'ERROR: --output-dir {r.output_dir} already holds a run ({name}); '
+        'choose another directory or remove those files\n')
+    assert held.read_bytes() == b'published \x00 bytes\n'
+    assert other.read_bytes() == b'kept'
+    assert sorted(os.listdir(r.output_dir)) == sorted([name, 'keep.txt'])
+    assert r.calls == []
+    assert r.config_path is None
+
+
+def test_main_allows_an_explicit_empty_output_dir(r):
+    os.makedirs(r.output_dir)
+    assert r.main() == 0
+    assert r.named('outputs')[0][0] == str(r.output_dir)
+
+
+def test_main_allows_an_explicit_output_dir_with_other_files(r):
+    os.makedirs(r.output_dir)
+    (r.output_dir / 'notes.txt').write_text('not a run file')
+    assert r.main() == 0
 
 
 def test_main_creates_a_missing_output_dir(r):

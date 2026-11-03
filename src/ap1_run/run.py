@@ -57,8 +57,8 @@ from ap1_run.runner.executions import (
 )
 from ap1_run.runner.outputs import write_outputs
 from ap1_run.runner.settings import (
-    apply_sampling_overrides, check_condition_guard, endpoint_and_model,
-    parse_args,
+    apply_sampling_overrides, check_condition_guard, check_output_dir,
+    endpoint_and_model, parse_args,
 )
 from ap1_run.runner.summary import (
     build_summary, classify_reproducibility, find_d2_cap,
@@ -88,6 +88,9 @@ def main(argv=None):
     # -- Command line: where the inputs and outputs are --
     # The defaults are the shipped example, reference/ and output/.
     args = parse_args(sys.argv[1:] if argv is None else argv, BASE_DIR)
+    refused = check_output_dir(args)
+    if refused:
+        return refused
     base_dir = BASE_DIR
     fixture_dir = args.fixture_dir
 

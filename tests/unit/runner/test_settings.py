@@ -9,7 +9,8 @@ from ap1_run.execution.perturbation_guard import PerturbationRefusal
 from ap1_run.runner import settings
 from ap1_run.runner.settings import (
     DEFAULT_ENDPOINT, DEFAULT_MODEL, apply_sampling_overrides,
-    check_condition_guard, endpoint_and_model, parse_args,
+    RUN_OUTPUT_FILES, check_condition_guard, check_output_dir,
+    endpoint_and_model, parse_args,
 )
 
 
@@ -174,6 +175,7 @@ def test_parse_args_defaults_are_the_fixed_paths():
         'config': '/repo/example/config.json',
         'fixture_dir': '/repo/example',
         'output_dir': '/repo/output',
+        'output_dir_explicit': False,
         'ap1_text': '/repo/reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md',
     }
 
@@ -183,7 +185,9 @@ def test_parse_args_absolute_paths_kept():
                        '--output-dir', '/c/out', '--ap1-text', '/d/ap1.md'],
                       BASE)
     assert vars(args) == {'config': '/a/c.json', 'fixture_dir': '/b',
-                          'output_dir': '/c/out', 'ap1_text': '/d/ap1.md'}
+                          'output_dir': '/c/out',
+                          'output_dir_explicit': True,
+                          'ap1_text': '/d/ap1.md'}
 
 
 def test_parse_args_relative_paths_resolve_against_the_working_directory(
@@ -197,6 +201,7 @@ def test_parse_args_relative_paths_resolve_against_the_working_directory(
     assert vars(args) == {'config': f'{root}/c.json',
                           'fixture_dir': f'{root}/in',
                           'output_dir': f'{root}/out/x',
+                          'output_dir_explicit': True,
                           'ap1_text': f'{parent}/t.md'}
 
 
@@ -234,3 +239,75 @@ def test_parse_args_help_text(capsys, monkeypatch):
         '  --ap1-text AP1_TEXT   the AP-1 text to seal; its hash must match '
         'the one the runner expects '
         '(default: reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md)\n')
+
+
+def test_parse_args_output_dir_given_as_the_default_path_is_explicit():
+    args = parse_args(['--output-dir', '/repo/output'], BASE)
+    assert args.output_dir == '/repo/output'
+    assert args.output_dir_explicit is True
+
+
+# -- check_output_dir -----------------------------------------------------
+
+def test_run_output_files():
+    assert RUN_OUTPUT_FILES == ('smoke_run.jsonl', 'report.md',
+                                'smoke_summary.json')
+
+
+def output_args(path, explicit):
+    return parse_args(['--output-dir', str(path)] if explicit else [],
+                      str(path.parent))
+
+
+@pytest.mark.parametrize('name', RUN_OUTPUT_FILES)
+def test_check_output_dir_refuses_an_explicit_dir_holding_a_run_file(
+        tmp_path, capsys, name):
+    out = tmp_path / 'output'
+    out.mkdir()
+    (out / name).write_text('x')
+    assert check_output_dir(output_args(out, explicit=True)) == 2
+    captured = capsys.readouterr()
+    assert captured.out == ''
+    assert captured.err == (
+        f'ERROR: --output-dir {out} already holds a run ({name}); choose '
+        'another directory or remove those files\n')
+
+
+def test_check_output_dir_names_every_run_file_found(tmp_path, capsys):
+    out = tmp_path / 'output'
+    out.mkdir()
+    for name in RUN_OUTPUT_FILES:
+        (out / name).write_text('x')
+    assert check_output_dir(output_args(out, explicit=True)) == 2
+    assert ('already holds a run (smoke_run.jsonl, report.md, '
+            'smoke_summary.json); ') in capsys.readouterr().err
+
+
+@pytest.mark.parametrize('contents', [[], ['notes.txt', 'DISCLAIMER.txt']])
+def test_check_output_dir_allows_an_explicit_dir_without_run_files(
+        tmp_path, capsys, contents):
+    out = tmp_path / 'output'
+    out.mkdir()
+    for name in contents:
+        (out / name).write_text('x')
+    assert check_output_dir(output_args(out, explicit=True)) is None
+    assert capsys.readouterr() == ('', '')
+
+
+def test_check_output_dir_allows_an_explicit_dir_that_does_not_exist(
+        tmp_path):
+    out = tmp_path / 'new' / 'run'
+    assert check_output_dir(output_args(out, explicit=True)) is None
+    assert not out.exists()
+
+
+def test_check_output_dir_allows_the_default_dir_holding_a_run(tmp_path,
+                                                                capsys):
+    out = tmp_path / 'output'
+    out.mkdir()
+    for name in RUN_OUTPUT_FILES:
+        (out / name).write_text('x')
+    args = output_args(out, explicit=False)
+    assert args.output_dir == str(out)
+    assert check_output_dir(args) is None
+    assert capsys.readouterr() == ('', '')

@@ -156,7 +156,11 @@ ap1-run --config my/config.json \
 ```
 
 `--fixture-dir` holds `fixture.json`, `questions.json` and
-`ground_truth_example.py`. The AP-1 text must be the one the seal expects. The
+`ground_truth_example.py`. A run replaces the files it writes in the default
+`output/`, as before; a directory given with `--output-dir` that already holds
+a run's `smoke_run.jsonl`, `report.md` or `smoke_summary.json` is refused
+(exit status 2) before anything is read or written, so a published run cannot
+be overwritten by mistake. The AP-1 text must be the one the seal expects. The
 runner still takes its version and source hash from the clone, so run it from
 a clone (an editable install), not from a wheel.
 

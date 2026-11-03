@@ -9,6 +9,7 @@ whose two conditions differ in more than the system prompt.
 import argparse
 import hashlib
 import os
+import sys
 
 from ap1_run.execution.perturbation_guard import (
     check_single_variable_perturbation,
@@ -20,12 +21,16 @@ DEFAULT_MODEL = 'gpt-4o-mini'
 
 AP1_TEXT = os.path.join('reference', 'AP-1_v1.3_DRAFT_FOR_COMMENT.md')
 
+# The files a run writes to its output directory.
+RUN_OUTPUT_FILES = ('smoke_run.jsonl', 'report.md', 'smoke_summary.json')
+
 
 def parse_args(argv, base_dir):
     """The command-line options, as absolute paths.
 
     Every option defaults to the path the runner has always used under
     base_dir (the repository root), so a run without options is unchanged.
+    output_dir_explicit says whether --output-dir was given.
     """
     example_dir = os.path.join(base_dir, 'example')
     parser = argparse.ArgumentParser(
@@ -41,7 +46,7 @@ def parse_args(argv, base_dir):
         help='the directory holding fixture.json, questions.json and '
              'ground_truth_example.py (default: example/)')
     parser.add_argument(
-        '--output-dir', default=os.path.join(base_dir, 'output'),
+        '--output-dir',
         help='where the transcript, report and summary are written; files '
              'of the same name there are replaced (default: output/)')
     parser.add_argument(
@@ -49,9 +54,33 @@ def parse_args(argv, base_dir):
         help='the AP-1 text to seal; its hash must match the one the '
              'runner expects (default: ' + AP1_TEXT + ')')
     args = parser.parse_args(argv)
+    args.output_dir_explicit = args.output_dir is not None
+    if not args.output_dir_explicit:
+        args.output_dir = os.path.join(base_dir, 'output')
     for name in ('config', 'fixture_dir', 'output_dir', 'ap1_text'):
         setattr(args, name, os.path.abspath(getattr(args, name)))
     return args
+
+
+def check_output_dir(args):
+    """Refuse an explicitly given --output-dir that already holds a run.
+
+    A run replaces the files it writes, so pointing --output-dir at an
+    earlier run (a published output/run_* say) would delete that run's
+    transcript. The default output/ keeps its behaviour: files there are
+    replaced. Returns 2 (the usage-error status) after printing the
+    refusal, or None if the run may go ahead.
+    """
+    if not args.output_dir_explicit:
+        return None
+    found = [name for name in RUN_OUTPUT_FILES
+             if os.path.exists(os.path.join(args.output_dir, name))]
+    if not found:
+        return None
+    print(f'ERROR: --output-dir {args.output_dir} already holds a run '
+          f'({", ".join(found)}); choose another directory or remove '
+          f'those files', file=sys.stderr)
+    return 2
 
 
 def endpoint_and_model(environ=os.environ):
