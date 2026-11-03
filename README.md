@@ -126,6 +126,10 @@ ap1-run                       # or: python smoke_test.py
 shim for the runner, which now lives in `src/ap1_run/run.py`. It always runs
 its own clone's `src/`, even when another clone is installed in the same
 environment; so do `tools/verify_run_seal.py` and `tools/generate_findings.py`.
+The `ap1-run` command and `python -m ap1_run.run` do not: they run whichever
+clone is installed in the environment, and that clone's `output/` receives the
+results. Use one environment per clone, or run `python smoke_test.py`, which
+always uses its own clone's `src/`.
 The runner reads `example/` and `reference/` and writes `output/` relative to
 the clone, so run it from a clone (an editable install), not from a wheel.
 
