@@ -604,6 +604,7 @@ def test_main_end_to_end_against_the_mock_endpoint(tmp_path, monkeypatch,
         system_prompts={config['system_prompt_base']: 'base',
                         config['system_prompt_instruction_removed']:
                         'instruction_removed'},
+        api_key='sk-test',
         responses={
             'Q01/*/*': [{'call': '15200.00 * 1.2 / 100 / 12'},
                         {'say': 'The monthly interest is ${result}.'}],
