@@ -120,6 +120,7 @@ def test_extract_operands_float_converted_through_its_text():
     assert extract_operands('0.1') == [(D('0.1'), '0.1')]
 
 
+@pytest.mark.finding('T3-58')
 def test_extract_operands_reads_literals_through_float():
     # Current behaviour: the literal is parsed by ast into a float first,
     # so trailing zeros are lost and digits beyond float precision are
@@ -130,6 +131,7 @@ def test_extract_operands_reads_literals_through_float():
     assert extract_operands('1e3') == [(D('1000.0'), '1000.0')]
 
 
+@pytest.mark.finding('T3-39')
 def test_extract_operands_boolean_literal_raises():
     # Current behaviour: True is an int to isinstance, and Decimal('True')
     # is invalid, so the extraction raises.
