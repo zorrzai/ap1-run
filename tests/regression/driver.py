@@ -12,6 +12,9 @@ to stderr. The result directory receives:
     seal.json       the seal record(s) the run created
     seal_inputs.json  what each call to the seal function was given
                     (see snapshot()), for the hash oracle
+    transport_violations.json
+                    requests the mock refused as outside its transport
+                    contract (wrong path or credential); must be empty
     requests.jsonl  every request the mock endpoint received
 """
 
@@ -20,6 +23,9 @@ import os
 import sys
 import time
 from decimal import Decimal
+
+# The credential the runner is given, and the mock requires.
+API_KEY = 'sk-regression-not-a-real-key-0000'
 
 
 def snapshot(value):
@@ -74,14 +80,14 @@ def main():
             replay_records = [json.loads(line) for line in f if line.strip()]
 
     mock = MockEndpoint(questions=questions, system_prompts=system_prompts,
-                        responses=scenario.get('responses'),
+                        api_key=API_KEY, responses=scenario.get('responses'),
                         replay_records=replay_records).start()
 
     # Only what the scenario sets; nothing inherited from the shell.
     for name in list(os.environ):
         if name.startswith('AP1_SMOKE_'):
             del os.environ[name]
-    os.environ['AP1_SMOKE_API_KEY'] = 'sk-regression-not-a-real-key-0000'
+    os.environ['AP1_SMOKE_API_KEY'] = API_KEY
     os.environ['AP1_SMOKE_ENDPOINT'] = mock.url
     os.environ['AP1_SMOKE_MODEL'] = 'mock-model'
     os.environ.update(scenario.get('env', {}))
@@ -142,6 +148,10 @@ def main():
     with open(os.path.join(result_dir, 'seal_inputs.json'), 'w',
               encoding='utf-8') as f:
         json.dump(seal_inputs, f, indent=2, ensure_ascii=False)
+        f.write('\n')
+    with open(os.path.join(result_dir, 'transport_violations.json'), 'w',
+              encoding='utf-8') as f:
+        json.dump(mock.violations, f, indent=2)
         f.write('\n')
     with open(os.path.join(result_dir, 'requests.jsonl'), 'w',
               encoding='utf-8') as f:

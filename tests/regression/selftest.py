@@ -10,20 +10,25 @@ a broken runner.
 """
 
 import hashlib
+import json
 import os
 import shutil
 import sys
 import tempfile
 import types
 import unittest
+import urllib.error
+import urllib.request
 from decimal import Decimal
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+sys.path.insert(0, os.path.join(os.path.dirname(HERE), 'fixtures'))
 
 import driver  # noqa: E402  (snapshot() only; main() is not run)
 import hard_checks  # noqa: E402
 import hash_oracle  # noqa: E402
+from mock_endpoint import MockEndpoint  # noqa: E402
 
 
 class CanonicalHash(unittest.TestCase):
@@ -132,6 +137,80 @@ class ReplayComparison(unittest.TestCase):
                       hard_checks.first_difference({'k': 1}, {}))
         self.assertIn('2 entries in the published run, 1',
                       hard_checks.first_difference([1, 2], [1]))
+
+
+class MockTransportContract(unittest.TestCase):
+
+    KEY = 'sk-selftest'
+
+    def setUp(self):
+        self.mock = MockEndpoint(
+            questions={'items': [{'id': 'Q01', 'text': 'What?'}]},
+            system_prompts={'S': 'base'}, api_key=self.KEY,
+            responses={'Q01/*/*': [{'say': 'It is $1.00.'}]}).start()
+        self.base = self.mock.url.rsplit('/v1/', 1)[0]
+
+    def tearDown(self):
+        self.mock.stop()
+
+    def post(self, path='/v1/chat/completions', auth='Bearer sk-selftest'):
+        body = json.dumps({'messages': [
+            {'role': 'system', 'content': 'S'},
+            {'role': 'user', 'content': 'Question: What?'}]}).encode()
+        req = urllib.request.Request(self.base + path, data=body,
+                                     method='POST')
+        req.add_header('Content-Type', 'application/json')
+        if auth is not None:
+            req.add_header('Authorization', auth)
+        try:
+            with urllib.request.urlopen(req, timeout=10) as r:
+                return r.status, json.loads(r.read())
+        except urllib.error.HTTPError as e:
+            return e.code, json.loads(e.read())
+
+    def test_valid_request_is_served_and_logged(self):
+        status, body = self.post()
+        self.assertEqual(status, 200)
+        self.assertEqual(body['choices'][0]['message']['content'],
+                         'It is $1.00.')
+        self.assertEqual(self.mock.violations, [])
+        self.assertEqual([e['repeat'] for e in self.mock.log], [1])
+
+    def test_refusals_do_not_advance_the_script(self):
+        self.assertEqual(self.post(auth=None)[0], 401)
+        self.assertEqual(self.post(auth='Bearer wrong')[0], 401)
+        self.assertEqual(self.post(auth='sk-selftest')[0], 401)
+        self.assertEqual(self.post(path='/v1/completions')[0], 404)
+        self.assertEqual(self.mock.log, [])
+        self.assertEqual(self.mock.violations, [
+            {'kind': 'credential', 'path': '/v1/chat/completions'},
+            {'kind': 'credential', 'path': '/v1/chat/completions'},
+            {'kind': 'credential', 'path': '/v1/chat/completions'},
+            {'kind': 'path', 'path': '/v1/completions'}])
+        # The first valid request is still repeat 1.
+        self.assertEqual(self.post()[0], 200)
+        self.assertEqual([e['repeat'] for e in self.mock.log], [1])
+
+    def test_violations_never_record_header_names_or_values(self):
+        self.post(auth='Bearer leaked-secret')
+        self.assertNotIn('leaked-secret', json.dumps(self.mock.violations))
+        self.assertEqual(sorted(self.mock.violations[0]), ['kind', 'path'])
+
+    def test_harness_fails_a_run_with_a_violation(self):
+        result_dir = tempfile.mkdtemp(prefix='ap1-selftest-')
+        try:
+            path = os.path.join(result_dir, 'transport_violations.json')
+            with self.assertRaises(hard_checks.HardCheckError):
+                hard_checks.check_transport(result_dir)   # not recorded
+            with open(path, 'w') as f:
+                json.dump([{'kind': 'path', 'path': '/x'}], f)
+            with self.assertRaises(hard_checks.HardCheckError):
+                hard_checks.check_transport(result_dir)
+            with open(path, 'w') as f:
+                json.dump([], f)
+            hard_checks.check_transport(result_dir)
+        finally:
+            shutil.rmtree(result_dir)
 
 
 class Independence(unittest.TestCase):

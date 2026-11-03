@@ -4,6 +4,8 @@ run_regression.collect() calls check() once per runner scenario, before
 normalisation. A failure raises, so the harness stops: it is never a
 golden difference, and --update cannot write over it or around it.
 
+  check_transport          the mock refused no request (wrong path or
+                           credential)
   hash_oracle.check_seals  every seal value recomputed independently
   check_replay             a replay re-scores its published run exactly
 """
@@ -32,9 +34,29 @@ def check(scenario, tree, result_dir, raw):
 
     raw is {file name: text} of what the run produced, before
     normalisation; 'console.txt' is its stdout."""
+    check_transport(result_dir)
     hash_oracle.check_seals(scenario, tree, result_dir, raw)
     if 'replay' in scenario:
         check_replay(scenario, raw)
+
+
+def check_transport(result_dir):
+    """Every request kept the mock's transport contract: the chat
+    completions path and the driver's bearer credential."""
+    path = os.path.join(result_dir, 'transport_violations.json')
+    if not os.path.exists(path):
+        raise HardCheckError('the driver recorded no transport check')
+    with open(path, encoding='utf-8') as f:
+        violations = json.load(f)
+    if violations:
+        counts = {}
+        for v in violations:
+            key = f'{v["kind"]} ({v["path"]})'
+            counts[key] = counts.get(key, 0) + 1
+        raise HardCheckError(
+            f'the mock refused {len(violations)} request(s) outside its '
+            f'transport contract: '
+            + '; '.join(f'{k} x{n}' for k, n in counts.items()))
 
 
 def first_difference(want, got, path='$'):

@@ -39,6 +39,13 @@ Two kinds of script:
   in a standard envelope.
 
 Every request is logged (self.log) for the golden output.
+
+Transport contract: a request must POST to /v1/chat/completions with
+"Authorization: Bearer <api_key>". Any other request is refused (404 for
+the path, 401 for the credential) before it is identified, so it advances
+no scripted state, and is recorded in self.violations (the kind and path,
+never header names or values). The regression harness fails a run with
+any violation, also under --update.
 """
 
 import json
@@ -48,11 +55,16 @@ from decimal import Decimal, ROUND_HALF_UP
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
+PATH = '/v1/chat/completions'
+
+
 class MockEndpoint:
     """A scripted chat-completions server on 127.0.0.1, in a thread."""
 
-    def __init__(self, *, questions, system_prompts, responses=None,
+    def __init__(self, *, questions, system_prompts, api_key, responses=None,
                  replay_records=None):
+        self._authorization = f'Bearer {api_key}'
+        self.violations = []
         self._question_ids = {
             item['text']: item['id'] for item in questions['items']}
         self._conditions = system_prompts  # {prompt text: condition}
@@ -79,7 +91,13 @@ class MockEndpoint:
         class Handler(BaseHTTPRequestHandler):
             def do_POST(self):
                 length = int(self.headers.get('Content-Length', 0))
-                body = json.loads(self.rfile.read(length).decode('utf-8'))
+                data = self.rfile.read(length)
+                refused = endpoint.refusal(
+                    self.path, self.headers.get('Authorization'))
+                if refused:
+                    self._send(*refused)
+                    return
+                body = json.loads(data.decode('utf-8'))
                 action = endpoint.handle(body)
                 if action[0] == 'close':
                     self.close_connection = True
@@ -88,7 +106,9 @@ class MockEndpoint:
                     except OSError:
                         pass
                     return
-                status, payload = action[1], action[2]
+                self._send(action[1], action[2])
+
+            def _send(self, status, payload):
                 data = (payload if isinstance(payload, str)
                         else json.dumps(payload)).encode('utf-8')
                 self.send_response(status)
@@ -109,7 +129,7 @@ class MockEndpoint:
     @property
     def url(self):
         host, port = self._server.server_address
-        return f'http://{host}:{port}/v1/chat/completions'
+        return f'http://{host}:{port}{PATH}'
 
     def stop(self):
         if self._server:
@@ -117,6 +137,20 @@ class MockEndpoint:
             self._server.server_close()
 
     # -- request handling -------------------------------------------
+
+    def refusal(self, path, authorization):
+        """(status, body) refusing a request outside the transport
+        contract, recorded in self.violations; None for a valid one."""
+        if path != PATH:
+            self.violations.append({'kind': 'path', 'path': path})
+            return 404, {'error': {'message': f'mock: no route {path}',
+                                   'type': 'invalid_request_error'}}
+        if authorization != self._authorization:
+            self.violations.append({'kind': 'credential', 'path': path})
+            return 401, {'error': {'message': 'mock: missing or wrong '
+                                              'bearer credential',
+                                   'type': 'invalid_request_error'}}
+        return None
 
     def _identify(self, body):
         messages = body.get('messages', [])
