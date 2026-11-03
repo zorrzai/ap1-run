@@ -109,6 +109,12 @@ pip install -e .              # the ap1_run package and its one dependency, requ
 python run_all_tests.py       # offline, reports its own totals
 ```
 
+**Only the editable install, `pip install -e .`, is supported.** A plain
+`pip install .` leaves a `build/` directory in the clone. Git ignores it, but
+`runner_source_hash` covers every `.py` file under the clone, so its copies
+change the hash (T3-70 in `docs/REVIEW_FINDINGS.md`). For the same reason,
+keep virtual environments outside the clone.
+
 Then run the worked example against your own endpoint:
 
 ```bash

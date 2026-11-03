@@ -768,6 +768,9 @@ Grouped by severity, in ID order.
   hashed. The paths are sorted in the platform's own form before `\` is replaced by `/`, so two
   names such as `a/z.py` and `a0.py` hash in a different order on Windows and POSIX; the tracked
   files at the reorganisation heads sort the same way on both, so no published hash is affected.
+  Since the move to `src/`, a non-editable `pip install .` leaves `build/lib/ap1_run/*.py` in the
+  clone, ignored by git but hashed; the README supports only `pip install -e .` until the walk
+  excludes `build/` and venvs.
 - Where: `version.py:84-109`
 
 **T3-71 · low · Canonical JSON loses type information and does not check dict keys for floats**
