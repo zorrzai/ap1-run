@@ -614,7 +614,9 @@ def test_reclassify_session_skipped_call_shifts_the_expressions(
     # both lists are read by the same index. From a skipped call on they
     # are out of step, so the 182.4 that feeds '182.4/12' is not
     # reclassified. Trailing: the lists still line up for the two results.
-    # Correct: OPERATION-CORRECT in all three cases.
+    # Correct: OPERATION-CORRECT in all three cases, whether the fix
+    # aligns the lists here or in execute_item (then these tests are
+    # rewritten to pass aligned lists; see test_engine.py).
     out = reclassify_session([wo('182.4'), oc('15.2')], expressions)
     assert out[0]['outcome'] == outcome
 
