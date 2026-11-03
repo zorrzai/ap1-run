@@ -571,7 +571,12 @@ def test_execute_item_malformed_response_shape_raises(tmp_path, final, error):
 
 # -- D7.2 wiring -------------------------------------------------------
 
+@pytest.mark.finding('S3-G2-5')
 def test_execute_item_scoring_wired(tmp_path, calculator, recorders):
+    # S3-G2-5: two results (the python call has no expression) but three
+    # expressions, '' for the python call, so reclassify_session gets
+    # lists that are out of step from that call on. Correct: one
+    # expression per result, in the same order.
     send = FakeAdapter(calls(tool_call('1+1', id='a'),
                              tool_call(name='python', id='b'),
                              tool_call('2*3', id='c')), answer())

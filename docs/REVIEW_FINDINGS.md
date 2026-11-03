@@ -1429,6 +1429,23 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - After the reorg: `src/ap1_run/execution/engine.py:263-277` (`_extract_calc_expression`);
   `src/ap1_run/scoring/provenance/classify.py:159-172` (`_extract_expression`)
 
+**S3-G2-5 · medium · `reclassify_session` gets a result list and an expression list that are out of step**
+- What's wrong: `execute_item` builds `op_correctness_results` only for calculator calls with an
+  expression, but passes `exprs` with one entry per tool call (`''` for a call without one), and
+  `reclassify_session` reads both lists by the same index. From the first call without an
+  expression on, a WRONG-OPERATION result is checked against the operands of another call:
+  `[WO 182.4, OC]` with `['15200*0.012', '182.4/12']` reclassifies the first call as
+  OPERATION-CORRECT, but with a leading `''` (a non-calculator or malformed call first) it stays
+  WRONG-OPERATION; the shift can also reclassify a result that feeds nothing. Found in review of
+  the tests pull request. Not observed in the published runs: none of the 8,000 executions in
+  `output/run_*/smoke_run.jsonl` has a tool call without a calculator expression. Open; the work on
+  T3-16 (calls without a readable expression) is expected to fix it, and it counts as fixed only
+  when its own tests pass.
+- Where: `engine.py:122-138`; `operation_correctness.py:235-284` (`:273`)
+- After the reorg: `src/ap1_run/execution/engine.py:122-138` (`execute_item`);
+  `src/ap1_run/scoring/operation_correctness.py:235-284`, `:273` (`reclassify_session`)
+- Breaks: AP-1 v1.3 D7.2(b) (a result is resolved against another call's operands)
+
 ### G3: seal
 
 **S3-G3-1 · high (latent while T3-7 holds; the finder rated it medium) · `declared_constants_check` sees only literals written `D("…")`**
