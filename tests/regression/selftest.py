@@ -59,6 +59,75 @@ class CanonicalHash(unittest.TestCase):
         with self.assertRaises(hash_oracle.HashCheckError):
             hash_oracle.canonical_hash({'a': [1.5]})
 
+    def test_non_string_key_is_refused(self):
+        # json.dumps would quietly write {"0.5":"x"}.
+        for obj in ({'a': {0.5: 'x'}}, {1: 'x'}, [{None: 1}]):
+            with self.assertRaises(hash_oracle.HashCheckError):
+                hash_oracle.canonical_hash(obj)
+        self.assertIn('float key 0.5', hash_oracle.canonical_refusal(
+            {'extension': {0.5: 'x'}}))
+
+
+class VersionFile(unittest.TestCase):
+
+    def setUp(self):
+        self.root = tempfile.mkdtemp(prefix='ap1-oracle-')
+
+    def tearDown(self):
+        shutil.rmtree(self.root)
+
+    def write(self, text):
+        with open(os.path.join(self.root, 'VERSION'), 'w') as f:
+            f.write(text)
+
+    def test_first_line_that_is_not_a_comment(self):
+        self.write('# header\n\n  v1.3.1 e0d9ec9  extra\nv9 ffff\n')
+        self.assertEqual(hash_oracle.version_file_fields(self.root),
+                         ('v1.3.1', 'e0d9ec9'))
+
+    def test_fallbacks(self):
+        self.assertEqual(hash_oracle.version_file_fields(self.root),
+                         ('unknown', 'unknown'))
+        self.write('v1.3.1\n')
+        self.assertEqual(hash_oracle.version_file_fields(self.root),
+                         ('v1.3.1', 'unknown'))
+
+
+class Timestamp(unittest.TestCase):
+
+    def test_must_fall_within_the_run(self):
+        import time
+        now = time.time()
+        from datetime import datetime, timezone
+        inside = datetime.fromtimestamp(now, timezone.utc).isoformat()
+        self.assertEqual(hash_oracle._check_timestamp(inside, (now, now)), [])
+        self.assertIn('outside the run', hash_oracle._check_timestamp(
+            '2000-01-01T00:00:00+00:00', (now, now))[0])
+        self.assertIn('not a valid date', hash_oracle._check_timestamp(
+            '2026-13-40T25:00:00+00:00', (now, now))[0])
+        self.assertIn('not ISO 8601', hash_oracle._check_timestamp(
+            '2026-11-02T10:00:00+01:00', (now, now))[0])
+
+
+class Report(unittest.TestCase):
+
+    def test_only_identified_fields_are_seal_references(self):
+        # A 64-hex config value (a valid decline marker) is not a hash.
+        config = {'decline_markers': ['a' * 64], 'answer_tolerance': '0.01'}
+        record = {'config_hash': hash_oracle.canonical_hash(config),
+                  'seal_hash': 'b' * 64, 'verification_keys': []}
+        report = '\n'.join(
+            ['## 1. Pre-Registration Record', '', '| Field | Value |',
+             '|---|---|']
+            + [f'| `{k}` | `{v}` |' for k, v in sorted(record.items())]
+            + ['', '## 2. Resolved Configuration', '', '```json',
+               json.dumps(config, indent=2, sort_keys=True), '```', '',
+               '## 3. Results', 'quoted: ' + 'c' * 64])
+        self.assertEqual(hash_oracle.check_report(report, record), [])
+        wrong = report.replace('b' * 64, 'd' * 64)
+        self.assertIn('report §1 seal_hash',
+                      hash_oracle.check_report(wrong, record)[0])
+
 
 class Snapshot(unittest.TestCase):
 
@@ -72,6 +141,11 @@ class Snapshot(unittest.TestCase):
         self.assertIs(type(back['d']), Decimal)
         self.assertIs(type(back['b']), bool)
         self.assertEqual(str(back['d']), '0.010')
+
+    def test_a_tuple_is_a_sequence_not_text(self):
+        self.assertEqual(driver.snapshot(()), ['list', []])
+        self.assertEqual(hash_oracle.from_snapshot(driver.snapshot(('k',))),
+                         ['k'])
 
     def test_unknown_type_is_refused(self):
         with self.assertRaises(hash_oracle.HashCheckError):

@@ -1,5 +1,6 @@
 {
   "description": "T3-2 (critical): a leading space or tab in a calculator expression makes D7.2(a) see no operands and score the call OPERANDS-GROUNDED; chained, the fabricated return is laundered through step 4 (Q01, the review's example). The same chain without the space on Q09 for contrast (ORIGINATED, ORIGINATED). Single calls with a leading space (Q04) and a tab (Q06).",
+  "seal_attempts": 1,
   "seal_records": 1,
   "exercises": [
     "T3-2",

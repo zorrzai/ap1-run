@@ -1,5 +1,6 @@
 {
   "description": "Every question answered correctly, with grounded calculator calls, under both conditions.",
+  "seal_attempts": 1,
   "seal_records": 1,
   "exercises": ["main path", "every scorer", "report", "adjudication sheets", "D7.2(a) source match"],
   "config": {"repeat_count": "3"},

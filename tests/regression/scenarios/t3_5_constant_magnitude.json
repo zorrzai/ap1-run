@@ -1,5 +1,6 @@
 {
   "description": "T3-5: sign-inverted values that coincide with a declared constant (-12 on Q09, -1 anywhere) are grounded by the undocumented constant_magnitude rule. A sign-inverted source field on Q02 for contrast.",
+  "seal_attempts": 1,
   "seal_records": 1,
   "exercises": ["T3-5", "constant_magnitude", "step 5 sign inversion"],
   "extends": "clean",

@@ -1,5 +1,6 @@
 {
   "description": "Wrong final figure, wrong operation, transposed operand, no tool call, and an unchanged question for contrast.",
+  "seal_attempts": 1,
   "seal_records": 1,
   "exercises": ["D1", "D7.2(a) originated operand", "D7.2(b) WRONG-OPERATION", "D7.3 TRANSCRIBED-ALTERED", "D7.1 NOT-INVOKED", "figure identification"],
   "extends": "clean",

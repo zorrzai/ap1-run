@@ -27,6 +27,11 @@ from decimal import Decimal
 # The credential the runner is given, and the mock requires.
 API_KEY = 'sk-regression-not-a-real-key-0000'
 
+# The seal function's path arguments, captured as strings; every other
+# argument is captured as it is.
+PATH_ARGS = ('fixture_path', 'questions_path', 'ground_truth_path',
+             'ap1_text_path')
+
 
 def snapshot(value):
     """A typed copy of a value, safe to write as JSON: [type, payload].
@@ -116,12 +121,15 @@ def main():
         def observed_seal(**kwargs):
             seal_inputs.append({
                 'cwd': os.getcwd(),
-                'kwargs': {k: snapshot(v if k == 'config' or v is None
-                                       or isinstance(v, (list, dict))
-                                       else str(v))
+                'kwargs': {k: snapshot(os.fspath(v) if k in PATH_ARGS
+                                       and v is not None else v)
                            for k, v in kwargs.items()},
                 'returned': False})
-            record = real_seal(**kwargs)
+            try:
+                record = real_seal(**kwargs)
+            except BaseException as e:
+                seal_inputs[-1]['error'] = f'{type(e).__name__}: {e}'
+                raise
             seals.append(record)
             seal_inputs[-1]['returned'] = True
             return record

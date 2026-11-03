@@ -1,8 +1,14 @@
 """Checks a run must pass before its output is normalised or compared.
 
-run_regression.collect() calls check() once per runner scenario, before
-normalisation. A failure raises, so the harness stops: it is never a
-golden difference, and --update cannot write over it or around it.
+run_regression.run_scenario() calls before_run() once the scratch tree
+exists and before the runner starts; run_regression.collect() calls check()
+once per runner scenario, before normalisation. A failure raises, so the
+harness stops: it is never a golden difference, and --update cannot write
+over it or around it.
+
+Command scenarios (a "command" in the scenario) run an entry point
+directly and get none of these checks. None of them seals today; a command
+scenario that seals needs the driver's capture first.
 
   check_transport          the mock refused no request (wrong path or
                            credential)
@@ -12,6 +18,7 @@ golden difference, and --update cannot write over it or around it.
 
 import json
 import os
+import time
 
 import hash_oracle
 
@@ -25,8 +32,21 @@ REPO = os.path.dirname(os.path.dirname(HERE))
 REPLAY_SUMMARY_EXCLUDED = ('seal_hash',)
 
 
+# Expectations frozen before each run, by tree.
+_FROZEN = {}
+
+
 class HardCheckError(Exception):
     """A run broke an invariant the golden files cannot express."""
+
+
+def before_run(tree):
+    """Freeze what the run must agree with, before the runner starts: the
+    source hash of the tree it will run from, and the start time."""
+    _FROZEN[os.path.realpath(tree)] = {
+        'source_hash': hash_oracle.runner_source_hash(tree),
+        'started': time.time(),
+    }
 
 
 def check(scenario, tree, result_dir, raw):
@@ -34,8 +54,12 @@ def check(scenario, tree, result_dir, raw):
 
     raw is {file name: text} of what the run produced, before
     normalisation; 'console.txt' is its stdout."""
+    frozen = _FROZEN.pop(os.path.realpath(tree), None)
+    if frozen is None:
+        raise HardCheckError('before_run() was not called for this run')
+    frozen['finished'] = time.time()
     check_transport(result_dir)
-    hash_oracle.check_seals(scenario, tree, result_dir, raw)
+    hash_oracle.check_seals(scenario, tree, result_dir, raw, frozen)
     if 'replay' in scenario:
         check_replay(scenario, raw)
 

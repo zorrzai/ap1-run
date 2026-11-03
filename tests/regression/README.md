@@ -57,15 +57,20 @@ they are pinned.
 golden difference, and `--update` cannot write over it.
 - `hash_oracle.py` recomputes the seal the run made, from the inputs the seal
   function was given (`driver.py` captures them before the call): the file
-  hashes, `config_hash` from the resolved config, `runner_source_hash` from
-  its own walk of the tree the runner ran from, and `seal_hash` from the
-  expected record. The record must have exactly the expected fields and
-  values. The printed `Runner source hash:` prefix, the console's seal and
-  AP-1 text hashes, every transcript line's `seal_hash`, the summary's
-  `seal_hash`, report §1 and every hash printed in the report must agree
-  with it, and report §2's resolved config must hash to `config_hash`. The
-  oracle is standard library only and fails if any runner module has been
-  imported into the harness process.
+  hashes, `config_hash` from the resolved config, the version fields from
+  the tree's `VERSION` file, and `seal_hash` from the expected record. The
+  record must have exactly the expected fields and values, and a timestamp
+  that falls within the run. Each path the seal was given must be the file
+  of its role (`seal_paths` in a scenario that moves them). The source hash
+  is frozen before the runner starts (`before_run`): the one passed to every
+  seal call, refused or not, must equal it, and so must the tree's after the
+  run. The printed `Runner source hash:` prefix (once per run that calls the
+  seal), the console's seal and AP-1 text hashes (once per record), every
+  transcript record's `seal_hash` (which must be present), the summary's
+  `seal_hash` and report §1 must agree with it, and report §2's resolved
+  config must hash to `config_hash`. Other 64-hex text in a report is not
+  read as a seal reference. The oracle is standard library only and fails
+  if any runner module has been imported into the harness process.
 - The mock refused no request (`check_transport`): a request to the wrong
   path or without the driver's bearer credential fails the run.
 - A replay must re-score its published run exactly: the replayed
@@ -73,9 +78,16 @@ golden difference, and `--update` cannot write over it.
   key, value, type and list order, except the top-level `seal_hash`
   (`check_replay`). Any other difference is investigated, not added to the
   exclusions.
-- Each runner scenario states `"seal_records"`: how many seal records the run
-  makes (0 for a run refused before or at sealing). A refused seal must be
-  one the contract refuses.
+- Each runner scenario states `"seal_attempts"`, how many times the run calls
+  the seal function, and `"seal_records"`, how many records it makes: 1 and
+  1 for a run that seals, 1 and 0 for a refused seal, 0 and 0 for a run that
+  stops before sealing. A refused seal must be one the contract refuses,
+  with the exception the contract names. A run that seals must write
+  `report.md`, `smoke_run.jsonl` and `smoke_summary.json`, unless the
+  scenario states otherwise in `"sealed_outputs"` (the two crash scenarios).
+- **Command scenarios** (`"command"`) run an entry point directly and get
+  none of these checks. None of them seals today; a command scenario that
+  seals needs the driver's capture first.
 
 `python tests/regression/selftest.py` tests these checks directly, with known
 answers.

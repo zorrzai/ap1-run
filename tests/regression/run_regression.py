@@ -33,8 +33,9 @@ Normalisation (in the comparison, never in the runner):
     port; the source hash covers the code, and changes when files move)
 
 Before normalisation, hard_checks.check() recomputes every value in that
-seal independently (hash_oracle.py) and stops the harness on a mismatch,
-also under --update.
+seal independently (hash_oracle.py), against expectations frozen before
+the runner starts (hard_checks.before_run()), and stops the harness on a
+mismatch, also under --update.
 """
 
 import argparse
@@ -130,6 +131,7 @@ def run_scenario(name, coverage_dir=None):
     """Run one scenario. Returns {golden file name: normalised text}."""
     scenario = load_scenario(name)
     copy_dir, tree = make_copy(scenario)
+    hard_checks.before_run(tree)
     result_dir = os.path.join(copy_dir, 'result')
     os.makedirs(result_dir)
     path = os.path.join(copy_dir, 'scenario.json')
@@ -344,6 +346,8 @@ def main(argv=None):
                          'scenario to DIR/<scenario>/, including files the '
                          'golden output keeps only as a digest')
     args = ap.parse_args(argv)
+    if args.runs < 1:
+        ap.error('--runs must be at least 1')
 
     names = args.scenarios or sorted(
         f[:-5] for f in os.listdir(SCENARIOS) if f.endswith('.json'))
