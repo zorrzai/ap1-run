@@ -49,7 +49,7 @@ REPO = os.path.dirname(os.path.dirname(HERE))
 _FORBIDDEN_MODULES = ('ap1_run', 'numeric', 'seal', 'version', 'smoke_test',
                       'verify_run_seal', 'generate_findings', 'tools')
 
-_SOURCE_HASH_EXCLUDED = ('output', 'review_output', '__pycache__')
+SOURCE_HASH_EXCLUDED = ('output', 'review_output', '__pycache__')
 
 _HEX64 = re.compile(r'\A[0-9a-f]{64}\Z')
 _TIMESTAMP = re.compile(
@@ -138,7 +138,7 @@ def source_hash_files(base_dir):
             if not f.endswith('.py'):
                 continue
             rel = os.path.relpath(os.path.join(root, f), base_dir)
-            if rel.startswith(_SOURCE_HASH_EXCLUDED):
+            if rel.startswith(SOURCE_HASH_EXCLUDED):
                 continue
             found.append(rel)
     return sorted(found)

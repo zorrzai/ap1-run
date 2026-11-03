@@ -70,6 +70,13 @@ golden difference, and `--update` cannot write over it.
 `python tests/regression/selftest.py` tests these checks directly, with known
 answers.
 
+**The files the source hash covers** are listed in `source_hash_files.txt`:
+the tracked `.py` files (from `git ls-files`, tests included) that the
+`runner_source_hash` rule takes in. `check_source_files.py` compares the list
+with the tree and runs as its own CI step, so a move, a new module or a
+deletion shows as a reviewed diff of the list. It is checked at each PR head;
+a commit that changes the set updates the list (`--update`).
+
 ## Running it
 
 ```
@@ -80,6 +87,8 @@ python tests/regression/run_regression.py --update     # rewrite golden output
 python tests/regression/run_regression.py --keep DIR replay_run_e_mini
                                                        # full output, digested files too
 python tests/regression/check_imports.py               # every module imports
+python tests/regression/check_source_files.py          # source-hash file list
+python tests/regression/selftest.py                    # the harness's own checks
 python tests/regression/coverage_report.py OUTDIR      # legacy suites + scenarios
 ```
 

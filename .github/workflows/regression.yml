@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
+      - name: Check the list of files the source hash covers
+        run: python tests/regression/check_source_files.py
+
       - name: Test the harness's own checks
         run: python tests/regression/selftest.py
 
