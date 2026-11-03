@@ -6,6 +6,9 @@ and reports a combined result with both function counts and check counts.
 Usage:
     python run_all_tests.py
 
+The suites run with this clone's src/ first on PYTHONPATH, so the install
+step is not needed.
+
 Exit code 0 if all suites pass, 1 if any fail.
 A new suite is added by appending one entry to the SUITES list.
 """
@@ -92,8 +95,16 @@ def _parse_check_count(output):
 
 
 def main():
-    base = Path(__file__).parent
+    base = Path(__file__).resolve().parent
     python = sys.executable
+
+    # The suites import ap1_run. This clone's src/ goes first on their
+    # PYTHONPATH, so a bare clone runs without the install, and another
+    # clone's ap1_run installed in the same environment is never used.
+    src = str(base / 'src')
+    pythonpath = os.pathsep.join(
+        [src] + [p for p in os.environ.get('PYTHONPATH', '').split(os.pathsep)
+                 if p])
 
     print()
     print('AP-1 runner -- full test suite')
@@ -127,7 +138,8 @@ def main():
             [python, str(script_path)],
             capture_output=True, text=True, timeout=120,
             cwd=str(base),
-            env={**os.environ, 'PYTHONIOENCODING': 'utf-8'},
+            env={**os.environ, 'PYTHONIOENCODING': 'utf-8',
+                 'PYTHONPATH': pythonpath},
         )
 
         combined = proc.stdout + '\n' + proc.stderr
