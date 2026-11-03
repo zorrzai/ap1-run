@@ -31,3 +31,12 @@ score. Tests that pin today's behaviour where it is known to be
 wrong carry `@pytest.mark.finding(...)` with the finding's ID; fixing the
 defect changes the test. `tests/legacy/RETIREMENT.md` maps every check of
 the legacy suites to the tests that now cover it.
+
+## When a test may change
+
+A marked test changes only together with the fix of its finding. An
+unmarked test that pins the exact text of a report or console section may
+be rewritten when that code is refactored, but the change is still
+reviewed like any other: it has to keep checking the same behaviour. A fix
+that breaks an unmarked test has found a pin that should have been marked;
+mark it (or register the defect) rather than just updating it.
