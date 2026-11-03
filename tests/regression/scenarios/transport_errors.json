@@ -1,5 +1,6 @@
 {
   "description": "Transport and HTTP failures: rate limit and server error in round 0 and mid-loop, a dropped connection (three retries), and a non-JSON body.",
+  "seal_records": 1,
   "exercises": ["adapter errors", "UNMEASURED cells", "transport retries", "mid-loop failure", "rate limiting"],
   "extends": "clean",
   "config": {"repeat_count": "2"},

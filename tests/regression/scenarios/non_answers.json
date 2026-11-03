@@ -1,5 +1,6 @@
 {
   "description": "Responses that are not a single clear answer: empty content, a configured decline, an unrecognised decline, a refusal reciting balances, two candidate figures, null content, no figure at all.",
+  "seal_records": 1,
   "exercises": ["figure identification routing", "ADJUDICATE-* outcomes", "decline markers", "unrecognised declines", "adjudication sheets"],
   "extends": "clean",
   "config": {"repeat_count": "2"},

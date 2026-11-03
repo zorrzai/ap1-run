@@ -10,6 +10,8 @@ The runner's console output is this process's stdout. Driver messages go
 to stderr. The result directory receives:
     exit.json       exit code, or the exception type and message
     seal.json       the seal record(s) the run created
+    seal_inputs.json  what each call to the seal function was given
+                    (see snapshot()), for the hash oracle
     requests.jsonl  every request the mock endpoint received
 """
 
@@ -17,6 +19,33 @@ import json
 import os
 import sys
 import time
+from decimal import Decimal
+
+
+def snapshot(value):
+    """A typed copy of a value, safe to write as JSON: [type, payload].
+
+    Taken before the seal function runs, so nothing it or the runner does
+    later can change the evidence. Decimals keep their exact string; a
+    float or any other type is recorded as such, and the oracle refuses it.
+    """
+    if isinstance(value, bool):
+        return ['bool', value]
+    if value is None:
+        return ['none', None]
+    if isinstance(value, str):
+        return ['str', value]
+    if isinstance(value, int):
+        return ['int', value]
+    if isinstance(value, Decimal):
+        return ['decimal', str(value)]
+    if isinstance(value, float):
+        return ['float', repr(value)]
+    if isinstance(value, (list, tuple)):
+        return ['list', [snapshot(v) for v in value]]
+    if isinstance(value, dict):
+        return ['dict', [[snapshot(k), snapshot(v)] for k, v in value.items()]]
+    return ['other', type(value).__name__, repr(value)]
 
 
 def main():
@@ -68,6 +97,7 @@ def main():
 
     outcome = {}
     seals = []
+    seal_inputs = []
     try:
         import smoke_test
         # smoke_test.py may be a shim; patch the module main() lives in.
@@ -78,8 +108,16 @@ def main():
         real_seal = runner.create_seal
 
         def observed_seal(**kwargs):
+            seal_inputs.append({
+                'cwd': os.getcwd(),
+                'kwargs': {k: snapshot(v if k == 'config' or v is None
+                                       or isinstance(v, (list, dict))
+                                       else str(v))
+                           for k, v in kwargs.items()},
+                'returned': False})
             record = real_seal(**kwargs)
             seals.append(record)
+            seal_inputs[-1]['returned'] = True
             return record
         runner.create_seal = observed_seal
 
@@ -100,6 +138,10 @@ def main():
     with open(os.path.join(result_dir, 'seal.json'), 'w',
               encoding='utf-8') as f:
         json.dump(seals, f, indent=2, sort_keys=True)
+        f.write('\n')
+    with open(os.path.join(result_dir, 'seal_inputs.json'), 'w',
+              encoding='utf-8') as f:
+        json.dump(seal_inputs, f, indent=2, ensure_ascii=False)
         f.write('\n')
     with open(os.path.join(result_dir, 'requests.jsonl'), 'w',
               encoding='utf-8') as f:

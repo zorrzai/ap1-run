@@ -1,5 +1,6 @@
 {
   "description": "Chained intermediates over several rounds, several calls in one round, and intermediate assistant text that the transcript does not keep (V12-3).",
+  "seal_records": 1,
   "exercises": ["tool loop over several rounds", "D7.2(a)(iv) computed in session", "D7.2(a) reference intermediate", "release coverage", "V12-3 intermediate responses discarded"],
   "extends": "clean",
   "config": {"repeat_count": "2"},

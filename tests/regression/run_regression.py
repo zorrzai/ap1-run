@@ -31,6 +31,10 @@ Normalisation (in the comparison, never in the runner):
   - this run's seal_hash, config_hash and runner_source_hash, read from
     the seal the run actually made (the config hash covers the mock's
     port; the source hash covers the code, and changes when files move)
+
+Before normalisation, hard_checks.check() recomputes every value in that
+seal independently (hash_oracle.py) and stops the harness on a mismatch,
+also under --update.
 """
 
 import argparse
@@ -43,6 +47,8 @@ import shutil
 import subprocess
 import sys
 import tempfile
+
+import hard_checks
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
@@ -199,6 +205,7 @@ def collect(scenario, tree, result_dir, proc):
     if 'smoke_run.jsonl' in raw:
         raw['outcomes.jsonl'] = outcome_table(raw['smoke_run.jsonl'])
 
+    hard_checks.check(scenario, tree, result_dir, raw)
     seals = json.loads(_read(os.path.join(result_dir, 'seal.json')))
     return {k: normalise(v, tree, seals) for k, v in raw.items()}
 

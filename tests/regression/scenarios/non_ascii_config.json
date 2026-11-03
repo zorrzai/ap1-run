@@ -1,0 +1,13 @@
+{
+  "description": "A resolved config with non-ASCII text: a decline marker with a typographic apostrophe (U+2019), which one answer matches. The seal's config hash covers it as UTF-8 (canonical JSON with ensure_ascii=False, R0.4.3), so the hash oracle checks that rule through the real sealing path.",
+  "seal_records": 1,
+  "exercises": ["R0.4.3 canonical JSON of non-ASCII text", "decline marker with U+2019"],
+  "extends": "clean",
+  "config": {
+    "repeat_count": "1",
+    "decline_markers": ["I cannot", "I don't have enough", "unable to determine", "I'm sorry, I cannot", "I’m unable to say"]
+  },
+  "responses": {
+    "Q01/base/*": [{"say": "I’m unable to say what the monthly interest is from the information given."}]
+  }
+}

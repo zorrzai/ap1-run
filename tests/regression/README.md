@@ -49,6 +49,27 @@ run it at both commits and diff the two directories.
 The fixture, questions, ground-truth and AP-1 text hashes are kept, and so
 they are pinned.
 
+**Hard checks** run on each runner scenario before normalisation
+(`hard_checks.py`). A failure stops the harness with a message; it is never a
+golden difference, and `--update` cannot write over it.
+- `hash_oracle.py` recomputes the seal the run made, from the inputs the seal
+  function was given (`driver.py` captures them before the call): the file
+  hashes, `config_hash` from the resolved config, `runner_source_hash` from
+  its own walk of the tree the runner ran from, and `seal_hash` from the
+  expected record. The record must have exactly the expected fields and
+  values. The printed `Runner source hash:` prefix, the console's seal and
+  AP-1 text hashes, every transcript line's `seal_hash`, the summary's
+  `seal_hash`, report §1 and every hash printed in the report must agree
+  with it, and report §2's resolved config must hash to `config_hash`. The
+  oracle is standard library only and fails if any runner module has been
+  imported into the harness process.
+- Each runner scenario states `"seal_records"`: how many seal records the run
+  makes (0 for a run refused before or at sealing). A refused seal must be
+  one the contract refuses.
+
+`python tests/regression/selftest.py` tests these checks directly, with known
+answers.
+
 ## Running it
 
 ```
@@ -87,6 +108,7 @@ restructure.
 | `t3_5_constant_magnitude` | **T3-5**: `-12` and `-1` grounded by `constant_magnitude`; a sign-inverted source field for contrast |
 | `t3_38_unknown_tool` | **T3-38**: an unoffered tool trips the FATAL consistency check; no report |
 | `t3_39_crash` | **T3-39**: a non-string expression crashes the run |
+| `non_ascii_config` | a decline marker with U+2019 in the resolved config: the config hash's UTF-8 rule through the real seal |
 | `seal_refused` | AP-1 text hash mismatch: SealError before any request |
 | `config_no_tools` | config without tools: exit 1 |
 | `mini_config` | the shipped `example/config_mini.json` is refused at load today (`model-unsupported` is not a permitted omission reason) |

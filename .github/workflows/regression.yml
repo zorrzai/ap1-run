@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
+      - name: Test the harness's own checks
+        run: python tests/regression/selftest.py
+
       - name: Run regression baseline
         shell: bash
         run: |

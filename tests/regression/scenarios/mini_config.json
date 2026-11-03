@@ -1,5 +1,6 @@
 {
   "description": "The shipped example/config_mini.json, with the environment overrides of the published mini runs. Today it is refused at load: its reasoning_effort omission gives the reason 'model-unsupported', which config validation does not permit.",
+  "seal_records": 0,
   "exercises": [
     "config_mini.json",
     "config validation of omission reasons",
