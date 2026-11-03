@@ -18,9 +18,15 @@ mode-dependence in a production fixture must be disclosed per R0.4.1.
 
 ### Perturbation Check
 
-All ten derivations pass the three-way perturbation check at seal time:
-every declared source field affects the result, no undeclared field
-affects the result, and no derivation returns constants.
+All ten derivations pass a three-way perturbation check: every declared
+source field affects the result, no undeclared field affects the result,
+and no derivation returns constants. That check does not run at seal
+time: no ground-truth guard is called by a live run (T3-7 in
+`docs/REVIEW_FINDINGS.md`), and the module that held the three-way
+check, `perturbation.py`, was never called and was removed in the
+reorganisation (it is at `pre-reorg:perturbation.py`). The legacy tests
+run the seal's own `perturbation_check` on this module, which checks the
+declared fields only.
 
 ## Phase D Notes (Do Not Change Now)
 

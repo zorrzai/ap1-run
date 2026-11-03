@@ -227,6 +227,10 @@ Grouped by severity, in ID order.
   `src/ap1_run/execution/seal_constants.py:16` (`declared_constants_check`)
 - Breaks: SPEC R3.1 ("A constant-returning module is refused, perturbation named") and the SPEC §10
   rows for AP-1 v1.3 §11.9, §13.4, §13.5 marked IMPLEMENTED; README ("the run is refused")
+- For the fix: a stricter three-way check was at `pre-reorg:perturbation.py` (never called; removed
+  in the reorg). It refuses a declared field that is not in the context and an undeclared field
+  that changes the result, which `perturbation_check` lets through, but it also passes an empty
+  declaration with a constant result (its constant check runs only when fields are declared).
 
 **T3-8 · high (critical once the guards are wired) · `source_fields_check` misses undeclared reads made other than by subscript**
 - What's wrong: `TrackingAccount` overrides only `__getitem__`, so reads through `.get()`,
