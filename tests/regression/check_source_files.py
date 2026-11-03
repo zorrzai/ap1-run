@@ -34,9 +34,18 @@ def tracked_source_files():
     except (OSError, subprocess.CalledProcessError) as e:
         print(f'check_source_files: git ls-files failed: {e}', file=sys.stderr)
         raise SystemExit(2)
-    paths = [p for p in out.decode('utf-8').split('\0') if p]
-    return sorted(p for p in paths if p.endswith('.py')
-                  and not p.startswith(hash_oracle.SOURCE_HASH_EXCLUDED))
+    # Filter on bytes first: a tracked file whose name is not UTF-8 is
+    # not this check's business unless it is a .py file.
+    py = [p for p in out.split(b'\0') if p.endswith(b'.py')]
+    try:
+        paths = [p.decode('utf-8') for p in py]
+    except UnicodeDecodeError as e:
+        print(f'check_source_files: a tracked .py file name is not UTF-8, '
+              f'which the source hash cannot encode either: {e}',
+              file=sys.stderr)
+        raise SystemExit(1)
+    return sorted(p for p in paths
+                  if not p.startswith(hash_oracle.SOURCE_HASH_EXCLUDED))
 
 
 def main(argv=None):
