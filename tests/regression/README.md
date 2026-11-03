@@ -102,7 +102,9 @@ python tests/regression/selftest.py                    # the harness's own check
 python tests/regression/coverage_report.py OUTDIR      # legacy suites + scenarios
 ```
 
-It needs `requests`, and `coverage` for the coverage report. The golden files
+It needs `requests`, and `coverage` for the coverage report. CI pins
+`requests` and `urllib3` with `constraints.txt`, because the
+`transport_errors` golden output contains urllib3's own error text. The golden files
 were made on macOS with Python 3.11; CI runs this harness on Ubuntu with
 Python 3.11 and 3.12 (`regression.yml`). A full comparison of all scenarios
 takes about 30 seconds.
