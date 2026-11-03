@@ -224,6 +224,7 @@ def run_in_tree(name, scenario, coverage_dir):
     if copy_only:
         raise RuntimeError(f'{name}: {", ".join(sorted(copy_only))} '
                            'need "scratch_copy"')
+    hard_checks.before_run(REPO)
     work = tempfile.mkdtemp(prefix='ap1rt-')
     try:
         if 'command' in scenario:
@@ -236,7 +237,8 @@ def run_in_tree(name, scenario, coverage_dir):
                                         '--output-dir', output_dir]
                         + scenario.get('args', []))
         proc, result_dir = _drive(name, scenario, REPO, work, coverage_dir)
-        return collect(proc, result_dir, output_dir, [REPO, run_dir])
+        return collect(scenario, REPO, proc, result_dir, output_dir,
+                       [REPO, run_dir])
     finally:
         shutil.rmtree(work, ignore_errors=True)
 
@@ -252,7 +254,7 @@ def run_in_copy(name, scenario, coverage_dir):
                                   coverage_dir)
         output_dir = os.path.join(tree, scenario.get('output_dir', 'output'))
         default_output = os.path.join(tree, 'output')
-        return collect(proc, result_dir, output_dir, [tree],
+        return collect(scenario, tree, proc, result_dir, output_dir, [tree],
                        default_output=(default_output
                                        if output_dir != default_output
                                        else None))
@@ -307,8 +309,11 @@ def _read(path):
         return f.read()
 
 
-def collect(proc, result_dir, output_dir, roots, default_output=None):
-    """What a runner scenario produced. roots are the paths that become
+def collect(scenario, tree, proc, result_dir, output_dir, roots,
+            default_output=None):
+    """What a runner scenario produced. tree is the code tree the runner
+    ran from (the repository, or the scratch copy): the hard checks
+    recompute the source hash over it. roots are the paths that become
     <RUNDIR>; default_output, when the runner was pointed elsewhere, is
     the default output/ that must stay as the copy made it."""
     raw = {

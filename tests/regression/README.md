@@ -86,15 +86,17 @@ golden difference, and `--update` cannot write over it.
   record must have exactly the expected fields and values, and a timestamp
   that falls within the run. Each path the seal was given must be the file
   of its role (`seal_paths` in a scenario that moves them). The source hash
-  is frozen before the runner starts (`before_run`): the one passed to every
-  seal call, refused or not, must equal it, and so must the tree's after the
-  run. The printed `Runner source hash:` prefix (once per run that calls the
-  seal), the console's seal and AP-1 text hashes (once per record), every
-  transcript record's `seal_hash` (which must be present), the summary's
-  `seal_hash` and report §1 must agree with it, and report §2's resolved
-  config must hash to `config_hash`. Other 64-hex text in a report is not
-  read as a seal reference. The oracle is standard library only and fails
-  if any runner module has been imported into the harness process.
+  is frozen before the runner starts (`before_run`), over the tree the
+  runner runs from (the repository itself for a real-tree scenario, the
+  copy for a scratch-copy one): the one passed to every seal call, refused
+  or not, must equal it, and so must the tree's after the run. The printed
+  `Runner source hash:` prefix (once per run that calls the seal), the
+  console's seal and AP-1 text hashes (once per record), every transcript
+  record's `seal_hash` (which must be present), the summary's `seal_hash`
+  and report §1 must agree with it, and report §2's resolved config must
+  hash to `config_hash`. Other 64-hex text in a report is not read as a
+  seal reference. The oracle is standard library only and fails if any
+  runner module has been imported into the harness process.
 - The mock refused no request (`check_transport`): a request with any
   method but POST, to the wrong path or without the driver's bearer
   credential fails the run.
