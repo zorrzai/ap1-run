@@ -1370,10 +1370,31 @@ location is given at the head of the pull request that adds the code, with the f
   nothing reads as a pass to anything that looks only at the exit code. No published result
   depends on it; rated low because it is test tooling, not the instrument. The CI job for the
   baseline checks the summary line as well as the exit code.
-- Where: `tests/regression/run_regression.py:341-372` (`main`), at the head of the pull request
+- Where: `tests/regression/run_regression.py:348-379` (`main`), at the head of the pull request
   that adds the regression baseline
 - Breaks: no AP-1 or SPEC clause; the harness's own purpose, that a change in behaviour is
   detected (`tests/regression/README.md`)
+
+**REORG-2 · low · The regression harness took the run's own hashes as expected values**
+- What's wrong: the golden files cannot hold `seal_hash`, `config_hash` or `runner_source_hash`
+  (the config covers the mock's port, and the source hash changes whenever a file moves), so
+  `normalise` replaced them by placeholders, reading the values to replace from the seal the run
+  had just made. Nothing checked those values, so a change in how any of the three is computed
+  passed every scenario: hashing the timestamp, dropping `ap1_text_hash` from the seal hash,
+  salting the config, hashing no files and skipping `tests/` all passed 21/21. The printed
+  `Runner source hash:` prefix was normalised away the same way. No published result depends on
+  it; rated low because it is test tooling, not the instrument.
+- Where: `tests/regression/run_regression.py:185-203` (`collect`) and `:261-280` (`normalise`),
+  at `cdf698d`, the head of the pull request that adds the regression baseline before the fix
+- Breaks: no AP-1 or SPEC clause; the harness's own purpose, that a change in behaviour is
+  detected (`tests/regression/README.md`), for SPEC R0.4.3 and R1.1 (canonical hashing and the
+  seal)
+- Addressed by: fixed; commits adeb30a, 0b2df16; note: `tests/regression/hash_oracle.py`
+  recomputes every seal value independently, before normalisation and also under `--update`, and
+  `source_hash_files.txt` lists the files the source hash covers; the five changes above, and
+  others, each fail with a hash message; the checks' own tests are in
+  `tests/regression/selftest.py`, which has no `finding` marks because pytest does not exist at
+  this head.
 
 ---
 
