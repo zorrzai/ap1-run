@@ -22,6 +22,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 import driver  # noqa: E402  (snapshot() only; main() is not run)
+import hard_checks  # noqa: E402
 import hash_oracle  # noqa: E402
 
 
@@ -109,6 +110,28 @@ class SourceHash(unittest.TestCase):
         want = hashlib.sha256(
             b'a.py\x00A\x00b.py\x00B\x00pkg/c.py\x00C\x00').hexdigest()
         self.assertEqual(hash_oracle.runner_source_hash(self.root), want)
+
+
+class ReplayComparison(unittest.TestCase):
+
+    def test_equal(self):
+        self.assertIsNone(hard_checks.first_difference(
+            {'a': [1, {'b': True}]}, {'a': [1, {'b': True}]}))
+
+    def test_type_aware(self):
+        self.assertIn('bool True', hard_checks.first_difference(
+            {'a': True}, {'a': 1}))
+        self.assertIn('int 1', hard_checks.first_difference(
+            {'a': 1}, {'a': 1.0}))
+
+    def test_names_the_path(self):
+        self.assertTrue(hard_checks.first_difference(
+            {'a': [0, {'b': 'x'}]}, {'a': [0, {'b': 'y'}]}
+        ).startswith('$.a[1].b: '))
+        self.assertIn('missing from the replay',
+                      hard_checks.first_difference({'k': 1}, {}))
+        self.assertIn('2 entries in the published run, 1',
+                      hard_checks.first_difference([1, 2], [1]))
 
 
 class Independence(unittest.TestCase):

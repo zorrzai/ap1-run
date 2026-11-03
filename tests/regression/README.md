@@ -63,6 +63,11 @@ golden difference, and `--update` cannot write over it.
   with it, and report §2's resolved config must hash to `config_hash`. The
   oracle is standard library only and fails if any runner module has been
   imported into the harness process.
+- A replay must re-score its published run exactly: the replayed
+  `smoke_summary.json` equals `output/run_*/smoke_summary.json` in every
+  key, value, type and list order, except the top-level `seal_hash`
+  (`check_replay`). Any other difference is investigated, not added to the
+  exclusions.
 - Each runner scenario states `"seal_records"`: how many seal records the run
   makes (0 for a run refused before or at sealing). A refused seal must be
   one the contract refuses.
@@ -133,9 +138,12 @@ The intermediate rounds survive only as assistant messages (V12-3), so each
 one is wrapped in a standard envelope. A recorded loop that ended mid-way
 (EV-0) is replayed as a failure of the next request.
 
-The replayed `report.md` files agree with the published `output/run_e_mini`
-and `output/run_f_sol` reports in every scored figure. Only run metadata
-differs: model name, endpoint, hashes, timestamps and runner commit.
+The replayed `smoke_summary.json` files equal the published ones except the
+top-level `seal_hash`, and the harness checks this on every run (above). The
+replayed `report.md` files agree with the published `output/run_e_mini` and
+`output/run_f_sol` reports in every scored figure. Only run metadata
+differs: model name, endpoint, hashes (seal, config, runner source and
+`ground_truth_hash`), timestamps, runner commit and `runner_modified`.
 
 ## Coverage (at `77514b4`, Python 3.11, with inspect-ai installed)
 
