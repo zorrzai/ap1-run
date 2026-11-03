@@ -1378,7 +1378,7 @@ location is given at the head of the pull request that adds the code, with the f
   nothing reads as a pass to anything that looks only at the exit code. No published result
   depends on it; rated low because it is test tooling, not the instrument. The CI job for the
   baseline checks the summary line as well as the exit code.
-- Where: `tests/regression/run_regression.py:348-379` (`main`), at the head of the pull request
+- Where: `tests/regression/run_regression.py:352-383` (`main`), at the head of the pull request
   that adds the regression baseline
 - Breaks: no AP-1 or SPEC clause; the harness's own purpose, that a change in behaviour is
   detected (`tests/regression/README.md`)
