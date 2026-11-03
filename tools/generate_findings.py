@@ -19,10 +19,9 @@ from collections import Counter, defaultdict
 from decimal import Decimal, getcontext, ROUND_HALF_UP
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-try:
-    import ap1_run  # noqa: F401
-except ImportError:  # not installed: run from a clone
-    sys.path.insert(0, os.path.join(ROOT, 'src'))
+# This clone's src/ first, before any ap1_run import, so the tool uses
+# this clone's code even when another clone's ap1_run is installed.
+sys.path.insert(0, os.path.join(ROOT, 'src'))
 
 from ap1_run.reporting.report import clopper_pearson_upper_k0  # noqa: E402
 

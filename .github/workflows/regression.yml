@@ -48,3 +48,6 @@ jobs:
             echo "::error::Regression summary missing, empty or failing: '$summary'"
             exit 1
           fi
+
+      - name: Entry points use their own clone's src/
+        run: python tests/regression/check_own_src.py

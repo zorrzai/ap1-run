@@ -117,9 +117,11 @@ ap1-run                       # or: python smoke_test.py
 ```
 
 `python smoke_test.py` still works, even without the install step: it is a
-shim for the runner, which now lives in `src/ap1_run/run.py`. The runner reads
-`example/` and `reference/` and writes `output/` relative to the clone, so run
-it from a clone (an editable install), not from a wheel.
+shim for the runner, which now lives in `src/ap1_run/run.py`. It always runs
+its own clone's `src/`, even when another clone is installed in the same
+environment; so do `tools/verify_run_seal.py` and `tools/generate_findings.py`.
+The runner reads `example/` and `reference/` and writes `output/` relative to
+the clone, so run it from a clone (an editable install), not from a wheel.
 
 `run_all_tests.py` reports two columns. `verify.py` counts individual
 assertions; the other suites count test functions. Running `pytest` directly

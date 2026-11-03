@@ -29,10 +29,9 @@ import sys
 
 # Determine base_dir (ap1-runner root) from this file's location
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-try:
-    import ap1_run  # noqa: F401
-except ImportError:  # not installed: run from a clone
-    sys.path.insert(0, os.path.join(BASE_DIR, 'src'))
+# This clone's src/ first, before any ap1_run import, so the tool checks
+# with this clone's code even when another clone's ap1_run is installed.
+sys.path.insert(0, os.path.join(BASE_DIR, 'src'))
 
 from ap1_run.foundation.numeric import canonical_hash, file_hash  # noqa: E402
 

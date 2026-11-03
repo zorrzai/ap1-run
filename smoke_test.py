@@ -3,18 +3,17 @@
 `python smoke_test.py` keeps working, as documented in older material and
 in the published runs. The installed command is `ap1-run`.
 
-If the package is not installed (`pip install -e .`), src/ is put on the
-path so that a fresh clone still runs.
+This clone's src/ always goes first on the path, so the shim runs this
+clone's code even when another clone's ap1_run is installed in the same
+environment or is on PYTHONPATH. A fresh clone runs without installing.
 """
 
 import os
 import sys
 
-try:
-    import ap1_run  # noqa: F401
-except ImportError:
-    sys.path.insert(0, os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), 'src'))
+# This clone's src/ first, before any ap1_run import.
+sys.path.insert(0, os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), 'src'))
 
 from ap1_run.run import main  # noqa: E402
 
