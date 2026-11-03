@@ -601,28 +601,43 @@ def test_reclassify_session_aligned_lists_value_fed_forward_becomes_correct():
     assert out[0]['matched_against'] == 'operand_of_call_1'
 
 
+@pytest.mark.finding('S3-G2-5')
 @pytest.mark.parametrize('expressions, outcome', [
     (['', '15200*0.012', '182.4/12'], WO),
     (['15200*0.012', '', '182.4/12'], WO),
     (['15200*0.012', '182.4/12', ''], OC),
 ], ids=['leading', 'middle', 'trailing'])
-def test_reclassify_session_reads_results_and_expressions_by_index(
+def test_reclassify_session_skipped_call_shifts_the_expressions(
         expressions, outcome):
-    # Context: S3-G2-5 (the caller passes lists out of step). The function
-    # reads both lists by the same index, so the caller must align them:
-    # an extra expression before a result shifts every later lookup.
+    # S3-G2-5: the engine passes one result per calculator call with an
+    # expression but one expression per tool call ('' for a call without
+    # one), and both lists are read by the same index. From a skipped call
+    # on they are out of step, so the 182.4 that feeds '182.4/12' is not
+    # reclassified; trailing, the lists still line up for the two results.
+    # Pins the current outcome on lists out of step. A fix may align the
+    # lists in execute_item or normalise or refuse them here; these cases
+    # change with it either way (correct: OPERATION-CORRECT in all three,
+    # or a refusal). The aligned-input contract is the unmarked
+    # test_reclassify_session_aligned_lists_* tests.
     out = reclassify_session([wo('182.4'), oc('15.2')], expressions)
     assert out[0]['outcome'] == outcome
 
 
-def test_reclassify_session_shifted_expressions_can_match_a_result_to_its_own_operands():
-    # Context: S3-G2-5. With an extra leading expression, the result of
-    # '15*1' is looked up in its own operands (index 1) and call 1 is
-    # correct, so it is reclassified; with aligned lists it is not.
+@pytest.mark.finding('S3-G2-5')
+def test_reclassify_session_skipped_call_matches_a_result_to_its_own_operands():
+    # S3-G2-5: '15*1' gives 15 and feeds nothing, yet after a leading
+    # skipped call its result is looked up in its own operands, at index 1,
+    # and call 1 ('700+77') is correct. Pins the current outcome on lists
+    # out of step; correct: stays WRONG-OPERATION, as with aligned lists.
     out = reclassify_session([wo('15'), oc('777')], ['', '15*1', '700+77'])
     assert out[0]['outcome'] == OC
-    assert reclassify_session([wo('15'), oc('777')],
-                              ['15*1', '700+77'])[0]['outcome'] == WO
+
+
+def test_reclassify_session_aligned_lists_result_feeding_nothing_stays_wrong():
+    # The aligned-input contract for the case above: '15*1' feeds no later
+    # call, so its result stays WRONG-OPERATION.
+    out = reclassify_session([wo('15'), oc('777')], ['15*1', '700+77'])
+    assert out[0]['outcome'] == WO
 
 
 def test_reclassify_session_only_wrong_operation_is_reclassified():
