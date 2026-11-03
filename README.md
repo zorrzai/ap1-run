@@ -125,7 +125,7 @@ For development, `pip install -e .[dev]` adds pytest, mutmut and coverage:
 
 ```bash
 python -m pytest                            # unit tests (tests/unit/)
-python tests/regression/run_regression.py   # the regression baseline, about 30 s
+python tests/regression/run_regression.py   # the regression baseline, about 2 minutes
 python tests/mutation/run_mutation.py       # mutation scores, against tests/mutation/scores.json
 ```
 
