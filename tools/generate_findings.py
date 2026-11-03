@@ -19,8 +19,9 @@ from collections import Counter, defaultdict
 from decimal import Decimal, getcontext, ROUND_HALF_UP
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# This clone's src/ first, before any ap1_run import, so the tool uses
-# this clone's code even when another clone's ap1_run is installed.
+# This clone's src/ goes first, before any ap1_run import, so the tool
+# uses this clone's code even when another clone's ap1_run is
+# installed or on PYTHONPATH (tests/regression/check_own_src.py).
 sys.path.insert(0, os.path.join(ROOT, 'src'))
 
 from ap1_run.reporting.report import clopper_pearson_upper_k0  # noqa: E402
