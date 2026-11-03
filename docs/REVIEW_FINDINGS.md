@@ -624,7 +624,7 @@ Grouped by severity, in ID order.
   new transcript.
 - Where: `evidence.py:119-128`; `smoke_test.py:161-192`, called at `:808`
 - After the reorg: `src/ap1_run/execution/evidence.py:119-128` (`classify_invocation`);
-  `src/ap1_run/runner/summary.py:12-43` (`verify_invocation_consistency`); `src/ap1_run/run.py:283`
+  `src/ap1_run/runner/summary.py:12-43` (`verify_invocation_consistency`); `src/ap1_run/run.py:286`
   (`main`)
 - Breaks: SPEC R2.3 (NOT-INVOKED is a legitimate outcome)
 
@@ -718,8 +718,8 @@ Grouped by severity, in ID order.
   identically while being reported as a contrast. `invocation.compute_dpr` has no live caller.
   Today what is sent is single-variable by construction, so there is no live defect yet.
 - Where: `smoke_test.py:509-525`; `perturbation_guard.py:34-40`, `:87-88`; `invocation.py:140`
-- After the reorg: `src/ap1_run/runner/settings.py:116-134` (`check_condition_guard`, called at
-  `run.py:207`); `src/ap1_run/execution/perturbation_guard.py:34-40`, `:87-88`
+- After the reorg: `src/ap1_run/runner/settings.py:147-165` (`check_condition_guard`, called at
+  `run.py:210`); `src/ap1_run/execution/perturbation_guard.py:34-40`, `:87-88`
   (`check_single_variable_perturbation`); `src/ap1_run/scoring/invocation.py:140` (`compute_dpr`)
 - Breaks: AP-1 v1.3 D7.8 ("vary the instruction and nothing else … what is held constant shall be
   reported"; DPR), D7.6; SPEC R1.2, R2.3
@@ -736,7 +736,7 @@ Grouped by severity, in ID order.
 - What's wrong: a nondeterministic ground-truth module would produce values that no sealed artifact
   fixes, and nothing detects it.
 - Where: `seal.py:37-48`; `smoke_test.py:549`
-- After the reorg: `src/ap1_run/execution/seal.py:37-48` (`seal`); `src/ap1_run/run.py:224` (`main`)
+- After the reorg: `src/ap1_run/execution/seal.py:37-48` (`seal`); `src/ap1_run/run.py:227` (`main`)
 - Breaks: SPEC R1.1 ("… expected values …"), R3.1 ("Intermediates reproducible across two
   executions"); AP-1 v1.3 §13.4
 
@@ -767,7 +767,7 @@ Grouped by severity, in ID order.
 - Where: `config.py:97-104`; fallbacks `smoke_test.py:490`, `:495` (required at `config.py:23-28`,
   `:78-81`)
 - After the reorg: `src/ap1_run/foundation/config.py:97-104` (`load_config`);
-  `src/ap1_run/run.py:187`, `:192` (`main`); `src/ap1_run/foundation/config.py:23-28`
+  `src/ap1_run/run.py:190`, `:195` (`main`); `src/ap1_run/foundation/config.py:23-28`
   (`REQUIRED_FIELDS`), `:78-81` (`load_config`)
 - Breaks: SPEC R0.1; AP-1 v1.3 §6.9 ("Every evaluation shall declare its rounding policy")
 
@@ -886,7 +886,7 @@ Grouped by severity, in ID order.
   the console prints "3g. UNMEASURED CELLS: 0" beside "3a. … 1 unmeasured", and
   `smoke_summary.json` is empty here while report §10 does list them.
 - Where: `smoke_test.py:567-603`; `engine.py:72-93`
-- After the reorg: `src/ap1_run/run.py:239-261` (`main`); `src/ap1_run/runner/executions.py:45-55`
+- After the reorg: `src/ap1_run/run.py:242-264` (`main`); `src/ap1_run/runner/executions.py:45-55`
   (`record_transport_failure`); `src/ap1_run/execution/engine.py:72-93` (`execute_item`)
 - Breaks: AP-1 v1.3 §13.2
 
@@ -894,7 +894,7 @@ Grouped by severity, in ID order.
 - What's wrong: `run_e_mini` gives report §3 n=1000 and report §8 818+181=999; the UNMEASURABLE
   Q07/base/r44 appears in neither bucket.
 - Where: `smoke_test.py:932`; `report.py:411-430`; `accuracy.py:117-123`
-- After the reorg: `src/ap1_run/run.py:299` (`main`); `src/ap1_run/reporting/report.py:411-430`
+- After the reorg: `src/ap1_run/run.py:302` (`main`); `src/ap1_run/reporting/report.py:411-430`
   (`_section_scoring_proportions`); `src/ap1_run/scoring/accuracy.py:117-123` (`summarise_accuracy`)
 - Breaks: SPEC R2.1
 
@@ -906,7 +906,7 @@ Grouped by severity, in ID order.
   would refuse, into the sealed config.
 - Where: `engine.py:172-236` (`max_turns=10`); `smoke_test.py:404-411`
 - After the reorg: `src/ap1_run/execution/engine.py:172-236` (`_drive_tool_loop`);
-  `src/ap1_run/runner/settings.py:99-106` (`apply_sampling_overrides`)
+  `src/ap1_run/runner/settings.py:130-137` (`apply_sampling_overrides`)
 - Breaks: SPEC R0.1
 
 **T3-68 · low · `seal()` accepts an empty or `"placeholder"` AP-1 text hash, or no text path at all**
@@ -957,8 +957,8 @@ Grouped by severity, in ID order.
   window between load and hash, and `gt_module.__file__` is never compared with the sealed path.
   This, not the absence of `verify_seal`, is the real exposure (see T3-17).
 - Where: `smoke_test.py:420-428` vs `:476-483` vs `:511-512`
-- After the reorg: `src/ap1_run/run.py:119-127`, `:172-180` (`main`);
-  `src/ap1_run/runner/settings.py:120-121` (`check_condition_guard`)
+- After the reorg: `src/ap1_run/run.py:122-130`, `:175-183` (`main`);
+  `src/ap1_run/runner/settings.py:151-152` (`check_condition_guard`)
 - Breaks: SPEC R1.1 (seal what is executed)
 
 **T3-73 · low · SPEC lags the code**
@@ -989,7 +989,7 @@ Grouped by severity, in ID order.
   collision is detected at run time rather than at seal.
 - Where: SPEC R4.1; `smoke_test.py:617-625`, `:561`
 - After the reorg: `src/ap1_run/runner/executions.py:74-82` (`score_execution`);
-  `src/ap1_run/run.py:233` (`main`)
+  `src/ap1_run/run.py:236` (`main`)
 - Breaks: SPEC R2.0, R3.1, R4.1; AP-1 v1.3 §6.8
 
 **T3-76 · low · KNOWN_ISSUES.md is stale**
@@ -1022,8 +1022,8 @@ Grouped by severity, in ID order.
   with `config_mini.json` is misled; report §2 is the only record of what was sent.
   `config.demo.json` is read by nothing.
 - Where: `smoke_test.py:368`, `:373-416`; `example/config_mini.json:17`; `config.py:179-182`
-- After the reorg: `src/ap1_run/run.py:111` (`main`; the path is now the `--config` option, default
-  at `settings.py:36-38`); `src/ap1_run/runner/settings.py:68-111` (`apply_sampling_overrides`);
+- After the reorg: `src/ap1_run/run.py:114` (`main`; the path is now the `--config` option, default
+  at `settings.py:41-43`); `src/ap1_run/runner/settings.py:99-142` (`apply_sampling_overrides`);
   `src/ap1_run/foundation/config.py:179-182` (`_validate_sampling`)
 
 **T3-80 · low · Cosmetic and stale items on the live path**
@@ -1032,7 +1032,7 @@ Grouped by severity, in ID order.
 - Where: `smoke_test.py:884`, `:7`, `:357`
 - After the reorg: `src/ap1_run/runner/console.py:93` (`print_run_report`); `src/ap1_run/run.py:7`
   (module docstring; the move rewrote it, and it now names `output/`);
-  `src/ap1_run/runner/settings.py:18` (`DEFAULT_MODEL`, read at `:61` in `endpoint_and_model`)
+  `src/ap1_run/runner/settings.py:19` (`DEFAULT_MODEL`, read at `:92` in `endpoint_and_model`)
 
 ### Info
 
@@ -1163,7 +1163,7 @@ does not arise under v1.3. V12-9 to V12-12 were candidates that passed and are n
   D4 item at all. Excluding them from the D7.1 denominator is correct; not running them is the
   defect. D4 is declared NOT MEASURED, so no false claim is made.
 - Where: `smoke_test.py:550-557`; `engine.py:47-61`; `adjudication.py:97-101`
-- After the reorg: `src/ap1_run/run.py:226-230` (`main`); `src/ap1_run/runner/executions.py:37-42`
+- After the reorg: `src/ap1_run/run.py:229-233` (`main`); `src/ap1_run/runner/executions.py:37-42`
   (`record_underivable`); `src/ap1_run/execution/engine.py:47-61` (`execute_item`);
   `src/ap1_run/reporting/adjudication.py:97-101` (`generate_sheets`)
 - Breaks: AP-1 v1.2 §11.2 (non-computable items are the D4 instrument), D4 Method, AP-1 v1.2 §11.4;
@@ -1204,8 +1204,8 @@ does not arise under v1.3. V12-9 to V12-12 were candidates that passed and are n
   the seal and report say "v1.2" while `ap1_text_hash` is the v1.3 draft's and every rule applied is
   v1.3's. No field binds `ap1_version` to the sealed text.
 - Where: `smoke_test.py:474-481`; `seal.py:43`, `:50-63`; `report.py:73`; `adjudication.py:88`
-- After the reorg: `src/ap1_run/run.py:172-180` (`main`; the path is now the `--ap1-text` option,
-  default `AP1_TEXT` at `settings.py:21`); `src/ap1_run/execution/seal.py:43`, `:50-63` (`seal`);
+- After the reorg: `src/ap1_run/run.py:175-183` (`main`; the path is now the `--ap1-text` option,
+  default `AP1_TEXT` at `settings.py:22`); `src/ap1_run/execution/seal.py:43`, `:50-63` (`seal`);
   `src/ap1_run/reporting/report.py:73` (`generate_report`);
   `src/ap1_run/reporting/adjudication.py:88` (`generate_sheets`)
 - Breaks: AP-1 v1.2 §0.4 ("A claim of compliance must cite the specific version evaluated
