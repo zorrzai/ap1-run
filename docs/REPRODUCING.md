@@ -106,11 +106,23 @@ checks `.py` files out with LF; the seals hashed the ground-truth module with
 CRLF (FINDINGS_ERRATA N2). The `NOTE` the script prints after this mismatch
 names the August corrections; for the September seals the cause is line
 endings only. To check the module too, restore CRLF, verify again, and put
-the module back:
+the module back. The first line turns every line ending into CRLF, so
+running it twice does no harm.
+
+At `4cfe283`:
 
 ```bash
-python -c "p='example/ground_truth_example.py'; b=open(p,'rb').read(); open(p,'wb').write(b.replace(b'\n', b'\r\n'))"
-python tools/verify_run_seal.py output/run_e_mini    # at 4cfe283: python verify_run_seal.py ...
+python -c "p='example/ground_truth_example.py'; b=open(p,'rb').read(); open(p,'wb').write(b.replace(b'\r\n', b'\n').replace(b'\n', b'\r\n'))"
+python verify_run_seal.py output/run_e_mini
+python verify_run_seal.py output/run_f_sol
+git checkout -- example/ground_truth_example.py
+```
+
+On the current tree:
+
+```bash
+python -c "p='example/ground_truth_example.py'; b=open(p,'rb').read(); open(p,'wb').write(b.replace(b'\r\n', b'\n').replace(b'\n', b'\r\n'))"
+python tools/verify_run_seal.py output/run_e_mini
 python tools/verify_run_seal.py output/run_f_sol
 git checkout -- example/ground_truth_example.py
 ```
