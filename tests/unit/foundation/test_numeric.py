@@ -636,6 +636,22 @@ def test_quantise_half_up_explicit():
     assert str(quantise(D('2.5'), 0, 'ROUND_HALF_UP')) == '3'
 
 
+@pytest.mark.parametrize('value, rounding, expected', [
+    ('1.005', 'ROUND_HALF_UP', '1.01'),
+    ('1.005', 'ROUND_HALF_EVEN', '1.00'),
+    ('1.015', 'ROUND_HALF_UP', '1.02'),
+    ('1.015', 'ROUND_HALF_EVEN', '1.02'),
+    ('-1.005', 'ROUND_HALF_UP', '-1.01'),
+    ('-1.005', 'ROUND_HALF_EVEN', '-1.00'),
+])
+def test_quantise_tie_at_third_decimal_follows_the_named_mode(
+        value, rounding, expected):
+    # A 5 at the third decimal is where the two modes part: swapping one
+    # mode for the other fails here.
+    assert quantise(D(value), 2, rounding) == D(expected)
+    assert str(quantise(D(value), 2, rounding)) == expected
+
+
 def test_quantise_pads_to_places():
     assert str(quantise(D('2'), 2)) == '2.00'
 

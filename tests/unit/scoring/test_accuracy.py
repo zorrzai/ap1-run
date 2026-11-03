@@ -111,6 +111,19 @@ def test_score_accuracy_difference_is_absolute():
     assert score(figure(AUTO_MATCH, D('15.10')))['difference'] == D('0.10')
 
 
+@pytest.mark.req('R2.1')
+@pytest.mark.parametrize('released, outcome', [
+    ('15.25', CORRECT), ('15.15', CORRECT),
+    ('15.26', INCORRECT), ('15.14', INCORRECT),
+])
+def test_score_accuracy_difference_equal_to_tolerance_is_correct(
+        released, outcome):
+    # The tolerance bound is inclusive: a difference of exactly 0.05 with
+    # tolerance 0.05 is correct, one hundredth more is not.
+    r = score(figure(AUTO_MATCH, D(released)), tol=D('0.05'))
+    assert r['outcome'] == outcome
+
+
 @pytest.mark.finding('T3-78')
 def test_score_accuracy_tolerance_bound_is_inclusive():
     # Q07 round-each (777.42) against round-once (777.41) with the shipped
