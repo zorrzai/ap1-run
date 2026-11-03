@@ -1,5 +1,6 @@
 {
   "description": "The clean run with every input and the output moved: --config, --fixture-dir, --output-dir and --ap1-text point at copies elsewhere in the tree. Everything but the printed paths matches clean, and the default output/ is left empty.",
+  "seal_records": 1,
   "exercises": ["ap1-run --config --fixture-dir --output-dir --ap1-text"],
   "extends": "clean",
   "copy_paths": {
