@@ -164,6 +164,13 @@ be overwritten by mistake. The AP-1 text must be the one the seal expects. The
 runner still takes its version and source hash from the clone, so run it from
 a clone (an editable install), not from a wheel.
 
+Two limits for now: `tools/verify_run_seal.py` checks a run only against
+`example/` and `reference/`, so a run made with other inputs fails
+verification even when its seal is sound (S3-G8-4); and keep fixture copies
+outside the clone, because the source hash covers every `.py` file in it, so
+a copied `ground_truth_example.py` changes `runner_source_hash` and the run
+is reported as modified (T3-70).
+
 `run_all_tests.py` reports two columns. `verify.py` counts individual
 assertions; the other suites count test functions. Running pytest on
 `tests/legacy/` directly reports the function count only — both numbers are
