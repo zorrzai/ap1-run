@@ -1203,7 +1203,10 @@ def test_declared_limitations_text():
 
 # -- _format_dim_result ---------------------------------------------------
 
+@pytest.mark.finding('T3-29', 'T3-4')
 def test_format_dim_result_d2_and_d7_point_to_sections():
+    # The helper behind the D2 and D7 rows of the section-level tests
+    # marked T3-4 and T3-29: fixing either changes these strings.
     assert report._format_dim_result('D2', {'x': 1}) == \
         'See \u00a79 D2 Mechanism Classes'
     assert report._format_dim_result('D7', {'x': 1}) == \

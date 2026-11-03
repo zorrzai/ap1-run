@@ -502,8 +502,11 @@ def test_extract_percent_with_space():
     assert tokens('rate 3 %') == [('3', True, '', '3 %')]
 
 
+@pytest.mark.finding('S3-G1-5')
 def test_extract_adjacent_tokens_both_kept():
     # T3-55: a mutant dropping '-3' from '5-3' survived the legacy suites.
+    # S3-G1-5: the '-' here is a subtraction, so '-3' is the defect; the
+    # fix changes this test.
     assert tokens('5-3') == [('5', False, '', '5'), ('-3', False, '', '-3')]
 
 
