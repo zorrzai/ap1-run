@@ -204,6 +204,7 @@ def test_surface_values_prose_message_without_content_is_empty():
                                     {'choices': [{}]}], 'prose') == ['', '']
 
 
+@pytest.mark.finding('T3-4')
 def test_surface_values_figures_without_tool_calls_is_the_content():
     assert _extract_surface_values(
         [response('$15.20'), response('$1', []), response('$2', None),
@@ -222,12 +223,14 @@ def test_surface_values_figures_with_tool_calls_is_first_call_arguments():
                                    'figures') == ['{"expression": "15200 * 0.012"}']
 
 
+@pytest.mark.finding('T3-4')
 def test_surface_values_figures_tool_call_without_arguments_is_empty():
     assert _extract_surface_values(
         [response('x', [{'function': {}}]), response('x', [{}])],
         'figures') == ['', '']
 
 
+@pytest.mark.finding('T3-4')
 def test_surface_values_figures_arguments_are_stringified():
     assert _extract_surface_values(
         [response('x', [{'function': {'arguments': {'expression': '1'}}}])],

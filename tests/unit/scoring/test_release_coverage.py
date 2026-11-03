@@ -92,6 +92,7 @@ def test_parse_tool_returns_accepts_nan():
 
 # -- check_release_coverage: unobservable -----------------------------------
 
+@pytest.mark.finding('S3-G5-1')
 def test_release_coverage_no_tool_calls_is_unobservable():
     assert check_release_coverage([], [D('430.75')], D('430.75')) == {
         'outcome': 'COVERAGE-UNOBSERVABLE',
@@ -115,6 +116,7 @@ def test_release_coverage_unobservable_lists_candidates_as_ungoverned():
     assert r['ungoverned_token_count'] == 0
 
 
+@pytest.mark.finding('S3-G5-1')
 def test_release_coverage_calls_without_parseable_returns_are_unobservable():
     calls = [{'return_value': json.dumps({'error': 'division by zero'})}]
     assert check_release_coverage(calls, [D('430.75')], D('430.75')) == {

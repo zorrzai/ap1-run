@@ -323,6 +323,7 @@ def test_resolve_step4_ungrounded_prior_return_is_originated():
         5, 'computed_in_session_ungrounded', near_miss_finding=None)
 
 
+@pytest.mark.finding('T3-57')
 def test_resolve_step4_first_matching_prior_return_decides():
     prior = [{'value': D('7'), 'grounded': False},
              {'value': D('7'), 'grounded': True}]

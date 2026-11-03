@@ -146,6 +146,7 @@ def test_summary_evidence_class_counts_and_detail():
     assert s['item_evidence'] is findings
 
 
+@pytest.mark.finding('T3-11')
 def test_summary_invocation_figures_per_condition():
     results = [
         executed(condition='base', invocation_outcome='INVOKED'),
@@ -163,12 +164,14 @@ def test_summary_invocation_figures_per_condition():
     }
 
 
+@pytest.mark.finding('T3-1')
 def test_summary_invocation_figures_without_condition():
     s = build_summary([{'status': 'EXECUTED'}], [])
     assert s['invocation_figures'] == {
         'd7_invocation_': {'failures': 0, 'n': 1, 'rate': '1/1'}}
 
 
+@pytest.mark.finding('T3-63')
 def test_summary_operation_correctness_and_wrong_operation_split():
     def oc(*outcomes):
         return [{'outcome': o} for o in outcomes]
@@ -210,6 +213,7 @@ def prov(outcome, *resolutions, originated=()):
             'originated_operands': list(originated)}
 
 
+@pytest.mark.finding('T3-16', 'T3-5')
 def test_summary_operand_provenance_counts():
     results = [
         executed('Q01', 'base', provenance_results=[
@@ -245,6 +249,7 @@ def test_summary_operand_provenance_counts():
          'value': '7', 'expression': '7*2'}]
 
 
+@pytest.mark.finding('T3-35')
 def test_summary_non_outcome_cells():
     results = [
         executed(),
@@ -276,6 +281,7 @@ def test_consistency_checks_rows_after_a_non_executed_row():
         ])
 
 
+@pytest.mark.finding('T3-1', 'T3-11', 'T3-63')
 def test_summary_counts_accumulate_after_non_executed_rows():
     def oc(outcome):
         return [{'outcome': outcome}]

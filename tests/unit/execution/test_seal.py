@@ -72,6 +72,7 @@ def make_seal(files, config=CONFIG, **kwargs):
 
 # -- seal(): the record --------------------------------------------------
 
+@pytest.mark.finding('T3-68', 'T3-47', 'T3-48')
 def test_seal_record_without_ap1_text(files, frozen):
     record = make_seal(files, runner_source_hash='f' * 64)
     body = {
@@ -93,6 +94,7 @@ def test_seal_record_without_ap1_text(files, frozen):
     assert frozen.calls == [timezone.utc]
 
 
+@pytest.mark.finding('T3-68')
 def test_seal_empty_config_gives_blank_fields(files, frozen):
     record = make_seal(files, config={})
     for key in ('ap1_version', 'ap1_version_doi', 'runner_version_tag',
@@ -458,6 +460,7 @@ def test_perturbation_check_no_items_returns_empty_list():
     assert perturbation_check(mod, FIXTURE, {}) == []
 
 
+@pytest.mark.finding('S3-G3-3')
 @pytest.mark.req('R3.1')
 def test_perturbation_check_baseline_raising_is_a_failure():
     def compute(item_id, ctx):
@@ -466,6 +469,7 @@ def test_perturbation_check_baseline_raising_is_a_failure():
         perturbation_check(module(compute), FIXTURE, questions('Q01'))
 
 
+@pytest.mark.finding('S3-G3-3')
 def test_perturbation_check_baseline_failure_does_not_stop_later_items():
     def compute(item_id, ctx):
         if item_id == 'Q01':
@@ -475,6 +479,7 @@ def test_perturbation_check_baseline_failure_does_not_stop_later_items():
         perturbation_check(module(compute), FIXTURE, questions('Q01', 'Q02'))
 
 
+@pytest.mark.finding('S3-G3-3')
 def test_perturbation_check_perturbed_raising_is_a_failure():
     def compute(item_id, ctx):
         if ctx['acct']['balance'] != '100':
@@ -514,6 +519,7 @@ def test_perturbation_check_constant_module_passes_with_vacuous_declaration(
 
 @pytest.mark.parametrize('vacuous', [
     'nope.balance', 'acct.nope', 'balance', 'acct.kind'])
+@pytest.mark.finding('T3-7')
 def test_perturbation_check_vacuous_field_does_not_stop_later_fields(vacuous):
     with pytest.raises(SealError) as exc:
         perturbation_check(module(constant([vacuous, 'acct.balance'])),
@@ -521,6 +527,7 @@ def test_perturbation_check_vacuous_field_does_not_stop_later_fields(vacuous):
     assert str(exc.value).endswith('no effect: acct.balance')
 
 
+@pytest.mark.finding('T3-7')
 def test_perturbation_check_no_declared_fields_key_checks_nothing():
     mod = module(lambda i, ctx: {'final': Decimal('42')})
     assert perturbation_check(mod, FIXTURE, questions('Q01')) == []
@@ -533,6 +540,7 @@ def test_perturbation_check_final_none_skips_item():
     assert_only_q09_fails(constant(['acct.balance'], final=None), 'Q01')
 
 
+@pytest.mark.finding('T3-7', 'S3-G3-3')
 def test_perturbation_check_returns_empty_list_when_nothing_fails():
     # The failures list is only ever returned empty: any failure raises.
     mod = module(constant(['acct.kind']))
@@ -628,6 +636,7 @@ def test_source_fields_check_compute_raising_reported_as_empty_access():
         'Q01: accessed []')
 
 
+@pytest.mark.finding('S3-G3-3')
 def test_source_fields_check_raising_item_does_not_stop_later_items():
     def compute(item_id, ctx):
         if item_id == 'Q01':

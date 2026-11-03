@@ -93,6 +93,7 @@ def test_send_returns_raw_response_unmodified(transport):
     assert raw is OK
 
 
+@pytest.mark.finding('T3-52')
 def test_send_minimal_body_and_headers(transport):
     t, _, _ = ok_send(transport)
     assert t.calls == [{
@@ -150,6 +151,7 @@ def test_send_non_numeric_sampling_value_sent_as_is(transport):
                                           'stop': "['\\n']"}
 
 
+@pytest.mark.finding('S3-G1-19')
 def test_send_infinite_sampling_value_sent_as_string(transport):
     # int(Decimal('Infinity')) raises, and the except keeps the text.
     t, _, _ = ok_send(transport, sampling={'max_tokens': 'Infinity'})

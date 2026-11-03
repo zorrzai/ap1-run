@@ -1,5 +1,6 @@
 """Unit tests for the runner's console report, compared as exact text."""
 
+import pytest
 
 from ap1_run.runner.console import print_run_report, print_scoring_report
 
@@ -26,6 +27,7 @@ def run_report(capsys, all_results, conditions=('base',), **lists):
 HEADER = f'\n{RULE}\nSMOKE TEST REPORT\n{RULE}\n\nDISCLAIMER TEXT\n\n'
 
 
+@pytest.mark.finding('T3-80')
 def test_run_report_with_no_results(capsys):
     assert run_report(capsys, [], conditions=['base', 'instruction_removed']) \
         == (HEADER +
@@ -199,6 +201,7 @@ PROVENANCE = (
     '  OPERAND-ORIGINATED: 4\n')
 
 
+@pytest.mark.finding('T3-16')
 def test_scoring_report_full(capsys):
     d1 = {'auto_scored_n': 50, 'adjudicated_n': 10, 'correct': 40,
           'incorrect': 8, 'no_figure': 2, 'accuracy_rate': '40/50'}
@@ -221,6 +224,7 @@ def test_scoring_report_full(capsys):
         '  UNMEASURED: 1\n' + PROVENANCE)
 
 
+@pytest.mark.finding('T3-16')
 def test_scoring_report_defaults_when_values_are_missing(capsys):
     print_scoring_report({'n': 0}, {}, None, {})
     assert capsys.readouterr().out == (
@@ -244,6 +248,7 @@ def test_scoring_report_defaults_when_values_are_missing(capsys):
         '  OPERAND-ORIGINATED: 0\n')
 
 
+@pytest.mark.finding('T3-16')
 def test_scoring_report_without_d1_summary(capsys):
     print_scoring_report({}, {}, None, SUMMARY)
     assert capsys.readouterr().out == (
@@ -251,6 +256,7 @@ def test_scoring_report_without_d1_summary(capsys):
         '\n3k. D2 REPRODUCIBILITY:\n' + PROVENANCE)
 
 
+@pytest.mark.finding('T3-63')
 def test_run_report_single_execution(capsys):
     # Thresholds at one: one scored figure, one execution in a condition,
     # one wrong operation.

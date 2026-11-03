@@ -136,6 +136,7 @@ def test_transcription_sign_inversion_is_altered():
 
 # -- comparison under a declared quantisation policy ------------------------
 
+@pytest.mark.finding('V12-6')
 @pytest.mark.req('R2.5')
 def test_transcription_difference_within_quantisation_is_exact():
     assert check_transcription(

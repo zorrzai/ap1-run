@@ -53,6 +53,7 @@ def test_measure_invocation_empty_list_has_no_classes_and_no_warning():
         'cross_class_warning': None}
 
 
+@pytest.mark.finding('T3-11')
 def test_measure_invocation_one_class_counts_invoked_and_not_invoked():
     r = measure_invocation([item(True), item(True), item(False)])
     assert r['per_class'] == {EV_2: {
@@ -63,6 +64,7 @@ def test_measure_invocation_one_class_counts_invoked_and_not_invoked():
     assert r['cross_class_warning'] is None
 
 
+@pytest.mark.finding('T3-11')
 @pytest.mark.req('R2.3')
 def test_measure_invocation_reports_each_evidence_class_separately():
     r = measure_invocation([item(True, EV_2), item(False, EV_1),
@@ -128,6 +130,7 @@ def test_measure_invocation_unobservable_mixed_into_class_dilutes_rate():
 
 # -- _summarise_class --------------------------------------------------------
 
+@pytest.mark.finding('S3-G7-1')
 def test_summarise_class_truthy_non_bool_invoked_is_in_no_bucket():
     # 'invoked' must be exactly True, False or None; 1 or 'yes' counts in n only.
     s = _summarise_class([{'invoked': 1}, {'invoked': 0}], EV_2)
@@ -136,6 +139,7 @@ def test_summarise_class_truthy_non_bool_invoked_is_in_no_bucket():
     assert s['failure_rate'].startswith('0/2 failures;')
 
 
+@pytest.mark.finding('T3-81')
 def test_summarise_class_all_not_invoked_reports_full_failure_rate():
     s = _summarise_class([{'invoked': False}] * 4, EV_1)
     assert s == {'evidence_class': EV_1, 'n': 4, 'invoked': 0,
@@ -159,12 +163,14 @@ def test_format_rate_zero_failures_n1_states_95_percent_bound():
         '0/1 failures; one-sided 95% upper bound on the failure rate 95.0%')
 
 
+@pytest.mark.finding('T3-61')
 @pytest.mark.req('R2.3')
 def test_format_rate_zero_failures_below_30_omits_rule_of_three():
     assert format_rate(0, 29) == (
         '0/29 failures; one-sided 95% upper bound on the failure rate 9.8%')
 
 
+@pytest.mark.finding('T3-61')
 @pytest.mark.req('R2.3')
 def test_format_rate_zero_failures_at_30_adds_rule_of_three():
     assert format_rate(0, 30) == (
@@ -216,15 +222,18 @@ def test_format_rate_treats_n_as_independent_trials():
     assert format_rate(0, 10).endswith('failure rate 25.9%')
 
 
+@pytest.mark.finding('T3-81')
 def test_format_rate_nonzero_failures_prints_count_and_percent():
     assert format_rate(3, 50) == '3/50 (6.0%)'
 
 
+@pytest.mark.finding('T3-81')
 def test_format_rate_nonzero_percent_rounds_half_even():
     # 1/16 = 6.25 %; the context rounding (half-even) gives 6.2 %.
     assert format_rate(1, 16) == '1/16 (6.2%)'
 
 
+@pytest.mark.finding('T3-81')
 def test_format_rate_failures_above_n_are_not_refused():
     assert format_rate(5, 3) == '5/3 (166.7%)'
 

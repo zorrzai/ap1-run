@@ -104,6 +104,7 @@ def test_optional_fields():
         'runner_modified']
 
 
+@pytest.mark.finding('V12-7')
 def test_minimum_n_table():
     assert MINIMUM_N == {'D1': {'type': 'per_category', 'min': 10},
                          'D5': {'type': 'total', 'min': 20},
@@ -232,12 +233,14 @@ def test_load_config_missing_field_reported_before_unknown_field(load):
         "missing required field: 'model'"
 
 
+@pytest.mark.finding('S3-G1-15')
 def test_load_config_unknown_field_refused(load):
     assert refused(load, foo='x') == (
         "unrecognised top-level field: 'foo'. "
         f"Permitted top-level fields: {PERMITTED_LIST}")
 
 
+@pytest.mark.finding('S3-G1-15')
 def test_load_config_top_level_sampling_param_suggests_sampling(load):
     assert refused(load, temperature='0') == (
         "unrecognised top-level field: 'temperature'. Sampling parameters "

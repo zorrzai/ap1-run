@@ -101,6 +101,7 @@ def test_sheets_counts_items_and_two_sheets_each():
         '\nTotal sheets: 6 (2 per item, for 2 scorers)\n')
 
 
+@pytest.mark.finding('T3-36')
 def test_sheets_two_copies_per_item_with_shared_item_number():
     text = sheets_for([record(), record('Q02', 'instruction_removed')])
     headings = re.findall(r'\n## (.*)\n', text)
@@ -211,6 +212,7 @@ def test_sheets_falsy_error_state_does_not_skip():
     assert 'Total items requiring adjudication: 1' in text
 
 
+@pytest.mark.finding('T3-36')
 def test_sheets_record_without_condition_reads_unknown():
     rec = record()
     del rec['condition']
@@ -521,6 +523,7 @@ def test_sheet_without_coverage_has_no_finding():
     assert 'Release Coverage Finding' not in one_sheet(coverage_records=[])
 
 
+@pytest.mark.finding('T3-37')
 def test_sheets_coverage_joined_on_item_and_condition():
     text = sheets_for(
         [record()],
@@ -534,6 +537,7 @@ def test_sheets_coverage_joined_on_item_and_condition():
     assert 'other condition' not in text
 
 
+@pytest.mark.finding('T3-37')
 def test_sheets_coverage_on_record_without_condition_joins_unknown():
     rec = record()
     del rec['condition']

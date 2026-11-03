@@ -34,6 +34,7 @@ def test_all_dimensions_are_d1_to_d7_in_order():
 
 # -- clopper_pearson_upper_k0 ---------------------------------------------
 
+@pytest.mark.finding('T3-61')
 def test_clopper_pearson_k0_is_one_minus_alpha_to_one_over_n():
     assert clopper_pearson_upper_k0(10, 0.05) == 1.0 - 0.05 ** (1.0 / 10)
     assert clopper_pearson_upper_k0(10, 0.05) == pytest.approx(0.25887,
@@ -44,6 +45,7 @@ def test_clopper_pearson_k0_default_alpha_is_five_percent():
     assert clopper_pearson_upper_k0(20) == clopper_pearson_upper_k0(20, 0.05)
 
 
+@pytest.mark.finding('T3-61')
 def test_clopper_pearson_k0_n1_is_one_minus_alpha():
     assert clopper_pearson_upper_k0(1, 0.1) == pytest.approx(0.9)
 
@@ -55,6 +57,7 @@ def test_clopper_pearson_k0_n_not_positive_is_nan(n):
 
 # -- generate_report: header and section order ----------------------------
 
+@pytest.mark.finding('T3-45')
 def test_report_header_names_version_doi_and_model():
     text = generate_report(summary={}, config=CONFIG, seal_record={})
     assert re.match(
@@ -388,6 +391,7 @@ def test_d73_without_data_says_so_for_both_parts():
         '*No release coverage data available.*\n')
 
 
+@pytest.mark.finding('T3-26')
 def test_d73_transcription_counts_and_percentages():
     text = report._section_d73({'transcription_results': [
         tr('TRANSCRIBED-EXACT'), tr('TRANSCRIBED-EXACT'),
@@ -520,6 +524,7 @@ def test_clopper_pearson_section_zero_failures_shows_bound():
         '')
 
 
+@pytest.mark.finding('T3-11')
 def test_clopper_pearson_section_zero_failures_ignores_given_rate():
     text = report._section_clopper_pearson({'invocation_figures': {
         'm': {'n': 500, 'rate': 'whatever'}}})
@@ -556,6 +561,7 @@ def test_d72a_audit_without_entries_says_so():
         '*No originated operands detected.*\n')
 
 
+@pytest.mark.finding('T3-64')
 def test_d72a_audit_renders_operation_and_operand_fields():
     text = report._section_d72a_audit({'originated_operand_audit': [
         {'item_id': 'Q03', 'condition': 'base', 'operation': 'mul',
@@ -583,6 +589,7 @@ def test_d72a_audit_live_entries_render_question_marks():
             '| originated |') in text
 
 
+@pytest.mark.finding('T3-64')
 def test_d72a_audit_missing_fields_read_question_marks():
     text = report._section_d72a_audit({'originated_operand_audit': [{}]})
     assert '| ? | ? | ? | `?` | `?` | ? |\n' in text
@@ -610,6 +617,7 @@ def test_d72b_counts_in_fixed_order_with_total():
         '')
 
 
+@pytest.mark.finding('T3-63')
 def test_d72b_wrong_operation_split_shown_when_non_zero():
     text = report._section_d72b_counts({
         'operation_correctness_counts': {'WRONG-OPERATION': 3},
@@ -709,6 +717,7 @@ def test_provenance_split_keys_missing_read_zero():
     assert '| 5 | Originated, no traceable basis | 0 |' in text
 
 
+@pytest.mark.finding('T3-16')
 def test_provenance_outcomes_only_shows_dashes_for_percentages():
     text = report._section_operand_provenance({
         'provenance_outcomes': {'OPERANDS-GROUNDED': 2}})
@@ -809,6 +818,7 @@ def test_scoring_proportions_d1_proportion_two_decimals():
     assert '- Auto-scored proportion: 1/3 = 33.33%' in text
 
 
+@pytest.mark.finding('T3-66')
 def test_scoring_proportions_d1_without_counts_or_rate():
     text = report._section_scoring_proportions({'d1_results': {'n': 5}})
     assert text == md(
@@ -864,6 +874,7 @@ def test_scoring_proportions_d7_without_counts():
                             '- Total: 0', ''))
 
 
+@pytest.mark.finding('T3-33')
 def test_scoring_proportions_d1_then_d7():
     text = report._section_scoring_proportions({
         'd1_results': {'auto_scored_n': 1},
@@ -899,6 +910,7 @@ def test_d2_cap_reason_shown_before_note():
         '*No D2 results available.*\n')
 
 
+@pytest.mark.finding('T3-4')
 def test_d2_surfaces_table_sorted_with_basis():
     text = report._section_d2_mechanisms({'d2_results': {'surfaces': {
         'prose': {'mechanism': 'STRUCTURAL', 'operator_declared': True,
@@ -961,6 +973,7 @@ def test_cells_from_summary_listed():
         '')
 
 
+@pytest.mark.finding('T3-35')
 def test_cells_from_transcript_error_state_and_ev0():
     text = report._section_unmeasured_cells({}, [
         {'item_id': 'Q02', 'condition': 'base',
@@ -1175,6 +1188,7 @@ def test_unmeasured_dimensions_all_unclaimed():
     assert 'evaluation and require human adjudication:' in text
 
 
+@pytest.mark.finding('T3-29')
 def test_unmeasured_dimensions_all_claimed():
     assert report._section_unmeasured_dimensions(
         {'dimensions_claimed': ALL_DIMENSIONS}) == md(
@@ -1279,6 +1293,7 @@ def test_cells_duplicate_does_not_stop_later_cells():
     assert '| Q02 | base | VOID |' in text
 
 
+@pytest.mark.finding('T3-35')
 def test_cells_ev0_record_without_ids_reads_question_marks():
     text = report._section_unmeasured_cells({}, [
         {'evidence_class': 'EV-0 UNOBSERVABLE'}])

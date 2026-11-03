@@ -461,6 +461,7 @@ def test_extract_trailing_currency_longest_symbol_first():
         ('5', False, 'USD', '5USD')]
 
 
+@pytest.mark.finding('S3-G1-6')
 def test_extract_symbol_with_regex_metacharacters_is_literal():
     assert tokens('cost $5 or x5', currency_symbols=['$']) == [
         ('5', False, '$', '$5'), ('5', False, '', '5')]

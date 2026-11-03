@@ -113,6 +113,7 @@ def test_resolve_version_git_commands_run_in_base_dir(tmp_path, git):
     ]
 
 
+@pytest.mark.finding('S3-G3-2')
 def test_resolve_version_head_matching_prefix_not_modified(tmp_path, git):
     git(head='abc123def\n')
     write_version(tmp_path, 'v1 abc123\n')

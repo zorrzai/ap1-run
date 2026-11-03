@@ -136,6 +136,7 @@ def test_evaluate_expression_result_depends_on_context_precision():
         assert len(str(evaluate_expression('1 / 3'))) == 52
 
 
+@pytest.mark.finding('T3-58')
 def test_evaluate_expression_huge_float_literal_is_infinity():
     assert evaluate_expression('1e400') == D('Infinity')
 
