@@ -29,20 +29,43 @@ Other references you may meet:
   README.
 
 A clean checkout of `e7-quantise-fix` reproduces the September seals'
-`runner_source_hash` byte for byte (checked again on 13 October 2026).
+`runner_source_hash` byte for byte (checked again on 13 October and
+2 November 2026, with the recipe below).
 
-## Running the code of a published run
+## Reproducing the source hash
 
-At those commits there is no package, so there is no install step beyond
-`requests`:
+This recipe rebuilds the code of the September runs and recomputes their
+`runner_source_hash`. At `e7-quantise-fix` there is no package, so there is
+no install step beyond `requests`. The virtual environment goes **outside**
+the clone (see the note below):
 
 ```bash
 git clone https://github.com/zorrzai/ap1-run && cd ap1-run
 git checkout e7-quantise-fix
-python -m venv .venv && . .venv/bin/activate   # keep the venv out of the
-pip install requests                           # hash: see the note below
+python -m venv ../ap1-venv && . ../ap1-venv/bin/activate
+pip install requests
+python -c "import os, version; print(version.compute_runner_source_hash(os.getcwd()))"
 python run_all_tests.py
 ```
+
+On Windows, activate with `..\ap1-venv\Scripts\activate`. The hash printed
+is `da0739eb396e65468d33adb7953aa828fdde9bee6ec1c78e56c83c345defd795`, the
+value in both September seals (`report.md` §1 of `run_e_mini` and `run_f_sol`),
+and `run_all_tests.py` reports 226 test functions and 406 checks, `PASS`.
+Running the tests writes only `__pycache__/` directories, which the hash
+excludes, so the hash is the same before and after.
+
+**Keep virtual environments outside the clone, or name them so that they are
+excluded.** `compute_runner_source_hash` hashes every `.py` file under the
+repository root except `output/`, `review_output*` and `__pycache__/`. A
+`.venv/` inside the clone therefore changes `runner_source_hash`. The same
+goes for the `build/` directory that a non-editable `pip install .` leaves in
+the clone on the current layout (see the README: only `pip install -e .` is
+supported).
+
+### Running the code of a published run
+
+From the same checkout and environment:
 
 - **Python:** 3.11 or later. CI runs 3.11 and 3.12.
 - **Configuration:** both September runs used `example/config.json` with
@@ -55,28 +78,50 @@ python run_all_tests.py
   URL. The key goes in `AP1_SMOKE_API_KEY` (see SECURITY.md).
 - Then run `python smoke_test.py`.
 
-**Keep virtual environments outside the clone, or name them so that they are
-excluded.** `compute_runner_source_hash` hashes every `.py` file under the
-repository root except `output/`, `review_output*` and `__pycache__/`. A
-`.venv/` inside the clone therefore changes `runner_source_hash`.
+## Verifying the published artifacts
 
-## Checking a seal
+This recipe checks the September run directories against their seals. The
+directories are not in the `e7-quantise-fix` tree: they arrived in
+`4cfe283`. Use either a checkout of `4cfe283` or the current tree; both have
+them. Any environment with `requests` will do, for example the one above.
 
-At the run's commit:
+At `4cfe283`, from a clone (the flat layout, script at the root):
 
 ```bash
+git checkout 4cfe283
 python verify_run_seal.py output/run_e_mini
 python verify_run_seal.py output/run_f_sol
 ```
 
-On the current layout, the same script is `python tools/verify_run_seal.py`.
+On the current tree, the script is in `tools/` and needs no install:
 
-**Expected mismatch.** `ground_truth_hash` fails on a clean clone, and only
-because of line endings. The repository checks `.py` files out with LF; the
-seals hashed the file with CRLF. With CRLF restored, the September seals pass
-in full. FINDINGS_ERRATA N2 gives the details and the recipe. For the August
-seals, restore the module from `203fef4` with CRLF; see FINDINGS_ERRATA,
-"Note by addition - 3 October 2026: restoring the original ground-truth module".
+```bash
+python tools/verify_run_seal.py output/run_e_mini
+python tools/verify_run_seal.py output/run_f_sol
+```
+
+**Expected mismatch.** Each run reports `10 passed, 1 failed`: only
+`ground_truth_hash` fails, and only because of line endings. The repository
+checks `.py` files out with LF; the seals hashed the ground-truth module with
+CRLF (FINDINGS_ERRATA N2). The `NOTE` the script prints after this mismatch
+names the August corrections; for the September seals the cause is line
+endings only. To check the module too, restore CRLF, verify again, and put
+the module back:
+
+```bash
+python -c "p='example/ground_truth_example.py'; b=open(p,'rb').read(); open(p,'wb').write(b.replace(b'\n', b'\r\n'))"
+python tools/verify_run_seal.py output/run_e_mini    # at 4cfe283: python verify_run_seal.py ...
+python tools/verify_run_seal.py output/run_f_sol
+git checkout -- example/ground_truth_example.py
+```
+
+With CRLF the module hashes to `033ce73d…`, the sealed value, and each run
+reports `11 passed, 0 failed` and `RESULT: PASS (11 checks)`. Both ways give
+the same results.
+
+For the August seals (`run_a_mini`, `run_b_sol`), restore the module from
+`203fef4` with CRLF; see FINDINGS_ERRATA, "Note by addition - 3 October 2026:
+restoring the original ground-truth module".
 
 ## What differs on the current layout
 
@@ -96,4 +141,6 @@ seals, restore the module from `203fef4` with CRLF; see FINDINGS_ERRATA,
 
 - **Commands:** `python smoke_test.py` still works; it is now a shim for
   `ap1_run.run`, also available as the `ap1-run` command. The test suites are
-  in `tests/legacy/`; `python run_all_tests.py` runs them as before.
+  in `tests/legacy/`; `python run_all_tests.py` runs them as before, with
+  or without the install step: it puts this clone's `src/` first on the
+  suites' path.
