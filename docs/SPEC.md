@@ -1085,7 +1085,7 @@ a module-level constant definition, not added logic.
 | `src/ap1_run/runner/credentials.py` | 98 | Demonstration tooling |
 | `src/ap1_run/runner/executions.py` | 259 | Demonstration tooling |
 | `src/ap1_run/runner/outputs.py` | 99 | Demonstration tooling |
-| `src/ap1_run/runner/settings.py` | 163 | Demonstration tooling |
+| `src/ap1_run/runner/settings.py` | 165 | Demonstration tooling |
 | `src/ap1_run/runner/summary.py` | 242 | Demonstration tooling |
 | `example/ground_truth_example.py` | 571 | Example / demonstration |
 | `example/calculator_tool.py` | 224 | Example / demonstration |

@@ -47,8 +47,10 @@ def parse_args(argv, base_dir):
              'ground_truth_example.py (default: example/)')
     parser.add_argument(
         '--output-dir',
-        help='where the transcript, report and summary are written; files '
-             'of the same name there are replaced (default: output/)')
+        help='where the transcript, report and summary are written '
+             '(default: output/, where files of the same name are '
+             'replaced); a directory given here that already holds a run '
+             'is refused')
     parser.add_argument(
         '--ap1-text', default=os.path.join(base_dir, AP1_TEXT),
         help='the AP-1 text to seal; its hash must match the one the '

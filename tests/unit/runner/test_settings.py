@@ -234,8 +234,9 @@ def test_parse_args_help_text(capsys, monkeypatch):
         f'{pad}the directory holding fixture.json, questions.json and '
         'ground_truth_example.py (default: example/)\n'
         '  --output-dir OUTPUT_DIR\n'
-        f'{pad}where the transcript, report and summary are written; files '
-        'of the same name there are replaced (default: output/)\n'
+        f'{pad}where the transcript, report and summary are written '
+        '(default: output/, where files of the same name are replaced); a '
+        'directory given here that already holds a run is refused\n'
         '  --ap1-text AP1_TEXT   the AP-1 text to seal; its hash must match '
         'the one the runner expects '
         '(default: reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md)\n')
