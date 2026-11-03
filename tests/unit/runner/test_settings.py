@@ -2,6 +2,7 @@
 R1.2 condition guard."""
 
 import hashlib
+import os
 
 import pytest
 
@@ -169,14 +170,20 @@ def test_guard_refusal_propagates_and_prints_nothing(fixture_file, capsys,
 BASE = '/repo'
 
 
+def native(path):
+    """The absolute path os.path makes of a POSIX-style test path: itself
+    on POSIX, with a drive and backslashes on Windows."""
+    return os.path.abspath(path)
+
+
 def test_parse_args_defaults_are_the_fixed_paths():
     args = parse_args([], BASE)
     assert vars(args) == {
-        'config': '/repo/example/config.json',
-        'fixture_dir': '/repo/example',
-        'output_dir': '/repo/output',
+        'config': native('/repo/example/config.json'),
+        'fixture_dir': native('/repo/example'),
+        'output_dir': native('/repo/output'),
         'output_dir_explicit': False,
-        'ap1_text': '/repo/reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md',
+        'ap1_text': native('/repo/reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md'),
     }
 
 
@@ -184,10 +191,11 @@ def test_parse_args_absolute_paths_kept():
     args = parse_args(['--config', '/a/c.json', '--fixture-dir', '/b',
                        '--output-dir', '/c/out', '--ap1-text', '/d/ap1.md'],
                       BASE)
-    assert vars(args) == {'config': '/a/c.json', 'fixture_dir': '/b',
-                          'output_dir': '/c/out',
+    assert vars(args) == {'config': native('/a/c.json'),
+                          'fixture_dir': native('/b'),
+                          'output_dir': native('/c/out'),
                           'output_dir_explicit': True,
-                          'ap1_text': '/d/ap1.md'}
+                          'ap1_text': native('/d/ap1.md')}
 
 
 def test_parse_args_relative_paths_resolve_against_the_working_directory(
@@ -198,11 +206,11 @@ def test_parse_args_relative_paths_resolve_against_the_working_directory(
                       BASE)
     root = str(tmp_path.resolve())
     parent = str(tmp_path.resolve().parent)
-    assert vars(args) == {'config': f'{root}/c.json',
-                          'fixture_dir': f'{root}/in',
-                          'output_dir': f'{root}/out/x',
+    assert vars(args) == {'config': os.path.join(root, 'c.json'),
+                          'fixture_dir': os.path.join(root, 'in'),
+                          'output_dir': os.path.join(root, 'out', 'x'),
                           'output_dir_explicit': True,
-                          'ap1_text': f'{parent}/t.md'}
+                          'ap1_text': os.path.join(parent, 't.md')}
 
 
 def test_parse_args_rejects_unknown_options(capsys):
@@ -244,7 +252,7 @@ def test_parse_args_help_text(capsys, monkeypatch):
 
 def test_parse_args_output_dir_given_as_the_default_path_is_explicit():
     args = parse_args(['--output-dir', '/repo/output'], BASE)
-    assert args.output_dir == '/repo/output'
+    assert args.output_dir == native('/repo/output')
     assert args.output_dir_explicit is True
 
 

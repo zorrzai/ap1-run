@@ -135,8 +135,9 @@ def test_write_outputs_writes_four_files_and_says_where(
     rule = '=' * 60
     assert capsys.readouterr().out == (
         f'\n{rule}\nGENERATING FORMAL REPORT (report.py)\n{rule}\n'
-        f'Formal report written to {tmp_path}/report.md\n'
+        f'Formal report written to {tmp_path / "report.md"}\n'
         '\nGENERATING ADJUDICATION SHEETS (adjudication.py)\n'
-        f'Adjudication sheets written to {tmp_path}/adjudication_sheets.md\n'
-        f'\nSummary written to {tmp_path}/smoke_summary.json\n'
+        'Adjudication sheets written to '
+        f'{tmp_path / "adjudication_sheets.md"}\n'
+        f'\nSummary written to {tmp_path / "smoke_summary.json"}\n'
         f'Transcript written to {transcript_path}\n')
