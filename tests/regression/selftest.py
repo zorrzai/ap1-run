@@ -265,6 +265,44 @@ class MockTransportContract(unittest.TestCase):
         self.assertEqual(self.post()[0], 200)
         self.assertEqual([e['repeat'] for e in self.mock.log], [1])
 
+    def request(self, method, data=None):
+        req = urllib.request.Request(
+            self.base + '/v1/chat/completions', data=data, method=method)
+        req.add_header('Authorization', 'Bearer sk-selftest')
+        try:
+            with urllib.request.urlopen(req, timeout=10) as r:
+                return r.status
+        except urllib.error.HTTPError as e:
+            e.read()
+            return e.code
+
+    def test_other_methods_are_refused_and_recorded(self):
+        methods = ['GET', 'HEAD', 'PUT', 'DELETE', 'PATCH', 'OPTIONS',
+                   'TRACE', 'BREW']
+        for m in methods:
+            data = b'{}' if m in ('PUT', 'PATCH') else None
+            self.assertEqual(self.request(m, data), 405, m)
+        self.assertEqual(self.mock.log, [])
+        self.assertEqual(self.mock.violations, [
+            {'kind': 'method', 'method': m, 'path': '/v1/chat/completions'}
+            for m in methods])
+        # The first valid POST is still repeat 1.
+        self.assertEqual(self.post()[0], 200)
+        self.assertEqual([e['repeat'] for e in self.mock.log], [1])
+
+    def test_harness_fails_a_run_with_a_method_violation(self):
+        self.request('GET')
+        result_dir = tempfile.mkdtemp(prefix='ap1-selftest-')
+        try:
+            with open(os.path.join(result_dir, 'transport_violations.json'),
+                      'w') as f:
+                json.dump(self.mock.violations, f)
+            with self.assertRaisesRegex(hard_checks.HardCheckError,
+                                        r'method \(GET /v1/chat'):
+                hard_checks.check_transport(result_dir)
+        finally:
+            shutil.rmtree(result_dir)
+
     def test_violations_never_record_header_names_or_values(self):
         self.post(auth='Bearer leaked-secret')
         self.assertNotIn('leaked-secret', json.dumps(self.mock.violations))

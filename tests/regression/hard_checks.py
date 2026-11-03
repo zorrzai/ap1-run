@@ -10,8 +10,8 @@ Command scenarios (a "command" in the scenario) run an entry point
 directly and get none of these checks. None of them seals today; a command
 scenario that seals needs the driver's capture first.
 
-  check_transport          the mock refused no request (wrong path or
-                           credential)
+  check_transport          the mock refused no request (wrong method,
+                           path or credential)
   hash_oracle.check_seals  every seal value recomputed independently
   check_replay             a replay re-scores its published run exactly
 """
@@ -65,8 +65,8 @@ def check(scenario, tree, result_dir, raw):
 
 
 def check_transport(result_dir):
-    """Every request kept the mock's transport contract: the chat
-    completions path and the driver's bearer credential."""
+    """Every request kept the mock's transport contract: a POST to the
+    chat completions path with the driver's bearer credential."""
     path = os.path.join(result_dir, 'transport_violations.json')
     if not os.path.exists(path):
         raise HardCheckError('the driver recorded no transport check')
@@ -75,7 +75,8 @@ def check_transport(result_dir):
     if violations:
         counts = {}
         for v in violations:
-            key = f'{v["kind"]} ({v["path"]})'
+            what = f'{v["method"]} ' if 'method' in v else ''
+            key = f'{v["kind"]} ({what}{v["path"]})'
             counts[key] = counts.get(key, 0) + 1
         raise HardCheckError(
             f'the mock refused {len(violations)} request(s) outside its '

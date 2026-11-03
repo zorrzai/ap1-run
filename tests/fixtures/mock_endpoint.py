@@ -41,11 +41,12 @@ Two kinds of script:
 Every request is logged (self.log) for the golden output.
 
 Transport contract: a request must POST to /v1/chat/completions with
-"Authorization: Bearer <api_key>". Any other request is refused (404 for
-the path, 401 for the credential) before it is identified, so it advances
-no scripted state, and is recorded in self.violations (the kind and path,
-never header names or values). The regression harness fails a run with
-any violation, also under --update.
+"Authorization: Bearer <api_key>". Any other request is refused (405 for
+any method but POST, 404 for the path, 401 for the credential) before it
+is identified, so it advances no scripted state, and is recorded in
+self.violations (the kind, the path and, for a method refusal, the
+method; never header names or values). The regression harness fails a
+run with any violation, also under --update.
 """
 
 import json
@@ -89,6 +90,24 @@ class MockEndpoint:
         endpoint = self
 
         class Handler(BaseHTTPRequestHandler):
+            def __getattr__(self, name):
+                # BaseHTTPRequestHandler looks up do_<METHOD> and answers
+                # a missing one with 501 itself, unrecorded. Every method
+                # but POST comes here instead, so it is refused and
+                # recorded like any other contract violation.
+                if name.startswith('do_') and name != 'do_POST':
+                    return self._refuse_method
+                raise AttributeError(name)
+
+            def _refuse_method(self):
+                length = int(self.headers.get('Content-Length', 0) or 0)
+                if length:
+                    self.rfile.read(length)
+                status, payload = endpoint.method_refusal(
+                    self.command, self.path)
+                self._send(status, payload, allow='POST',
+                           body=self.command != 'HEAD')
+
             def do_POST(self):
                 length = int(self.headers.get('Content-Length', 0))
                 data = self.rfile.read(length)
@@ -108,14 +127,17 @@ class MockEndpoint:
                     return
                 self._send(action[1], action[2])
 
-            def _send(self, status, payload):
+            def _send(self, status, payload, allow=None, body=True):
                 data = (payload if isinstance(payload, str)
                         else json.dumps(payload)).encode('utf-8')
                 self.send_response(status)
                 self.send_header('Content-Type', 'application/json')
                 self.send_header('Content-Length', str(len(data)))
+                if allow:
+                    self.send_header('Allow', allow)
                 self.end_headers()
-                self.wfile.write(data)
+                if body:
+                    self.wfile.write(data)
 
             def log_message(self, *args):
                 pass
@@ -137,6 +159,15 @@ class MockEndpoint:
             self._server.server_close()
 
     # -- request handling -------------------------------------------
+
+    def method_refusal(self, method, path):
+        """(status, body) refusing a request whose method is not POST,
+        recorded in self.violations."""
+        self.violations.append({'kind': 'method', 'method': method,
+                                'path': path})
+        return 405, {'error': {'message': f'mock: method {method} not '
+                                          f'allowed, only POST',
+                               'type': 'invalid_request_error'}}
 
     def refusal(self, path, authorization):
         """(status, body) refusing a request outside the transport

@@ -17,7 +17,8 @@ real adapter and HTTP transport:
 - `../fixtures/mock_endpoint.py`: a local HTTP server that speaks the
   chat-completions API. It serves scripted turns per question, condition,
   repeat and round, or it replays a published transcript. It refuses a
-  request to any path but `/v1/chat/completions` (404) or without
+  request with any method but POST (405), to any path but
+  `/v1/chat/completions` (404) or without
   `Authorization: Bearer <the driver's test key>` (401), without advancing
   its script.
 - `driver.py`: runs `smoke_test.main()` in a scratch copy of the repository,
@@ -71,8 +72,9 @@ golden difference, and `--update` cannot write over it.
   config must hash to `config_hash`. Other 64-hex text in a report is not
   read as a seal reference. The oracle is standard library only and fails
   if any runner module has been imported into the harness process.
-- The mock refused no request (`check_transport`): a request to the wrong
-  path or without the driver's bearer credential fails the run.
+- The mock refused no request (`check_transport`): a request with any
+  method but POST, to the wrong path or without the driver's bearer
+  credential fails the run.
 - A replay must re-score its published run exactly: the replayed
   `smoke_summary.json` equals `output/run_*/smoke_summary.json` in every
   key, value, type and list order, except the top-level `seal_hash`
