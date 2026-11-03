@@ -651,6 +651,23 @@ def test_execute_item_numeric_expression_crashes_real_provenance(
     assert transcript.read_all(tmp_path / 'run.jsonl') == []
 
 
+@pytest.mark.finding('S3-G2-5')
+def test_execute_item_real_scoring_skipped_call_stops_reclassification(
+        tmp_path, calculator):
+    # S3-G2-5: a python call (no calculator expression) comes first, then
+    # 15200*0.012 = 182.4 (wrong on its own) feeds 182.4/12 = 15.2
+    # (correct). execute_item scores two calls but hands reclassify_session
+    # three expressions, so 182.4 is looked up in the operands of
+    # '15200*0.012' and stays WRONG-OPERATION. Correct: OPERATION-CORRECT,
+    # as an operand of call 1.
+    send = FakeAdapter(calls(tool_call(name='python', id='a'),
+                             tool_call('15200*0.012', id='b'),
+                             tool_call('182.4/12', id='c')), answer())
+    _, records = run(tmp_path, send)
+    assert [r['outcome'] for r in records[0]['operation_correctness']] == [
+        'WRONG-OPERATION', 'OPERATION-CORRECT']
+
+
 def test_execute_item_real_scoring_correct_call(tmp_path, calculator):
     result, records = run(tmp_path, FakeAdapter(calls(tool_call('15200*1.2')),
                                                 answer()))
