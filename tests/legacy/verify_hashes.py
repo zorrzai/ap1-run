@@ -13,8 +13,6 @@ import os
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-# Add parent to path
-
 from decimal import Decimal
 from ap1_run.foundation.numeric import canonical_hash, canonical_json
 
