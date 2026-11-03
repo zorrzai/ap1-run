@@ -761,12 +761,20 @@ Grouped by severity, in ID order.
   scratch `.py` files and the test mock are hashed, and a user with a venv in the clone gets a
   different `runner_source_hash` from the published one; the test suites are hashed too, so adding
   or changing a test changes the sealed hash with no change to the code that runs. A top-level
-  `output*.py` is excluded; `VERSION` is not hashed.
+  `output*.py` is excluded; `VERSION` is not hashed. The exclusion is a prefix match on the
+  relative path, so any top-level file or directory whose name starts with `output`,
+  `review_output` or `__pycache__` (an `output_helpers.py` the runner imports, say) is left out,
+  and `os.walk` does not follow directory symlinks, so a package reached through one is not
+  hashed. The paths are sorted in the platform's own form before `\` is replaced by `/`, so two
+  names such as `a/z.py` and `a0.py` hash in a different order on Windows and POSIX; the tracked
+  files at the reorganisation heads sort the same way on both, so no published hash is affected.
 - Where: `version.py:84-109`
 
 **T3-71 · low · Canonical JSON loses type information and does not check dict keys for floats**
 - What's wrong: `Decimal('0.01')` and `'0.01'` hash identically, as do a tuple and a list;
-  `{0.1: 'x'}` is accepted; no Unicode normalisation is applied. Not exploitable on current paths.
+  `{0.1: 'x'}` is accepted (the float check visits values, not keys); no Unicode normalisation
+  is applied. Not exploitable on current paths. The regression harness's hash oracle refuses a
+  key that is not a string, so a run that seals one fails there.
 - Where: `numeric.py:255-292`
 - Breaks: SPEC R0.4.1 (R0.4.3 is met to the letter)
 
@@ -1389,9 +1397,10 @@ location is given at the head of the pull request that adds the code, with the f
 - Breaks: no AP-1 or SPEC clause; the harness's own purpose, that a change in behaviour is
   detected (`tests/regression/README.md`), for SPEC R0.4.3 and R1.1 (canonical hashing and the
   seal)
-- Addressed by: fixed; commits adeb30a, 0b2df16; note: `tests/regression/hash_oracle.py`
-  recomputes every seal value independently, before normalisation and also under `--update`, and
-  `source_hash_files.txt` lists the files the source hash covers; the five changes above, and
+- Addressed by: fixed; commits adeb30a, 0b2df16, 01c568a, b3862d2; note: `tests/regression/hash_oracle.py`
+  recomputes every seal value independently, against expectations frozen before the run starts,
+  before normalisation and also under `--update`, and `source_hash_files.txt` lists the files the
+  source hash covers; the five changes above, and
   others, each fail with a hash message; the checks' own tests are in
   `tests/regression/selftest.py`, which has no `finding` marks because pytest does not exist at
   this head.
