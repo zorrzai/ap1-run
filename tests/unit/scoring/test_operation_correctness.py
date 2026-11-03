@@ -601,32 +601,24 @@ def test_reclassify_session_aligned_lists_value_fed_forward_becomes_correct():
     assert out[0]['matched_against'] == 'operand_of_call_1'
 
 
-@pytest.mark.finding('S3-G2-5')
 @pytest.mark.parametrize('expressions, outcome', [
     (['', '15200*0.012', '182.4/12'], WO),
     (['15200*0.012', '', '182.4/12'], WO),
     (['15200*0.012', '182.4/12', ''], OC),
 ], ids=['leading', 'middle', 'trailing'])
-def test_reclassify_session_skipped_call_shifts_the_expressions(
+def test_reclassify_session_reads_results_and_expressions_by_index(
         expressions, outcome):
-    # The engine passes one result per calculator call with an expression
-    # but one expression per tool call ('' for a call without one), and
-    # both lists are read by the same index. From a skipped call on they
-    # are out of step, so the 182.4 that feeds '182.4/12' is not
-    # reclassified. Trailing: the lists still line up for the two results.
-    # Correct: OPERATION-CORRECT in all three cases, whether the fix
-    # aligns the lists here or in execute_item (then these tests are
-    # rewritten to pass aligned lists; see test_engine.py).
+    # Context: S3-G2-5 (the caller passes lists out of step). The function
+    # reads both lists by the same index, so the caller must align them:
+    # an extra expression before a result shifts every later lookup.
     out = reclassify_session([wo('182.4'), oc('15.2')], expressions)
     assert out[0]['outcome'] == outcome
 
 
-@pytest.mark.finding('S3-G2-5')
-def test_reclassify_session_skipped_call_matches_a_result_to_its_own_operands():
-    # '15*1' gives 15 and feeds nothing, yet after a leading skipped call
-    # its result is looked up in its own operands, at index 1, and call 1
-    # ('700+77') is correct. Correct: stays WRONG-OPERATION, as it does
-    # when the lists line up.
+def test_reclassify_session_shifted_expressions_can_match_a_result_to_its_own_operands():
+    # Context: S3-G2-5. With an extra leading expression, the result of
+    # '15*1' is looked up in its own operands (index 1) and call 1 is
+    # correct, so it is reclassified; with aligned lists it is not.
     out = reclassify_session([wo('15'), oc('777')], ['', '15*1', '700+77'])
     assert out[0]['outcome'] == OC
     assert reclassify_session([wo('15'), oc('777')],
