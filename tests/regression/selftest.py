@@ -35,8 +35,9 @@ from mock_endpoint import MockEndpoint  # noqa: E402
 class CanonicalHash(unittest.TestCase):
 
     def test_known_answer_with_decimal_and_unicode(self):
-        # The vector verify_hashes.py checks on three platforms; its digest
-        # is the committed hash_digest.txt.
+        # The vector tests/legacy/verify_hashes.py checks on three platforms
+        # (hashes.yml); its digest is that script's EXPECTED_DIGEST, the
+        # value hash_digest.txt held while it was committed.
         obj = {
             'z_last': 'should sort last',
             'a_first': 'should sort first',
@@ -55,6 +56,14 @@ class CanonicalHash(unittest.TestCase):
         self.assertEqual(
             hash_oracle.canonical_hash(obj),
             '831709b2231846ed20fd63ff0bc0764d73cee50db271f733e6a2f1c377c7cff3')
+
+    def test_verify_hashes_pins_the_same_digest(self):
+        # Read as text: importing the script would import the runner.
+        path = os.path.join(os.path.dirname(HERE), 'legacy', 'verify_hashes.py')
+        with open(path, encoding='utf-8') as f:
+            text = f.read()
+        self.assertIn("EXPECTED_DIGEST = (\n    '831709b2231846ed20fd63ff0bc0764d"
+                      "73cee50db271f733e6a2f1c377c7cff3')", text)
 
     def test_float_is_refused(self):
         with self.assertRaises(hash_oracle.HashCheckError):
