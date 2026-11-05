@@ -21,10 +21,12 @@ real adapter and HTTP transport:
   `/v1/chat/completions` (404) or without
   `Authorization: Bearer <the driver's test key>` (401), without advancing
   its script.
-- `driver.py`: runs the runner's `main()` in a scratch copy of the
-  repository, so the runner writes to the copy's `output/`, never to the
-  published runs. It imports `smoke_test`, or `ap1_run.run` when the tree
-  has no `smoke_test.py`.
+- `driver.py`: runs the runner's `main()` from the repository itself. The
+  runner gets the scenario's config with `--config` (a temporary merged copy
+  when the scenario edits it) and a temporary `--output-dir`, so it never
+  writes under the repository; `run_regression.py` checks that `output/` is
+  unchanged after every real-tree scenario. It imports `smoke_test`, or
+  `ap1_run.run` when the tree has no `smoke_test.py`.
 - `run_regression.py`: runs each scenario, normalises the output and compares
   it exactly with `golden/<scenario>/`.
 - `scenarios/*.json`: one scenario per file. A scenario can `extend` another
@@ -33,7 +35,20 @@ real adapter and HTTP transport:
   give the runner command-line `args`, make `copy_paths` inside the copy
   (`{"from": "to"}`, after the config edits), and name the `output_dir` the
   outputs are read from; the default `output/` must then stay empty
-  (`default_output.txt`).
+  (`default_output.txt`). `copy_paths`, `output_dir` and `copy_output`
+  (published runs copied into the copy's `output/`) need a scratch copy.
+- **Scratch copy.** A scenario that sets `"scratch_copy"` (its value says
+  why) runs in a scratch copy of the repository, without `.git` and
+  `output/`, instead of the real tree. Three do: `cli_paths` (it checks that
+  the default `output/` stays empty, which needs a disposable one),
+  `tool_generate_findings` (the tool writes `findings/FINDINGS.md` at a
+  fixed path) and `clean_no_options` (with no options the runner reads
+  `example/config.json` and writes to the default `output/`, so the config
+  edit and the outputs need a disposable tree).
+- **No git.** Every run gets `GIT_DIR` pointing nowhere. The runner
+  cross-checks `VERSION` against git `HEAD` and records `runner_modified`;
+  the golden output pins a run without git (as in a copy without `.git`),
+  so it does not depend on the branch the checkout is on.
 
 What is compared for each scenario:
 - the console output, stderr and exit code (or the exception);
@@ -50,7 +65,9 @@ run it at both commits and diff the two directories.
 
 **Normalisation** happens in the comparison, never in the runner. It covers:
 - line endings;
-- the scratch path and the mock's address and port;
+- the run's root path (the scratch copy, or the repository and the
+  temporary run directory whose `output/` the runner writes to) and the
+  mock's address and port;
 - ISO and epoch timestamps;
 - this run's `seal_hash`, `config_hash` and `runner_source_hash`, read from
   the seal the run actually made. The config hash covers the mock's port. The
@@ -69,15 +86,17 @@ golden difference, and `--update` cannot write over it.
   record must have exactly the expected fields and values, and a timestamp
   that falls within the run. Each path the seal was given must be the file
   of its role (`seal_paths` in a scenario that moves them). The source hash
-  is frozen before the runner starts (`before_run`): the one passed to every
-  seal call, refused or not, must equal it, and so must the tree's after the
-  run. The printed `Runner source hash:` prefix (once per run that calls the
-  seal), the console's seal and AP-1 text hashes (once per record), every
-  transcript record's `seal_hash` (which must be present), the summary's
-  `seal_hash` and report §1 must agree with it, and report §2's resolved
-  config must hash to `config_hash`. Other 64-hex text in a report is not
-  read as a seal reference. The oracle is standard library only and fails
-  if any runner module has been imported into the harness process.
+  is frozen before the runner starts (`before_run`), over the tree the
+  runner runs from (the repository itself for a real-tree scenario, the
+  copy for a scratch-copy one): the one passed to every seal call, refused
+  or not, must equal it, and so must the tree's after the run. The printed
+  `Runner source hash:` prefix (once per run that calls the seal), the
+  console's seal and AP-1 text hashes (once per record), every transcript
+  record's `seal_hash` (which must be present), the summary's `seal_hash`
+  and report §1 must agree with it, and report §2's resolved config must
+  hash to `config_hash`. Other 64-hex text in a report is not read as a
+  seal reference. The oracle is standard library only and fails if any
+  runner module has been imported into the harness process.
 - The mock refused no request (`check_transport`): a request with any
   method but POST, to the wrong path or without the driver's bearer
   credential fails the run.
@@ -165,6 +184,7 @@ and `run_all_tests.py` records the new count in the same commit.
 | `tool_generate_findings` | `generate_findings.py`; its output equals the committed `findings/FINDINGS.md` |
 | `smoke_no_api_key` | `python -m ap1_run.run` with no key: instructions, exit 1 |
 | `smoke_test_shim_no_api_key` | the root `smoke_test.py` shim with no key: the same golden output as `smoke_no_api_key` |
+| `clean_no_options` | `clean` with a bare `ap1-run`, no `--config` or `--output-dir`: the runner's default config and output paths, end to end; the same golden output as `clean` |
 | `cli_paths` | `clean` with `--config`, `--fixture-dir`, `--output-dir` and `--ap1-text` pointing at copies: every output equals `clean`'s, only the printed paths differ |
 | `cli_help` | `ap1-run --help`: the options and their defaults |
 

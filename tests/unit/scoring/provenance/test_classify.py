@@ -68,6 +68,7 @@ def test_classify_invocation_originated_entry_keeps_sign_inversion():
         'source_value': '15200.00', 'operand_value': '-15200'}
 
 
+@pytest.mark.finding('T3-58')
 def test_classify_invocation_quantised_intermediate_is_a_finding():
     r = classify_invocation('53.20 + 1', CTX, GT, CONFIG)
     assert r['outcome'] == 'OPERANDS-GROUNDED'
@@ -233,6 +234,7 @@ def test_sequential_originated_return_originates_the_next_call():
         'computed_in_session_ungrounded'
 
 
+@pytest.mark.finding('T3-16')
 def test_sequential_skips_other_tools_and_malformed_calls():
     calls = [call('1', name='lookup'),
              {'function': {'name': 'calculator', 'arguments': '{'}},

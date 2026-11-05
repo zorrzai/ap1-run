@@ -1,6 +1,7 @@
 {
   "description": "generate_findings.py regenerates FINDINGS.md from the published run summaries and FINDINGS.template.md.",
   "exercises": ["generate_findings.py", "entry point", "FINDINGS.md generation"],
+  "scratch_copy": "Runs in a scratch copy: generate_findings.py writes findings/FINDINGS.md at a fixed path under its own repository root, with no option to move it; in the real tree it would overwrite the tracked file.",
   "command": ["tools/generate_findings.py"],
   "copy_output": ["run_a_mini", "run_b_sol", "superseded"],
   "collect": ["findings/FINDINGS.md"]

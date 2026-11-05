@@ -9,6 +9,7 @@
     "ap1_text_path": "texts/ap1.md"
   },
   "exercises": ["ap1-run --config --fixture-dir --output-dir --ap1-text"],
+  "scratch_copy": "Runs in a scratch copy: it checks that the default output/ stays untouched (default_output.txt) when every path option is given, which needs a disposable default output/ that starts empty; in the real tree a failure would write into the published output/.",
   "extends": "clean",
   "copy_paths": {
     "example": "inputs/my_example",

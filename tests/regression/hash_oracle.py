@@ -34,9 +34,11 @@ when the file or a field is missing), and must equal the config's and the
 record's. Git can only set runner_modified, which is not checked.
 
 Expected values are frozen before the runner starts: hard_checks
-.before_run() records the source hash of the scratch tree and the start
-time, so source the run changes or removes, or a timestamp from outside
-the run, fails.
+.before_run() records the source hash of the tree the runner runs from
+(the repository itself for a real-tree scenario, the scratch copy
+otherwise; run_regression passes the same tree to before_run() and
+check()) and the start time, so source the run changes or removes, or a
+timestamp from outside the run, fails.
 
 Entry point: check_seals(), called by hard_checks.check() from
 run_regression.collect() before normalisation.
