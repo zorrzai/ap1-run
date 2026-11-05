@@ -145,14 +145,27 @@ Then run the worked example against your own endpoint. Every setting comes
 from the config file, the endpoint and model included; the environment
 supplies only the API key. `example/config.json` points at
 `http://localhost:8080` with a placeholder model, so set its `endpoint_url`
-and `model` (or give your own config with `--config`).
-`example/config_mini.json` is the configuration of the published gpt-4.1-mini
-runs (temperature 1, no `reasoning_effort`):
+and `model` (or give your own config with `--config`). Each published model
+has its own config file:
+
+| config | model | published runs |
+|---|---|---|
+| `example/config.json` | placeholder (`example-model-v1` at `localhost:8080`) | none: the generic example |
+| `example/config_mini.json` | `gpt-4.1-mini`; temperature 1, no `reasoning_effort` | `run_e_mini` |
+| `example/config_sol.json` | `gpt-5.6-sol`; temperature omitted (platform-rejected), `reasoning_effort` none | `run_f_sol` |
+
+The September runs were made with `example/config.json` and environment
+overrides (see [`docs/REPRODUCING.md`](docs/REPRODUCING.md)); the two model
+files hold the settings those runs sealed (their `report.md` §2), except
+`dimensions_claimed`, which is now D2 and D7 (minimum n, above). The August
+runs `run_a_mini` and `run_b_sol` sealed different sampling settings, recorded
+in their own `report.md` §2; no file reproduces them.
 
 ```bash
 export AP1_SMOKE_API_KEY=<key>
 ap1-run                       # or: python smoke_test.py
 ap1-run --config example/config_mini.json
+ap1-run --config example/config_sol.json
 ```
 
 `python smoke_test.py` still works, even without the install step: it is a

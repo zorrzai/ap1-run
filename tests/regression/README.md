@@ -211,7 +211,7 @@ each of their checks went.
 | `config_no_tools` | config without tools: exit 1 |
 | `mini_config` | the shipped `example/config_mini.json`, the mini run's config: temperature 1 sent, `reasoning_effort` omitted as platform-unsupported |
 | `replay_run_e_mini` | the published gpt-4.1-mini run, 1,000 executions, replayed through today's runner with `example/config_mini.json` |
-| `replay_run_f_sol` | the published gpt-5.6-sol run, 1,000 executions, replayed |
+| `replay_run_f_sol` | the published gpt-5.6-sol run, 1,000 executions, replayed with `example/config_sol.json` |
 | `tool_verify_run_seal` | `verify_run_seal.py` on the four published runs |
 | `tool_verify_run_seal_usage` | `verify_run_seal.py` with no arguments |
 | `tool_generate_findings` | `generate_findings.py`; its output equals the committed `findings/FINDINGS.md` |

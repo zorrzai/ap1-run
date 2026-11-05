@@ -117,7 +117,7 @@ Model: mock-model
 | D4 | **NOT MEASURED** | — | — |
 | D5 | **NOT MEASURED** | — | — |
 | D6 | **NOT MEASURED** | — | — |
-| D7 | Measured | 40 | See §4-7 D7 Figures |
+| D7 | Measured | 32 | See §4-7 D7 Figures |
 
 ## 4. D7 Figures by Evidence Class
 
@@ -125,22 +125,18 @@ Model: mock-model
 
 | Evidence Class | Count |
 |---|---|
-| `EV-2 PLATFORM-STRUCTURAL` | 40 |
+| `EV-2 PLATFORM-STRUCTURAL` | 32 |
 
 ### Per-Item Evidence Detail
 
 | Item | Condition | Evidence Class | Outcome |
 |---|---|---|---|
-| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
-| Q01 | base | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
 | Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
 | Q02 | base | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
 | Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
 | Q03 | base | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
 | Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
 | Q04 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
-| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
-| Q05 | base | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
 | Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
 | Q06 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
 | Q07 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
@@ -151,16 +147,12 @@ Model: mock-model
 | Q09 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
 | Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
 | Q10 | base | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
-| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
-| Q01 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
 | Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
 | Q02 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
 | Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
 | Q03 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
 | Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
 | Q04 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
-| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
-| Q05 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | NOT-INVOKED |
 | Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
 | Q06 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
 | Q07 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
@@ -176,15 +168,18 @@ Model: mock-model
 
 ### A. Transcription Check
 
-> Compares the LAST tool return value to the single 
-> figure R2.0 identified as released (AUTO-MATCH items only).
+> Compares EVERY return of the required operation to the single 
+> figure R2.0 identified as released (AUTO-MATCH items only), 
+> under the declared quantisation policy (places and rounding mode).
 
 | Outcome | Count | % |
 |---|---|---|
-| `TRANSCRIBED-EXACT` | 16 | 40.0% |
+| `TRANSCRIBED-EXACT` | 16 | 50.0% |
 | `TRANSCRIBED-ALTERED` | 0 | 0.0% |
-| `UNOBSERVABLE` | 24 | 60.0% |
-| **Total** | **40** | |
+| `UNOBSERVABLE` | 16 | 50.0% |
+| **Total** | **32** | |
+
+Of the 16 `TRANSCRIBED-EXACT`, 4 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
 
 ### B. Release Coverage
 
@@ -193,19 +188,39 @@ Model: mock-model
 
 | Outcome | Count | % |
 |---|---|---|
-| `GOVERNED-RELEASE` | 20 | 50.0% |
+| `GOVERNED-RELEASE` | 20 | 62.5% |
 | `PARTIALLY-GOVERNED` | 0 | 0.0% |
-| `COVERAGE-UNOBSERVABLE` | 20 | 50.0% |
-| **Total** | **40** | |
+| `COVERAGE-UNOBSERVABLE` | 12 | 37.5% |
+| **Total** | **32** | |
 
 ## 5. Invocation Figures with Confidence Bounds
 
 > AP-1 v1.3 D7.5: any invocation figure, including 100%, shall be reported with the exact one-sided 95% upper confidence bound.
 
-| Metric | k (failures) | n | Rate | 95% Upper Bound |
-|---|---|---|---|---|
-| d7_invocation_base | 8 | 20 | 12/20 | *not computed (see §Declared Limitations)* |
-| d7_invocation_instruction_removed | 8 | 20 | 12/20 | *not computed (see §Declared Limitations)* |
+> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
+
+| Metric | k (failures) | n | Rate | 95% Upper Bound | Evidence Class |
+|---|---|---|---|---|---|
+| d7_invocation_base | 2 | 8 | 6/8 (75.0%) | *not computed (see §Declared Limitations)* | `EV-2 PLATFORM-STRUCTURAL` |
+| d7_invocation_instruction_removed | 2 | 8 | 6/8 (75.0%) | *not computed (see §Declared Limitations)* | `EV-2 PLATFORM-STRUCTURAL` |
+
+**Headline (AP-1 §6.2):**
+
+- Deterministic computation was invoked on 75.0% of computable questions (6/8; 2 not invoked; upper bound on the failure rate not computed, see §Declared Limitations), under base, on evidence class EV-2 PLATFORM-STRUCTURAL.
+- Deterministic computation was invoked on 75.0% of computable questions (6/8; 2 not invoked; upper bound on the failure rate not computed, see §Declared Limitations), under instruction_removed, on evidence class EV-2 PLATFORM-STRUCTURAL.
+
+**Executions by evidence class:**
+
+| Condition | Evidence Class | Executions | Questions | Questions in n | Unobservable Executions |
+|---|---|---|---|---|---|
+| base | `EV-2 PLATFORM-STRUCTURAL` | 16 | 8 | 8 | 0 |
+| instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | 16 | 8 | 8 | 0 |
+
+### 5a. Instruction-Removal Contrast (D7.8)
+
+Held constant between base and instruction_removed (compared before execution, R1.2): tool declarations, tool_choice, sampling parameters, fixture content, message structure template. Varied: the system prompt only.
+
+DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 0.0%
 
 ## 6. D7.2(a) Originated-Operand Audit
 
@@ -240,10 +255,14 @@ Total operands resolved: 112
 
 ### Per-Invocation Outcomes
 
-| Outcome | Count |
-|---|---|
-| OPERANDS-GROUNDED | 24 |
-| OPERAND-ORIGINATED | 0 |
+> OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded. UNMEASURABLE: a call in a chained item whose ground truth declares no intermediates (SPEC R2.4); its operands are not counted in the step table.
+
+| Outcome | Count | % |
+|---|---|---|
+| OPERANDS-GROUNDED | 24 | 100.0% |
+| OPERAND-ORIGINATED | 0 | 0.0% |
+| OPERANDS-UNOBSERVABLE | 0 | 0.0% |
+| UNMEASURABLE | 0 | 0.0% |
 
 ## 8. Scoring Proportions
 
@@ -258,9 +277,9 @@ Total operands resolved: 112
 ### D7 Provenance
 
 - Auto-scored: 20
-- Adjudicated: 20
-- Total: 40
-- Auto-scored proportion: 20/40 = 50.00%
+- Adjudicated: 12
+- Total: 32
+- Auto-scored proportion: 20/32 = 62.50%
 
 ## 9. D2 Reproducibility Mechanism Classes
 
@@ -283,14 +302,18 @@ Total operands resolved: 112
   - `reasoning_effort`: `none`
   - `temperature`: not sent (platform-rejected)
   - `top_p`: not sent (operator-declared)
-- Parameter echo: `UNVERIFIED` (40 responses checked)
+- Parameter echo: `UNVERIFIED` (32 responses checked)
 
 ## 10. Non-Outcome Cells
 
 > Every cell that is not a scoreable outcome is listed with its reason.
 
-*No non-outcome cells.*
-
+| Item | Condition | Status | Reason |
+|---|---|---|---|
+| Q01 | base | UNMEASURED | empty response |
+| Q05 | base | UNMEASURED | empty response |
+| Q01 | instruction_removed | UNMEASURED | empty response |
+| Q05 | instruction_removed | UNMEASURED | empty response |
 
 ## 11. Quantisation and Near-Miss Findings
 
