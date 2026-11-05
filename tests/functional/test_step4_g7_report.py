@@ -266,15 +266,34 @@ def test_run_report_declares_d74_not_measured(run):
 def test_run_report_d1_per_category_with_confidence_interval(run_d1):
     run = run_d1
     # AP-1 v1.3 D1: "Results reported per category, with 95% confidence
-    # intervals, and with n stated." The example has six categories.
-    # Correct: §3 (per-dimension results, SPEC R3.3) gives D1 for each
-    # category with n and a 95 % interval (or, below n = 10, says no
-    # category claim can be made).
+    # intervals, and with n stated"; SPEC R0.1: D1 needs at least 10 items
+    # per category. Correct: §3 (per-dimension results, SPEC R3.3) gives a
+    # row per category with its n and its interval, or, below the minimum
+    # of 10, that row says why no interval is given. The example's six
+    # categories have 1 or 2 items each (read from questions.json, not
+    # from the run), 4 executions per item here (2 repeats x 2 arms):
+    # every row must state its n (items, or executions, as the fix
+    # counts it; T3-11) and the minimum it falls below.
     s3 = section(run['report'], '3')
-    for category in ('interest', 'balance', 'amortisation', 'fees',
-                     'growth', 'net_income'):
-        assert category in s3, (category, s3)
-    assert re.search(r'95\s*%', s3), s3
+    items = json.loads((EXAMPLE / 'questions.json').read_text('utf-8'))
+    per_category = {}
+    for item in items['items']:
+        per_category[item['category']] = \
+            per_category.get(item['category'], 0) + 1
+    assert sorted(per_category.values()) == [1, 1, 2, 2, 2, 2]
+    bad = []
+    for category, n_items in per_category.items():
+        rows = [line for line in s3.splitlines()
+                if re.search(rf'\b{category}\b', line)]
+        ns = '|'.join(str(n) for n in (n_items, 4 * n_items))
+        ok = [line for line in rows
+              if re.search(rf'(\bn\s*=\s*|\|\s*)({ns})\b', line)
+              and re.search(r'\b10\b', line)
+              and re.search(r'minimum|below|fewer|too few|insufficient',
+                            line, re.I)]
+        if not ok:
+            bad.append((category, rows))
+    assert bad == [], s3
 
 
 @pytest.mark.finding('T3-35')
