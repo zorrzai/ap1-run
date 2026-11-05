@@ -39,6 +39,8 @@ EXAMPLE = ROOT / 'example'
 FIXTURES = ROOT / 'tests' / 'fixtures'
 
 SERVED_MODEL = 'mock-model-2026-01-01'
+# A later snapshot, served from the 11th request on in the 'changed' run.
+LATER_MODEL = 'mock-model-2026-02-01'
 FINGERPRINTS = ('fp_mock_a', 'fp_mock_b')
 
 Q01_CALL = '15200.00 * 1.2 / 100 / 12'
@@ -94,7 +96,7 @@ def _script():
     return script
 
 
-def _run(tmp_path_factory, dimensions_claimed):
+def _run(tmp_path_factory, dimensions_claimed, later_model=None):
     """One run of the real runner; returns its output files."""
     tmp = tmp_path_factory.mktemp('g7run')
     fixture_dir = tmp / 'inputs'
@@ -135,7 +137,8 @@ def _run(tmp_path_factory, dimensions_claimed):
 
         def served(message):
             body = envelope(message)
-            body['model'] = SERVED_MODEL
+            body['model'] = (later_model if later_model and mock._seq > 10
+                             else SERVED_MODEL)
             body['system_fingerprint'] = FINGERPRINTS[mock._seq % 2]
             return body
         mock._envelope = served
@@ -182,6 +185,14 @@ def run(tmp_path_factory):
     # dimensions R0.1 sets no minimum for, as test_step4_g9_spec_claims.py
     # does.
     return _run(tmp_path_factory, ['D2', 'D7'])
+
+
+@pytest.fixture(scope='module')
+def run_changed(tmp_path_factory):
+    # The system under test changes during the run: from the 11th request
+    # the endpoint serves another model snapshot (and the fingerprint keeps
+    # alternating).
+    return _run(tmp_path_factory, ['D2', 'D7'], later_model=LATER_MODEL)
 
 
 @pytest.fixture(scope='module')
@@ -441,19 +452,30 @@ def test_run_report_records_served_model_and_fingerprints(run):
 @pytest.mark.finding('V12-8')
 @pytest.mark.req('AP-1 §5.2')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-8: report.md neither confirms the system was '
-                          'frozen nor says it changed')
-def test_run_report_says_the_system_was_not_shown_frozen(run):
+                   reason='V12-8: report.md says nothing of a model snapshot '
+                          'that changed during the run')
+def test_run_report_says_the_system_changed(run_changed):
     # AP-1 (v1.2 and v1.3) §5.2: "Confirmation that the system under test
-    # was frozen for the duration". Two system_fingerprint values were
-    # served, so the run can't confirm it: report.md says so (a change
-    # finding, or that freezing could not be verified), on a line that
-    # names the freeze, and nowhere claims the system was frozen.
-    report = run['report']
-    lines = [line for line in report.splitlines()
-             if re.search(r'froz|freez', line, re.I)]
-    assert any(re.search(r'not|chang|could not|unverif|cannot', line,
-                         re.I) for line in lines), lines
-    assert not any(re.search(r'\bwas frozen\b', line, re.I)
-                   and not re.search(r'\bnot\b', line, re.I)
-                   for line in lines), lines
+    # was frozen for the duration". Here the served snapshot changed during
+    # the run (mock-model-2026-01-01, then -02-01). Correct: report.md
+    # says so, naming both snapshots on a line that says the system
+    # changed, or says explicitly that freezing could not be confirmed;
+    # no line says it was frozen or that nothing changed.
+    report = run_changed['report']
+    lines = report.splitlines()
+    names_change = [line for line in lines
+                    if SERVED_MODEL in line and LATER_MODEL in line
+                    and re.search(r'chang', line, re.I)]
+    cannot = [line for line in lines if re.search(
+        r'(froz|freez)\w*.*\b(not|cannot|could not) (be )?'
+        r'(shown|confirmed|verified)|(not|cannot|could not) (be )?'
+        r'(shown|confirmed|verified).*(froz|freez)', line, re.I)]
+    assert names_change or cannot, [
+        line for line in lines
+        if re.search(r'froz|freez|snapshot', line, re.I)]
+    claims = [line for line in lines
+              if re.search(r'froz|freez', line, re.I)
+              and re.search(r'no change|unchanged|frozen:? *(yes|confirmed|'
+                            r'true)|\bwas frozen\b(?!.*\bnot\b)', line,
+                            re.I)]
+    assert claims == [], claims
