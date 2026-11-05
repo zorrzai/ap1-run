@@ -1409,8 +1409,8 @@ ACCURACY_ONE = re.compile(r'Accuracy(?: rate)?: 1(?:\.0+)?(?![\d./])')
                           'items while 18 of 40 await adjudication')
 def test_dimension_results_d1_pending_adjudication_prints_no_rate_of_one():
     # Every wrong figure routes to adjudication (SPEC R2.0 step 4), so the
-    # auto-scored rate is 1 whenever it is defined. Correct (T3-3, fix
-    # plan branch 7; SPEC R2.3 "100 % never printed alone", by analogy):
+    # auto-scored rate is 1 whenever it is defined. Correct (T3-3;
+    # SPEC R2.3 "100 % never printed alone", by analogy):
     # no "Accuracy: 1" headline while items await adjudication; the row
     # states the adjudicated share instead.
     rows = dim_rows(report._section_dimension_results(
@@ -1742,8 +1742,8 @@ def test_d73_reports_count_of_exact_rounded_under_declared_policy():
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='V12-5: §5 prints no invocation percentage')
 def test_clopper_pearson_section_rate_as_percentage_with_k_n_and_bound():
-    # Correct (AP-1 §6.2 "invoked on [X]% of computable questions"; fix
-    # plan row 1): the figure is printed as a percentage, with k/n and
+    # Correct (AP-1 §6.2 "invoked on [X]% of computable questions";
+    # V12-5): the figure is printed as a percentage, with k/n and
     # the bound beside it (never "100%" alone, SPEC R2.3).
     text = report._section_clopper_pearson({'invocation_figures': {
         'd7_invocation_base': {'failures': 0, 'n': 10, 'rate': '10/10'}}})
@@ -1751,3 +1751,25 @@ def test_clopper_pearson_section_rate_as_percentage_with_k_n_and_bound():
     assert rows, text
     assert re.search(r'\b100(\.0+)?\s?%', rows[0]), rows[0]
     assert re.search(r'25\.8[89]|25\.9', rows[0]), rows[0]
+
+
+# T3-23, settled for the report by the maintainer's decision DEC-3: "when
+# two scorers are supplied, the report says explicitly that agreement was
+# not computed (external), rather than leaving it out". The runner writes
+# two sheets per adjudicated execution, one per scorer (adjudication.py).
+
+AGREEMENT_NOT_COMPUTED = re.compile(
+    r'agreement[^\n]*not (?:been )?computed|not computed[^\n]*agreement',
+    re.I)
+
+
+@pytest.mark.finding('T3-23')
+@pytest.mark.req('R3.3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-23: report.md says nothing about inter-rater '
+                          'agreement while 18 executions go to two scorers')
+def test_report_with_adjudication_says_agreement_not_computed():
+    text = generate_report(summary={'d1_results': D1_PENDING},
+                           config=CONFIG, seal_record={})
+    assert AGREEMENT_NOT_COMPUTED.search(text), \
+        [line for line in text.splitlines() if 'agree' in line.lower()]
