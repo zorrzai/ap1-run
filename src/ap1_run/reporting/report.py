@@ -1182,8 +1182,8 @@ def _section_unmeasured_cells(summary, transcript_records):
 
     A tool loop stopped by the turn limit (T3-67) is a flag on an
     executed, scored execution, not a status of its own: it is the reason
-    beside its R2.0 figure's UNMEASURABLE cell when it has one, and no
-    cell when its figure was scored.
+    beside its R2.0 figure's UNMEASURABLE cell and its EV-0 invocation
+    cell when it has them, and no cell otherwise.
     """
     lines = ['## 10. Non-Outcome Cells\n']
     lines.append('> Every cell that is not a scoreable outcome is listed '
@@ -1212,14 +1212,18 @@ def _section_unmeasured_cells(summary, transcript_records):
         # An EV-0 state is structured (T3-35); its text is derived.
         error = error_state_text(rec.get('error_state'))
         evidence = str(rec.get('evidence_class'))
-        if error.startswith(LOOP_EXHAUSTED):
+        # The loop flag is apart from invocation observability: an
+        # exhausted loop keeps its EV-0 cell, the flag beside its reason.
+        flag = error if error.startswith(LOOP_EXHAUSTED) else None
+        if flag:
             flags[(rec.get('item_id'), rec.get('condition'),
-                   rec.get('repeat'))] = error
+                   rec.get('repeat'))] = flag
         elif error:
-            text = error
-            add(rec, text.split(':')[0], text, 'execution', execution=True)
-        elif 'UNOBSERVABLE' in evidence:
-            add(rec, 'UNOBSERVABLE', f'Evidence class: {evidence}',
+            add(rec, error.split(':')[0], error, 'execution', execution=True)
+            continue
+        if 'UNOBSERVABLE' in evidence:
+            reason = f'Evidence class: {evidence}'
+            add(rec, 'UNOBSERVABLE', f'{reason}; {flag}' if flag else reason,
                 'D7.1 invocation', execution=True)
     for rec in records:
         if rec.get('figure_outcome') == 'UNMEASURABLE':

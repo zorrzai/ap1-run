@@ -1635,6 +1635,29 @@ def test_cells_tool_loop_exhaustion_is_a_reason_not_a_status():
         *CELLS_HEAD, '*No non-outcome cells.*\n', '')
 
 
+@pytest.mark.finding('T3-67', 'T3-35')
+@pytest.mark.req('R3.3', 'AP-1 D7.7')
+def test_cells_tool_loop_exhaustion_keeps_the_ev0_invocation_cell():
+    # The loop flag is handled apart from invocation observability: an
+    # exhausted loop whose invocation is EV-0 still has its D7.1 cell, the
+    # flag beside its reason; with an unreadable figure, both cells.
+    record = {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+              'status': 'EXECUTED', 'evidence_class': 'EV-0 UNOBSERVABLE',
+              'error_state': EXHAUSTED}
+    invocation = ('| Q01 | base | UNOBSERVABLE | Evidence class: EV-0 '
+                  f'UNOBSERVABLE; {EXHAUSTED} | 1 | D7.1 invocation |')
+    assert report._section_unmeasured_cells({}, [
+        dict(record, figure_outcome='AUTO-MATCH')]) == md(
+        *CELLS_HEAD, '1 cells: D7.1 invocation 1.\n', *CELLS_TABLE,
+        invocation, '')
+    assert report._section_unmeasured_cells({}, [
+        dict(record, figure_outcome='UNMEASURABLE')]) == md(
+        *CELLS_HEAD, '2 cells: D7.1 invocation 1; R2.0 figure 1.\n',
+        *CELLS_TABLE, invocation,
+        '| Q01 | base | UNMEASURABLE | response could not be read; routed '
+        f'to adjudication; {EXHAUSTED} | 1 | R2.0 figure |', '')
+
+
 def test_cells_summary_cells_come_before_transcript_cells():
     text = report._section_unmeasured_cells(
         {'non_outcome_cells': [{'item_id': 'S', 'condition': 'c',
