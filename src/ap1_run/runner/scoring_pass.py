@@ -260,6 +260,9 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
             rounds = rounds_by_execution.get((item_id, condition, rep))
             if record is None and rounds:
                 print('UNMEASURED (interrupted)')
+                # V12-8: its rounds' responses were served all the same
+                for round_ in rounds:
+                    record_served(findings, round_.get('response_received'))
                 record_interrupted(findings, item_id, condition, rep,
                                    rounds[-1]['round'])
                 continue

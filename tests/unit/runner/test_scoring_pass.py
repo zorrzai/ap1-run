@@ -487,12 +487,13 @@ def test_score_run_refuses_collisions_other_than_the_sealed_ones(p):
 # -- The transcript against the run's plan (SPEC R0.2, R0.3) ---------------
 
 def write_round(path, item_id, condition, repeat, number, seal_hash='SEAL',
-                error=None, **extra):
+                error=None, response=None, **extra):
     """A round record, as the engine writes one when the round arrives."""
     transcript.append(
         path, item_id=item_id, arm_id=condition, condition=condition,
         request_sent={'request': number},
-        response_received=None if error else {'response': number},
+        response_received=None if error else (response
+                                              or {'response': number}),
         tool_calls=[], evidence_class=None, error_state=error,
         seal_hash=seal_hash, repeat=repeat, kind='round', round=number,
         error=error, **extra)
@@ -533,6 +534,24 @@ def test_score_run_interrupted_execution_unmeasured_with_its_round(p, capsys):
     assert [(r['repeat'], r['status']) for r in records] == [(1, 'EXECUTED')]
     console = capsys.readouterr().out
     assert '  Q1/base/r2: UNMEASURED (interrupted)\n' in console
+
+
+@pytest.mark.finding('V12-8', 'V12-3')
+@pytest.mark.req('AP-1 §5.2')
+def test_score_run_counts_what_served_an_interrupted_execution(p):
+    # An interrupted execution has round records only. The responses they
+    # hold were served like any other, so they are counted; a round whose
+    # request failed holds no response and counts nothing.
+    write_round(p.transcript, 'Q1', 'base', 1, 0, response={'model': 'm-1'})
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED', rounds=[
+        entry(0, response={'model': 'm-1'})])
+    write_round(p.transcript, 'Q1', 'base', 2, 0,
+                response={'model': 'm-2', 'system_fingerprint': 'fp'})
+    write_round(p.transcript, 'Q1', 'base', 2, 1, error='HTTP 502')
+    p.run()
+    (_, _, kw), = p.named('summary')
+    assert kw['served'] == {'models': {'m-1': 1, 'm-2': 1},
+                            'fingerprints': {'fp': 1}, 'responses': 2}
 
 
 @pytest.mark.finding('V12-3')
