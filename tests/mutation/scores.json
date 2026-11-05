@@ -89,10 +89,10 @@
     "score": 0.9757
   },
   "run": {
-    "killed": 584,
-    "mutants": 590,
-    "notes": "All 6 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored. One passes ctx=None to the sealed ground-truth compute, which returns the sealed value of the item and ignores the context. (Step 5 seal-verifier-hardening: the inputs are read by execution/sealed_inputs, so the ten survivors on how fixture.json and questions.json were opened are gone.) (V12-4: the AP-1 text is resolved from the version table and the sealed text checked against it; no new survivors.)",
-    "score": 0.9898
+    "killed": 558,
+    "mutants": 564,
+    "notes": "All 6 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored. One passes ctx=None to the sealed ground-truth compute, which returns the sealed value of the item and ignores the context. (Step 5 seal-verifier-hardening: the inputs are read by execution/sealed_inputs, so the ten survivors on how fixture.json and questions.json were opened are gone; V12-4 adds no survivors.) [Merge of sjl/step5/integration 19bed82 (spec-conformance-claims) into seal-verifier-hardening: 558/564, 0.9894. The two sides scored 584/590 and 555/570; the merged count is lower than the first only because spec-conformance-claims deleted code whose mutants were killed (sampling overrides, environment endpoint and model, defaults). Same 6 survivors.]",
+    "score": 0.9894
   },
   "runner/console": {
     "killed": 526,
@@ -119,9 +119,9 @@
     "score": 0.929
   },
   "runner/settings": {
-    "killed": 258,
-    "mutants": 258,
-    "notes": "(Step 5 seal-verifier-hardening, V12-4: --ap1-text has no default path; the text comes from the version table.)",
+    "killed": 196,
+    "mutants": 196,
+    "notes": "(Step 5 seal-verifier-hardening, V12-4: --ap1-text has no default path; the text comes from the version table.) [Merge with spec-conformance-claims, which removed the environment endpoint/model and the sampling overrides: 196/196.]",
     "score": 1.0
   },
   "runner/summary": {

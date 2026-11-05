@@ -652,9 +652,12 @@ def test_main_under_powered_claim_refused_before_seal_and_requests(r):
 
 
 @pytest.mark.finding('T3-12', 'V12-7')
-def test_main_minimum_n_counts_the_question_items(r):
+def test_main_minimum_n_counts_the_question_items(r, monkeypatch):
     # Under v1.2, D6 needs one item with a conflict_class: Q2 has one.
     r.config.update(dimensions_claimed=['D6'], ap1_version='v1.2')
+    # V12-4: a v1.2 run must seal the v1.2 text.
+    monkeypatch.setattr(run, 'create_seal', lambda **kw: r.calls.append(
+        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH})
     questions = json.loads(json.dumps(QUESTIONS))
     questions['items'][2]['conflict_class'] = 'stated twice'
     (r.fixture_dir / 'questions.json').write_text(json.dumps(questions))
