@@ -10,7 +10,9 @@ a broken runner.
 """
 
 import ast
+import contextlib
 import hashlib
+import io
 import json
 import os
 import shutil
@@ -27,6 +29,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(os.path.dirname(HERE), 'fixtures'))
 
+import check_source_files  # noqa: E402
 import driver  # noqa: E402  (snapshot() only; main() is not run)
 import hard_checks  # noqa: E402
 import hash_oracle  # noqa: E402
@@ -206,6 +209,59 @@ class SourceHash(unittest.TestCase):
         self.assertEqual(hash_oracle.runner_source_hash(self.root), want)
 
 
+
+class SourceFileList(unittest.TestCase):
+    """check_source_files.py takes its list from the oracle's rule."""
+
+    def test_a_rule_change_shows_in_the_list(self):
+        # A rule change git ls-files with the excluded prefixes cannot see:
+        # the oracle stops hashing __init__.py files.
+        rule = hash_oracle.source_hash_files
+
+        def narrower(base_dir):
+            return [p for p in rule(base_dir)
+                    if os.path.basename(p) != '__init__.py']
+        with open(check_source_files.LIST, encoding='utf-8') as f:
+            pinned = f.read().splitlines()
+        hash_oracle.source_hash_files = narrower
+        try:
+            listed = check_source_files.tracked_source_files()
+        finally:
+            hash_oracle.source_hash_files = rule
+        self.assertEqual(
+            sorted(set(pinned) - set(listed)),
+            sorted(p for p in pinned if p.endswith('/__init__.py')))
+        self.assertTrue(set(listed) < set(pinned))
+
+    def test_untracked_files_are_named_not_listed(self):
+        root = tempfile.mkdtemp(prefix='ap1-source-list-')
+        try:
+            files = {'a.py': 'tracked', 'pkg/b.py': 'tracked',
+                     'output/c.py': 'tracked', 'scratch.py': 'untracked',
+                     'notes.txt': 'tracked'}
+            for rel in files:
+                path = os.path.join(root, *rel.split('/'))
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                with open(path, 'w') as f:
+                    f.write('x = 1\n')
+            env = {k: v for k, v in os.environ.items()
+                   if not k.startswith('GIT_')}
+            subprocess.run(['git', 'init', '-q', root], check=True, env=env)
+            subprocess.run(['git', '-C', root, 'add', '--']
+                           + [r for r, kind in files.items()
+                              if kind == 'tracked'], check=True, env=env)
+            repo, check_source_files.REPO = check_source_files.REPO, root
+            err = io.StringIO()
+            try:
+                with contextlib.redirect_stderr(err):
+                    listed = check_source_files.tracked_source_files()
+            finally:
+                check_source_files.REPO = repo
+            self.assertEqual(listed, ['a.py', 'pkg/b.py'])
+            self.assertIn('1 untracked file(s)', err.getvalue())
+            self.assertIn('scratch.py', err.getvalue())
+        finally:
+            shutil.rmtree(root)
 
 class PublishedSourceHash(unittest.TestCase):
     """The oracle's source-hash rule, on the code of the September runs,
