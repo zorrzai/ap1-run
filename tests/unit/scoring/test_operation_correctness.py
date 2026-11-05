@@ -882,3 +882,27 @@ def test_reclassify_session_unreadable_expression_kept_no_raise(expression):
         out = e
     assert isinstance(out, list), f'{type(out).__name__}: {out}'
     assert [o['outcome'] for o in out] == [WO]
+
+
+@pytest.mark.finding('S3-G4-3')
+@pytest.mark.parametrize('expression', [
+    'round(1234.5, -1)', 'round(1250, -2)', 'round(-1234.5, -1)',
+    'round(2.5)', 'round(2.675, 2)', 'round(777.4125, 2)', 'round(15.2, 0)'])
+def test_evaluate_expression_round_agrees_with_the_calculator(expression):
+    # D7.2(b) judges the value the calculator returned: round() with any
+    # places, negative ones included, gives the calculator's result
+    # (round(1234.5, -1) is 1230, not 1235).
+    import importlib.util
+    from pathlib import Path
+    path = Path(__file__).resolve().parents[3] / 'example' / 'calculator_tool.py'
+    spec = importlib.util.spec_from_file_location('_calc_for_round', path)
+    calc = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(calc)
+    tool = json_result(calc.execute_calculator(expression))
+    assert evaluate_expression(expression) == Decimal(str(tool)), tool
+
+
+def json_result(returned):
+    import json
+    value = json.loads(returned) if isinstance(returned, str) else returned
+    return value['result'] if isinstance(value, dict) else value

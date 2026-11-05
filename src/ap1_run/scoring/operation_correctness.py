@@ -66,7 +66,10 @@ _ALLOWED_FUNCS = {
     'abs': abs,
     # Half away from zero, as the reference calculator rounds and as the
     # example configs declare (ROUND_HALF_UP); round(2.5) is 3.
-    'round': lambda v, n=0: v.quantize(Decimal(10) ** -int(n),
+    # The quantum is 1 scaled by the places, so negative places round to
+    # tens or hundreds as the calculator does (round(1234.5, -1) is 1230);
+    # Decimal(10) ** 1 is 10 with exponent 0, which rounds to units.
+    'round': lambda v, n=0: v.quantize(Decimal(1).scaleb(-int(n)),
                                        rounding=ROUND_HALF_UP),
 }
 
