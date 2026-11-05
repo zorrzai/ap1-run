@@ -286,7 +286,9 @@ def test_main_full_run_calls(r, capsys):
 
     assert r.config_path == os.path.join(fx, 'config.json')
     assert r.named('version') == [(run.BASE_DIR,)]
-    assert r.named('source_hash') == [(run.BASE_DIR,)]
+    # Hashed for the seal, then again by each of the two seal checks
+    # (before the first request and before reporting), from disk.
+    assert r.named('source_hash') == [(run.BASE_DIR,)] * 3
     guards = r.named('gt_guard')
     assert [g[0] for g in guards] == [
         'perturbation', 'source_fields', 'declared_constants']
@@ -456,9 +458,10 @@ def test_main_full_run_calls(r, capsys):
         'execute', 'consistency', 'run_report', 'summarise', 'd2_cap', 'd2',
         'summary', 'scoring_report', 'outputs')]
     assert stages == ['version', 'source_hash', 'gt_guard', 'gt_guard',
-                      'gt_guard', 'seal', 'guard', 'verify_seal'] + [
-                      'execute'] * 8 + [
-                      'verify_seal', 'consistency', 'run_report', 'summarise',
+                      'gt_guard', 'seal', 'guard', 'source_hash',
+                      'verify_seal'] + ['execute'] * 8 + [
+                      'source_hash', 'verify_seal', 'consistency',
+                      'run_report', 'summarise',
                       'd2_cap', 'd2', 'summary', 'scoring_report', 'outputs']
 
 

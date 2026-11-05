@@ -97,6 +97,28 @@ def load_ground_truth(path, data):
     return load_sealed_module(GROUND_TRUTH_MODULE, path, data)
 
 
+def recompute_expected_values(paths):
+    """The expected values the input files give now: the fixture,
+    questions and ground-truth module read again from `paths` and the
+    module run on every item, in the shared Decimal context. The module
+    is loaded under a private name and not left in sys.modules, so the
+    run's own modules are untouched. For the run's seal checks after the
+    seal (T3-17): they compare these with the sealed values, not the
+    sealed copy with itself."""
+    from ap1_run.foundation.numeric import in_decimal_context
+    data = {}
+    for name in ('fixture', 'questions', 'ground_truth'):
+        with open(paths[name], 'rb') as f:
+            data[name] = f.read()
+    private = '_ap1_recheck_' + GROUND_TRUTH_MODULE
+    module = load_sealed_module(private, paths['ground_truth'],
+                                data['ground_truth'])
+    sys.modules.pop(private, None)
+    module.compute = in_decimal_context(module.compute)
+    return compute_expected_values(module, parse_json_input(data['fixture']),
+                                   parse_json_input(data['questions']))
+
+
 def load_sealed_module(name, path, data):
     """Load a module from `data`, the bytes read from `path`, as module
     `name` (in sys.modules, with __file__ = path), so an import of the

@@ -407,6 +407,55 @@ def test_run_ground_truth_executed_from_other_file_refused_or_sealed(
                 executed, fixture_dir / 'ground_truth_example.py'))
 
 
+# -- The run's own seal checks recompute from disk ---------------------------
+
+@pytest.mark.finding('T3-17', 'T3-48')
+@pytest.mark.req('R1.1')
+def test_run_expected_values_changed_after_the_seal_refused(runner,
+                                                           fixture_dir):
+    # The ground truth reads a neighbour module the seal does not hash.
+    # Changed after the seal, the expected values the inputs give now
+    # differ from the sealed ones: the run's check recomputes them from
+    # the files and refuses, naming them (it compared the sealed copy with
+    # itself before).
+    (fixture_dir / 'gt_policy.py').write_text('BONUS = 0\n', 'utf-8')
+    gt = fixture_dir / 'ground_truth_example.py'
+    gt.write_text(gt.read_text('utf-8') + (
+        '\n\nimport gt_policy\n_compute = compute\n\n\n'
+        'def compute(item_id, delivered_context):\n'
+        '    result = _compute(item_id, delivered_context)\n'
+        '    return dict(result, final=result["final"] + gt_policy.BONUS)\n'),
+        'utf-8')
+
+    def change_policy(record):
+        (fixture_dir / 'gt_policy.py').write_text('BONUS = 1\n', 'utf-8')
+        sys.modules.pop('gt_policy', None)
+    result = runner(fixture_dir, hooks={'after_seal': change_policy})
+    assert result.seals, 'no seal was made'
+    assert refused_naming(result, 'expected_values'), (
+        result.code, result.refusal)
+
+
+@pytest.mark.finding('T3-17', 'T3-70')
+@pytest.mark.req('R1.1')
+def test_run_runner_source_changed_after_the_seal_refused(runner, fixture_dir,
+                                                         monkeypatch):
+    # The run's check hashes the runner source again, so an edit of the
+    # package after the seal is refused, naming runner_source_hash.
+    real = run_mod.compute_runner_source_hash
+    calls = []
+
+    def hashed(base_dir):
+        calls.append(base_dir)
+        value = real(base_dir)
+        return value if len(calls) == 1 else '0' * 64
+    monkeypatch.setattr(run_mod, 'compute_runner_source_hash', hashed)
+    result = runner(fixture_dir)
+    assert len(calls) >= 2
+    assert refused_naming(result, 'runner_source_hash'), (
+        result.code, result.refusal)
+
+
 # -- The calculator is an executed input -----------------------------------
 
 DOCTORED = '\n\ndef execute_calculator(expression):\n    return "1"\n'

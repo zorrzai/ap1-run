@@ -47,11 +47,12 @@ from ap1_run.execution.ap1_texts import (
 from ap1_run.execution.engine import execute_item
 from ap1_run.execution.perturbation_guard import HELD_CONSTANT
 from ap1_run.execution.seal import (
-    perturbation_check, seal as create_seal, source_fields_check,
+    SealError, perturbation_check, seal as create_seal, source_fields_check,
     verify_seal,
 )
 from ap1_run.execution.sealed_inputs import (
-    check_reproducible, read_inputs, sealed_compute,
+    check_reproducible, read_inputs, recompute_expected_values,
+    sealed_compute,
 )
 from ap1_run.execution.seal_constants import declared_constants_check
 from ap1_run.execution.version import (
@@ -219,10 +220,17 @@ def main(argv=None):
     def check_seal():
         # R1.1: the sealed inputs are verified before the run sends any
         # request and again before its results are reported; any change
-        # since the seal refuses the run, naming it (T3-17).
+        # since the seal refuses the run, naming it (T3-17). The runner
+        # source hash and the expected values are recomputed from disk,
+        # not taken from the copies that went into the seal.
+        try:
+            current_values = recompute_expected_values(inputs.paths)
+        except Exception as e:
+            raise SealError(f'seal verification failed:\n  expected_values: '
+                            f'cannot recompute: {type(e).__name__}: {e}')
         verify_seal(seal_record, **seal_inputs,
-                    runner_source_hash=runner_source_hash,
-                    expected_values=expected_values)
+                    runner_source_hash=compute_runner_source_hash(base_dir),
+                    expected_values=current_values)
     print(f'Seal hash: {seal_hash}')
     print(f'AP-1 text hash: {seal_record["ap1_text_hash"]}')
     print()
