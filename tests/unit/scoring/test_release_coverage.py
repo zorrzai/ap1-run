@@ -351,6 +351,22 @@ def test_release_coverage_unquantisable_return_beside_governing_one():
 
 
 @pytest.mark.finding('T3-39')
+@pytest.mark.parametrize('returns, figure', [
+    (['inf'], '0.00'),
+    (['0'], '1e+60'),
+    (['Infinity', '1e+60'], '0'),
+], ids=['infinite-return-zero-figure', 'zero-return-huge-figure',
+        'unquantisable-returns-zero-figure'])
+def test_release_coverage_unquantisable_value_is_not_zero(returns, figure):
+    # A value that cannot be quantised is no value at all for coverage:
+    # it neither governs a zero figure nor is governed by a zero return.
+    r = check_release_coverage([call(v) for v in returns], [D(figure)],
+                               D(figure))
+    assert (r['outcome'], r['ungoverned_figures']) == (
+        PARTIALLY_GOVERNED, [D(figure)])
+
+
+@pytest.mark.finding('T3-39')
 def test_release_coverage_unquantisable_candidate_ungoverned():
     r = check_release_coverage([call('430.75')], [D('1e+60')], D('430.75'))
     assert (r['outcome'], r['ungoverned_figures']) == (

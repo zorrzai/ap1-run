@@ -530,6 +530,22 @@ def test_execute_item_tool_loop_stops_after_ten_turns_flagged(
 
 
 @pytest.mark.finding('T3-67')
+def test_execute_item_tool_loop_exhausted_with_text_still_flagged(
+        tmp_path, calculator):
+    # The 11th response has text as well as a call: the model had not
+    # finished, so the loop is still exhausted, and the figure in that
+    # text is scored from an unfinished answer. It is flagged.
+    replies = [calls(tool_call(id=f'c{n}')) for n in range(1, 11)]
+    final = answer('The interest is $15.20, checking again.',
+                   tool_calls=[tool_call(id='c11')])
+    result, records = run(tmp_path, FakeAdapter(*replies, final))
+    flag = ('TOOL_LOOP_EXHAUSTED: the response after 10 tool turns still '
+            'asked for 1 tool call(s), which were not executed')
+    assert (records[0]['error_state'], result['error_state']) == (flag, flag)
+    assert engine._loop_exhaustion(final, [(True, None)]) == flag
+
+
+@pytest.mark.finding('T3-67')
 def test_execute_item_loop_ending_at_turn_limit_not_flagged(tmp_path,
                                                            calculator):
     # Ten tool turns followed by an answer: the loop completed.
