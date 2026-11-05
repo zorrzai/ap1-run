@@ -507,3 +507,11 @@ def test_run_tool_loop_exhausted_flagged_run_completes(full_run):
     assert record['error_state'] == q01['error_state']
     assert len(record['tool_calls']) == 10
     assert f"Q01/base/r1: {q01['error_state']}" in r.console_section('3a')
+    # report section 10: only R3.3's statuses; the flag is a reason
+    section = r.report_section(10)
+    statuses = {row.split(' | ')[2] for row in section.splitlines()
+                if row.startswith('| Q')}
+    assert statuses <= {'UNMEASURED', 'UNOBSERVABLE', 'UNMEASURABLE',
+                        'VOID', 'OPERANDS-UNOBSERVABLE',
+                        'OPERATION-UNOBSERVABLE', 'COVERAGE-UNOBSERVABLE'}, \
+        statuses

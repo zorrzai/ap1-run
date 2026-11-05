@@ -43,6 +43,7 @@ from datetime import datetime, timezone
 from decimal import ROUND_DOWN, ROUND_HALF_UP, Decimal
 
 from ap1_run.foundation.transcript import error_state_text
+from ap1_run.runner.executions import LOOP_EXHAUSTED
 from ap1_run.scoring.accuracy import CATEGORY_MINIMUM_N
 from ap1_run.scoring.invocation import (
     _exact_upper_bound, clopper_pearson_upper, format_failing_questions,
@@ -906,6 +907,11 @@ def _section_unmeasured_cells(summary, transcript_records):
     per call), D7.3 transcription (UNOBSERVABLE) and D7.3 release
     coverage (COVERAGE-UNOBSERVABLE). Nothing is de-duplicated across
     repeats, and the summary is not changed.
+
+    A tool loop stopped by the turn limit (T3-67) is a flag on an
+    executed, scored execution, not a status of its own: it is the reason
+    beside its R2.0 figure's UNMEASURABLE cell when it has one, and no
+    cell when its figure was scored.
     """
     lines = ['## 10. Non-Outcome Cells\n']
     lines.append('> Every cell that is not a scoreable outcome is listed '
@@ -929,11 +935,15 @@ def _section_unmeasured_cells(summary, transcript_records):
             execution=True)
     records = [r for r in transcript_records or []
                if r.get('record_type') != 'figure_identification']
+    flags = {}
     for rec in records:
         # An EV-0 state is structured (T3-35); its text is derived.
         error = error_state_text(rec.get('error_state'))
         evidence = str(rec.get('evidence_class'))
-        if error:
+        if error.startswith(LOOP_EXHAUSTED):
+            flags[(rec.get('item_id'), rec.get('condition'),
+                   rec.get('repeat'))] = error
+        elif error:
             text = error
             add(rec, text.split(':')[0], text, 'execution', execution=True)
         elif 'UNOBSERVABLE' in evidence:
@@ -941,8 +951,11 @@ def _section_unmeasured_cells(summary, transcript_records):
                 'D7.1 invocation', execution=True)
     for rec in records:
         if rec.get('figure_outcome') == 'UNMEASURABLE':
-            add(rec, 'UNMEASURABLE', 'response could not be read; routed '
-                'to adjudication', 'R2.0 figure')
+            reason = 'response could not be read; routed to adjudication'
+            flag = flags.get((rec.get('item_id'), rec.get('condition'),
+                              rec.get('repeat')))
+            add(rec, 'UNMEASURABLE', f'{reason}; {flag}' if flag else reason,
+                'R2.0 figure')
     for cell in summary.get('provenance_unmeasurable', []):
         add(cell, 'UNMEASURABLE', cell.get('reason'), 'D7.2(a) provenance')
     for cell in summary.get('operands_unobservable', []):

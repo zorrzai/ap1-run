@@ -1348,6 +1348,35 @@ def test_cells_from_transcript_error_state_or_ev0_one_row_per_record():
         '')
 
 
+EXHAUSTED = ('TOOL_LOOP_EXHAUSTED: the response after 10 tool turns still '
+             'asked for 1 tool call(s), which were not executed')
+
+
+@pytest.mark.finding('T3-67')
+@pytest.mark.req('R3.3')
+def test_cells_tool_loop_exhaustion_is_a_reason_not_a_status():
+    # An exhausted loop is an EXECUTED, scored execution with a flag
+    # (T3-67), not one of section 10's statuses (SPEC R3.3: UNMEASURED,
+    # UNOBSERVABLE, UNMEASURABLE, VOID). With no figure to read, its R2.0
+    # figure is the UNMEASURABLE cell, and the flag is its reason; with a
+    # scored figure it has no non-outcome cell.
+    record = {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+              'status': 'EXECUTED', 'evidence_class': 'EV-2 '
+              'PLATFORM-STRUCTURAL', 'error_state': EXHAUSTED}
+    text = report._section_unmeasured_cells({}, [
+        dict(record, figure_outcome='UNMEASURABLE')])
+    assert text == md(
+        *CELLS_HEAD,
+        '1 cells: R2.0 figure 1.\n',
+        *CELLS_TABLE,
+        '| Q01 | base | UNMEASURABLE | response could not be read; routed '
+        f'to adjudication; {EXHAUSTED} | 1 | R2.0 figure |',
+        '')
+    assert report._section_unmeasured_cells({}, [
+        dict(record, figure_outcome='AUTO-MATCH')]) == md(
+        *CELLS_HEAD, '*No non-outcome cells.*\n', '')
+
+
 def test_cells_summary_cells_come_before_transcript_cells():
     text = report._section_unmeasured_cells(
         {'non_outcome_cells': [{'item_id': 'S', 'condition': 'c',
