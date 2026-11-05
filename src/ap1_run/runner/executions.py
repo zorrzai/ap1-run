@@ -16,6 +16,7 @@ from decimal import Decimal
 
 from ap1_run.execution.engine import _extract_calc_expression
 from ap1_run.foundation.numeric import extract_numeric_tokens
+from ap1_run.foundation.transcript import error_state_text
 from ap1_run.scoring.accuracy import score_accuracy
 from ap1_run.scoring.answer_outcome import answer_outcome, refusal_outcome
 from ap1_run.scoring.figure_id import ADJUDICATE_REFUSAL, identify_figure
@@ -156,7 +157,7 @@ def score_d72(tool_calls, ctx, gt, config):
 def _cause(record):
     """Why a record is not scored: its error state after the status
     prefix ('TRANSPORT_FAILURE: <error>', 'UNMEASURED: empty response')."""
-    error_state = str(record.get('error_state') or '')
+    error_state = error_state_text(record.get('error_state'))
     return error_state.split(': ', 1)[1] if ': ' in error_state \
         else error_state
 

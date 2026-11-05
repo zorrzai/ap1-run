@@ -358,7 +358,8 @@ def test_execute_item_no_tools_ev0(tmp_path, tools):
     assert (result['evidence_class'], result['invocation_outcome']) == (
         EV_0, None)
     assert send.calls[0]['tools'] == tools
-    assert records[0]['error_state'] == 'UNOBSERVABLE: no tools offered'
+    assert records[0]['error_state'] == {'cause': 'no tools offered',
+                                         'round': 0}
 
 
 def test_execute_item_attestation_reason_recorded_class_unchanged(tmp_path):
@@ -545,9 +546,10 @@ def test_execute_item_unrecognised_first_response_executed_ev0(tmp_path):
     assert len(send.calls) == 1
     assert (result['status'], result['evidence_class'],
             result['invocation_outcome']) == ('EXECUTED', EV_0, None)
-    assert records[0]['error_state'] == (
-        'UNOBSERVABLE: round 0: unrecognised response shape: response '
-        'appears Anthropic-shaped (has type=message, content)')
+    assert records[0]['error_state'] == {
+        'cause': 'unrecognised response shape: response appears '
+                 'Anthropic-shaped (has type=message, content)',
+        'round': 0}
 
 
 def test_execute_item_unrecognised_later_response_ev0(tmp_path, calculator):
@@ -556,9 +558,10 @@ def test_execute_item_unrecognised_later_response_ev0(tmp_path, calculator):
     assert (result['evidence_class'], result['invocation_outcome']) == (
         EV_0, None)
     assert result['response'] == ANTHROPIC
-    assert records[0]['error_state'] == (
-        'UNOBSERVABLE: round 1: unrecognised response shape: response '
-        'appears Anthropic-shaped (has type=message, content)')
+    assert records[0]['error_state'] == {
+        'cause': 'unrecognised response shape: response appears '
+                 'Anthropic-shaped (has type=message, content)',
+        'round': 1}
 
 
 @pytest.mark.finding('T3-35')
@@ -568,19 +571,30 @@ def test_unobservable_cause_first_unrecognised_round_named():
     shapes = [(True, None), (False, 'choices is empty or not a list'),
               (False, 'later')]
     rounds = [{'round': 0}, {'round': 1, 'response': {}}]
-    assert engine._unobservable_cause(shapes, rounds, True) == (
+    # The state is structured (T3-35: {'cause', 'round'}, round 0 the
+    # first request); its text, error_state_text, is derived from it.
+    from ap1_run.foundation.transcript import error_state_text
+    state = engine._unobservable_cause(shapes, rounds, True)
+    assert state == {'cause': 'unrecognised response shape: choices is '
+                              'empty or not a list', 'round': 1}
+    assert error_state_text(state) == (
         'UNOBSERVABLE: round 1: unrecognised response shape: choices is '
         'empty or not a list')
     rounds[1] = {'round': 1, 'error': 'HTTP 503: down'}
-    assert engine._unobservable_cause(shapes, rounds, True) == (
-        'UNOBSERVABLE: round 1: request failed: HTTP 503: down')
+    assert engine._unobservable_cause(shapes, rounds, True) == {
+        'cause': 'request failed: HTTP 503: down', 'round': 1}
     # a shape failure past the recorded rounds is still a shape failure
-    assert engine._unobservable_cause([(False, 'r')], [], True) == (
-        'UNOBSERVABLE: round 0: unrecognised response shape: r')
-    assert engine._unobservable_cause([(True, None)], [], True) == \
-        'UNOBSERVABLE'
-    assert engine._unobservable_cause([(False, 'r')], [], False) == \
-        'UNOBSERVABLE: no tools offered'
+    assert engine._unobservable_cause([(False, 'r')], [], True) == {
+        'cause': 'unrecognised response shape: r', 'round': 0}
+    none_read = engine._unobservable_cause([(True, None)], [], True)
+    assert none_read == {'cause': 'no round of the loop could be read',
+                         'round': None}
+    assert error_state_text(none_read) == (
+        'UNOBSERVABLE: no round of the loop could be read')
+    assert engine._unobservable_cause([(False, 'r')], [], False) == {
+        'cause': 'no tools offered', 'round': 0}
+    assert error_state_text('VOID') == 'VOID'
+    assert error_state_text(None) == ''
 
 
 @pytest.mark.finding('T3-1', 'T3-35')
@@ -598,8 +612,8 @@ def test_execute_item_later_send_fails_executed_ev0_cause_recorded(
             result['invocation_outcome']) == ('EXECUTED', EV_0, None)
     assert result['response'] == first
     assert len(result['tool_calls']) == 1
-    assert records[0]['error_state'] == (
-        'UNOBSERVABLE: round 1: request failed: Rate limit reached')
+    assert records[0]['error_state'] == {
+        'cause': 'request failed: Rate limit reached', 'round': 1}
 
 
 def test_drive_tool_loop_failed_round_recorded_unrecognised(calculator):
@@ -865,10 +879,6 @@ def assert_ev0_state(error_state, cause):
 @pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-35: error_state names the cause and round as "
-                          "text ('UNOBSERVABLE: round 1: ...'), not the "
-                          "structured {'cause', 'round'} EV0_STATE proposes")
 def test_execute_item_later_send_fails_error_state_names_cause_and_round(
         tmp_path, calculator):
     # Correct (SPEC R1.3 "EV-0 UNOBSERVABLE with the round identified";
@@ -885,10 +895,6 @@ def test_execute_item_later_send_fails_error_state_names_cause_and_round(
 @pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-35: error_state names the cause and round as "
-                          "text ('UNOBSERVABLE: round 1: ...'), not the "
-                          "structured {'cause', 'round'} EV0_STATE proposes")
 def test_execute_item_unrecognised_later_response_error_state_names_round(
         tmp_path, calculator):
     # Correct (SPEC R1.3, as above): the record names the cause and the
@@ -901,10 +907,6 @@ def test_execute_item_unrecognised_later_response_error_state_names_round(
 @pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
-@pytest.mark.xfail(strict=True, raises=(AssertionError, AttributeError),
-                   reason="T3-35: error_state names the cause and round as "
-                          "text ('UNOBSERVABLE: round 1: ...'), not the "
-                          "structured {'cause', 'round'} EV0_STATE proposes")
 def test_execute_item_ev0_causes_are_told_apart(tmp_path, calculator):
     # A rate limit and an unrecognised shape in round 1 are two causes;
     # the records tell them apart.

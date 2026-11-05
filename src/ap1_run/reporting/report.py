@@ -42,6 +42,7 @@ import math
 from datetime import datetime, timezone
 from decimal import ROUND_DOWN, ROUND_HALF_UP, Decimal
 
+from ap1_run.foundation.transcript import error_state_text
 from ap1_run.scoring.invocation import format_failing_questions
 
 
@@ -701,7 +702,8 @@ def _section_unmeasured_cells(summary, transcript_records):
     # Also extract from transcript if available
     if transcript_records:
         for rec in transcript_records:
-            error = rec.get('error_state')
+            # An EV-0 state is structured (T3-35); its text is derived.
+            error = error_state_text(rec.get('error_state'))
             if error:
                 cells.append({
                     'item_id': rec.get('item_id', '?'),

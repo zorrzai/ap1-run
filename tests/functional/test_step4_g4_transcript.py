@@ -542,10 +542,6 @@ def _ev0_error_state(cli, second_round):
 @pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-35: error_state names the cause and round as "
-                          "text ('UNOBSERVABLE: round 1: ...'), not the "
-                          "structured {'cause', 'round'} EV0_STATE proposes")
 @pytest.mark.parametrize('second_round, cause', [
     ({'http': 503, 'body': '{"error": "upstream down"}'}, 'http'),
     ({'close': True}, 'transport'),

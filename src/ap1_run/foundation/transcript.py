@@ -89,3 +89,14 @@ def read_all(path):
                     f'invalid JSON at line {line_num}: {e}') from e
 
     return records
+
+
+def error_state_text(error_state):
+    """A record's error state as one line of text. An EV-0 state is
+    structured, {'cause', 'round'} (T3-35); its text is derived from it:
+    'UNOBSERVABLE: round <n>: <cause>'. Any other state is already text."""
+    if isinstance(error_state, dict):
+        number = error_state.get('round')
+        where = f'round {number}: ' if number is not None else ''
+        return f'UNOBSERVABLE: {where}{error_state.get("cause", "")}'
+    return '' if error_state is None else str(error_state)

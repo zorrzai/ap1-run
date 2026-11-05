@@ -329,23 +329,25 @@ def _drive_tool_loop(*, response, messages, config, tools,
     return all_tool_calls, current, round_shapes
 
 def _unobservable_cause(round_shapes, rounds, tools_offered):
-    """The error state of an EV-0 execution: why the invocation could not
-    be observed, and in which round (round 0 is the first request).
+    """The error state of an EV-0 execution, structured so the round can't
+    be misread (T3-35, SPEC R1.3 "with the round identified"):
+    {'cause': <text>, 'round': <int, the first request is round 0>}.
+    transcript.error_state_text gives its one-line text.
 
     A round is unobservable when its request failed (rounds holds the
     error) or its response came back in an unrecognised shape.
     """
     if not tools_offered:
-        return 'UNOBSERVABLE: no tools offered'
+        return {'cause': 'no tools offered', 'round': 0}
     for number, (recognised, reason) in enumerate(round_shapes):
         if recognised:
             continue
         if number < len(rounds) and 'error' in rounds[number]:
-            return (f'UNOBSERVABLE: round {number}: request failed: '
-                    f'{rounds[number]["error"]}')
-        return (f'UNOBSERVABLE: round {number}: unrecognised response '
-                f'shape: {reason}')
-    return 'UNOBSERVABLE'
+            return {'cause': f'request failed: {rounds[number]["error"]}',
+                    'round': number}
+        return {'cause': f'unrecognised response shape: {reason}',
+                'round': number}
+    return {'cause': 'no round of the loop could be read', 'round': None}
 
 
 def _failed_round(number, messages, error):

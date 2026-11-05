@@ -1258,20 +1258,6 @@ def test_cells_non_string_error_state_without_colon_is_stringified():
     assert '| Q | c | 504 | 504 |' in text
 
 
-@pytest.mark.finding('S3-G6-1')
-def test_cells_non_string_error_state_with_colon_raises():
-    # The colon test goes through str() but the split does not, so a
-    # non-string error_state whose text contains ':' raises and no
-    # report is written. Engine error states are strings today, so this
-    # is latent. Correct: split str(error).
-    class Err:
-        def __str__(self):
-            return 'TRANSPORT_FAILURE: x'
-    with pytest.raises(AttributeError):
-        report._section_unmeasured_cells({}, [
-            {'item_id': 'Q', 'condition': 'c', 'error_state': Err()}])
-
-
 def test_cells_ev_unobservable_matches_anywhere_in_class():
     text = report._section_unmeasured_cells({}, [
         {'item_id': 'Q', 'condition': 'c', 'evidence_class': 'X-UNOBSERVABLE'},
@@ -1831,9 +1817,6 @@ def test_cells_leave_the_summary_unchanged():
 
 
 @pytest.mark.finding('S3-G6-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G6-1: a non-string error_state containing ":" '
-                          'raises AttributeError')
 def test_cells_non_string_error_state_with_colon_is_listed():
     # Correct: any error_state is rendered (str() then split), and the
     # report is written.

@@ -798,7 +798,7 @@ def test_result_from_record_loop_exhaustion_carried(recorders):
         engine_record(status='EXECUTED', error_state=state), gt=GT_D72,
         ctx=CTX_D72, config=CONFIG_D72)
     assert result['error_state'] == state
-    for other in ('UNOBSERVABLE: round 1: request failed: x', None):
+    for other in ({'cause': 'request failed: x', 'round': 1}, None):
         result = result_from_record(
             engine_record(status='EXECUTED', error_state=other), gt=GT_D72,
             ctx=CTX_D72, config=CONFIG_D72)
