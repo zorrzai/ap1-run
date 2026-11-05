@@ -1011,11 +1011,11 @@ VERIFY_HASHES_DIGEST = \
 @pytest.mark.req('R0.4.3')
 def test_canonical_hash_pinned_digest_same_on_every_platform():
     # Not an xfail: passes today and must pass on every OS CI runs.
-    # T3-20: the CI
-    # job wrote this digest on three platforms and compared nothing; the
-    # expected value is now pinned in the test, so a platform that hashes
-    # differently fails here (SPEC R0.4.3 verification item 1). Inputs are
-    # those of tests/legacy/verify_hashes.py, key order varied as there.
+    # T3-20: the CI job wrote this digest on three platforms and compared
+    # nothing until verify_hashes.py pinned it; this test pins the same
+    # value under pytest, so a platform that hashes differently fails here
+    # (SPEC R0.4.3 verification item 1) without the legacy script. Inputs
+    # are those of tests/legacy/verify_hashes.py, key order varied as there.
     # (test_canonical_hash_known_digest_of_verify_hashes_input, step 3,
     # pins the same digest and the canonical text.)
     obj = {
