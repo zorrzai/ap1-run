@@ -293,18 +293,25 @@ def _drive_tool_loop(*, response, messages, config, tools,
             break
 
         turn_records = []
-        for tc in model_calls:
+        for tc, call_id in zip(model_calls, _call_ids(model_calls, turn)):
             record = {
                 'turn': turn,
-                'id': tc.get('id', f'call_{turn}'),
+                'id': call_id,
                 'type': tc.get('type', 'function'),
                 'function': tc.get('function', {}),
             }
             all_tool_calls.append(record)
             turn_records.append(record)
 
-        messages.append(
-            current.get('choices', [{}])[0].get('message', {}))
+        # The assistant message goes back as received, except that a call
+        # without an id gets the id its tool reply answers (a copy: the
+        # raw response in rounds keeps the calls as received).
+        message = current.get('choices', [{}])[0].get('message', {})
+        if any(not tc.get('id') for tc in model_calls):
+            message = dict(message, tool_calls=[
+                dict(tc, id=record['id'])
+                for tc, record in zip(model_calls, turn_records)])
+        messages.append(message)
 
         # D7.2(a)(iv): each return value is attached to its own call's
         # record, so a call without an id (S3-G2-2) or a reused id
@@ -340,6 +347,25 @@ def _drive_tool_loop(*, response, messages, config, tools,
         _record_shape(current, round_shapes)
 
     return all_tool_calls, current, round_shapes
+
+def _call_ids(model_calls, turn):
+    """Each call's id: its own, or, for a call without one (absent, null
+    or empty, S3-G2-2), an id no other call of its turn has: call_<turn>
+    for a turn's only such call, else call_<turn>_<position>."""
+    taken = {tc.get('id') for tc in model_calls if tc.get('id')}
+    without = sum(1 for tc in model_calls if not tc.get('id'))
+    ids = []
+    for position, tc in enumerate(model_calls, 1):
+        call_id = tc.get('id')
+        if not call_id:
+            call_id = (f'call_{turn}' if without == 1
+                       else f'call_{turn}_{position}')
+            while call_id in taken:
+                call_id += '_'
+            taken.add(call_id)
+        ids.append(call_id)
+    return ids
+
 
 def _unobservable_cause(round_shapes, rounds, tools_offered):
     """The error state of an EV-0 execution, structured so the round can't

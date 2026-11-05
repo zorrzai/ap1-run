@@ -1047,20 +1047,83 @@ def test_execute_item_unreadable_message_part_ev0_no_tool_run(
     assert [r['response_received'] for r in records] == [final]
 
 
+class CheckingAdapter(FakeAdapter):
+    """A FakeAdapter that refuses a continuation request whose tool
+    messages do not answer the calls of the assistant message before
+    them, one to one, by id (as a strict endpoint does)."""
+
+    def __call__(self, url, *, messages, tools, sampling, model):
+        for n, message in enumerate(messages):
+            if message.get('role') != 'assistant' or not message.get(
+                    'tool_calls'):
+                continue
+            asked = [tc.get('id') for tc in message['tool_calls']]
+            answered = [m.get('tool_call_id') for m in
+                        messages[n + 1:n + 1 + len(asked)]]
+            if None in asked or len(set(asked)) != len(asked) \
+                    or answered != asked:
+                raise adapter.AdapterError(
+                    f'HTTP 400: tool replies {answered} do not match the '
+                    f'calls {asked}')
+        return super().__call__(url, messages=messages, tools=tools,
+                                sampling=sampling, model=model)
+
+
 @pytest.mark.finding('S3-G2-2', 'S3-G2-3')
-def test_execute_item_two_calls_without_id_in_one_turn_each_own_return(
-        tmp_path, calculator):
-    # Two calls of one turn without ids share the default id 'call_1';
-    # each return still goes on its own record, in order.
+@pytest.mark.parametrize('missing', ['absent', None, ''])
+def test_execute_item_two_calls_without_id_in_one_turn_each_own_id(
+        tmp_path, calculator, missing):
+    # Two calls of one turn without ids each get an id of their own, used
+    # alike on the assistant message sent back and on its tool reply, so
+    # an endpoint that checks the pairing accepts the continuation. Each
+    # return goes on its own record, in order; the raw response keeps the
+    # calls as received.
     a, b = tool_call('1+1'), tool_call('boom')
-    del a['id'], b['id']
-    send = FakeAdapter(calls(a, b), answer())
-    result, _ = run(tmp_path, send)
+    for tc in (a, b):
+        if missing == 'absent':
+            del tc['id']
+        else:
+            tc['id'] = missing
+    first = calls(a, b)
+    raw = copy.deepcopy(first)
+    send = CheckingAdapter(first, answer())
+    result, records = run(tmp_path, send)
     assert [(r['id'], r['return_value']) for r in result['tool_calls']] == [
-        ('call_1', '{"result": "15.2"}'),
-        ('call_1', '{"error": "cannot evaluate boom"}')]
+        ('call_1_1', '{"result": "15.2"}'),
+        ('call_1_2', '{"error": "cannot evaluate boom"}')]
+    sent = send.calls[1]['messages']
+    assistant, = [m for m in sent if m['role'] == 'assistant']
+    assert [tc['id'] for tc in assistant['tool_calls']] == [
+        'call_1_1', 'call_1_2']
+    assert [m.get('tool_call_id') for m in sent if m['role'] == 'tool'] == [
+        'call_1_1', 'call_1_2']
+    assert result['response'] == answer()
+    assert records[0]['rounds'][0]['response'] == raw
+
+
+@pytest.mark.finding('S3-G2-2')
+def test_execute_item_call_without_id_beside_one_with_an_id(tmp_path,
+                                                            calculator):
+    # A call without an id never takes an id another call of its turn has.
+    a, b = tool_call('1+1', id='call_1'), tool_call('2+2')
+    del b['id']
+    send = CheckingAdapter(calls(a, b), answer())
+    result, _ = run(tmp_path, send)
+    ids = [r['id'] for r in result['tool_calls']]
+    assert ids[0] == 'call_1' and ids[1] not in ('call_1', None, '')
     assert [m.get('tool_call_id') for m in send.calls[1]['messages']
-            if m['role'] == 'tool'] == ['call_1', 'call_1']
+            if m['role'] == 'tool'] == ids
+
+
+@pytest.mark.finding('S3-G2-2')
+def test_execute_item_one_call_without_id_answered_by_the_same_id(
+        tmp_path, calculator):
+    tc = tool_call()
+    del tc['id']
+    send = CheckingAdapter(calls(tc), answer())
+    result, _ = run(tmp_path, send)
+    assert [r['id'] for r in result['tool_calls']] == ['call_1']
+    assert result['invocation_outcome'] == 'INVOKED'
 
 
 @pytest.mark.finding('S3-G2-2')
