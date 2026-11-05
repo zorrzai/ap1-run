@@ -412,22 +412,27 @@ def test_sequential_return_of_unobservable_call_originates_dependent_operand():
         'computed_in_session_ungrounded'
 
 
+# Only the boolean cases rest on a proposal (a boolean literal is not an
+# operand); the others follow from T3-39's own rule.
+BOOL_PROPOSAL = pytest.mark.proposal(
+    'T3-39/S3-G4-5: a boolean literal is not an operand; proposed, not '
+    'decided')
+
+
 def raw_call(arguments):
     return {'id': 'c1', 'function': {'name': 'calculator',
                                      'arguments': arguments},
             'return_value': result_json('15.2')}
 
 
-@pytest.mark.proposal(
-    'T3-39/S3-G4-5: a boolean literal is not an operand (the boolean '
-    'cases); proposed, not decided')
 @pytest.mark.finding('T3-39')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-39: model-controlled expression raises out '
                           'of provenance')
 @pytest.mark.parametrize('arguments', [
-    '{"expression": 15.2}', '{"expression": "True * 15.2"}',
-    '{"expression": "True + 1"}',
+    '{"expression": 15.2}',
+    pytest.param('{"expression": "True * 15.2"}', marks=BOOL_PROPOSAL),
+    pytest.param('{"expression": "True + 1"}', marks=BOOL_PROPOSAL),
 ], ids=['number', 'true-times', 'true-plus'])
 def test_sequential_unreadable_expression_operands_unobservable(arguments):
     # Correct (T3-39): no exception; the call's operands cannot be read,
