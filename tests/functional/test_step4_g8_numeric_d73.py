@@ -163,6 +163,20 @@ def test_run_transcription_uses_declared_half_up_rounding(
         dict.fromkeys(BOTH, 'TRANSCRIBED-EXACT')
 
 
+@pytest.mark.req('R2.5', 'R0.4.1')
+def test_run_transcription_declared_half_even_tie_is_altered(
+        tmp_path, monkeypatch, capsys):
+    # A guard for T3-27's fix, not failing-first: under a declared
+    # ROUND_HALF_EVEN the tool's 430.745 is 430.74, so releasing 430.75 is
+    # ALTERED. Today's code always uses HALF_EVEN, so this passes; a fix
+    # that hard-codes ROUND_HALF_UP to pass the test above fails it.
+    out = run_example(tmp_path, monkeypatch, {
+        'Q04/*/*': [{'call': '861.49 / 2'}, Q04_SAY]},
+        quantisation={'places': '2', 'rounding': 'ROUND_HALF_EVEN'})
+    assert transcription_outcomes(out, 'Q04') == \
+        dict.fromkeys(BOTH, 'TRANSCRIBED-ALTERED')
+
+
 # -- V12-6: the "rounded under declared policy" count ------------------------
 
 @pytest.mark.proposal(

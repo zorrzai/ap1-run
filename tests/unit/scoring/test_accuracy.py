@@ -281,14 +281,19 @@ def test_summarise_accuracy_missing_auto_scored_raises_key_error():
                    reason='T3-27: score_accuracy quantises with the Decimal '
                           'default HALF_EVEN; the fix must add a '
                           'quantisation_rounding= keyword and use it')
-def test_score_accuracy_declared_half_up_boundary_within_tolerance_is_correct():
+@pytest.mark.parametrize('mode, outcome, difference', [
+    ('ROUND_HALF_UP', CORRECT, '0.01'),
+    ('ROUND_HALF_EVEN', INCORRECT, '0.02'),
+], ids=['half-up', 'half-even'])
+def test_score_accuracy_declared_rounding_mode_decides_the_boundary(
+        mode, outcome, difference):
     # SPEC R0.4.1: quantise once "using the declared rounding mode". Under
-    # the shipped ROUND_HALF_UP, 2.005 -> 2.01 and 2.015 -> 2.02: they
-    # differ by 0.01, within the 0.01 tolerance, so CORRECT. (Today:
-    # 2.00 vs 2.02, INCORRECT; found by the T3 SCORE checker.)
+    # ROUND_HALF_UP, 2.005 -> 2.01 and 2.015 -> 2.02: 0.01 apart, within
+    # the 0.01 tolerance, CORRECT. Under ROUND_HALF_EVEN, 2.00 and 2.02:
+    # 0.02 apart, INCORRECT. A fix that ignores the declared mode gets one
+    # of the two wrong. (Today the keyword doesn't exist; HALF_EVEN is
+    # always used. Found by the T3 SCORE checker.)
     r = score_accuracy(figure(AUTO_MATCH, D('2.005')),
                        expected_value=D('2.015'), answer_tolerance=TOL,
-                       quantisation_digits=2,
-                       quantisation_rounding='ROUND_HALF_UP')
-    assert r['outcome'] == CORRECT
-    assert r['difference'] == D('0.01')
+                       quantisation_digits=2, quantisation_rounding=mode)
+    assert (r['outcome'], r['difference']) == (outcome, D(difference))
