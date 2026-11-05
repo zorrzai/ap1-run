@@ -1346,7 +1346,7 @@ Total operands resolved: 4860
   - `reasoning_effort`: not sent (platform-unsupported)
   - `temperature`: `1`
   - `top_p`: not sent (operator-declared)
-- Parameter echo: `UNVERIFIED` (1000 responses checked)
+- Parameter echo: `UNVERIFIED` (2415 responses checked)
 
 ## 10. Non-Outcome Cells
 

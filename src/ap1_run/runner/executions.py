@@ -205,6 +205,11 @@ def result_from_record(record, *, gt, ctx, config):
         'response': record.get('response_received'),
         'provenance_results': provenance_results,
         'operation_correctness': as_recorded(op_correctness),
+        # every round's response, for the D2.2 echo check
+        'round_responses': [{'round': r.get('round'),
+                             'response': r['response']}
+                            for r in record.get('rounds') or []
+                            if 'response' in r],
     })
     # T3-10: a provider refusal or content-filter stop, as the engine
     # recorded it
@@ -351,10 +356,15 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
     findings.d2_responses.setdefault(d2_key, []).append(
         result.get('response'))
 
-    # -- D2.2: were the requested sampling parameters applied? --
-    findings.parameter_echo.append(dict(
-        item_id=item_id, condition=condition, repeat=rep,
-        **echo_check(config.get('sampling', {}), final_response)))
+    # -- D2.2: were the requested sampling parameters applied? In every
+    # round's response, tool-call rounds included; a result without its
+    # rounds has its final response checked --
+    for checked in (result.get('round_responses')
+                    or [{'round': None, 'response': final_response}]):
+        findings.parameter_echo.append(dict(
+            item_id=item_id, condition=condition, repeat=rep,
+            round=checked['round'],
+            **echo_check(config.get('sampling', {}), checked['response'])))
 
     ev_class = result.get('evidence_class', '')
     inv_outcome = result.get('invocation_outcome', '')

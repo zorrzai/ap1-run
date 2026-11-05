@@ -726,10 +726,30 @@ def test_result_from_record_executed_as_the_engine_returned_it(recorders):
         'tool_calls': tcs, 'response': response('It is 2.'),
         'provenance_results': [{'provenance': 'P'}],
         'operation_correctness': [{'outcome': 'OC 1+1',
-                                   'reclassified': True}]}
+                                   'reclassified': True}],
+        'round_responses': []}
     assert recorders.calls['provenance'] == [(tcs, CTX_D72, GT_D72,
                                               CONFIG_D72)]
     assert record == kept
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+@pytest.mark.req('AP-1 D2.2')
+def test_result_from_record_carries_every_round_s_response():
+    # The responses of the tool loop's rounds, in order, for the D2.2
+    # echo check; a round whose request failed has none.
+    first, last = {'temperature': 0.7}, response('It is 2.')
+    record = engine_record(status='EXECUTED', response_received=last,
+                           rounds=[{'round': 0, 'request': {},
+                                    'response': first},
+                                   {'round': 1, 'request': {},
+                                    'error': 'HTTP 502'},
+                                   {'round': 2, 'request': {},
+                                    'response': last}])
+    result = result_from_record(record, gt=GT_D72, ctx=CTX_D72,
+                                config=CONFIG_D72)
+    assert result['round_responses'] == [
+        {'round': 0, 'response': first}, {'round': 2, 'response': last}]
 
 
 def test_result_from_record_executed_without_calls(recorders):
@@ -1252,8 +1272,30 @@ def test_score_execution_records_the_echo_check(fakes):
                                       temperature=0.5),
                      'tool_calls': []},
           config=dict(CONFIG, sampling={'temperature': '0'}))
+    # A result without its rounds (none recorded): the final response
     assert findings.parameter_echo == [{
-        'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+        'item_id': 'Q01', 'condition': 'base', 'repeat': 2, 'round': None,
         'verified': False, 'status': 'MISMATCH',
         'findings': ["parameter 'temperature': requested='0', applied=0.5 "
                      '— silently ignored'], 'not_echoed': []}]
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+@pytest.mark.req('AP-1 D2.2')
+def test_score_execution_checks_the_echo_of_every_round(fakes):
+    # AP-1 D2.2: a parameter requested and silently ignored is a platform
+    # finding, in whichever response shows it. Here the tool-call round
+    # shows temperature 0.7 applied and the final response echoes the 0
+    # sent; checking the final response alone found nothing.
+    final = dict(response('It is $15.20.'), temperature=0)
+    findings = Findings()
+    score(findings, {'response': final, 'tool_calls': [],
+                     'round_responses': [
+                         {'round': 0, 'response': {'temperature': 0.7}},
+                         {'round': 1, 'response': final}]},
+          config=dict(CONFIG, sampling={'temperature': '0'}))
+    assert [(e['round'], e['status']) for e in findings.parameter_echo] == [
+        (0, 'MISMATCH'), (1, 'VERIFIED')]
+    assert findings.parameter_echo[0]['findings'] == [
+        "parameter 'temperature': requested='0', applied=0.7 "
+        '— silently ignored']
