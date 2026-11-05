@@ -189,23 +189,36 @@ def test_run_transcription_declared_half_even_tie_is_altered(
                           'transcriptions rounded under the declared policy')
 def test_run_report_counts_transcriptions_rounded_under_declared_policy(
         tmp_path, monkeypatch, capsys):
-    # V12-6: Q07's calculator returns 777.4125 and the model
-    # releases 777.41: TRANSCRIBED-EXACT under v1.3 (licensed rounding),
-    # with a sub-flag whose count the report states, so a v1.2 reader can
-    # take them out. One execution per condition: the count is 2.
+    # V12-6: Q07's calculator returns 777.4125 and the model releases
+    # 777.41: TRANSCRIBED-EXACT under v1.3 (licensed rounding), with a
+    # sub-flag whose count the report states, so a v1.2 reader can take
+    # them out. Two repeats of Q07 in both conditions: 4 rounded under the
+    # policy. Q01's call returns exactly 15.2 ('1520 / 100'; the shipped
+    # expression returns 15.200000000000001, itself a licensed rounding)
+    # and the model releases $15.20: EXACT with no rounding, 4 more EXACT
+    # results that must not be counted. The count
+    # (4) differs from the declared places (2) and from all EXACT (8), and
+    # is read as a value (": 4" or a table cell), not anywhere on a line.
     out = run_example(tmp_path, monkeypatch, {
         'Q07/*/*': [{'call': '42175 * (0.078 / 4) - (15 * 3)'},
                     {'say': 'The quarterly net growth after fees is '
-                            '${result}.'}]})
-    assert transcription_outcomes(out, 'Q07') == \
-        dict.fromkeys(BOTH, 'TRANSCRIBED-EXACT')
+                            '${result}.'}],
+        'Q01/*/*': [{'call': '1520 / 100'},
+                    {'say': 'The monthly interest is $15.20.'}]},
+        repeat_count='2')
+    summary = json.loads((out / 'smoke_summary.json').read_text('utf-8'))
+    exact = [(r['item_id'], r['condition'], r['repeat'])
+             for r in summary['all_results']
+             if r.get('transcription_outcome') == 'TRANSCRIBED-EXACT']
+    assert len(exact) == 8, exact
     report = (out / 'report.md').read_text('utf-8')
     d73 = report[report.index('## D7.3'):]
     d73 = d73[:d73.index('\n## ', 1)] if '\n## ' in d73[1:] else d73
     lines = [ln for ln in d73.splitlines()
              if re.search(r'rounded under (the )?declared '
                           r'(quantisation )?policy', ln, re.I)]
-    assert any(re.search(r'\b2\b', ln) for ln in lines), lines
+    assert any(re.search(r'(:\s*|\|\s*\**)4\**\s*(\||$|\b)', ln)
+               for ln in lines), lines
 
 
 # -- T3-41: the configured separators ----------------------------------------
