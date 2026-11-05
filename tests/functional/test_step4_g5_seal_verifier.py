@@ -282,9 +282,6 @@ def test_run_seal_record_binds_expected_values(runner):
 
 @pytest.mark.finding('T3-48')
 @pytest.mark.req('R1.1', 'R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-48: scoring recomputes expected values after '
-                          'the seal, so values that change then are scored')
 def test_run_ground_truth_drifting_after_the_seal_is_not_scored(
         runner, fixture_dir):
     # Correct (SPEC R1.1, expected values sealed): the values scored are

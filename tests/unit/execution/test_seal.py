@@ -1042,9 +1042,6 @@ def test_seal_same_inputs_sealed_twice_give_identical_input_hashes(
 
 @pytest.mark.finding('T3-47')
 @pytest.mark.req('R1.1', 'AP-1 §5.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-47: verify_seal accepts a record whose '
-                          'timestamp was moved by one second')
 def test_verify_seal_timestamp_moved_one_second_refused(files):
     # AP-1 v1.3 §5.3 "hashed and timestamped before execution": the
     # timestamp is bound by a hash verify_seal checks. Design-neutral
@@ -1200,9 +1197,6 @@ VARIANTS = {'crlf': LF_TEXT.replace(b'\n', b'\r\n'),
 @pytest.mark.parametrize('variant', [
     pytest.param(v, marks=BOM_PROPOSAL) if 'bom' in v else v
     for v in sorted(VARIANTS)])
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-50: sealed file hashes depend on line endings '
-                          'and a BOM')
 def test_seal_text_input_hash_independent_of_line_endings_and_bom(
         files, frozen, name, variant):
     files.paths[name].write_bytes(LF_TEXT)

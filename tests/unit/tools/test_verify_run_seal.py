@@ -1193,8 +1193,11 @@ def test_verify_run_good_record_with_timed_transcript_has_no_failure(
     # The control for the T3-47 and T3-15 tests below: the same fixture
     # with nothing edited verifies cleanly, today and after their fixes,
     # so a failure there comes from the edit, not from the fixture.
+    # The record is the one the runner makes (make_record: the tree's
+    # source hash and the sealed expected values), since the T3-48 and
+    # T3-72 fixes the verifier checks both.
     config = good_config(base)
-    record = good_record(base, config)
+    record = make_record(base, config)
     run_dir = write_run(tmp_path / 'run', record, config,
                         transcript=transcript_after(record))
     _, failures, error = outcome(vrs, run_dir)
@@ -1375,8 +1378,6 @@ def test_main_reports_runner_modified(vrs, tmp_path, base, monkeypatch,
 @pytest.mark.req('R1.1')
 @pytest.mark.parametrize('moved', [
     'six-years-earlier', 'one-second-later'])
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-47: an edited timestamp still verifies')
 def test_verify_run_edited_timestamp_fails(vrs, tmp_path, base, moved):
     # Correct (AP-1 v1.3 §5.3, SPEC R1.1): the timestamp is bound by a
     # hash the verifier checks, so a timestamp edited in report.md fails
@@ -1502,9 +1503,6 @@ BOM_PROPOSAL = pytest.mark.proposal(
                  os.path.join('example', 'ground_truth_example.py'),
                  b'\xef\xbb\xbfX = 1\r\n', marks=BOM_PROPOSAL)],
     ids=['crlf', 'bom', 'bom-crlf'])
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-50: sealed file hashes depend on line endings '
-                          'and a BOM')
 def test_verify_run_same_text_other_line_endings_verifies(vrs, good_run, base,
                                                           field, relpath,
                                                           data):
