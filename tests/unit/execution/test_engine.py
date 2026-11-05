@@ -360,15 +360,21 @@ def test_execute_item_unrecognised_empty_shape_is_ev0_not_unmeasured(
     assert (result['status'], result['evidence_class']) == ('EXECUTED', EV_0)
 
 
+@pytest.mark.finding('T3-35')
+@pytest.mark.req('R1.3')
 @pytest.mark.parametrize('tools', [None, []])
 def test_execute_item_no_tools_ev0(tmp_path, tools):
+    # No round was unobservable: round 0's response was read. The cause
+    # is the request (no tool structure offered), so no round is named.
     send = FakeAdapter(answer())
     result, records = run(tmp_path, send, tools=tools)
     assert (result['evidence_class'], result['invocation_outcome']) == (
         EV_0, None)
     assert send.calls[0]['tools'] == tools
     assert records[0]['error_state'] == {'cause': 'no tools offered',
-                                         'round': 0}
+                                         'round': None}
+    assert transcript.error_state_text(records[0]['error_state']) == (
+        'UNOBSERVABLE: no tools offered')
 
 
 def test_execute_item_attestation_reason_recorded_class_unchanged(tmp_path):
@@ -607,7 +613,7 @@ def test_unobservable_cause_first_unrecognised_round_named():
     assert error_state_text(none_read) == (
         'UNOBSERVABLE: no round of the loop could be read')
     assert engine._unobservable_cause([(False, 'r')], [], False) == {
-        'cause': 'no tools offered', 'round': 0}
+        'cause': 'no tools offered', 'round': None}
     assert error_state_text('VOID') == 'VOID'
     assert error_state_text(None) == ''
 

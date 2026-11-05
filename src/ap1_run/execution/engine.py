@@ -348,10 +348,12 @@ def _unobservable_cause(round_shapes, rounds, tools_offered):
     transcript.error_state_text gives its one-line text.
 
     A round is unobservable when its request failed (rounds holds the
-    error) or its response came back in an unrecognised shape.
+    error) or its response came back in an unrecognised shape. The round
+    is None when no round is to blame: none could be read, or no tools
+    were offered (the request's design, not a round, is the cause).
     """
     if not tools_offered:
-        return {'cause': 'no tools offered', 'round': 0}
+        return {'cause': 'no tools offered', 'round': None}
     for number, (recognised, reason) in enumerate(round_shapes):
         if recognised:
             continue
