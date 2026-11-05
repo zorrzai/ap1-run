@@ -10,6 +10,7 @@ tests/functional/test_step4_g4_transcript.py.
 """
 
 import json
+import re
 import os
 import shutil
 from decimal import Decimal
@@ -162,10 +163,44 @@ def test_rescore_given_pre_registration_path(r, tmp_path):
     assert r.scored[0][1]['seal_record'] == r.seal_record
 
 
-def test_rescore_into_an_existing_directory(r):
+def test_rescore_into_an_existing_empty_directory(r):
     r.out.mkdir()
-    (r.out / 'report.md').write_text('old')
+    (r.out / 'notes.txt').write_text('kept')
     assert r.rescore() == {'smoke': 'summary'}
+
+
+OUTPUTS = ('report.md', 'adjudication_sheets.md', 'DISCLAIMER.txt',
+           'smoke_summary.json', 'smoke_run.jsonl', PRE_REGISTRATION)
+
+
+@pytest.mark.finding('T3-21')
+@pytest.mark.parametrize('names', [('report.md',), OUTPUTS,
+                                   ('smoke_summary.json',)],
+                         ids=['a-report', 'another-run', 'a-summary'])
+def test_rescore_into_a_directory_holding_outputs_refused(r, names):
+    # AP-1 §13.12: a correction is made by addition. A re-score never
+    # replaces outputs already written, its own run's or another's.
+    r.out.mkdir()
+    for name in names:
+        (r.out / name).write_text('earlier')
+    with pytest.raises(ValueError, match=(
+            '^the re-scored outputs must go to a directory that holds no '
+            'run or scoring output: .* holds ' + re.escape(
+                ', '.join(sorted(names))) + '$')):
+        r.rescore()
+    assert r.scored == []
+    assert all((r.out / name).read_text() == 'earlier' for name in names)
+
+
+@pytest.mark.finding('T3-21')
+def test_rescore_into_a_directory_with_an_output_symlink_refused(r, tmp_path):
+    # A symlink named like an output, even one that points nowhere, is not
+    # followed: the directory is refused.
+    r.out.mkdir()
+    os.symlink(tmp_path / 'elsewhere' / 'report.md', r.out / 'report.md')
+    with pytest.raises(ValueError, match='holds report.md$'):
+        r.rescore()
+    assert r.scored == []
 
 
 def test_rescore_without_pre_registration_record_refused(r):
@@ -175,11 +210,27 @@ def test_rescore_without_pre_registration_record_refused(r):
     assert r.scored == []
 
 
-def test_rescore_into_the_transcript_s_own_directory_refused(r):
+@pytest.mark.parametrize('alias', ['same', 'symlink', 'case', 'dotdot'])
+def test_rescore_into_the_transcript_s_own_directory_refused(r, tmp_path,
+                                                             alias):
+    # The run's own directory, however it is named: the same path, a
+    # symlink to it, the same path in another case (on a file system that
+    # ignores case, as macOS's does by default), or a path through '..'.
+    if alias == 'same':
+        target = r.run_dir
+    elif alias == 'symlink':
+        target = tmp_path / 'link'
+        os.symlink(r.run_dir, target)
+    elif alias == 'case':
+        target = r.run_dir.parent / r.run_dir.name.upper()
+        if not target.exists():
+            pytest.skip('this file system tells case apart')
+    else:
+        target = r.fx / '..' / r.run_dir.name
     with pytest.raises(ValueError, match=(
             '^the re-scored outputs must go to another directory than the '
             "transcript's")):
-        r.rescore(output_dir=str(r.run_dir))
+        r.rescore(output_dir=str(target))
     assert r.scored == []
 
 

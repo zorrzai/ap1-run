@@ -238,9 +238,12 @@ be beside the transcript. Before scoring, the re-scorer verifies the run's seal
 against the inputs given (the config, the fixture, questions, ground-truth and
 calculator files, and the expected values, computed again), and refuses any mismatch,
 naming it, as well as a transcript of another run. It scores against the
-sealed expected values, as the run does. It writes the four scoring outputs to `--output-dir`, which must not be
-the transcript's directory. Re-scoring a finished run gives back its
-`smoke_summary.json`, `report.md` and adjudication sheets. Re-scoring the
+sealed expected values, as the run does. It writes the four scoring outputs to
+`--output-dir`, which must not be the transcript's directory, by any name (a
+symlink, another case), and must hold no run or scoring output: a correction is
+made by addition, so nothing already written is replaced. Re-scoring a finished
+run gives back its `smoke_summary.json`, `report.md` and adjudication sheets.
+Re-scoring the
 partial transcript of an interrupted run reports the executions it never
 reached as NOT-RUN, never as failures, and an execution it stopped inside
 (rounds recorded, no record of its end) as UNMEASURED with cause `interrupted`
