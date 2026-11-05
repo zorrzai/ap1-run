@@ -860,6 +860,28 @@ def _refused(fn):
     return None
 
 
+@pytest.mark.req('R1.1')
+def test_seal_same_inputs_sealed_twice_give_identical_input_hashes(
+        files, monkeypatch):
+    # SPEC R1.1's verification contract: "Sealing the same inputs twice
+    # yields identical hashes." Whatever T3-47's fix does with the
+    # timestamp, every hash of an input (and of the inputs together,
+    # leaving the timestamp out) stays the same at two times. Passes today.
+    stamps = iter(['2020-01-01T00:00:00+00:00', '2026-10-15T00:00:00+00:00'])
+
+    class Clock:
+        @staticmethod
+        def now(tz=None):
+            return SimpleNamespace(isoformat=lambda s=next(stamps): s)
+    monkeypatch.setattr(seal_mod, 'datetime', Clock)
+    first, second = full_seal(files), full_seal(files)
+    assert first['timestamp'] != second['timestamp']
+    inputs = sorted(k for k in first if k.endswith('_hash')
+                    and k != 'seal_hash')
+    assert len(inputs) >= 4, inputs
+    assert {k: first[k] for k in inputs} == {k: second[k] for k in inputs}
+
+
 @pytest.mark.proposal(
     'T3-47: the timestamp inside seal_hash; SPEC R1.1 says sealing the '
     'same inputs twice gives identical hashes, and the register leaves '
