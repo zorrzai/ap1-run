@@ -28,6 +28,16 @@ writing):
                    relative path in the platform's own form; for each,
                    the path with '/' separators, NUL, the bytes, NUL
 
+The source-hash rule pins current behaviour, defects included: it is the
+scope T3-70 describes (tests, an in-tree venv and scratch files hashed; a
+prefix match on the excluded names, so a top-level output_*.py is left
+out; directory symlinks not followed; the platform's own sort order;
+VERSION not hashed). A fix to T3-70 changes this rule and the runner's in
+the same commit; check_source_files.py then shows the change in the file
+list, and selftest.py's recomputation of the published September hash
+from the tag e7-quantise-fix shows whether the old seals can still be
+reproduced.
+
 Version fields: the tag and commit are read from the tree's VERSION file
 here, independently (first line that is not blank or a comment; 'unknown'
 when the file or a field is missing), and must equal the config's and the
