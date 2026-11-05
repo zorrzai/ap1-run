@@ -1239,3 +1239,18 @@ def test_seal_text_input_hash_independent_of_line_endings_and_bom(
     lf = full_seal(files)['%s_hash' % name]
     files.paths[name].write_bytes(VARIANTS[variant])
     assert full_seal(files)['%s_hash' % name] == lf == sha(LF_TEXT)
+
+
+@pytest.mark.finding('T3-17')
+@pytest.mark.req('R1.1')
+@pytest.mark.parametrize('name', ['fixture', 'questions', 'ground_truth',
+                                  'calculator'])
+def test_verify_seal_input_deleted_after_the_seal_is_named(files, frozen,
+                                                          name):
+    # A sealed input removed after the seal is a named mismatch, not a
+    # FileNotFoundError out of the run.
+    record = make_seal(files)
+    files.paths[name].unlink()
+    with pytest.raises(SealError) as exc:
+        verify(record, files)
+    assert f'  {name}: cannot read: ' in str(exc.value)

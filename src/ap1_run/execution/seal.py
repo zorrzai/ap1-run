@@ -203,15 +203,23 @@ def verify_seal(record, *, config, fixture_path, questions_path,
         mismatches.append(f'seal_hash: sealed={record.get("seal_hash")!r}, '
                           f'recomputed={recomputed!r}')
 
-    checks = [
-        ('fixture', record.get('fixture_hash'),
-         text_file_hash(str(fixture_path))),
-        ('questions', record.get('questions_hash'),
-         text_file_hash(str(questions_path))),
-        ('ground_truth', record.get('ground_truth_hash'),
-         text_file_hash(str(ground_truth_path))),
-        ('calculator', record.get('calculator_hash'),
-         text_file_hash(str(calculator_path))),
+    def current(read, path, name):
+        # A sealed input that cannot be read now (deleted after the seal)
+        # is a named mismatch, not an exception out of the run.
+        try:
+            return read(str(path))
+        except OSError as e:
+            mismatches.append(f'{name}: cannot read: {e}')
+            return None
+
+    checks = [(name, record.get(f'{name}_hash'),
+               current(text_file_hash, path, name))
+              for name, path in (('fixture', fixture_path),
+                                 ('questions', questions_path),
+                                 ('ground_truth', ground_truth_path),
+                                 ('calculator', calculator_path))]
+    checks = [c for c in checks if c[2] is not None]
+    checks += [
         ('config', record.get('config_hash'),
          canonical_hash(config)),
         ('ap1_text', record.get('ap1_text_hash'),
@@ -219,9 +227,9 @@ def verify_seal(record, *, config, fixture_path, questions_path,
     ]
 
     if ap1_text_path:
-        checks.append(
-            ('ap1_text', record.get('ap1_text_hash'),
-             file_hash(str(ap1_text_path))))
+        ap1_now = current(file_hash, ap1_text_path, 'ap1_text')
+        if ap1_now is not None:
+            checks.append(('ap1_text', record.get('ap1_text_hash'), ap1_now))
 
     # Version DOI check: a DOI on one side only is a mismatch too
     checks.append(('ap1_version_doi', record.get('ap1_version_doi', ''),
