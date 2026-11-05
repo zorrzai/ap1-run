@@ -18,6 +18,14 @@ CTX = {
 }
 
 
+# DEC-5: tests of today's behaviour in a module SPEC does not define are
+# provisional (the code is the definition for now); the step-4 xfails
+# in this file are not, they state the correct behaviour of known defects.
+PROVISIONAL = pytest.mark.provisional(
+    'DEC-5: sign inversion has no SPEC section; the code is the '
+    'provisional definition')
+
+
 def resolved(step, resolution, *, field=None, intermediate=None,
              quantisation=False, transform=None, sign=None, **extra):
     """The dict resolve_operand returns, built in full so that every key and
@@ -172,6 +180,7 @@ def test_resolve_step1_source_match_wins_over_constant():
         'source_match'
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-5')
 def test_resolve_step1_negated_constant_matches_by_magnitude():
     # Current behaviour (T3-5): -12 is grounded by a declared 12.
@@ -386,6 +395,7 @@ def test_resolve_step5_untraceable():
                                         near_miss_finding=None)
 
 
+@PROVISIONAL
 def test_resolve_step5_sign_inverted_source_is_a_finding():
     assert resolve('-15200') == resolved(
         5, 'originated', near_miss_finding=None,
@@ -393,12 +403,14 @@ def test_resolve_step5_sign_inverted_source_is_a_finding():
               'source_value': '15200.00', 'operand_value': '-15200'})
 
 
+@PROVISIONAL
 def test_resolve_step5_sign_inversion_takes_first_match():
     ctx = {'a': {'x': 'n/a', 'y': '9'}, 'b': {'z': '9'}}
     r = resolve('-9', ctx=ctx)
     assert r['sign_inversion_finding']['matched_field'] == 'a.y'
 
 
+@PROVISIONAL
 def test_resolve_step5_zero_source_is_not_a_sign_inversion():
     r = resolve('-0', ctx={'a': {'fee': '0.00', 'x': '5'}}, constants=[])
     assert r['step'] == 1  # -0 == 0.00: a source match

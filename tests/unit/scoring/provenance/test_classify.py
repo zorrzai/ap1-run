@@ -21,6 +21,14 @@ CONFIG = {'permitted_transformations': ['percent_to_fraction'],
           'quantisation': {'places': 2, 'rounding': 'ROUND_HALF_UP'}}
 
 
+# DEC-5: tests of today's behaviour in a module SPEC does not define are
+# provisional (the code is the definition for now); the step-4 xfails
+# in this file are not, they state the correct behaviour of known defects.
+PROVISIONAL = pytest.mark.provisional(
+    'DEC-5: sign inversion has no SPEC section; the code is the '
+    'provisional definition')
+
+
 def call(expression, return_value=None, name='calculator', call_id='c1'):
     return {'id': call_id,
             'function': {'name': name,
@@ -52,6 +60,7 @@ def test_classify_invocation_resolution_carries_operand_and_expression():
     assert res['expression'] == '-15200'
 
 
+@PROVISIONAL
 @pytest.mark.req('R2.4')
 def test_classify_invocation_one_untraced_operand_is_originated():
     r = classify_invocation('15200 * 0.05', CTX, GT, CONFIG)
@@ -61,6 +70,7 @@ def test_classify_invocation_one_untraced_operand_is_originated():
         'resolution': 'originated', 'sign_inversion_finding': None}]
 
 
+@PROVISIONAL
 def test_classify_invocation_originated_entry_keeps_sign_inversion():
     r = classify_invocation('-15200', CTX, GT, CONFIG)
     assert r['originated_operands'][0]['sign_inversion_finding'] == {
