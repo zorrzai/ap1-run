@@ -1286,5 +1286,23 @@ def test_seal_records_lookup_collisions_in_the_hash(files, frozen,
     assert record['seal_hash'] != make_seal(files)['seal_hash']
 
 
+@pytest.mark.finding('T3-75')
+@pytest.mark.req('R3.1', 'R1.1')
+def test_verify_seal_compares_the_sealed_lookup_collisions(files, frozen):
+    # The collisions scoring uses are the ones sealed: verify_seal
+    # compares the sealed field with the collisions the current inputs
+    # give, and names a difference.
+    record = make_seal(files, lookup_collisions=[('Q2', 'b.fee')])
+    assert verify(record, files, lookup_collisions=[('Q2', 'b.fee')])
+    with pytest.raises(SealError) as exc:
+        verify(record, files, lookup_collisions=[])
+    assert ("  lookup_collisions: sealed='Q2 (b.fee)', current='none'"
+            in str(exc.value))
+    # A record that seals none (written before the field existed) has
+    # nothing to compare.
+    assert verify(make_seal(files), files,
+                  lookup_collisions=[('Q2', 'b.fee')])
+
+
 def test_seal_without_lookup_collisions_has_no_field(files, frozen):
     assert 'lookup_collisions' not in make_seal(files)

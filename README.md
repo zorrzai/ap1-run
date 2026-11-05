@@ -698,6 +698,7 @@ input, if any has changed.
 | `ground_truth_hash` | `example/ground_truth_example.py` | Ground-truth module unchanged (see E3) |
 | `calculator_hash` | `example/calculator_tool.py` | Calculator tool unchanged (records with `seal_format` only) |
 | `expected_values_hash` | the ground-truth module's results | Expected values as scored (records with `seal_format` only) |
+| `lookup_collisions` | the expected values and each item's delivered context | The R3.1 lookup collisions scoring uses, found at seal (records that have the field) |
 | `ap1_text_hash` | `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` | AP-1 standard text unchanged |
 | `seal_hash` | All of the above | Composite integrity |
 

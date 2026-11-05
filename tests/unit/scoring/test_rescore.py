@@ -345,6 +345,38 @@ def test_rescore_ground_truth_giving_other_values_refused(r):
         r.rescore()
 
 
+@pytest.mark.finding('T3-75')
+@pytest.mark.req('R3.1', 'R1.1')
+def test_rescore_checks_the_sealed_lookup_collisions(r):
+    # The collisions scoring uses are the sealed ones: a record that
+    # seals others than the inputs give is refused, naming the field.
+    from ap1_run.execution.context import lookup_collisions
+    from ap1_run.execution.sealed_inputs import sealed_compute
+    inputs = read_inputs(str(r.fx))
+    found = lookup_collisions(sealed_compute(r.expected_values),
+                              inputs.fixture, inputs.questions)
+
+    def reseal(collisions):
+        record = seal(
+            config=r.config, fixture_path=inputs.paths['fixture'],
+            questions_path=inputs.paths['questions'],
+            ground_truth_path=inputs.paths['ground_truth'],
+            calculator_path=inputs.paths['calculator'],
+            ap1_text_path=resolve_ap1_text(r.config, None, REPO),
+            runner_source_hash='feed' * 16,
+            expected_values=r.expected_values, loaded=inputs.data,
+            lookup_collisions=collisions)
+        write_pre_registration(str(r.run_dir), seal_record=record,
+                               config=r.config)
+    reseal(found + [('Q01', 'savings.balance')])
+    with pytest.raises(SealError, match='\n  lookup_collisions: sealed='):
+        r.rescore()
+    assert r.scored == []
+    reseal(found)
+    r.rescore()
+    assert len(r.scored) == 1
+
+
 def test_rescore_rewritten_record_refused(r):
     # A field of the record changed after sealing: its seal_hash no
     # longer matches (T3-47).

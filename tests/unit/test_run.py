@@ -306,7 +306,8 @@ def test_main_full_run_calls(r, capsys):
                    'ground_truth': GROUND_TRUTH.encode(),
                    'calculator': CALCULATOR.encode()}}
     # T3-17: the seal is verified, the whole record and every input,
-    # before the first request and again before anything is reported.
+    # before the first request and again before anything is reported;
+    # T3-75: with the lookup collisions the current values give.
     verified = {
         'config': config,
         'fixture_path': os.path.join(fx, 'fixture.json'),
@@ -315,7 +316,8 @@ def test_main_full_run_calls(r, capsys):
         'calculator_path': os.path.join(fx, 'calculator_tool.py'),
         'ap1_text_path': str(r.tmp / 'ap1.md'),
         'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
-        'expected_values': expected_values}
+        'expected_values': expected_values,
+        'lookup_collisions': [('Q2', 'b.fee')]}
     assert r.named('verify_seal') == [
         ({'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH',
           'lookup_collisions': 'COLLISIONS'}, verified)] * 2

@@ -32,6 +32,7 @@ import json
 import os
 from datetime import datetime, timezone
 
+from ap1_run.execution.context import lookup_collisions
 from ap1_run.execution.seal import verify_seal
 from ap1_run.execution.sealed_inputs import (
     compute_expected_values, read_inputs, sealed_compute,
@@ -158,7 +159,10 @@ def rescore_transcript(transcript_path, *, config_path, fixture_dir,
                 questions_path=inputs.paths['questions'],
                 ground_truth_path=inputs.paths['ground_truth'],
                 calculator_path=inputs.paths['calculator'],
-                expected_values=expected_values, loaded=inputs.data)
+                expected_values=expected_values, loaded=inputs.data,
+                lookup_collisions=lookup_collisions(
+                    sealed_compute(expected_values), inputs.fixture,
+                    inputs.questions))
 
     rescore = {
         'rescored_at': datetime.now(timezone.utc).isoformat(),

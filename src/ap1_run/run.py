@@ -230,7 +230,9 @@ def main(argv=None):
                             f'cannot recompute: {type(e).__name__}: {e}')
         verify_seal(seal_record, **seal_inputs,
                     runner_source_hash=compute_runner_source_hash(base_dir),
-                    expected_values=current_values)
+                    expected_values=current_values,
+                    lookup_collisions=lookup_collisions(
+                        sealed_compute(current_values), fixture, questions))
     print(f'Lookup collisions (R3.1): {seal_record["lookup_collisions"]}')
     print(f'Seal hash: {seal_hash}')
     print(f'AP-1 text hash: {seal_record["ap1_text_hash"]}')

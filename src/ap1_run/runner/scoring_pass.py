@@ -29,6 +29,7 @@ from ap1_run.execution.context import (
     build_delivered_context, check_lookup_collision,
 )
 from ap1_run.execution.perturbation_guard import HELD_CONSTANT
+from ap1_run.execution.seal import SealError, check_collisions
 from ap1_run.foundation import transcript
 from ap1_run.foundation.transcript import (
     ROUND_RECORD, TranscriptError, round_entry,
@@ -225,6 +226,21 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
         for condition, item, _, gt in planned if gt.get('derivable', True)
         for rep in range(1, repeat_count + 1)])
 
+    # R3.1: the lookup collisions, once per derivable item. Scoring uses
+    # the sealed ones (T3-75): the collisions the sealed inputs give must
+    # be the record's, or nothing is scored. A record sealed before the
+    # field existed has none to compare.
+    found = []
+    for condition, item, ctx, gt in planned:
+        if condition == CONDITIONS[0] and gt.get('derivable', True):
+            collision, field = check_lookup_collision(gt['final'], ctx)
+            if collision:
+                found.append((item['id'], field))
+    mismatch = check_collisions(seal_record, found)
+    if mismatch:
+        raise SealError('seal verification failed:\n  ' + mismatch[0])
+    collided = {item_id for item_id, _ in found}
+
     findings = Findings()
     for condition, item, ctx, gt in planned:
         item_id = item['id']
@@ -236,7 +252,7 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
             continue
 
         expected = gt['final']
-        collision, _ = check_lookup_collision(expected, ctx)
+        collision = item_id in collided
 
         for rep in range(1, repeat_count + 1):
             print(f'  {item_id}/{condition}/r{rep}: ', end='', flush=True)

@@ -18,6 +18,7 @@ from decimal import Decimal
 import pytest
 
 from ap1_run.execution.perturbation_guard import HELD_CONSTANT
+from ap1_run.execution.seal import SealError
 from ap1_run.foundation import transcript
 from ap1_run.foundation.transcript import TranscriptError
 from ap1_run.runner import scoring_pass
@@ -83,9 +84,9 @@ class Pass:
                      'write_outputs'):
             monkeypatch.setattr(scoring_pass, name, getattr(self, name))
 
-    def run(self):
+    def run(self, seal_record=SEAL):
         return score_run(self.transcript, config=self.config,
-                         seal_record=dict(SEAL), fixture=FIXTURE,
+                         seal_record=dict(seal_record), fixture=FIXTURE,
                          questions=QUESTIONS,
                          ground_truth_compute=self.gt.compute,
                          output_dir='OUT')
@@ -202,8 +203,8 @@ def test_score_run_calls(p, capsys):
               for r in records}
     smoke = p.run()
 
-    # ground truth and context per item and condition; no collision check
-    # for the underivable Q3
+    # ground truth and context per item and condition; the collision
+    # check once per derivable item (R3.1), none for the underivable Q3
     assert [c[1] for c in p.named('context')] == [
         ['a'], [], ['b'], ['a'], [], ['b']]
     assert all(c[0] is FIXTURE for c in p.named('context'))
@@ -211,7 +212,7 @@ def test_score_run_calls(p, capsys):
                              ('Q3', {'accounts': []}),
                              ('Q2', {'accounts': ['b']})] * 2
     assert p.named('collision') == [(D('10.00'), {'accounts': ['a']}),
-                                    (D('10.00'), {'accounts': ['b']})] * 2
+                                    (D('10.00'), {'accounts': ['b']})]
 
     # each record found is read back with its item's ground truth
     reads = p.named('read')
@@ -231,7 +232,7 @@ def test_score_run_calls(p, capsys):
     assert scores[0][1] == {
         'item_id': 'Q1', 'condition': 'base', 'rep': 2,
         'expected': D('10.00'), 'ctx': {'accounts': ['a']},
-        'collision': 'COLLISION', 'config': p.config,
+        'collision': True, 'config': p.config,
         'answer_tolerance': D('0.05'), 'decline_markers': ['cannot'],
         'currency_symbols': ['$']}
 
@@ -454,6 +455,33 @@ def test_score_run_counts_what_served_every_recorded_round(p):
     assert kw['served'] == {'models': {'m-1': 2, 'm-2': 1},
                             'fingerprints': {'a': 1, 'b': 1},
                             'responses': 3}
+
+
+@pytest.mark.finding('T3-75')
+@pytest.mark.req('R3.1')
+def test_score_run_uses_the_sealed_lookup_collisions(p, monkeypatch):
+    # The fake gives every derivable item a collision on 'field': both
+    # are sealed, so scoring goes on and step 3 sees Q1's.
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED')
+    seal_record = dict(SEAL, lookup_collisions='Q1 (field); Q2 (field)')
+    p.run(seal_record=seal_record)
+    (_, kwargs), = p.named('score')
+    assert kwargs['collision'] is True
+    # Checked once per derivable item, not once per condition
+    assert len(p.named('collision')) == 2
+
+
+@pytest.mark.finding('T3-75')
+@pytest.mark.req('R3.1')
+def test_score_run_refuses_collisions_other_than_the_sealed_ones(p):
+    # A sealed field that differs from what the sealed inputs give is
+    # refused before anything is scored.
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED')
+    with pytest.raises(SealError, match=(
+            r"^seal verification failed:\n  lookup_collisions: "
+            r"sealed='none', current='Q1 \(field\); Q2 \(field\)'$")):
+        p.run(seal_record=dict(SEAL, lookup_collisions='none'))
+    assert p.named('score') == [] and p.named('read') == []
 
 
 # -- The transcript against the run's plan (SPEC R0.2, R0.3) ---------------

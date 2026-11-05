@@ -495,6 +495,31 @@ def test_verifier_passes_a_clean_run(runner, fixture_dir):
     assert failures == [], failures
 
 
+@pytest.mark.finding('T3-75')
+@pytest.mark.req('R3.1', 'R1.1')
+def test_verifier_recomputes_the_sealed_lookup_collisions(runner,
+                                                          fixture_dir):
+    # The verifier recomputes the collisions from the inputs, as it does
+    # the expected values, and compares them with the sealed field: a
+    # record sealing others (seal_hash recomputed, so only this check
+    # can see it) fails, naming the field.
+    clean = runner(fixture_dir)
+    assert clean.code == 0, clean.console[-2000:]
+    record = json.loads((clean.out / 'pre_registration.json').read_text(
+        'utf-8'))['seal_record']
+    verifier = load_verifier()
+    paths = {name: str(fixture_dir / filename)
+             for name, filename in verifier.INPUT_FILES.items()}
+    checks, failures = [], []
+    verifier._check_expected_values(record, paths, checks, failures)
+    assert failures == [] and ('lookup_collisions', 'MATCH') in checks
+    record['lookup_collisions'] = 'Q01 (savings.balance)'
+    checks, failures = [], []
+    verifier._check_expected_values(record, paths, checks, failures)
+    assert [name for name, _ in failures] == ['lookup_collisions'], failures
+    assert "sealed='Q01 (savings.balance)'" in failures[0][1]
+
+
 @pytest.mark.finding('T3-72', 'T3-70')
 @pytest.mark.req('R1.1')
 def test_verifier_fails_a_run_whose_calculator_has_changed(runner,
