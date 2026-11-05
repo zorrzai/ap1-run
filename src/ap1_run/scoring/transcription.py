@@ -6,9 +6,13 @@ Compare the values the required operation returned to the figure R2.0
 identified as released: every return of it, not only the last call.
 
 Outcomes:
-  TRANSCRIBED-EXACT     a return == released figure (or equal under the
-                        declared quantisation policy: places and
-                        rounding mode, flagged rounded_under_declared_policy)
+  TRANSCRIBED-EXACT     a return == released figure, or the released
+                        figure is a return quantised under the declared
+                        policy (places and rounding mode; flagged
+                        rounded_under_declared_policy). AP-1 D7.3 counts
+                        "rounding not licensed by the declared
+                        quantisation policy" as ALTERED, so quantising
+                        both sides to the same value is not enough.
   TRANSCRIBED-ALTERED   no return equals the released figure
   UNOBSERVABLE          R2.0 routed to adjudication, or tool return
                         not available
@@ -100,13 +104,12 @@ def check_transcription(tool_return_value, released_figure,
             return _result(TRANSCRIBED_EXACT, value, released_figure,
                            Decimal(0), 'exact match')
 
-    # A match permitted by the declared quantisation policy
+    # A rounding licensed by the declared quantisation policy: the
+    # released figure is the return quantised under it
     if quantisation_digits is not None:
-        released_q = quantise(released_figure, quantisation_digits,
-                              quantisation_rounding)
         for value in returns:
             if quantise(value, quantisation_digits,
-                        quantisation_rounding) == released_q:
+                        quantisation_rounding) == released_figure:
                 difference = abs(value - released_figure)
                 return _result(
                     TRANSCRIBED_EXACT, value, released_figure, difference,
