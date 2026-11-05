@@ -776,8 +776,6 @@ def test_build_messages_system_then_user():
 
 # --- Step 4: correct behaviour (failing until fixed) ---
 
-import re  # noqa: E402  (kept in this section to ease merging)
-
 
 def _contains(tree, target):
     """True if target is tree or any value nested in it."""
@@ -827,6 +825,23 @@ def test_execute_item_every_round_request_and_response_recorded(
     assert missing == []
 
 
+# The same proposal as the functional T3-35 tests
+# (tests/functional/test_step4_g4_transcript.py, EV0_STATE).
+EV0_STATE = ("T3-35: error_state as {'cause': <non-empty text>, 'round': "
+             "<int, the first request is round 0>}; the field names and the "
+             "counting are this test's proposal, SPEC R1.3 says only 'the "
+             "round identified'")
+
+
+def assert_ev0_state(error_state):
+    """The structured error state EV0_STATE describes, for round 1."""
+    assert isinstance(error_state, dict), error_state
+    assert error_state.get('round') == 1, error_state
+    assert isinstance(error_state.get('cause'), str) \
+        and error_state['cause'].strip(), error_state
+
+
+@pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -837,20 +852,16 @@ def test_execute_item_later_send_fails_error_state_names_cause_and_round(
         tmp_path, calculator):
     # Correct (SPEC R1.3 "EV-0 UNOBSERVABLE with the round identified";
     # R0.3 "error state" field): the record says what failed and in which
-    # round (the second request, round 1 counting the first as round 0).
-    # Today's round_shapes reason "adapter_send failed on turn 1: Rate
-    # limit reached" written into error_state would pass.
+    # round (the second request, round 1 counting the first as round 0),
+    # in the structured form EV0_STATE proposes.
     send = FakeAdapter(calls(tool_call()),
                        adapter.RateLimitError('Rate limit reached'))
     _, records = run(tmp_path, send)
     assert records[0]['evidence_class'] == EV_0
-    error_state = records[0]['error_state']
-    assert error_state is not None
-    text = json.dumps(error_state).lower()
-    assert 'rate limit' in text
-    assert re.search(r'\b(round|turn)\D{0,3}[12]\b', text)
+    assert_ev0_state(records[0]['error_state'])
 
 
+@pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -858,15 +869,30 @@ def test_execute_item_later_send_fails_error_state_names_cause_and_round(
                           'with error_state None and the round unidentified')
 def test_execute_item_unrecognised_later_response_error_state_names_round(
         tmp_path, calculator):
-    # Correct (SPEC R1.3, as above): the record names the unrecognised
-    # shape and the round it came in (round 1).
+    # Correct (SPEC R1.3, as above): the record names the cause and the
+    # round it came in (round 1), structured as EV0_STATE proposes.
     _, records = run(tmp_path, FakeAdapter(calls(tool_call()), ANTHROPIC))
     assert records[0]['evidence_class'] == EV_0
-    error_state = records[0]['error_state']
-    assert error_state is not None
-    text = json.dumps(error_state).lower()
-    assert 'shape' in text
-    assert re.search(r'\b(round|turn)\D{0,3}[12]\b', text)
+    assert_ev0_state(records[0]['error_state'])
+
+
+@pytest.mark.proposal(EV0_STATE)
+@pytest.mark.finding('T3-35')
+@pytest.mark.req('R1.3', 'AP-1 D7.9')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-35: error_state is None for both causes')
+def test_execute_item_ev0_causes_are_told_apart(tmp_path, calculator):
+    # A rate limit and an unrecognised shape in round 1 are two causes;
+    # the records tell them apart.
+    (tmp_path / 'a').mkdir()
+    (tmp_path / 'b').mkdir()
+    _, rate = run(tmp_path / 'a', FakeAdapter(
+        calls(tool_call()), adapter.RateLimitError('Rate limit reached')))
+    _, shape = run(tmp_path / 'b', FakeAdapter(calls(tool_call()),
+                                               ANTHROPIC))
+    causes = [(r[0]['error_state'] or {}).get('cause') for r in (rate,
+                                                                 shape)]
+    assert None not in causes and causes[0] != causes[1], causes
 
 
 def run_without_raising(tmp_path, adapter_send, **kwargs):
