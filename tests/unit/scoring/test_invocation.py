@@ -463,13 +463,13 @@ def test_measure_invocation_n_counts_questions_not_repeats():
     'if any of its repeats did not invoke; the unit and this rule are the '
     "author's proposal")
 @pytest.mark.finding('T3-11')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-11: repeats of a question pooled as n')
 def test_measure_invocation_question_with_a_repeat_not_invoked_is_a_failure():
     # Q01 invoked in 2 of its 3 repeats, Q02 in its one: n = 2 questions,
     # k = 1 failure (Q01), not 1 failure in 4 executions and not Q01
-    # counted as invoked because most of its repeats were.
-    r = measure_invocation([item(True), item(True), item(False),
+    # counted as invoked because most of its repeats were (nor because its
+    # last one was: the failed repeat is the middle one).
+    r = measure_invocation([item(True), item(False), item(True),
                             item(True, item_id='Q02')])
     assert r['per_class'][EV_2]['n'] == 2
-    assert r['per_class'][EV_2]['failure_rate'].startswith('1/2 failures')
+    # k/n first; the wording after it is the fix's ('1/2 (50.0%); ...').
+    assert r['per_class'][EV_2]['failure_rate'].startswith('1/2 ')
