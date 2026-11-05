@@ -39,7 +39,7 @@ Classification: DETERMINISTIC. No model, no network.
 import json
 import math
 from datetime import datetime, timezone
-from decimal import ROUND_DOWN, Decimal
+from decimal import ROUND_DOWN, ROUND_HALF_UP, Decimal
 
 
 # -- All seven dimensions per AP-1 v1.3 --------------------------------
@@ -243,7 +243,7 @@ def _section_d73(summary):
         lines.append('|---|---|---|')
         for outcome in ['TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED', 'UNOBSERVABLE']:
             c = counts.get(outcome, 0)
-            pct = f'{100*c/total:.1f}' if total > 0 else '\u2014'
+            pct = _share(c, total) if total > 0 else '\u2014'
             lines.append(f'| `{outcome}` | {c} | {pct}% |')
         lines.append(f'| **Total** | **{total}** | |')
 
@@ -290,7 +290,7 @@ def _section_d73(summary):
         for outcome in ['GOVERNED-RELEASE', 'PARTIALLY-GOVERNED',
                         'COVERAGE-UNOBSERVABLE']:
             c = rc_counts.get(outcome, 0)
-            pct = f'{100*c/rc_total:.1f}' if rc_total > 0 else '\u2014'
+            pct = _share(c, rc_total) if rc_total > 0 else '\u2014'
             lines.append(f'| `{outcome}` | {c} | {pct}% |')
         lines.append(f'| **Total** | **{rc_total}** | |')
 
@@ -410,6 +410,14 @@ def _section_clopper_pearson(summary):
             lines.append('')
 
     return '\n'.join(lines)
+
+
+def _share(part, whole):
+    """part/whole as a percentage to one decimal, in Decimal and rounded
+    half up, the default declared rounding (SPEC R0.4.1: no binary float
+    where a value is reported). 1/400 is '0.3', not float's '0.2'."""
+    return str((Decimal(part) / Decimal(whole) * 100).quantize(
+        Decimal('0.1'), rounding=ROUND_HALF_UP))
 
 
 def _percent(part, whole):
@@ -749,24 +757,24 @@ def _section_operand_provenance(summary):
     lines.append('|---|---|---|---|')
     # Step 1 broken out: source match and declared constant
     if total_operands > 0:
-        pct_src = f'{100*s1_src/total_operands:.1f}'
-        pct_const = f'{100*s1_const/total_operands:.1f}'
+        pct_src = _share(s1_src, total_operands)
+        pct_const = _share(s1_const, total_operands)
     else:
         pct_src = pct_const = '—'
     lines.append(f'| 1 | Source match | {s1_src} | {pct_src}% |')
     lines.append(f'| 1 | Declared constant | {s1_const} | {pct_const}% |')
     for step in range(2, 5):
         count = step_counts.get(step, 0)
-        pct = f'{100*count/total_operands:.1f}' if total_operands > 0 else '—'
+        pct = _share(count, total_operands) if total_operands > 0 else '—'
         lines.append(f'| {step} | {step_names[step]} | {count} | {pct}% |')
     # Step 5 split: sign-inverted, ungrounded-chain, untraceable
     s5_si = summary.get('step_5_sign_inverted', 0)
     s5_uc = summary.get('step_5_ungrounded_chain', 0)
     s5_ut = summary.get('step_5_untraceable', 0)
     if total_operands > 0:
-        pct_si = f'{100*s5_si/total_operands:.1f}'
-        pct_uc = f'{100*s5_uc/total_operands:.1f}'
-        pct_ut = f'{100*s5_ut/total_operands:.1f}'
+        pct_si = _share(s5_si, total_operands)
+        pct_uc = _share(s5_uc, total_operands)
+        pct_ut = _share(s5_ut, total_operands)
     else:
         pct_si = pct_uc = pct_ut = '—'
     lines.append(f'| 5 | Originated, sign-inverted from source | {s5_si} | {pct_si}% |')
@@ -794,7 +802,7 @@ def _section_operand_provenance(summary):
             # The proportion with its denominator, every calculator
             # invocation (T3-16).
             lines.append(f'| {outcome} | {count} | {count}/{total_inv} '
-                         f'({100*count/total_inv:.1f}%) |')
+                         f'({_share(count, total_inv)}%) |')
         lines.append('')
 
     # Executions for which D7.2 is UNMEASURABLE, with the reason (R3.3)

@@ -2012,3 +2012,28 @@ def test_dimension_results_d1_per_category_with_n_and_interval():
         if not ok:
             bad.append((category, rows))
     assert bad == [], text
+
+
+# -- reported proportions in Decimal (SPEC R0.4.1) --------------------------
+
+@pytest.mark.req('R0.4.1')
+@pytest.mark.parametrize('part, whole, shown', [
+    (1, 400, '0.3'),       # 0.25 %: float formatting gave 0.2
+    (1, 8, '12.5'), (3, 8, '37.5'), (1, 3, '33.3'), (2, 3, '66.7'),
+    (0, 7, '0.0'), (7, 7, '100.0')])
+def test_share_is_decimal_rounded_half_up(part, whole, shown):
+    assert report._share(part, whole) == shown
+
+
+@pytest.mark.req('R0.4.1')
+def test_per_invocation_and_d73_tables_use_the_decimal_share():
+    # 1 of 400: '0.3%', not the float formatting's '0.2%'
+    prov = {'OPERANDS-GROUNDED': 399, 'OPERAND-ORIGINATED': 1}
+    text = report._section_operand_provenance({
+        'provenance_outcomes': prov, 'step_counts': {1: 1}})
+    assert '| OPERAND-ORIGINATED | 1 | 1/400 (0.3%) |' in text
+    tr = [{'outcome': 'TRANSCRIBED-EXACT'}] * 399 + [
+        {'outcome': 'TRANSCRIBED-ALTERED', 'item_id': 'Q', 'condition': 'c',
+         'repeat': 1, 'difference': '1', 'reason': 'x'}]
+    text = report._section_d73({'transcription_results': tr})
+    assert '| `TRANSCRIBED-ALTERED` | 1 | 0.3% |' in text
