@@ -294,7 +294,11 @@ intermediate, or a declared constant.
 > time it perturbs each declared source field and re-executes; if the output
 > does not move, the module is returning constants and the run is refused. The
 > run is also refused if the module reads a field it does not declare, or uses
-> a numeric literal it does not declare as a constant.
+> a numeric literal it does not declare as a constant: in any code of the module
+> that runs for the item, `compute()` included, or in a module-level constant
+> that code reads. The checks catch mistakes, not a module written to evade
+> them: a number made without a literal (`len("abcdefghijkl")`), code in another
+> file, or a field read through `dict.get(account, ...)` is not seen.
 
 **A config** — endpoint, model, sampling parameters (each with a value or an
 explicit declared omission and its reason), tolerance, quantisation policy,

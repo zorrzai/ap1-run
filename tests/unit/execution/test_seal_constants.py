@@ -322,9 +322,10 @@ def test_declared_constants_check_every_spelling_named_in_source_order(
     ''')
     with pytest.raises(SealError) as exc:
         declared_constants_check(mod, FIXTURE, questions('Q01'))
+    # source order: the helper is defined first
     assert str(exc.value) == REFUSED + (
-        'Q01: 4; Q01: Decimal("5"); Q01: 7; Q01: decimal.Decimal(\'8\'); '
-        'Q01: D("6"); Q01: 2.5')
+        'Q01: D("6"); Q01: 2.5; Q01: 4; Q01: Decimal("5"); Q01: 7; '
+        'Q01: decimal.Decimal(\'8\')')
 
 
 @pytest.mark.finding('S3-G3-1')
@@ -422,7 +423,8 @@ def test_declared_constants_check_class_as_derive_function_checked(gt_module):
     ''')
     with pytest.raises(SealError) as exc:
         declared_constants_check(mod, FIXTURE, questions('Q01'))
-    assert str(exc.value) == REFUSED + 'Q01: D("4")'
+    # compute's own D("1") ran and is undeclared too
+    assert str(exc.value) == REFUSED + 'Q01: D("1"); Q01: D("4")'
 
 
 # -- the shipped example module --------------------------------------------
@@ -565,3 +567,153 @@ def test_declared_constants_check_any_undeclared_numeric_literal_refused(
     msg = refusal_of(mod, questions('Q01'))
     assert msg is not None, 'undeclared literal 4 passed'
     assert 'Q01' in msg and '4' in msg
+
+
+# -- what the derivation actually runs (S3-G3-1) ---------------------------
+#
+# The check reads every top-level statement of the module that the item's
+# computation executes (compute itself, the function it dispatches to,
+# helpers however they are called), and the module-level assignments
+# those statements read. Each case below passed all three R3.1 guards
+# before; each is now refused, naming the item and the literal.
+
+@pytest.mark.finding('S3-G3-1')
+@pytest.mark.parametrize('body, literal', [
+    # a module-level constant used in place of D("12")
+    ('''
+        MONTHS = 13
+
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) / MONTHS)
+    ''', '13'),
+    ('''
+        BONUS = D("1.05")
+
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) * BONUS)
+    ''', 'D("1.05")'),
+    # a module-level constant reached through another one
+    ('''
+        RATE = D("1.05")
+        FACTOR = RATE
+
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) * FACTOR)
+    ''', 'D("1.05")'),
+    # a helper called as an attribute (staticmethod)
+    ('''
+        class H:
+            @staticmethod
+            def k():
+                return D("1.05")
+
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) * H.k())
+    ''', 'D("1.05")'),
+    # a string built by concatenation inside D(...)
+    ('''
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) * D("1" + ".05"))
+    ''', 'D("1" + ".05")'),
+    # a number in a string given to int() or float()
+    ('''
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) * int("7"))
+    ''', 'int("7")'),
+], ids=['module-int', 'module-decimal', 'module-alias', 'attribute-helper',
+        'concatenated-string', 'int-of-string'])
+def test_declared_constants_check_refuses_literals_outside_the_derive_body(
+        gt_module, body, literal):
+    mod = gt_module(body)
+    with pytest.raises(SealError) as e:
+        declared_constants_check(mod, FIXTURE, questions('Q01'))
+    assert f'Q01: {literal}' in str(e.value)
+
+
+@pytest.mark.finding('S3-G3-1')
+def test_declared_constants_check_reads_compute_itself(gt_module):
+    # compute() post-processes the final: compute's own source is read.
+    mod = gt_module('''
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']))
+
+        _compute = compute
+
+        def compute(item_id, ctx):
+            out = _compute(item_id, ctx)
+            out['final'] *= D("1.05")
+            return out
+    ''')
+    with pytest.raises(SealError, match=r'Q01: D\("1\.05"\)'):
+        declared_constants_check(mod, FIXTURE, questions('Q01'))
+
+
+@pytest.mark.finding('S3-G3-1')
+def test_declared_constants_check_reads_the_function_compute_runs(gt_module):
+    # A decoy derive_q01; compute dispatches to another function.
+    mod = gt_module('''
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']))
+
+        def _q01_real(ctx):
+            return result(D(ctx['acct']['balance']) + D("7"))
+
+        def compute(item_id, ctx):
+            return _q01_real(ctx)
+    ''')
+    with pytest.raises(SealError, match=r'Q01: D\("7"\)'):
+        declared_constants_check(mod, FIXTURE, questions('Q01'))
+
+
+@pytest.mark.finding('S3-G3-1')
+def test_declared_constants_check_module_constant_declared_passes(gt_module):
+    # A module-level constant is fine when the item declares it; another
+    # item's derivation that does not run it is not charged with it.
+    mod = gt_module('''
+        MONTHS = D("12")
+
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) / MONTHS, "12")
+
+        def derive_q02(ctx):
+            return result(D(ctx['acct']['balance']))
+    ''')
+    assert declared_constants_check(mod, FIXTURE,
+                                    questions('Q01', 'Q02')) == []
+
+
+def test_declared_constants_check_shipped_example_passes():
+    # The shipped example declares every constant its derivations run.
+    root = Path(__file__).resolve().parents[3] / 'example'
+    spec = importlib.util.spec_from_file_location(
+        '_example_gt_for_constants', root / 'ground_truth_example.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    fixture = json.loads((root / 'fixture.json').read_text('utf-8'))
+    qs = json.loads((root / 'questions.json').read_text('utf-8'))
+    assert declared_constants_check(module, fixture, qs) == []
+
+
+@pytest.mark.finding('S3-G3-1')
+def test_declared_constants_check_charges_only_the_branch_that_ran(gt_module):
+    # A shared helper with a branch per item: Q01's computation does not
+    # run Q02's branch, so its D("7") is charged to Q02 only.
+    mod = gt_module('''
+        def shared(item_id, b):
+            if item_id == 'Q02':
+                return result(b + D("7"))
+            return result(b)
+
+        def derive_q01(ctx):
+            return shared('Q01', D(ctx['acct']['balance']))
+
+        def derive_q02(ctx):
+            return shared('Q02', D(ctx['acct']['balance']))
+
+        def compute(item_id, ctx):
+            return shared(item_id, D(ctx['acct']['balance']))
+    ''')
+    assert declared_constants_check(mod, FIXTURE, questions('Q01')) == []
+    with pytest.raises(SealError, match=r'^declared-constants check failed: '
+                       r'undeclared numeric literals\. Q02: D\("7"\)$'):
+        declared_constants_check(mod, FIXTURE, questions('Q01', 'Q02'))
