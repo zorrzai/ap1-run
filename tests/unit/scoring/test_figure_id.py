@@ -383,7 +383,7 @@ def test_identify_figure_locale_ambiguous_token_routes_to_adjudication():
     assert outcome.startswith('ADJUDICATE')
 
 
-# -- Step 5 (report-honesty): T3-3, S3-G4-2 ------------------------------------
+# -- T3-3, S3-G4-2 ---------------------------------------------------------
 
 @pytest.mark.finding('T3-3')
 @pytest.mark.req('R2.0')

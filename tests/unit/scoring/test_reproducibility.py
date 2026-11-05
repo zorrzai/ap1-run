@@ -148,7 +148,7 @@ def test_classify_mechanism_many_distinct_values_is_also_observed_only():
     # answers get the same class; only distinct_values differs. This is
     # correct (AP-1 D2.1; step-4 g7 report): from evidence the runner can
     # only tell OBSERVED-ONLY from UNMEASURED. The distinct values per
-    # question and surface reach report §9 (T3-4, step 5).
+    # question and surface reach report §9 (T3-4).
     responses = [response(f'${v}') for v in ('1', '2', '3', '4', '5')]
     assert classify_mechanism(responses, surface='prose', minimum_runs=3) == {
         'mechanism': 'OBSERVED-ONLY',
@@ -388,7 +388,7 @@ def test_parameter_echo_compares_numbers_as_decimals_else_text(
     assert r['verified'] is (status == 'VERIFIED')
 
 
-# -- Step 5 (report-honesty): the figures surface (T3-4) ----------------------
+# -- The figures surface (T3-4) ------------------------------------------
 
 @pytest.mark.finding('T3-4')
 @pytest.mark.req('R2.2', 'AP-1 D2')

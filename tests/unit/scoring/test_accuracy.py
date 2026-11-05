@@ -230,7 +230,7 @@ def test_score_accuracy_wrong_answer_is_adjudicated_never_incorrect():
     # A plainly wrong answer routes to adjudication, so on the live path
     # (no adjudication) D1 can never count it INCORRECT. This is SPEC
     # R2.0 ("does not conclude that a response containing unmatched
-    # figures is wrong"; ruling on T3-3), so the report prints no
+    # figures is wrong"; T3-3), so the report prints no
     # auto-scored rate while items await adjudication (report.py).
     fig = identify('The answer is $15.30.', '15.20')
     r = score(fig, digits=2)

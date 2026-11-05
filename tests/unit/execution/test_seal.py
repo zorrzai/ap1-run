@@ -1270,7 +1270,7 @@ def test_verify_seal_input_deleted_after_the_seal_is_named(files, frozen,
     assert f'  {name}: cannot read: ' in str(exc.value)
 
 
-# -- Step 5 (report-honesty): lookup collisions recorded at seal (T3-75) --
+# -- Lookup collisions recorded at seal (T3-75) ---------------------------
 
 @pytest.mark.finding('T3-75')
 @pytest.mark.req('R3.1')

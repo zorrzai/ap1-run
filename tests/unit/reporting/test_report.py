@@ -2256,7 +2256,7 @@ def test_clopper_pearson_section_lists_failing_questions_beside_k():
     assert f'| d7_invocation_base | 0 | 10 | 10/10 (100.0%) |' in text
 
 
-# -- Step 5 (report-honesty): served model and fingerprints (V12-8) -------
+# -- Served model and fingerprints (V12-8) -------------------------------
 
 @pytest.mark.finding('V12-8')
 @pytest.mark.req('AP-1 §5.2')

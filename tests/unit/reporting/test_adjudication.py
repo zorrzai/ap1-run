@@ -514,7 +514,7 @@ def test_adjudication_reasons_text():
             'the expected value within tolerance. A scorer must determine '
             'whether the figure answers the right question at the wrong '
             'scope, or is originated.',
-        # T3-3 (step 5): also a match followed by a competing figure.
+        # T3-3: also a match followed by a competing figure.
         'ADJUDICATE-AMBIGUOUS': 'Which figure in the response is the '
                                 'released answer is ambiguous: several '
                                 'numeric tokens match the expected value, '
