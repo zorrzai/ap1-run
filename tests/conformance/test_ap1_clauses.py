@@ -462,8 +462,11 @@ def test_zero_failure_bound_is_one_minus_alpha_to_the_one_over_n():
     assert str(bound)[:8] == '0.139108'
 
 
+@pytest.mark.finding('T3-61')
 @pytest.mark.req('AP-1 D7.5', 'R2.3')
 def test_zero_failure_rate_is_reported_with_n_and_bound():
+    # T3-61: the exact bound is 13.91 %; it is shown rounded to nearest,
+    # not up. The fix changes the expected text.
     from ap1_run.scoring.invocation import format_rate
     assert format_rate(0, 20) == (
         '0/20 failures; one-sided 95% upper bound on the failure rate 13.9%')
