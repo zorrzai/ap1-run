@@ -3,6 +3,10 @@
 Thin integration layer that runs AP-1 evaluations inside the
 [UK AI Security Institute's Inspect framework](https://inspect.aisi.org.uk/).
 
+**Unsupported for now.** This wrapper's scoring differs from the runner's, and
+it cannot seal against the AP-1 v1.3 text, so nothing it produces is an AP-1
+result.
+
 **No measurement logic lives here.** Every classification call — evidence,
 invocation, accuracy, operation correctness, provenance — goes to the
 runner's existing modules.
@@ -16,8 +20,14 @@ The **optional Inspect integration** (this directory) additionally requires
 `inspect-ai` and is not needed to run AP-1 directly.
 
 ```
+pip install -e .[inspect]                     # the runner package plus inspect-ai
+# or, with the package already installed:
 pip install -r ap1_inspect/requirements.txt
 ```
+
+The wrapper imports the runner as the `ap1_run` package (`src/ap1_run/`).
+`ap1_inspect/` itself stays a separate top-level package; run it from the
+repository root.
 
 ## Usage
 

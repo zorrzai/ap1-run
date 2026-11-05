@@ -21,8 +21,10 @@ real adapter and HTTP transport:
   `/v1/chat/completions` (404) or without
   `Authorization: Bearer <the driver's test key>` (401), without advancing
   its script.
-- `driver.py`: runs `smoke_test.main()` in a scratch copy of the repository,
-  so the runner writes to the copy's `output/`, never to the published runs.
+- `driver.py`: runs the runner's `main()` in a scratch copy of the
+  repository, so the runner writes to the copy's `output/`, never to the
+  published runs. It imports `smoke_test`, or `ap1_run.run` when the tree
+  has no `smoke_test.py`.
 - `run_regression.py`: runs each scenario, normalises the output and compares
   it exactly with `golden/<scenario>/`.
 - `scenarios/*.json`: one scenario per file. A scenario can `extend` another
@@ -113,6 +115,7 @@ python tests/regression/run_regression.py --keep DIR replay_run_e_mini
 python tests/regression/check_imports.py               # every module imports
 python tests/regression/check_source_files.py          # source-hash file list
 python tests/regression/selftest.py                    # the harness's own checks
+python tests/regression/check_own_src.py               # entry points use their own src/
 python tests/regression/coverage_report.py OUTDIR      # legacy suites + scenarios
 ```
 
@@ -152,8 +155,9 @@ restructure.
 | `replay_run_f_sol` | the published gpt-5.6-sol run, 1,000 executions, replayed |
 | `tool_verify_run_seal` | `verify_run_seal.py` on the four published runs |
 | `tool_verify_run_seal_usage` | `verify_run_seal.py` with no arguments |
-| `tool_generate_findings` | `generate_findings.py`; its output equals the committed `FINDINGS.md` |
-| `smoke_no_api_key` | `smoke_test.py` with no key: instructions, exit 1 |
+| `tool_generate_findings` | `generate_findings.py`; its output equals the committed `findings/FINDINGS.md` |
+| `smoke_no_api_key` | `python -m ap1_run.run` with no key: instructions, exit 1 |
+| `smoke_test_shim_no_api_key` | the root `smoke_test.py` shim with no key: the same golden output as `smoke_no_api_key` |
 
 **About the replays:** the recorded final responses are served as they were.
 The intermediate rounds survive only as assistant messages (V12-3), so each

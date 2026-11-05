@@ -14,17 +14,16 @@ import os
 from inspect_ai import Task, task
 from inspect_ai.dataset import Sample, MemoryDataset
 
-# Ensure the runner modules are importable
+# The runner is the installed ap1_run package. The example's ground-truth
+# module and calculator are imported by name from example/.
 _RUNNER_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 _EXAMPLE_DIR = os.path.join(_RUNNER_DIR, 'example')
-if _RUNNER_DIR not in sys.path:
-    sys.path.insert(0, _RUNNER_DIR)
 if _EXAMPLE_DIR not in sys.path:
     sys.path.insert(0, _EXAMPLE_DIR)
 
-from seal import seal as create_seal, SealError
-from config import load_config
-from context import build_delivered_context, format_fixture_context
+from ap1_run.execution.seal import seal as create_seal, SealError
+from ap1_run.foundation.config import load_config
+from ap1_run.execution.context import build_delivered_context, format_fixture_context
 import ground_truth_example as gt_module
 
 from .solver import ap1_solver
@@ -56,7 +55,7 @@ def _create_seal(config, fixture_path, questions_path, gt_path):
     Raises SealError if the AP-1 text hash mismatches.
     """
     ap1_text_path = None
-    spec_path = os.path.join(_RUNNER_DIR, 'SPEC.md')
+    spec_path = os.path.join(_RUNNER_DIR, 'docs', 'SPEC.md')
     if os.path.exists(spec_path):
         ap1_text_path = spec_path
 

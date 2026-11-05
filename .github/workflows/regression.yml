@@ -25,7 +25,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: pip install -c tests/regression/constraints.txt requests
+        run: pip install -c tests/regression/constraints.txt -e .
 
       - name: Check the list of files the source hash covers
         run: python tests/regression/check_source_files.py
@@ -48,3 +48,6 @@ jobs:
             echo "::error::Regression summary missing, empty or failing: '$summary'"
             exit 1
           fi
+
+      - name: Entry points use their own clone's src/
+        run: python tests/regression/check_own_src.py

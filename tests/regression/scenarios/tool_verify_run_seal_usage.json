@@ -1,5 +1,5 @@
 {
   "description": "verify_run_seal.py with no arguments prints its usage and exits 1.",
   "exercises": ["verify_run_seal.py usage", "entry point"],
-  "command": ["verify_run_seal.py"]
+  "command": ["tools/verify_run_seal.py"]
 }
