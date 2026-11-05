@@ -813,15 +813,15 @@ def test_classify_operation_round_uses_declared_half_up():
     assert (result['outcome'], result['evaluated_result']) == (OC, '3')
 
 
-@pytest.mark.proposal(
-    'T3-39/S3-G4-5: a boolean literal is not an operand (the boolean '
-    'cases); proposed, not decided')
 @pytest.mark.finding('S3-G4-5')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='S3-G4-5: reclassify_session raises on '
                           'model-controlled expressions')
-@pytest.mark.parametrize('expression', ['True + 1', '-' * 5000 + '1'],
-                         ids=['bool-literal', 'deep-nesting'])
+@pytest.mark.parametrize('expression', [
+    pytest.param('True + 1', marks=pytest.mark.proposal(
+        'T3-39/S3-G4-5: a boolean literal is not an operand; proposed, not '
+        'decided')),
+    '-' * 5000 + '1'], ids=['bool-literal', 'deep-nesting'])
 def test_reclassify_session_unreadable_expression_kept_no_raise(expression):
     # Correct (S3-G4-5; as for T3-39, a boolean is not an
     # operand): an expression whose operands cannot be

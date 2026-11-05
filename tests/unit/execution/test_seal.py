@@ -1041,6 +1041,12 @@ def test_verify_seal_doi_on_one_side_only_named_as_mismatch(
 # byte-significant, its hash must equal the publisher's deposit
 # (.gitattributes: "reference/** -text"), so it stays raw bytes.
 
+# Only the BOM cases rest on a proposal; CRLF is T3-50's own case (DEC-6
+# lists T3-50, line endings).
+BOM_PROPOSAL = pytest.mark.proposal(
+    'T3-50: a BOM, like CRLF, does not change the text input hash; a '
+    'proposed normalisation')
+
 LF_TEXT = b'{"accounts": [\n  "a"\n]}\n'
 VARIANTS = {'crlf': LF_TEXT.replace(b'\n', b'\r\n'),
             'cr': LF_TEXT.replace(b'\n', b'\r'),
@@ -1048,13 +1054,12 @@ VARIANTS = {'crlf': LF_TEXT.replace(b'\n', b'\r\n'),
             'bom_crlf': b'\xef\xbb\xbf' + LF_TEXT.replace(b'\n', b'\r\n')}
 
 
-@pytest.mark.proposal(
-    'T3-50: a BOM, like CRLF, does not change the text input hash; a '
-    'proposed normalisation')
 @pytest.mark.finding('T3-50')
 @pytest.mark.req('R0.4.3')
 @pytest.mark.parametrize('name', ['fixture', 'questions', 'ground_truth'])
-@pytest.mark.parametrize('variant', sorted(VARIANTS))
+@pytest.mark.parametrize('variant', [
+    pytest.param(v, marks=BOM_PROPOSAL) if 'bom' in v else v
+    for v in sorted(VARIANTS)])
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-50: sealed file hashes depend on line endings '
                           'and a BOM')

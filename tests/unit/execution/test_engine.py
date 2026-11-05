@@ -834,7 +834,8 @@ EV0_STATE = ("T3-35: error_state as {'cause': <non-empty text>, 'round': "
              "round identified'")
 
 
-# What each cause's text must mention (part of the EV0_STATE proposal; as in the functional tests):
+# What each cause's text must mention (part of the EV0_STATE proposal, as
+# in the functional tests):
 # broad word families, so wording is free but the causes can't be swapped.
 CAUSE_WORDS = {
     'http': r'503|http|status',
@@ -910,6 +911,13 @@ def test_execute_item_ev0_causes_are_told_apart(tmp_path, calculator):
     causes = [(r[0]['error_state'] or {}).get('cause') for r in (rate,
                                                                  shape)]
     assert None not in causes and causes[0] != causes[1], causes
+
+
+# Only the boolean cases rest on a proposal (a boolean literal is not an
+# operand); the others follow from T3-39's own rule.
+BOOL_PROPOSAL = pytest.mark.proposal(
+    'T3-39/S3-G4-5: a boolean literal is not an operand; proposed, not '
+    'decided')
 
 
 def run_without_raising(tmp_path, adapter_send, **kwargs):
@@ -1026,16 +1034,15 @@ def test_extract_calc_expression_non_object_json_none(arguments):
     assert found is None
 
 
-@pytest.mark.proposal(
-    'T3-39/S3-G4-5: a boolean literal is not an operand (the boolean '
-    'cases); proposed, not decided')
 @pytest.mark.finding('T3-39', 'S3-G2-4')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-39/S3-G2-4: model-controlled calculator '
                           'input raises out of execute_item')
 @pytest.mark.parametrize('arguments', [
-    '{"expression": 15.2}', '{"expression": "True * 15.2"}',
-    '{"expression": "True + 1"}', '"1+1"', '["1+1"]',
+    '{"expression": 15.2}',
+    pytest.param('{"expression": "True * 15.2"}', marks=BOOL_PROPOSAL),
+    pytest.param('{"expression": "True + 1"}', marks=BOOL_PROPOSAL),
+    '"1+1"', '["1+1"]',
 ], ids=['number', 'true-times', 'true-plus', 'json-string', 'json-list'])
 def test_execute_item_model_controlled_arguments_recorded_no_raise(
         tmp_path, calculator, arguments):
