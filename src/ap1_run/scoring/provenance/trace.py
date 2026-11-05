@@ -125,7 +125,7 @@ def _walk_for_operands(tree, source):
         if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.USub) \
                 and isinstance(node.operand, ast.Constant):
             value, text = literal_decimal(node.operand, source)
-            operands.append((-value, '-' + text))
+            operands.append((value.copy_negate(), '-' + text))
         elif isinstance(node, ast.Constant):
             operands.append(literal_decimal(node, source))
         else:

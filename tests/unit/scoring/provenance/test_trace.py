@@ -356,6 +356,21 @@ def test_resolve_step4_ungrounded_prior_return_is_originated():
         5, 'computed_in_session_ungrounded', near_miss_finding=None)
 
 
+@pytest.mark.finding('T3-58')
+def test_negative_operand_beyond_precision_does_not_resolve_to_a_shorter_source():
+    # A negative literal with more digits than the working precision is
+    # not the source value it would round to: -15200.000...0001 is not
+    # -15200, so it is not grounded at step 1 on a delivered -15200.
+    from decimal import localcontext
+    literal = '-15200.' + '0' * 60 + '1'
+    with localcontext() as ctx:
+        ctx.prec = 50
+        [(value, _)] = extract_operands(literal)
+    assert value != D('-15200')
+    ctx_neg = {'acct01': {'balance': '-15200'}}
+    assert resolve(str(value), ctx=ctx_neg)['step'] != 1
+
+
 @pytest.mark.finding('T3-57')
 def test_resolve_step4_grounded_non_matching_return_does_not_ground():
     # T3-57: only grounded returns of the operand's own value count.
@@ -501,6 +516,8 @@ def test_extract_operands_leading_whitespace_is_stripped(expression):
     '-53.20',
     '15200.0000000000000001',   # 17+ significant digits, not rounded
     '0.12345678901234567890',
+    # negative, with more digits than any working precision in use (50)
+    '-15200.' + '0' * 60 + '1',
 ])
 def test_extract_operands_reads_literal_text_exactly_as_decimal(literal):
     # Correct (DEC-6, T3-58; SPEC R0.4.1 and

@@ -1064,3 +1064,16 @@ def test_parse_decimal_misplaced_grouping_separator_refused(text):
     except (NumericParseError, AmbiguousLocaleError):
         return
     assert False, f'{text!r} parsed as {value}'
+
+
+@pytest.mark.finding('T3-58')
+@pytest.mark.parametrize('text', ['-15200.' + '0' * 60 + '1',
+                                  '(15200.' + '0' * 60 + '1)'],
+                         ids=['minus', 'parentheses'])
+def test_parse_decimal_negative_keeps_every_digit(text):
+    # A negative figure is read exactly whatever the working precision:
+    # negating through arithmetic would round it to the context.
+    with localcontext() as ctx:
+        ctx.prec = 28
+        value = parse_decimal(text)[0]
+    assert value == Decimal('-15200.' + '0' * 60 + '1')
