@@ -47,6 +47,7 @@ src/ap1_run/scoring/release_coverage.py
 src/ap1_run/scoring/reproducibility.py
 src/ap1_run/scoring/transcription.py
 tests/conformance/conftest.py
+tests/conformance/marks_plugin.py
 tests/conformance/test_ap1_clauses.py
 tests/conformance/test_clause_quotes.py
 tests/conformance/test_marks.py
