@@ -9,11 +9,12 @@ Design assumption: automated identification of an answer inside prose
 is NOT reliable. The module routes to adjudication wherever there is
 ambiguity, and never guesses which of several figures was the answer.
 
-Steps, in order:
+Steps, as SPEC R2.0 numbers them, applied in the order 0, 2, 3, 1, 4
+(step 1 after 2 and 3, so a structured value never skips them; T3-75):
   0  Response shape unrecognised -> UNMEASURABLE (adjudication)
-  1  Structured answer field where configured
   2  Decline markers -> adjudication, NOT auto-scored
   3  Lookup collision -> adjudication, never auto-scored
+  1  Structured answer field where configured
   4  Extract per R0.4.2 -> AUTO-MATCH / AUTO-NO-FIGURE / ADJUDICATE
 
 In step 4 figures are compared like with like. A percentage token is
@@ -99,24 +100,6 @@ def identify_figure(response, *, expected_value, delivered_context,
             'matched_indices': [],
         }
 
-    # -- Step 1: Structured answer field --
-    if structured_answer_field is not None:
-        structured_val = _get_structured_answer(response, structured_answer_field)
-        if structured_val is not None:
-            try:
-                figure, _, _ = parse_decimal(
-                    str(structured_val), decimal_sep=decimal_separator,
-                    grouping_sep=grouping_separator)
-                return {
-                    'outcome': AUTO_MATCH,
-                    'released_figure': figure,
-                    'reason': f'structured answer field: {structured_answer_field}',
-                    'extracted_tokens': None,
-                    'matched_indices': [],
-                }
-            except (ValueError, Exception):
-                pass  # Fall through to extraction
-
     # -- Step 2: Decline detection --
     if decline_markers and content:
         lower_content = content.lower()
@@ -139,6 +122,27 @@ def identify_figure(response, *, expected_value, delivered_context,
             'extracted_tokens': None,
             'matched_indices': [],
         }
+
+    # -- Step 1: Structured answer field --
+    # Applied after steps 2 and 3, so a structured value never skips the
+    # decline check or a lookup collision (step 3: "never auto-scored";
+    # T3-75; SPEC lists step 1 first, so the order is a proposal).
+    if structured_answer_field is not None:
+        structured_val = _get_structured_answer(response, structured_answer_field)
+        if structured_val is not None:
+            try:
+                figure, _, _ = parse_decimal(
+                    str(structured_val), decimal_sep=decimal_separator,
+                    grouping_sep=grouping_separator)
+                return {
+                    'outcome': AUTO_MATCH,
+                    'released_figure': figure,
+                    'reason': f'structured answer field: {structured_answer_field}',
+                    'extracted_tokens': None,
+                    'matched_indices': [],
+                }
+            except (ValueError, Exception):
+                pass  # Fall through to extraction
 
     # -- Step 4: Extraction and disambiguation --
     if not content:

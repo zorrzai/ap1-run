@@ -114,14 +114,32 @@ def test_identify_figure_structured_field_skips_tolerance_check():
     assert r['released_figure'] == D('999')
 
 
+STEP_ORDER = pytest.mark.proposal(
+    'T3-75: R2.0 steps 2 (decline) and 3 (lookup collision) are applied '
+    'before step 1 (structured field), as step 3\'s "never auto-scored" and '
+    'its verification clause require; SPEC lists step 1 first, and the '
+    'maintainer has not decided the order')
+
+
+@STEP_ORDER
 @pytest.mark.finding('T3-75')
-def test_identify_figure_structured_field_bypasses_decline_and_collision():
-    # The module docstring says a lookup collision is "never auto-scored";
-    # with a structured field it is (step 1 runs before steps 2 and 3).
+@pytest.mark.req('R2.0')
+@pytest.mark.parametrize('collision, markers, outcome', [
+    (True, DECLINE, ADJUDICATE_DECLINE),
+    (False, DECLINE, ADJUDICATE_DECLINE),
+    (True, [], ADJUDICATE_COLLISION),
+])
+def test_identify_figure_structured_field_never_skips_decline_or_collision(
+        collision, markers, outcome):
+    # SPEC R2.0 step 3: a lookup collision is "never auto-scored", and
+    # "An item whose expected value appears in its delivered context
+    # routes to adjudication even where exactly one match is found"; step
+    # 2 routes a decline "regardless of what numerics it contains". A
+    # structured answer does not skip either.
     r = identify(response('I cannot provide that.', answer='15.20'),
-                 collision=True, decline_markers=DECLINE,
+                 collision=collision, decline_markers=markers,
                  structured_answer_field='answer')
-    assert r['outcome'] == AUTO_MATCH
+    assert (r['outcome'], r['released_figure']) == (outcome, None)
 
 
 def test_identify_figure_structured_field_missing_falls_through():
