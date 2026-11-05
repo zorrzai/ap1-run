@@ -13,13 +13,14 @@ reports its unreached executions NOT-RUN.
 Before scoring, the run's seal (format 2) is verified against the inputs
 given (execution/seal.py verify_seal): the record's own seal_hash, the
 config (with the values the runner resolved at run time, taken from the
-pre-registration record), the fixture, questions and ground-truth files,
-the AP-1 text hash the config declares, and the expected values, which
-the ground-truth module computes again and which must hash to the sealed
-ones. The runner's source hash is not compared: a corrected scorer must
-be able to re-score. Every transcript record must carry the seal hash.
-A mismatch is refused with SealError, naming it. The executions are then
-scored against the sealed expected values, as in the run.
+pre-registration record), the fixture, questions, ground-truth and
+calculator files, the AP-1 text hash the config declares, and the
+expected values, which the ground-truth module computes again and which
+must hash to the sealed ones. The runner's source hash is not compared:
+a corrected scorer must be able to re-score. Every transcript record
+must carry the seal hash. A mismatch is refused with SealError, naming
+it. The executions are then scored against the sealed expected values,
+as in the run.
 
 From the command line: ap1-run --rescore <transcript> (README, "Scoring
 a transcript again").
@@ -61,7 +62,8 @@ def rescore_transcript(transcript_path, *, config_path, fixture_dir,
     smoke_summary.json after its '_disclaimer' line).
 
     config_path is the run's config file and fixture_dir holds its
-    fixture.json, questions.json and ground_truth_example.py.
+    fixture.json, questions.json, ground_truth_example.py and
+    calculator_tool.py.
     pre_registration_path defaults to pre_registration.json beside the
     transcript. The output files go to output_dir, which must not be the
     transcript's own directory (the run's outputs there are not replaced).
@@ -94,6 +96,7 @@ def rescore_transcript(transcript_path, *, config_path, fixture_dir,
                 fixture_path=inputs.paths['fixture'],
                 questions_path=inputs.paths['questions'],
                 ground_truth_path=inputs.paths['ground_truth'],
+                calculator_path=inputs.paths['calculator'],
                 expected_values=expected_values)
 
     os.makedirs(output_dir, exist_ok=True)

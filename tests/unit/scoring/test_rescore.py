@@ -31,7 +31,7 @@ from ap1_run.scoring.rescore import (
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
     os.path.abspath(__file__)))))
 INPUTS = ('config.json', 'fixture.json', 'questions.json',
-          'ground_truth_example.py')
+          'ground_truth_example.py', 'calculator_tool.py')
 RUNTIME = {'runner_version_tag': 'v9', 'runner_version_commit': 'abc',
            'runner_modified': True}
 
@@ -60,6 +60,7 @@ class Run:
             config=config, fixture_path=inputs.paths['fixture'],
             questions_path=inputs.paths['questions'],
             ground_truth_path=inputs.paths['ground_truth'],
+            calculator_path=inputs.paths['calculator'],
             ap1_text_path=resolve_ap1_text(config, None, REPO),
             runner_source_hash='feed' * 16,
             expected_values=self.expected_values, loaded=inputs.data)
@@ -193,6 +194,7 @@ def test_rescore_into_the_transcript_s_own_directory_refused(r):
     ('questions.json', lambda c: c + '\n\n', 'questions'),
     ('ground_truth_example.py', lambda c: c + '\n# edited\n',
      'ground_truth'),
+    ('calculator_tool.py', lambda c: c + '\n# edited\n', 'calculator'),
 ])
 def test_rescore_input_not_matching_the_seal_refused(r, name, edit, field):
     # SPEC R1.1: modifying any sealed input makes the scorer refuse,

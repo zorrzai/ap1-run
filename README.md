@@ -233,8 +233,8 @@ ap1-run --rescore runs/today/smoke_run.jsonl \
 
 Give the run's own config and fixture directory; `pre_registration.json` must
 be beside the transcript. Before scoring, the re-scorer verifies the run's seal
-against the inputs given (the config, the fixture, questions and ground-truth
-files, and the expected values, computed again), and refuses any mismatch,
+against the inputs given (the config, the fixture, questions, ground-truth and
+calculator files, and the expected values, computed again), and refuses any mismatch,
 naming it, as well as a transcript of another run. It scores against the
 sealed expected values, as the run does. It writes the four scoring outputs to `--output-dir`, which must not be
 the transcript's directory. Re-scoring a finished run gives back its
