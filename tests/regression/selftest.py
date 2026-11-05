@@ -9,6 +9,7 @@ rules with known answers, so a broken oracle cannot pass by agreeing with
 a broken runner.
 """
 
+import ast
 import hashlib
 import json
 import os
@@ -58,12 +59,16 @@ class CanonicalHash(unittest.TestCase):
             '831709b2231846ed20fd63ff0bc0764d73cee50db271f733e6a2f1c377c7cff3')
 
     def test_verify_hashes_pins_the_same_digest(self):
-        # Read as text: importing the script would import the runner.
+        # Parsed, not imported: importing the script would import the runner.
         path = os.path.join(os.path.dirname(HERE), 'legacy', 'verify_hashes.py')
         with open(path, encoding='utf-8') as f:
-            text = f.read()
-        self.assertIn("EXPECTED_DIGEST = (\n    '831709b2231846ed20fd63ff0bc0764d"
-                      "73cee50db271f733e6a2f1c377c7cff3')", text)
+            tree = ast.parse(f.read(), path)
+        pins = [ast.literal_eval(node.value) for node in tree.body
+                if isinstance(node, ast.Assign)
+                and [getattr(t, 'id', None) for t in node.targets]
+                == ['EXPECTED_DIGEST']]
+        self.assertEqual(pins, [
+            '831709b2231846ed20fd63ff0bc0764d73cee50db271f733e6a2f1c377c7cff3'])
 
     def test_float_is_refused(self):
         with self.assertRaises(hash_oracle.HashCheckError):
