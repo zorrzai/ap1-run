@@ -62,6 +62,9 @@ def base(tmp_path, vrs, monkeypatch):
     (root / 'example' / 'questions.json').write_bytes(b'{"items": []}\n')
     (root / 'example' / 'ground_truth_example.py').write_bytes(b'X = 1\n')
     (root / AP1_TEXT).write_bytes(b'# AP-1 text\n')
+    for name in ('config.json', 'config_mini.json'):
+        (root / 'example' / name).write_text(json.dumps(
+            {'model': 'REPLACE', 'endpoint_url': 'REPLACE'}))
     monkeypatch.setattr(vrs, 'BASE_DIR', str(root))
     return root
 
