@@ -143,7 +143,7 @@ def runner(tmp_path, monkeypatch, capsys):
                 sys.modules.pop(name, None)
         return SimpleNamespace(code=code, refusal=refusal, seals=seals,
                                out=out, console=capsys.readouterr().out,
-                               executed=executed)
+                               executed=executed, requests=list(mock.log))
     return go
 
 
@@ -208,6 +208,41 @@ def test_run_sealed_input_changed_after_seal_refused_naming_it(
 
 # -- T3-48: no expected-values component -----------------------------------
 
+def true_expected_values(fixture_dir):
+    """{item_id: final} computed here, from the fixture directory's own
+    ground-truth module, with each item's delivered context: the values a
+    correct seal binds, independent of the runner."""
+    from ap1_run.execution.context import build_delivered_context
+    spec = importlib.util.spec_from_file_location(
+        '_g5_ground_truth', Path(fixture_dir) / 'ground_truth_example.py')
+    module = importlib.util.module_from_spec(spec)
+    saved = sys.dont_write_bytecode
+    sys.dont_write_bytecode = True
+    try:
+        spec.loader.exec_module(module)
+    finally:
+        sys.dont_write_bytecode = saved
+    fixture = json.loads((Path(fixture_dir) / 'fixture.json').read_text(
+        'utf-8'))
+    items = json.loads((Path(fixture_dir) / 'questions.json').read_text(
+        'utf-8'))['items']
+    return {item['id']: module.compute(item['id'], build_delivered_context(
+        fixture, item['source_accounts']))['final'] for item in items}
+
+
+DRIFT = (
+    '\n\n_drift = {"after_seal": False}\n_compute = compute\n\n\n'
+    'def compute(item_id, delivered_context):\n'
+    '    result = _compute(item_id, delivered_context)\n'
+    '    if _drift["after_seal"]:\n'
+    '        result = dict(result, final=result["final"] + 1)\n'
+    '    return result\n')
+
+
+@pytest.mark.proposal(
+    'T3-48: the expected-values digest is canonical_hash of {item_id: '
+    'final value} (as Decimal, its text, or quantised to the declared '
+    'places); the format is the author\'s proposal')
 @pytest.mark.finding('T3-48')
 @pytest.mark.req('R1.1')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -216,19 +251,32 @@ def test_run_seal_record_binds_expected_values(runner):
     # Correct (SPEC R1.1: "hash and timestamp the fixture, question set,
     # expected values, ground-truth module, ..."; AP-1 v1.3 §13.4): the
     # expected values are computed before the seal and hashed into it.
-    # The field's name is the fix's choice (it contains 'expected'); its
-    # value is a SHA-256 digest, and it is bound: editing it in report.md
-    # makes the published-run verifier fail where it passed before. A
-    # field added to the record but left out of the composite fails the
-    # unedited check already. The run reads example/ in place, so the
+    # The record has one field named '...expected...' whose value is the
+    # digest of the expected values, computed here independently (so a
+    # hash of the module file, or of anything else, does not pass); it
+    # differs from every other hash in the record; and it is bound:
+    # editing it in report.md makes the published-run verifier fail where
+    # it passed before. The run reads example/ in place, so the
     # verifier's fixed input paths match.
+    from decimal import Decimal
+    from ap1_run.foundation.numeric import canonical_hash
     result = runner(EXAMPLE)
     assert result.code == 0, result.console[-2000:]
     record = report_seal_record(result.out)
     fields = [k for k in record if 'expected' in k]
     assert len(fields) == 1, sorted(record)
     digest = record[fields[0]]
-    assert re.fullmatch(r'[0-9a-f]{64}', digest), digest
+    values = true_expected_values(EXAMPLE)
+    places = Decimal(10) ** -int(json.loads((EXAMPLE / 'config.json')
+                                            .read_text('utf-8'))
+                                 ['quantisation']['places'])
+    candidates = {
+        canonical_hash(values),
+        canonical_hash({k: str(v) for k, v in values.items()}),
+        canonical_hash({k: str(Decimal(v).quantize(places))
+                        for k, v in values.items()})}
+    assert digest in candidates, (digest, sorted(candidates))
+    assert digest not in [v for k, v in record.items() if k != fields[0]]
     vrs = load_verifier()
     _, before = vrs.verify_run(str(result.out))
     report = result.out / 'report.md'
@@ -243,17 +291,58 @@ def test_run_seal_record_binds_expected_values(runner):
 @pytest.mark.finding('T3-48')
 @pytest.mark.req('R1.1', 'R3.1')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-48: scoring recomputes expected values after '
+                          'the seal, so values that change then are scored')
+def test_run_ground_truth_drifting_after_the_seal_is_not_scored(
+        runner, fixture_dir):
+    # Correct (SPEC R1.1, expected values sealed): the values scored are
+    # the values sealed. Here the module adds 1 to every final value once
+    # the seal is made (the after_seal hook flips it). Either the run is
+    # refused before any request, naming the ground truth or the expected
+    # values, or every scored expected value is the one computed before the
+    # seal (computed here independently). Design-neutral: refusing and
+    # binding both pass. Today scoring recomputes after the seal and uses
+    # the drifted values.
+    path = fixture_dir / 'ground_truth_example.py'
+    path.write_text(path.read_text('utf-8') + DRIFT, 'utf-8')
+    from decimal import Decimal
+    values = true_expected_values(fixture_dir)
+
+    def drift(record):
+        sys.modules['ground_truth_example']._drift['after_seal'] = True
+    result = runner(fixture_dir, hooks={'after_seal': drift})
+    if result.refusal is not None or result.code not in (0, None):
+        why = str(result.refusal or '') + result.console[-2000:]
+        assert result.requests == [] and re.search(
+            r'ground.truth|expected', why, re.I), why[-500:]
+        return
+    summary = json.loads((result.out / 'smoke_summary.json').read_text(
+        'utf-8'))
+    scored = [(r['item_id'], r['expected']) for r in summary['all_results']
+              if r.get('status') == 'EXECUTED']
+    assert scored
+    drifted = [(i, e) for i, e in scored
+               if abs(Decimal(e) - values[i]) >= Decimal('0.5')]
+    assert drifted == [], drifted
+
+
+@pytest.mark.proposal(
+    'T3-48: refusing a ground-truth module that is not reproducible, '
+    'rather than sealing and scoring its first values, is the author\'s '
+    'reading of SPEC R3.1')
+@pytest.mark.finding('T3-48')
+@pytest.mark.req('R1.1', 'R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-48: a ground-truth module whose values change '
                           'between computations runs unnoticed')
 def test_run_ground_truth_values_changing_between_computations_refused(
         runner, fixture_dir):
-    # Correct (SPEC R3.1 "Intermediates reproducible across two
-    # executions", in T3-48's Breaks; R1.1 expected values sealed): a
-    # module that returns a different value when asked again for the same
-    # item and context is caught before any request. Here every repeated
-    # call (same item, same context) adds 1 to the final value. Today the
-    # run computes expected values per execution, after the seal, and
-    # scores the two conditions against different values.
+    # SPEC R3.1 "Intermediates reproducible across two executions", in
+    # T3-48's Breaks: a module that returns a different value when asked
+    # again for the same item and context is refused before any request,
+    # with a reason naming the ground truth or the reproducibility. Here
+    # every repeated call (same item, same context) adds 1 to the final
+    # value. Today the run goes ahead.
     path = fixture_dir / 'ground_truth_example.py'
     path.write_text(path.read_text('utf-8') + (
         '\n\n_seen = {}\n_compute = compute\n\n\n'
@@ -267,6 +356,10 @@ def test_run_ground_truth_values_changing_between_computations_refused(
     result = runner(fixture_dir)
     refused = result.refusal is not None or result.code not in (0, None)
     assert refused, 'the run completed: exit %r' % (result.code,)
+    why = str(result.refusal or '') + result.console[-2000:]
+    assert result.requests == [], f'{len(result.requests)} requests sent'
+    assert re.search(r'ground.truth|reproduc|expected', why, re.I), \
+        why[-500:]
 
 
 # -- T3-72: what is sealed is not what is executed -------------------------
