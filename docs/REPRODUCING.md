@@ -107,8 +107,15 @@ python tools/verify_run_seal.py output/run_e_mini
 python tools/verify_run_seal.py output/run_f_sol
 ```
 
-**Expected mismatch.** Each run reports `10 passed, 1 failed`: only
-`ground_truth_hash` fails, and only because of line endings. The repository
+**Expected mismatch.** At `4cfe283` each run reports `10 passed, 1 failed`;
+on the current tree, `7 passed, 1 failed, 3 warnings`. Since October 2026 the
+script checks a record without a `seal_format` field, as the published runs'
+are, under the rules it was made with (raw bytes, a `seal_hash` without the
+timestamp), and says so in a warning; it also checks every transcript line
+and the time of the seal. It cannot recompute those records'
+`runner_source_hash` (it covered every `.py` file of the clone), and the runs
+recorded `runner_modified: true`: those are the other two warnings. Either
+way only `ground_truth_hash` fails, and only because of line endings. The repository
 checks `.py` files out with LF; the seals hashed the ground-truth module with
 CRLF (FINDINGS_ERRATA N2). The `NOTE` the script prints after this mismatch
 names the August corrections; for the September seals the cause is line
@@ -135,8 +142,9 @@ git checkout -- example/ground_truth_example.py
 ```
 
 With CRLF the module hashes to `033ce73d…`, the sealed value, and each run
-reports `11 passed, 0 failed` and `RESULT: PASS (11 checks)`. Both ways give
-the same results.
+reports `11 passed, 0 failed` and `RESULT: PASS (11 checks)` at `4cfe283`, and
+`8 passed, 0 failed, 3 warnings` and `RESULT: PASS (8 checks, 3 warnings)` on
+the current tree.
 
 For the August seals (`run_a_mini`, `run_b_sol`), restore the module from
 `203fef4` with CRLF; see FINDINGS_ERRATA, "Note by addition - 3 October 2026:

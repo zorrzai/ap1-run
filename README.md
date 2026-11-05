@@ -202,11 +202,10 @@ text with another version is refused. Another version needs `--ap1-text`.
 The runner still takes its version and source hash from the clone, so run it from
 a clone (an editable install), not from a wheel.
 
-One limit for now: `tools/verify_run_seal.py` checks a run only against
-`example/` and `reference/`, so a run made with other inputs fails
-verification even when its seal is sound (S3-G8-4). A fixture copy inside the
-clone no longer changes `runner_source_hash`, which covers only `src/ap1_run/`
-and `VERSION` (T3-70).
+`tools/verify_run_seal.py` takes `--fixture-dir` and `--ap1-text` as the
+runner does, so a run made with other inputs is verified against those
+(S3-G8-4). A fixture copy inside the clone does not change
+`runner_source_hash`, which covers only `src/ap1_run/` and `VERSION` (T3-70).
 
 ---
 
