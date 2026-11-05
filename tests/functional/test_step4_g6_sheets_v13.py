@@ -149,12 +149,6 @@ def test_run_transcript_records_carry_their_repeat_index(tmp_path,
     (T3-9). Today no record has one. Figure-identification records are
     left out: once scoring is a separate pass (T3-21) the transcript has
     none, and the scoring output already carries the repeat."""
-
-
-    """Every transcript record (the failed repeat's too) carries the
-    repeat it belongs to, so the outputs can join on it (T3-9).
-    Since the two passes were separated (T3-21), the transcript holds one
-    record per execution and no figure-identification records."""
     out = run_example(tmp_path, monkeypatch, items={'Q02'}, repeat_count=3,
                       responses={'Q02/*/r1': [ERROR_500],
                                  'Q02/*/r2': [Q02_CALL, Q02_RIGHT],
@@ -163,15 +157,6 @@ def test_run_transcript_records_carry_their_repeat_index(tmp_path,
             if r.get('record_type') != 'figure_identification']
     expected = [(cond, repeat) for cond in ('base', 'instruction_removed')
                 for repeat in (1, 2, 3)]
-
-
-    seen = [(r['condition'], r.get('record_type', 'engine'), r.get('repeat'))
-            for r in transcript_of(out)]
-    expected = []
-    for cond in ('base', 'instruction_removed'):
-        expected += [(cond, 'engine', 1),
-                     (cond, 'engine', 2),
-                     (cond, 'engine', 3)]
     assert seen == expected
 
 
