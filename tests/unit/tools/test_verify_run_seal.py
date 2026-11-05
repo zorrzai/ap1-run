@@ -30,9 +30,10 @@ TOOL = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
     'verify_run_seal.py')
 
 SOURCE_HASH = 'ab' * 32
-# The runner source hash of the base tree, which holds no src/ap1_run/ and
-# no VERSION: the hash of nothing.
-TREE_SOURCE_HASH = hashlib.sha256(b'').hexdigest()
+# The runner source hash of the base tree, which holds an empty
+# src/ap1_run/__init__.py and no VERSION.
+TREE_SOURCE_HASH = hashlib.sha256(
+    b'src/ap1_run/__init__.py\x00\x00').hexdigest()
 
 
 def load_tool():
@@ -67,6 +68,8 @@ def base(tmp_path, vrs, monkeypatch):
     (root / 'example' / 'questions.json').write_bytes(b'{"items": []}\n')
     (root / 'example' / 'ground_truth_example.py').write_bytes(b'X = 1\n')
     (root / 'example' / 'calculator_tool.py').write_bytes(b'Y = 1\n')
+    (root / 'src' / 'ap1_run').mkdir(parents=True)
+    (root / 'src' / 'ap1_run' / '__init__.py').write_bytes(b'')
     (root / AP1_TEXT).write_bytes(b'# AP-1 text\n')
     for name in ('config.json', 'config_mini.json'):
         (root / 'example' / name).write_text(json.dumps(
@@ -769,7 +772,7 @@ def test_verify_run_record_without_expected_values_fails(vrs, tmp_path,
 
 def test_verify_run_runner_source_hash_of_this_checkout(vrs, tmp_path, base):
     # T3-19: compared with this checkout's code, named in the failure.
-    (base / 'src' / 'ap1_run').mkdir(parents=True)
+    (base / 'src' / 'ap1_run').mkdir(parents=True, exist_ok=True)
     (base / 'src' / 'ap1_run' / 'm.py').write_text('X = 1\n')
     here = compute_runner_source_hash(str(base))
     config = resolved_config()
@@ -1553,3 +1556,15 @@ def test_verify_run_makes_no_check_against_on_disk_configs(vrs, run):
     assert failures == []
     assert [name for name in names(checks) if name.startswith('on-disk')] \
         == []
+
+
+@pytest.mark.finding('T3-70')
+def test_verify_run_checkout_without_the_package_is_a_named_failure(
+        vrs, tmp_path, base):
+    import shutil
+    shutil.rmtree(base / 'src')
+    config = resolved_config()
+    run_dir = write_run(tmp_path / 'run', make_record(base, config), config)
+    _, failures = vrs.verify_run(str(run_dir))
+    assert [f for f, _ in failures] == ['runner_source_hash']
+    assert 'no package files' in failures[0][1]

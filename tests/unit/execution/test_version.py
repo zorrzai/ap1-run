@@ -245,11 +245,6 @@ def expected_hash(files):
 PKG = 'src/ap1_run/'
 
 
-def test_source_hash_empty_tree_is_sha256_of_nothing(tmp_path):
-    assert compute_runner_source_hash(str(tmp_path)) == \
-        hashlib.sha256(b'').hexdigest()
-
-
 def test_source_hash_format_paths_and_contents_sorted(tmp_path):
     files = {PKG + 'b.py': b'two\n', PKG + 'a.py': b'one\n',
              PKG + 'pkg/sub/c.py': b'\xffraw', 'VERSION': b'v1 abc\n'}
@@ -471,3 +466,14 @@ def test_recorded_packages_are_the_runner_and_its_dependencies():
     project = pyproject['project']
     assert version.RECORDED_PACKAGES == (
         project['name'], *project['dependencies'])
+
+
+@pytest.mark.finding('T3-70')
+@pytest.mark.req('R1.1')
+def test_runner_source_hash_of_a_tree_without_the_package_refused(tmp_path):
+    # A base directory with no src/ap1_run/ (a non-editable install)
+    # would seal the hash of nothing, the same for every runner build.
+    from ap1_run.execution.seal import SealError
+    (tmp_path / 'VERSION').write_text('v1\n')
+    with pytest.raises(SealError, match='no package files'):
+        compute_runner_source_hash(str(tmp_path))

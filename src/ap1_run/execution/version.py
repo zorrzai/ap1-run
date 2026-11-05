@@ -130,8 +130,18 @@ def compute_runner_source_hash(base_dir):
     tools/ and anything else in the clone are not hashed: they do not run
     during a measurement (T3-70).
     """
+    files = _source_files(base_dir)
+    if not any(f.startswith(SOURCE_PACKAGE.replace(os.sep, '/') + '/')
+               for f in files):
+        # A base directory without the package (a non-editable install)
+        # would seal the hash of nothing, the same for every build.
+        from ap1_run.execution.seal import SealError
+        raise SealError(
+            f'runner source: no package files under '
+            f'{os.path.join(base_dir, SOURCE_PACKAGE)}; the run cannot hash '
+            f'the code it executes (install with pip install -e)')
     h = hashlib.sha256()
-    for rel_path in _source_files(base_dir):
+    for rel_path in files:
         # Hash the relative path (so the hash is location-independent)
         h.update(rel_path.encode('utf-8'))
         h.update(b'\x00')

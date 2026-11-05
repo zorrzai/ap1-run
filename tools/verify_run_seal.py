@@ -56,7 +56,8 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'src'))
 
 from ap1_run.execution.ap1_texts import ap1_text_entry  # noqa: E402
 from ap1_run.execution.seal import (  # noqa: E402
-    SEAL_FORMAT, SEALED_FIELDS, expected_values_hash, text_file_hash,
+    SEAL_FORMAT, SEALED_FIELDS, SealError, expected_values_hash,
+    text_file_hash,
 )
 from ap1_run.execution.sealed_inputs import (  # noqa: E402
     INPUT_FILES, compute_expected_values, load_ground_truth, parse_json_input,
@@ -405,8 +406,14 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
         if all(os.path.exists(p) for p in paths.values()):
             _check_expected_values(seal_record, paths, checks, failures)
         sealed_source = seal_record.get('runner_source_hash', '')
-        source_here = compute_runner_source_hash(BASE_DIR)
-        if sealed_source == source_here:
+        try:
+            source_here = compute_runner_source_hash(BASE_DIR)
+        except SealError as e:
+            source_here = None
+            failures.append(('runner_source_hash', str(e)))
+        if source_here is None:
+            pass
+        elif sealed_source == source_here:
             checks.append(('runner_source_hash', 'MATCH'))
         else:
             failures.append(('runner_source_hash', 'sealed=%s, this '
