@@ -21,7 +21,10 @@ statement that the figures are not comparable.
 """
 
 import math
-from decimal import ROUND_CEILING, Decimal, localcontext
+from decimal import (
+    MAX_EMAX, MIN_EMIN, ROUND_CEILING, ROUND_HALF_EVEN, Context, Decimal,
+    localcontext,
+)
 
 from ap1_run.execution.evidence import EV_0, EV_1, EV_2, EV_3
 from ap1_run.foundation.numeric import DECIMAL_CONTEXT
@@ -207,8 +210,10 @@ def clopper_pearson_upper(failures, n, alpha=None):
         return _exact_upper_bound(n, alpha)
     if failures >= n:
         return Decimal(1)
-    with localcontext() as ctx:
-        ctx.prec = 60
+    # An explicit context, not the caller's: precision 60 and the widest
+    # exponent range, so (1 - p)^n never underflows to 0 at large n
+    with localcontext(Context(prec=60, rounding=ROUND_HALF_EVEN,
+                              Emin=MIN_EMIN, Emax=MAX_EMAX)):
         lo, hi = Decimal(0), Decimal(1)
         for _ in range(135):
             mid = (lo + hi) / 2
@@ -220,7 +225,18 @@ def clopper_pearson_upper(failures, n, alpha=None):
 
 
 def _binomial_cdf(k, n, p):
-    """P(X <= k) for X ~ Binomial(n, p), 0 < p < 1, in Decimal."""
+    """P(X <= k) for X ~ Binomial(n, p), 0 < p < 1, in Decimal, summed
+    over the shorter tail: for k above n/2, 1 - P(Y <= n - k - 1) with
+    Y ~ Binomial(n, 1 - p)."""
+    if k >= n:
+        return Decimal(1)
+    if 2 * k > n:
+        return 1 - _binomial_lower_tail(n - k - 1, n, 1 - p)
+    return _binomial_lower_tail(k, n, p)
+
+
+def _binomial_lower_tail(k, n, p):
+    """P(X <= k) for X ~ Binomial(n, p), summed term by term."""
     q = 1 - p
     term = q ** n
     total = term

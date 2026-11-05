@@ -594,3 +594,33 @@ def test_clopper_pearson_upper_does_not_change_the_context():
     ('-0.05', '0.1', '-0.0')])
 def test_round_up_is_toward_plus_infinity(value, quantum, shown):
     assert str(round_up(D(value), D(quantum))) == shown
+
+
+# -- the bound at large n, all but one failing (D7.5) -----------------------
+
+@pytest.mark.finding('T3-61')
+@pytest.mark.req('AP-1 D7.5')
+@pytest.mark.parametrize('n', [10, 500, 10000, 300000])
+def test_clopper_pearson_upper_all_but_one_failing_is_the_closed_form(n):
+    # P(X <= n-1; n, p) = 1 - p^n, so the bound for n-1 failures is
+    # 0.95^(1/n) exactly. At n = 300000 the binomial terms underflow an
+    # ordinary exponent range; the bound must not fall below the closed
+    # form, and must be within the bisection's bracket of it.
+    from decimal import Context, localcontext
+    bound = clopper_pearson_upper(n - 1, n)
+    with localcontext(Context(prec=80)):
+        closed = Decimal('0.95') ** (Decimal(1) / Decimal(n))
+        assert closed <= bound < closed + Decimal('1e-38'), (bound, closed)
+
+
+@pytest.mark.finding('T3-61')
+@pytest.mark.req('R0.4.1')
+def test_clopper_pearson_upper_does_not_depend_on_the_callers_context():
+    from decimal import Context, localcontext
+    # 400 of 2000: the shorter tail's first term, about 0.78^2000 (1e-216),
+    # is below even the subnormals of an exponent range of -99
+    expected = [clopper_pearson_upper(2, 10), clopper_pearson_upper(400, 2000)]
+    with localcontext(Context(prec=10, Emin=-99, Emax=99)):
+        assert [clopper_pearson_upper(2, 10),
+                clopper_pearson_upper(400, 2000)] == expected
+        assert clopper_pearson_upper(29999, 30000) > Decimal('0.99999')
