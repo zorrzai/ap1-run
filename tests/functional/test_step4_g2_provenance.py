@@ -187,6 +187,34 @@ def test_run_unreadable_calls_are_operands_unobservable(full_run):
     }
 
 
+def scripted_calculator_calls(responses, *, repeat_count=1):
+    """The calculator calls the mock will script, counted from the script
+    itself (the clean scenario overridden by `responses`), with the
+    mock's key precedence: item, condition, repeat, each before '*'."""
+    script = json.loads(CLEAN.read_text('utf-8'))['responses']
+    script.update(responses)
+    items = json.loads((EXAMPLE / 'questions.json').read_text('utf-8'))
+    total = 0
+    for item in items['items']:
+        for condition in ('base', 'instruction_removed'):
+            for repeat in range(1, repeat_count + 1):
+                key = next(k for k in (
+                    f'{i}/{c}/{r}' for i in (item['id'], '*')
+                    for c in (condition, '*') for r in (f'r{repeat}', '*'))
+                    if k in script)
+                for turn in script[key]:
+                    if not isinstance(turn, dict):
+                        continue
+                    calls = ([turn['call']] if 'call' in turn
+                             else turn.get('calls', []))
+                    total += sum(1 for c in calls if not isinstance(c, dict)
+                                 or c.get('name') == 'calculator')
+    return total
+
+
+@pytest.mark.proposal(
+    'T3-16: the proportion is OPERANDS-UNOBSERVABLE over all calculator '
+    'invocations; AP-1 says only "its proportion reported"')
 @pytest.mark.finding('T3-16')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-16: the report has no OPERANDS-UNOBSERVABLE '
@@ -195,16 +223,15 @@ def test_run_report_states_operands_unobservable_count(full_run):
     # AP-1 v1.3 D7.2(a): the unobservable case is declared and "its
     # proportion reported". Three unreadable calls per condition, one
     # repeat: 6 OPERANDS-UNOBSERVABLE invocations beside the grounded ones.
-    # The proportion is stated with its denominator: every calculator
-    # invocation the run made, counted from the executions' tool calls
-    # (what the model sent, not a score).
-    code, summary, report = full_run(UNREADABLE)
+    # The proportion is stated with its denominator, every calculator
+    # invocation of the run, counted from the test's own script (not from
+    # the run's output).
+    total = scripted_calculator_calls(UNREADABLE)
+    assert total > 6
+    code, _, report = full_run(UNREADABLE)
     assert code == 0
     provenance = section(report, '7b. D7.2(a)')
     assert table_count(provenance, 'OPERANDS-UNOBSERVABLE') == 6
-    total = sum(r.get('tool_calls_count') or 0
-                for r in summary['all_results']
-                if r.get('status') == 'EXECUTED')
     share = f'{100 * 6 / total:.1f}'
     assert re.search(rf'\b6\s*(/|of)\s*{total}\b|\b{share}\s*%',
                      provenance), (total, share, provenance)
