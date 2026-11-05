@@ -22,8 +22,9 @@ directory.
 A record with a seal_format field (runs since October 2026) is checked
 under the current rules: the record holds every sealed field, seal_hash
 covers the timestamp, the text inputs are hashed with LF line endings and
-no BOM, and the expected values and the runner source hash are recomputed,
-and so are the lookup collisions where the record seals them.
+no BOM, and the expected values, the runner source hash and the sealed
+lookup collisions are recomputed (a record without them fails). A legacy
+record sealed no collisions: the verifier says so, as a warning.
 A record without one (the published runs) is checked under the rules it
 was made with: raw bytes, and a seal_hash without the timestamp.
 
@@ -278,7 +279,10 @@ def _check_expected_values(seal_record, paths, checks, failures):
     else:
         failures.append(('expected_values_hash', 'sealed=%s, recomputed=%s'
                          % (sealed, computed)))
-    if 'lookup_collisions' in seal_record:
+    if 'lookup_collisions' not in seal_record:
+        failures.append(('lookup_collisions', 'not sealed: a record with '
+                         'seal_format seals the R3.1 lookup collisions'))
+    else:
         try:
             collisions = lookup_collisions(
                 lambda item_id, ctx: values[item_id], fixture, questions)
@@ -423,6 +427,9 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
         warnings.append(('seal_format', 'none: a record made before '
                          'October 2026, checked under the rules it was made '
                          'with (raw bytes, seal_hash without the timestamp)'))
+        warnings.append(('lookup_collisions', 'not sealed (legacy record): '
+                         'a runner before October 2026 did not seal the '
+                         'R3.1 lookup collisions; not verified'))
     text_hash_of = text_file_hash if current_format else file_hash
 
     # 3. Recompute config_hash from resolved config

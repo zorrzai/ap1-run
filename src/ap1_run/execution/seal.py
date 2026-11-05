@@ -36,7 +36,8 @@ SEALED_FIELDS = (
 
 # The fields a record of this format carries when the run gives them;
 # seal_hash covers them too. The live run always records the R3.1 lookup
-# collisions it found at seal (T3-75).
+# collisions it found at seal (T3-75), and every check that compares them
+# (check_collisions) refuses a record of this format without them.
 OPTIONAL_SEALED_FIELDS = ('lookup_collisions',)
 
 # The sealed text inputs, by name: the record field is '<name>_hash'.
@@ -202,12 +203,17 @@ def collisions_text(lookup_collisions):
 
 def check_collisions(record, lookup_collisions):
     """[mismatch] if the record seals lookup collisions other than
-    lookup_collisions (the ones the inputs give now), else []. A record
-    without the field (sealed before it existed) is not compared."""
+    lookup_collisions (the ones the inputs give now), or, being of this
+    format (seal_format), seals none; else []. Only a record without
+    seal_format (the published runs made before October 2026, which the
+    verifier accepts by seal_hash) has no collisions to compare."""
+    current = collisions_text(lookup_collisions)
     if 'lookup_collisions' not in record:
-        return []
-    sealed, current = (record['lookup_collisions'],
-                       collisions_text(lookup_collisions))
+        if 'seal_format' not in record:
+            return []
+        return [f'lookup_collisions: not sealed (a record with seal_format '
+                f'seals the R3.1 lookup collisions), current={current!r}']
+    sealed = record['lookup_collisions']
     if sealed == current:
         return []
     return [f'lookup_collisions: sealed={sealed!r}, current={current!r}']

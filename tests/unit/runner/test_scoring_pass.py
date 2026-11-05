@@ -484,6 +484,15 @@ def test_score_run_refuses_collisions_other_than_the_sealed_ones(p):
     assert p.named('score') == [] and p.named('read') == []
 
 
+@pytest.mark.finding('T3-75')
+@pytest.mark.req('R3.1')
+def test_score_run_refuses_a_current_record_without_sealed_collisions(p):
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED')
+    with pytest.raises(SealError, match='lookup_collisions: not sealed'):
+        p.run(seal_record=dict(SEAL, seal_format=2))
+    assert p.named('score') == []
+
+
 # -- The transcript against the run's plan (SPEC R0.2, R0.3) ---------------
 
 def write_round(path, item_id, condition, repeat, number, seal_hash='SEAL',

@@ -1298,10 +1298,24 @@ def test_verify_seal_compares_the_sealed_lookup_collisions(files, frozen):
         verify(record, files, lookup_collisions=[])
     assert ("  lookup_collisions: sealed='Q2 (b.fee)', current='none'"
             in str(exc.value))
-    # A record that seals none (written before the field existed) has
-    # nothing to compare.
-    assert verify(make_seal(files), files,
-                  lookup_collisions=[('Q2', 'b.fee')])
+    # A record of this format must seal them: one without the field
+    # (removed, seal_hash recomputed) is refused, not passed unchecked.
+    with pytest.raises(SealError) as exc:
+        verify(make_seal(files), files, lookup_collisions=[('Q2', 'b.fee')])
+    assert '  lookup_collisions: not sealed' in str(exc.value)
+
+
+@pytest.mark.finding('T3-75')
+@pytest.mark.req('R3.1', 'R1.1')
+def test_check_collisions_exempts_only_records_without_seal_format():
+    # The published runs made before October 2026 have no seal_format and
+    # sealed no collisions: nothing to compare. A seal_format record
+    # without the field is a mismatch.
+    from ap1_run.execution.seal import check_collisions
+    assert check_collisions({'seal_hash': 'h'}, [('Q1', 'a.b')]) == []
+    assert check_collisions({'seal_format': 2}, []) == [
+        'lookup_collisions: not sealed (a record with seal_format seals the '
+        'R3.1 lookup collisions), current=\'none\'']
 
 
 def test_seal_without_lookup_collisions_has_no_field(files, frozen):

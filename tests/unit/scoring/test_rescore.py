@@ -19,8 +19,9 @@ import pytest
 
 from ap1_run.execution.ap1_texts import resolve_ap1_text
 from ap1_run.execution.seal import SealError, seal
+from ap1_run.execution.context import lookup_collisions
 from ap1_run.execution.sealed_inputs import (
-    compute_expected_values, read_inputs,
+    compute_expected_values, read_inputs, sealed_compute,
 )
 from ap1_run.foundation.config import load_config
 from ap1_run.scoring import rescore
@@ -64,7 +65,11 @@ class Run:
             calculator_path=inputs.paths['calculator'],
             ap1_text_path=resolve_ap1_text(config, None, REPO),
             runner_source_hash='feed' * 16,
-            expected_values=self.expected_values, loaded=inputs.data)
+            expected_values=self.expected_values, loaded=inputs.data,
+            # as the run seals them (R3.1, T3-75)
+            lookup_collisions=lookup_collisions(
+                sealed_compute(self.expected_values), inputs.fixture,
+                inputs.questions))
         write_pre_registration(str(self.run_dir),
                                seal_record=self.seal_record, config=config)
         self.scored = []
@@ -350,8 +355,6 @@ def test_rescore_ground_truth_giving_other_values_refused(r):
 def test_rescore_checks_the_sealed_lookup_collisions(r):
     # The collisions scoring uses are the sealed ones: a record that
     # seals others than the inputs give is refused, naming the field.
-    from ap1_run.execution.context import lookup_collisions
-    from ap1_run.execution.sealed_inputs import sealed_compute
     inputs = read_inputs(str(r.fx))
     found = lookup_collisions(sealed_compute(r.expected_values),
                               inputs.fixture, inputs.questions)
