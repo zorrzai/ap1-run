@@ -256,20 +256,29 @@ def test_summarise_accuracy_reports_auto_and_adjudicated_n_separately():
     assert summarise_accuracy(results) == {
         'auto_scored_n': 3, 'adjudicated_n': 2, 'unmeasurable_n': 1,
         'correct': 1, 'incorrect': 1, 'no_figure': 1,
-        'accuracy_rate': D('0.5')}
+        'accuracy_rate': D(1) / D(3)}
 
 
-def test_summarise_accuracy_rate_excludes_no_figure():
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.1')
+def test_summarise_accuracy_no_figure_is_not_correct():
+    # AP-1 D1 tests whether the system "produce[s] the correct figure": an
+    # answer with no figure did not, so it is in the denominator, as in
+    # the per-category rate. Otherwise the rate is 1 whenever nothing
+    # awaits adjudication, beside a category row of 5/10.
     results = [result(CORRECT, True), result(CORRECT, True),
                result(INCORRECT, True), result(NO_FIGURE, True)]
-    s = summarise_accuracy(results)
-    assert s['accuracy_rate'] == D(2) / D(3)
+    assert summarise_accuracy(results)['accuracy_rate'] == D('0.5')
+    half = [result(CORRECT, True)] * 5 + [result(NO_FIGURE, True)] * 5
+    assert summarise_accuracy(half)['accuracy_rate'] == D('0.5')
 
 
-def test_summarise_accuracy_only_no_figure_has_no_rate():
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.1')
+def test_summarise_accuracy_only_no_figure_rate_is_zero():
     s = summarise_accuracy([result(NO_FIGURE, True)])
     assert s['auto_scored_n'] == 1
-    assert s['accuracy_rate'] is None
+    assert s['accuracy_rate'] == D(0)
 
 
 def test_summarise_accuracy_all_incorrect_rate_is_zero():

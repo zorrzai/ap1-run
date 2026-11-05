@@ -123,7 +123,12 @@ def summarise_accuracy(results):
             correct: int (auto-scored only)
             incorrect: int (auto-scored only)
             no_figure: int (auto-scored only)
-            accuracy_rate: Decimal or None (correct / auto-scored with figures)
+            accuracy_rate: Decimal or None (correct / (correct +
+                incorrect + no_figure))
+
+    An auto-scored answer with no figure is not correct: AP-1 D1 asks
+    whether the system produces the correct figure, so it is in the
+    denominator, as in the per-category rate (T3-3).
     """
     auto_scored = [r for r in results if r['auto_scored']]
     adjudicated = [r for r in results if not r['auto_scored']
@@ -134,10 +139,10 @@ def summarise_accuracy(results):
     incorrect = sum(1 for r in auto_scored if r['outcome'] == INCORRECT)
     no_figure = sum(1 for r in auto_scored if r['outcome'] == NO_FIGURE)
 
-    scored_with_figures = correct + incorrect
+    answered = correct + incorrect + no_figure
     accuracy_rate = None
-    if scored_with_figures > 0:
-        accuracy_rate = Decimal(correct) / Decimal(scored_with_figures)
+    if answered > 0:
+        accuracy_rate = Decimal(correct) / Decimal(answered)
 
     return {
         'auto_scored_n': len(auto_scored),
