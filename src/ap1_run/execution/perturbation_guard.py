@@ -99,10 +99,13 @@ def check_single_variable_perturbation(base_config, removed_config):
 
     # Every other request field (the model, the endpoint, ...) MUST NOT
     # differ either: AP-1 D7.8 holds all other request content constant.
+    # Such a field goes into the request as given, so present as null and
+    # absent are different requests.
     for field in sorted((set(base_config) | set(removed_config))
                         - _NAMED_FIELDS):
-        if _canonical(base_config.get(field)) != \
-                _canonical(removed_config.get(field)):
+        if ((field in base_config) != (field in removed_config)
+                or _canonical(base_config.get(field))
+                != _canonical(removed_config.get(field))):
             diffs.append({
                 'field': field,
                 'issue': f'{field} differs between conditions',

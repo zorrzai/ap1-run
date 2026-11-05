@@ -256,3 +256,14 @@ def test_guard_other_fields_equal_accepted():
     base = {**BASE, 'model': 'a', 'extra': {'k': [1, 2]}}
     other = {**removed(), 'model': 'a', 'extra': {'k': [1, 2]}}
     assert check_single_variable_perturbation(base, other) == []
+
+
+@pytest.mark.finding('S3-G7-2')
+@pytest.mark.req('R1.2', 'AP-1 D7.8')
+def test_guard_field_present_as_null_differs_from_field_absent():
+    # A request body with "seed": null is not the same request as one
+    # without a seed: the endpoint may treat them differently.
+    base = {**BASE, 'seed': None}
+    with pytest.raises(PerturbationRefusal) as e:
+        check_single_variable_perturbation(base, removed())
+    assert str(e.value).endswith('  - seed: seed differs between conditions')
