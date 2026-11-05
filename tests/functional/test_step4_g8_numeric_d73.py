@@ -237,10 +237,10 @@ def test_run_european_separators_parse_the_released_figure(
     # governs it. Today: 430 and 75, no match, coverage UNOBSERVABLE.
     out = run_example(tmp_path, monkeypatch, {
         'Q04/*/*': [{'call': '1437.00 - 1006.25'},
-                    # The answer comes last: a dollar figure after it
-                    # would compete with it (T3-3).
-                    {'say': 'Zinsen 1.006,25 $; der Tilgungsanteil der '
-                            'ersten Rate betraegt 430,75 $.'}]},
+                    # The answer alone: another figure beside it would
+                    # compete with it (T3-3).
+                    {'say': 'Der Tilgungsanteil der ersten Rate betraegt '
+                            '430,75 $.'}]},
         decimal_separator=',', grouping_separator='.')
     q04 = rows(out, 'Q04')
     assert {c: (q04[c]['figure_outcome'], q04[c]['released_figure'],

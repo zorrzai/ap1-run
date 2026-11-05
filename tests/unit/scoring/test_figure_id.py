@@ -385,6 +385,22 @@ def test_identify_figure_locale_ambiguous_token_routes_to_adjudication():
 
 # -- T3-3, S3-G4-2 ---------------------------------------------------------
 
+# The competing-figure rule changes SPEC R2.0 step 4's AUTO-MATCH (one
+# matching token); the maintainer has not decided it.
+# The rest of T3-3: a wrong answer stated before the expected figure. An
+# earlier amount is the working far more often than a rival answer: as a
+# competing figure it would route 202 (run E) and 512 (run F) more
+# correct executions to adjudication. Not decided.
+EARLIER_WRONG_FIGURE = pytest.mark.xfail(
+    strict=True, raises=AssertionError,
+    reason='T3-3: a wrong answer stated before the expected figure is still '
+           'AUTO-MATCH; treating earlier amounts as competing is not decided')
+
+T3_3_RULE = pytest.mark.proposal(
+    'T3-3: R2.0 step 4 changed: one matching token followed by any other '
+    'figure, whatever its currency symbol, is routed to adjudication, not '
+    'AUTO-MATCH; needs a SPEC change the maintainer has not decided')
+
 @pytest.mark.finding('T3-3')
 @pytest.mark.req('R2.0')
 def test_identify_figure_match_followed_by_a_figure_is_ambiguous():
@@ -393,8 +409,8 @@ def test_identify_figure_match_followed_by_a_figure_is_ambiguous():
     assert r == {
         'outcome': ADJUDICATE_AMBIGUOUS, 'released_figure': None,
         'reason': "the one matching token '15.20' is followed by 1 other "
-                  "figure(s) of the same kind, first '182.40'; which figure "
-                  "is the released answer is undetermined",
+                  "figure(s), first '182.40'; which figure is the released "
+                  "answer is undetermined",
         'extracted_tokens': toks, 'matched_indices': [0]}
     assert [t.literal for t in toks] == ['15.20', '182.40']
 
@@ -403,12 +419,10 @@ def test_identify_figure_match_followed_by_a_figure_is_ambiguous():
 @pytest.mark.req('R2.0')
 def test_identify_figure_only_figures_after_the_match_compete():
     r = identify(response('15.20, then 1 and 2.'))
-    assert "followed by 2 other figure(s) of the same kind, first '1';" \
-        in r['reason']
+    assert "followed by 2 other figure(s), first '1';" in r['reason']
     r = identify(response('Of 15200: 15.20, or 182.40 a year.'))
     assert (r['outcome'], r['matched_indices']) == (ADJUDICATE_AMBIGUOUS, [1])
-    assert "followed by 1 other figure(s) of the same kind, first " \
-        "'182.40'" in r['reason']
+    assert "followed by 1 other figure(s), first '182.40'" in r['reason']
 
 
 @pytest.mark.finding('T3-3')
@@ -429,23 +443,51 @@ def test_identify_figure_trailing_percentage_does_not_compete():
     assert (r['outcome'], r['released_figure']) == (AUTO_MATCH, D('15.20'))
 
 
+@T3_3_RULE
 @pytest.mark.finding('T3-3')
 @pytest.mark.req('R2.0', 'R0.4.2')
-def test_identify_figure_currency_match_competes_only_with_currency():
-    # Like with like: after a match in dollars, a bare count (12 months)
-    # is not a competing answer; another dollar figure is.
-    plain = identify(response('It is $15.20, over 12 months.'),
-                     currency_symbols=['$'])
-    assert (plain['outcome'], plain['released_figure']) == \
-        (AUTO_MATCH, D('15.20'))
-    money = identify(response('It is $15.20, or $182.40 a year.'),
-                     currency_symbols=['$'])
-    assert money['outcome'] == ADJUDICATE_AMBIGUOUS
-    assert "first '$182.40'" in money['reason']
-    # A match without a currency symbol competes with any later figure.
-    bare = identify(response('It is 15.20, over 12 months.'),
-                    currency_symbols=['$'])
-    assert bare['outcome'] == ADJUDICATE_AMBIGUOUS
+def test_identify_figure_any_later_figure_competes_whatever_its_symbol():
+    # After the match, every other figure competes, with or without a
+    # currency symbol: a bare 182.40 after $15.20 can be the answer.
+    for text in ('It is $15.20, over 12 months.',
+                 'It is $15.20, or $182.40 a year.',
+                 'It is 15.20, over 12 months.'):
+        r = identify(response(text), currency_symbols=['$'])
+        assert r['outcome'] == ADJUDICATE_AMBIGUOUS, text
+
+
+@T3_3_RULE
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.0')
+@pytest.mark.parametrize('text', [
+    pytest.param(text, marks=EARLIER_WRONG_FIGURE) for text in (
+        'The answer is $182.40, not $15.20.',
+        'Answer: $182.40. (Earlier I wrongly said $15.20.)',
+        'Total: $182.40; monthly: $15.20')] + [
+    'Rate 1.2% on 15200 gives $15.20 a year? No: answer is 182.40.',
+    '$15.20? No. The monthly interest is 182.40 dollars.',
+    'Initially $15.20. Correction: the answer is 182.40 dollars.',
+])
+def test_identify_figure_wrong_answer_beside_the_match_is_not_auto_matched(
+        text):
+    # T3-3: a response whose answer may be another figure is never
+    # AUTO-MATCH on the expected one, whichever comes first and whichever
+    # has a currency symbol. Routed to adjudication.
+    r = identify(response(text), currency_symbols=['$'])
+    assert (r['outcome'], r['released_figure']) == (
+        ADJUDICATE_AMBIGUOUS, None), r['reason']
+
+
+@T3_3_RULE
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.0')
+def test_identify_figure_earlier_figures_are_the_working():
+    # Figures before the match, amounts included, are read as the working.
+    for text in ('15200 * 1.2% / 12 = $15.20',
+                 'The interest is $1006.25, so the principal is $15.20.'):
+        r = identify(response(text), currency_symbols=['$'])
+        assert (r['outcome'], r['released_figure']) == (
+            AUTO_MATCH, D('15.20')), text
 
 
 @pytest.mark.finding('S3-G4-2')

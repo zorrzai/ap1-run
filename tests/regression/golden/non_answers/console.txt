@@ -130,7 +130,7 @@ result, by us or by anyone, in any document.
   Per item (base condition, first repeat):
     Q02: ADJUDICATE-DECLINE — decline marker matched: 'I cannot'
     Q03: ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING — 2 numeric tokens found, none matching expected
-    Q04: ADJUDICATE-AMBIGUOUS — the one matching token '$430.75' is followed by 1 other figure(s) of the same kind, first '$1,006.25'; which figure is the released answer is undetermined
+    Q04: ADJUDICATE-AMBIGUOUS — the one matching token '$430.75' is followed by 1 other figure(s), first '$1,006.25'; which figure is the released answer is undetermined
     Q06: AUTO-NO-FIGURE — no numeric tokens found in response
     Q07: ADJUDICATE-AMBIGUOUS — 2 tokens match expected value — ambiguous
     Q08: AUTO-MATCH — exactly one token matches: '$287069.25'

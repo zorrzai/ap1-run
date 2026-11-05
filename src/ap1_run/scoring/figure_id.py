@@ -187,19 +187,19 @@ def identify_figure(response, *, expected_value, delivered_context,
 
     if len(matched) == 1:
         match = tokens[matched[0]]
-        competing = [t for t in tokens[matched[0] + 1:]
-                     if not t.percent and (t.currency or not match.currency)]
+        # A competing figure (T3-3): any other figure after the match,
+        # whatever its currency symbol. Figures before it are the working.
+        # Percentages never compete (S3-G4-2).
+        competing = [t for t in tokens[matched[0] + 1:] if not t.percent]
         if competing:
-            # A figure of the same kind follows the one match: which
-            # figure the response releases is undetermined (T3-3)
+            # Which figure the response releases is undetermined
             return {
                 'outcome': ADJUDICATE_AMBIGUOUS,
                 'released_figure': None,
                 'reason': (f'the one matching token {match.literal!r} is '
-                           f'followed by {len(competing)} other figure(s) '
-                           f'of the same kind, first '
-                           f'{competing[0].literal!r}; which figure is the '
-                           f'released answer is undetermined'),
+                           f'followed by {len(competing)} other figure(s), '
+                           f'first {competing[0].literal!r}; which figure '
+                           f'is the released answer is undetermined'),
                 'extracted_tokens': tokens,
                 'matched_indices': matched,
             }

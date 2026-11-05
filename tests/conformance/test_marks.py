@@ -149,7 +149,15 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/scoring/test_answer_outcome.py::test_match_with_any_originated_call_is_originated[originated-then-unobservable]',
     'tests/unit/scoring/test_answer_outcome.py::test_refusal_outcome_is_provisional_and_routed[content-filter]',
     'tests/unit/scoring/test_answer_outcome.py::test_refusal_outcome_is_provisional_and_routed[refusal]',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_any_later_figure_competes_whatever_its_symbol',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_earlier_figures_are_the_working',
     'tests/unit/scoring/test_figure_id.py::test_identify_figure_matching_non_final_token_is_not_auto_matched',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_wrong_answer_beside_the_match_is_not_auto_matched[$15.20? No. The monthly interest is 182.40 dollars.]',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_wrong_answer_beside_the_match_is_not_auto_matched[Answer: $182.40. (Earlier I wrongly said $15.20.)]',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_wrong_answer_beside_the_match_is_not_auto_matched[Initially $15.20. Correction: the answer is 182.40 dollars.]',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_wrong_answer_beside_the_match_is_not_auto_matched[Rate 1.2% on 15200 gives $15.20 a year? No: answer is 182.40.]',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_wrong_answer_beside_the_match_is_not_auto_matched[The answer is $182.40, not $15.20.]',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_wrong_answer_beside_the_match_is_not_auto_matched[Total: $182.40; monthly: $15.20]',
     'tests/unit/scoring/test_invocation.py::test_format_failing_questions_two_question_failure_case',
     'tests/unit/scoring/test_invocation.py::test_measure_invocation_lists_each_failing_question_with_its_counts',
     'tests/unit/scoring/test_invocation.py::test_measure_invocation_n_counts_questions_not_repeats',
@@ -171,7 +179,7 @@ EXPECTED_PROVISIONAL_CASES = {
     'tests/unit/scoring/test_operation_correctness.py': 109,
     'tests/unit/scoring/test_release_coverage.py': 31,
 }
-MIN_STRICT_XFAIL_CASES = 46
+MIN_STRICT_XFAIL_CASES = 49
 
 
 @pytest.fixture(scope='module')
