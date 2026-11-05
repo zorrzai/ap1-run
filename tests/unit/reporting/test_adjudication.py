@@ -671,39 +671,85 @@ def test_sheets_do_not_name_the_arm():
     assert found == []
 
 
-@pytest.mark.proposal(
-    'T3-36: sheets in an order the arm cannot be read from (with a '
-    'separate sheet-to-arm key for joining back); the design is the '
-    "author's proposal")
-@pytest.mark.finding('T3-36')
-@pytest.mark.req('AP-1 §13.8', 'R3.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-36: sheets follow the transcript order, so '
-                          'the first sheet of each item is the base arm')
-def test_sheets_order_does_not_give_away_the_arm():
-    # AP-1 v1.3 §13.8, blind to arm identity: removing the arm's name is
-    # not enough if the order shows it. Six items, each run base first
-    # (as every run does); each response carries a marker the sheet shows
-    # verbatim, so the test can read the arm. The sequence of arms over
-    # the scorer-1 sheets must not be the transcript's strict
-    # alternation (nor all of one arm, then the other). Today it is.
+T3_36_DESIGN = (
+    "T3-36: generate_sheets(..., order_seed=<text>) orders the sheets by a "
+    "seeded shuffle (the seal hash in a run), and "
+    "adjudication.sheet_key(<same arguments>) returns the private "
+    "{sheet number: (item_id, condition, repeat)} key for joining back; "
+    "the API and the design are the author's proposal")
+NEW_API = (TypeError, AttributeError, AssertionError)
+
+
+def _six_items_base_first():
+    """Six items, each run base first (as every run is); each response
+    carries a marker the sheet shows verbatim, so a test can read the arm
+    of a sheet without the sheet naming it."""
     items = [{'id': f'Q0{i}', 'category': 'interest',
               'text': f'Question {i}?', 'source_accounts': ['savings']}
              for i in range(1, 7)]
     records = [record(item_id=q['id'], condition=arm, arm_id=arm,
                       response_received=f'ARM-{arm.upper()}-{q["id"]}')
                for q in items for arm in ('base', 'instruction_removed')]
-    text = sheets_for(records, qs=questions(*items))
-    scorer1 = [re.search(r'ARM-(BASE|INSTRUCTION_REMOVED)-Q0\d', sheet)
-               .group(1) for sheet in sheets_list(text)
-               if re.search(r'Scorer 1\b', sheet.split('\n', 1)[0])]
-    assert len(scorer1) == 12, scorer1
-    pair = ['BASE', 'INSTRUCTION_REMOVED']
-    grouped = sorted(scorer1)
-    assert scorer1 not in (pair * 6, pair[::-1] * 6, grouped,
-                           grouped[::-1]), scorer1
-    # Not tested here: the separate sheet-to-arm key, whose form is still
-    # to be decided.
+    return items, records
+
+
+def _scorer1_arms(text):
+    return [re.search(r'ARM-(BASE|INSTRUCTION_REMOVED)-Q0\d', sheet)
+            .group(1) for sheet in sheets_list(text)
+            if re.search(r'Scorer 1\b', sheet.split('\n', 1)[0])]
+
+
+@pytest.mark.proposal(T3_36_DESIGN)
+@pytest.mark.finding('T3-36')
+@pytest.mark.req('AP-1 §13.8', 'R3.2')
+@pytest.mark.xfail(strict=True, raises=NEW_API,
+                   reason='T3-36: sheets follow the transcript order; there '
+                          'is no order_seed (new API)')
+def test_sheets_order_is_seeded_and_does_not_follow_the_arm():
+    # AP-1 v1.3 §13.8, blind to arm identity: removing the arm's name is
+    # not enough if the order shows it. The order is a function of a seed
+    # (the same seed gives the same sheets, so they can be reproduced),
+    # and across seeds the arm at each scorer-1 position is not
+    # predictable: over 60 seeds, every position holds the base arm
+    # between 20 % and 80 % of the time. A fixed pattern (the transcript
+    # order, BBII..., grouping by arm) fails; a seeded shuffle passes.
+    # Seeds are fixed, so the test is deterministic.
+    items, records = _six_items_base_first()
+    qs = questions(*items)
+    first = sheets_list(sheets_for(records, qs=qs, order_seed='seed-0'))
+    assert first == sheets_list(sheets_for(records, qs=qs,
+                                           order_seed='seed-0'))
+    sequences = [_scorer1_arms(sheets_for(records, qs=qs,
+                                          order_seed=f'seed-{n}'))
+                 for n in range(60)]
+    assert all(len(seq) == 12 for seq in sequences)
+    base_share = [sum(seq[pos] == 'BASE' for seq in sequences) / 60
+                  for pos in range(12)]
+    assert all(0.2 <= share <= 0.8 for share in base_share), base_share
+
+
+@pytest.mark.proposal(T3_36_DESIGN)
+@pytest.mark.finding('T3-36')
+@pytest.mark.req('AP-1 §13.8', 'R3.2')
+@pytest.mark.xfail(strict=True, raises=NEW_API,
+                   reason='T3-36: no sheet-to-arm key (new API: '
+                          'adjudication.sheet_key)')
+def test_sheet_key_joins_every_sheet_back_to_its_arm():
+    # The scorers get the sheets; the key stays with the operator. For
+    # every sheet, the key's (item, condition, repeat) is the record the
+    # sheet shows (read from the response marker), for every seed tried.
+    items, records = _six_items_base_first()
+    qs = questions(*items)
+    for seed in ('seed-0', 'seed-1', 'seed-2'):
+        text = sheets_for(records, qs=qs, order_seed=seed)
+        key = adjudication.sheet_key(records, qs, fixture(), CONFIG,
+                                     order_seed=seed)
+        sheets = sheets_list(text)
+        assert sorted(key) == list(range(1, len(sheets) + 1)), key
+        for number, sheet in enumerate(sheets, start=1):
+            item_id, condition, _ = key[number]
+            assert f'ARM-{condition.upper()}-{item_id}' in sheet, \
+                (seed, number, key[number])
 
 
 @pytest.mark.finding('T3-13')
