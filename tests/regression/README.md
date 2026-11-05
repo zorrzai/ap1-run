@@ -110,7 +110,9 @@ golden difference, and `--update` cannot write over it.
   `replay_expected.json` lists (`check_replay`). That file lists, per
   published run, the fields new in the replay and each execution's moves as
   [published value, replayed value]; a listed move that does not happen
-  fails as well. A difference is investigated before it is listed, never
+  fails as well. A field listed under `numeric_text_fields` is compared
+  with the numbers in its strings read as Decimals, for a fix that changes
+  only how a value is written (`15.20` for `15.2`). A difference is investigated before it is listed, never
   added by explanation alone, and the commit that lists it says which fix
   makes it.
 - Each runner scenario states `"seal_attempts"`, how many times the run calls
@@ -119,7 +121,7 @@ golden difference, and `--update` cannot write over it.
   stops before sealing. A refused seal must be one the contract refuses,
   with the exception the contract names. A run that seals must write
   `report.md`, `smoke_run.jsonl` and `smoke_summary.json`, unless the
-  scenario states otherwise in `"sealed_outputs"` (the two crash scenarios).
+  scenario states otherwise in `"sealed_outputs"` (`t3_38_unknown_tool`, which stops early).
 - **Command scenarios** (`"command"`) run an entry point directly and get
   none of these checks. None of them seals today; a command scenario that
   seals needs the driver's capture first.

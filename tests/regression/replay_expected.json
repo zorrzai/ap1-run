@@ -3,6 +3,7 @@
   "output/run_e_mini": {
     "new_top_level_keys": [],
     "new_execution_fields": ["answer_outcome", "answer_outcome_reason"],
+    "numeric_text_fields": ["operation_correctness", "provenance_results"],
     "moves": {
       "Q05/instruction_removed/r12": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
       "Q05/instruction_removed/r13": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
@@ -23,6 +24,7 @@
   "output/run_f_sol": {
     "new_top_level_keys": [],
     "new_execution_fields": ["answer_outcome", "answer_outcome_reason"],
+    "numeric_text_fields": ["operation_correctness", "provenance_results"],
     "moves": {
       "Q05/instruction_removed/r4": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
       "Q05/instruction_removed/r41": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
