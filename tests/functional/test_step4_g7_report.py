@@ -223,8 +223,10 @@ def test_run_report_shows_d2_classes_per_question_and_surface(run):
     # operator-declared marking". No class is declared here, so Q02's
     # surfaces are OBSERVED-ONLY (R2.2: the runner cannot establish
     # STRUCTURAL or CONFIGURED); each Q02 surface row states its 2 runs;
-    # the figures row shows both values; the section states the
-    # evidence basis.
+    # the figures row shows both values; each row states its evidence
+    # basis (beyond the class name: 'evidence: ...', observed across or
+    # over the runs, or the repeats) and that the class is not operator-
+    # declared, a marking the section names.
     s9 = section(run['report'], '9')
     assert 'No per-surface D2 data' not in s9, s9
     q02 = [line for line in s9.splitlines() if 'Q02' in line]
@@ -236,7 +238,14 @@ def test_run_report_shows_d2_classes_per_question_and_surface(run):
         assert re.search(r'(\bn\s*=\s*|\|\s*)2\b|\b2 runs\b', line), line
     assert any('2600.00' in line and '2500.00' in line for line in figures), \
         figures
-    assert re.search(r'evidence', s9, re.I), s9
+    assert re.search(r'operator[- ]declared', s9, re.I), s9
+    for line in figures + prose:
+        rest = line.replace('OBSERVED-ONLY', '')
+        assert re.search(r'evidence\s*:|observed (across|over|in)|repeat',
+                         rest, re.I), line
+        assert re.search(r'not (operator[- ])?declared|undeclared|'
+                         r'declared\s*:\s*no\b|\|\s*no\s*\|', rest,
+                         re.I), line
     d2 = next(line for line in section(run['report'], '3').split('\n')
               if line.startswith('| D2 |'))
     assert '| N/A |' not in d2, d2
