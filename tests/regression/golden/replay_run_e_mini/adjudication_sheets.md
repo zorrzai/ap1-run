@@ -66,7 +66,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -177,7 +177,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -288,7 +288,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -399,7 +399,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -509,7 +509,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -619,7 +619,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -728,7 +728,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -837,7 +837,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -950,7 +950,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1063,7 +1063,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1174,7 +1174,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1285,7 +1285,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1394,7 +1394,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1503,7 +1503,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1616,7 +1616,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1729,7 +1729,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1841,7 +1841,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1953,7 +1953,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2064,7 +2064,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2175,7 +2175,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2284,7 +2284,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2393,7 +2393,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2506,7 +2506,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2619,7 +2619,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2730,7 +2730,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2841,7 +2841,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2950,7 +2950,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3059,7 +3059,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3170,7 +3170,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3281,7 +3281,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3393,7 +3393,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3505,7 +3505,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3615,7 +3615,7 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3725,7 +3725,7 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3835,7 +3835,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3945,7 +3945,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4056,7 +4056,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4167,7 +4167,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4278,7 +4278,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4389,7 +4389,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4499,7 +4499,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4609,7 +4609,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4722,7 +4722,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4835,7 +4835,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4945,7 +4945,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5055,7 +5055,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5168,7 +5168,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5281,7 +5281,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5392,7 +5392,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5503,7 +5503,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5626,7 +5626,7 @@ The credit card balance after one month, if only the minimum payment of $25.00 i
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5742,7 +5742,7 @@ The credit card balance after one month, if only the minimum payment of $25.00 i
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6758,7 +6758,7 @@ After one month, if only the minimum payment of $25.00 is made, the credit card 
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6874,7 +6874,7 @@ After one month, if only the minimum payment of $25.00 is made, the credit card 
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6990,7 +6990,7 @@ If only the minimum payment of $25.00 is made after one month, the credit card b
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7106,7 +7106,7 @@ If only the minimum payment of $25.00 is made after one month, the credit card b
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7630,7 +7630,7 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7746,7 +7746,7 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17902,7 +17902,7 @@ The net monthly income from the savings account after deducting checking account
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18031,7 +18031,7 @@ The net monthly income from the savings account after deducting checking account
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18158,7 +18158,7 @@ So, the net monthly income is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18285,7 +18285,7 @@ So, the net monthly income is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18408,7 +18408,7 @@ The net monthly income from the savings account after deducting checking account
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18531,7 +18531,7 @@ The net monthly income from the savings account after deducting checking account
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18658,7 +18658,7 @@ So, the net monthly income is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18785,7 +18785,7 @@ So, the net monthly income is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18912,7 +18912,7 @@ So, the net monthly income is 3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19039,7 +19039,7 @@ So, the net monthly income is 3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19166,7 +19166,7 @@ So, the net monthly income is 3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19293,7 +19293,7 @@ So, the net monthly income is 3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19420,7 +19420,7 @@ The net monthly income from the savings account after deducting checking account
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19547,7 +19547,7 @@ The net monthly income from the savings account after deducting checking account
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19674,7 +19674,7 @@ So, the net monthly income is 3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19801,7 +19801,7 @@ So, the net monthly income is 3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19917,7 +19917,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20026,7 +20026,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20131,7 +20131,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20243,7 +20243,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20355,7 +20355,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20467,7 +20467,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20579,7 +20579,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20691,7 +20691,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20800,7 +20800,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20909,7 +20909,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21021,7 +21021,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21133,7 +21133,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21244,7 +21244,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21355,7 +21355,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21473,7 +21473,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21591,7 +21591,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21703,7 +21703,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21815,7 +21815,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21924,7 +21924,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22033,7 +22033,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22145,7 +22145,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22257,7 +22257,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22366,7 +22366,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22475,7 +22475,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22586,7 +22586,7 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22697,7 +22697,7 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22806,7 +22806,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22915,7 +22915,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23024,7 +23024,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23133,7 +23133,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23244,7 +23244,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23355,7 +23355,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23464,7 +23464,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23573,7 +23573,7 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23685,7 +23685,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23797,7 +23797,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23909,7 +23909,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24021,7 +24021,7 @@ The principal portion of the first mortgage payment is $430.75.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24147,7 +24147,7 @@ So the correct credit card balance after one month is $2411.00.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24273,7 +24273,7 @@ So the correct credit card balance after one month is $2411.00.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24396,7 +24396,7 @@ If only the minimum payment of $25 is made after one month, the credit card bala
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24512,7 +24512,7 @@ If only the minimum payment of $25 is made after one month, the credit card bala
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24628,7 +24628,7 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24744,7 +24744,7 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24855,7 +24855,7 @@ Note that the balance increased due to the monthly interest applied at an annual
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24966,7 +24966,7 @@ Note that the balance increased due to the monthly interest applied at an annual
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25075,7 +25075,7 @@ The credit card balance after one month, if only the minimum payment of $25 is m
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25184,7 +25184,7 @@ The credit card balance after one month, if only the minimum payment of $25 is m
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25297,7 +25297,7 @@ The key figure for your question is the balance after interest and payment, whic
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25410,7 +25410,7 @@ The key figure for your question is the balance after interest and payment, whic
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25526,7 +25526,7 @@ After one month, if only the minimum payment is made, the credit card balance wo
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25642,7 +25642,7 @@ After one month, if only the minimum payment is made, the credit card balance wo
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25758,7 +25758,7 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25874,7 +25874,7 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25983,7 +25983,7 @@ If only the minimum payment of $25.00 is made after one month, the credit card b
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26092,7 +26092,7 @@ If only the minimum payment of $25.00 is made after one month, the credit card b
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26208,7 +26208,7 @@ The credit card balance after one month, if only the minimum payment of $25.00 i
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26324,7 +26324,7 @@ The credit card balance after one month, if only the minimum payment of $25.00 i
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26438,7 +26438,7 @@ The credit card balance after one month would be $2411.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26559,7 +26559,7 @@ The credit card balance after one month would be $2411.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26677,7 +26677,7 @@ Additionally, the rewards earned on the balance for that month would be $36.00.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26788,7 +26788,7 @@ Additionally, the rewards earned on the balance for that month would be $36.00.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27142,7 +27142,7 @@ If only the minimum payment is made, the credit card balance after one month wil
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27258,7 +27258,7 @@ If only the minimum payment is made, the credit card balance after one month wil
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27374,7 +27374,7 @@ If only the minimum payment of $25 is made after one month, the credit card bala
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27490,7 +27490,7 @@ If only the minimum payment of $25 is made after one month, the credit card bala
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27599,7 +27599,7 @@ If only the minimum payment of $25 is made, the credit card balance after one mo
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27708,7 +27708,7 @@ If only the minimum payment of $25 is made, the credit card balance after one mo
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27817,7 +27817,7 @@ If only the minimum payment of $25.00 is made after one month, the credit card b
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27926,7 +27926,7 @@ If only the minimum payment of $25.00 is made after one month, the credit card b
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28039,7 +28039,7 @@ The correct balance after one month with the minimum payment considering the ann
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28152,7 +28152,7 @@ The correct balance after one month with the minimum payment considering the ann
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28493,7 +28493,7 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28602,7 +28602,7 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28713,7 +28713,7 @@ Additionally, the reward earned from the balance at a reward rate of 1.5% would 
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28824,7 +28824,7 @@ Additionally, the reward earned from the balance at a reward rate of 1.5% would 
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28929,7 +28929,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29034,7 +29034,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29137,7 +29137,7 @@ The total annual cost of maintaining the checking account is $144. This cost com
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29240,7 +29240,7 @@ The total annual cost of maintaining the checking account is $144. This cost com
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29348,7 +29348,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29456,7 +29456,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29561,7 +29561,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29666,7 +29666,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29774,7 +29774,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29882,7 +29882,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29990,7 +29990,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30098,7 +30098,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30206,7 +30206,7 @@ So, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30314,7 +30314,7 @@ So, the total annual cost of maintaining the checking account is $144.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30417,7 +30417,7 @@ The total annual cost of maintaining the checking account is $144. This amount c
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30520,7 +30520,7 @@ The total annual cost of maintaining the checking account is $144. This amount c
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30628,7 +30628,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30736,7 +30736,7 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30839,7 +30839,7 @@ The total annual cost of maintaining the checking account is $144. This includes
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30942,7 +30942,7 @@ The total annual cost of maintaining the checking account is $144. This includes
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31045,7 +31045,7 @@ The total annual cost of maintaining the checking account is $144. This cost com
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31148,7 +31148,7 @@ The total annual cost of maintaining the checking account is $144. This cost com
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31851,7 +31851,7 @@ So, the remaining mortgage balance after the first monthly payment is $287,069.2
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31973,7 +31973,7 @@ So, the remaining mortgage balance after the first monthly payment is $287,069.2
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34053,7 +34053,7 @@ The remaining mortgage balance after the first monthly payment is $287,069.25.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34173,7 +34173,7 @@ The remaining mortgage balance after the first monthly payment is $287,069.25.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -39884,7 +39884,7 @@ So, the net monthly income is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40011,7 +40011,7 @@ So, the net monthly income is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40134,7 +40134,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40257,7 +40257,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40382,7 +40382,7 @@ So, the net monthly income after fees is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40507,7 +40507,7 @@ So, the net monthly income after fees is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40632,7 +40632,7 @@ So, the net monthly income after deducting the checking account fees is 3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40757,7 +40757,7 @@ So, the net monthly income after deducting the checking account fees is 3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40882,7 +40882,7 @@ So, the net monthly income after deducting the checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41007,7 +41007,7 @@ So, the net monthly income after deducting the checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41133,7 +41133,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41259,7 +41259,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41384,7 +41384,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41509,7 +41509,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41634,7 +41634,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41759,7 +41759,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41886,7 +41886,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42013,7 +42013,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42138,7 +42138,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42263,7 +42263,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42391,7 +42391,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42519,7 +42519,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42644,7 +42644,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42769,7 +42769,7 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42896,7 +42896,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43023,7 +43023,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43148,7 +43148,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43273,7 +43273,7 @@ So, the net monthly income from the savings account after deducting checking acc
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 

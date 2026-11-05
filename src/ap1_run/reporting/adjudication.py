@@ -56,8 +56,9 @@ ADJUDICATION_REASONS = {
     'ADJUDICATE-AMBIGUOUS': 'Which figure in the response is the released '
                             'answer is ambiguous: several numeric tokens '
                             'match the expected value, or the one that '
-                            'matches is followed by another figure of the '
-                            'same kind.',
+                            'matches is followed by another figure (a '
+                            'percentage excepted), whatever its currency '
+                            'symbol.',
     'UNMEASURABLE': 'Response shape unrecognised. Cannot extract a figure '
                     'for comparison.',
     'ADJUDICATE-REFUSAL': 'The provider refused the request or its content '

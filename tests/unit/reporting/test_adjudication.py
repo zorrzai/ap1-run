@@ -481,7 +481,8 @@ def test_sheet_ambiguous_reason_given_for_same_value_written_twice():
     assert section(text, 'Reason for Adjudication') == (
         '\nWhich figure in the response is the released answer is '
         'ambiguous: several numeric tokens match the expected value, or the '
-        'one that matches is followed by another figure of the same kind.'
+        'one that matches is followed by another figure (a percentage '
+        'excepted), whatever its currency symbol.'
         '\n')
 
 
@@ -519,7 +520,8 @@ def test_adjudication_reasons_text():
                                 'released answer is ambiguous: several '
                                 'numeric tokens match the expected value, '
                                 'or the one that matches is followed by '
-                                'another figure of the same kind.',
+                                'another figure (a percentage excepted), '
+                                'whatever its currency symbol.',
         'UNMEASURABLE': 'Response shape unrecognised. Cannot extract a '
                         'figure for comparison.',
         'ADJUDICATE-REFUSAL': 'The provider refused the request or its '

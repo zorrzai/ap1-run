@@ -804,7 +804,7 @@ The principal portion is either $430.75 or $1,006.25, depending on the conventio
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -902,7 +902,7 @@ The principal portion is either $430.75 or $1,006.25, depending on the conventio
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1000,7 +1000,7 @@ The principal portion is either $430.75 or $1,006.25, depending on the conventio
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1098,7 +1098,7 @@ The principal portion is either $430.75 or $1,006.25, depending on the conventio
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1194,7 +1194,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1290,7 +1290,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1386,7 +1386,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1482,7 +1482,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2324,7 +2324,7 @@ The principal portion is either $430.75 or $1,006.25, depending on the conventio
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2422,7 +2422,7 @@ The principal portion is either $430.75 or $1,006.25, depending on the conventio
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2520,7 +2520,7 @@ The principal portion is either $430.75 or $1,006.25, depending on the conventio
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2618,7 +2618,7 @@ The principal portion is either $430.75 or $1,006.25, depending on the conventio
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2714,7 +2714,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2810,7 +2810,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2906,7 +2906,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3002,7 +3002,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 

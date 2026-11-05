@@ -58,7 +58,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -154,7 +154,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -250,7 +250,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -346,7 +346,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -442,7 +442,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -538,7 +538,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -634,7 +634,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -730,7 +730,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -826,7 +826,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -922,7 +922,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1018,7 +1018,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1114,7 +1114,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1210,7 +1210,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1306,7 +1306,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1402,7 +1402,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1498,7 +1498,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1594,7 +1594,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1690,7 +1690,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1786,7 +1786,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1882,7 +1882,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1978,7 +1978,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2074,7 +2074,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2170,7 +2170,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2266,7 +2266,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2362,7 +2362,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2458,7 +2458,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2554,7 +2554,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2650,7 +2650,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2746,7 +2746,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2842,7 +2842,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2938,7 +2938,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3034,7 +3034,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3130,7 +3130,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3226,7 +3226,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3322,7 +3322,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3418,7 +3418,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3514,7 +3514,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3610,7 +3610,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3706,7 +3706,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3802,7 +3802,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3898,7 +3898,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -3994,7 +3994,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4090,7 +4090,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4186,7 +4186,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4282,7 +4282,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4378,7 +4378,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4474,7 +4474,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4570,7 +4570,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4666,7 +4666,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4762,7 +4762,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4858,7 +4858,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -4954,7 +4954,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5050,7 +5050,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5146,7 +5146,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5242,7 +5242,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5338,7 +5338,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5434,7 +5434,7 @@ The monthly interest earned is **$15.20**, assuming a 1.2% annual interest rate 
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5530,7 +5530,7 @@ The monthly interest earned is **$15.20**, assuming a 1.2% annual interest rate 
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5626,7 +5626,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5722,7 +5722,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5818,7 +5818,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -5914,7 +5914,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6010,7 +6010,7 @@ The monthly interest earned is **$15.20**, assuming a 1.2% annual rate divided e
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6106,7 +6106,7 @@ The monthly interest earned is **$15.20**, assuming a 1.2% annual rate divided e
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6202,7 +6202,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6298,7 +6298,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6394,7 +6394,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6490,7 +6490,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6586,7 +6586,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6682,7 +6682,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6778,7 +6778,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6874,7 +6874,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -6970,7 +6970,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7066,7 +7066,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7162,7 +7162,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7258,7 +7258,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7354,7 +7354,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7450,7 +7450,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7546,7 +7546,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7642,7 +7642,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7738,7 +7738,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7834,7 +7834,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -7930,7 +7930,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8026,7 +8026,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8122,7 +8122,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8218,7 +8218,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8314,7 +8314,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8410,7 +8410,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8506,7 +8506,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8602,7 +8602,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8698,7 +8698,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8794,7 +8794,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8890,7 +8890,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -8986,7 +8986,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9090,7 +9090,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9194,7 +9194,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9296,7 +9296,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9398,7 +9398,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9504,7 +9504,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9610,7 +9610,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9714,7 +9714,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9818,7 +9818,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -9922,7 +9922,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10026,7 +10026,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10128,7 +10128,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10230,7 +10230,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10334,7 +10334,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10438,7 +10438,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10542,7 +10542,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10646,7 +10646,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10748,7 +10748,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10850,7 +10850,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -10954,7 +10954,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11058,7 +11058,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11160,7 +11160,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11262,7 +11262,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11366,7 +11366,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11470,7 +11470,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11572,7 +11572,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11674,7 +11674,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11776,7 +11776,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11878,7 +11878,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -11982,7 +11982,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -12086,7 +12086,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -12190,7 +12190,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -12294,7 +12294,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -12396,7 +12396,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -12498,7 +12498,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -12600,7 +12600,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ov
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -12702,7 +12702,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ov
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -12806,7 +12806,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -12910,7 +12910,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -13012,7 +13012,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ac
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -13114,7 +13114,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ac
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -13216,7 +13216,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR applied to the $2
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -13318,7 +13318,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR applied to the $2
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -13420,7 +13420,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -13522,7 +13522,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -13626,7 +13626,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -13730,7 +13730,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -13832,7 +13832,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -13934,7 +13934,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14036,7 +14036,7 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14138,7 +14138,7 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14240,7 +14240,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14342,7 +14342,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14444,7 +14444,7 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14546,7 +14546,7 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14648,7 +14648,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14750,7 +14750,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14852,7 +14852,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -14954,7 +14954,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15058,7 +15058,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15162,7 +15162,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15266,7 +15266,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15370,7 +15370,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15474,7 +15474,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15578,7 +15578,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15680,7 +15680,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15782,7 +15782,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15884,7 +15884,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -15986,7 +15986,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16090,7 +16090,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16194,7 +16194,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16296,7 +16296,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16398,7 +16398,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16502,7 +16502,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16606,7 +16606,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16710,7 +16710,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16814,7 +16814,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -16918,7 +16918,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17022,7 +17022,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17126,7 +17126,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17230,7 +17230,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17334,7 +17334,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17438,7 +17438,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17540,7 +17540,7 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17642,7 +17642,7 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17746,7 +17746,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17850,7 +17850,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -17954,7 +17954,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18058,7 +18058,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18160,7 +18160,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18262,7 +18262,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18364,7 +18364,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18466,7 +18466,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18570,7 +18570,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18674,7 +18674,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18776,7 +18776,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18878,7 +18878,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -18980,7 +18980,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19082,7 +19082,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19186,7 +19186,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19290,7 +19290,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19403,7 +19403,7 @@ Therefore, the principal portion of the $1,437 payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19516,7 +19516,7 @@ Therefore, the principal portion of the $1,437 payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19625,7 +19625,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19734,7 +19734,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19847,7 +19847,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -19960,7 +19960,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20073,7 +20073,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20186,7 +20186,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20288,7 +20288,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20390,7 +20390,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20496,7 +20496,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20602,7 +20602,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20704,7 +20704,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20806,7 +20806,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -20915,7 +20915,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21024,7 +21024,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21127,7 +21127,7 @@ The first month’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21230,7 +21230,7 @@ The first month’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21332,7 +21332,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21434,7 +21434,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21543,7 +21543,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21652,7 +21652,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21763,7 +21763,7 @@ This assumes the monthly interest rate is the annual rate of 4.20% divided by 12
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21874,7 +21874,7 @@ This assumes the monthly interest rate is the annual rate of 4.20% divided by 12
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -21987,7 +21987,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22100,7 +22100,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22209,7 +22209,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22318,7 +22318,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22429,7 +22429,7 @@ This assumes monthly interest is calculated as the annual rate divided by 12.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22540,7 +22540,7 @@ This assumes monthly interest is calculated as the annual rate divided by 12.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22649,7 +22649,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22758,7 +22758,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22867,7 +22867,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -22976,7 +22976,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23078,7 +23078,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23180,7 +23180,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23282,7 +23282,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23384,7 +23384,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23486,7 +23486,7 @@ The first month’s interest is **$1,006.25**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23588,7 +23588,7 @@ The first month’s interest is **$1,006.25**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23701,7 +23701,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23814,7 +23814,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -23922,7 +23922,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24030,7 +24030,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24144,7 +24144,7 @@ Assuming interest is charged before the payment:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24258,7 +24258,7 @@ Assuming interest is charged before the payment:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24372,7 +24372,7 @@ Assuming interest is charged before the payment:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24486,7 +24486,7 @@ Assuming interest is charged before the payment:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24607,7 +24607,7 @@ The balance after one month is **$2,411.00**, assuming interest is added before 
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24728,7 +24728,7 @@ The balance after one month is **$2,411.00**, assuming interest is added before 
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24849,7 +24849,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -24970,7 +24970,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25084,7 +25084,7 @@ Assuming interest is charged before the minimum payment:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25198,7 +25198,7 @@ Assuming interest is charged before the minimum payment:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25319,7 +25319,7 @@ The credit card balance after one month is **$2,411.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25440,7 +25440,7 @@ The credit card balance after one month is **$2,411.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25557,7 +25557,7 @@ After adding interest and making the $25 minimum payment:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25674,7 +25674,7 @@ After adding interest and making the $25 minimum payment:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25788,7 +25788,7 @@ Assuming interest is applied before the payment:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -25902,7 +25902,7 @@ Assuming interest is applied before the payment:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26023,7 +26023,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26144,7 +26144,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26252,7 +26252,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26360,7 +26360,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26481,7 +26481,7 @@ The credit card balance after one month is **$2,411.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26602,7 +26602,7 @@ The credit card balance after one month is **$2,411.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26698,7 +26698,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26794,7 +26794,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26890,7 +26890,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -26986,7 +26986,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27082,7 +27082,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27178,7 +27178,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27274,7 +27274,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27370,7 +27370,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27466,7 +27466,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27562,7 +27562,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27658,7 +27658,7 @@ The total annual cost is **$144.00** (a $12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27754,7 +27754,7 @@ The total annual cost is **$144.00** (a $12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27850,7 +27850,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -27946,7 +27946,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28042,7 +28042,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28138,7 +28138,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28234,7 +28234,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28330,7 +28330,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28426,7 +28426,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28522,7 +28522,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28618,7 +28618,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28714,7 +28714,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28810,7 +28810,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -28906,7 +28906,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29002,7 +29002,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29098,7 +29098,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29194,7 +29194,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29290,7 +29290,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29392,7 +29392,7 @@ The quarterly investment growth is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29494,7 +29494,7 @@ The quarterly investment growth is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29824,7 +29824,7 @@ _Assumes simple quarterly growth at 7.8% ÷ 4 and three monthly fees._
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -29926,7 +29926,7 @@ _Assumes simple quarterly growth at 7.8% ÷ 4 and three monthly fees._
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30256,7 +30256,7 @@ _Assumes simple quarterly interest at 7.8% ÷ 4 and three monthly fees._
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30358,7 +30358,7 @@ _Assumes simple quarterly interest at 7.8% ÷ 4 and three monthly fees._
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30460,7 +30460,7 @@ The quarterly investment growth is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -30562,7 +30562,7 @@ The quarterly investment growth is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31724,7 +31724,7 @@ This assumes simple quarterly interest calculated as 7.8% ÷ 4.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31826,7 +31826,7 @@ This assumes simple quarterly interest calculated as 7.8% ÷ 4.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -31928,7 +31928,7 @@ This assumes simple quarterly interest at **7.8% ÷ 4** and three monthly fees.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -32030,7 +32030,7 @@ This assumes simple quarterly interest at **7.8% ÷ 4** and three monthly fees.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33011,7 +33011,7 @@ This assumes monthly interest is calculated as 4.20% ÷ 12 and there are no addi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33122,7 +33122,7 @@ This assumes monthly interest is calculated as 4.20% ÷ 12 and there are no addi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33226,7 +33226,7 @@ This assumes the annual rate is divided by 12 and the payment is made after one 
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33330,7 +33330,7 @@ This assumes the annual rate is divided by 12 and the payment is made after one 
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33434,7 +33434,7 @@ This assumes interest accrues monthly at **4.20% ÷ 12** and there are no fees.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33538,7 +33538,7 @@ This assumes interest accrues monthly at **4.20% ÷ 12** and there are no fees.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33649,7 +33649,7 @@ This assumes interest accrues monthly at **4.20% ÷ 12** and the full **$1,437 p
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33760,7 +33760,7 @@ This assumes interest accrues monthly at **4.20% ÷ 12** and the full **$1,437 p
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33860,7 +33860,7 @@ The annual net growth after fees is **$3,109.65**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -33960,7 +33960,7 @@ The annual net growth after fees is **$3,109.65**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34062,7 +34062,7 @@ This assumes simple annual growth on the current balance and 12 monthly fees.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34164,7 +34164,7 @@ This assumes simple annual growth on the current balance and 12 monthly fees.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34260,7 +34260,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34356,7 +34356,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34452,7 +34452,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34548,7 +34548,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34644,7 +34644,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34740,7 +34740,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34836,7 +34836,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -34932,7 +34932,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35028,7 +35028,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35124,7 +35124,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35220,7 +35220,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35316,7 +35316,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35412,7 +35412,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35508,7 +35508,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35604,7 +35604,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35700,7 +35700,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35796,7 +35796,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35892,7 +35892,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -35988,7 +35988,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36084,7 +36084,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36180,7 +36180,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36276,7 +36276,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36372,7 +36372,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36468,7 +36468,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36564,7 +36564,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36660,7 +36660,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36756,7 +36756,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36852,7 +36852,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -36948,7 +36948,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37044,7 +37044,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37140,7 +37140,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37236,7 +37236,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37332,7 +37332,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37428,7 +37428,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37524,7 +37524,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37620,7 +37620,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37716,7 +37716,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37812,7 +37812,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -37908,7 +37908,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38004,7 +38004,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38100,7 +38100,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38196,7 +38196,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38292,7 +38292,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38388,7 +38388,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38484,7 +38484,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38580,7 +38580,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38676,7 +38676,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38772,7 +38772,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38868,7 +38868,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -38964,7 +38964,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -39060,7 +39060,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -39156,7 +39156,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -39252,7 +39252,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -39348,7 +39348,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -39444,7 +39444,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -39540,7 +39540,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -39636,7 +39636,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -39732,7 +39732,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -39828,7 +39828,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -39924,7 +39924,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40020,7 +40020,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40116,7 +40116,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40212,7 +40212,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40308,7 +40308,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40404,7 +40404,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40500,7 +40500,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40596,7 +40596,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40692,7 +40692,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40788,7 +40788,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40884,7 +40884,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -40980,7 +40980,7 @@ The monthly interest earned is **$15.20**, assuming a 1.2% annual rate divided e
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41076,7 +41076,7 @@ The monthly interest earned is **$15.20**, assuming a 1.2% annual rate divided e
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41172,7 +41172,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41268,7 +41268,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41364,7 +41364,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41460,7 +41460,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41556,7 +41556,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41652,7 +41652,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41748,7 +41748,7 @@ The monthly interest earned is **$15.20**, assuming a 1.2% annual rate divided e
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41844,7 +41844,7 @@ The monthly interest earned is **$15.20**, assuming a 1.2% annual rate divided e
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -41940,7 +41940,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42036,7 +42036,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42132,7 +42132,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42228,7 +42228,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42324,7 +42324,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42420,7 +42420,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42516,7 +42516,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42612,7 +42612,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42708,7 +42708,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42804,7 +42804,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42900,7 +42900,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -42996,7 +42996,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43092,7 +43092,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43188,7 +43188,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43284,7 +43284,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43380,7 +43380,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43476,7 +43476,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43572,7 +43572,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43668,7 +43668,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43764,7 +43764,7 @@ The monthly interest earned is **$15.20**, assuming the 1.2% annual rate is divi
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43860,7 +43860,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -43956,7 +43956,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -44052,7 +44052,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -44148,7 +44148,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -44620,7 +44620,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -44716,7 +44716,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -45001,7 +45001,7 @@ Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -45096,7 +45096,7 @@ Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -45378,7 +45378,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -45474,7 +45474,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -45570,7 +45570,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -45666,7 +45666,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -45762,7 +45762,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -45858,7 +45858,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -45955,7 +45955,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -46052,7 +46052,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -46148,7 +46148,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -46244,7 +46244,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -46339,7 +46339,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -46434,7 +46434,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -46720,7 +46720,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -46816,7 +46816,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -46913,7 +46913,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -47010,7 +47010,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -47292,7 +47292,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -47388,7 +47388,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -47485,7 +47485,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -47582,7 +47582,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -48435,7 +48435,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -48532,7 +48532,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -48628,7 +48628,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -48724,7 +48724,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -49386,7 +49386,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -49482,7 +49482,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -49577,7 +49577,7 @@ Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -49672,7 +49672,7 @@ Calculation: $5,000.00 credit limit − $2,400.00 balance = **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -49768,7 +49768,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -49864,7 +49864,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -50150,7 +50150,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -50246,7 +50246,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -50341,7 +50341,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -50436,7 +50436,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -50721,7 +50721,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -50816,7 +50816,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -50911,7 +50911,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -51006,7 +51006,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -51102,7 +51102,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -51198,7 +51198,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -51484,7 +51484,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -51580,7 +51580,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -51862,7 +51862,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -51958,7 +51958,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -52054,7 +52054,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -52150,7 +52150,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -52245,7 +52245,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -52340,7 +52340,7 @@ The available credit is **$2,600.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -52627,7 +52627,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -52724,7 +52724,7 @@ The available credit is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -52820,7 +52820,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -52916,7 +52916,7 @@ Available credit = Credit limit − Balance
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -53022,7 +53022,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -53128,7 +53128,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -53232,7 +53232,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -53336,7 +53336,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -53442,7 +53442,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -53548,7 +53548,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -53654,7 +53654,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -53760,7 +53760,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -53864,7 +53864,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -53968,7 +53968,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -54072,7 +54072,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -54176,7 +54176,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -54282,7 +54282,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -54388,7 +54388,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -54494,7 +54494,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -54600,7 +54600,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -54706,7 +54706,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -54812,7 +54812,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -54916,7 +54916,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -55020,7 +55020,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -55126,7 +55126,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -55232,7 +55232,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -55334,7 +55334,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -55436,7 +55436,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -55540,7 +55540,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -55644,7 +55644,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -55750,7 +55750,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -55856,7 +55856,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -55960,7 +55960,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -56064,7 +56064,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -56170,7 +56170,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR applied to the fu
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -56276,7 +56276,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR applied to the fu
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -56382,7 +56382,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -56488,7 +56488,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -56594,7 +56594,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -56700,7 +56700,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -56804,7 +56804,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -56908,7 +56908,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -57014,7 +57014,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -57120,7 +57120,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -57226,7 +57226,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -57332,7 +57332,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -57436,7 +57436,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -57540,7 +57540,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -57646,7 +57646,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -57752,7 +57752,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -57858,7 +57858,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -57964,7 +57964,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -58068,7 +58068,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -58172,7 +58172,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -58276,7 +58276,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -58380,7 +58380,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -58486,7 +58486,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -58592,7 +58592,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -58698,7 +58698,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -58804,7 +58804,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -58908,7 +58908,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -59012,7 +59012,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -59118,7 +59118,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -59224,7 +59224,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -59330,7 +59330,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -59436,7 +59436,7 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -59538,7 +59538,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -59640,7 +59640,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -59746,7 +59746,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -59852,7 +59852,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -59956,7 +59956,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -60060,7 +60060,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -60166,7 +60166,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -60272,7 +60272,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -60378,7 +60378,7 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -60484,7 +60484,7 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -60588,7 +60588,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -60692,7 +60692,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -60798,7 +60798,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -60904,7 +60904,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -61010,7 +61010,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ac
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -61116,7 +61116,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ac
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -61222,7 +61222,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -61328,7 +61328,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -61430,7 +61430,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -61532,7 +61532,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -61638,7 +61638,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -61744,7 +61744,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -61846,7 +61846,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -61948,7 +61948,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -62050,7 +62050,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ov
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -62152,7 +62152,7 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ov
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -62258,7 +62258,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -62364,7 +62364,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -62468,7 +62468,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -62572,7 +62572,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -62678,7 +62678,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -62784,7 +62784,7 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -62890,7 +62890,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -62996,7 +62996,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -63098,7 +63098,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -63200,7 +63200,7 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -63304,7 +63304,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -63408,7 +63408,7 @@ The monthly interest charge is **$36.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -63511,7 +63511,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -63614,7 +63614,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -63724,7 +63724,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -63834,7 +63834,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -63944,7 +63944,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -64054,7 +64054,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -64163,7 +64163,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -64272,7 +64272,7 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -64375,7 +64375,7 @@ The first month’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -64478,7 +64478,7 @@ The first month’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -64581,7 +64581,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -64684,7 +64684,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -64797,7 +64797,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -64910,7 +64910,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -65023,7 +65023,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -65136,7 +65136,7 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -65239,7 +65239,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -65342,7 +65342,7 @@ The first payment’s interest is:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -65463,7 +65463,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -65584,7 +65584,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -65692,7 +65692,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -65800,7 +65800,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -65908,7 +65908,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -66016,7 +66016,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -66124,7 +66124,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -66232,7 +66232,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -66340,7 +66340,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -66448,7 +66448,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -66556,7 +66556,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -66664,7 +66664,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -66785,7 +66785,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -66906,7 +66906,7 @@ After adding interest and making the **$25 minimum payment**:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -67014,7 +67014,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -67122,7 +67122,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -67230,7 +67230,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -67338,7 +67338,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -67446,7 +67446,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -67554,7 +67554,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -67662,7 +67662,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -67770,7 +67770,7 @@ After one month:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -67861,7 +67861,7 @@ Since the account earns no interest, the **total annual cost is $144.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -67952,7 +67952,7 @@ Since the account earns no interest, the **total annual cost is $144.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -68048,7 +68048,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -68144,7 +68144,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -68242,7 +68242,7 @@ The total annual cost is **$144.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -68340,7 +68340,7 @@ The total annual cost is **$144.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -68436,7 +68436,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -68532,7 +68532,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -68806,7 +68806,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -68902,7 +68902,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -69710,7 +69710,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -69806,7 +69806,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -70073,7 +70073,7 @@ Calculation: **$12 monthly fee × 12 months = $144 annually**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -70162,7 +70162,7 @@ Calculation: **$12 monthly fee × 12 months = $144 annually**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -70796,7 +70796,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -70892,7 +70892,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -71168,7 +71168,7 @@ Calculation: **$12 monthly fee × 12 months = $144**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -71266,7 +71266,7 @@ Calculation: **$12 monthly fee × 12 months = $144**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -71362,7 +71362,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -71458,7 +71458,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -71554,7 +71554,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -71650,7 +71650,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -71926,7 +71926,7 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -72024,7 +72024,7 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -72120,7 +72120,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -72216,7 +72216,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -72492,7 +72492,7 @@ The total annual cost is **$144.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -72590,7 +72590,7 @@ The total annual cost is **$144.00**, calculated as:
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -72688,7 +72688,7 @@ The checking account costs **$144 per year** to maintain.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -72786,7 +72786,7 @@ The checking account costs **$144 per year** to maintain.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -72882,7 +72882,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -72978,7 +72978,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -73074,7 +73074,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -73170,7 +73170,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -73266,7 +73266,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -73362,7 +73362,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -73458,7 +73458,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -73554,7 +73554,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -73650,7 +73650,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -73746,7 +73746,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -73837,7 +73837,7 @@ Since the account earns no interest, the **total annual cost is $144.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -73928,7 +73928,7 @@ Since the account earns no interest, the **total annual cost is $144.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -74024,7 +74024,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -74120,7 +74120,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -74216,7 +74216,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -74312,7 +74312,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -74408,7 +74408,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -74504,7 +74504,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -74600,7 +74600,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -74696,7 +74696,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -74792,7 +74792,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -74888,7 +74888,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -75155,7 +75155,7 @@ Calculation: **$12 monthly fee × 12 months = $144**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -75244,7 +75244,7 @@ Calculation: **$12 monthly fee × 12 months = $144**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -75518,7 +75518,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -75614,7 +75614,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -75712,7 +75712,7 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -75810,7 +75810,7 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -76084,7 +76084,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -76180,7 +76180,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -76271,7 +76271,7 @@ Since the account earns no interest, the **total annual cost is $144.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -76362,7 +76362,7 @@ Since the account earns no interest, the **total annual cost is $144.00**.
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -76636,7 +76636,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -76732,7 +76732,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -76828,7 +76828,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -76924,7 +76924,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -77020,7 +77020,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -77116,7 +77116,7 @@ The total annual cost is **$144.00** ($12 monthly fee × 12 months).
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -85430,7 +85430,7 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -85532,7 +85532,7 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -85636,7 +85636,7 @@ This assumes interest accrues monthly at **4.20% ÷ 12** and the payment is made
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -85740,7 +85740,7 @@ This assumes interest accrues monthly at **4.20% ÷ 12** and the payment is made
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -85842,7 +85842,7 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -85944,7 +85944,7 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -86049,7 +86049,7 @@ _Assumes interest is calculated monthly at 4.20% ÷ 12 and there are no fees._
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -86154,7 +86154,7 @@ _Assumes interest is calculated monthly at 4.20% ÷ 12 and there are no fees._
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -86258,7 +86258,7 @@ This assumes monthly interest is calculated as 4.20% ÷ 12 and there are no fees
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -86362,7 +86362,7 @@ This assumes monthly interest is calculated as 4.20% ÷ 12 and there are no fees
 
 ### Reason for Adjudication
 
-Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure of the same kind.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
