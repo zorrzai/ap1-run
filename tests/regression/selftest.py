@@ -293,16 +293,28 @@ class PublishedSourceHash(unittest.TestCase):
         shutil.rmtree(self.root)
 
     def git(self, *args, stdin=None):
+        # The clone this file is in, whatever GIT_DIR a caller has set.
         repo = os.path.dirname(os.path.dirname(HERE))
+        env = {k: v for k, v in os.environ.items()
+               if not k.startswith('GIT_')}
         return subprocess.run(['git', '-C', repo, *args], input=stdin,
-                              capture_output=True, check=True).stdout
+                              capture_output=True, check=True,
+                              env=env).stdout
 
     def write_tag_tree(self):
         try:
             listing = self.git('ls-tree', '-r', '-z', self.TAG + '^{tree}')
         except (OSError, subprocess.CalledProcessError) as e:
-            self.fail(f'cannot read tag {self.TAG} (fetch the tags, e.g. '
-                      f'git fetch --tags): {getattr(e, "stderr", e)!r}')
+            # Fails rather than skips: a skip would let a CI checkout
+            # without tags pass this check silently.
+            self.fail(
+                f'cannot read the tag {self.TAG} from this clone '
+                f'({getattr(e, "stderr", None) or e!r}). This test needs '
+                f'git and the tag: a shallow clone, a clone without tags, '
+                f'or a copy without .git does not have it. Run '
+                f'"git fetch --tags" (CI checks out with fetch-depth: 0). '
+                f'It fails rather than skips so that a missing tag cannot '
+                f'pass silently.')
         entries = []
         for entry in listing.split(b'\0'):
             if entry:
