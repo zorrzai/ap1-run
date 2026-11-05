@@ -25,7 +25,7 @@ Backend fingerprints (system_fingerprint): not reported
 | `ap1_version_doi` | `10.5281/zenodo.21755443` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
-| `expected_values_hash` | `5b5f7c1d0a5c638692c2bd7b334f38989dee50c8ccba6956048290a3c078dc36` |
+| `expected_values_hash` | `905dae727aa2446778c0c5570fa6233a176f60d1b72693f947720c023b8f0091` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
 | `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
 | `lookup_collisions` | `none` |
@@ -291,12 +291,12 @@ Total operands resolved: 88
 
 > OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded. UNMEASURABLE: a call in a chained item whose ground truth declares no intermediates (SPEC R2.4); its operands are not counted in the step table.
 
-| Outcome | Count | % |
+| Outcome | Count | Proportion |
 |---|---|---|
-| OPERANDS-GROUNDED | 20 | 100.0% |
-| OPERAND-ORIGINATED | 0 | 0.0% |
-| OPERANDS-UNOBSERVABLE | 0 | 0.0% |
-| UNMEASURABLE | 0 | 0.0% |
+| OPERANDS-GROUNDED | 20 | 20/20 (100.0%) |
+| OPERAND-ORIGINATED | 0 | 0/20 (0.0%) |
+| OPERANDS-UNOBSERVABLE | 0 | 0/20 (0.0%) |
+| UNMEASURABLE | 0 | 0/20 (0.0%) |
 
 ## 8. Scoring Proportions
 
