@@ -383,7 +383,9 @@ def test_run_report_says_the_system_changed(run_changed):
     lines = report.splitlines()
     names_change = [line for line in lines
                     if SERVED_MODEL in line and LATER_MODEL in line
-                    and re.search(r'chang', line, re.I)]
+                    and re.search(r'\bchanged\b', line, re.I)
+                    and not re.search(r'unchanged|no change|not changed',
+                                      line, re.I)]
     cannot = [line for line in lines if re.search(
         r'(froz|freez)\w*.*\b(not|cannot|could not) (be )?'
         r'(shown|confirmed|verified)|(not|cannot|could not) (be )?'
@@ -392,8 +394,9 @@ def test_run_report_says_the_system_changed(run_changed):
         line for line in lines
         if re.search(r'froz|freez|snapshot', line, re.I)]
     claims = [line for line in lines
-              if re.search(r'froz|freez', line, re.I)
-              and re.search(r'no change|unchanged|frozen:? *(yes|confirmed|'
-                            r'true)|\bwas frozen\b(?!.*\bnot\b)', line,
-                            re.I)]
+              if re.search(r'froz|freez|snapshot|model', line, re.I)
+              and re.search(r'no change|unchanged|not changed|'
+                            r'(freeze|frozen):? *(yes|confirmed|true)|'
+                            r'freeze confirmed|\bwas frozen\b(?!.*\bnot\b)',
+                            line, re.I)]
     assert claims == [], claims
