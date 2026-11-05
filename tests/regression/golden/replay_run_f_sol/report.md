@@ -1170,7 +1170,7 @@ Evidence class (AP-1 D7.7), executions: `EV-0 UNOBSERVABLE` (1), `EV-2 PLATFORM-
 | `UNOBSERVABLE` | 293 | 29.3% |
 | **Total** | **1000** | |
 
-Of the 707 `TRANSCRIBED-EXACT`, 319 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
+Of the 707 `TRANSCRIBED-EXACT`, 319 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3). Of these: roundings of the tool's return to the declared places, 48; float artefacts of the tool (the return differs from the release only past a binary float's 15 significant digits, such as 15.200000000000001 for 15.20), 271. A strict v1.2 "match" count subtracts the roundings, or all 319 for the strictest reading.
 
 ### B. Release Coverage
 

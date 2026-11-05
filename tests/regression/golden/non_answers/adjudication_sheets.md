@@ -755,6 +755,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 5: Q04, repeat 1 — Scorer 1
 
+Execution id: `<EXECUTION_ID_5>`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -850,6 +852,8 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 
 ## Item 5: Q04, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
@@ -947,6 +951,8 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 ## Item 6: Q04, repeat 2 — Scorer 1
 
+Execution id: `<EXECUTION_ID_6>`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -1042,6 +1048,8 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 
 ## Item 6: Q04, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
@@ -1139,7 +1147,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 ## Item 7: Q07, repeat 1 — Scorer 1
 
-Execution id: `<EXECUTION_ID_5>`
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -1235,7 +1243,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 ## Item 7: Q07, repeat 1 — Scorer 2
 
-Execution id: `<EXECUTION_ID_5>`
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -1331,7 +1339,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 ## Item 8: Q07, repeat 2 — Scorer 1
 
-Execution id: `<EXECUTION_ID_6>`
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -1427,7 +1435,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 ## Item 8: Q07, repeat 2 — Scorer 2
 
-Execution id: `<EXECUTION_ID_6>`
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -1523,7 +1531,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 ## Item 9: Q02, repeat 1 — Scorer 1
 
-Execution id: `<EXECUTION_ID_7>`
+Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
@@ -1616,7 +1624,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 9: Q02, repeat 1 — Scorer 2
 
-Execution id: `<EXECUTION_ID_7>`
+Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
@@ -1709,7 +1717,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 10: Q02, repeat 2 — Scorer 1
 
-Execution id: `<EXECUTION_ID_8>`
+Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
@@ -1802,7 +1810,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 10: Q02, repeat 2 — Scorer 2
 
-Execution id: `<EXECUTION_ID_8>`
+Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
@@ -1895,7 +1903,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 11: Q03, repeat 1 — Scorer 1
 
-Execution id: `<EXECUTION_ID_9>`
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -1988,7 +1996,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 11: Q03, repeat 1 — Scorer 2
 
-Execution id: `<EXECUTION_ID_9>`
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -2081,7 +2089,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 12: Q03, repeat 2 — Scorer 1
 
-Execution id: `<EXECUTION_ID_10>`
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
@@ -2174,7 +2182,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 12: Q03, repeat 2 — Scorer 2
 
-Execution id: `<EXECUTION_ID_10>`
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
@@ -2266,6 +2274,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 13: Q04, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_13>`
 
 ### Question
 
@@ -2363,6 +2373,8 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 ## Item 13: Q04, repeat 1 — Scorer 2
 
+Execution id: `<EXECUTION_ID_13>`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -2458,6 +2470,8 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 
 ## Item 14: Q04, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_14>`
 
 ### Question
 
@@ -2555,6 +2569,8 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 ## Item 14: Q04, repeat 2 — Scorer 2
 
+Execution id: `<EXECUTION_ID_14>`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -2651,7 +2667,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 ## Item 15: Q07, repeat 1 — Scorer 1
 
-Execution id: `<EXECUTION_ID_11>`
+Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
@@ -2747,7 +2763,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 ## Item 15: Q07, repeat 1 — Scorer 2
 
-Execution id: `<EXECUTION_ID_11>`
+Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
@@ -2843,7 +2859,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 ## Item 16: Q07, repeat 2 — Scorer 1
 
-Execution id: `<EXECUTION_ID_12>`
+Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
@@ -2939,7 +2955,7 @@ Which figure in the response is the released answer is ambiguous: several numeri
 
 ## Item 16: Q07, repeat 2 — Scorer 2
 
-Execution id: `<EXECUTION_ID_12>`
+Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
