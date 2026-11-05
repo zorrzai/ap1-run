@@ -410,7 +410,7 @@ _EPOCH = re.compile(r'("timestamp":\s*)\d{9,}(?:\.\d+)?')
 _MOCK = re.compile(r'http://127\.0\.0\.1:\d+')
 # Printed before the seal exists, so not covered by the seal's values.
 _SOURCE_HASH_LINE = re.compile(r'(Runner source hash: )[0-9a-f]+')
-# The environment fields of the seal (F2) in report.md section 1: they
+# The environment fields of the seal (T3-30, T3-70) in report.md section 1: they
 # depend on the machine, not on the code.
 _ENVIRONMENT_ROW = re.compile(
     r'(\| `(?:python_version|platform|package_versions)` \| `)[^`]*(` \|)')

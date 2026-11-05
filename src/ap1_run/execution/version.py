@@ -4,7 +4,7 @@ Reads the VERSION file (authoritative, present in clones and tarballs).
 Cross-checks against git when available. Computes a hash over the code
 that runs (the .py files of the ap1_run package under src/, and VERSION)
 for seal inclusion. Tests, tools, examples and anything else in the clone
-(an in-tree venv, scratch files) are outside it (F2, T3-70); the Python
+(an in-tree venv, scratch files) are outside it (T3-70); the Python
 version, platform and package versions are recorded as separate seal
 fields (runner_environment).
 
@@ -31,7 +31,7 @@ MIN_COMMIT_PREFIX = 7
 SOURCE_PACKAGE = os.path.join('src', 'ap1_run')
 VERSION_FILE = 'VERSION'
 
-# The packages whose versions the seal records (F2): the runner's own
+# The packages whose versions the seal records (T3-30, T3-70): the runner's own
 # distribution and its runtime dependencies (pyproject.toml).
 RECORDED_PACKAGES = ('ap1-run', 'requests')
 
@@ -85,7 +85,7 @@ def resolve_runner_version(base_dir):
                 f'{git_commit[:12]}. Runner may be modified.')
 
         # Check for uncommitted changes to the package's code (a test or
-        # tool edit does not modify the runner, F2; VERSION itself is
+        # tool edit does not modify the runner, T3-70; VERSION itself is
         # compared with HEAD above)
         try:
             dirty = subprocess.check_output(
@@ -128,7 +128,7 @@ def compute_runner_source_hash(base_dir):
     or file timestamps. Computed before seal() and included in the
     seal record so that a modified instrument is detectable. Tests,
     tools/ and anything else in the clone are not hashed: they do not run
-    during a measurement (F2).
+    during a measurement (T3-70).
     """
     h = hashlib.sha256()
     for rel_path in _source_files(base_dir):
@@ -143,7 +143,7 @@ def compute_runner_source_hash(base_dir):
 
 def runner_environment():
     """The environment a run executes in, recorded in the seal as fields
-    of their own, outside runner_source_hash (F2): the Python
+    of their own, outside runner_source_hash (T3-30, T3-70): the Python
     implementation and version, the platform, and the installed versions
     of RECORDED_PACKAGES ('<name> <version>', or '<name> not installed')."""
     packages = []

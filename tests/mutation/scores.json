@@ -2,7 +2,7 @@
   "execution/ap1_texts": {
     "killed": 46,
     "mutants": 46,
-    "notes": "New in step 5 (seal-verifier-hardening, V12-4). No survivors.",
+    "notes": "New with the V12-4 fix. No survivors.",
     "score": 1.0
   },
   "execution/context": {
@@ -31,7 +31,7 @@
   "execution/seal": {
     "killed": 485,
     "mutants": 486,
-    "notes": "The 1 survivor is equivalent: it sets perturbed_any = None instead of False in perturbation_check: both are falsy, and the flag is only ever tested for truth. (Step 5 seal-gt-guards: the failure dicts no longer carry a 'field' key, which nothing read; every failure's item and reason are in the SealError message, S3-G3-3.) (Step 5 seal-verifier-hardening: seal() and verify_seal() rewritten for the format-2 record (T3-15, T3-17, T3-47, T3-48, T3-50, T3-68, T3-72, F2); the 4 old DOI-default survivors are killed by test_verify_seal_record_without_doi_named_once.)",
+    "notes": "The 1 survivor is equivalent: it sets perturbed_any = None instead of False in perturbation_check: both are falsy, and the flag is only ever tested for truth. (The R3.1 guard fixes, T3-7: the failure dicts no longer carry a 'field' key, which nothing read; every failure's item and reason are in the SealError message, S3-G3-3.) (The seal fixes: seal() and verify_seal() rewritten for the format-2 record (T3-15, T3-17, T3-47, T3-48, T3-50, T3-68, T3-72, T3-30); the 4 old DOI-default survivors are killed by test_verify_seal_record_without_doi_named_once.)",
     "score": 0.9979
   },
   "execution/seal_constants": {
@@ -43,13 +43,13 @@
   "execution/sealed_inputs": {
     "killed": 100,
     "mutants": 107,
-    "notes": "New in step 5 (seal-verifier-hardening, T3-48/T3-72). All 7 survivors are equivalent. One decodes the JSON inputs as 'UTF-8-SIG', the same codec. Three change the message of the OSError path_stats raises, which importlib catches and never shows. Two pass location None or no location to spec_from_file_location: it then takes the location from the loader's get_filename, the same path. One pops the module from sys.modules without a default: it is always there at that point (load_ground_truth put it there).",
+    "notes": "New with the T3-48/T3-72 fix. All 7 survivors are equivalent. One decodes the JSON inputs as 'UTF-8-SIG', the same codec. Three change the message of the OSError path_stats raises, which importlib catches and never shows. Two pass location None or no location to spec_from_file_location: it then takes the location from the loader's get_filename, the same path. One pops the module from sys.modules without a default: it is always there at that point (load_ground_truth put it there).",
     "score": 0.9346
   },
   "execution/version": {
     "killed": 171,
     "mutants": 183,
-    "notes": "All 12 survivors are equivalent. Three touch dead code: the local 'modified' (False to None or True) and the first 'result = {}' are assigned and never read. Three change the unreachable else of 'parts[0] if parts else ...' (a stripped non-empty line always splits into at least one part). Five change how VERSION is opened or a path is encoded: 'UTF-8' is the same codec; no 'r', no encoding or encoding=None mean the locale's, UTF-8 on macOS and Linux. One opens 'version' instead of 'VERSION', which macOS's case-insensitive file system finds anyway. (Step 5 seal-verifier-hardening: the source hash covers src/ap1_run/ and VERSION only, F2/T3-70, and a VERSION commit under 7 characters marks the runner modified, S3-G3-2; the 12 survivors are the same ones; runner_environment, F2, has none.) No legacy suite imports version.py (0 % legacy coverage); the regression scenarios run it end to end.",
+    "notes": "All 12 survivors are equivalent. Three touch dead code: the local 'modified' (False to None or True) and the first 'result = {}' are assigned and never read. Three change the unreachable else of 'parts[0] if parts else ...' (a stripped non-empty line always splits into at least one part). Five change how VERSION is opened or a path is encoded: 'UTF-8' is the same codec; no 'r', no encoding or encoding=None mean the locale's, UTF-8 on macOS and Linux. One opens 'version' instead of 'VERSION', which macOS's case-insensitive file system finds anyway. (The T3-70 fix: the source hash covers src/ap1_run/ and VERSION only, and a VERSION commit under 7 characters marks the runner modified, S3-G3-2; the 12 survivors are the same ones; runner_environment (T3-30) has none.) No legacy suite imports version.py (0 % legacy coverage); the regression scenarios run it end to end.",
     "score": 0.9344
   },
   "foundation/adapter": {
@@ -85,13 +85,13 @@
   "reporting/report": {
     "killed": 1845,
     "mutants": 1891,
-    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Re-recorded after combining the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after combining.] [Re-recorded on the combination of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.] [spec-conformance-claims merge: 46 survivors, none in the new section 9b (_section_d2_conditions).]",
+    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Re-recorded after combining the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after combining.] [Re-recorded on the combination of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after combining.] [Combined with the T3-30/T3-22 report fixes: 46 survivors, none in the new section 9b (_section_d2_conditions).]",
     "score": 0.9757
   },
   "run": {
     "killed": 558,
     "mutants": 564,
-    "notes": "All 6 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored. One passes ctx=None to the sealed ground-truth compute, which returns the sealed value of the item and ignores the context. (Step 5 seal-verifier-hardening: the inputs are read by execution/sealed_inputs, so the ten survivors on how fixture.json and questions.json were opened are gone; V12-4 adds no survivors.) [Merge of sjl/step5/integration 19bed82 (spec-conformance-claims) into seal-verifier-hardening: 558/564, 0.9894. The two sides scored 584/590 and 555/570; the merged count is lower than the first only because spec-conformance-claims deleted code whose mutants were killed (sampling overrides, environment endpoint and model, defaults). Same 6 survivors.]",
+    "notes": "All 6 survivors are equivalent here. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. Four change the default status of a result without one ('UNKNOWN', None, none, 'unknown'), all of which are scored. One passes ctx=None to the sealed ground-truth compute, which returns the sealed value of the item and ignores the context. (The T3-72 fix: the inputs are read by execution/sealed_inputs, so the ten survivors on how fixture.json and questions.json were opened are gone; V12-4 adds no survivors.) [Recorded on the seal fixes combined with the inputs fixes: 558/564, 0.9894. The two sides scored 584/590 and 555/570; the merged count is lower than the first only because the T3-79/T3-80 fix deleted code whose mutants were killed (sampling overrides, environment endpoint and model, defaults). Same 6 survivors.]",
     "score": 0.9894
   },
   "runner/console": {
@@ -121,13 +121,13 @@
   "runner/settings": {
     "killed": 196,
     "mutants": 196,
-    "notes": "(Step 5 seal-verifier-hardening, V12-4: --ap1-text has no default path; the text comes from the version table.) [Merge with spec-conformance-claims, which removed the environment endpoint/model and the sampling overrides: 196/196.]",
+    "notes": "(The V12-4 fix: --ap1-text has no default path; the text comes from the version table.) [Combined with the T3-79/T3-80 fix, which removed the environment endpoint/model and the sampling overrides: 196/196.]",
     "score": 1.0
   },
   "runner/summary": {
     "killed": 743,
     "mutants": 754,
-    "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default. [Re-recorded on the combination of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
+    "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default. [Re-recorded on the combination of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after combining.]",
     "score": 0.9854
   },
   "scoring/accuracy": {

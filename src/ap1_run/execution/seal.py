@@ -153,7 +153,7 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
         'runner_version_tag': config.get('runner_version_tag', ''),
         'runner_version_commit': config.get('runner_version_commit', ''),
         'runner_source_hash': runner_source_hash or '',
-        # The environment, outside runner_source_hash (F2)
+        # The environment, outside runner_source_hash (T3-30, T3-70)
         **runner_environment(),
         # Verification keys for EV-3 (not implemented in v1.0)
         'verification_keys': verification_keys or [],

@@ -122,7 +122,7 @@ def test_seal_record(files, frozen):
 
 
 def test_seal_records_the_real_environment(files, monkeypatch):
-    # Not frozen: the fields are runner_environment's (F2).
+    # Not frozen: the fields are runner_environment's (T3-30, T3-70).
     from ap1_run.execution.version import runner_environment
     record = make_seal(files)
     env = runner_environment()

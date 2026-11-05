@@ -107,7 +107,7 @@ def test_resolve_version_git_commands_run_in_base_dir(tmp_path, git):
     resolve_quietly(tmp_path)
     expected_kwargs = {'cwd': str(tmp_path), 'text': True,
                        'stderr': subprocess.DEVNULL}
-    # The dirty check looks at what runner_source_hash covers only (F2).
+    # The dirty check looks at what runner_source_hash covers only (T3-70).
     assert fake.calls == [
         (['git', 'rev-parse', 'HEAD'], expected_kwargs),
         (['git', 'status', '--porcelain', '--', 'src/ap1_run'],
@@ -212,7 +212,7 @@ def test_resolve_version_real_git_repository(tmp_path):
     write_version(tmp_path, f'v9 {head[:7]}\n')
     assert resolve_quietly(tmp_path)['version_modified'] is False
     # A scratch file or a test outside the package is not a modification
-    # of the runner (F2); a file inside src/ap1_run/ is.
+    # of the runner (T3-70); a file inside src/ap1_run/ is.
     (tmp_path / 'scratch.py').write_text('', encoding='utf-8')
     (tmp_path / 'tests').mkdir()
     (tmp_path / 'tests' / 'test_x.py').write_text('', encoding='utf-8')
@@ -297,9 +297,9 @@ def test_source_hash_excludes_caches_inside_the_package(tmp_path):
     assert compute_runner_source_hash(root) == expected_hash(files)
 
 
-@pytest.mark.finding('F2', 'T3-70')
+@pytest.mark.finding('T3-70')
 def test_source_hash_covers_only_the_package_and_version(tmp_path):
-    # F2 (choices-for-marcus entry 6): an in-tree venv, the tests, tools/,
+    # T3-70 (the author's proposal): an in-tree venv, the tests, tools/,
     # other packages under src/, smoke_test.py and untracked scratch files
     # are not hashed.
     files = {PKG + 'a.py': b'1', 'VERSION': b'v1'}
@@ -398,11 +398,6 @@ def test_source_hash_scratch_file_outside_package_leaves_it_unchanged(
     'T3-70: runner_source_hash covers src/ap1_run/ and VERSION only; the '
     'scope is proposed, not decided')
 @pytest.mark.finding('T3-70')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-70: VERSION is not part of runner_source_hash')
-
-
-@pytest.mark.finding('F2', 'T3-70')
 def test_source_hash_editing_version_file_changes_it(tmp_path):
     before, after = hash_after(tmp_path, {'VERSION': b'v1.3.2 abcdef0\n'})
     assert after != before
@@ -434,7 +429,7 @@ def test_resolve_version_short_commit_prefix_is_modified(tmp_path, git,
     assert result['version_modified'] is True
 
 
-# -- runner_environment (F2) ----------------------------------------------
+# -- runner_environment (T3-30) -------------------------------------------
 
 def test_runner_environment_fields(monkeypatch):
     monkeypatch.setattr(version.platform, 'python_implementation',
