@@ -97,6 +97,10 @@ def full_run(tmp_path, monkeypatch, capsys):
             '__pycache__'))
         config = json.loads((fx / 'config.json').read_text('utf-8'))
         config['repeat_count'] = repeat_count
+        # The shipped config claims D1 on 10 items, which minimum-n (R0.1)
+        # refuses once wired (T3-12); claim only dimensions R0.1 sets no
+        # minimum for, as tests/functional/test_step4_g9_spec_claims.py does.
+        config['dimensions_claimed'] = ['D2', 'D7']
         (fx / 'config.json').write_text(json.dumps(config), 'utf-8')
         questions = json.loads((fx / 'questions.json').read_text('utf-8'))
         with open(CLEAN, encoding='utf-8') as f:
