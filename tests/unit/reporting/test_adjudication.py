@@ -670,6 +670,41 @@ def test_sheets_do_not_name_the_arm():
     assert found == []
 
 
+@pytest.mark.proposal(
+    'T3-36: sheets in an order the arm cannot be read from (with a '
+    'separate sheet-to-arm key for joining back); the design is the '
+    "author's proposal")
+@pytest.mark.finding('T3-36')
+@pytest.mark.req('AP-1 §13.8', 'R3.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-36: sheets follow the transcript order, so '
+                          'the first sheet of each item is the base arm')
+def test_sheets_order_does_not_give_away_the_arm():
+    # AP-1 v1.3 §13.8, blind to arm identity: removing the arm's name is
+    # not enough if the order shows it. Six items, each run base first
+    # (as every run does); each response carries a marker the sheet shows
+    # verbatim, so the test can read the arm. The sequence of arms over
+    # the scorer-1 sheets must not be the transcript's strict
+    # alternation (nor all of one arm, then the other). Today it is.
+    items = [{'id': f'Q0{i}', 'category': 'interest',
+              'text': f'Question {i}?', 'source_accounts': ['savings']}
+             for i in range(1, 7)]
+    records = [record(item_id=q['id'], condition=arm, arm_id=arm,
+                      response_received=f'ARM-{arm.upper()}-{q["id"]}')
+               for q in items for arm in ('base', 'instruction_removed')]
+    text = sheets_for(records, qs=questions(*items))
+    scorer1 = [re.search(r'ARM-(BASE|INSTRUCTION_REMOVED)-Q0\d', sheet)
+               .group(1) for sheet in sheets_list(text)
+               if re.search(r'Scorer 1\b', sheet.split('\n', 1)[0])]
+    assert len(scorer1) == 12, scorer1
+    pair = ['BASE', 'INSTRUCTION_REMOVED']
+    grouped = sorted(scorer1)
+    assert scorer1 not in (pair * 6, pair[::-1] * 6, grouped,
+                           grouped[::-1]), scorer1
+    # Not tested here: the separate sheet-to-arm key, whose form is still
+    # to be decided.
+
+
 @pytest.mark.finding('T3-13')
 @pytest.mark.req('AP-1 §6.8', 'R3.2')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
