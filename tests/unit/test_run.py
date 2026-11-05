@@ -886,18 +886,7 @@ def test_main_ground_truth_computes_in_the_shared_context(r):
 # (F4, T3-65) removed the code whose mutants they killed, so the ratchet
 # needs these mutants of main() killed instead.
 
-def test_main_reads_fixture_and_questions_as_utf8_text(r, monkeypatch):
-    # The fixture and questions are read by their exact names, as text in
-    # UTF-8 whatever the platform's default encoding.
-    opened = []
-
-    def spy_open(path, *args, **kwargs):
-        opened.append((os.path.basename(path), args, kwargs))
-        return open(path, *args, **kwargs)
-
-    monkeypatch.setattr(run, 'open', spy_open, raising=False)
-    assert r.main() == 0
-    assert [o for o in opened if o[0] in ('fixture.json',
-                                          'questions.json')] == [
-        ('fixture.json', ('r',), {'encoding': 'utf-8'}),
-        ('questions.json', ('r',), {'encoding': 'utf-8'})]
+# (test_main_reads_fixture_and_questions_as_utf8_text was removed on the
+# merge with seal-verifier-hardening: main() no longer opens these files;
+# execution/sealed_inputs.py reads every input once, as UTF-8, and
+# tests/unit/execution/test_sealed_inputs.py covers that.)
