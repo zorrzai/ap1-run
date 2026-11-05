@@ -865,6 +865,10 @@ def assert_ev0_state(error_state, cause):
 @pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason="T3-35: error_state names the cause and round as "
+                          "text ('UNOBSERVABLE: round 1: ...'), not the "
+                          "structured {'cause', 'round'} EV0_STATE proposes")
 def test_execute_item_later_send_fails_error_state_names_cause_and_round(
         tmp_path, calculator):
     # Correct (SPEC R1.3 "EV-0 UNOBSERVABLE with the round identified";
@@ -881,6 +885,10 @@ def test_execute_item_later_send_fails_error_state_names_cause_and_round(
 @pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason="T3-35: error_state names the cause and round as "
+                          "text ('UNOBSERVABLE: round 1: ...'), not the "
+                          "structured {'cause', 'round'} EV0_STATE proposes")
 def test_execute_item_unrecognised_later_response_error_state_names_round(
         tmp_path, calculator):
     # Correct (SPEC R1.3, as above): the record names the cause and the
@@ -893,8 +901,10 @@ def test_execute_item_unrecognised_later_response_error_state_names_round(
 @pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: error_state is None for both causes')
+@pytest.mark.xfail(strict=True, raises=(AssertionError, AttributeError),
+                   reason="T3-35: error_state names the cause and round as "
+                          "text ('UNOBSERVABLE: round 1: ...'), not the "
+                          "structured {'cause', 'round'} EV0_STATE proposes")
 def test_execute_item_ev0_causes_are_told_apart(tmp_path, calculator):
     # A rate limit and an unrecognised shape in round 1 are two causes;
     # the records tell them apart.

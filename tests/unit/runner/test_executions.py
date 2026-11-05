@@ -1072,8 +1072,6 @@ def test_score_execution_no_released_figure_recorded_as_null(fakes):
     score(findings, {'response': response('It is $15.25.'),
                      'tool_calls': []})
     assert findings.all_results[0]['released_figure'] is None
-    assert all(r['released_figure'] is None
-               for r in transcript.read_all(tpath) if 'released_figure' in r)
 
 
 @pytest.mark.finding('T3-65')

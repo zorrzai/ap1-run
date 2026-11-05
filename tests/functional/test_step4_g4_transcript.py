@@ -317,9 +317,6 @@ def test_run_multi_round_every_raw_response_in_transcript(cli):
 
 @pytest.mark.finding('V12-3', 'T3-52')
 @pytest.mark.req('R0.2', 'R0.3', 'AP-1 §5.6')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-3: the requests of the intermediate '
-                          'tool-loop rounds are not in the transcript')
 def test_run_multi_round_every_request_in_transcript(cli, monkeypatch):
     # Correct (SPEC R0.2 "Every request and response is written to the
     # transcript ... The request as sent", with its sampling parameters
@@ -545,6 +542,10 @@ def _ev0_error_state(cli, second_round):
 @pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason="T3-35: error_state names the cause and round as "
+                          "text ('UNOBSERVABLE: round 1: ...'), not the "
+                          "structured {'cause', 'round'} EV0_STATE proposes")
 @pytest.mark.parametrize('second_round, cause', [
     ({'http': 503, 'body': '{"error": "upstream down"}'}, 'http'),
     ({'close': True}, 'transport'),
@@ -576,8 +577,6 @@ def test_run_ev0_record_names_cause_and_round(cli, second_round, cause):
 @pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: an EV-0 record has error_state None')
 def test_run_ev0_causes_are_distinct(cli):
     # An HTTP error, a dropped connection and an unrecognised shape are
     # three causes; the record tells them apart.
