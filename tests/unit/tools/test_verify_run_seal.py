@@ -54,10 +54,12 @@ def base(tmp_path, vrs, monkeypatch):
     root = tmp_path / 'repo'
     (root / 'example').mkdir(parents=True)
     (root / 'reference').mkdir()
-    (root / 'example' / 'fixture.json').write_text('{"fixture": 1}\n')
-    (root / 'example' / 'questions.json').write_text('{"items": []}\n')
-    (root / 'example' / 'ground_truth_example.py').write_text('X = 1\n')
-    (root / AP1_TEXT).write_text('# AP-1 text\n')
+    # bytes, not text: write_text would turn \n into \r\n on Windows, and a
+    # real checkout has LF here on every platform (.gitattributes)
+    (root / 'example' / 'fixture.json').write_bytes(b'{"fixture": 1}\n')
+    (root / 'example' / 'questions.json').write_bytes(b'{"items": []}\n')
+    (root / 'example' / 'ground_truth_example.py').write_bytes(b'X = 1\n')
+    (root / AP1_TEXT).write_bytes(b'# AP-1 text\n')
     for name in ('config.json', 'config_mini.json'):
         (root / 'example' / name).write_text(json.dumps(
             {'model': 'REPLACE', 'endpoint_url': 'REPLACE'}))
