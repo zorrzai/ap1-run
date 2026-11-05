@@ -25,10 +25,11 @@ writing):
   config_hash      canonical hash of the resolved config, as passed to the
                    seal function (captured by driver.py before the call)
   expected_values_hash
-                   canonical hash of {item: final} of the expected values
-                   passed to the seal ('' if none; None for a result
-                   without a final); the values themselves are pinned by
-                   the goldens, which print this hash (T3-48)
+                   canonical hash of {item: {final, derivable,
+                   required_operation}} of the expected values passed to
+                   the seal ('' if none; derivable true and the others
+                   None when not given); the values themselves are pinned
+                   by the goldens, which print this hash (T3-48)
   environment      python_version, platform and package_versions of this
                    interpreter (the driver runs on the same one), outside
                    runner_source_hash (T3-30, T3-70)
@@ -137,6 +138,17 @@ RECORDED_PACKAGES = ('ap1-run', 'requests')
 TEXT_INPUTS = {'fixture': 'fixture_path', 'questions': 'questions_path',
                'ground_truth': 'ground_truth_path',
                'calculator': 'calculator_path'}
+
+
+def _scored_part(result):
+    """What scoring reads of one ground-truth result: its final, whether
+    it is derivable (true when not given), its required operation."""
+    if not isinstance(result, dict):
+        return {'final': result, 'derivable': True,
+                'required_operation': None}
+    return {'final': result.get('final'),
+            'derivable': result.get('derivable', True),
+            'required_operation': result.get('required_operation')}
 
 
 class HashCheckError(Exception):
@@ -436,8 +448,7 @@ def expected_outcome(inputs, tree):
         'calculator_hash': hashes['calculator'],
         'expected_values_hash': ('' if expected_values is None
                                  else canonical_hash({
-                                     k: (v.get('final') if isinstance(v, dict)
-                                         else v)
+                                     k: _scored_part(v)
                                      for k, v in expected_values.items()})),
         'config_hash': canonical_hash(config),
         'ap1_version': config.get('ap1_version', ''),

@@ -20,7 +20,7 @@ Model: gpt-5.6-sol
 | `calculator_hash` | `43c836b56e0ccf93dad7f6e7eba7b7e74cdf5c90a78ffcc2942ba11bc4dfb0bc` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
-| `expected_values_hash` | `905dae727aa2446778c0c5570fa6233a176f60d1b72693f947720c023b8f0091` |
+| `expected_values_hash` | `81d9b435264ddbb032c5744342df577d691e9766fd566dc75632b34bc6dd46ca` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
 | `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
 | `package_versions` | `<ENVIRONMENT>` |

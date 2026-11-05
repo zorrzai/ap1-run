@@ -205,10 +205,11 @@ def test_run_sealed_input_changed_after_seal_refused_naming_it(
 
 # -- T3-48: no expected-values component -----------------------------------
 
-def true_expected_values(fixture_dir):
+def true_expected_values(fixture_dir, whole=False):
     """{item_id: final} computed here, from the fixture directory's own
     ground-truth module, with each item's delivered context: the values a
-    correct seal binds, independent of the runner."""
+    correct seal binds, independent of the runner. whole: the whole
+    results instead."""
     from ap1_run.execution.context import build_delivered_context
     spec = importlib.util.spec_from_file_location(
         '_g5_ground_truth', Path(fixture_dir) / 'ground_truth_example.py')
@@ -223,8 +224,11 @@ def true_expected_values(fixture_dir):
         'utf-8'))
     items = json.loads((Path(fixture_dir) / 'questions.json').read_text(
         'utf-8'))['items']
-    return {item['id']: module.compute(item['id'], build_delivered_context(
-        fixture, item['source_accounts']))['final'] for item in items}
+    results = {item['id']: module.compute(item['id'], build_delivered_context(
+        fixture, item['source_accounts'])) for item in items}
+    if whole:
+        return results
+    return {k: r['final'] for k, r in results.items()}
 
 
 DRIFT = (
@@ -239,7 +243,9 @@ DRIFT = (
 @pytest.mark.proposal(
     'T3-48: the expected-values digest is canonical_hash of {item_id: '
     'final value} (as Decimal, its text, or quantised to the declared '
-    'places); the format is the author\'s proposal')
+    'places), or of {item_id: {final, derivable, required_operation}} '
+    '(what scoring reads of each result); the format is the author\'s '
+    'proposal')
 @pytest.mark.finding('T3-48')
 @pytest.mark.req('R1.1')
 def test_run_seal_record_binds_expected_values(runner):
@@ -261,7 +267,13 @@ def test_run_seal_record_binds_expected_values(runner):
     places = Decimal(10) ** -int(json.loads((EXAMPLE / 'config.json')
                                             .read_text('utf-8'))
                                  ['quantisation']['places'])
+    results = true_expected_values(EXAMPLE, whole=True)
     candidates = {
+        canonical_hash({k: {'final': str(r['final']),
+                            'derivable': r.get('derivable', True),
+                            'required_operation':
+                                r.get('required_operation')}
+                        for k, r in results.items()}),
         canonical_hash(values),
         canonical_hash({k: str(v) for k, v in values.items()}),
         canonical_hash({k: str(Decimal(v).quantize(places))

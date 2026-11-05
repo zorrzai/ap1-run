@@ -88,6 +88,12 @@ def files(tmp_path):
                 'calculator_path': paths['calculator']})
 
 
+def digest_entry(final, derivable=True, required_operation=None):
+    """One item of the expected-values digest (T3-48)."""
+    return {'final': final, 'derivable': derivable,
+            'required_operation': required_operation}
+
+
 def make_seal(files, config=CONFIG, **kwargs):
     """seal() over the files, with the AP-1 text unless kwargs say."""
     kwargs = {'ap1_text_path': files.paths['ap1_text'], **kwargs}
@@ -189,13 +195,35 @@ def test_seal_hash_binds_the_environment(files, frozen, monkeypatch, field):
 
 @pytest.mark.req('R1.1')
 def test_seal_expected_values_hashed_canonically(files, frozen):
-    # T3-48: each item's final value, Decimals as their exact strings
-    # (the format step 4's binding test computes on its own).
-    values = {'Q02': {'final': Decimal('1.50'), 'derivable': True},
+    # T3-48: for each item what scoring reads of its result: the final
+    # value (a Decimal as its exact string), whether it is derivable (VOID
+    # otherwise; true by default) and its required operation.
+    values = {'Q02': {'final': Decimal('1.50'), 'derivable': True,
+                      'required_operation': 'calculator', 'x': 1},
               'Q01': {'final': None, 'derivable': False}}
     record = make_seal(files, expected_values=values)
-    assert record['expected_values_hash'] == canon(
-        {'Q01': None, 'Q02': '1.50'})
+    assert record['expected_values_hash'] == canon({
+        'Q01': {'final': None, 'derivable': False,
+                'required_operation': None},
+        'Q02': {'final': '1.50', 'derivable': True,
+                'required_operation': 'calculator'}})
+
+
+@pytest.mark.finding('T3-48')
+@pytest.mark.req('R1.1')
+@pytest.mark.parametrize('change', [
+    {'derivable': False}, {'required_operation': 'none'},
+    {'final': Decimal('1.51')}])
+def test_seal_expected_values_digest_binds_what_scoring_reads(files, frozen,
+                                                              change):
+    # Two ground truths that differ only in derivable (VOID or scored) or
+    # in the required operation (the D7 evidence) are different expected
+    # values, as they are for the final.
+    base = {'final': Decimal('1.50'), 'derivable': True,
+            'required_operation': 'calculator'}
+    one = make_seal(files, expected_values={'Q01': base})
+    other = make_seal(files, expected_values={'Q01': dict(base, **change)})
+    assert one['expected_values_hash'] != other['expected_values_hash']
 
 
 def test_seal_empty_expected_values_are_sealed_as_such(files, frozen):
@@ -464,8 +492,8 @@ def test_verify_seal_expected_values_compared_when_given(files, frozen):
         verify(record, files, expected_values=other)
     assert str(exc.value) == (
         "seal verification failed:\n  expected_values: "
-        f"sealed={canon({'Q01': '2'})!r}, "
-        f"current={canon({'Q01': '3'})!r}")
+        f"sealed={canon({'Q01': digest_entry('2')})!r}, "
+        f"current={canon({'Q01': digest_entry('3')})!r}")
 
 
 # -- perturbation_check -----------------------------------------------------

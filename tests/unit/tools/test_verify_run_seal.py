@@ -710,7 +710,9 @@ def test_verify_run_expected_values_recomputed_from_the_module(
     _, failures = vrs.verify_run(str(run_dir))
     assert failures == [('expected_values_hash', 'sealed=%s, recomputed=%s'
                          % (record['expected_values_hash'],
-                            canonical_hash({'Q01': '2'})))]
+                            canonical_hash({'Q01': {
+                                'final': '2', 'derivable': True,
+                                'required_operation': None}})))]
 
 
 def test_verify_run_expected_values_module_may_import_its_neighbours(
