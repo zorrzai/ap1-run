@@ -35,16 +35,19 @@ real adapter and HTTP transport:
   give the runner command-line `args`, make `copy_paths` inside the copy
   (`{"from": "to"}`, after the config edits), and name the `output_dir` the
   outputs are read from; the default `output/` must then stay empty
-  (`default_output.txt`). `copy_paths`, `output_dir` and `copy_output`
-  (published runs copied into the copy's `output/`) need a scratch copy.
+  (`default_output.txt`). `crlf_paths` lists files given CRLF line endings
+  in the copy, made at setup so that git's line-ending handling cannot
+  change them. `copy_paths`, `output_dir`, `copy_output` (published runs
+  copied into the copy's `output/`) and `crlf_paths` need a scratch copy.
 - **Scratch copy.** A scenario that sets `"scratch_copy"` (its value says
   why) runs in a scratch copy of the repository, without `.git` and
-  `output/`, instead of the real tree. Three do: `cli_paths` (it checks that
+  `output/`, instead of the real tree. Four do: `cli_paths` (it checks that
   the default `output/` stays empty, which needs a disposable one),
   `tool_generate_findings` (the tool writes `findings/FINDINGS.md` at a
   fixed path) and `clean_no_options` (with no options the runner reads
   `example/config.json` and writes to the default `output/`, so the config
-  edit and the outputs need a disposable tree).
+  edit and the outputs need a disposable tree) and `crlf_ground_truth` (it
+  turns a tracked file to CRLF).
 - **No git.** Every run gets `GIT_DIR` pointing nowhere. The runner
   cross-checks `VERSION` against git `HEAD` and records `runner_modified`;
   the golden output pins a run without git (as in a copy without `.git`),
@@ -174,6 +177,7 @@ and `run_all_tests.py` records the new count in the same commit.
 | `t3_38_unknown_tool` | **T3-38**: an unoffered tool trips the FATAL consistency check; no report |
 | `t3_39_crash` | **T3-39**: a non-string expression crashes the run |
 | `non_ascii_config` | a decline marker with U+2019 in the resolved config: the config hash's UTF-8 rule through the real seal |
+| `crlf_ground_truth` | `clean` with `example/ground_truth_example.py` in CRLF bytes, as the September seals hashed it: `ground_truth_hash` is theirs (`033ce73d…`), and a runner that read sealed inputs or source files in text mode fails the hash oracle |
 | `decimal_trailing_zero` | `answer_tolerance` `"0.010"` in the resolved config: the config hash keeps a Decimal's exact string (a runner that normalised it to `0.01` fails the hash oracle) |
 | `seal_refused` | AP-1 text hash mismatch: SealError before any request |
 | `config_no_tools` | config without tools: exit 1 |

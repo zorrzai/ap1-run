@@ -1,0 +1,10 @@
+{
+  "description": "The clean run with the ground-truth module in CRLF bytes, as the published September seals hashed it (FINDINGS_ERRATA N2): its ground_truth_hash is theirs, 033ce73d…. The seal hashes a file's raw bytes; the module is also a .py file the runner source hash covers. A runner that read either in text mode would hash the LF form and fail the hash oracle.",
+  "seal_attempts": 1,
+  "seal_records": 1,
+  "exercises": ["file hashes of raw bytes (R0.4.3)", "a sealed input with CRLF line endings", "runner_source_hash over a CRLF .py file"],
+  "scratch_copy": "Runs in a scratch copy: the CRLF module is made there, at the sealed default path example/ground_truth_example.py, which in the real tree is a tracked LF file.",
+  "extends": "clean",
+  "config": {"repeat_count": "1"},
+  "crlf_paths": ["example/ground_truth_example.py"]
+}

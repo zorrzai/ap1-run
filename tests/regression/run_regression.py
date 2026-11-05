@@ -25,7 +25,8 @@ config (written to a temporary directory) with --config and a temporary
 --output-dir, so it never writes under the repository. A scenario that
 sets "scratch_copy" (with the reason) runs instead in a scratch copy of
 the repository (without .git and output/): one that writes files at fixed
-repository paths, or checks that the default output/ stays untouched.
+repository paths, checks that the default output/ stays untouched, or
+changes a tracked file (crlf_paths).
 Either way git is hidden from the run (GIT_DIR points nowhere), as in a
 copy without .git, so the result does not depend on the checkout's state.
 
@@ -169,6 +170,18 @@ def make_copy(scenario):
             shutil.copytree(src, dst)
         else:
             shutil.copyfile(src, dst)
+    # Files given CRLF line endings in the copy (every line ending, from
+    # LF or CRLF), made here rather than committed so that git's
+    # line-ending handling on any platform cannot change them.
+    for rel in scenario.get('crlf_paths', []):
+        path = os.path.join(tree, *rel.split('/'))
+        with open(path, 'rb') as f:
+            data = f.read()
+        crlf = data.replace(b'\r\n', b'\n').replace(b'\n', b'\r\n')
+        if b'\r\n' not in crlf:
+            raise RuntimeError(f'crlf_paths: {rel} has no line endings')
+        with open(path, 'wb') as f:
+            f.write(crlf)
     return copy_dir, tree
 
 
@@ -220,7 +233,8 @@ def run_in_tree(name, scenario, coverage_dir):
     the tree (the config from a temporary copy when the scenario edits
     it) and writes to a temporary run directory, which stands where the
     scratch copy's root stood: <RUNDIR>/output/."""
-    copy_only = {'copy_paths', 'output_dir', 'copy_output'} & set(scenario)
+    copy_only = ({'copy_paths', 'output_dir', 'copy_output', 'crlf_paths'}
+                 & set(scenario))
     if copy_only:
         raise RuntimeError(f'{name}: {", ".join(sorted(copy_only))} '
                            'need "scratch_copy"')
