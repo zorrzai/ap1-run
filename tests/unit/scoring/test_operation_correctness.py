@@ -113,7 +113,6 @@ def test_evaluate_expression_caret_is_power_with_power_precedence():
     assert abs(r - D('0.0196')) < D('0.001')
 
 
-@PROVISIONAL
 @pytest.mark.finding('T3-77')
 def test_evaluate_expression_pi_and_e_at_context_precision():
     # R0.4: never through float. evaluate_expression runs in
@@ -127,7 +126,6 @@ def test_evaluate_expression_pi_and_e_at_context_precision():
             assert evaluate_expression('e') == e_50
 
 
-@PROVISIONAL
 @pytest.mark.finding('T3-77')
 @pytest.mark.parametrize('expression, value', [
     ('round(2.5)', '3'), ('round(-2.5)', '-3'), ('round(2.4)', '2'),
@@ -147,7 +145,6 @@ def test_evaluate_expression_floor_division_and_mod_truncate_toward_zero():
     assert evaluate_expression('-7 % 3') == D('-1')
 
 
-@PROVISIONAL
 @pytest.mark.finding('T3-60')
 def test_evaluate_expression_result_does_not_depend_on_context_precision():
     # T3-60 fixed: the walker runs in numeric.DECIMAL_CONTEXT (precision

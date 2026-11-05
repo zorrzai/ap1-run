@@ -402,10 +402,6 @@ def test_send_transport_error_text_is_masked(transport):
 
 @pytest.mark.finding('S3-G1-21')
 @pytest.mark.req('R0.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-21: a sampling key named like a body field '
-                          'overwrites it; the request record disagrees with '
-                          'what was sent')
 @pytest.mark.parametrize('key', ['model', 'messages', 'tools'])
 def test_send_sampling_key_cannot_overwrite_body_field(transport, key):
     # SPEC R0.2: the request record is "the request AS SENT". A sampling
