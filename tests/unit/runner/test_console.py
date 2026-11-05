@@ -297,6 +297,9 @@ def test_run_report_wrong_operation_in_unreadable_or_no_figure_not_item_wrong(
     assert line.split()[-1] == '0'
 
 
+@pytest.mark.proposal(
+    'T3-80: the 3h2 heading laid out like the others; a presentation '
+    'choice')
 @pytest.mark.finding('T3-80')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-80: section 3h2 prints a literal backslash-n')
@@ -331,6 +334,9 @@ def test_run_report_3h_ev0_execution_not_in_rate(capsys):
     assert '0/1 failures' in text, text
 
 
+@pytest.mark.proposal(
+    'T3-11: n counts questions, not executions; no decision covers what n '
+    'counts')
 @pytest.mark.finding('T3-11')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-11: console 3h pools repeats as n')

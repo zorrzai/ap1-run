@@ -512,6 +512,9 @@ def extract_without_raising(expression):
         return None, e
 
 
+@pytest.mark.proposal(
+    'T3-39/S3-G4-5: a boolean literal is not an operand (the boolean '
+    'cases); proposed, not decided')
 @pytest.mark.finding('T3-39')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-39: a boolean literal in the expression raises')

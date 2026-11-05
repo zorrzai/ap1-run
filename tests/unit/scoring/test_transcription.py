@@ -282,6 +282,9 @@ def test_transcription_declared_half_up_policy_decides_the_tie(
     assert r['outcome'] == expected_outcome
 
 
+@pytest.mark.proposal(
+    "V12-n: v1.2 behaviour alongside v1.3 is the author's proposal; field "
+    "and key names are the fix's")
 @pytest.mark.finding('V12-6')
 @pytest.mark.req('R2.5')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -299,6 +302,9 @@ def test_transcription_licensed_rounding_is_exact_and_flagged_rounded():
     assert r.get('rounded_under_declared_policy') is True
 
 
+@pytest.mark.proposal(
+    "V12-n: v1.2 behaviour alongside v1.3 is the author's proposal; field "
+    "and key names are the fix's")
 @pytest.mark.finding('V12-6')
 @pytest.mark.req('R2.5')
 @pytest.mark.xfail(strict=True, raises=AssertionError,

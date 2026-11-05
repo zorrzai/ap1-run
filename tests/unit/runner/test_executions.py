@@ -587,6 +587,9 @@ def test_score_execution_accuracy_uses_declared_rounding(capsys):
     assert f.all_accuracy_results[0]['outcome'] == 'CORRECT'
 
 
+@pytest.mark.proposal(
+    "V12-n: v1.2 behaviour alongside v1.3 is the author's proposal; field "
+    "and key names are the fix's")
 @pytest.mark.finding('V12-6')
 @pytest.mark.req('R2.5')
 @pytest.mark.xfail(strict=True, raises=AssertionError,

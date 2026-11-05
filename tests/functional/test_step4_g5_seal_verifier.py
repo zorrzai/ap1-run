@@ -280,6 +280,9 @@ def test_run_ground_truth_executed_from_other_file_refused_or_sealed(
 
 # -- T3-30: the environment is recorded in the seal ---------------------------
 
+@pytest.mark.proposal(
+    'T3-30/T3-70: the environment recorded in the seal as separate '
+    'fields; a proposed design')
 @pytest.mark.finding('T3-30', 'T3-70')
 @pytest.mark.req('R1.1')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -301,6 +304,9 @@ def test_run_seal_record_carries_environment_fields(runner, fixture_dir):
 
 # -- V12-4: the AP-1 text is chosen per version ----------------------------
 
+@pytest.mark.proposal(
+    "V12-n: v1.2 behaviour alongside v1.3 is the author's proposal; field "
+    "and key names are the fix's")
 @pytest.mark.finding('V12-4')
 @pytest.mark.req('R1.1')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -319,6 +325,9 @@ def test_run_v12_config_seals_the_v12_text(runner, fixture_dir):
     assert result.seals[0]['ap1_text_hash'] == V12_HASH
 
 
+@pytest.mark.proposal(
+    "V12-n: v1.2 behaviour alongside v1.3 is the author's proposal; field "
+    "and key names are the fix's")
 @pytest.mark.finding('V12-4', 'T3-68')
 @pytest.mark.req('R1.1')
 @pytest.mark.parametrize('declared', ['placeholder', ''])

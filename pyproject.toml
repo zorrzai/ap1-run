@@ -38,5 +38,6 @@ addopts = ["--strict-markers", "--import-mode=importlib"]
 filterwarnings = ["ignore:VERSION file says:UserWarning"]
 markers = [
     "req(*ids): the requirement IDs a test checks, e.g. @pytest.mark.req('R2.4')",
+    "proposal(reason): the expected behaviour rests on the author's proposal, not on SPEC, AP-1 or a maintainer decision (DEC-n); the reason names the choice. Select with -m proposal",
     "finding(*ids): the test concerns a known finding, e.g. @pytest.mark.finding('T3-2'). Without xfail it pins today's behaviour (the fix changes it); with xfail(strict=True) it states the correct behaviour (the fix removes the xfail)",
 ]
