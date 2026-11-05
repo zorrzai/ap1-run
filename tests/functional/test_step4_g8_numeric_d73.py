@@ -1,4 +1,4 @@
-"""Step 4, group g8-numeric-d73: end-to-end tests of the correct behaviour
+"""Step 4: end-to-end tests of the correct behaviour
 for D7.3 transcription and numeric parsing.
 
 Each test runs the real runner (ap1_run.run.main) in-process against the
