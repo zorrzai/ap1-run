@@ -11,6 +11,8 @@ Version DOI: 10.5281/zenodo.21755443
 
 ## Item 1: Q02, repeat 1 — Scorer 1
 
+Execution id: `027cc0a8be96`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -101,6 +103,8 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 
 ## Item 1: Q02, repeat 1 — Scorer 2
+
+Execution id: `027cc0a8be96`
 
 ### Question
 
@@ -193,6 +197,8 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 2: Q02, repeat 2 — Scorer 1
 
+Execution id: `b34aedda5d62`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -283,6 +289,8 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 
 ## Item 2: Q02, repeat 2 — Scorer 2
+
+Execution id: `b34aedda5d62`
 
 ### Question
 
@@ -375,6 +383,8 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 3: Q03, repeat 1 — Scorer 1
 
+Execution id: `78332b9bbe0f`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -465,6 +475,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 3: Q03, repeat 1 — Scorer 2
+
+Execution id: `78332b9bbe0f`
 
 ### Question
 
@@ -557,6 +569,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 4: Q03, repeat 2 — Scorer 1
 
+Execution id: `6ea6e300f23a`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -648,6 +662,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 4: Q03, repeat 2 — Scorer 2
 
+Execution id: `6ea6e300f23a`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -738,6 +754,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 5: Q07, repeat 1 — Scorer 1
+
+Execution id: `1d39a44c89f9`
 
 ### Question
 
@@ -833,6 +851,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 5: Q07, repeat 1 — Scorer 2
 
+Execution id: `1d39a44c89f9`
+
 ### Question
 
 > What is the quarterly net growth of the investment account after fees?
@@ -926,6 +946,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 6: Q07, repeat 2 — Scorer 1
+
+Execution id: `7e97473190f0`
 
 ### Question
 
@@ -1021,6 +1043,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 6: Q07, repeat 2 — Scorer 2
 
+Execution id: `7e97473190f0`
+
 ### Question
 
 > What is the quarterly net growth of the investment account after fees?
@@ -1115,6 +1139,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 7: Q02, repeat 1 — Scorer 1
 
+Execution id: `e1147fbedade`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -1205,6 +1231,8 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 
 ## Item 7: Q02, repeat 1 — Scorer 2
+
+Execution id: `e1147fbedade`
 
 ### Question
 
@@ -1297,6 +1325,8 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 8: Q02, repeat 2 — Scorer 1
 
+Execution id: `4a20c1bcf15a`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -1387,6 +1417,8 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 
 ## Item 8: Q02, repeat 2 — Scorer 2
+
+Execution id: `4a20c1bcf15a`
 
 ### Question
 
@@ -1479,6 +1511,8 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 9: Q03, repeat 1 — Scorer 1
 
+Execution id: `9e388d9b30da`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -1569,6 +1603,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 9: Q03, repeat 1 — Scorer 2
+
+Execution id: `9e388d9b30da`
 
 ### Question
 
@@ -1661,6 +1697,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 10: Q03, repeat 2 — Scorer 1
 
+Execution id: `50abca6c1d78`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -1752,6 +1790,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 10: Q03, repeat 2 — Scorer 2
 
+Execution id: `50abca6c1d78`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -1842,6 +1882,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 11: Q07, repeat 1 — Scorer 1
+
+Execution id: `876f5b77af7a`
 
 ### Question
 
@@ -1937,6 +1979,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 11: Q07, repeat 1 — Scorer 2
 
+Execution id: `876f5b77af7a`
+
 ### Question
 
 > What is the quarterly net growth of the investment account after fees?
@@ -2031,6 +2075,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 12: Q07, repeat 2 — Scorer 1
 
+Execution id: `35028e9c0f91`
+
 ### Question
 
 > What is the quarterly net growth of the investment account after fees?
@@ -2124,6 +2170,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 12: Q07, repeat 2 — Scorer 2
+
+Execution id: `35028e9c0f91`
 
 ### Question
 

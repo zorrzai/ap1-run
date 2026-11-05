@@ -11,6 +11,8 @@ Version DOI: 10.5281/zenodo.21755443
 
 ## Item 1: Q01, repeat 1 — Scorer 1
 
+Execution id: `9657472877ab`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -104,6 +106,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 1: Q01, repeat 1 — Scorer 2
+
+Execution id: `9657472877ab`
 
 ### Question
 
@@ -199,6 +203,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 2: Q01, repeat 2 — Scorer 1
 
+Execution id: `035135e138e2`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -293,6 +299,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 2: Q01, repeat 2 — Scorer 2
 
+Execution id: `035135e138e2`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -386,6 +394,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 3: Q02, repeat 1 — Scorer 1
+
+Execution id: `623986c2ca1a`
 
 ### Question
 
@@ -487,6 +497,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 3: Q02, repeat 1 — Scorer 2
 
+Execution id: `623986c2ca1a`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -586,6 +598,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 4: Q02, repeat 2 — Scorer 1
+
+Execution id: `5952789464a2`
 
 ### Question
 
@@ -687,6 +701,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 4: Q02, repeat 2 — Scorer 2
 
+Execution id: `5952789464a2`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -786,6 +802,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 5: Q03, repeat 1 — Scorer 1
+
+Execution id: `5aa10bfe81c4`
 
 ### Question
 
@@ -887,6 +905,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 5: Q03, repeat 1 — Scorer 2
 
+Execution id: `5aa10bfe81c4`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -986,6 +1006,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 6: Q03, repeat 2 — Scorer 1
+
+Execution id: `d6da1af7a333`
 
 ### Question
 
@@ -1087,6 +1109,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 6: Q03, repeat 2 — Scorer 2
 
+Execution id: `d6da1af7a333`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -1187,6 +1211,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 7: Q04, repeat 1 — Scorer 1
 
+Execution id: `f60ea387193e`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -1282,6 +1308,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 7: Q04, repeat 1 — Scorer 2
+
+Execution id: `f60ea387193e`
 
 ### Question
 
@@ -1379,6 +1407,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 8: Q04, repeat 2 — Scorer 1
 
+Execution id: `baf189bc062c`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -1474,6 +1504,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 8: Q04, repeat 2 — Scorer 2
+
+Execution id: `baf189bc062c`
 
 ### Question
 
@@ -1571,6 +1603,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 9: Q01, repeat 1 — Scorer 1
 
+Execution id: `68ca13754aa9`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -1664,6 +1698,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 9: Q01, repeat 1 — Scorer 2
+
+Execution id: `68ca13754aa9`
 
 ### Question
 
@@ -1759,6 +1795,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 10: Q01, repeat 2 — Scorer 1
 
+Execution id: `c5a526cbc51c`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -1853,6 +1891,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 10: Q01, repeat 2 — Scorer 2
 
+Execution id: `c5a526cbc51c`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -1946,6 +1986,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 11: Q02, repeat 1 — Scorer 1
+
+Execution id: `3c79b2b8cfc1`
 
 ### Question
 
@@ -2047,6 +2089,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 11: Q02, repeat 1 — Scorer 2
 
+Execution id: `3c79b2b8cfc1`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -2146,6 +2190,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 12: Q02, repeat 2 — Scorer 1
+
+Execution id: `9e363e6a6a64`
 
 ### Question
 
@@ -2247,6 +2293,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 12: Q02, repeat 2 — Scorer 2
 
+Execution id: `9e363e6a6a64`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -2346,6 +2394,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 13: Q03, repeat 1 — Scorer 1
+
+Execution id: `228e3cbef326`
 
 ### Question
 
@@ -2447,6 +2497,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 13: Q03, repeat 1 — Scorer 2
 
+Execution id: `228e3cbef326`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -2546,6 +2598,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 14: Q03, repeat 2 — Scorer 1
+
+Execution id: `f55bbe6c2a0e`
 
 ### Question
 
@@ -2647,6 +2701,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 14: Q03, repeat 2 — Scorer 2
 
+Execution id: `f55bbe6c2a0e`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -2747,6 +2803,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 15: Q04, repeat 1 — Scorer 1
 
+Execution id: `3985f557dbbc`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -2842,6 +2900,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 15: Q04, repeat 1 — Scorer 2
+
+Execution id: `3985f557dbbc`
 
 ### Question
 
@@ -2939,6 +2999,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 16: Q04, repeat 2 — Scorer 1
 
+Execution id: `d210059e218a`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -3034,6 +3096,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 16: Q04, repeat 2 — Scorer 2
+
+Execution id: `d210059e218a`
 
 ### Question
 
@@ -3131,6 +3195,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 17: Q08, repeat 1 — Scorer 1
 
+Execution id: `23c6f6e34c64`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -3217,6 +3283,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 17: Q08, repeat 1 — Scorer 2
+
+Execution id: `23c6f6e34c64`
 
 ### Question
 
@@ -3305,6 +3373,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 18: Q08, repeat 2 — Scorer 1
 
+Execution id: `9b5320b83730`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -3391,6 +3461,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 18: Q08, repeat 2 — Scorer 2
+
+Execution id: `9b5320b83730`
 
 ### Question
 

@@ -11,6 +11,8 @@ Version DOI: 10.5281/zenodo.21755443
 
 ## Item 1: Q01, repeat 1 — Scorer 1
 
+Execution id: `10782fdf5f2a`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -95,6 +97,8 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 
 ## Item 1: Q01, repeat 1 — Scorer 2
+
+Execution id: `10782fdf5f2a`
 
 ### Question
 

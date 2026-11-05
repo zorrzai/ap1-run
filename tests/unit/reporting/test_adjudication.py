@@ -629,8 +629,10 @@ def test_sheet_sections_in_order():
         '### Scoring Rubric (AP-1 v1.3 \u00a76.8)\n',
         '### Release Coverage Finding\n', '### Reference Values\n')]
     assert order == sorted(order)
+    # the execution id (T3-36) sits between the heading and the question
     assert text.startswith(
-        '\n## Item 1: Q01 \u2014 Scorer 1\n\n### Question')
+        '\n## Item 1: Q01 \u2014 Scorer 1\n\nExecution id: `'
+        f'{adjudication.execution_id(record())}`\n\n### Question')
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
@@ -679,6 +681,36 @@ def test_sheets_each_sheet_names_its_repeat():
     headers = [s.splitlines()[0] for s in sheets_list(text)]
     assert [bool(re.search(r'\b[Rr]epeat\W{0,3}%d\b' % n, h))
             for h, n in zip(headers, (3, 3, 7, 7))] == [True] * 4, headers
+
+
+@pytest.mark.finding('T3-36')
+@pytest.mark.req('AP-1 §13.8', 'R3.2')
+def test_sheets_give_each_execution_a_unique_id_that_does_not_name_the_arm():
+    # Two executions of the same item and repeat in different arms (run F:
+    # "Q07, repeat 7" was both Item 57 and Item 179) get different ids, so
+    # a scorer's mark is unambiguous; both scorer copies of one execution
+    # carry the same id; the id does not print the arm.
+    recs = [record('Q07', 'base', repeat=7, seal_hash='s1'),
+            record('Q07', 'instruction_removed', repeat=7, seal_hash='s1')]
+    text = sheets_for(recs)
+    ids = re.findall(r'\nExecution id: `([0-9a-f]{12})`\n', text)
+    assert len(ids) == 4
+    assert ids[0] == ids[1] and ids[2] == ids[3] and ids[0] != ids[2]
+    assert ids == [adjudication.execution_id(r) for r in recs
+                   for _ in (1, 2)]
+    assert 'instruction_removed' not in text and 'base' not in ids[0]
+
+
+@pytest.mark.finding('T3-36')
+def test_execution_id_is_determined_by_the_execution_and_the_seal():
+    one = record('Q07', 'base', repeat=7, seal_hash='s1')
+    assert adjudication.execution_id(one) == adjudication.execution_id(
+        dict(one, figure_outcome='UNMEASURABLE', response_received={'x': 1}))
+    for other in (dict(one, item_id='Q08'), dict(one, repeat=8),
+                  dict(one, condition='instruction_removed'),
+                  dict(one, seal_hash='s2')):
+        assert adjudication.execution_id(other) != \
+            adjudication.execution_id(one)
 
 
 @pytest.mark.finding('T3-36')

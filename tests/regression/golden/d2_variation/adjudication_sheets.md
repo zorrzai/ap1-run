@@ -11,6 +11,8 @@ Version DOI: 10.5281/zenodo.21755443
 
 ## Item 1: Q02, repeat 3 — Scorer 1
 
+Execution id: `a6796a004786`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -110,6 +112,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 1: Q02, repeat 3 — Scorer 2
+
+Execution id: `a6796a004786`
 
 ### Question
 
@@ -211,6 +215,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 2: Q02, repeat 3 — Scorer 1
 
+Execution id: `abf75d1f90bc`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -310,6 +316,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 2: Q02, repeat 3 — Scorer 2
+
+Execution id: `abf75d1f90bc`
 
 ### Question
 

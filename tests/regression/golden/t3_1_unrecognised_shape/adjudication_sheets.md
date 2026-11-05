@@ -11,6 +11,8 @@ Version DOI: 10.5281/zenodo.21755443
 
 ## Item 1: Q01, repeat 1 — Scorer 1
 
+Execution id: `e2e3e5db04e2`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -104,6 +106,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 1: Q01, repeat 1 — Scorer 2
+
+Execution id: `e2e3e5db04e2`
 
 ### Question
 
@@ -199,6 +203,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 2: Q01, repeat 2 — Scorer 1
 
+Execution id: `2a5025bee42e`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -293,6 +299,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 2: Q01, repeat 2 — Scorer 2
 
+Execution id: `2a5025bee42e`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -386,6 +394,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 3: Q02, repeat 1 — Scorer 1
+
+Execution id: `f12fb5661809`
 
 ### Question
 
@@ -487,6 +497,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 3: Q02, repeat 1 — Scorer 2
 
+Execution id: `f12fb5661809`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -586,6 +598,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 4: Q02, repeat 2 — Scorer 1
+
+Execution id: `bd23801dafd2`
 
 ### Question
 
@@ -687,6 +701,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 4: Q02, repeat 2 — Scorer 2
 
+Execution id: `bd23801dafd2`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -786,6 +802,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 5: Q03, repeat 1 — Scorer 1
+
+Execution id: `6069c5a4b9f4`
 
 ### Question
 
@@ -887,6 +905,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 5: Q03, repeat 1 — Scorer 2
 
+Execution id: `6069c5a4b9f4`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -986,6 +1006,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 6: Q03, repeat 2 — Scorer 1
+
+Execution id: `bca4171111c2`
 
 ### Question
 
@@ -1087,6 +1109,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 6: Q03, repeat 2 — Scorer 2
 
+Execution id: `bca4171111c2`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -1187,6 +1211,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 7: Q01, repeat 1 — Scorer 1
 
+Execution id: `ec9336a6da35`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -1271,6 +1297,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 7: Q01, repeat 1 — Scorer 2
+
+Execution id: `ec9336a6da35`
 
 ### Question
 
@@ -1357,6 +1385,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 8: Q01, repeat 2 — Scorer 1
 
+Execution id: `6dc7a0d4cb85`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -1442,6 +1472,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 8: Q01, repeat 2 — Scorer 2
 
+Execution id: `6dc7a0d4cb85`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -1526,6 +1558,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 9: Q02, repeat 1 — Scorer 1
+
+Execution id: `46caa8774b7c`
 
 ### Question
 
@@ -1618,6 +1652,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 9: Q02, repeat 1 — Scorer 2
 
+Execution id: `46caa8774b7c`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -1708,6 +1744,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 10: Q02, repeat 2 — Scorer 1
+
+Execution id: `2021d7b660d9`
 
 ### Question
 
@@ -1800,6 +1838,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 10: Q02, repeat 2 — Scorer 2
 
+Execution id: `2021d7b660d9`
+
 ### Question
 
 > What is the available credit remaining on the credit card?
@@ -1890,6 +1930,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 11: Q03, repeat 1 — Scorer 1
+
+Execution id: `cb4326097cfb`
 
 ### Question
 
@@ -1982,6 +2024,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 11: Q03, repeat 1 — Scorer 2
 
+Execution id: `cb4326097cfb`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -2072,6 +2116,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 12: Q03, repeat 2 — Scorer 1
+
+Execution id: `731179a4aff7`
 
 ### Question
 
@@ -2164,6 +2210,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 12: Q03, repeat 2 — Scorer 2
 
+Execution id: `731179a4aff7`
+
 ### Question
 
 > What is the monthly interest charge on the credit card?
@@ -2255,6 +2303,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 13: Q04, repeat 1 — Scorer 1
 
+Execution id: `e025075d457c`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -2341,6 +2391,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 13: Q04, repeat 1 — Scorer 2
+
+Execution id: `e025075d457c`
 
 ### Question
 
@@ -2429,6 +2481,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 14: Q04, repeat 2 — Scorer 1
 
+Execution id: `c72dde677622`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -2516,6 +2570,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 14: Q04, repeat 2 — Scorer 2
 
+Execution id: `c72dde677622`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -2602,6 +2658,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 15: Q05, repeat 1 — Scorer 1
+
+Execution id: `8c6ad498d9d2`
 
 ### Question
 
@@ -2694,6 +2752,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 15: Q05, repeat 1 — Scorer 2
 
+Execution id: `8c6ad498d9d2`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -2784,6 +2844,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 16: Q05, repeat 2 — Scorer 1
+
+Execution id: `8202746367f4`
 
 ### Question
 
@@ -2876,6 +2938,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 16: Q05, repeat 2 — Scorer 2
 
+Execution id: `8202746367f4`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -2967,6 +3031,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 17: Q06, repeat 1 — Scorer 1
 
+Execution id: `a1b0bdf19aba`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -3051,6 +3117,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 17: Q06, repeat 1 — Scorer 2
+
+Execution id: `a1b0bdf19aba`
 
 ### Question
 
@@ -3137,6 +3205,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 18: Q06, repeat 2 — Scorer 1
 
+Execution id: `1a6428e5f981`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -3221,6 +3291,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 18: Q06, repeat 2 — Scorer 2
+
+Execution id: `1a6428e5f981`
 
 ### Question
 
@@ -3307,6 +3379,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 19: Q07, repeat 1 — Scorer 1
 
+Execution id: `173f23720b69`
+
 ### Question
 
 > What is the quarterly net growth of the investment account after fees?
@@ -3391,6 +3465,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 19: Q07, repeat 1 — Scorer 2
+
+Execution id: `173f23720b69`
 
 ### Question
 
@@ -3477,6 +3553,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 20: Q07, repeat 2 — Scorer 1
 
+Execution id: `0c67f90db34a`
+
 ### Question
 
 > What is the quarterly net growth of the investment account after fees?
@@ -3562,6 +3640,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 20: Q07, repeat 2 — Scorer 2
 
+Execution id: `0c67f90db34a`
+
 ### Question
 
 > What is the quarterly net growth of the investment account after fees?
@@ -3646,6 +3726,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 21: Q08, repeat 1 — Scorer 1
+
+Execution id: `42bdc5e54d90`
 
 ### Question
 
@@ -3734,6 +3816,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 21: Q08, repeat 1 — Scorer 2
 
+Execution id: `42bdc5e54d90`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -3820,6 +3904,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 22: Q08, repeat 2 — Scorer 1
+
+Execution id: `7f014e39c6ec`
 
 ### Question
 
@@ -3908,6 +3994,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 22: Q08, repeat 2 — Scorer 2
 
+Execution id: `7f014e39c6ec`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -3994,6 +4082,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 23: Q09, repeat 1 — Scorer 1
+
+Execution id: `7cbec86e0181`
 
 ### Question
 
@@ -4091,6 +4181,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 23: Q09, repeat 1 — Scorer 2
 
+Execution id: `7cbec86e0181`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -4186,6 +4278,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 24: Q09, repeat 2 — Scorer 1
+
+Execution id: `ee2edbfb64a0`
 
 ### Question
 
@@ -4283,6 +4377,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 24: Q09, repeat 2 — Scorer 2
 
+Execution id: `ee2edbfb64a0`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -4379,6 +4475,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 25: Q10, repeat 1 — Scorer 1
 
+Execution id: `7d1996ce3b52`
+
 ### Question
 
 > What is the annual net growth of the investment account after all fees?
@@ -4463,6 +4561,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 25: Q10, repeat 1 — Scorer 2
+
+Execution id: `7d1996ce3b52`
 
 ### Question
 
@@ -4549,6 +4649,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 26: Q10, repeat 2 — Scorer 1
 
+Execution id: `b28aed7f81fa`
+
 ### Question
 
 > What is the annual net growth of the investment account after all fees?
@@ -4633,6 +4735,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 
 ## Item 26: Q10, repeat 2 — Scorer 2
+
+Execution id: `b28aed7f81fa`
 
 ### Question
 

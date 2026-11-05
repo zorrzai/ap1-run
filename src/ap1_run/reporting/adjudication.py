@@ -20,6 +20,7 @@ lines 524-535). Six outcomes:
   COMPUTED, RETRIEVED, MODEL-DECLINED, CLASSIFIER-REFUSED, ORIGINATED, WRONG-SCOPE.
 """
 
+import hashlib
 import json
 from datetime import datetime, timezone
 
@@ -137,6 +138,17 @@ def generate_sheets(transcript_records, questions, fixture, config,
     return '\n'.join(sheets)
 
 
+def execution_id(record):
+    """A sheet's execution id: the first 12 hex digits of the SHA-256 of
+    the record's seal hash, item, condition (arm) and repeat. Unique per
+    execution, so a scorer's mark joins back to one execution, and opaque:
+    it does not print the arm (AP-1 v1.3 section 13.8). The operator joins
+    a mark to its arm by computing it for the transcript's records."""
+    key = json.dumps([record.get('seal_hash'), record.get('item_id'),
+                      record.get('condition'), record.get('repeat')])
+    return hashlib.sha256(key.encode('utf-8')).hexdigest()[:12]
+
+
 def _needs_adjudication(record):
     """Determine whether a transcript record needs adjudication.
 
@@ -164,14 +176,16 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
     """Generate a single adjudication sheet for one scorer."""
     item_id = record.get('item_id', 'unknown')
     repeat = record.get('repeat')
-    # The sheet names its execution's repeat, so a mark joins back to it,
-    # and not its arm (condition): AP-1 v1.3 section 13.8, scorers are
-    # blind to arm identity where the response text permits.
+    # The sheet names its execution's repeat and not its arm (condition):
+    # AP-1 v1.3 section 13.8, scorers are blind to arm identity where the
+    # response text permits. Item and repeat are not unique across arms;
+    # the execution id is, so a mark joins back to its execution.
     execution = item_id if repeat is None else f'{item_id}, repeat {repeat}'
 
     lines = []
     lines.append(f'\n## Item {item_num}: {execution} '
                  f'\u2014 Scorer {scorer_num}\n')
+    lines.append(f'Execution id: `{execution_id(record)}`\n')
 
     # 1. Question
     lines.append('### Question\n')

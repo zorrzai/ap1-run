@@ -11,6 +11,8 @@ Version DOI: 10.5281/zenodo.21755443
 
 ## Item 1: Q01, repeat 1 — Scorer 1
 
+Execution id: `0ce2f0170bcd`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -111,6 +113,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 1: Q01, repeat 1 — Scorer 2
+
+Execution id: `0ce2f0170bcd`
 
 ### Question
 
@@ -213,6 +217,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 2: Q01, repeat 2 — Scorer 1
 
+Execution id: `7772b0ee01ab`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -314,6 +320,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 2: Q01, repeat 2 — Scorer 2
 
+Execution id: `7772b0ee01ab`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -414,6 +422,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 3: Q09, repeat 1 — Scorer 1
+
+Execution id: `e3ebf23d18e2`
 
 ### Question
 
@@ -527,6 +537,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 3: Q09, repeat 1 — Scorer 2
 
+Execution id: `e3ebf23d18e2`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -638,6 +650,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 4: Q09, repeat 2 — Scorer 1
+
+Execution id: `b5d386bf1b7c`
 
 ### Question
 
@@ -751,6 +765,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 4: Q09, repeat 2 — Scorer 2
 
+Execution id: `b5d386bf1b7c`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -863,6 +879,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 5: Q01, repeat 1 — Scorer 1
 
+Execution id: `23502ac6148e`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -963,6 +981,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 5: Q01, repeat 1 — Scorer 2
+
+Execution id: `23502ac6148e`
 
 ### Question
 
@@ -1065,6 +1085,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 6: Q01, repeat 2 — Scorer 1
 
+Execution id: `5b4d36547b11`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -1166,6 +1188,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 6: Q01, repeat 2 — Scorer 2
 
+Execution id: `5b4d36547b11`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -1266,6 +1290,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 7: Q09, repeat 1 — Scorer 1
+
+Execution id: `2de413b4a1f6`
 
 ### Question
 
@@ -1379,6 +1405,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 7: Q09, repeat 1 — Scorer 2
 
+Execution id: `2de413b4a1f6`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -1491,6 +1519,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 8: Q09, repeat 2 — Scorer 1
 
+Execution id: `aeaded10ff0f`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -1602,6 +1632,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 8: Q09, repeat 2 — Scorer 2
+
+Execution id: `aeaded10ff0f`
 
 ### Question
 

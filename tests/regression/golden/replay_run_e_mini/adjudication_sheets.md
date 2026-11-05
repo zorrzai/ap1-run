@@ -11,6 +11,8 @@ Version DOI: 10.5281/zenodo.21755443
 
 ## Item 1: Q04, repeat 1 — Scorer 1
 
+Execution id: `379ba12c6d23`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -119,6 +121,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 1: Q04, repeat 1 — Scorer 2
+
+Execution id: `379ba12c6d23`
 
 ### Question
 
@@ -229,6 +233,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 2: Q04, repeat 2 — Scorer 1
 
+Execution id: `f0f29ba8ed9d`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -337,6 +343,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 2: Q04, repeat 2 — Scorer 2
+
+Execution id: `f0f29ba8ed9d`
 
 ### Question
 
@@ -447,6 +455,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 3: Q04, repeat 4 — Scorer 1
 
+Execution id: `aa278f06d6a9`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -554,6 +564,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 3: Q04, repeat 4 — Scorer 2
+
+Execution id: `aa278f06d6a9`
 
 ### Question
 
@@ -663,6 +675,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 4: Q04, repeat 7 — Scorer 1
 
+Execution id: `44d4e2daabfc`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -770,6 +784,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 4: Q04, repeat 7 — Scorer 2
 
+Execution id: `44d4e2daabfc`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -876,6 +892,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 5: Q04, repeat 9 — Scorer 1
+
+Execution id: `f1f817ab1ed7`
 
 ### Question
 
@@ -988,6 +1006,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 5: Q04, repeat 9 — Scorer 2
 
+Execution id: `f1f817ab1ed7`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -1099,6 +1119,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 6: Q04, repeat 12 — Scorer 1
 
+Execution id: `556a4901bccc`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -1207,6 +1229,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 6: Q04, repeat 12 — Scorer 2
+
+Execution id: `556a4901bccc`
 
 ### Question
 
@@ -1317,6 +1341,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 7: Q04, repeat 14 — Scorer 1
 
+Execution id: `a6176638768e`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -1424,6 +1450,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 7: Q04, repeat 14 — Scorer 2
 
+Execution id: `a6176638768e`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -1530,6 +1558,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 8: Q04, repeat 15 — Scorer 1
+
+Execution id: `c8b4719936ce`
 
 ### Question
 
@@ -1642,6 +1672,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 8: Q04, repeat 15 — Scorer 2
 
+Execution id: `c8b4719936ce`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -1753,6 +1785,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 9: Q04, repeat 18 — Scorer 1
 
+Execution id: `88dd638c8d3d`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -1862,6 +1896,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 9: Q04, repeat 18 — Scorer 2
+
+Execution id: `88dd638c8d3d`
 
 ### Question
 
@@ -1973,6 +2009,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 10: Q04, repeat 21 — Scorer 1
 
+Execution id: `5497634b78f0`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -2081,6 +2119,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 10: Q04, repeat 21 — Scorer 2
+
+Execution id: `5497634b78f0`
 
 ### Question
 
@@ -2191,6 +2231,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 11: Q04, repeat 23 — Scorer 1
 
+Execution id: `44e08d05503c`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -2298,6 +2340,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 11: Q04, repeat 23 — Scorer 2
 
+Execution id: `44e08d05503c`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -2404,6 +2448,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 12: Q04, repeat 24 — Scorer 1
+
+Execution id: `106c28696ff0`
 
 ### Question
 
@@ -2516,6 +2562,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 12: Q04, repeat 24 — Scorer 2
 
+Execution id: `106c28696ff0`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -2627,6 +2675,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 13: Q04, repeat 31 — Scorer 1
 
+Execution id: `c1b7a235067b`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -2735,6 +2785,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 13: Q04, repeat 31 — Scorer 2
+
+Execution id: `c1b7a235067b`
 
 ### Question
 
@@ -2845,6 +2897,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 14: Q04, repeat 32 — Scorer 1
 
+Execution id: `ea0f1e21dd48`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -2952,6 +3006,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 14: Q04, repeat 32 — Scorer 2
 
+Execution id: `ea0f1e21dd48`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -3058,6 +3114,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 15: Q04, repeat 36 — Scorer 1
+
+Execution id: `7808183c03fa`
 
 ### Question
 
@@ -3168,6 +3226,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 15: Q04, repeat 36 — Scorer 2
 
+Execution id: `7808183c03fa`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -3276,6 +3336,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 16: Q04, repeat 37 — Scorer 1
+
+Execution id: `90004be728da`
 
 ### Question
 
@@ -3387,6 +3449,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 16: Q04, repeat 37 — Scorer 2
 
+Execution id: `90004be728da`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -3497,6 +3561,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 17: Q04, repeat 38 — Scorer 1
 
+Execution id: `e7d2da17b15d`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -3604,6 +3670,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 17: Q04, repeat 38 — Scorer 2
+
+Execution id: `e7d2da17b15d`
 
 ### Question
 
@@ -3713,6 +3781,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 18: Q04, repeat 39 — Scorer 1
 
+Execution id: `359c969f6eeb`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -3821,6 +3891,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 18: Q04, repeat 39 — Scorer 2
 
+Execution id: `359c969f6eeb`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -3928,6 +4000,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 19: Q04, repeat 41 — Scorer 1
+
+Execution id: `116728a7a9d6`
 
 ### Question
 
@@ -4038,6 +4112,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 19: Q04, repeat 41 — Scorer 2
 
+Execution id: `116728a7a9d6`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -4146,6 +4222,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 20: Q04, repeat 42 — Scorer 1
+
+Execution id: `2fb7138a346b`
 
 ### Question
 
@@ -4256,6 +4334,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 20: Q04, repeat 42 — Scorer 2
 
+Execution id: `2fb7138a346b`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -4365,6 +4445,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 21: Q04, repeat 43 — Scorer 1
 
+Execution id: `83630d2701d2`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -4473,6 +4555,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 21: Q04, repeat 43 — Scorer 2
 
+Execution id: `83630d2701d2`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -4580,6 +4664,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 22: Q04, repeat 44 — Scorer 1
+
+Execution id: `455808f1a304`
 
 ### Question
 
@@ -4692,6 +4778,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 22: Q04, repeat 44 — Scorer 2
 
+Execution id: `455808f1a304`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -4803,6 +4891,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 23: Q04, repeat 45 — Scorer 1
 
+Execution id: `7264627f319c`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -4911,6 +5001,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 23: Q04, repeat 45 — Scorer 2
 
+Execution id: `7264627f319c`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -5018,6 +5110,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 24: Q04, repeat 46 — Scorer 1
+
+Execution id: `4a27d62380ed`
 
 ### Question
 
@@ -5130,6 +5224,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 24: Q04, repeat 46 — Scorer 2
 
+Execution id: `4a27d62380ed`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -5241,6 +5337,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 25: Q04, repeat 48 — Scorer 1
 
+Execution id: `e3d23df5444c`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -5350,6 +5448,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 25: Q04, repeat 48 — Scorer 2
 
+Execution id: `e3d23df5444c`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -5458,6 +5558,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 26: Q05, repeat 15 — Scorer 1
+
+Execution id: `21499bd2a16c`
 
 ### Question
 
@@ -5573,6 +5675,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 26: Q05, repeat 15 — Scorer 2
 
+Execution id: `21499bd2a16c`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -5687,6 +5791,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 27: Q05, repeat 22 — Scorer 1
 
+Execution id: `faa3a5bf92c0`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -5787,6 +5893,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 27: Q05, repeat 22 — Scorer 2
 
+Execution id: `faa3a5bf92c0`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -5886,6 +5994,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 28: Q05, repeat 28 — Scorer 1
+
+Execution id: `1117785e08cf`
 
 ### Question
 
@@ -6001,6 +6111,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 28: Q05, repeat 28 — Scorer 2
 
+Execution id: `1117785e08cf`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -6114,6 +6226,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 29: Q05, repeat 30 — Scorer 1
+
+Execution id: `ce15282c67b2`
 
 ### Question
 
@@ -6229,6 +6343,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 29: Q05, repeat 30 — Scorer 2
 
+Execution id: `ce15282c67b2`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -6342,6 +6458,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 30: Q05, repeat 36 — Scorer 1
+
+Execution id: `46fda7f814d3`
 
 ### Question
 
@@ -6457,6 +6575,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 30: Q05, repeat 36 — Scorer 2
 
+Execution id: `46fda7f814d3`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -6571,6 +6691,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 31: Q05, repeat 41 — Scorer 1
 
+Execution id: `7c0fc06c6995`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -6670,6 +6792,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 31: Q05, repeat 41 — Scorer 2
+
+Execution id: `7c0fc06c6995`
 
 ### Question
 
@@ -6771,6 +6895,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 32: Q05, repeat 46 — Scorer 1
 
+Execution id: `c7e0ae367041`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -6871,6 +6997,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 32: Q05, repeat 46 — Scorer 2
 
+Execution id: `c7e0ae367041`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -6970,6 +7098,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 33: Q07, repeat 44 — Scorer 1
+
+Execution id: `314dd02bf270`
 
 ### Question
 
@@ -7086,6 +7216,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 33: Q07, repeat 44 — Scorer 2
 
+Execution id: `314dd02bf270`
+
 ### Question
 
 > What is the quarterly net growth of the investment account after fees?
@@ -7201,6 +7333,8 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 34: Q08, repeat 1 — Scorer 1
 
+Execution id: `44489c6fa0d4`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -7296,6 +7430,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 34: Q08, repeat 1 — Scorer 2
+
+Execution id: `44489c6fa0d4`
 
 ### Question
 
@@ -7393,6 +7529,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 35: Q08, repeat 2 — Scorer 1
 
+Execution id: `dee842068a73`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -7488,6 +7626,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 35: Q08, repeat 2 — Scorer 2
+
+Execution id: `dee842068a73`
 
 ### Question
 
@@ -7585,6 +7725,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 36: Q08, repeat 3 — Scorer 1
 
+Execution id: `98f67478544f`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -7680,6 +7822,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 36: Q08, repeat 3 — Scorer 2
+
+Execution id: `98f67478544f`
 
 ### Question
 
@@ -7777,6 +7921,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 37: Q08, repeat 4 — Scorer 1
 
+Execution id: `91b4626e459c`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -7872,6 +8018,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 37: Q08, repeat 4 — Scorer 2
+
+Execution id: `91b4626e459c`
 
 ### Question
 
@@ -7969,6 +8117,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 38: Q08, repeat 5 — Scorer 1
 
+Execution id: `f4faf09d4004`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -8064,6 +8214,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 38: Q08, repeat 5 — Scorer 2
+
+Execution id: `f4faf09d4004`
 
 ### Question
 
@@ -8161,6 +8313,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 39: Q08, repeat 6 — Scorer 1
 
+Execution id: `4d590c223f3d`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -8256,6 +8410,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 39: Q08, repeat 6 — Scorer 2
+
+Execution id: `4d590c223f3d`
 
 ### Question
 
@@ -8353,6 +8509,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 40: Q08, repeat 7 — Scorer 1
 
+Execution id: `2544b45a07ef`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -8448,6 +8606,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 40: Q08, repeat 7 — Scorer 2
+
+Execution id: `2544b45a07ef`
 
 ### Question
 
@@ -8545,6 +8705,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 41: Q08, repeat 8 — Scorer 1
 
+Execution id: `816f0031342a`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -8640,6 +8802,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 41: Q08, repeat 8 — Scorer 2
+
+Execution id: `816f0031342a`
 
 ### Question
 
@@ -8737,6 +8901,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 42: Q08, repeat 9 — Scorer 1
 
+Execution id: `e1087a41e3f1`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -8832,6 +8998,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 42: Q08, repeat 9 — Scorer 2
+
+Execution id: `e1087a41e3f1`
 
 ### Question
 
@@ -8929,6 +9097,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 43: Q08, repeat 10 — Scorer 1
 
+Execution id: `511091c622d8`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -9024,6 +9194,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 43: Q08, repeat 10 — Scorer 2
+
+Execution id: `511091c622d8`
 
 ### Question
 
@@ -9121,6 +9293,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 44: Q08, repeat 11 — Scorer 1
 
+Execution id: `2dfa28d931e1`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -9216,6 +9390,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 44: Q08, repeat 11 — Scorer 2
+
+Execution id: `2dfa28d931e1`
 
 ### Question
 
@@ -9313,6 +9489,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 45: Q08, repeat 12 — Scorer 1
 
+Execution id: `80b1da86e364`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -9408,6 +9586,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 45: Q08, repeat 12 — Scorer 2
+
+Execution id: `80b1da86e364`
 
 ### Question
 
@@ -9505,6 +9685,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 46: Q08, repeat 13 — Scorer 1
 
+Execution id: `cb14b5cc1cea`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -9600,6 +9782,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 46: Q08, repeat 13 — Scorer 2
+
+Execution id: `cb14b5cc1cea`
 
 ### Question
 
@@ -9697,6 +9881,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 47: Q08, repeat 14 — Scorer 1
 
+Execution id: `862fe4ffd743`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -9792,6 +9978,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 47: Q08, repeat 14 — Scorer 2
+
+Execution id: `862fe4ffd743`
 
 ### Question
 
@@ -9889,6 +10077,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 48: Q08, repeat 15 — Scorer 1
 
+Execution id: `a21059bff6d6`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -9984,6 +10174,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 48: Q08, repeat 15 — Scorer 2
+
+Execution id: `a21059bff6d6`
 
 ### Question
 
@@ -10081,6 +10273,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 49: Q08, repeat 16 — Scorer 1
 
+Execution id: `525c23da17f2`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -10176,6 +10370,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 49: Q08, repeat 16 — Scorer 2
+
+Execution id: `525c23da17f2`
 
 ### Question
 
@@ -10273,6 +10469,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 50: Q08, repeat 17 — Scorer 1
 
+Execution id: `426409b5cdd8`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -10368,6 +10566,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 50: Q08, repeat 17 — Scorer 2
+
+Execution id: `426409b5cdd8`
 
 ### Question
 
@@ -10465,6 +10665,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 51: Q08, repeat 18 — Scorer 1
 
+Execution id: `da4ede9ff74a`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -10560,6 +10762,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 51: Q08, repeat 18 — Scorer 2
+
+Execution id: `da4ede9ff74a`
 
 ### Question
 
@@ -10657,6 +10861,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 52: Q08, repeat 19 — Scorer 1
 
+Execution id: `adbbc901f1db`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -10752,6 +10958,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 52: Q08, repeat 19 — Scorer 2
+
+Execution id: `adbbc901f1db`
 
 ### Question
 
@@ -10849,6 +11057,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 53: Q08, repeat 20 — Scorer 1
 
+Execution id: `69a756dcde58`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -10944,6 +11154,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 53: Q08, repeat 20 — Scorer 2
+
+Execution id: `69a756dcde58`
 
 ### Question
 
@@ -11041,6 +11253,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 54: Q08, repeat 21 — Scorer 1
 
+Execution id: `eb05ff10fdbd`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -11136,6 +11350,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 54: Q08, repeat 21 — Scorer 2
+
+Execution id: `eb05ff10fdbd`
 
 ### Question
 
@@ -11233,6 +11449,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 55: Q08, repeat 22 — Scorer 1
 
+Execution id: `eeddcedee0b8`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -11328,6 +11546,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 55: Q08, repeat 22 — Scorer 2
+
+Execution id: `eeddcedee0b8`
 
 ### Question
 
@@ -11425,6 +11645,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 56: Q08, repeat 23 — Scorer 1
 
+Execution id: `ade789ff3a71`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -11520,6 +11742,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 56: Q08, repeat 23 — Scorer 2
+
+Execution id: `ade789ff3a71`
 
 ### Question
 
@@ -11617,6 +11841,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 57: Q08, repeat 24 — Scorer 1
 
+Execution id: `f8d40161a112`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -11712,6 +11938,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 57: Q08, repeat 24 — Scorer 2
+
+Execution id: `f8d40161a112`
 
 ### Question
 
@@ -11809,6 +12037,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 58: Q08, repeat 25 — Scorer 1
 
+Execution id: `8aca6cb6b4dc`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -11904,6 +12134,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 58: Q08, repeat 25 — Scorer 2
+
+Execution id: `8aca6cb6b4dc`
 
 ### Question
 
@@ -12001,6 +12233,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 59: Q08, repeat 26 — Scorer 1
 
+Execution id: `23cd58fc6460`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -12096,6 +12330,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 59: Q08, repeat 26 — Scorer 2
+
+Execution id: `23cd58fc6460`
 
 ### Question
 
@@ -12193,6 +12429,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 60: Q08, repeat 27 — Scorer 1
 
+Execution id: `738b57082ebe`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -12288,6 +12526,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 60: Q08, repeat 27 — Scorer 2
+
+Execution id: `738b57082ebe`
 
 ### Question
 
@@ -12385,6 +12625,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 61: Q08, repeat 28 — Scorer 1
 
+Execution id: `c151fd20af84`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -12480,6 +12722,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 61: Q08, repeat 28 — Scorer 2
+
+Execution id: `c151fd20af84`
 
 ### Question
 
@@ -12577,6 +12821,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 62: Q08, repeat 29 — Scorer 1
 
+Execution id: `3151a849ca92`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -12672,6 +12918,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 62: Q08, repeat 29 — Scorer 2
+
+Execution id: `3151a849ca92`
 
 ### Question
 
@@ -12769,6 +13017,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 63: Q08, repeat 30 — Scorer 1
 
+Execution id: `d24317c5139f`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -12864,6 +13114,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 63: Q08, repeat 30 — Scorer 2
+
+Execution id: `d24317c5139f`
 
 ### Question
 
@@ -12961,6 +13213,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 64: Q08, repeat 31 — Scorer 1
 
+Execution id: `137a0ee9e3a8`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -13056,6 +13310,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 64: Q08, repeat 31 — Scorer 2
+
+Execution id: `137a0ee9e3a8`
 
 ### Question
 
@@ -13153,6 +13409,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 65: Q08, repeat 32 — Scorer 1
 
+Execution id: `3b6d0dc8fd4d`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -13248,6 +13506,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 65: Q08, repeat 32 — Scorer 2
+
+Execution id: `3b6d0dc8fd4d`
 
 ### Question
 
@@ -13345,6 +13605,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 66: Q08, repeat 33 — Scorer 1
 
+Execution id: `a2ac5b420e9b`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -13440,6 +13702,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 66: Q08, repeat 33 — Scorer 2
+
+Execution id: `a2ac5b420e9b`
 
 ### Question
 
@@ -13537,6 +13801,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 67: Q08, repeat 34 — Scorer 1
 
+Execution id: `fdfd19c49029`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -13632,6 +13898,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 67: Q08, repeat 34 — Scorer 2
+
+Execution id: `fdfd19c49029`
 
 ### Question
 
@@ -13729,6 +13997,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 68: Q08, repeat 35 — Scorer 1
 
+Execution id: `9c1b6375dfda`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -13824,6 +14094,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 68: Q08, repeat 35 — Scorer 2
+
+Execution id: `9c1b6375dfda`
 
 ### Question
 
@@ -13921,6 +14193,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 69: Q08, repeat 36 — Scorer 1
 
+Execution id: `18f4a4e8075e`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -14016,6 +14290,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 69: Q08, repeat 36 — Scorer 2
+
+Execution id: `18f4a4e8075e`
 
 ### Question
 
@@ -14113,6 +14389,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 70: Q08, repeat 37 — Scorer 1
 
+Execution id: `703c562f0e3a`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -14208,6 +14486,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 70: Q08, repeat 37 — Scorer 2
+
+Execution id: `703c562f0e3a`
 
 ### Question
 
@@ -14305,6 +14585,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 71: Q08, repeat 38 — Scorer 1
 
+Execution id: `3168e055f62d`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -14400,6 +14682,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 71: Q08, repeat 38 — Scorer 2
+
+Execution id: `3168e055f62d`
 
 ### Question
 
@@ -14497,6 +14781,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 72: Q08, repeat 39 — Scorer 1
 
+Execution id: `c913141055b5`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -14592,6 +14878,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 72: Q08, repeat 39 — Scorer 2
+
+Execution id: `c913141055b5`
 
 ### Question
 
@@ -14689,6 +14977,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 73: Q08, repeat 40 — Scorer 1
 
+Execution id: `4ab3c0012958`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -14784,6 +15074,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 73: Q08, repeat 40 — Scorer 2
+
+Execution id: `4ab3c0012958`
 
 ### Question
 
@@ -14881,6 +15173,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 74: Q08, repeat 41 — Scorer 1
 
+Execution id: `808cc8a3359d`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -14976,6 +15270,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 74: Q08, repeat 41 — Scorer 2
+
+Execution id: `808cc8a3359d`
 
 ### Question
 
@@ -15073,6 +15369,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 75: Q08, repeat 42 — Scorer 1
 
+Execution id: `bbd16df1ca81`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -15168,6 +15466,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 75: Q08, repeat 42 — Scorer 2
+
+Execution id: `bbd16df1ca81`
 
 ### Question
 
@@ -15265,6 +15565,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 76: Q08, repeat 43 — Scorer 1
 
+Execution id: `aba2470d68a4`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -15360,6 +15662,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 76: Q08, repeat 43 — Scorer 2
+
+Execution id: `aba2470d68a4`
 
 ### Question
 
@@ -15457,6 +15761,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 77: Q08, repeat 44 — Scorer 1
 
+Execution id: `7a653a166f2d`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -15552,6 +15858,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 77: Q08, repeat 44 — Scorer 2
+
+Execution id: `7a653a166f2d`
 
 ### Question
 
@@ -15649,6 +15957,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 78: Q08, repeat 45 — Scorer 1
 
+Execution id: `2b7e0966ccde`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -15744,6 +16054,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 78: Q08, repeat 45 — Scorer 2
+
+Execution id: `2b7e0966ccde`
 
 ### Question
 
@@ -15841,6 +16153,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 79: Q08, repeat 46 — Scorer 1
 
+Execution id: `f71da4e98990`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -15936,6 +16250,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 79: Q08, repeat 46 — Scorer 2
+
+Execution id: `f71da4e98990`
 
 ### Question
 
@@ -16033,6 +16349,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 80: Q08, repeat 47 — Scorer 1
 
+Execution id: `ab7ec181858e`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -16128,6 +16446,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 80: Q08, repeat 47 — Scorer 2
+
+Execution id: `ab7ec181858e`
 
 ### Question
 
@@ -16225,6 +16545,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 81: Q08, repeat 48 — Scorer 1
 
+Execution id: `584bede1d67a`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -16320,6 +16642,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 81: Q08, repeat 48 — Scorer 2
+
+Execution id: `584bede1d67a`
 
 ### Question
 
@@ -16417,6 +16741,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 82: Q08, repeat 49 — Scorer 1
 
+Execution id: `9615b7c74bf3`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -16512,6 +16838,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 82: Q08, repeat 49 — Scorer 2
+
+Execution id: `9615b7c74bf3`
 
 ### Question
 
@@ -16609,6 +16937,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 83: Q08, repeat 50 — Scorer 1
 
+Execution id: `e57c0bf73a33`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -16705,6 +17035,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 83: Q08, repeat 50 — Scorer 2
 
+Execution id: `e57c0bf73a33`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -16800,6 +17132,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 84: Q09, repeat 4 — Scorer 1
+
+Execution id: `9df0485875be`
 
 ### Question
 
@@ -16928,6 +17262,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 84: Q09, repeat 4 — Scorer 2
 
+Execution id: `9df0485875be`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -17055,6 +17391,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 85: Q09, repeat 5 — Scorer 1
 
+Execution id: `d8249016baf1`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -17179,6 +17517,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 85: Q09, repeat 5 — Scorer 2
+
+Execution id: `d8249016baf1`
 
 ### Question
 
@@ -17305,6 +17645,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 86: Q09, repeat 23 — Scorer 1
 
+Execution id: `86e8dc2f2bd3`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -17426,6 +17768,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 86: Q09, repeat 23 — Scorer 2
 
+Execution id: `86e8dc2f2bd3`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -17546,6 +17890,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 87: Q09, repeat 24 — Scorer 1
+
+Execution id: `a0426d36a6a0`
 
 ### Question
 
@@ -17672,6 +18018,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 87: Q09, repeat 24 — Scorer 2
 
+Execution id: `a0426d36a6a0`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -17796,6 +18144,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 88: Q09, repeat 29 — Scorer 1
+
+Execution id: `d682930ee396`
 
 ### Question
 
@@ -17922,6 +18272,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 88: Q09, repeat 29 — Scorer 2
 
+Execution id: `d682930ee396`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -18046,6 +18398,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 89: Q09, repeat 31 — Scorer 1
+
+Execution id: `e69076150fff`
 
 ### Question
 
@@ -18172,6 +18526,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 89: Q09, repeat 31 — Scorer 2
 
+Execution id: `e69076150fff`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -18296,6 +18652,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 90: Q09, repeat 32 — Scorer 1
+
+Execution id: `40835105a6b0`
 
 ### Question
 
@@ -18422,6 +18780,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 90: Q09, repeat 32 — Scorer 2
 
+Execution id: `40835105a6b0`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -18546,6 +18906,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 91: Q09, repeat 39 — Scorer 1
+
+Execution id: `640f1af9532d`
 
 ### Question
 
@@ -18672,6 +19034,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 91: Q09, repeat 39 — Scorer 2
 
+Execution id: `640f1af9532d`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -18797,6 +19161,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 92: Q04, repeat 4 — Scorer 1
 
+Execution id: `800427379043`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -18904,6 +19270,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 92: Q04, repeat 4 — Scorer 2
 
+Execution id: `800427379043`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -19010,6 +19378,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 93: Q04, repeat 10 — Scorer 1
+
+Execution id: `d030cc808a61`
 
 ### Question
 
@@ -19121,6 +19491,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 93: Q04, repeat 10 — Scorer 2
 
+Execution id: `d030cc808a61`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -19230,6 +19602,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 94: Q04, repeat 11 — Scorer 1
+
+Execution id: `fa0b08444b61`
 
 ### Question
 
@@ -19341,6 +19715,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 94: Q04, repeat 11 — Scorer 2
 
+Execution id: `fa0b08444b61`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -19450,6 +19826,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 95: Q04, repeat 12 — Scorer 1
+
+Execution id: `76013e748759`
 
 ### Question
 
@@ -19561,6 +19939,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 95: Q04, repeat 12 — Scorer 2
 
+Execution id: `76013e748759`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -19671,6 +20051,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 96: Q04, repeat 13 — Scorer 1
 
+Execution id: `560786193cf6`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -19778,6 +20160,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 96: Q04, repeat 13 — Scorer 2
 
+Execution id: `560786193cf6`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -19884,6 +20268,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 97: Q04, repeat 14 — Scorer 1
+
+Execution id: `11b9407d9733`
 
 ### Question
 
@@ -19995,6 +20381,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 97: Q04, repeat 14 — Scorer 2
 
+Execution id: `11b9407d9733`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -20105,6 +20493,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 98: Q04, repeat 15 — Scorer 1
 
+Execution id: `52be634fb748`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -20214,6 +20604,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 98: Q04, repeat 15 — Scorer 2
 
+Execution id: `52be634fb748`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -20322,6 +20714,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 99: Q04, repeat 16 — Scorer 1
+
+Execution id: `787b3ee45fc1`
 
 ### Question
 
@@ -20439,6 +20833,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 99: Q04, repeat 16 — Scorer 2
 
+Execution id: `787b3ee45fc1`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -20555,6 +20951,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 100: Q04, repeat 17 — Scorer 1
 
+Execution id: `4f779b3fa1fb`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -20664,6 +21062,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 100: Q04, repeat 17 — Scorer 2
+
+Execution id: `4f779b3fa1fb`
 
 ### Question
 
@@ -20775,6 +21175,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 101: Q04, repeat 18 — Scorer 1
 
+Execution id: `3ac3b08a38fd`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -20882,6 +21284,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 101: Q04, repeat 18 — Scorer 2
 
+Execution id: `3ac3b08a38fd`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -20988,6 +21392,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 102: Q04, repeat 19 — Scorer 1
+
+Execution id: `e87da413bd85`
 
 ### Question
 
@@ -21099,6 +21505,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 102: Q04, repeat 19 — Scorer 2
 
+Execution id: `e87da413bd85`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -21209,6 +21617,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 103: Q04, repeat 20 — Scorer 1
 
+Execution id: `680b6a69a131`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -21316,6 +21726,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 103: Q04, repeat 20 — Scorer 2
 
+Execution id: `680b6a69a131`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -21422,6 +21834,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 104: Q04, repeat 25 — Scorer 1
+
+Execution id: `d09139c5af7c`
 
 ### Question
 
@@ -21532,6 +21946,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 104: Q04, repeat 25 — Scorer 2
 
+Execution id: `d09139c5af7c`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -21641,6 +22057,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 105: Q04, repeat 26 — Scorer 1
 
+Execution id: `d9f056995581`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -21747,6 +22165,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 105: Q04, repeat 26 — Scorer 2
+
+Execution id: `d9f056995581`
 
 ### Question
 
@@ -21855,6 +22275,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 106: Q04, repeat 28 — Scorer 1
 
+Execution id: `d188aaf7a64b`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -21962,6 +22384,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 106: Q04, repeat 28 — Scorer 2
 
+Execution id: `d188aaf7a64b`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -22068,6 +22492,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 107: Q04, repeat 33 — Scorer 1
+
+Execution id: `49a86ea06770`
 
 ### Question
 
@@ -22178,6 +22604,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 107: Q04, repeat 33 — Scorer 2
 
+Execution id: `49a86ea06770`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -22287,6 +22715,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 108: Q04, repeat 38 — Scorer 1
 
+Execution id: `3a8c3bfd8cc8`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -22394,6 +22824,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 108: Q04, repeat 38 — Scorer 2
 
+Execution id: `3a8c3bfd8cc8`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -22500,6 +22932,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 109: Q04, repeat 41 — Scorer 1
+
+Execution id: `7fe1ad260f6b`
 
 ### Question
 
@@ -22611,6 +23045,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 109: Q04, repeat 41 — Scorer 2
 
+Execution id: `7fe1ad260f6b`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -22720,6 +23156,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 110: Q04, repeat 46 — Scorer 1
+
+Execution id: `b87df8eb85c9`
 
 ### Question
 
@@ -22831,6 +23269,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 110: Q04, repeat 46 — Scorer 2
 
+Execution id: `b87df8eb85c9`
+
 ### Question
 
 > What is the principal portion of the first mortgage payment?
@@ -22940,6 +23380,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 111: Q05, repeat 3 — Scorer 1
+
+Execution id: `8e347f82c7e5`
 
 ### Question
 
@@ -23065,6 +23507,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 111: Q05, repeat 3 — Scorer 2
 
+Execution id: `8e347f82c7e5`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -23189,6 +23633,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 112: Q05, repeat 5 — Scorer 1
 
+Execution id: `555bcd064d1e`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -23302,6 +23748,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 112: Q05, repeat 5 — Scorer 2
+
+Execution id: `555bcd064d1e`
 
 ### Question
 
@@ -23417,6 +23865,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 113: Q05, repeat 17 — Scorer 1
 
+Execution id: `f740187902e0`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -23528,6 +23978,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 113: Q05, repeat 17 — Scorer 2
 
+Execution id: `f740187902e0`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -23638,6 +24090,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 114: Q05, repeat 28 — Scorer 1
+
+Execution id: `ab13a2b4e67c`
 
 ### Question
 
@@ -23758,6 +24212,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 114: Q05, repeat 28 — Scorer 2
 
+Execution id: `ab13a2b4e67c`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -23877,6 +24333,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 115: Q05, repeat 31 — Scorer 1
 
+Execution id: `df5cee3a40d8`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -23993,6 +24451,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 115: Q05, repeat 31 — Scorer 2
+
+Execution id: `df5cee3a40d8`
 
 ### Question
 
@@ -24111,6 +24571,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 116: Q05, repeat 44 — Scorer 1
 
+Execution id: `89466e8d8fb0`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -24222,6 +24684,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 116: Q05, repeat 44 — Scorer 2
 
+Execution id: `89466e8d8fb0`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -24332,6 +24796,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 117: Q05, repeat 45 — Scorer 1
+
+Execution id: `20b0cbafc6b1`
 
 ### Question
 
@@ -24447,6 +24913,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 117: Q05, repeat 45 — Scorer 2
 
+Execution id: `20b0cbafc6b1`
+
 ### Question
 
 > What is the credit card balance after one month if only the minimum payment is made?
@@ -24561,6 +25029,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 118: Q06, repeat 3 — Scorer 1
 
+Execution id: `ab9f78d833e4`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -24664,6 +25134,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 118: Q06, repeat 3 — Scorer 2
 
+Execution id: `ab9f78d833e4`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -24766,6 +25238,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 119: Q06, repeat 7 — Scorer 1
+
+Execution id: `560078789d90`
 
 ### Question
 
@@ -24873,6 +25347,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 119: Q06, repeat 7 — Scorer 2
 
+Execution id: `560078789d90`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -24979,6 +25455,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 120: Q06, repeat 12 — Scorer 1
 
+Execution id: `3bb1b33d84cf`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -25082,6 +25560,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 120: Q06, repeat 12 — Scorer 2
 
+Execution id: `3bb1b33d84cf`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -25184,6 +25664,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 121: Q06, repeat 14 — Scorer 1
+
+Execution id: `8f044d614f0d`
 
 ### Question
 
@@ -25291,6 +25773,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 121: Q06, repeat 14 — Scorer 2
 
+Execution id: `8f044d614f0d`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -25396,6 +25880,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 122: Q06, repeat 23 — Scorer 1
+
+Execution id: `fea987576246`
 
 ### Question
 
@@ -25503,6 +25989,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 122: Q06, repeat 23 — Scorer 2
 
+Execution id: `fea987576246`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -25608,6 +26096,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 123: Q06, repeat 36 — Scorer 1
+
+Execution id: `28a8dd3c811f`
 
 ### Question
 
@@ -25715,6 +26205,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 123: Q06, repeat 36 — Scorer 2
 
+Execution id: `28a8dd3c811f`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -25821,6 +26313,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 124: Q06, repeat 38 — Scorer 1
 
+Execution id: `0178c733a844`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -25922,6 +26416,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 124: Q06, repeat 38 — Scorer 2
 
+Execution id: `0178c733a844`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -26022,6 +26518,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 125: Q06, repeat 39 — Scorer 1
+
+Execution id: `d77856522d5c`
 
 ### Question
 
@@ -26129,6 +26627,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 125: Q06, repeat 39 — Scorer 2
 
+Execution id: `d77856522d5c`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -26235,6 +26735,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 126: Q08, repeat 1 — Scorer 1
 
+Execution id: `220fbc4601ce`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -26330,6 +26832,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 126: Q08, repeat 1 — Scorer 2
+
+Execution id: `220fbc4601ce`
 
 ### Question
 
@@ -26427,6 +26931,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 127: Q08, repeat 2 — Scorer 1
 
+Execution id: `758072cb8b68`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -26522,6 +27028,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 127: Q08, repeat 2 — Scorer 2
+
+Execution id: `758072cb8b68`
 
 ### Question
 
@@ -26619,6 +27127,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 128: Q08, repeat 3 — Scorer 1
 
+Execution id: `6e19bac92ab7`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -26715,6 +27225,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 128: Q08, repeat 3 — Scorer 2
 
+Execution id: `6e19bac92ab7`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -26810,6 +27322,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 129: Q08, repeat 4 — Scorer 1
+
+Execution id: `c96ce819036e`
 
 ### Question
 
@@ -26931,6 +27445,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 129: Q08, repeat 4 — Scorer 2
 
+Execution id: `c96ce819036e`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -27051,6 +27567,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 130: Q08, repeat 5 — Scorer 1
 
+Execution id: `b5fed3151d7b`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -27146,6 +27664,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 130: Q08, repeat 5 — Scorer 2
+
+Execution id: `b5fed3151d7b`
 
 ### Question
 
@@ -27243,6 +27763,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 131: Q08, repeat 6 — Scorer 1
 
+Execution id: `b9bf0e6bedfd`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -27338,6 +27860,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 131: Q08, repeat 6 — Scorer 2
+
+Execution id: `b9bf0e6bedfd`
 
 ### Question
 
@@ -27435,6 +27959,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 132: Q08, repeat 7 — Scorer 1
 
+Execution id: `343b8692444c`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -27530,6 +28056,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 132: Q08, repeat 7 — Scorer 2
+
+Execution id: `343b8692444c`
 
 ### Question
 
@@ -27627,6 +28155,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 133: Q08, repeat 8 — Scorer 1
 
+Execution id: `4c18dac2d1fd`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -27722,6 +28252,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 133: Q08, repeat 8 — Scorer 2
+
+Execution id: `4c18dac2d1fd`
 
 ### Question
 
@@ -27819,6 +28351,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 134: Q08, repeat 9 — Scorer 1
 
+Execution id: `b9570b99ce08`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -27914,6 +28448,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 134: Q08, repeat 9 — Scorer 2
+
+Execution id: `b9570b99ce08`
 
 ### Question
 
@@ -28011,6 +28547,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 135: Q08, repeat 10 — Scorer 1
 
+Execution id: `adb1837f325b`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -28106,6 +28644,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 135: Q08, repeat 10 — Scorer 2
+
+Execution id: `adb1837f325b`
 
 ### Question
 
@@ -28203,6 +28743,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 136: Q08, repeat 11 — Scorer 1
 
+Execution id: `c34297c1e06b`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -28298,6 +28840,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 136: Q08, repeat 11 — Scorer 2
+
+Execution id: `c34297c1e06b`
 
 ### Question
 
@@ -28395,6 +28939,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 137: Q08, repeat 12 — Scorer 1
 
+Execution id: `6c0d79356e1f`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -28490,6 +29036,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 137: Q08, repeat 12 — Scorer 2
+
+Execution id: `6c0d79356e1f`
 
 ### Question
 
@@ -28587,6 +29135,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 138: Q08, repeat 13 — Scorer 1
 
+Execution id: `108f7b3577a0`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -28682,6 +29232,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 138: Q08, repeat 13 — Scorer 2
+
+Execution id: `108f7b3577a0`
 
 ### Question
 
@@ -28779,6 +29331,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 139: Q08, repeat 15 — Scorer 1
 
+Execution id: `68bdd79fc734`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -28875,6 +29429,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 139: Q08, repeat 15 — Scorer 2
 
+Execution id: `68bdd79fc734`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -28970,6 +29526,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 140: Q08, repeat 17 — Scorer 1
+
+Execution id: `8ca3cdaeee1a`
 
 ### Question
 
@@ -29089,6 +29647,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 140: Q08, repeat 17 — Scorer 2
 
+Execution id: `8ca3cdaeee1a`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -29207,6 +29767,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 141: Q08, repeat 18 — Scorer 1
 
+Execution id: `ff5a1d0d54d9`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -29303,6 +29865,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 141: Q08, repeat 18 — Scorer 2
 
+Execution id: `ff5a1d0d54d9`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -29398,6 +29962,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 142: Q08, repeat 19 — Scorer 1
+
+Execution id: `35753b4136e0`
 
 ### Question
 
@@ -29510,6 +30076,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 142: Q08, repeat 19 — Scorer 2
 
+Execution id: `35753b4136e0`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -29621,6 +30189,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 143: Q08, repeat 20 — Scorer 1
 
+Execution id: `d7267ef093d9`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -29717,6 +30287,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 143: Q08, repeat 20 — Scorer 2
 
+Execution id: `d7267ef093d9`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -29812,6 +30384,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 144: Q08, repeat 21 — Scorer 1
+
+Execution id: `02e30098b3fd`
 
 ### Question
 
@@ -29924,6 +30498,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 144: Q08, repeat 21 — Scorer 2
 
+Execution id: `02e30098b3fd`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -30035,6 +30611,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 145: Q08, repeat 22 — Scorer 1
 
+Execution id: `91e83a6bbb4e`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -30130,6 +30708,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 145: Q08, repeat 22 — Scorer 2
+
+Execution id: `91e83a6bbb4e`
 
 ### Question
 
@@ -30227,6 +30807,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 146: Q08, repeat 23 — Scorer 1
 
+Execution id: `bf979949126e`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -30323,6 +30905,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 146: Q08, repeat 23 — Scorer 2
 
+Execution id: `bf979949126e`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -30418,6 +31002,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 147: Q08, repeat 24 — Scorer 1
+
+Execution id: `6ed96bb80154`
 
 ### Question
 
@@ -30524,6 +31110,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 147: Q08, repeat 24 — Scorer 2
 
+Execution id: `6ed96bb80154`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -30629,6 +31217,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 148: Q08, repeat 25 — Scorer 1
 
+Execution id: `2057e24a6fff`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -30724,6 +31314,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 148: Q08, repeat 25 — Scorer 2
+
+Execution id: `2057e24a6fff`
 
 ### Question
 
@@ -30821,6 +31413,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 149: Q08, repeat 27 — Scorer 1
 
+Execution id: `95cf95817798`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -30916,6 +31510,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 149: Q08, repeat 27 — Scorer 2
+
+Execution id: `95cf95817798`
 
 ### Question
 
@@ -31013,6 +31609,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 150: Q08, repeat 28 — Scorer 1
 
+Execution id: `7dca0a430c36`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -31109,6 +31707,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 150: Q08, repeat 28 — Scorer 2
 
+Execution id: `7dca0a430c36`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -31204,6 +31804,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 151: Q08, repeat 29 — Scorer 1
+
+Execution id: `e053c0fb8b64`
 
 ### Question
 
@@ -31310,6 +31912,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 151: Q08, repeat 29 — Scorer 2
 
+Execution id: `e053c0fb8b64`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -31415,6 +32019,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 152: Q08, repeat 30 — Scorer 1
 
+Execution id: `8b74bf0e343c`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -31510,6 +32116,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 152: Q08, repeat 30 — Scorer 2
+
+Execution id: `8b74bf0e343c`
 
 ### Question
 
@@ -31607,6 +32215,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 153: Q08, repeat 32 — Scorer 1
 
+Execution id: `25ab0d27bf40`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -31702,6 +32312,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 153: Q08, repeat 32 — Scorer 2
+
+Execution id: `25ab0d27bf40`
 
 ### Question
 
@@ -31799,6 +32411,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 154: Q08, repeat 34 — Scorer 1
 
+Execution id: `5a096fb941c2`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -31894,6 +32508,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 154: Q08, repeat 34 — Scorer 2
+
+Execution id: `5a096fb941c2`
 
 ### Question
 
@@ -31991,6 +32607,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 155: Q08, repeat 35 — Scorer 1
 
+Execution id: `25b8cb7dbff8`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -32086,6 +32704,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 155: Q08, repeat 35 — Scorer 2
+
+Execution id: `25b8cb7dbff8`
 
 ### Question
 
@@ -32183,6 +32803,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 156: Q08, repeat 36 — Scorer 1
 
+Execution id: `f81da3c2ce1a`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -32278,6 +32900,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 156: Q08, repeat 36 — Scorer 2
+
+Execution id: `f81da3c2ce1a`
 
 ### Question
 
@@ -32375,6 +32999,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 157: Q08, repeat 37 — Scorer 1
 
+Execution id: `ed8f95d5a9cf`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -32470,6 +33096,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 157: Q08, repeat 37 — Scorer 2
+
+Execution id: `ed8f95d5a9cf`
 
 ### Question
 
@@ -32567,6 +33195,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 158: Q08, repeat 38 — Scorer 1
 
+Execution id: `fa8e759755f0`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -32662,6 +33292,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 158: Q08, repeat 38 — Scorer 2
+
+Execution id: `fa8e759755f0`
 
 ### Question
 
@@ -32759,6 +33391,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 159: Q08, repeat 40 — Scorer 1
 
+Execution id: `bf7fda6181e4`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -32854,6 +33488,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 159: Q08, repeat 40 — Scorer 2
+
+Execution id: `bf7fda6181e4`
 
 ### Question
 
@@ -32951,6 +33587,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 160: Q08, repeat 41 — Scorer 1
 
+Execution id: `7eef0af78687`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -33046,6 +33684,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 160: Q08, repeat 41 — Scorer 2
+
+Execution id: `7eef0af78687`
 
 ### Question
 
@@ -33143,6 +33783,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 161: Q08, repeat 42 — Scorer 1
 
+Execution id: `151feebfd4da`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -33238,6 +33880,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 161: Q08, repeat 42 — Scorer 2
+
+Execution id: `151feebfd4da`
 
 ### Question
 
@@ -33335,6 +33979,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 162: Q08, repeat 43 — Scorer 1
 
+Execution id: `baf28363cb7b`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -33430,6 +34076,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 162: Q08, repeat 43 — Scorer 2
+
+Execution id: `baf28363cb7b`
 
 ### Question
 
@@ -33527,6 +34175,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 163: Q08, repeat 44 — Scorer 1
 
+Execution id: `e573beeb554a`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -33622,6 +34272,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 163: Q08, repeat 44 — Scorer 2
+
+Execution id: `e573beeb554a`
 
 ### Question
 
@@ -33719,6 +34371,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 164: Q08, repeat 45 — Scorer 1
 
+Execution id: `b51a6eeb3f5f`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -33814,6 +34468,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 164: Q08, repeat 45 — Scorer 2
+
+Execution id: `b51a6eeb3f5f`
 
 ### Question
 
@@ -33911,6 +34567,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 165: Q08, repeat 46 — Scorer 1
 
+Execution id: `a55ed5075178`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -34006,6 +34664,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 165: Q08, repeat 46 — Scorer 2
+
+Execution id: `a55ed5075178`
 
 ### Question
 
@@ -34103,6 +34763,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 166: Q08, repeat 48 — Scorer 1
 
+Execution id: `bdc1bdaa67c6`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -34198,6 +34860,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 166: Q08, repeat 48 — Scorer 2
+
+Execution id: `bdc1bdaa67c6`
 
 ### Question
 
@@ -34295,6 +34959,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 167: Q08, repeat 49 — Scorer 1
 
+Execution id: `45863c3c95ec`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -34390,6 +35056,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 167: Q08, repeat 49 — Scorer 2
+
+Execution id: `45863c3c95ec`
 
 ### Question
 
@@ -34487,6 +35155,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 168: Q08, repeat 50 — Scorer 1
 
+Execution id: `7aea3344ded0`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -34583,6 +35253,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 168: Q08, repeat 50 — Scorer 2
 
+Execution id: `7aea3344ded0`
+
 ### Question
 
 > What is the remaining mortgage balance after the first monthly payment?
@@ -34678,6 +35350,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 169: Q09, repeat 1 — Scorer 1
+
+Execution id: `065596a4d0af`
 
 ### Question
 
@@ -34804,6 +35478,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 169: Q09, repeat 1 — Scorer 2
 
+Execution id: `065596a4d0af`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -34929,6 +35605,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 170: Q09, repeat 7 — Scorer 1
 
+Execution id: `f9bb3f2f51ce`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -35050,6 +35728,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 170: Q09, repeat 7 — Scorer 2
 
+Execution id: `f9bb3f2f51ce`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -35170,6 +35850,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 171: Q09, repeat 10 — Scorer 1
+
+Execution id: `bd878809d0de`
 
 ### Question
 
@@ -35294,6 +35976,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 171: Q09, repeat 10 — Scorer 2
 
+Execution id: `bd878809d0de`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -35416,6 +36100,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 172: Q09, repeat 13 — Scorer 1
+
+Execution id: `8e0069a1cfcc`
 
 ### Question
 
@@ -35540,6 +36226,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 172: Q09, repeat 13 — Scorer 2
 
+Execution id: `8e0069a1cfcc`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -35662,6 +36350,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 173: Q09, repeat 15 — Scorer 1
+
+Execution id: `f70fd9795a12`
 
 ### Question
 
@@ -35786,6 +36476,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 173: Q09, repeat 15 — Scorer 2
 
+Execution id: `f70fd9795a12`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -35908,6 +36600,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 174: Q09, repeat 23 — Scorer 1
+
+Execution id: `810f8d6ae127`
 
 ### Question
 
@@ -36033,6 +36727,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 174: Q09, repeat 23 — Scorer 2
 
+Execution id: `810f8d6ae127`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -36157,6 +36853,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 175: Q09, repeat 24 — Scorer 1
 
+Execution id: `862a50144100`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -36279,6 +36977,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 175: Q09, repeat 24 — Scorer 2
+
+Execution id: `862a50144100`
 
 ### Question
 
@@ -36403,6 +37103,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 176: Q09, repeat 28 — Scorer 1
 
+Execution id: `c3329be4d8d6`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -36526,6 +37228,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 176: Q09, repeat 28 — Scorer 2
 
+Execution id: `c3329be4d8d6`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -36648,6 +37352,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 177: Q09, repeat 33 — Scorer 1
+
+Execution id: `b0a5bf63ef42`
 
 ### Question
 
@@ -36774,6 +37480,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 177: Q09, repeat 33 — Scorer 2
 
+Execution id: `b0a5bf63ef42`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -36899,6 +37607,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 178: Q09, repeat 34 — Scorer 1
 
+Execution id: `0109dc060518`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -37022,6 +37732,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 178: Q09, repeat 34 — Scorer 2
 
+Execution id: `0109dc060518`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -37144,6 +37856,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 179: Q09, repeat 41 — Scorer 1
+
+Execution id: `1ed8ce46d5f0`
 
 ### Question
 
@@ -37271,6 +37985,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 179: Q09, repeat 41 — Scorer 2
 
+Execution id: `1ed8ce46d5f0`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -37397,6 +38113,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 180: Q09, repeat 43 — Scorer 1
 
+Execution id: `28fa59a1341d`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -37520,6 +38238,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 180: Q09, repeat 43 — Scorer 2
 
+Execution id: `28fa59a1341d`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -37642,6 +38362,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 181: Q09, repeat 47 — Scorer 1
+
+Execution id: `d44ed2322148`
 
 ### Question
 
@@ -37768,6 +38490,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 181: Q09, repeat 47 — Scorer 2
 
+Execution id: `d44ed2322148`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -37893,6 +38617,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 182: Q09, repeat 48 — Scorer 1
 
+Execution id: `0360cf04f9a7`
+
 ### Question
 
 > What is the net monthly income from the savings account after deducting checking account fees?
@@ -38015,6 +38741,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 
 ## Item 182: Q09, repeat 48 — Scorer 2
+
+Execution id: `0360cf04f9a7`
 
 ### Question
 
