@@ -469,6 +469,27 @@ ANTHROPIC = {'id': 'msg_mock', 'type': 'message', 'role': 'assistant',
              'stop_reason': 'end_turn'}
 
 
+EV0_STATE = ("error_state as {'cause': <non-empty text>, 'round': <int, the "
+             "first request is round 0>}; the field names and the counting "
+             "are this test's proposal, SPEC R1.3 says only 'the round "
+             "identified'")
+
+
+def _ev0_error_state(cli, second_round):
+    """The error state of Q01/base, whose second request (round 1)
+    fails or comes back in an unrecognised shape."""
+    r = cli({'Q01/base/*': [{'call': '15200.00 * 1.2 / 100 / 12'},
+                            second_round],
+             'Q01/instruction_removed/*': ONE_ROUND['Q01/*/*']},
+            items=('Q01',), repeat=1)
+    records = [rec for rec in _read_jsonl(r.transcript)
+               if rec['condition'] == 'base'
+               and rec.get('record_type') != 'figure_identification']
+    assert [rec['evidence_class'] for rec in records] == [EV_0]
+    return records[0]['error_state']
+
+
+@pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -486,22 +507,32 @@ def test_run_ev0_record_names_cause_and_round(cli, second_round, cause):
     # record of an execution whose second round (round 1, counting the
     # first request as round 0) fails, or comes back in an unrecognised
     # shape, has evidence class EV-0 and an error state naming the cause
-    # and the round. Today's round_shapes reason ("adapter_send failed on
-    # turn 1: HTTP 503: ...", "response appears Anthropic-shaped ...")
-    # written into error_state would pass.
-    r = cli({'Q01/base/*': [{'call': '15200.00 * 1.2 / 100 / 12'},
-                            second_round],
-             'Q01/instruction_removed/*': ONE_ROUND['Q01/*/*']},
-            items=('Q01',), repeat=1)
-    records = [rec for rec in _read_jsonl(r.transcript)
-               if rec['condition'] == 'base'
-               and rec.get('record_type') != 'figure_identification']
-    assert [rec['evidence_class'] for rec in records] == [EV_0]
-    error_state = records[0]['error_state']
-    assert error_state is not None
-    text = json.dumps(error_state).lower()
-    assert cause in text
-    assert re.search(r'\b(round|turn)\D{0,3}[12]\b', text)
+    # and the round, structured so the round can't be misread (EV0_STATE:
+    # round 1, the first request being round 0). The HTTP case's cause
+    # names the status; the other two causes are any non-empty text, and
+    # test_run_ev0_causes_are_distinct checks they differ.
+    error_state = _ev0_error_state(cli, second_round)
+    assert isinstance(error_state, dict), error_state
+    assert error_state.get('round') == 1, error_state
+    assert isinstance(error_state.get('cause'), str) \
+        and error_state['cause'].strip(), error_state
+    if cause == '503':
+        assert '503' in error_state['cause'], error_state
+
+
+@pytest.mark.proposal(EV0_STATE)
+@pytest.mark.finding('T3-35')
+@pytest.mark.req('R1.3', 'AP-1 D7.9')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-35: an EV-0 record has error_state None')
+def test_run_ev0_causes_are_distinct(cli):
+    # An HTTP error, a dropped connection and an unrecognised shape are
+    # three causes; the record tells them apart.
+    states = [_ev0_error_state(cli, second_round) for second_round in (
+        {'http': 503, 'body': '{"error": "upstream down"}'},
+        {'close': True}, {'raw': ANTHROPIC})]
+    causes = [s.get('cause') if isinstance(s, dict) else s for s in states]
+    assert None not in causes and len(set(causes)) == 3, causes
 
 
 # -- S4-G4-1 (new): the round-0 request record is not the request as sent ----
