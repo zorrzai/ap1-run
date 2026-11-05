@@ -19,9 +19,10 @@ Steps, as SPEC R2.0 numbers them, applied in the order 0, 2, 3, 1, 4
 
 In step 4 a percentage token is never compared with the expected value
 (R0.4.2 records the percent flag; 15.20% is not the figure 15.20,
-S3-G4-2). The expected value has no unit (R3.1), so an answer that is a
-percentage cannot auto-match: it is ADJUDICATE-FIGURES-PRESENT-NONE-
-MATCHING, as the report declares (section 13). One matching token is
+S3-G4-2). The expected value has no unit (R3.1), so an answer written
+as a percentage cannot auto-match here: it is ADJUDICATE-FIGURES-PRESENT-
+NONE-MATCHING. Written without %, or as a structured answer, it is
+compared as a plain figure (report section 13). One matching token is
 AUTO-MATCH only if no competing figure follows it: a response that
 mentions the expected value on the way and concludes with another
 figure has not released it, and the runner does not guess which figure

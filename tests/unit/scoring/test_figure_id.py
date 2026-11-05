@@ -521,9 +521,9 @@ def test_identify_figure_percentage_is_never_the_match():
 
 @pytest.mark.xfail(
     strict=True, raises=AssertionError,
-    reason='S3-G4-2: a percentage is never compared, and the expected '
-           'value carries no unit (SPEC R3.1), so an answer that is a rate '
-           'cannot auto-match; declared in report section 13')
+    reason='S3-G4-2: a figure written with % is never compared, and the '
+           'expected value carries no unit (SPEC R3.1), so a rate written '
+           'with % cannot auto-match; declared in report section 13')
 @pytest.mark.proposal('matching a percentage only to an expected value '
                       'the ground truth declares a percentage: SPEC R3.1 '
                       'has no such field')
@@ -532,6 +532,27 @@ def test_identify_figure_percentage_is_never_the_match():
 def test_identify_figure_percentage_valued_answer_auto_matches():
     r = identify(response('The APR is 18.5%.'), '18.5')
     assert (r['outcome'], r['released_figure']) == (AUTO_MATCH, D('18.5'))
+
+
+@pytest.mark.finding('S3-G4-2')
+@pytest.mark.req('R0.4.2', 'R2.0', 'R3.3')
+@pytest.mark.parametrize('resp, kwargs, outcome', [
+    # only a figure written with % is kept out of the comparison
+    (response('The APR is 18.5%.'), {}, ADJUDICATE_NO_MATCH),
+    # the same rate written otherwise is compared as a plain figure
+    (response('The APR is 18.5 percent.'), {}, AUTO_MATCH),
+    (response('APR: 18.5'), {}, AUTO_MATCH),
+    # a structured answer is compared whatever its unit
+    (response('The APR is 18.5%.', answer='18.5'),
+     {'structured_answer_field': 'answer'}, AUTO_MATCH),
+    # a figure glued to letters is not read: no figure
+    (response('The APR is 18.5pct'), {}, AUTO_NO_FIGURE),
+], ids=['percent-sign', 'percent-word', 'bare', 'structured', 'glued'])
+def test_identify_figure_percentage_answer_as_report_section_13_says(
+        resp, kwargs, outcome):
+    # Report section 13 states what happens to an answer that is a rate;
+    # each statement is checked here against the code.
+    assert identify(resp, '18.5', **kwargs)['outcome'] == outcome
 
 
 # --- The configured separators (T3-41) ---
