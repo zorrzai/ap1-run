@@ -318,7 +318,7 @@ def test_run_round0_transport_errors_listed_as_unmeasured_cells_with_cause(
     assert 'rate' not in cells[('Q05', 'base', 1)].lower()
     assert 'transport' in cells[('Q05', 'base', 1)].lower()
     section3g = r.console_section('3g')
-    assert '3' in section3g.splitlines()[0], section3g
+    assert re.match(r'3g\. UNMEASURED CELLS: 3\n', section3g), section3g
     for q in ('Q03', 'Q04', 'Q05'):
         assert q in section3g, section3g
 
