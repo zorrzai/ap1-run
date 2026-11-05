@@ -371,7 +371,7 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose:
 
 ## 9b. D2.2 Execution Conditions
 
-- Serving stack and version: not disclosed by the endpoint; the runner cannot observe it.
+- Serving stack and version: as the responses report it, model mock-model (16); backend fingerprints (system_fingerprint) not reported; the runner observes nothing more.
 - Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
 - Concurrency: one request at a time, sequentially, from a single process.
 - Sampling parameters sent:

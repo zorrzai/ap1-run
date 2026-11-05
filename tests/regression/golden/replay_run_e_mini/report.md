@@ -1397,7 +1397,7 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose:
 
 ## 9b. D2.2 Execution Conditions
 
-- Serving stack and version: not disclosed by the endpoint; the runner cannot observe it.
+- Serving stack and version: as the responses report it, model gpt-4.1-mini-2025-04-14 (1000); backend fingerprints (system_fingerprint) fp_50915ebef8 (41), fp_5eb9ee8319 (1), fp_6d15e4ed70 (454), fp_a035767cd3 (16), fp_a8d92733a0 (442), fp_dfe5abd468 (41), fp_ee38530f4a (5); the runner observes nothing more.
 - Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
 - Concurrency: one request at a time, sequentially, from a single process.
 - Sampling parameters sent:
