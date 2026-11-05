@@ -257,12 +257,12 @@ Total operands resolved: 112
 
 > OPERANDS-UNOBSERVABLE: a calculator call whose operands could not be read (malformed arguments or an unreadable expression); declared, never grounded. UNMEASURABLE: a call in a chained item whose ground truth declares no intermediates (SPEC R2.4); its operands are not counted in the step table.
 
-| Outcome | Count | % |
+| Outcome | Count | Proportion |
 |---|---|---|
-| OPERANDS-GROUNDED | 24 | 100.0% |
-| OPERAND-ORIGINATED | 0 | 0.0% |
-| OPERANDS-UNOBSERVABLE | 0 | 0.0% |
-| UNMEASURABLE | 0 | 0.0% |
+| OPERANDS-GROUNDED | 24 | 24/24 (100.0%) |
+| OPERAND-ORIGINATED | 0 | 0/24 (0.0%) |
+| OPERANDS-UNOBSERVABLE | 0 | 0/24 (0.0%) |
+| UNMEASURABLE | 0 | 0/24 (0.0%) |
 
 ## 8. Scoring Proportions
 
