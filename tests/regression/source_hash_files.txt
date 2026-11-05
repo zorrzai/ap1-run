@@ -58,6 +58,15 @@ tests/functional/test_example_calculator.py
 tests/functional/test_example_ground_truth.py
 tests/functional/test_findings.py
 tests/functional/test_run_guards.py
+tests/functional/test_step4_g1_invocation.py
+tests/functional/test_step4_g2_provenance.py
+tests/functional/test_step4_g3_seal_guards.py
+tests/functional/test_step4_g4_transcript.py
+tests/functional/test_step4_g5_seal_verifier.py
+tests/functional/test_step4_g6_sheets_v13.py
+tests/functional/test_step4_g7_report.py
+tests/functional/test_step4_g8_numeric_d73.py
+tests/functional/test_step4_g9_spec_claims.py
 tests/functional/test_tool_loop.py
 tests/inspect/conftest.py
 tests/inspect/test_compare.py
