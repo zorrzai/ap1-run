@@ -1,4 +1,4 @@
-"""Step 4, group g9: correct behaviour for the SPEC conformance claims and
+"""Step 4: correct behaviour for the SPEC conformance claims and
 one config file per run, end to end (failing until fixed).
 
 Each test drives the real runner (``ap1_run.run.main``) against the mock

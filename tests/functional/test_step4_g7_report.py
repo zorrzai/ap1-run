@@ -1,4 +1,4 @@
-"""Step 4, group g7-report (report honesty): failing-first
+"""Step 4, report honesty: failing-first
 tests of the correct behaviour, end to end.
 
 Each test reads the files a real run writes. The run is the real runner
