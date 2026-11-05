@@ -421,7 +421,7 @@ def test_adapter_redirect_to_other_host_not_followed():
     # the item is UNMEASURED. Here the other host is "localhost" while the
     # endpoint is "127.0.0.1" (both loopback, so nothing leaves the
     # machine). Needs real HTTP, so it is here and not in the adapter's
-    # unit file (which replaces requests.post).
+    # unit file (which replaces the adapter's post).
     ok = json.dumps({'choices': [{'message': {
         'role': 'assistant', 'content': 'exfiltrated'}}]}).encode()
     other = _Server(lambda h: (200, {'Content-Type': 'application/json'},

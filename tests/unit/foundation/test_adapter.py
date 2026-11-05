@@ -1,11 +1,13 @@
 """Unit tests for the R0.2 endpoint adapter (foundation/adapter.py).
 
-No network: requests.post and time.sleep are replaced by fakes. The real
-HTTP path is covered end to end by the regression scenarios, which run
-against tests/fixtures/mock_endpoint.py (clean, transport_errors, ...).
+No network: the adapter's post (adapter._post) and time.sleep are replaced
+by fakes, except in the proxy tests at the end, which use local servers.
+The real HTTP path is covered end to end by the regression scenarios, which
+run against tests/fixtures/mock_endpoint.py (clean, transport_errors, ...).
 """
 
 import json
+from types import SimpleNamespace
 
 import pytest
 import requests
@@ -59,7 +61,7 @@ class FakeTransport:
 def transport(monkeypatch):
     def _install(*outcomes):
         t = FakeTransport(*outcomes)
-        monkeypatch.setattr(adapter._requests, 'post', t.post)
+        monkeypatch.setattr(adapter, '_post', t.post)
         monkeypatch.setattr(adapter.time, 'sleep', t.sleep)
         monkeypatch.setattr(adapter.time, 'time', lambda: 1000.5)
         return t
@@ -545,3 +547,77 @@ def test_send_refuses_a_sampling_value_with_no_finite_float(transport, value):
     with pytest.raises(AdapterError, match='no finite non-zero float'):
         send(URL, messages=MESSAGES, sampling={'temperature': value})
     assert t.calls == []
+
+
+# -- No proxy from the environment (SPEC R0.2 single-host egress) ----------
+
+PROXY_VARIABLES = ('HTTP_PROXY', 'http_proxy', 'HTTPS_PROXY', 'https_proxy',
+                   'ALL_PROXY', 'all_proxy', 'NO_PROXY', 'no_proxy')
+
+
+@pytest.fixture
+def proxy(monkeypatch):
+    """A local HTTP server that answers any request as a proxy would, and
+    records what reached it; and a closed local port for the endpoint."""
+    import socket
+    import threading
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+
+    seen = []
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_POST(self):
+            length = int(self.headers.get('Content-Length') or 0)
+            seen.append((self.path, self.headers.get('Authorization'),
+                         self.rfile.read(length)))
+            body = json.dumps({'choices': [{'message': {
+                'role': 'assistant', 'content': 'from the proxy'}}]})
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Content-Length', str(len(body)))
+            self.end_headers()
+            self.wfile.write(body.encode())
+
+        def log_message(self, *args):
+            pass
+
+    server = HTTPServer(('127.0.0.1', 0), Handler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    with socket.socket() as s:
+        s.bind(('127.0.0.1', 0))
+        closed = s.getsockname()[1]
+    for name in PROXY_VARIABLES:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setattr(adapter.time, 'sleep', lambda seconds: None)
+    yield SimpleNamespace(
+        url=f'http://127.0.0.1:{server.server_port}', seen=seen,
+        endpoint=f'http://127.0.0.1:{closed}/v1/chat/completions')
+    server.shutdown()
+    server.server_close()
+
+
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2')
+@pytest.mark.parametrize('variable', ['HTTP_PROXY', 'http_proxy',
+                                      'ALL_PROXY', 'all_proxy'])
+def test_send_ignores_a_proxy_named_in_the_environment(proxy, monkeypatch,
+                                                       variable):
+    # SPEC R0.2: "The adapter makes no network call to any host other than
+    # the configured endpoint". A proxy named in the environment is never
+    # contacted: the request (the key, the fixture data) goes only to the
+    # endpoint, here a closed port, so the send fails.
+    monkeypatch.setenv(variable, proxy.url)
+    with pytest.raises(AdapterError, match='transport failure'):
+        adapter.send(proxy.endpoint, messages=[
+            {'role': 'user', 'content': 'FIXTURE DATA 15200'}],
+            model='m', api_key='sk-test-not-a-real-key-000')
+    assert proxy.seen == []
+
+
+def test_proxy_fixture_proxy_answers_when_asked(proxy):
+    # The fixture's proxy is reachable and answers: the test above would
+    # see it if the adapter used it.
+    r = requests.post(proxy.url + '/x', json={}, timeout=5)
+    assert r.json()['choices'][0]['message']['content'] == 'from the proxy'
+    assert len(proxy.seen) == 1

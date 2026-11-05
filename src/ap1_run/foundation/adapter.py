@@ -9,7 +9,9 @@ raw response unmodified.
 Dependencies: requests (the external dependency used by this module).
 No SDK. No interpretation, no retry-on-content, no normalisation.
 Network calls target only the configured endpoint: HTTP redirects are not
-followed (a 3xx is an HTTP error), so no request reaches another host.
+followed (a 3xx is an HTTP error), and the environment is ignored (no proxy
+from HTTP_PROXY, HTTPS_PROXY, ALL_PROXY or the system settings, no .netrc
+credentials), so no request reaches another host.
 """
 
 import copy
@@ -101,6 +103,16 @@ RETRY_DELAY = 1.0   # seconds between transport-failure retries
 BODY_FIELDS = ('model', 'messages', 'tools')
 
 
+def _post(url, **kwargs):
+    """requests.post, without the environment: trust_env is off, so no
+    proxy, .netrc credential or CA bundle is taken from environment
+    variables or system settings (SPEC R0.2: no network call to a host
+    other than the configured endpoint)."""
+    with _requests.Session() as session:
+        session.trust_env = False
+        return session.post(url, **kwargs)
+
+
 def send(endpoint_url, *, messages, tools=None, sampling=None,
          model=None, api_key=None, timeout=120):
     """Send a chat-completions request. Return raw JSON response.
@@ -167,9 +179,10 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
 
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            # Never follow a redirect: it could send the request (with
-            # the fixture data in it) to another host (SPEC R0.2).
-            resp = _requests.post(
+            # Never follow a redirect, nor a proxy from the environment:
+            # either could send the request (with the key and the fixture
+            # data in it) to another host (SPEC R0.2).
+            resp = _post(
                 endpoint_url, json=body, headers=headers,
                 timeout=timeout, allow_redirects=False)
             attempts.append({

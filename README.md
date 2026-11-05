@@ -271,7 +271,10 @@ this way.
   Using one would place a model in the scoring loop for dimensions that
   require human judgement. Human adjudication is the design, not a gap
   awaiting better tooling.
-- **No network egress** beyond the endpoint under test.
+- **No network egress** beyond the endpoint under test. Redirects are not
+  followed, and proxies from the environment (`HTTP_PROXY`, `HTTPS_PROXY`,
+  `ALL_PROXY`, the system settings) are ignored: the runner connects to the
+  endpoint directly or not at all.
 - **No telemetry, no analytics, no hosted service.** If the author ran it for
   you, it would be the author's result again.
 
