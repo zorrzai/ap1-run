@@ -876,12 +876,12 @@ def test_provenance_outcomes_only_shows_dashes_for_percentages():
         'declared, never grounded. UNMEASURABLE: a call in a chained item '
         'whose ground truth declares no intermediates (SPEC R2.4); its '
         'operands are not counted in the step table.\n',
-        '| Outcome | Count | % |',
+        '| Outcome | Count | Proportion |',
         '|---|---|---|',
-        '| OPERANDS-GROUNDED | 2 | 100.0% |',
-        '| OPERAND-ORIGINATED | 0 | 0.0% |',
-        '| OPERANDS-UNOBSERVABLE | 0 | 0.0% |',
-        '| UNMEASURABLE | 0 | 0.0% |',
+        '| OPERANDS-GROUNDED | 2 | 2/2 (100.0%) |',
+        '| OPERAND-ORIGINATED | 0 | 0/2 (0.0%) |',
+        '| OPERANDS-UNOBSERVABLE | 0 | 0/2 (0.0%) |',
+        '| UNMEASURABLE | 0 | 0/2 (0.0%) |',
         '')
 
 
@@ -894,10 +894,10 @@ def test_provenance_unmeasurable_count_and_executions_shown():
         'provenance_unmeasurable': [
             {'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
              'reason': 'chained'}, {}]})
-    assert ('| OPERANDS-GROUNDED | 1 | 25.0% |\n'
-            '| OPERAND-ORIGINATED | 0 | 0.0% |\n'
-            '| OPERANDS-UNOBSERVABLE | 0 | 0.0% |\n'
-            '| UNMEASURABLE | 3 | 75.0% |\n') in text
+    assert ('| OPERANDS-GROUNDED | 1 | 1/4 (25.0%) |\n'
+            '| OPERAND-ORIGINATED | 0 | 0/4 (0.0%) |\n'
+            '| OPERANDS-UNOBSERVABLE | 0 | 0/4 (0.0%) |\n'
+            '| UNMEASURABLE | 3 | 3/4 (75.0%) |\n') in text
     assert text.endswith(md(
         '### D7.2 UNMEASURABLE Executions\n',
         '| Item | Condition | Repeat | Reason |',

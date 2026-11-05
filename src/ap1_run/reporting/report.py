@@ -787,12 +787,14 @@ def _section_operand_provenance(summary):
                      'UNMEASURABLE: a call in a chained item whose ground '
                      'truth declares no intermediates (SPEC R2.4); its '
                      'operands are not counted in the step table.\n')
-        lines.append('| Outcome | Count | % |')
+        lines.append('| Outcome | Count | Proportion |')
         lines.append('|---|---|---|')
         for outcome in PROVENANCE_OUTCOMES:
             count = prov_outcomes.get(outcome, 0)
-            lines.append(f'| {outcome} | {count} | '
-                         f'{100*count/total_inv:.1f}% |')
+            # The proportion with its denominator, every calculator
+            # invocation (T3-16).
+            lines.append(f'| {outcome} | {count} | {count}/{total_inv} '
+                         f'({100*count/total_inv:.1f}%) |')
         lines.append('')
 
     # Executions for which D7.2 is UNMEASURABLE, with the reason (R3.3)

@@ -210,10 +210,6 @@ def scripted_calculator_calls(responses, *, repeat_count=1):
     'T3-16: the proportion is OPERANDS-UNOBSERVABLE over all calculator '
     'invocations; AP-1 says only "its proportion reported"')
 @pytest.mark.finding('T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-16: report §7b gives the OPERANDS-UNOBSERVABLE '
-                          'count and percentage, not the denominator on '
-                          'the row')
 def test_run_report_states_operands_unobservable_count(full_run):
     # AP-1 v1.3 D7.2(a): the unobservable case is declared and "its
     # proportion reported". Three unreadable calls per condition, one
