@@ -113,10 +113,6 @@ def _run(tmp_path_factory, dimensions_claimed, later_model=None):
     config['repeat_count'] = '2'
     config['dimensions_claimed'] = dimensions_claimed
     config['structured_answer_field'] = 'answer'
-    # The D1 sections are under test, so the run claims D1, which the
-    # 10-item example cannot support (R0.1 minimum-n, T3-12); the
-    # minimum-n check is switched off below for this run only.
-    config['dimensions_claimed'] = ['D1', 'D2', 'D7']
     config_path = tmp / 'config.json'
     config_path.write_text(json.dumps(config, indent=2), 'utf-8')
     output_dir = tmp / 'output'
@@ -156,8 +152,12 @@ def _run(tmp_path_factory, dimensions_claimed, later_model=None):
             mock.point_config(config_path)  # T3-80: config only
             mp.setattr(time, 'sleep', lambda seconds: None)
             from ap1_run import run as runner
-            mp.setattr(runner, 'validate_minimum_n',
-                       lambda config, items: None)
+            if 'D1' in dimensions_claimed:
+                # The D1 sections are under test, so the run claims D1,
+                # which the 10-item example cannot support (R0.1
+                # minimum-n, T3-12): the check is switched off for it.
+                mp.setattr(runner, 'validate_minimum_n',
+                           lambda config, items: None)
             exit_code = runner.main([
                 '--config', str(config_path),
                 '--fixture-dir', str(fixture_dir),
@@ -185,11 +185,10 @@ def _run(tmp_path_factory, dimensions_claimed, later_model=None):
 
 @pytest.fixture(scope='module')
 def run(tmp_path_factory):
-    # The shipped config claims D1 on 10 items, which minimum-n (R0.1)
-    # refuses once wired (T3-12). Tests not about D1 claim only the
-    # dimensions R0.1 sets no minimum for, as test_step4_g9_spec_claims.py
-    # does.
-    return _run(tmp_path_factory, ['D2', 'D7'])
+    # The D1 report sections are under test here, so this run claims D1
+    # on the 10-item example, with minimum-n (R0.1, T3-12) switched off
+    # for it in _run.
+    return _run(tmp_path_factory, ['D1', 'D2', 'D7'])
 
 
 @pytest.fixture(scope='module')
