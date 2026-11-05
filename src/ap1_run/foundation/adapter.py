@@ -176,7 +176,9 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
                 f"transport failure after {MAX_RETRIES} attempts: "
                 f"{error_text}")
             failure.request_record = request_record
-            raise failure from e
+            # Not chained: the original's text is unmasked, and a printed
+            # traceback shows chained exceptions (rule 0c).
+            raise failure from None
 
         request_record["attempts"] = attempts
 
@@ -196,7 +198,7 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
         except ValueError as e:
             raise AdapterError(
                 f"response is not valid JSON: {_mask_credentials(resp.text[:200])}"
-            ) from e
+            ) from None
 
         return raw, request_record
 

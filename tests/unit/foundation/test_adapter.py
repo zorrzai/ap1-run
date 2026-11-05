@@ -229,7 +229,8 @@ def test_send_transport_failure_every_attempt_raises(transport):
         send(URL, messages=MESSAGES)
     assert type(e.value) is AdapterError
     assert str(e.value) == 'transport failure after 3 attempts: e2'
-    assert isinstance(e.value.__cause__, requests.ConnectionError)
+    # the unmasked transport exception is not chained (see below)
+    assert e.value.__cause__ is None and e.value.__suppress_context__
     assert len(t.calls) == 3
     assert t.sleeps == [1.0, 1.0]   # no sleep after the last attempt
 
@@ -308,7 +309,8 @@ def test_send_200_not_json_raises_adapter_error(transport):
     assert type(e.value) is AdapterError
     assert str(e.value) == 'response is not valid JSON: ' + \
         text[:200].replace('sk-abcdefghijklmnop', '[REDACTED]')
-    assert isinstance(e.value.__cause__, ValueError)
+    # not chained: the JSON error's .doc holds the whole unmasked body
+    assert e.value.__cause__ is None and e.value.__suppress_context__
 
 
 def test_send_200_not_json_truncated_before_masking(transport):
@@ -479,3 +481,21 @@ def test_send_non_numeric_sampling_string_sent_as_is(transport):
     t, _, record = ok_send(transport, sampling={'reasoning_effort': 'low'})
     assert t.calls[0]['json']['reasoning_effort'] == 'low'
     assert record['sampling_as_sent'] == {'reasoning_effort': 'low'}
+
+
+@pytest.mark.finding('S3-G1-20')
+@pytest.mark.parametrize('failure', ['transport', 'not-json'])
+def test_send_formatted_traceback_carries_no_credential(transport, failure):
+    # Rule 0c: no credential in any exception text. The traceback a
+    # caller prints shows the chained exceptions too, so the unmasked
+    # original must not be chained to the masked one.
+    import traceback
+    secret = 'sk-abcdefghijklmnopqrst'
+    if failure == 'transport':
+        transport(*[requests.ConnectionError(f'GET ?key={secret}')] * 3)
+    else:
+        transport(FakeResponse(200, text=f'not json {secret}'))
+    with pytest.raises(AdapterError) as e:
+        send(URL, messages=MESSAGES)
+    text = ''.join(traceback.format_exception(e.value))
+    assert secret not in text and 'sk-abcdef' not in text, text
