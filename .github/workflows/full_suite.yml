@@ -15,6 +15,14 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, edited]
 
+# One run per PR (or branch) at a time: a newer event cancels the older
+# run, so a series of edits or pushes ends in one run of the latest state.
+# A cancelled run reports "cancelled", which does not satisfy a required
+# check.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -26,6 +34,7 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ['3.11', '3.12']
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
