@@ -265,20 +265,27 @@ def test_transcription_infinite_return_without_policy_is_altered():
                    reason='T3-27: check_transcription quantises with the '
                           'Decimal default HALF_EVEN; the fix must add a '
                           'quantisation_rounding= keyword and use it')
-@pytest.mark.parametrize('released, expected_outcome', [
-    ('430.75', TRANSCRIBED_EXACT),     # the HALF_UP rounding of 430.745
-    ('430.74', TRANSCRIBED_ALTERED),   # not licensed by HALF_UP
-], ids=['licensed-rounding-exact', 'unlicensed-rounding-altered'])
-def test_transcription_declared_half_up_policy_decides_the_tie(
-        released, expected_outcome):
+@pytest.mark.parametrize('tool, released, mode, expected_outcome', [
+    ('430.745', '430.75', 'ROUND_HALF_UP', TRANSCRIBED_EXACT),
+    ('430.745', '430.74', 'ROUND_HALF_UP', TRANSCRIBED_ALTERED),
+    ('430.745', '430.74', 'ROUND_HALF_EVEN', TRANSCRIBED_EXACT),
+    ('430.745', '430.75', 'ROUND_HALF_EVEN', TRANSCRIBED_ALTERED),
+    ('-430.745', '-430.75', 'ROUND_HALF_UP', TRANSCRIBED_EXACT),
+], ids=['half-up-licensed', 'half-up-unlicensed', 'half-even-licensed',
+        'half-even-unlicensed', 'half-up-negative-tie'])
+def test_transcription_declared_rounding_mode_decides_the_tie(
+        tool, released, mode, expected_outcome):
     # SPEC R0.4.1: quantisation uses "the declared rounding mode"; R2.5:
     # "an alteration permitted by the declared quantisation policy is
     # EXACT"; AP-1 v1.3 D7.3 (l.388): rounding not licensed by the
-    # declared policy is ALTERED. The shipped config declares
-    # ROUND_HALF_UP, under which the tool's 430.745 is 430.75.
-    r = check_transcription(D('430.745'), D(released),
+    # declared policy is ALTERED. The tie 430.745 is 430.75 under
+    # ROUND_HALF_UP and 430.74 under ROUND_HALF_EVEN (the two modes the
+    # config accepts), so a fix that ignores the declared mode fails one
+    # of the pairs; -430.745 is -430.75 under HALF_UP (away from zero),
+    # which a fix rounding toward +infinity gets wrong.
+    r = check_transcription(D(tool), D(released),
                             figure_outcome=AUTO_MATCH, quantisation_digits=2,
-                            quantisation_rounding='ROUND_HALF_UP')
+                            quantisation_rounding=mode)
     assert r['outcome'] == expected_outcome
 
 

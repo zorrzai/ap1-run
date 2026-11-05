@@ -587,6 +587,35 @@ def test_score_execution_accuracy_uses_declared_rounding(capsys):
     assert f.all_accuracy_results[0]['outcome'] == 'CORRECT'
 
 
+# Guards for T3-27's fix, not failing-first: under a declared
+# ROUND_HALF_EVEN today's results are already right (the code always uses
+# HALF_EVEN), and they must stay right. A fix that passes the HALF_UP
+# tests above by hard-coding ROUND_HALF_UP fails these.
+
+HALF_EVEN_2 = {'quantisation': {'places': 2, 'rounding': 'ROUND_HALF_EVEN'}}
+
+
+@pytest.mark.req('R2.5', 'R0.4.1')
+def test_score_execution_transcription_declared_half_even_tie_altered(
+        capsys):
+    # The tool's 430.745 is 430.74 under the declared HALF_EVEN, so
+    # releasing 430.75 is an alteration the policy does not license.
+    f = real_score([calc('861.49 / 2', '{"result": 430.745}')],
+                   'The principal portion is $430.75.', '430.745',
+                   config=HALF_EVEN_2)
+    assert f.transcription_results[0]['outcome'] == 'TRANSCRIBED-ALTERED'
+
+
+@pytest.mark.req('R2.1', 'R0.4.1')
+def test_score_execution_accuracy_declared_half_even_boundary_incorrect(
+        capsys):
+    # 2.005 and 2.015 quantise to 2.00 and 2.02 under HALF_EVEN: 0.02
+    # apart, outside the 0.01 tolerance.
+    f = real_score([], 'The answer is 2.005.', '2.015', config=HALF_EVEN_2)
+    assert f.all_results[0]['figure_outcome'] == 'AUTO-MATCH'
+    assert f.all_accuracy_results[0]['outcome'] == 'INCORRECT'
+
+
 @pytest.mark.proposal(
     "V12-n: v1.2 behaviour alongside v1.3 is the author's proposal; field "
     "and key names are the fix's")
