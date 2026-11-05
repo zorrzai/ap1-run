@@ -123,8 +123,9 @@ def d1_run(tmp_path_factory):
                 if name.startswith('AP1_SMOKE_'):
                     mp.delenv(name)
             mp.setenv('AP1_SMOKE_API_KEY', KEY)
-            mp.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-            mp.setenv('AP1_SMOKE_MODEL', 'mock-model')
+            # the runner takes the endpoint and model from the config only
+            # (T3-80)
+            mock.point_config(config_path)
             mp.setattr(time, 'sleep', lambda seconds: None)
             from ap1_run import run as runner
             code = runner.main(['--config', str(config_path),
@@ -138,6 +139,14 @@ def d1_run(tmp_path_factory):
         # Not an AssertionError: this dataset meets D1's minimum, so a run
         # that does not complete is a defect of its own, not this test's.
         raise RuntimeError(f'the D1 run did not complete (exit {code})')
+    summary = json.loads((output_dir / 'smoke_summary.json').read_text('utf-8'))
+    unmeasured = [r for r in summary['all_results']
+                  if r.get('status') != 'EXECUTED']
+    if unmeasured:
+        # Every execution reaches the mock and is scored; otherwise the
+        # test below would fail for want of data, not for T3-32.
+        raise RuntimeError(f'{len(unmeasured)} executions not executed, '
+                           f'e.g. {unmeasured[0]}')
     return (output_dir / 'report.md').read_text('utf-8')
 
 
