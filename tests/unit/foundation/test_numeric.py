@@ -1118,3 +1118,38 @@ def test_parse_decimal_negative_keeps_every_digit(text):
         ctx.prec = 28
         value = parse_decimal(text)[0]
     assert value == Decimal('-15200.' + '0' * 60 + '1')
+
+
+def _values(text):
+    return [(str(t.value), t.percent) for t in extract_numeric_tokens(text)]
+
+
+@pytest.mark.finding('S3-G1-6')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.parametrize('text, expected', [
+    ('The answer is __430.75__', [('430.75', False)]),     # Markdown bold
+    ('_430.75_', [('430.75', False)]),                     # Markdown italic
+    ('合计430.75元', [('430.75', False)]),     # CJK beside it
+    ('Q04', []), ('v2.0.1', []), ('item A1', []),          # still words
+    ('5_000', []), ('Q4_5', []),               # '_' inside a run is a word
+])
+def test_extract_word_characters_are_ascii_letters_and_digits(text, expected):
+    # Only digits inside an identifier (ASCII letters and digits) are not
+    # a token: '_' emphasis and non-Latin script are boundaries.
+    assert _values(text) == expected
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.parametrize('text, expected', [
+    # a number dropped as inside a word does not make the sign an operator
+    ('Q4 -5% decline', [('-5', True)]),
+    # a line break is not the whitespace of a subtraction
+    ('Balance 1,006.25\n-575.50 paid', [('1006.25', False),
+                                       ('-575.50', False)]),
+    # the operator reading, on one line, is kept
+    ('1437.00 - 1006.25', [('1437.00', False), ('1006.25', False)]),
+])
+def test_extract_sign_is_an_operator_only_after_a_kept_number_on_its_line(
+        text, expected):
+    assert _values(text) == expected

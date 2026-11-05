@@ -223,7 +223,19 @@ def _build_extraction_re(decimal_sep, grouping_sep, currency_symbols):
 
 
 _SIGNS = '+-\u2212'
-_WORD_CHAR = re.compile(r'\w')
+# A word character: an ASCII letter or digit, or '_' between two of them
+# ('5_000', 'Q4_5'). '_' at the edge of a run (Markdown emphasis,
+# '__430.75__') and non-Latin script are boundaries (S3-G1-6).
+_ALNUM = re.compile(r'[A-Za-z0-9]')
+
+
+def _is_word_char(text, i):
+    c = text[i]
+    if _ALNUM.match(c):
+        return True
+    return (c == '_' and 0 < i < len(text) - 1
+            and bool(_ALNUM.match(text[i - 1]))
+            and bool(_ALNUM.match(text[i + 1])))
 
 
 def extract_numeric_tokens(text, *, decimal_sep='.', grouping_sep=',',
@@ -234,12 +246,15 @@ def extract_numeric_tokens(text, *, decimal_sep='.', grouping_sep=',',
     Raises AmbiguousLocaleError if any token is ambiguous.
 
     Two readings of the free text, beyond the token grammar:
-    - A sign directly after a number (only whitespace between) is a
-      binary operator, not the sign of the next token: '1437.00 - 1006.25'
-      and '5-3' give 1006.25 and 3 (S3-G1-5).
+    - A sign directly after a number (only spaces or tabs between, on
+      the same line) is a binary operator, not the sign of the next
+      token: '1437.00 - 1006.25' and '5-3' give 1006.25 and 3 (S3-G1-5).
+      A number dropped as inside a word does not count ('Q4 -5%' gives
+      -5%), nor does one on the line before ('1,006.25\n-575.50').
     - Digits inside a word are not a token: 'Q04', 'v2.0.1', 'item A1'
-      give nothing (S3-G1-6). A match is inside a word when a word
-      character touches its first or last character (both word
+      give nothing (S3-G1-6). A word character is an ASCII letter or
+      digit ('__430.75__' and CJK text around a figure still give it). A
+      match is inside a word when a word character touches its first or last character (both word
       characters), or when it is joined to such a match by separator
       characters only, or by nothing ('v2.0.1': '2.0' and '1'; 'Q4-5').
     """
@@ -268,10 +283,10 @@ def extract_numeric_tokens(text, *, decimal_sep='.', grouping_sep=',',
     for i, (start, end, match_text) in enumerate(deduped):
         core_end = start + len(match_text.rstrip())
         follows_number = (prev_core_end is not None
-                          and not text[prev_core_end:start].strip())
-        prev_core_end = core_end
+                          and not text[prev_core_end:start].strip(' \t'))
         if in_word[i]:
             continue
+        prev_core_end = core_end
         stripped = match_text.strip()
         if follows_number and stripped[0] in _SIGNS:
             # An operator: the token is what follows it.
@@ -307,11 +322,11 @@ def _matches_inside_words(text, matches, decimal_sep, grouping_sep):
              for start, _end, match_text in matches]
 
     def touches_word(start, core_end):
-        return bool((start > 0 and _WORD_CHAR.match(text[start - 1])
-                     and _WORD_CHAR.match(text[start]))
+        return bool((start > 0 and _is_word_char(text, start - 1)
+                     and _is_word_char(text, start))
                     or (core_end < len(text)
-                        and _WORD_CHAR.match(text[core_end])
-                        and _WORD_CHAR.match(text[core_end - 1])))
+                        and _is_word_char(text, core_end)
+                        and _is_word_char(text, core_end - 1)))
 
     in_word = [touches_word(start, core_end) for start, core_end in spans]
     # joined[i]: match i and match i + 1 are one run
