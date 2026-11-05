@@ -336,9 +336,9 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose:
 | Q03 | base | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
 | Q03 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 36.00 | 2 | `UNVERIFIED` |
 | Q03 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
-| Q04 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 1006.25, 430.75 | 2 | `UNVERIFIED` |
+| Q04 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 430.75 | 2 | `UNVERIFIED` |
 | Q04 | base | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
-| Q04 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 1006.25, 430.75 | 2 | `UNVERIFIED` |
+| Q04 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 430.75 | 2 | `UNVERIFIED` |
 | Q04 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
 | Q05 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 2411.00 | 2 | `UNVERIFIED` |
 | Q05 | base | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
@@ -360,9 +360,9 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose:
 | Q09 | base | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
 | Q09 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 3.20 | 2 | `UNVERIFIED` |
 | Q09 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
-| Q10 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 3289.65, 180.00, 3109.65 | 2 | `UNVERIFIED` |
+| Q10 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 3109.65 | 2 | `UNVERIFIED` |
 | Q10 | base | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
-| Q10 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 3289.65, 180.00, 3109.65 | 2 | `UNVERIFIED` |
+| Q10 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 3109.65 | 2 | `UNVERIFIED` |
 | Q10 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
 
 ## 9b. D2.2 Execution Conditions

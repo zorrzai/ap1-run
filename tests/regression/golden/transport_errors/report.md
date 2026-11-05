@@ -341,7 +341,7 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 14, UNMEAS
 | Q06 | base | prose | `UNMEASURED` | evidence: observed over 1 run; not operator-declared | — | 1 | `UNVERIFIED` |
 | Q06 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 144.00 | 2 | `UNVERIFIED` |
 | Q06 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
-| Q07 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 2: no figures; 777.41 | 2 | `UNVERIFIED` |
+| Q07 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 2: no single figure; 777.41 | 2 | `UNVERIFIED` |
 | Q07 | base | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 2 | 2 | `UNVERIFIED` |
 | Q07 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 777.41 | 2 | `UNVERIFIED` |
 | Q07 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |

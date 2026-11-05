@@ -301,7 +301,7 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
     # -- D2 classification per (item, condition) per surface --
     d2_cap_reason = find_d2_cap(config['sampling'])
     d2_results = classify_reproducibility(findings.d2_responses, repeat_count,
-                                          d2_cap_reason)
+                                          d2_cap_reason, findings.d2_figures)
 
     summary = build_summary(
         findings.all_results, findings.evidence_findings,

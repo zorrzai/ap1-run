@@ -667,7 +667,8 @@ def test_d2_cap_first_capping_parameter_wins():
 def fake_mechanism(monkeypatch):
     calls = []
 
-    def classify(responses, *, surface, minimum_runs, operator_declared=None):
+    def classify(responses, *, surface, minimum_runs, operator_declared=None,
+                 figures=None):
         calls.append((list(responses), surface, minimum_runs,
                       operator_declared))
         mechanism = responses[0] if responses else 'UNMEASURED'

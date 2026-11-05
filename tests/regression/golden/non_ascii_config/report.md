@@ -306,7 +306,7 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose:
 
 | Question | Condition | Surface | Mechanism Class | Basis | Distinct Values | Runs | Parameter Echo |
 |---|---|---|---|---|---|---|---|
-| Q01 | base | figures | `OBSERVED-ONLY` | evidence: observed over 1 run; not operator-declared | 1: no figures | 1 | `UNVERIFIED` |
+| Q01 | base | figures | `OBSERVED-ONLY` | evidence: observed over 1 run; not operator-declared | 1: no single figure | 1 | `UNVERIFIED` |
 | Q01 | base | prose | `OBSERVED-ONLY` | evidence: observed over 1 run; not operator-declared | 1 | 1 | `UNVERIFIED` |
 | Q01 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 1 run; not operator-declared | 1: 15.20 | 1 | `UNVERIFIED` |
 | Q01 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 1 run; not operator-declared | 1 | 1 | `UNVERIFIED` |

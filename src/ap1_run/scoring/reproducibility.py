@@ -16,6 +16,7 @@ diff requested vs applied. A silently ignored parameter is a platform finding.
 """
 
 from decimal import Decimal
+from fractions import Fraction
 
 from ap1_run.foundation.numeric import (
     AmbiguousLocaleError, extract_numeric_tokens,
@@ -40,7 +41,7 @@ class ReproducibilityError(Exception):
 
 
 def classify_mechanism(responses, *, surface, minimum_runs,
-                       operator_declared=None):
+                       operator_declared=None, figures=None):
     """Classify the reproducibility mechanism for a surface.
 
     Args:
@@ -50,6 +51,16 @@ def classify_mechanism(responses, *, surface, minimum_runs,
         minimum_runs: int -- minimum successful runs required
         operator_declared: str or None -- if the operator declares
             STRUCTURAL or CONFIGURED, this is that declaration.
+        figures: list or None -- each response's answer figure (Decimal,
+            or None where it has no single figure; see
+            runner/executions.py). When given, the figures surface is
+            that figure (AP-1 D2 "distinct numeric answers"; T3-4),
+            compared exactly, with "no single figure" a value of its own.
+            When not, the figures the text states.
+
+    A response that is an error, rate limited or of a shape that cannot
+    be read (SPEC R2.0 step 0) is not a run on either surface; how many
+    were left out, other than errors, is in the reason.
 
     Returns:
         dict with keys:
@@ -66,8 +77,10 @@ def classify_mechanism(responses, *, surface, minimum_runs,
         raise ReproducibilityError(
             f'unknown surface {surface!r}; expected one of {SURFACES}')
 
-    successful = [r for r in responses if not _is_error_or_limited(r)]
+    runs, left_out = _runs(responses, surface, figures)
+    successful = [responses[i] for i in runs]
     n_successful = len(successful)
+    note = f' ({left_out} left out)' if left_out else ''
 
     # Below minimum: UNMEASURED, never "stable" or "1 distinct answer"
     if n_successful < minimum_runs:
@@ -77,7 +90,7 @@ def classify_mechanism(responses, *, surface, minimum_runs,
             'distinct_values': None,
             'successful_runs': n_successful,
             'reason': (f'{n_successful} successful runs below minimum '
-                       f'{minimum_runs} — UNMEASURED'),
+                       f'{minimum_runs}{note} — UNMEASURED'),
         }
 
     # No observations (reachable with minimum_runs 0): nothing is known
@@ -88,11 +101,14 @@ def classify_mechanism(responses, *, surface, minimum_runs,
             'operator_declared': False,
             'distinct_values': None,
             'successful_runs': 0,
-            'reason': '0 successful runs — UNMEASURED',
+            'reason': f'0 successful runs{note} — UNMEASURED',
         }
 
     # Extract the surface values
-    values = _extract_surface_values(successful, surface)
+    if surface == 'figures' and figures is not None:
+        values = [_answer_key(figures[i]) for i in runs]
+    else:
+        values = _extract_surface_values(successful, surface)
     distinct = len(set(values))
 
     # If operator declares STRUCTURAL or CONFIGURED, mark it
@@ -226,15 +242,49 @@ def _extract_surface_values(responses, surface):
     return values
 
 
-def distinct_figures_shown(responses):
+NO_SINGLE_FIGURE = 'no single figure'
+
+
+def _answer_key(figure):
+    """An answer figure's identity: its exact value, whatever the Decimal
+    context; "no single figure" for None."""
+    return NO_SINGLE_FIGURE if figure is None else Fraction(figure)
+
+
+def _runs(responses, surface, figures):
+    """The indices of the responses that are runs on this surface, and
+    a note of those left out other than errors ('' if none): a response
+    whose shape cannot be read is not a run (SPEC R2.0 step 0)."""
+    from ap1_run.execution.evidence import _read_message
+    runs, unreadable = [], 0
+    for i, r in enumerate(responses):
+        if _is_error_or_limited(r):
+            continue
+        if _read_message(r)[0] is None:
+            unreadable += 1
+            continue
+        runs.append(i)
+    return runs, f'{unreadable} unreadable' if unreadable else ''
+
+
+def distinct_figures_shown(responses, figures=None):
     """Each distinct figures value of the successful responses (told
     apart as classify_mechanism tells them), as the first response to
     give it states it: the figures in text order, each value as written
     in Decimal ('2600.00', with '%' for a percent), joined by ', ';
     'no figures' for a text without one, 'unreadable' for one extraction
     refuses. First seen first (AP-1 D2 "distinct numeric answers per
-    question"; T3-4)."""
+    question"; T3-4). With figures (classify_mechanism), each distinct
+    released figure of the runs, as written."""
     from ap1_run.execution.evidence import _read_message
+    if figures is not None:
+        runs, _ = _runs(responses, 'figures', figures)
+        shown = {}
+        for i in runs:
+            shown.setdefault(_answer_key(figures[i]),
+                             NO_SINGLE_FIGURE if figures[i] is None
+                             else str(figures[i]))
+        return list(shown.values())
     shown = {}
     for r in responses:
         if _is_error_or_limited(r):
@@ -248,7 +298,7 @@ def distinct_figures_shown(responses):
             continue
         figures, seen = [], set()
         for t in extract_numeric_tokens(text):
-            k = (str(t.value.normalize()), t.percent)
+            k = (Fraction(t.value), t.percent)
             if k not in seen:
                 seen.add(k)
                 figures.append(f'{t.value}{"%" if t.percent else ""}')
@@ -258,11 +308,12 @@ def distinct_figures_shown(responses):
 
 def _figures(text):
     """The numeric figures a text states, as a sorted tuple of
-    (value, percent) pairs, each value normalised (15.2 and 15.20 are
-    one figure); ('unreadable', text) if extraction refuses the text."""
+    (value, percent) pairs, each value exact and independent of the
+    Decimal context (15.2 and 15.20 are one figure, 15.20 and 15.21 two);
+    ('unreadable', text) if extraction refuses the text."""
     try:
         tokens = extract_numeric_tokens(text)
     except (AmbiguousLocaleError, ArithmeticError, ValueError):
         return ('unreadable', text)
-    return tuple(sorted({(str(t.value.normalize()), t.percent)
+    return tuple(sorted({(Fraction(t.value), t.percent)
                          for t in tokens}))

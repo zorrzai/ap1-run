@@ -117,28 +117,33 @@ def find_d2_cap(sampling):
     return d2_cap_reason
 
 
-def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason):
+def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason,
+                             d2_figures=None):
     """D2 mechanism class per (item, condition) and per surface.
 
     d2_responses maps (item_id, condition) to the responses of its
     repeats. Returns {'<item_id>/<condition>': {surface: mechanism}};
     a measured figures surface also carries 'values', its distinct
-    values as stated (T3-4).
+    values as stated (T3-4). d2_figures maps the same keys to each
+    repeat's released figure (or None): the figures surface is then the
+    released figure.
     """
     d2_results = {}
     for (item_id, cond), responses in d2_responses.items():
         key = f'{item_id}/{cond}'
         d2_results[key] = {}
+        figures = (d2_figures or {}).get((item_id, cond))
         for surface in ('figures', 'prose'):
             mech = classify_mechanism(
                 responses,
                 surface=surface,
                 minimum_runs=repeat_count,
                 operator_declared=None,
+                figures=figures,
             )
             if surface == 'figures' and mech.get('distinct_values') is not None:
                 # the values themselves, for report section 9 (T3-4)
-                mech['values'] = distinct_figures_shown(responses)
+                mech['values'] = distinct_figures_shown(responses, figures)
             # D2.2 cap: platform-rejected -> cap at OBSERVED-ONLY
             if d2_cap_reason and mech['mechanism'] not in ('UNMEASURED',):
                 mech['mechanism'] = 'OBSERVED-ONLY'

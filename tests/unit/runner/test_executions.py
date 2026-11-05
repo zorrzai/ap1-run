@@ -514,6 +514,7 @@ def test_findings_start_empty_and_separate():
     assert b == Findings()
     assert vars(b) == {
         'all_results': [], 'all_accuracy_results': [], 'd2_responses': {},
+        'd2_figures': {},
         'grammar_issues': [], 'decline_findings': [],
         'tool_call_structures': [], 'evidence_findings': [],
         'transcription_results': [], 'release_coverage_results': [],
@@ -1319,3 +1320,24 @@ def test_score_execution_checks_the_echo_of_every_round(fakes):
     assert findings.parameter_echo[0]['findings'] == [
         "parameter 'temperature': requested='0', applied=0.7 "
         '— silently ignored']
+
+
+# -- d2_answer_figure (T3-4) -------------------------------------------------
+
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('R2.2')
+def test_d2_answer_figure_released_else_the_one_stated_else_none():
+    from types import SimpleNamespace as T
+    from ap1_run.runner.executions import d2_answer_figure
+    one = [T(value=Decimal('2500.00'), percent=False)]
+    assert d2_answer_figure({'released_figure': Decimal('2600.00'),
+                             'extracted_tokens': one}) == Decimal('2600.00')
+    assert d2_answer_figure({'released_figure': None,
+                             'extracted_tokens': one}) == Decimal('2500.00')
+    assert d2_answer_figure({'released_figure': None, 'extracted_tokens':
+                             one + [T(value=Decimal('1.2'), percent=True)]}
+                            ) == Decimal('2500.00')
+    assert d2_answer_figure({'released_figure': None, 'extracted_tokens':
+                             one + one}) is None
+    assert d2_answer_figure({'released_figure': None,
+                             'extracted_tokens': None}) is None

@@ -46,6 +46,8 @@ class Findings:
     all_results: list = field(default_factory=list)
     all_accuracy_results: list = field(default_factory=list)  # D1
     d2_responses: dict = field(default_factory=dict)  # (item, cond) -> [response]
+    # (item, cond) -> [released figure or None], beside d2_responses (T3-4)
+    d2_figures: dict = field(default_factory=dict)
     grammar_issues: list = field(default_factory=list)
     decline_findings: list = field(default_factory=list)
     tool_call_structures: list = field(default_factory=list)
@@ -91,6 +93,19 @@ def record_not_run(findings, item_id, condition, rep):
         'repeat': rep, 'status': NOT_RUN,
         'cause': 'not reached: the transcript has no record of it',
     })
+
+
+def d2_answer_figure(fig_result):
+    """The figure that is a response's answer for D2 (AP-1 D2 "distinct
+    numeric answers"; T3-4): its R2.0 released figure, else the one
+    figure it states if it states exactly one (a wrong answer is never
+    released, but it is the answer), else None (no single figure).
+    Percentages are not answers (S3-G4-2)."""
+    if fig_result.get('released_figure') is not None:
+        return fig_result['released_figure']
+    figures = [t for t in fig_result.get('extracted_tokens') or []
+               if not t.percent]
+    return figures[0].value if len(figures) == 1 else None
 
 
 def record_interrupted(findings, item_id, condition, rep, last_round):
@@ -377,6 +392,8 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
     d2_key = (item_id, condition)
     findings.d2_responses.setdefault(d2_key, []).append(
         result.get('response'))
+    findings.d2_figures.setdefault(d2_key, []).append(
+        d2_answer_figure(fig_result))
 
     # -- D2.2: were the requested sampling parameters applied? In every
     # round's response, tool-call rounds included; a result without its

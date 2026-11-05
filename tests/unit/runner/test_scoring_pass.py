@@ -133,7 +133,8 @@ class Pass:
         self.calls.append(('d2_cap', sampling))
         return 'CAP'
 
-    def classify_reproducibility(self, responses, repeat_count, cap):
+    def classify_reproducibility(self, responses, repeat_count, cap,
+                                 figures):
         self.calls.append(('d2', responses, repeat_count, cap))
         return {'d2': 'results'}
 

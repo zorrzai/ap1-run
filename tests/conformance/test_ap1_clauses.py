@@ -730,8 +730,9 @@ def test_mechanism_is_classified_for_a_single_configuration():
     (AP-1 v1.3 §5.11, L474)
     """
     from ap1_run.scoring.reproducibility import classify_mechanism
-    result = classify_mechanism([{'content': 'result1'},
-                                 {'content': 'result1'}],
+    reply = {'choices': [{'message': {'role': 'assistant',
+                                      'content': 'result1'}}]}
+    result = classify_mechanism([reply, dict(reply)],
                                 surface='figures', minimum_runs=2)
     assert result == {
         'mechanism': 'OBSERVED-ONLY', 'distinct_values': 1,

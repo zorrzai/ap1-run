@@ -1366,33 +1366,33 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose:
 | Q03 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1 | 50 | `UNVERIFIED` |
 | Q03 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1: 36.00 | 50 | `UNVERIFIED` |
 | Q03 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1 | 50 | `UNVERIFIED` |
-| Q04 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 4: 1006.25, 1437.00, 430.75; 430.75; 1006.25, 430.75; 12, 287500.00, 4.20%, 1006.25, 1437.00, 430.75 | 50 | `UNVERIFIED` |
+| Q04 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: no single figure; 430.75 | 50 | `UNVERIFIED` |
 | Q04 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 27 | 50 | `UNVERIFIED` |
-| Q04 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 3: 1006.25, 430.75; 1006.25, 1437.00, 430.75; 430.75 | 50 | `UNVERIFIED` |
+| Q04 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 430.75; no single figure | 50 | `UNVERIFIED` |
 | Q04 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 25 | 50 | `UNVERIFIED` |
-| Q05 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 11: 25.00, 2411.00; 25.00, 2411.00, 36.00; 25.00, 2411.00, 18%; 2411.00; 25.00, 2410.63, 18.0%; 36.00, 25.00, 2375.00, 2411.00; 25.00, 2375.00; 25.00, 2410.63; 25.00, 2411.00, 18%, 36.00, 2375.00; 18%, 4436, 25, 2411; 25.00, 2411.00, 18.0%, 2400.00, 36.00 | 50 | `UNVERIFIED` |
+| Q05 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 2411.00; no single figure | 50 | `UNVERIFIED` |
 | Q05 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 48 | 50 | `UNVERIFIED` |
-| Q05 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 19: 25.00, 2411.00; 25.00, 2411.00, 18%; 12, 18%, 2400, 0.18, 36.00, 2436.00, 25.00, 2411.00; 25, 2411, 2375, 36, 18%, 12; 25.00, 2411.00, 36.00, 18%, 2400; 25, 2411.00, 18%, 1.5%, 2400, 36.00; 0.015, 1.5%, 25, 2411.00; 25, 2411, 2375; 25.00, 2411.00, 18%, 1.5%, 2403.60; 2411.00, 36.00, 2375.00, 25.00; 25.00, 2411.00, 36.00; 25.00, 2411.00, 36.00, 18%; 2411.00, 36.00; 25.00, 2375.00, 18%, 36.00, 2411.00; 2400, 1, 18%, 12, 2436.00, 36.00, 25; 25, 2411, 11; 25.00, 2411.00, 2436.00; 25.00, 2410.63; 25.00, 2411.00, 1.5%, 36.00 | 50 | `UNVERIFIED` |
+| Q05 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 2411.00; no single figure | 50 | `UNVERIFIED` |
 | Q05 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 47 | 50 | `UNVERIFIED` |
-| Q06 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 144.00; 12.00, 144.00 | 50 | `UNVERIFIED` |
+| Q06 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1: 144.00 | 50 | `UNVERIFIED` |
 | Q06 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 8 | 50 | `UNVERIFIED` |
-| Q06 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 5: 144.00; 12.00, 144, 0.0%; 12.00, 144.00; 144.00, 12, 0.00, 0.0%; 12.00, 144, 4850, 0.0 | 50 | `UNVERIFIED` |
+| Q06 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 144.00; no single figure | 50 | `UNVERIFIED` |
 | Q06 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 20 | 50 | `UNVERIFIED` |
-| Q07 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 8: 777.41; 822.41, 3, 45, 777.41; 822.41, 45.00, 3, 15.00, 777.41; 7.8%, 822.41, 3, 45, 777.41; 822.41, 45, 777.41; 7.8%, 822.41, 45, 777.41; no figures; 822.41, 15.00, 45.00, 777.41 | 50 | `UNVERIFIED` |
+| Q07 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 777.41; no single figure | 50 | `UNVERIFIED` |
 | Q07 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 27 | 50 | `UNVERIFIED` |
-| Q07 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 3: 822.41, 45, 15, 3, 777.41; 777.41; 822.41, 45.00, 777.41 | 50 | `UNVERIFIED` |
+| Q07 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1: 777.41 | 50 | `UNVERIFIED` |
 | Q07 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 4 | 50 | `UNVERIFIED` |
-| Q08 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 1437.00, 286063.00; 286063.00 | 50 | `UNVERIFIED` |
+| Q08 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: no single figure; 286063.00 | 50 | `UNVERIFIED` |
 | Q08 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 10 | 50 | `UNVERIFIED` |
-| Q08 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 9: 1437.00, 286063.00; 286063.00; 286063, 1006.25, 1437, 430.75, 287500, 287069.25; 287069.25; 1006.25, 1437, 430.75, 287500, 287069.25; 1006.25, 1437.00, 430.75, 287500.00, 286069.25; 285056.75; 1437.00, 286063.00, 1006.25; 1437, 286063, 4.20%, 1006.25, 430.75, 287500, 287069.25 | 50 | `UNVERIFIED` |
+| Q08 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 4: no single figure; 286063.00; 287069.25; 285056.75 | 50 | `UNVERIFIED` |
 | Q08 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 19 | 50 | `UNVERIFIED` |
-| Q09 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 3.20; 15.20, 12.00, 3.20 | 50 | `UNVERIFIED` |
+| Q09 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 3.20; no single figure | 50 | `UNVERIFIED` |
 | Q09 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 18 | 50 | `UNVERIFIED` |
-| Q09 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 3: 15.20, 12.00, 3.20; 3.20; 12, 3.20 | 50 | `UNVERIFIED` |
+| Q09 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: no single figure; 3.20 | 50 | `UNVERIFIED` |
 | Q09 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 23 | 50 | `UNVERIFIED` |
-| Q10 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 4: 3289.65, 180, 15, 12, 3109.65; 3289.65, 180, 3109.65; 3109.65; 3289.65, 180, 15, 3109.65 | 50 | `UNVERIFIED` |
+| Q10 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1: 3109.65 | 50 | `UNVERIFIED` |
 | Q10 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 26 | 50 | `UNVERIFIED` |
-| Q10 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 4: 3109.65; 3289.65, 180, 15, 12, 3109.65; 7.8%, 3289.65, 180, 15, 12, 3109.65; 3289.65, 180.00, 3109.65 | 50 | `UNVERIFIED` |
+| Q10 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1: 3109.65 | 50 | `UNVERIFIED` |
 | Q10 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 9 | 50 | `UNVERIFIED` |
 
 ## 9b. D2.2 Execution Conditions

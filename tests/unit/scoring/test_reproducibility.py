@@ -1,6 +1,9 @@
 """Unit tests for scoring/reproducibility.py: the D2 mechanism class per
 surface and the parameter-echo check (R2.2)."""
 
+from decimal import Decimal as D
+from fractions import Fraction
+
 import pytest
 
 from ap1_run.scoring.reproducibility import (
@@ -424,8 +427,8 @@ def test_parameter_echo_compares_numbers_as_decimals_else_text(
 @pytest.mark.finding('T3-4')
 @pytest.mark.req('R2.2', 'AP-1 D2')
 def test_surface_values_figures_are_the_stated_numbers():
-    # The set of numeric figures in the text, normalised, with their
-    # percent flag: order, repetition and wording don't matter; tool
+    # The set of numeric figures in the text, each its exact value, with
+    # its percent flag: order, repetition and wording don't matter; tool
     # calls in the message are not figures; no text is no figures.
     responses = [
         response('$15.20 at 1.2%'),
@@ -434,12 +437,13 @@ def test_surface_values_figures_are_the_stated_numbers():
         response(None), {'choices': []}, {}, {'choices': [{}]},
         response('1.2 and 1.2%'),
     ]
+    F = Fraction
     assert _extract_surface_values(responses, 'figures') == [
-        (('1.2', True), ('15.2', False)),
-        (('1.2', True), ('15.2', False)),
-        (('182.4', False),),
+        ((F('1.2'), True), (F('15.2'), False)),
+        ((F('1.2'), True), (F('15.2'), False)),
+        ((F('182.4'), False),),
         (), (), (), (),
-        (('1.2', False), ('1.2', True)),
+        ((F('1.2'), False), (F('1.2'), True)),
     ]
 
 
@@ -480,3 +484,88 @@ def test_surface_values_unreadable_shape_is_empty(surface):
          {'choices': [{'message': {'tool_calls': ['x']}}]}],
         surface) == ([()] if surface == 'figures' else ['']) * 6
     # (figures: no text states no figures, T3-4)
+
+
+# -- The figures surface is the released figure (T3-4; AP-1 D2) -------------
+
+UNREADABLE = {'choices': []}
+
+
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('R2.2')
+def test_figures_surface_is_the_released_figure_not_every_number():
+    # AP-1 D2: "the number of distinct numeric answers per question". The
+    # same answer with different working is one answer.
+    responses = [response('The available credit is 2600.00.'),
+                 response('5000 - 2400 = 2600.00, so it is 2600.00.')]
+    r = classify_mechanism(responses, surface='figures', minimum_runs=2,
+                           figures=[D('2600.00'), D('2600.00')])
+    assert (r['mechanism'], r['distinct_values'], r['successful_runs']) == (
+        OBSERVED_ONLY, 1, 2)
+    assert distinct_figures_shown(responses, [D('2600.00'),
+                                              D('2600.0')]) == ['2600.00']
+
+
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('R2.2')
+def test_figures_surface_counts_different_released_figures():
+    responses = [response('15.20'), response('182.40')]
+    r = classify_mechanism(responses, surface='figures', minimum_runs=2,
+                           figures=[D('15.20'), D('182.40')])
+    assert r['distinct_values'] == 2
+    assert distinct_figures_shown(responses, [D('15.20'), D('182.40')]) == [
+        '15.20', '182.40']
+
+
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('R2.2', 'R2.0')
+def test_figures_surface_without_a_single_figure_is_its_own_value():
+    # A response with no single figure to its answer (None) is a value of
+    # its own, "no single figure": an answer that changes from a figure
+    # to none is variation.
+    responses = [response('15.20 or 182.40'), response('15.20')]
+    r = classify_mechanism(responses, surface='figures', minimum_runs=2,
+                           figures=[None, D('15.20')])
+    assert (r['mechanism'], r['successful_runs'], r['distinct_values']) == (
+        OBSERVED_ONLY, 2, 2)
+    assert distinct_figures_shown(responses, [None, D('15.20')]) == [
+        'no single figure', '15.20']
+
+
+@pytest.mark.finding('T3-4', 'S3-G2-1')
+@pytest.mark.req('R2.2', 'R2.0')
+@pytest.mark.parametrize('surface', ['figures', 'prose'])
+def test_unreadable_response_is_not_a_run(surface):
+    # SPEC R2.0 step 0: nothing is concluded about a response that could
+    # not be read. It is left out like an error, and counted.
+    only = classify_mechanism([UNREADABLE, UNREADABLE], surface=surface,
+                              minimum_runs=2, figures=[None, None])
+    assert (only['mechanism'], only['successful_runs']) == (UNMEASURED, 0)
+    assert '2 unreadable' in only['reason']
+    mixed = classify_mechanism([UNREADABLE, response('2600.00')],
+                               surface=surface, minimum_runs=1,
+                               figures=[None, D('2600.00')])
+    assert (mixed['distinct_values'], mixed['successful_runs']) == (1, 1)
+
+
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('R0.4.1', 'R2.2')
+def test_figures_identity_is_exact_whatever_the_context():
+    # 15.20 and 15.21 are two answers at any Decimal precision, and so
+    # are two values that differ beyond 28 digits.
+    from decimal import localcontext
+    long_a = D('1.' + '0' * 30 + '1')
+    long_b = D('1.' + '0' * 30 + '2')
+    with localcontext() as ctx:
+        ctx.prec = 2
+        r = classify_mechanism([response('a'), response('b')],
+                               surface='figures', minimum_runs=2,
+                               figures=[D('15.20'), D('15.21')])
+        assert r['distinct_values'] == 2
+        assert distinct_figures_shown(
+            [response('a'), response('b')],
+            [D('15.20'), D('15.21')]) == ['15.20', '15.21']
+    r = classify_mechanism([response('a'), response('b')],
+                           surface='figures', minimum_runs=2,
+                           figures=[long_a, long_b])
+    assert r['distinct_values'] == 2
