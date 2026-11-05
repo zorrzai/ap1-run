@@ -17,12 +17,21 @@ NO_RETURNS = 'no tool returns available'
 NO_CANDIDATES = 'no candidate figures matching expected value found in response'
 
 
+# DEC-5: tests of today's behaviour in a module SPEC does not define are
+# provisional (the code is the definition for now); the step-4 xfails
+# in this file are not, they state the correct behaviour of known defects.
+PROVISIONAL = pytest.mark.provisional(
+    'DEC-5: release coverage has no SPEC section; the code is the '
+    'provisional definition')
+
+
 def call(result, name='calculator'):
     """A tool-call record whose return is {"result": result} as JSON."""
     return {'function': {'name': name, 'arguments': '{}'},
             'return_value': json.dumps({'result': result})}
 
 
+@PROVISIONAL
 def test_release_coverage_outcome_constants():
     assert GOVERNED_RELEASE == 'GOVERNED-RELEASE'
     assert PARTIALLY_GOVERNED == 'PARTIALLY-GOVERNED'
@@ -31,36 +40,43 @@ def test_release_coverage_outcome_constants():
 
 # -- _parse_tool_returns ----------------------------------------------------
 
+@PROVISIONAL
 def test_parse_tool_returns_reads_result_of_each_call_in_order():
     assert _parse_tool_returns([call('1006.25'), call('430.75')]) == [
         D('1006.25'), D('430.75')]
 
 
+@PROVISIONAL
 def test_parse_tool_returns_keeps_the_string_digits():
     [value] = _parse_tool_returns([call('15.200000000000001')])
     assert str(value) == '15.200000000000001'
 
 
+@PROVISIONAL
 def test_parse_tool_returns_accepts_json_numbers():
     rv = [{'return_value': '{"result": 1.5}'}, {'return_value': '{"result": 7}'}]
     assert _parse_tool_returns(rv) == [D('1.5'), D('7')]
 
 
+@PROVISIONAL
 def test_parse_tool_returns_accepts_an_already_parsed_dict():
     assert _parse_tool_returns([{'return_value': {'result': '2.5'}}]) == [D('2.5')]
 
 
+@PROVISIONAL
 def test_parse_tool_returns_skips_missing_and_empty_returns():
     assert _parse_tool_returns(
         [{}, {'return_value': ''}, {'return_value': None},
          {'return_value': {}}, call('1')]) == [D('1')]
 
 
+@PROVISIONAL
 def test_parse_tool_returns_skips_error_returns():
     assert _parse_tool_returns(
         [{'return_value': json.dumps({'error': 'syntax error'})}]) == []
 
 
+@PROVISIONAL
 def test_parse_tool_returns_skips_unparseable_returns():
     assert _parse_tool_returns([
         {'return_value': 'not json'},
@@ -75,6 +91,7 @@ def test_parse_tool_returns_skips_unparseable_returns():
     ]) == [D('4')]
 
 
+@PROVISIONAL
 @pytest.mark.finding('S3-G5-2')
 def test_parse_tool_returns_counts_any_tool_name():
     # Today: the return of any tool counts, so a lookup tool that hands
@@ -85,6 +102,7 @@ def test_parse_tool_returns_counts_any_tool_name():
         D('430.75')]
 
 
+@PROVISIONAL
 def test_parse_tool_returns_accepts_nan():
     [value] = _parse_tool_returns([call('NaN')])
     assert value.is_nan()
@@ -92,6 +110,7 @@ def test_parse_tool_returns_accepts_nan():
 
 # -- check_release_coverage: unobservable -----------------------------------
 
+@PROVISIONAL
 @pytest.mark.finding('S3-G5-1')
 def test_release_coverage_no_tool_calls_is_unobservable():
     assert check_release_coverage([], [D('430.75')], D('430.75')) == {
@@ -103,6 +122,7 @@ def test_release_coverage_no_tool_calls_is_unobservable():
     }
 
 
+@PROVISIONAL
 @pytest.mark.finding('S3-G5-1')
 def test_release_coverage_unobservable_lists_candidates_as_ungoverned():
     # Today: with no tool returns the result is COVERAGE-UNOBSERVABLE,
@@ -116,6 +136,7 @@ def test_release_coverage_unobservable_lists_candidates_as_ungoverned():
     assert r['ungoverned_token_count'] == 0
 
 
+@PROVISIONAL
 @pytest.mark.finding('S3-G5-1')
 def test_release_coverage_calls_without_parseable_returns_are_unobservable():
     calls = [{'return_value': json.dumps({'error': 'division by zero'})}]
@@ -128,6 +149,7 @@ def test_release_coverage_calls_without_parseable_returns_are_unobservable():
     }
 
 
+@PROVISIONAL
 def test_release_coverage_no_candidates_is_unobservable():
     assert check_release_coverage([call('430.75')], [], D('430.75')) == {
         'outcome': 'COVERAGE-UNOBSERVABLE',
@@ -138,11 +160,13 @@ def test_release_coverage_no_candidates_is_unobservable():
     }
 
 
+@PROVISIONAL
 def test_release_coverage_no_returns_checked_before_no_candidates():
     r = check_release_coverage([], [], D('1'))
     assert r['finding'] == NO_RETURNS
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-28')
 def test_release_coverage_sees_only_the_candidates_it_is_given():
     # Today (documented scope limit): only figures matching the expected
@@ -156,6 +180,7 @@ def test_release_coverage_sees_only_the_candidates_it_is_given():
 
 # -- check_release_coverage: governed ---------------------------------------
 
+@PROVISIONAL
 def test_release_coverage_every_candidate_returned_is_governed():
     calls = [call('1006.25'), call('430.75')]
     assert check_release_coverage(calls, [D('430.75'), D('430.75')],
@@ -169,12 +194,14 @@ def test_release_coverage_every_candidate_returned_is_governed():
     }
 
 
+@PROVISIONAL
 def test_release_coverage_candidate_matching_an_earlier_return_is_governed():
     calls = [call('430.75'), call('1437.00')]
     r = check_release_coverage(calls, [D('430.75')], D('430.75'))
     assert r['outcome'] == GOVERNED_RELEASE
 
 
+@PROVISIONAL
 def test_release_coverage_quantising_absorbs_float_noise():
     r = check_release_coverage([call('15.200000000000001')], [D('15.20')],
                                D('15.2'))
@@ -182,23 +209,27 @@ def test_release_coverage_quantising_absorbs_float_noise():
     assert r['tool_returns'] == [D('15.200000000000001')]
 
 
+@PROVISIONAL
 def test_release_coverage_rounds_candidates_too():
     r = check_release_coverage([call('430.75')], [D('430.7549')], D('430.75'))
     assert r['outcome'] == GOVERNED_RELEASE
 
 
+@PROVISIONAL
 def test_release_coverage_default_rounding_is_half_up():
     # 430.745 -> 430.75 under HALF_UP (430.74 under HALF_EVEN).
     r = check_release_coverage([call('430.745')], [D('430.75')], D('430.75'))
     assert r['outcome'] == GOVERNED_RELEASE
 
 
+@PROVISIONAL
 def test_release_coverage_uses_the_declared_rounding_mode():
     r = check_release_coverage([call('430.745')], [D('430.75')], D('430.75'),
                                quantisation_rounding='ROUND_HALF_EVEN')
     assert r['outcome'] == PARTIALLY_GOVERNED
 
 
+@PROVISIONAL
 def test_release_coverage_default_places_are_two():
     governed = check_release_coverage([call('430.754')], [D('430.75')], D('1'))
     altered = check_release_coverage([call('430.756')], [D('430.75')], D('1'))
@@ -206,6 +237,7 @@ def test_release_coverage_default_places_are_two():
     assert altered['outcome'] == PARTIALLY_GOVERNED
 
 
+@PROVISIONAL
 def test_release_coverage_uses_the_declared_places():
     calls, cands = [call('430.76')], [D('430.75')]
     assert check_release_coverage(calls, cands, D('1'),
@@ -216,12 +248,14 @@ def test_release_coverage_uses_the_declared_places():
         == PARTIALLY_GOVERNED
 
 
+@PROVISIONAL
 def test_release_coverage_unknown_rounding_mode_raises():
     with pytest.raises(ValueError, match="unsupported rounding mode: 'UP'"):
         check_release_coverage([call('1')], [D('1')], D('1'),
                                quantisation_rounding='UP')
 
 
+@PROVISIONAL
 def test_release_coverage_ignores_expected_value():
     # The docstring says expected_value is used for the finding text; it
     # is not used at all.
@@ -232,6 +266,7 @@ def test_release_coverage_ignores_expected_value():
 
 # -- check_release_coverage: partially governed -----------------------------
 
+@PROVISIONAL
 def test_release_coverage_candidate_not_returned_is_partially_governed():
     assert check_release_coverage([call('1006.25')], [D('430.75')],
                                   D('430.75')) == {
@@ -244,6 +279,7 @@ def test_release_coverage_candidate_not_returned_is_partially_governed():
     }
 
 
+@PROVISIONAL
 def test_release_coverage_lists_only_the_ungoverned_figures():
     r = check_release_coverage([call('430.75')], [D('430.75'), D('430.76')],
                                D('430.75'))
@@ -252,6 +288,7 @@ def test_release_coverage_lists_only_the_ungoverned_figures():
     assert r['ungoverned_token_count'] == 1
 
 
+@PROVISIONAL
 def test_release_coverage_ungoverned_figures_are_deduplicated_by_value():
     r = check_release_coverage(
         [call('1006.25')],
@@ -265,6 +302,7 @@ def test_release_coverage_ungoverned_figures_are_deduplicated_by_value():
         'observed returns: [1006.25]')
 
 
+@PROVISIONAL
 def test_release_coverage_finding_lists_raw_returns_in_order():
     r = check_release_coverage(
         [call('15.200000000000001'), call('1006.25')], [D('430.75')], D('1'))
@@ -272,6 +310,7 @@ def test_release_coverage_finding_lists_raw_returns_in_order():
         'observed returns: [15.200000000000001, 1006.25]')
 
 
+@PROVISIONAL
 def test_release_coverage_substitution_at_declared_precision_is_caught():
     # T3-78: the shipped tolerance (0.01, inclusive) lets 777.41 through
     # as a candidate for 777.42; coverage still catches it at 2 places
@@ -280,11 +319,13 @@ def test_release_coverage_substitution_at_declared_precision_is_caught():
     assert r['outcome'] == PARTIALLY_GOVERNED
 
 
+@PROVISIONAL
 def test_release_coverage_nan_return_governs_nothing():
     r = check_release_coverage([call('NaN')], [D('1')], D('1'))
     assert r['outcome'] == PARTIALLY_GOVERNED
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-39')
 @pytest.mark.parametrize('result', ['inf', 'Infinity', '1e+60'])
 def test_release_coverage_unquantisable_return_raises(result):
