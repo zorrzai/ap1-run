@@ -91,3 +91,32 @@ def test_check_version_label_over_another_text_refused():
 def test_check_version_record_without_text_hash_refused():
     with pytest.raises(SealError, match="hashes to None"):
         check_ap1_text_version({'ap1_version': 'v1.3'}, {})
+
+
+@pytest.mark.finding('V12-4')
+@pytest.mark.req('AP-1 §0.4', 'R1.1')
+@pytest.mark.parametrize('version', ['v1.2.0', 'V1.2', 'AP-1 v1.2', 'v1.2 ',
+                                     'ap-1 V1.2.0'])
+def test_check_version_known_version_in_another_form_refused(version):
+    # A label that reads as a table version but is not written in its
+    # form would skip the text check: v1.2.0 over the v1.3 draft sealed.
+    with pytest.raises(SealError) as exc:
+        check_ap1_text_version({'ap1_version': version},
+                               {'ap1_text_hash': V13})
+    assert str(exc.value) == (
+        f"AP-1 text: ap1_version {version!r} reads as v1.2 but is not "
+        f"written as the table's 'v1.2' (or 'v1.2-<qualifier>'): write it "
+        f"so, and the text is checked against v1.2's")
+
+
+@pytest.mark.finding('V12-4')
+@pytest.mark.req('AP-1 §0.4', 'R1.1')
+def test_check_version_unknown_label_over_a_known_text_refused():
+    # A version outside the table over the text of one in it puts the
+    # wrong label on a known text.
+    with pytest.raises(SealError) as exc:
+        check_ap1_text_version({'ap1_version': 'v1.4'},
+                               {'ap1_text_hash': V13})
+    assert str(exc.value) == (
+        f"AP-1 text: the sealed text is the AP-1 v1.3 text ({V13!r}), "
+        f"labelled ap1_version 'v1.4'")

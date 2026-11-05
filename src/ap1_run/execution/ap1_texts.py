@@ -67,3 +67,34 @@ def check_ap1_text_version(config, record):
             f'AP-1 text: the sealed text hashes to '
             f'{record.get("ap1_text_hash")!r}, which is not the AP-1 '
             f'{version} text ({entry["sha256"]!r})')
+    if entry is None:
+        # A known version written in another form ('v1.2.0', 'V1.2',
+        # 'AP-1 v1.2') would skip the check above (V12-4).
+        reads_as = _reads_as(version)
+        if reads_as in AP1_TEXTS:
+            raise SealError(
+                f'AP-1 text: ap1_version {version!r} reads as {reads_as} '
+                f'but is not written as the table\'s {reads_as!r} (or '
+                f'\'{reads_as}-<qualifier>\'): write it so, and the text is '
+                f'checked against {reads_as}\'s')
+        # A version outside the table over the text of one in it
+        for known, known_entry in AP1_TEXTS.items():
+            if record.get('ap1_text_hash') == known_entry['sha256']:
+                raise SealError(
+                    f'AP-1 text: the sealed text is the AP-1 {known} text '
+                    f'({known_entry["sha256"]!r}), labelled ap1_version '
+                    f'{version!r}')
+
+
+def _reads_as(version):
+    """A version label as it reads: stripped, lower case, without a
+    leading 'AP-1', with a leading 'v', and without trailing '.0' patch
+    levels ('AP-1 V1.2.0' reads as 'v1.2')."""
+    text = str(version or '').strip().lower()
+    if text.startswith('ap-1'):
+        text = text[4:].strip()
+    if text and not text.startswith('v'):
+        text = 'v' + text
+    while text.count('.') > 1 and text.endswith('.0'):
+        text = text[:-2]
+    return text

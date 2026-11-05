@@ -682,3 +682,21 @@ def test_static_check_no_float_on_comparison_or_reporting_path():
         if uses:
             offenders[rel] = uses
     assert offenders == {}
+
+
+@pytest.mark.finding('V12-4')
+@pytest.mark.req('R1.1', 'AP-1 §0.4')
+@pytest.mark.parametrize('label', ['v1.2.0', 'V1.2', 'AP-1 v1.2', 'v1.4'])
+def test_run_other_label_over_the_v13_text_refused(runner, fixture_dir,
+                                                   label):
+    # A label outside the table's form, with the v1.3 draft given by
+    # --ap1-text and its hash declared, sealed as 'v1.2.0' over v1.3
+    # before. It is refused before any request.
+    result = runner(fixture_dir,
+                    config={'ap1_version': label, 'ap1_text_hash': V13_HASH,
+                            'dimensions_claimed': []},
+                    args=['--ap1-text', str(ROOT / 'reference' /
+                                            'AP-1_v1.3_DRAFT_FOR_COMMENT.md')])
+    assert refused_naming(result, 'ap1_version') or refused_naming(
+        result, 'AP-1 v1.3'), (result.code, result.refusal)
+    assert result.requests == []
