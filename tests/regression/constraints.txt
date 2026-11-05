@@ -1,0 +1,7 @@
+# Versions for the regression CI job (pip install -c this file).
+# The transport_errors golden output contains urllib3's own error text
+# ("Remote end closed connection ..."), so an upstream rewording would fail
+# an unrelated PR. These are the versions of the last green run before
+# the pin; change them deliberately, with the golden files if needed.
+requests==2.34.2
+urllib3==2.8.0

@@ -1,0 +1,8 @@
+{
+  "description": "The declared AP-1 text hash does not match the file, so the seal is refused before any request is sent.",
+  "seal_attempts": 1,
+  "seal_records": 0,
+  "exercises": ["R1.1 seal refusal", "SealError"],
+  "extends": "clean",
+  "config": {"repeat_count": "1", "ap1_text_hash": "0000000000000000000000000000000000000000000000000000000000000000"}
+}

@@ -1,0 +1,7 @@
+{
+  "description": "generate_findings.py regenerates FINDINGS.md from the published run summaries and FINDINGS.template.md.",
+  "exercises": ["generate_findings.py", "entry point", "FINDINGS.md generation"],
+  "command": ["generate_findings.py"],
+  "copy_output": ["run_a_mini", "run_b_sol", "superseded"],
+  "collect": ["FINDINGS.md"]
+}

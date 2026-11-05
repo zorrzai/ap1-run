@@ -1,0 +1,9 @@
+Endpoint: <MOCK>/v1/chat/completions
+Model: mock-model
+API key: present (33 chars)
+
+  temperature omitted (reason: platform-rejected)
+  reasoning_effort=none (from config)
+Runner version: v1.3.1 (e0d9ec9)
+Runner source hash: <RUNNER_SOURCE_HASH>...
+
