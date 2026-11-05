@@ -288,7 +288,7 @@ def test_transcription_declared_half_up_policy_decides_the_tie(
                    reason='V12-6: a D7.3 result has no "rounded under '
                           'declared policy" sub-flag')
 def test_transcription_licensed_rounding_is_exact_and_flagged_rounded():
-    # Fix plan §2a, V12-6 (Steven, 2026-10-19: in scope): keep v1.3's
+    # V12-6: keep v1.3's
     # TRANSCRIBED-EXACT for rounding the declared policy licenses (Q07:
     # the tool returned 777.4125, the model released 777.41), and add a
     # sub-flag so a v1.2 reader can count the strict "match" cases. The
@@ -306,14 +306,12 @@ def test_transcription_licensed_rounding_is_exact_and_flagged_rounded():
                           'declared policy" sub-flag')
 def test_transcription_exact_match_is_flagged_not_rounded():
     # The sub-flag is False when the released figure equals the return
-    # with no rounding (fix plan §2a, V12-6).
+    # with no rounding (V12-6).
     r = check_transcription(D('430.75'), D('430.75'),
                             figure_outcome=AUTO_MATCH, quantisation_digits=2)
     assert r['outcome'] == TRANSCRIBED_EXACT
     assert r.get('rounded_under_declared_policy') is False
 
-
-# Group g1-invocation (fix plan branch 10).
 
 @pytest.mark.finding('T3-39')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -321,7 +319,7 @@ def test_transcription_exact_match_is_flagged_not_rounded():
                           'raises InvalidOperation')
 @pytest.mark.parametrize('value', ['Infinity', '1e+60'])
 def test_transcription_unquantisable_return_altered_or_unobservable(value):
-    # Correct (T3 review T3-39, the step-3 pin's own comment): a tool
+    # Correct (T3-39, the step-3 pin's own comment): a tool
     # return that cannot be quantised is UNOBSERVABLE (or ALTERED), never
     # an exception.
     try:

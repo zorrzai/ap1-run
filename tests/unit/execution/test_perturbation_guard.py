@@ -188,7 +188,6 @@ def test_summarise_uses_str_for_non_json_values():
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
-# Group g3-seal-guards; see inbox/2026-10-20_step4-g3-seal-guards-report.md.
 
 def refusal_or_none(base, other):
     """The PerturbationRefusal message, or None if the guard passed. (Not

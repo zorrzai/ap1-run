@@ -1,5 +1,5 @@
 """Step 4, group g4-transcript: the transcript and the two-pass design,
-end to end (fix plan branch 4: raw-response preservation).
+end to end (raw-response preservation).
 
 Correct behaviour, failing on today's code (each test is a strict xfail
 with its finding):
@@ -9,8 +9,7 @@ with its finding):
   transcript read-only"). The run writes the transcript with no scoring
   in it; scoring is a separate pass that reads the transcript and writes
   nothing back; re-scoring a finished run's transcript reproduces its
-  scores. Steven's ruling: notes/ap1-run-common-fixes/choices-for-marcus.md
-  entry 1.
+  scores. The maintainer's decision DEC-6 lists T3-21 (two passes).
 - V12-3 / T3-52: SPEC R0.2 ("Every request and response is written to the
   transcript before any other processing"), AP-1 §5.6: every round of a
   tool loop, request and raw response, is in the transcript.
@@ -264,7 +263,7 @@ def test_run_transcript_is_only_what_the_execution_wrote(cli):
                    reason='T3-21: no scoring pass over a transcript; '
                           + RESCORE_API)
 def test_rescore_of_finished_run_reproduces_its_summary(cli, tmp_path):
-    # Correct (Steven's ruling, choices-for-marcus.md entry 1; SPEC §2 "A
+    # Correct (the maintainer's decision DEC-6, T3-21; SPEC §2 "A
     # single-pass design makes re-scoring impossible"): re-scoring a
     # finished run's transcript reproduces the run's scores, and leaves
     # the transcript byte-identical.

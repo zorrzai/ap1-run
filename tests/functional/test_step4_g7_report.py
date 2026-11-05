@@ -1,4 +1,4 @@
-"""Step 4, group g7-report (fix branch 7, report honesty): failing-first
+"""Step 4, group g7-report (report honesty): failing-first
 tests of the correct behaviour, end to end.
 
 Each test reads the files a real run writes. The run is the real runner
@@ -196,7 +196,7 @@ def d1_row(report):
 def test_run_report_prints_no_accuracy_of_one_with_adjudication_pending(run):
     # The run has wrong final answers (Q01 concludes $182.40, Q02 r2 and
     # Q03 release wrong figures) and 14 items routed to adjudication that
-    # nobody scores. Correct (T3-3; fix plan branch 7): report.md carries
+    # nobody scores. Correct (T3-3): report.md carries
     # no "Accuracy: 1" headline (§3 or §8) while adjudication is pending.
     report = run['report']
     assert not ACCURACY_ONE.search(report), d1_row(report)
@@ -291,7 +291,7 @@ def test_run_report_lists_every_non_outcome_kind(run):
                    reason='T3-45: report.md carries no demonstration-run / '
                           'non-conformance statement')
 def test_run_report_says_demonstration_run_not_conformance_result(run):
-    # Marcus (2026-10-13): runs are demonstration runs, not conformance
+    # README: runs are demonstration runs, not conformance
     # results (README lines 21-22). The run writes that only to
     # DISCLAIMER.txt and smoke_summary.json. Correct: report.md says so
     # before its first section.
@@ -369,7 +369,7 @@ def test_run_report_records_served_model_and_fingerprints(run):
     # AP-1 §5.2: "Confirmation that the system under test was frozen for
     # the duration, with a version or commit identifier." The mock serves
     # 'mock-model-2026-01-01' (configured: 'mock-model') under two
-    # system_fingerprint values. Correct (fix plan branch 7): report.md
+    # system_fingerprint values. Correct (V12-8): report.md
     # records the served snapshot(s) and the fingerprints seen, so a
     # reader can tell whether the system was frozen.
     report = run['report']

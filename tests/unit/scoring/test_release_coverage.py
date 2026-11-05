@@ -307,14 +307,11 @@ def test_release_coverage_unquantisable_return_raises(result):
 def test_release_coverage_no_tool_returns_names_no_ungoverned_figures():
     # COVERAGE-UNOBSERVABLE means coverage could not be assessed, so it
     # names no ungoverned figure, as the no-candidates branch already does
-    # (G5 report, S3-g5-scoring-b-1). runner/executions.py records the
-    # list per execution.
+    # (S3-G5-1). runner/executions.py records the list per execution.
     r = check_release_coverage([], [D('430.75'), D('430.75')], D('430.75'))
     assert r['outcome'] == COVERAGE_UNOBSERVABLE
     assert r['ungoverned_figures'] == []
 
-
-# Group g1-invocation (fix plan branch 10).
 
 @pytest.mark.finding('T3-39')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -322,7 +319,7 @@ def test_release_coverage_no_tool_returns_names_no_ungoverned_figures():
                           'InvalidOperation')
 @pytest.mark.parametrize('result', ['inf', 'Infinity', '1e+60'])
 def test_release_coverage_unquantisable_return_governs_nothing(result):
-    # Correct (T3 review T3-39): a tool return that cannot be quantised
+    # Correct (T3-39): a tool return that cannot be quantised
     # (the calculator gives 'inf' for 1e308*10) governs no released
     # figure, and the check never raises.
     try:

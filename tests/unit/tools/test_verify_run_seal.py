@@ -898,11 +898,10 @@ def test_verify_run_any_transcript_line_with_other_seal_hash_fails(
                    reason='T3-18: parse steps and on-disk notices are counted '
                           'as passed checks')
 def test_verify_run_passes_count_only_real_comparisons(vrs, good_run):
-    # Correct (T3-18; Steven's F1 ruling, choices-for-marcus.md entry 5:
-    # "verify_run_seal.py drops its two non-checks against on-disk
-    # configs"): the passes are hash comparisons only. Parsing the report
-    # is a precondition, not a check, and the on-disk configs are not
-    # compared at all.
+    # Correct (T3-18; T3-79: verify_run_seal.py drops its two non-checks
+    # against on-disk configs): the passes are hash comparisons only.
+    # Parsing the report is a precondition, not a check, and the on-disk
+    # configs are not compared at all.
     run_dir, _, _ = good_run
     checks, _, _ = outcome(vrs, run_dir)
     not_comparisons = [name for name in names(checks)
@@ -1086,7 +1085,7 @@ def test_verify_run_edited_timestamp_fails(vrs, tmp_path, base):
 def test_verify_run_seal_timestamp_after_first_transcript_record_fails(
         vrs, tmp_path, base):
     # Correct (AP-1 v1.3 §5.3 "hashed and timestamped before execution";
-    # the brief for step 4): the verifier compares the seal timestamp with
+    # T3-47): the verifier compares the seal timestamp with
     # the first transcript record's. A seal dated after the first request
     # was not made before execution. seal_hash is consistent here (it
     # binds the timestamp), so the failure has to come from that
@@ -1194,13 +1193,12 @@ def test_verify_run_same_text_other_line_endings_verifies(vrs, good_run, base,
     assert (field, 'MATCH') in checks, failures
 
 
-@pytest.mark.finding('F1', 'T3-79')
+@pytest.mark.finding('T3-79')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F1: verify_run reports two non-checks against '
+                   reason='T3-79: verify_run reports two non-checks against '
                           'the on-disk configs')
 def test_verify_run_makes_no_check_against_on_disk_configs(vrs, run):
-    # Steven's ruling (choices-for-marcus entry 5; decisions file, F1,
-    # "Steven's Response 2"): verify_run_seal.py drops its two non-checks
+    # Correct (T3-79): verify_run_seal.py drops its two non-checks
     # against the on-disk files. They always print "does NOT match seal --
     # EXPECTED" and can never fail; once each run's config file is sealed
     # as it stands, they are also untrue.

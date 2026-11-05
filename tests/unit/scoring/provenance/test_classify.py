@@ -297,27 +297,27 @@ def test_classify_invocation_no_extractable_operands_is_unobservable(
     assert r['outcome'] == 'OPERANDS-UNOBSERVABLE'
 
 
-@pytest.mark.finding('T3-58', 'F5')
+@pytest.mark.finding('T3-58')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-58/F5: the operand is rounded through float '
+                   reason='T3-58: the operand is rounded through float '
                           'to 15200.0 and matches the source exactly')
 def test_classify_invocation_operand_beyond_float_precision_is_originated():
     # 15200.0000000000000001 is not the source value 15200.00. Read
-    # exactly (Steven, 2026-10-20; SPEC R0.4.1/R0.4.2; R2.4 "exactly
-    # equals, at full Decimal precision"), it reaches step 5.
+    # exactly (the maintainer's decision DEC-6, T3-58; SPEC R0.4.1/R0.4.2;
+    # R2.4 "exactly equals, at full Decimal precision"), it reaches step 5.
     r = classify_invocation('15200.0000000000000001 * 0.042', CTX, GT, CONFIG)
     assert r['outcome'] == 'OPERAND-ORIGINATED'
     assert [o['literal'] for o in r['originated_operands']] == [
         '15200.0000000000000001']
 
 
-@pytest.mark.finding('T3-58', 'F5')
+@pytest.mark.finding('T3-58')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-58/F5: the quantisation finding records 53.2, '
+                   reason='T3-58: the quantisation finding records 53.2, '
                           'not the operand the model wrote')
 def test_classify_invocation_quantisation_finding_keeps_operand_text():
-    # The finding records the operand as written: 53.20 (Steven,
-    # 2026-10-20: operands are read exactly from the model's text).
+    # The finding records the operand as written: 53.20 (T3-58:
+    # operands are read exactly from the model's text).
     r = classify_invocation('53.20 + 1', CTX, GT, CONFIG)
     assert r['quantisation_findings'] == [{
         'operand': '53.20', 'matched_intermediate': 'interest',
@@ -412,26 +412,23 @@ def test_sequential_return_of_unobservable_call_originates_dependent_operand():
         'computed_in_session_ungrounded'
 
 
-# Group g1-invocation (fix plan branch 10).
-
 def raw_call(arguments):
     return {'id': 'c1', 'function': {'name': 'calculator',
                                      'arguments': arguments},
             'return_value': result_json('15.2')}
 
 
-@pytest.mark.finding('T3-39', 'F6')
+@pytest.mark.finding('T3-39')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39/F6: model-controlled expression raises out '
+                   reason='T3-39: model-controlled expression raises out '
                           'of provenance')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}', '{"expression": "True * 15.2"}',
     '{"expression": "True + 1"}',
 ], ids=['number', 'true-times', 'true-plus'])
 def test_sequential_unreadable_expression_operands_unobservable(arguments):
-    # Correct (T3 review T3-39; Steven's ruling on F6, choices-for-marcus
-    # #9): no exception; the call's operands cannot be read, so its
-    # provenance is OPERANDS-UNOBSERVABLE (SPEC R2.4), not grounded.
+    # Correct (T3-39): no exception; the call's operands cannot be read,
+    # so its provenance is OPERANDS-UNOBSERVABLE (SPEC R2.4), not grounded.
     try:
         results = classify_invocations_sequential(
             [raw_call(arguments)], CTX, GT, CONFIG)

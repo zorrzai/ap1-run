@@ -436,7 +436,7 @@ def test_score_execution_with_real_scorers(tpath, capsys):
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
-# Group g7-report (fix branch 7). xfail(strict=True) until the fix.
+# xfail(strict=True) until the fix.
 
 @pytest.mark.finding('T3-75')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -461,8 +461,8 @@ def test_score_execution_passes_structured_answer_field(fakes, tpath):
                           'figure_identification record to the transcript')
 def test_score_execution_transcript_left_byte_identical(fakes, tpath, capsys):
     # Correct (SPEC §2 "R2 SCORE: reads only; never writes back"; R0.3
-    # "The scorer opens the transcript read-only"; Steven's ruling,
-    # choices-for-marcus.md entry 1): scoring an execution leaves the
+    # "The scorer opens the transcript read-only"; the maintainer's
+    # decision DEC-6, T3-21): scoring an execution leaves the
     # transcript as the engine wrote it.
     transcript.append(tpath, item_id='Q01', arm_id='base', condition='base',
                       request_sent={}, response_received={}, tool_calls=[],
@@ -513,7 +513,7 @@ def real_score(tool_calls, content, expected, config=HALF_UP_2):
 def test_score_execution_release_of_earlier_calculator_return_is_exact(
         capsys):
     # SPEC R2.5: compare "the value the required operation returned" to
-    # the released figure; fix plan branch 8: compare against every return
+    # the released figure; T3-26: compare against every return
     # of the required operation. The Q04 pattern: the answer 430.75 is
     # returned first, then the model checks it (430.75 + 1006.25 = 1437).
     calls = [calc('1437.00 - 1006.25', '{"result": 430.75}'),
@@ -593,7 +593,7 @@ def test_score_execution_accuracy_uses_declared_rounding(capsys):
                    reason='V12-6: the collected D7.3 result has no "rounded '
                           'under declared policy" sub-flag')
 def test_score_execution_transcription_result_carries_rounded_flag(capsys):
-    # Fix plan §2a, V12-6: each D7.3 result carries the sub-flag, so the
+    # V12-6: each D7.3 result carries the sub-flag, so the
     # report can count it. Q07: tool 777.4125, released 777.41.
     f = real_score([calc('42175 * (0.078 / 4) - (15 * 3)',
                          '{"result": 777.4125}')],
@@ -696,18 +696,16 @@ def test_score_execution_no_released_figure_recorded_as_null(fakes, tpath):
     assert findings.all_results[0]['released_figure'] is None
 
 
-# Group g1-invocation (fix plan branch 10).
-
-@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.finding('T3-65')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-65/F4: engine UNMEASURED results never reach '
+                   reason='T3-65: engine UNMEASURED results never reach '
                           'unmeasured_cells')
 @pytest.mark.parametrize('error, word', [
     ('rate limited (HTTP 429): {"error": "Rate limit"}', 'rate'),
     ('transport failure after 3 attempts: reset', 'transport'),
 ], ids=['rate-limited', 'transport'])
 def test_record_not_scored_unmeasured_listed_with_cause(error, word):
-    # Correct (Steven's ruling on F4, choices-for-marcus #7): the engine
+    # Correct (T3-65; SPEC R0.2): the engine
     # returns UNMEASURED for a failed round-0 request; the runner lists
     # that cell among the unmeasured cells, with its cause, as well as in
     # all_results.

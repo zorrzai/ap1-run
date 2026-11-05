@@ -392,7 +392,6 @@ def test_extract_attestation_malformed_shape_raises(resp, error):
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
-# Group g1-invocation (fix plan branch 10).
 
 @pytest.mark.finding('S3-G2-1')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
