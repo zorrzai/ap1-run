@@ -1387,11 +1387,6 @@ def test_verify_run_edited_timestamp_fails(vrs, tmp_path, base, moved):
     # hash binds the timestamp is the fix's choice, so any failure whose
     # name contains 'hash' is accepted, a 'timestamp'-only one is not.
     from datetime import datetime, timedelta
-
-
-def test_verify_run_edited_timestamp_fails(vrs, tmp_path, base):
-    # Correct (AP-1 v1.3 §5.3, SPEC R1.1): the timestamp is bound by
-    # seal_hash, so a timestamp edited in report.md fails verification.
     config = good_config(base)
     sealed = good_record(base, config)
     stamp = ('2020-01-01T00:00:00+00:00' if moved == 'six-years-earlier'
@@ -1510,12 +1505,6 @@ BOM_PROPOSAL = pytest.mark.proposal(
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-50: sealed file hashes depend on line endings '
                           'and a BOM')
-
-
-    ('questions_hash', os.path.join('example', 'questions.json'),
-     b'\xef\xbb\xbf{"items": []}\n'),
-    ('ground_truth_hash', os.path.join('example', 'ground_truth_example.py'),
-     b'\xef\xbb\xbfX = 1\r\n')], ids=['crlf', 'bom', 'bom-crlf'])
 def test_verify_run_same_text_other_line_endings_verifies(vrs, good_run, base,
                                                           field, relpath,
                                                           data):
