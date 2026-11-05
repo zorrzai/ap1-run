@@ -107,7 +107,11 @@ def score(findings, result, tpath, **overrides):
 
 # -- the collected records ------------------------------------------------
 
+@pytest.mark.finding('T3-21', 'T3-27')
 def test_score_execution_collects_every_record(fakes, tpath, capsys):
+    # T3-21: scoring appends a figure_identification record to the
+    # transcript; T3-27: check_transcription gets no rounding mode. Both
+    # fixes change this test.
     transcript.append(tpath, item_id='Q01', arm_id='base', condition='base',
                       request_sent={}, response_received={}, tool_calls=[],
                       evidence_class='EV-2', error_state=None,
@@ -193,7 +197,10 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
         'release_coverage_outcome': 'PARTIALLY-GOVERNED'}]
 
 
+@pytest.mark.finding('T3-27')
 def test_score_execution_defaults_for_a_bare_result(fakes, tpath, capsys):
+    # T3-27: check_transcription and score_accuracy get no rounding mode
+    # (release coverage does).
     fakes.figure = {'outcome': 'AUTO-NO-FIGURE'}
     findings = Findings()
     score(findings, {}, tpath, config={})

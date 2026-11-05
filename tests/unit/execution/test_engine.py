@@ -358,8 +358,11 @@ def test_execute_item_tool_result_sent_back(tmp_path, calculator):
         'model': 'model-1'}
 
 
+@pytest.mark.finding('V12-3', 'T3-52')
 def test_execute_item_transcript_request_is_initial_messages(
         tmp_path, calculator):
+    # V12-3/T3-52: only the first request is kept; every round's request
+    # belongs in the record, so the fix changes this test.
     _, records = run(tmp_path, FakeAdapter(calls(tool_call()), answer()))
     assert records[0]['request_sent'] == {
         'messages': INITIAL, 'request_record': {'request_no': 1}}
