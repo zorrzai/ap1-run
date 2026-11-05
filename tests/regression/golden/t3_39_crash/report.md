@@ -168,7 +168,7 @@ Model: mock-model
 | `UNOBSERVABLE` | 1 | 5.0% |
 | **Total** | **20** | |
 
-Of the 19 `TRANSCRIBED-EXACT`, 7 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
+Of the 19 `TRANSCRIBED-EXACT`, 7 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3). Of these: roundings of the tool's return to the declared places, 2; float artefacts of the tool (the return differs from the release only past a binary float's 15 significant digits, such as 15.200000000000001 for 15.20), 5. A strict v1.2 "match" count subtracts the roundings, or all 7 for the strictest reading.
 
 ### B. Release Coverage
 

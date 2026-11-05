@@ -9,7 +9,9 @@ Outcomes:
   TRANSCRIBED-EXACT     a return == released figure, or the released
                         figure is a return quantised under the declared
                         policy (places and rounding mode; flagged
-                        rounded_under_declared_policy). AP-1 D7.3 counts
+                        rounded_under_declared_policy, and float_artefact
+                        where the difference is only the tool's binary
+                        float noise). AP-1 D7.3 counts
                         "rounding not licensed by the declared
                         quantisation policy" as ALTERED, so quantising
                         both sides to the same value is not enough.
@@ -18,7 +20,7 @@ Outcomes:
                         not available
 """
 
-from decimal import Decimal
+from decimal import ROUND_HALF_EVEN, Decimal
 
 from ap1_run.foundation.numeric import quantise
 
@@ -31,7 +33,7 @@ UNOBSERVABLE_TRANSCRIPTION = 'UNOBSERVABLE'
 
 
 def _result(outcome, tool_return, released_figure, difference, reason,
-            rounded=False):
+            rounded=False, float_artefact=False):
     return {
         'outcome': outcome,
         'tool_return': tool_return,
@@ -39,7 +41,16 @@ def _result(outcome, tool_return, released_figure, difference, reason,
         'difference': difference,
         'reason': reason,
         'rounded_under_declared_policy': rounded,
+        'float_artefact': float_artefact,
     }
+
+
+def _float_artefact(value, released):
+    """True if the return differs from the release only past a binary
+    float's 15 significant digits: the tool's float noise
+    (15.200000000000001 for 15.20), not a rounding the model chose."""
+    quantum = Decimal(1).scaleb(value.adjusted() - 14)
+    return value.quantize(quantum, rounding=ROUND_HALF_EVEN) == released
 
 
 def check_transcription(tool_return_value, released_figure,
@@ -115,7 +126,8 @@ def check_transcription(tool_return_value, released_figure,
                     TRANSCRIBED_EXACT, value, released_figure, difference,
                     f'values differ by {difference} but are equal '
                     f'under quantisation to {quantisation_digits} digits',
-                    rounded=True)
+                    rounded=True,
+                    float_artefact=_float_artefact(value, released_figure))
 
     # Altered: report the closest return
     closest = min(returns, key=lambda value: abs(value - released_figure))

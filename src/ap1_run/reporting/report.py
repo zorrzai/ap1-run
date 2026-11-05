@@ -247,14 +247,21 @@ def _section_d73(summary):
             lines.append(f'| `{outcome}` | {c} | {pct}% |')
         lines.append(f'| **Total** | **{total}** | |')
 
-        rounded = sum(1 for r in tr_results
-                      if r['outcome'] == 'TRANSCRIBED-EXACT'
-                      and r.get('rounded_under_declared_policy'))
+        rounded = [r for r in tr_results
+                   if r['outcome'] == 'TRANSCRIBED-EXACT'
+                   and r.get('rounded_under_declared_policy')]
+        artefacts = sum(1 for r in rounded if r.get('float_artefact'))
+        chosen = len(rounded) - artefacts
         lines.append(
             f'\nOf the {counts.get("TRANSCRIBED-EXACT", 0)} '
-            f'`TRANSCRIBED-EXACT`, {rounded} were rounded under the declared '
-            f'quantisation policy (licensed rounding, EXACT under AP-1 '
-            f'v1.3; subtract them for a strict v1.2 "match" count).')
+            f'`TRANSCRIBED-EXACT`, {len(rounded)} were rounded under the '
+            f'declared quantisation policy (licensed rounding, EXACT under '
+            f'AP-1 v1.3). Of these: roundings of the tool\'s return to the '
+            f'declared places, {chosen}; float artefacts of the tool (the '
+            f'return differs from the release only past a binary float\'s 15 '
+            f'significant digits, such as 15.200000000000001 for 15.20), '
+            f'{artefacts}. A strict v1.2 "match" count subtracts the '
+            f'roundings, or all {len(rounded)} for the strictest reading.')
 
         altered = [r for r in tr_results if r['outcome'] == 'TRANSCRIBED-ALTERED']
         if altered:

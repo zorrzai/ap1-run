@@ -155,7 +155,8 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
     assert findings.transcription_results == [{
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
         'outcome': 'TRANSCRIBED-EXACT', 'difference': '0.00',
-        'reason': 'equal', 'rounded_under_declared_policy': True}]
+        'reason': 'equal', 'rounded_under_declared_policy': True,
+        'float_artefact': False}]
 
     # D7.3 release coverage: candidates within the tolerance, inclusive
     assert fakes.calls['check_release_coverage'] == [((
@@ -268,7 +269,7 @@ def test_score_execution_empty_results_from_scorers(fakes, tpath, monkeypatch):
     assert findings.transcription_results == [{
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
         'outcome': 'UNOBSERVABLE', 'difference': '', 'reason': '',
-        'rounded_under_declared_policy': False}]
+        'rounded_under_declared_policy': False, 'float_artefact': False}]
     assert findings.release_coverage_results == [{
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
         'outcome': 'COVERAGE-UNOBSERVABLE', 'finding': '',

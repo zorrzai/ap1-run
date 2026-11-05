@@ -441,8 +441,12 @@ def test_d73_transcription_counts_and_percentages():
         '| `UNOBSERVABLE` | 1 | 25.0% |',
         '| **Total** | **4** | |',
         '\nOf the 2 `TRANSCRIBED-EXACT`, 0 were rounded under the declared '
-        'quantisation policy (licensed rounding, EXACT under AP-1 v1.3; '
-        'subtract them for a strict v1.2 "match" count).',
+        'quantisation policy (licensed rounding, EXACT under AP-1 v1.3). '
+        'Of these: roundings of the tool\'s return to the declared places, '
+        '0; float artefacts of the tool (the return differs from the release '
+        'only past a binary float\'s 15 significant digits, such as '
+        '15.200000000000001 for 15.20), 0. A strict v1.2 "match" count '
+        'subtracts the roundings, or all 0 for the strictest reading.',
         '',
         '### B.'))
 
@@ -457,6 +461,25 @@ def test_d73_rounded_count_counts_only_flagged_exact_results():
         tr('UNOBSERVABLE')]})
     assert ('\nOf the 4 `TRANSCRIBED-EXACT`, 2 were rounded under the '
             'declared quantisation policy (') in text
+
+
+@pytest.mark.finding('V12-6')
+def test_d73_rounded_count_splits_model_roundings_from_float_artefacts():
+    # Run E's 291 rounded were 99 roundings of 777.4125 and 192 returns
+    # like 15.200000000000001: the report says which.
+    rounded = dict(tr('TRANSCRIBED-EXACT'), rounded_under_declared_policy=True,
+                   float_artefact=False)
+    artefact = dict(rounded, float_artefact=True)
+    text = report._section_d73({'transcription_results': [
+        rounded, artefact, artefact, artefact, tr('TRANSCRIBED-EXACT')]})
+    assert ('\nOf the 5 `TRANSCRIBED-EXACT`, 4 were rounded under the '
+            'declared quantisation policy (licensed rounding, EXACT under '
+            'AP-1 v1.3). Of these: roundings of the tool\'s return to the '
+            'declared places, 1; float artefacts of the tool (the return '
+            'differs from the release only past a binary float\'s 15 '
+            'significant digits, such as 15.200000000000001 for 15.20), 3. A '
+            'strict v1.2 "match" count subtracts the roundings, or all 4 for '
+            'the strictest reading.') in text
 
 
 def test_d73_rounded_count_without_exact_results_is_zero_of_zero():
@@ -479,8 +502,12 @@ def test_d73_altered_transcriptions_listed():
     assert md(
         '| **Total** | **3** | |',
         '\nOf the 1 `TRANSCRIBED-EXACT`, 0 were rounded under the declared '
-        'quantisation policy (licensed rounding, EXACT under AP-1 v1.3; '
-        'subtract them for a strict v1.2 "match" count).',
+        'quantisation policy (licensed rounding, EXACT under AP-1 v1.3). '
+        'Of these: roundings of the tool\'s return to the declared places, '
+        '0; float artefacts of the tool (the return differs from the release '
+        'only past a binary float\'s 15 significant digits, such as '
+        '15.200000000000001 for 15.20), 0. A strict v1.2 "match" count '
+        'subtracts the roundings, or all 0 for the strictest reading.',
         '\n#### Altered Transcriptions\n',
         '| Item | Condition | Rep | Difference | Reason |',
         '|---|---|---|---|---|',

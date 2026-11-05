@@ -145,6 +145,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'reason': transcription_result.get('reason', ''),
         'rounded_under_declared_policy': transcription_result.get(
             'rounded_under_declared_policy', False),
+        'float_artefact': transcription_result.get('float_artefact', False),
     })
 
     # -- D7.3: Release coverage check (E7 fix, all items) --
