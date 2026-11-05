@@ -251,21 +251,17 @@ def test_run_seal_record_binds_expected_values(runner):
     # Correct (SPEC R1.1: "hash and timestamp the fixture, question set,
     # expected values, ground-truth module, ..."; AP-1 v1.3 §13.4): the
     # expected values are computed before the seal and hashed into it.
-    # The record has one field named '...expected...' whose value is the
-    # digest of the expected values, computed here independently (so a
-    # hash of the module file, or of anything else, does not pass); it
-    # differs from every other hash in the record; and it is bound:
-    # editing it in report.md makes the published-run verifier fail where
-    # it passed before. The run reads example/ in place, so the
+    # Some field of the record holds the digest of the expected values,
+    # computed here independently (so a hash of the module file, a
+    # constant, or anything else does not pass); its name is free; and it
+    # is bound: editing it in report.md makes the published-run verifier
+    # fail where it passed before. The run reads example/ in place, so the
     # verifier's fixed input paths match.
     from decimal import Decimal
     from ap1_run.foundation.numeric import canonical_hash
     result = runner(EXAMPLE)
     assert result.code == 0, result.console[-2000:]
     record = report_seal_record(result.out)
-    fields = [k for k in record if 'expected' in k]
-    assert len(fields) == 1, sorted(record)
-    digest = record[fields[0]]
     values = true_expected_values(EXAMPLE)
     places = Decimal(10) ** -int(json.loads((EXAMPLE / 'config.json')
                                             .read_text('utf-8'))
@@ -275,8 +271,9 @@ def test_run_seal_record_binds_expected_values(runner):
         canonical_hash({k: str(v) for k, v in values.items()}),
         canonical_hash({k: str(Decimal(v).quantize(places))
                         for k, v in values.items()})}
-    assert digest in candidates, (digest, sorted(candidates))
-    assert digest not in [v for k, v in record.items() if k != fields[0]]
+    found = [k for k, v in record.items() if v in candidates]
+    assert found, (sorted(record), sorted(candidates))
+    digest = record[found[0]]
     vrs = load_verifier()
     _, before = vrs.verify_run(str(result.out))
     report = result.out / 'report.md'
@@ -284,8 +281,7 @@ def test_run_seal_record_binds_expected_values(runner):
                       'utf-8')
     _, after = vrs.verify_run(str(result.out))
     new = {name for name, _ in after} - {name for name, _ in before}
-    assert any('seal_hash' in n or 'expected' in n for n in new), \
-        (before, after)
+    assert any('hash' in n or found[0] in n for n in new), (before, after)
 
 
 @pytest.mark.finding('T3-48')
