@@ -241,7 +241,12 @@ in a standard envelope. The envelope names the model the execution's recorded
 final response names (the published runs did not keep the intermediate rounds'
 own model field), and a replay is configured with the model the published
 run's requests name. So a replay's served and configured models are the run's,
-not the mock's `mock-model`, which only scripted turns name. A recorded loop
+not the mock's `mock-model`, which only scripted turns name. The envelope
+carries no `system_fingerprint`. The replayed `report.md` therefore serves one
+model per run (run F `gpt-5.6-sol (1932)`, run E `gpt-4.1-mini-2025-04-14
+(2415)`). Run F's freeze line reads "not verified" (its responses report no
+backend fingerprint); run E's "not shown" comes from its own seven
+`system_fingerprint` values (V12-8), not from the harness. A recorded loop
 that ended mid-way (EV-0) is replayed as a failure of the next request. Every
 tool call is answered with the return the published run recorded for it
 (`tool_calls[].return_value`), not by running today's calculator: the system's

@@ -2560,20 +2560,41 @@ def test_report_header_records_served_model_and_fingerprints():
             'm-2026-01-01 (4)\n\n'
             'Backend fingerprints (system_fingerprint): fp_a (3), '
             'fp_b (1)\n\n'
-            '> More than one served model or backend fingerprint: the run '
-            'does not show that the system under test was frozen for its '
-            'duration (AP-1 §5.2).\n\n'
+            '> Freezing (AP-1 §5.2): not shown: more than one served model '
+            'or backend fingerprint; the run does not show that the system '
+            'under test was frozen for its duration.\n\n'
             '> **Demonstration run') in head
 
 
+FREEZE = '> Freezing (AP-1 \u00a75.2): '
+
+
 @pytest.mark.finding('V12-8')
-@pytest.mark.parametrize('served, warned', [
-    ({'models': {'a': 1, 'b': 1}, 'fingerprints': {}}, True),
-    ({'models': {'a': 2}, 'fingerprints': {'f': 2}}, False),
-    ({'models': {}, 'fingerprints': {}}, False)])
-def test_served_lines_warn_only_when_more_than_one(served, warned):
+@pytest.mark.req('AP-1 §5.2')
+@pytest.mark.parametrize('served, status', [
+    ({'models': {'a': 1, 'b': 1}, 'fingerprints': {}, 'responses': 2},
+     'not shown: more than one served model or backend fingerprint; the '
+     'run does not show that the system under test was frozen for its '
+     'duration.'),
+    ({'models': {'a': 2}, 'fingerprints': {'f': 2}, 'responses': 2},
+     'not verified by the runner; consistent with a frozen system: all 2 '
+     'responses report one served model and one backend fingerprint.'),
+    # One model and no fingerprint: every mock run, and any endpoint
+    # that sends no system_fingerprint. Silence was the old output.
+    ({'models': {'a': 2}, 'fingerprints': {}, 'responses': 2},
+     'not verified: the responses report no backend fingerprint.'),
+    ({'models': {'a': 2}, 'fingerprints': {'f': 1}, 'responses': 3},
+     'not verified: 1 of 3 responses report no served model; 2 of 3 '
+     'responses report no backend fingerprint.'),
+    ({'models': {}, 'fingerprints': {}, 'responses': 0},
+     'not verified: no response was received.'),
+    # A summary without the response count (written before it existed)
+    ({'models': {'a': 2}, 'fingerprints': {'f': 2}},
+     'not verified: the number of responses is not recorded.'),
+])
+def test_served_lines_always_state_the_freeze_status(served, status):
     text = report._served_lines(served)
-    assert ('frozen' in text) is warned
+    assert text.endswith(f'\n{FREEZE}{status}\n'), text
     if not served['fingerprints']:
         assert 'Backend fingerprints (system_fingerprint): not reported\n' \
             in text

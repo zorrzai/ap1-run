@@ -56,9 +56,11 @@ class Findings:
     release_coverage_results: list = field(default_factory=list)  # D7.3
     unmeasured_cells: list = field(default_factory=list)
     parameter_echo: list = field(default_factory=list)  # D2.2
-    # model -> responses, fingerprint -> responses (V12-8)
+    # model -> responses, fingerprint -> responses, and the responses
+    # counted (V12-8)
     served: dict = field(default_factory=lambda: {'models': {},
-                                                  'fingerprints': {}})
+                                                  'fingerprints': {},
+                                                  'responses': 0})
 
 
 def record_served(findings, response):
@@ -66,7 +68,11 @@ def record_served(findings, response):
     it (V12-8; AP-1 §5.2: the system under test frozen for the run).
     The scoring pass counts every response the transcript records, tool-
     call rounds included; a value the response does not carry is not
-    counted."""
+    counted. 'responses' counts every response (not None), so the report
+    can say how many reported no model or fingerprint."""
+    if response is None:
+        return
+    findings.served['responses'] += 1
     if not isinstance(response, dict):
         return
     for key, name in (('models', 'model'),

@@ -12,6 +12,8 @@ Served model (as the responses report it, with responses): mock-model (120)
 
 Backend fingerprints (system_fingerprint): not reported
 
+> Freezing (AP-1 §5.2): not verified: the responses report no backend fingerprint.
+
 > **Demonstration run, not a conformance result.** ap1-run implements the AP-1 v1.3 Draft for Comment; v1.2 remains the version in force. A run of this instrument is a demonstration run, not a conformance result under either version (README, "Which version of AP-1").
 
 ---

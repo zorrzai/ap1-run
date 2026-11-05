@@ -162,21 +162,50 @@ def generate_report(*, summary, config, seal_record, transcript_records=None,
 
 def _served_lines(served):
     """What the responses say served them: model snapshots and backend
-    fingerprints, with how many responses each (V12-8; AP-1 §5.2 asks
-    for confirmation that the system was frozen for the run)."""
+    fingerprints, with how many responses each, and the freeze status
+    (V12-8; AP-1 §5.2 asks for confirmation that the system was frozen
+    for the run)."""
     def listed(counts):
         return ', '.join(f'{value} ({n})' for value, n in
                          sorted(counts.items())) or 'not reported'
     models, fingerprints = served['models'], served['fingerprints']
-    text = (f'Served model (as the responses report it, with responses): '
+    return (f'Served model (as the responses report it, with responses): '
             f'{listed(models)}\n\n'
             f'Backend fingerprints (system_fingerprint): '
-            f'{listed(fingerprints)}\n')
+            f'{listed(fingerprints)}\n\n'
+            f'> Freezing (AP-1 \u00a75.2): {_freeze_status(served)}\n')
+
+
+def _freeze_status(served):
+    """Whether the responses show the system frozen, always stated: not
+    shown (more than one model or fingerprint), not verified (an
+    identifier missing from some or all responses), or consistent with a
+    frozen system (one model and one fingerprint in every response). The
+    runner sees only what the endpoint reports, so it never says the
+    system was frozen."""
+    models, fingerprints = served['models'], served['fingerprints']
+    total = served.get('responses')
     if len(models) > 1 or len(fingerprints) > 1:
-        text += ('\n> More than one served model or backend fingerprint: '
-                 'the run does not show that the system under test was '
-                 'frozen for its duration (AP-1 §5.2).\n')
-    return text
+        return ('not shown: more than one served model or backend '
+                'fingerprint; the run does not show that the system under '
+                'test was frozen for its duration.')
+    if total is None:
+        return 'not verified: the number of responses is not recorded.'
+    if total == 0:
+        return 'not verified: no response was received.'
+    gaps = []
+    for counts, name in ((models, 'served model'),
+                         (fingerprints, 'backend fingerprint')):
+        missing = total - sum(counts.values())
+        if missing == total:
+            gaps.append(f'the responses report no {name}')
+        elif missing:
+            gaps.append(f'{missing} of {total} responses report no {name}')
+    if gaps:
+        return f'not verified: {"; ".join(gaps)}.'
+    return (f'not verified by the runner; consistent with a frozen system: '
+            f'all {total} responses report one served model and one '
+            f'backend fingerprint.')
 
 
 _RUNNER_FIELDS = ('runner_version_tag', 'runner_version_commit',

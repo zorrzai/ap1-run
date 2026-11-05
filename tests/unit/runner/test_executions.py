@@ -519,7 +519,7 @@ def test_findings_start_empty_and_separate():
         'tool_call_structures': [], 'evidence_findings': [],
         'transcription_results': [], 'release_coverage_results': [],
         'unmeasured_cells': [], 'parameter_echo': [],
-        'served': {'models': {}, 'fingerprints': {}}}
+        'served': {'models': {}, 'fingerprints': {}, 'responses': 0}}
 
 
 # -- the real scoring modules, on a realistic response --------------------
@@ -1233,9 +1233,10 @@ def test_record_served_counts_models_and_fingerprints():
             {'model': '', 'choices': []}, {}, None, 'not a dict',
             {'model': 7, 'system_fingerprint': 'fp_a'}]:
         record_served(findings, response)
+    # Seven responses (None is no response); what each reports, counted
     assert findings.served == {
         'models': {'m-2026-01-01': 3, '7': 1},
-        'fingerprints': {'fp_a': 2, 'fp_b': 1}}
+        'fingerprints': {'fp_a': 2, 'fp_b': 1}, 'responses': 7}
     assert Findings().served is not Findings().served
 
 

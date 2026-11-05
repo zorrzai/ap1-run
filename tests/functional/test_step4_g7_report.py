@@ -338,6 +338,66 @@ def test_run_seal_records_the_lookup_collision(run):
     assert 'Q09' in s1, s1
 
 
+# A statement that freezing is not shown, confirmed or verified
+NOT_SHOWN = (r"\b(not|cannot|can't|couldn't|isn't|doesn't|didn't)\s+"
+             r'(be\s+)?(shown?|confirm(ed)?|verif(y|ied)|establish(ed)?)\b')
+
+
+def freeze_claims(lines):
+    """The lines that claim the system was frozen or did not change. "was
+    frozen" is a claim unless a negation governs it: one earlier in the
+    same clause ("does not show that ... was frozen"). A negation in
+    another clause ("was frozen; drift was not shown", "was frozen (not
+    verified)") does not take the claim back."""
+    claims = []
+    for line in lines:
+        if not re.search(r'froz|freez|snapshot|model', line, re.I):
+            continue
+        if re.search(r'no change|unchanged|not changed|'
+                     r'(freeze|frozen):? *(yes|confirmed|true)|'
+                     r'freeze confirmed', line, re.I):
+            claims.append(line)
+            continue
+        for clause in re.split(r'[;:()\u2014]|\.\s', line):
+            frozen = re.search(r'\bwas frozen\b', clause, re.I)
+            if frozen and not re.search(NOT_SHOWN, clause[:frozen.start()],
+                                        re.I):
+                claims.append(line)
+                break
+    return claims
+
+
+@pytest.mark.finding('V12-8')
+@pytest.mark.parametrize('line, claim', [
+    ('The system under test was frozen; drift was not shown.', True),
+    ('The system under test was frozen (not verified by fingerprint).',
+     True),
+    ('System frozen: yes', True),
+    ('> Freezing (AP-1 \u00a75.2): not shown: more than one served model or '
+     'backend fingerprint; the run does not show that the system under '
+     'test was frozen for its duration.', False),
+    ('> Freezing (AP-1 \u00a75.2): not verified: the responses report no '
+     'backend fingerprint.', False),
+])
+def test_freeze_claims_catches_a_hedged_claim(line, claim):
+    # The check the next tests use: a hedge elsewhere on the line does
+    # not turn "was frozen" into a statement that freezing is not shown.
+    assert bool(freeze_claims([line])) is claim
+
+
+@pytest.mark.finding('V12-8')
+@pytest.mark.req('AP-1 §5.2')
+def test_run_report_states_the_freeze_status(run):
+    # Correct: report.md always states whether freezing was established,
+    # here not (two fingerprints), and never claims it.
+    lines = run['report'].splitlines()
+    status = [line for line in lines
+              if line.startswith('> Freezing (AP-1 \u00a75.2): ')]
+    assert len(status) == 1, status
+    assert re.search(NOT_SHOWN, status[0], re.I), status
+    assert freeze_claims(lines) == []
+
+
 @pytest.mark.finding('V12-8')
 def test_run_report_records_served_model_and_fingerprints(run):
     # AP-1 §5.2: "Confirmation that the system under test was frozen for
@@ -369,20 +429,11 @@ def test_run_report_says_the_system_changed(run_changed):
                     and not re.search(r'unchanged|no change|not changed',
                                       line, re.I)]
     # an explicit statement that freezing is not shown or not confirmed
-    not_shown = (r"\b(not|cannot|can't|couldn't|isn't|doesn't|didn't)\s+"
-                 r'(be\s+)?(shown?|confirm(ed)?|verif(y|ied)|'
-                 r'establish(ed)?)\b')
     cannot = [line for line in lines
               if re.search(r'froz|freez', line, re.I)
-              and re.search(not_shown, line, re.I)]
+              and re.search(NOT_SHOWN, line, re.I)]
     assert names_change or cannot, [
         line for line in lines
         if re.search(r'froz|freez|snapshot', line, re.I)]
-    claims = [line for line in lines
-              if re.search(r'froz|freez|snapshot|model', line, re.I)
-              and (re.search(r'no change|unchanged|not changed|'
-                             r'(freeze|frozen):? *(yes|confirmed|true)|'
-                             r'freeze confirmed', line, re.I)
-                   or (re.search(r'\bwas frozen\b', line, re.I)
-                       and not re.search(not_shown, line, re.I)))]
+    claims = freeze_claims(lines)
     assert claims == [], claims

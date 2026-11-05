@@ -287,7 +287,8 @@ def test_score_run_calls(p, capsys):
                   'release_coverage_results': [],
                   'parameter_echo': [],
                   'held_constant': HELD_CONSTANT,
-                  'served': {'models': {}, 'fingerprints': {}}}
+                  'served': {'models': {}, 'fingerprints': {},
+                             'responses': 0}}
     assert p.named('scoring_report') == [(
         d1, {'d2': 'results'}, 'CAP', {'summary': True})]
 
@@ -451,7 +452,8 @@ def test_score_run_counts_what_served_every_recorded_round(p):
     p.run()
     (_, _, kw), = p.named('summary')
     assert kw['served'] == {'models': {'m-1': 2, 'm-2': 1},
-                            'fingerprints': {'a': 1, 'b': 1}}
+                            'fingerprints': {'a': 1, 'b': 1},
+                            'responses': 3}
 
 
 # -- The transcript against the run's plan (SPEC R0.2, R0.3) ---------------
