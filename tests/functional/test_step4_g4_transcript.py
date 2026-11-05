@@ -37,6 +37,7 @@ shape; it then updates _rescore() and nothing else.
 
 import importlib.util
 import json
+import re
 from decimal import Decimal
 import os
 import shutil
@@ -543,6 +544,16 @@ EV0_STATE = ("T3-35: error_state as {'cause': <non-empty text>, 'round': "
              "round identified'")
 
 
+# What each cause's text must mention (part of the EV0_STATE proposal):
+# broad word families, so wording is free but the causes can't be swapped.
+CAUSE_WORDS = {
+    'http': r'503|http|status',
+    'transport': r'connect|transport|network|reset|closed|dropped|socket',
+    'rate': r'rate|429|limit',
+    'shape': r'shape|format|unrecogni[sz]ed|schema|pars|anthropic',
+}
+
+
 def _ev0_error_state(cli, second_round):
     """The error state of Q01/base, whose second request (round 1)
     fails or comes back in an unrecognised shape."""
@@ -565,7 +576,7 @@ def _ev0_error_state(cli, second_round):
                           'cause and failing round go only into the '
                           'unwritten round_shapes')
 @pytest.mark.parametrize('second_round, cause', [
-    ({'http': 503, 'body': '{"error": "upstream down"}'}, '503'),
+    ({'http': 503, 'body': '{"error": "upstream down"}'}, 'http'),
     ({'close': True}, 'transport'),
     ({'raw': ANTHROPIC}, 'shape'),
 ], ids=['http-503', 'dropped-connection', 'unrecognised-shape'])
@@ -584,8 +595,12 @@ def test_run_ev0_record_names_cause_and_round(cli, second_round, cause):
     assert error_state.get('round') == 1, error_state
     assert isinstance(error_state.get('cause'), str) \
         and error_state['cause'].strip(), error_state
-    if cause == '503':
-        assert '503' in error_state['cause'], error_state
+    others = [w for c, w in CAUSE_WORDS.items()
+              if c not in (cause, 'rate')]
+    assert re.search(CAUSE_WORDS[cause], error_state['cause'], re.I), \
+        error_state
+    assert not any(re.search(w, error_state['cause'], re.I)
+                   for w in others), error_state
 
 
 @pytest.mark.proposal(EV0_STATE)

@@ -271,8 +271,9 @@ def test_transcription_infinite_return_without_policy_is_altered():
     ('430.745', '430.74', 'ROUND_HALF_EVEN', TRANSCRIBED_EXACT),
     ('430.745', '430.75', 'ROUND_HALF_EVEN', TRANSCRIBED_ALTERED),
     ('-430.745', '-430.75', 'ROUND_HALF_UP', TRANSCRIBED_EXACT),
+    ('430.741', '430.74', 'ROUND_HALF_UP', TRANSCRIBED_EXACT),
 ], ids=['half-up-licensed', 'half-up-unlicensed', 'half-even-licensed',
-        'half-even-unlicensed', 'half-up-negative-tie'])
+        'half-even-unlicensed', 'half-up-negative-tie', 'half-up-not-a-tie'])
 def test_transcription_declared_rounding_mode_decides_the_tie(
         tool, released, mode, expected_outcome):
     # SPEC R0.4.1: quantisation uses "the declared rounding mode"; R2.5:
@@ -282,7 +283,8 @@ def test_transcription_declared_rounding_mode_decides_the_tie(
     # ROUND_HALF_UP and 430.74 under ROUND_HALF_EVEN (the two modes the
     # config accepts), so a fix that ignores the declared mode fails one
     # of the pairs; -430.745 is -430.75 under HALF_UP (away from zero),
-    # which a fix rounding toward +infinity gets wrong.
+    # which a fix rounding toward +infinity gets wrong; 430.741 is not a
+    # tie, so HALF_UP gives 430.74 where ROUND_UP would give 430.75.
     r = check_transcription(D(tool), D(released),
                             figure_outcome=AUTO_MATCH, quantisation_digits=2,
                             quantisation_rounding=mode)

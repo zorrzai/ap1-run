@@ -9,6 +9,7 @@ real unless a test replaces them with recorders to check the wiring.
 """
 
 import copy
+import re
 import json
 import sys
 import types
@@ -833,12 +834,28 @@ EV0_STATE = ("T3-35: error_state as {'cause': <non-empty text>, 'round': "
              "round identified'")
 
 
-def assert_ev0_state(error_state):
-    """The structured error state EV0_STATE describes, for round 1."""
+# What each cause's text must mention (part of the EV0_STATE proposal; as in the functional tests):
+# broad word families, so wording is free but the causes can't be swapped.
+CAUSE_WORDS = {
+    'http': r'503|http|status',
+    'transport': r'connect|transport|network|reset|closed|dropped|socket',
+    'rate': r'rate|429|limit',
+    'shape': r'shape|format|unrecogni[sz]ed|schema|pars|anthropic',
+}
+
+
+def assert_ev0_state(error_state, cause):
+    """The structured error state EV0_STATE describes, for round 1, whose
+    cause mentions its own word family and not the other one tested."""
     assert isinstance(error_state, dict), error_state
     assert error_state.get('round') == 1, error_state
     assert isinstance(error_state.get('cause'), str) \
         and error_state['cause'].strip(), error_state
+    other = {'rate': 'shape', 'shape': 'rate'}[cause]
+    assert re.search(CAUSE_WORDS[cause], error_state['cause'], re.I), \
+        error_state
+    assert not re.search(CAUSE_WORDS[other], error_state['cause'], re.I), \
+        error_state
 
 
 @pytest.mark.proposal(EV0_STATE)
@@ -858,7 +875,7 @@ def test_execute_item_later_send_fails_error_state_names_cause_and_round(
                        adapter.RateLimitError('Rate limit reached'))
     _, records = run(tmp_path, send)
     assert records[0]['evidence_class'] == EV_0
-    assert_ev0_state(records[0]['error_state'])
+    assert_ev0_state(records[0]['error_state'], 'rate')
 
 
 @pytest.mark.proposal(EV0_STATE)
@@ -873,7 +890,7 @@ def test_execute_item_unrecognised_later_response_error_state_names_round(
     # round it came in (round 1), structured as EV0_STATE proposes.
     _, records = run(tmp_path, FakeAdapter(calls(tool_call()), ANTHROPIC))
     assert records[0]['evidence_class'] == EV_0
-    assert_ev0_state(records[0]['error_state'])
+    assert_ev0_state(records[0]['error_state'], 'shape')
 
 
 @pytest.mark.proposal(EV0_STATE)
