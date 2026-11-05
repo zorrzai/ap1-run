@@ -1776,3 +1776,92 @@ def test_report_with_adjudication_says_agreement_not_computed():
                            config=CONFIG, seal_record={})
     assert AGREEMENT_NOT_COMPUTED.search(text), \
         [line for line in text.splitlines() if 'agree' in line.lower()]
+
+
+# T3-32 at unit level, so it can pass once T3-12 is fixed: an end-to-end
+# D1 claim needs at least 10 items per category, which the example's 10
+# items (6 categories) can't give.
+
+def _binom_cdf(k, n, p):
+    from math import comb
+    return sum(comb(n, i) * p ** i * (1 - p) ** (n - i) for i in range(k + 1))
+
+
+def _solve(f, target):
+    lo, hi = 0.0, 1.0           # f decreasing in p
+    for _ in range(80):
+        mid = (lo + hi) / 2
+        if f(mid) > target:
+            lo = mid
+        else:
+            hi = mid
+    return (lo + hi) / 2
+
+
+def _clopper_pearson(k, n):
+    lower = 0.0 if k == 0 else _solve(
+        lambda p: _binom_cdf(k - 1, n, p), 0.975)
+    upper = 1.0 if k == n else _solve(lambda p: _binom_cdf(k, n, p), 0.025)
+    return lower, upper
+
+
+def _wilson(k, n, z=1.959963984540054):
+    p = k / n
+    centre = (p + z * z / (2 * n)) / (1 + z * z / n)
+    half = z * ((p * (1 - p) / n + z * z / (4 * n * n)) ** 0.5) / (
+        1 + z * z / n)
+    return max(0.0, centre - half), min(1.0, centre + half)
+
+
+def _shown(value):
+    """The ways a bound may be printed: percent to one decimal, or a
+    proportion to three, rounded to nearest or outward."""
+    from math import floor, ceil
+    out = set()
+    for scale, places in ((100, 1), (1, 3)):
+        v = value * scale
+        q = 10 ** places
+        for r in (round(v * q), floor(v * q), ceil(v * q)):
+            out.add(f'{r / q:.{places}f}')
+    return out
+
+
+@pytest.mark.proposal(
+    "T3-32: the summary carries D1 per category as d1_results['by_category']"
+    "[category] with n, correct and incorrect (the step-3 pin's shape), and "
+    'the 95 % interval is Clopper-Pearson or Wilson; both are the '
+    "author's proposal")
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1', 'R3.3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-32: D1 is one pooled rate, not per category '
+                          'with a 95 % interval')
+def test_dimension_results_d1_per_category_with_n_and_interval():
+    # AP-1 v1.3 D1: "Results reported per category, with 95% confidence
+    # intervals, and with n stated"; SPEC R0.1: at least 10 items per
+    # category. Two categories at or above the minimum, every item
+    # auto-scored (no adjudication, so T3-3 does not apply): interest 9 of
+    # 12 correct, fees 10 of 10. Each category's row in section 3 states
+    # its n and both bounds of its interval, computed here.
+    by_category = {'interest': {'n': 12, 'correct': 9, 'incorrect': 3},
+                   'fees': {'n': 10, 'correct': 10, 'incorrect': 0}}
+    d1 = {'n': 22, 'auto_scored_n': 22, 'adjudicated_n': 0,
+          'unmeasurable_n': 0, 'correct': 19, 'incorrect': 3,
+          'no_figure': 0, 'accuracy_rate': Decimal(19) / Decimal(22),
+          'by_category': by_category}
+    text = report._section_dimension_results(
+        {'d1_results': d1}, {'dimensions_claimed': ['D1']})
+    bad = []
+    for category, c in by_category.items():
+        rows = [line for line in text.splitlines()
+                if re.search(rf'\b{category}\b', line)]
+        intervals = [_clopper_pearson(c['correct'], c['n']),
+                     _wilson(c['correct'], c['n'])]
+        ok = [line for line in rows
+              if re.search(rf'(\bn\s*=\s*|\|\s*){c["n"]}\b', line)
+              and any(any(s in line for s in _shown(lo))
+                      and any(s in line for s in _shown(hi))
+                      for lo, hi in intervals)]
+        if not ok:
+            bad.append((category, rows))
+    assert bad == [], text
