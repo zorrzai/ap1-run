@@ -999,3 +999,56 @@ def test_execute_item_model_controlled_arguments_recorded_no_raise(
     assert len(records) == 1 and len(result['tool_calls']) == 1
     assert all(p['outcome'] != 'OPERANDS-GROUNDED'
                for p in result['provenance_results'])
+
+
+# S3-G2-5: execute_item hands reclassify_session one result per calculator
+# call with an expression but one expression per tool call ('' for a call
+# without one). The fix may align the lists here or in reclassify_session;
+# these tests hold for either. The reference is what the same calls give
+# with no skipped call (test_execute_item_real_scoring_* and the aligned
+# reclassify_session tests in tests/unit/scoring/).
+
+def outcome_of(records, value):
+    """The D7.2(b) outcome of the call that evaluated to `value`."""
+    [r] = [r for r in records[0]['operation_correctness']
+           if r.get('evaluated_result') is not None
+           and D(r['evaluated_result']) == D(value)]
+    return r['outcome']
+
+
+@pytest.mark.finding('S3-G2-5')
+@pytest.mark.req('AP-1 D7.2(b)')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G2-5: after a call without an expression, a '
+                          'result that feeds a later correct call is not '
+                          'reclassified')
+def test_execute_item_skipped_call_value_fed_forward_is_operation_correct(
+        tmp_path, calculator):
+    # 15200*0.012 = 182.4 is wrong on its own and feeds 182.4/12 = 15.2.
+    # Without the python call first it is reclassified OPERATION-CORRECT,
+    # as an operand of the later call; a python call before it must not
+    # change that. Today it stays WRONG-OPERATION.
+    send = FakeAdapter(calls(tool_call(name='python', id='a'),
+                             tool_call('15200*0.012', id='b'),
+                             tool_call('182.4/12', id='c')), answer())
+    _, records = run(tmp_path, send)
+    assert outcome_of(records, '182.4') == 'OPERATION-CORRECT'
+
+
+@pytest.mark.finding('S3-G2-5')
+@pytest.mark.req('AP-1 D7.2(b)')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G2-5: after a call without an expression, a '
+                          'result is matched against its own operands')
+def test_execute_item_skipped_call_value_feeding_nothing_stays_wrong(
+        tmp_path, calculator):
+    # 15*1 = 15 is wrong and feeds nothing (15.2*1 has operands 15.2 and
+    # 1). Without the python call first it stays WRONG-OPERATION. Today,
+    # after the python call, 15 is looked up in the operands of '15*1'
+    # itself and becomes OPERATION-CORRECT.
+    send = FakeAdapter(calls(tool_call(name='python', id='a'),
+                             tool_call('15*1', id='b'),
+                             tool_call('15.2*1', id='c')), answer())
+    _, records = run(tmp_path, send)
+    assert outcome_of(records, '15') == 'WRONG-OPERATION'
+
