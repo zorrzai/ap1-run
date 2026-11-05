@@ -97,6 +97,7 @@ def test_extract_operands_skips_names():
     assert extract_operands('pi * 2 + e') == [(D('2'), '2')]
 
 
+@pytest.mark.finding('T3-39')
 @pytest.mark.parametrize('expression', ["'12' + 1", '2j + 1', 'None + 1',
                                         'True + 1', 'False * 15.2'])
 def test_extract_operands_non_numeric_constant_makes_expression_unreadable(
