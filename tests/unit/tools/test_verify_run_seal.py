@@ -271,7 +271,9 @@ def test_verify_run_without_seal_record_stops(vrs, tmp_path, base):
                          'no seal record found in report.md section 1')]
 
 
+@pytest.mark.finding('T3-18')
 def test_verify_run_without_resolved_config_stops(vrs, tmp_path, base):
+    # T3-18: parsing the seal record is counted as a passed check.
     report = '## 1. Pre-Registration Record\n| `seal_hash` | `x` |\n'
     run_dir = write_run(tmp_path / 'run', {'seal_hash': 'x'}, {},
                         report=report)

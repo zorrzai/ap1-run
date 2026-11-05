@@ -520,7 +520,9 @@ def test_compute_base_noninvocation_bound_assumes_500_base_executions(
         % clopper_pearson_upper_k0(500))
 
 
+@pytest.mark.finding('S3-G8-7')
 def test_compute_base_noninvocation_ratio_when_some(figures):
+    # S3-G8-7: the denominator is a fixed 500, not the run's base count.
     v = figures(b=[result('Q01', invocation='NOT-INVOKED'),
                    result('Q02', invocation='NOT-INVOKED')])
     assert v['b_base_noninvoke_cp'] == '2/500'
