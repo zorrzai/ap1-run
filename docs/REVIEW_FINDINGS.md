@@ -1706,7 +1706,7 @@ location is given at the head of the pull request that adds the code, with the f
   lines shift as the harness grows)
 - Breaks: no AP-1 or SPEC clause; the harness's own purpose, that a change in behaviour is
   detected (`tests/regression/README.md`)
-- Addressed by: fixed; commit 43f0486; note: `main` returns 1 with "nothing was checked" on
+- Addressed by: fixed in the follow-up PR to #4–#7 (its commit "Regression harness: exit non-zero when no scenario runs (REORG-1)"); note: `main` returns 1 with "nothing was checked" on
   stderr when it finds no scenarios (`--runs 0` was already refused); `tests/regression/selftest.py`
   (`NothingRunIsNotAPass`) fails on the previous behaviour
 
