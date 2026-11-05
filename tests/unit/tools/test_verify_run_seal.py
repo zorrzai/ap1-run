@@ -873,7 +873,8 @@ def transcript_failure(vrs, tmp_path, base, lines=None, text=None):
     return record, [f for f in failures if f[0] == 'transcript seal_hash']
 
 
-def test_verify_run_missing_transcript_fails(vrs, tmp_path, base):
+def test_verify_run_missing_transcript_fails_naming_its_path(vrs, tmp_path,
+                                                           base):
     _, failures = transcript_failure(vrs, tmp_path, base)
     path = os.path.join(str(tmp_path / 'run'), 'smoke_run.jsonl')
     assert failures == [('transcript seal_hash',
