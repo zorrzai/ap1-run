@@ -499,3 +499,16 @@ def test_send_formatted_traceback_carries_no_credential(transport, failure):
         send(URL, messages=MESSAGES)
     text = ''.join(traceback.format_exception(e.value))
     assert secret not in text and 'sk-abcdef' not in text, text
+
+
+@pytest.mark.finding('S3-G1-19')
+@pytest.mark.parametrize('value', ['9' * 400 + '.5', '1e-400'],
+                         ids=['overflows-to-infinity', 'underflows-to-zero'])
+def test_send_refuses_a_sampling_value_with_no_finite_float(transport, value):
+    # A finite, non-integral Decimal whose float is inf (sent as the
+    # non-JSON token Infinity) or 0.0 (sent, while the record says
+    # 1e-400) is refused before any request.
+    t = transport(FakeResponse(200, payload={}))
+    with pytest.raises(AdapterError, match='no finite non-zero float'):
+        send(URL, messages=MESSAGES, sampling={'temperature': value})
+    assert t.calls == []

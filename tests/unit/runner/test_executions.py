@@ -917,7 +917,7 @@ def test_echo_check_ignored_temperature_is_a_finding():
                                             'top_p': 0.9}) == {
         'verified': False, 'status': 'MISMATCH',
         'findings': ["parameter 'temperature': requested='1', applied=0.7 "
-                     '— silently ignored']}
+                     '— silently ignored'], 'not_echoed': []}
 
 
 @pytest.mark.finding('T3-22', 'T3-90')
@@ -944,4 +944,4 @@ def test_score_execution_records_the_echo_check(fakes, tpath):
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
         'verified': False, 'status': 'MISMATCH',
         'findings': ["parameter 'temperature': requested='0', applied=0.5 "
-                     '— silently ignored']}]
+                     '— silently ignored'], 'not_echoed': []}]

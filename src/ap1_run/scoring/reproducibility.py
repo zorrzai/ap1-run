@@ -122,10 +122,13 @@ def classify_mechanism(responses, *, surface, minimum_runs,
 
 
 def check_parameter_echo(requested_params, echoed_params):
-    """Diff requested vs echoed parameters.
+    """Diff requested vs echoed parameters (AP-1 v1.3 D2.2).
 
     Where the endpoint echoes applied parameters, a parameter requested
-    and silently ignored is a PLATFORM FINDING.
+    and silently ignored is a PLATFORM FINDING. A parameter the endpoint
+    does not echo was not shown ignored: it is unverified, not a finding.
+    Numbers compare as numbers, exactly (0 requested, 0.0 echoed is the
+    same temperature; S3-G5-4); anything else compares as text.
 
     Args:
         requested_params: dict of requested parameter values
@@ -134,40 +137,48 @@ def check_parameter_echo(requested_params, echoed_params):
 
     Returns:
         dict with keys:
-            verified: bool -- True if all parameters match or no echo
+            verified: bool -- True if every parameter was echoed and matches
             findings: list of str -- platform findings
-            status: 'VERIFIED' / 'UNVERIFIED' / 'MISMATCH'
+            status: 'VERIFIED' (all echoed and matching) / 'MISMATCH'
+                (any echoed value differs) / 'UNVERIFIED' otherwise
+            not_echoed: list of str -- requested parameters not echoed
     """
-    if echoed_params is None:
-        return {
-            'verified': False,
-            'findings': [],
-            'status': 'UNVERIFIED',
-        }
-
-    findings = []
+    echoed_params = echoed_params or {}
+    findings, not_echoed = [], []
     for param, requested_val in requested_params.items():
         echoed_val = echoed_params.get(param)
         if echoed_val is None:
-            findings.append(
-                f'parameter {param!r} requested but not echoed')
-        elif str(echoed_val) != str(requested_val):
+            not_echoed.append(param)
+        elif not _same_value(requested_val, echoed_val):
             findings.append(
                 f'parameter {param!r}: requested={requested_val!r}, '
                 f'applied={echoed_val!r} — silently ignored')
-
     if findings:
-        return {
-            'verified': False,
-            'findings': findings,
-            'status': 'MISMATCH',
-        }
+        status = 'MISMATCH'
+    elif not_echoed:
+        status = 'UNVERIFIED'
+    else:
+        status = 'VERIFIED'
+    return {'verified': status == 'VERIFIED', 'findings': findings,
+            'status': status, 'not_echoed': not_echoed}
 
-    return {
-        'verified': True,
-        'findings': [],
-        'status': 'VERIFIED',
-    }
+
+def _same_value(requested, echoed):
+    """True if an echoed parameter is the value that was sent: the same
+    text, or a number equal to the request's wire value (adapter.
+    wire_value: an integer, or the float sent), compared exactly as
+    Decimals of their text. So '1' sent as 1 and echoed 1.0 is applied,
+    and so is '0.10' sent and echoed as 0.1."""
+    if str(requested) == str(echoed):
+        return True
+    if isinstance(requested, bool) or isinstance(echoed, bool):
+        return False
+    from ap1_run.foundation.adapter import AdapterError, wire_value
+    try:
+        sent = wire_value('', requested)
+        return Decimal(repr(sent)) == Decimal(str(echoed))
+    except (AdapterError, ArithmeticError, ValueError, TypeError):
+        return False
 
 
 def _is_error_or_limited(response):

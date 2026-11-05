@@ -11,6 +11,7 @@ No SDK. No interpretation, no retry-on-content, no normalisation.
 Network calls target only the configured endpoint. Note: HTTP redirects are followed by default (requests library behaviour) and could reach other hosts.
 """
 
+import math
 import re
 import time
 from decimal import Decimal, InvalidOperation
@@ -66,6 +67,31 @@ class HTTPError(AdapterError):
         self.body = body
 
 
+def wire_value(name, value):
+    """A sampling value as the request body carries it: a number as a JSON
+    number (an integer if integral, else a float), anything else as given.
+    Refused (AdapterError): a value that is not finite, or whose float is
+    not (a finite number too large for a float, sent as Infinity) or
+    loses it entirely (one that underflows to 0) (S3-G1-19)."""
+    try:
+        d = Decimal(str(value))
+    except InvalidOperation:
+        return value
+    if not d.is_finite():
+        # NaN would go out as the non-JSON token NaN, and Infinity as a
+        # string
+        raise AdapterError(
+            f'sampling.{name}: not a finite number: {value!r}; not sent')
+    if d == d.to_integral_value():
+        return int(d)
+    f = float(d)
+    if not math.isfinite(f) or f == 0:
+        raise AdapterError(
+            f'sampling.{name}: {value!r} has no finite non-zero float '
+            f'(it would be sent as {f!r}); not sent')
+    return f
+
+
 MAX_RETRIES = 3     # on transport failure only, per R0.2
 RETRY_DELAY = 1.0   # seconds between transport-failure retries
 
@@ -118,21 +144,7 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
             elif v == "omitted":
                 sampling_as_sent[k] = "omitted"
             else:
-                try:
-                    d = Decimal(str(v))
-                except InvalidOperation:
-                    d = None
-                if d is None:
-                    body[k] = v
-                elif not d.is_finite():
-                    # NaN would go out as the non-JSON token NaN, and
-                    # Infinity as a string (S3-G1-19)
-                    raise AdapterError(
-                        f'sampling.{k}: not a finite number: {v!r}; not sent')
-                elif d == d.to_integral_value():
-                    body[k] = int(d)
-                else:
-                    body[k] = float(d)
+                body[k] = wire_value(k, v)
                 sampling_as_sent[k] = str(v)
 
     headers = {"Content-Type": "application/json"}
