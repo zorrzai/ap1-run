@@ -10,22 +10,28 @@ read-only and never writes to it. A finished run's transcript gives the
 run's own smoke_summary.json back; a partial one (an interrupted run)
 reports its unreached executions NOT-RUN.
 
-Before scoring, the inputs are checked against the seal: the config
-(with the values the runner resolved at run time, taken from the
-pre-registration record) and the fixture, questions and ground-truth
-files must hash to the sealed values, and every transcript record must
-carry the seal hash. A mismatch is refused with SealError, naming it.
+Before scoring, the run's seal (format 2) is verified against the inputs
+given (execution/seal.py verify_seal): the record's own seal_hash, the
+config (with the values the runner resolved at run time, taken from the
+pre-registration record), the fixture, questions and ground-truth files,
+the AP-1 text hash the config declares, and the expected values, which
+the ground-truth module computes again and which must hash to the sealed
+ones. The runner's source hash is not compared: a corrected scorer must
+be able to re-score. Every transcript record must carry the seal hash.
+A mismatch is refused with SealError, naming it. The executions are then
+scored against the sealed expected values, as in the run.
 
 From the command line: ap1-run --rescore <transcript> (README, "Scoring
 a transcript again").
 """
 
-import importlib.util
 import json
 import os
-import sys
 
-from ap1_run.execution.seal import SealError, seal
+from ap1_run.execution.seal import verify_seal
+from ap1_run.execution.sealed_inputs import (
+    compute_expected_values, read_inputs, sealed_compute,
+)
 from ap1_run.foundation.config import load_config
 from ap1_run.runner.scoring_pass import score_run
 
@@ -33,12 +39,8 @@ PRE_REGISTRATION = 'pre_registration.json'
 
 # The configuration values the runner resolves at run time, after loading
 # the config file and before sealing it (run.py main()).
-RUNTIME_FIELDS = ('endpoint_url', 'model', 'sampling', 'runner_version_tag',
-                  'runner_version_commit', 'runner_modified')
-
-# The sealed hashes the re-scorer recomputes from its inputs.
-CHECKED_HASHES = ('config_hash', 'fixture_hash', 'questions_hash',
-                  'ground_truth_hash')
+RUNTIME_FIELDS = ('runner_version_tag', 'runner_version_commit',
+                  'runner_modified')
 
 
 def write_pre_registration(output_dir, *, seal_record, config):
@@ -51,37 +53,6 @@ def write_pre_registration(output_dir, *, seal_record, config):
                   ensure_ascii=False)
         f.write('\n')
     return path
-
-
-def _load_ground_truth(path):
-    """The ground-truth module at path, loaded under its own name without
-    touching sys.modules or writing bytecode."""
-    spec = importlib.util.spec_from_file_location('ground_truth_example',
-                                                  path)
-    module = importlib.util.module_from_spec(spec)
-    saved = sys.dont_write_bytecode
-    sys.dont_write_bytecode = True
-    try:
-        spec.loader.exec_module(module)
-    finally:
-        sys.dont_write_bytecode = saved
-    return module
-
-
-def _check_against_seal(seal_record, *, config, fixture_path,
-                        questions_path, ground_truth_path):
-    """Refuse (SealError) inputs that do not hash to the sealed values."""
-    resealed = seal(config=config, fixture_path=fixture_path,
-                    questions_path=questions_path,
-                    ground_truth_path=ground_truth_path)
-    mismatched = [name for name in CHECKED_HASHES
-                  if resealed[name] != seal_record.get(name)]
-    if mismatched:
-        raise SealError(
-            'the inputs given do not match the run\'s seal: '
-            + ', '.join(f'{name} sealed {seal_record.get(name)!r}, '
-                        f'recomputed {resealed[name]!r}'
-                        for name in mismatched))
 
 
 def rescore_transcript(transcript_path, *, config_path, fixture_dir,
@@ -114,21 +85,19 @@ def rescore_transcript(transcript_path, *, config_path, fixture_dir,
         if name in resolved:
             config[name] = resolved[name]
 
-    fixture_path = os.path.join(fixture_dir, 'fixture.json')
-    questions_path = os.path.join(fixture_dir, 'questions.json')
-    ground_truth_path = os.path.join(fixture_dir, 'ground_truth_example.py')
-    _check_against_seal(seal_record, config=config,
-                        fixture_path=fixture_path,
-                        questions_path=questions_path,
-                        ground_truth_path=ground_truth_path)
-
-    with open(fixture_path, encoding='utf-8') as f:
-        fixture = json.load(f)
-    with open(questions_path, encoding='utf-8') as f:
-        questions = json.load(f)
-    gt_module = _load_ground_truth(ground_truth_path)
+    # The inputs, read once (T3-72), and the expected values the
+    # ground-truth module gives for them; all verified against the seal.
+    inputs = read_inputs(fixture_dir)
+    expected_values = compute_expected_values(
+        inputs.ground_truth, inputs.fixture, inputs.questions)
+    verify_seal(seal_record, config=config,
+                fixture_path=inputs.paths['fixture'],
+                questions_path=inputs.paths['questions'],
+                ground_truth_path=inputs.paths['ground_truth'],
+                expected_values=expected_values)
 
     os.makedirs(output_dir, exist_ok=True)
     return score_run(transcript_path, config=config, seal_record=seal_record,
-                     fixture=fixture, questions=questions,
-                     gt_module=gt_module, output_dir=output_dir)
+                     fixture=inputs.fixture, questions=inputs.questions,
+                     ground_truth_compute=sealed_compute(expected_values),
+                     output_dir=output_dir)
