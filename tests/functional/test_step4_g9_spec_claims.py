@@ -159,8 +159,13 @@ def engine_records(result, item_id=None):
 
 
 def figure_records(result, item_id=None):
-    return [r for r in result.transcript
-            if r.get('record_type') == 'figure_identification'
+    """The scored executions, from the scoring output (smoke_summary.json
+    all_results), not from the transcript: once scoring is a separate pass
+    (T3-21) the transcript holds no figure-identification records."""
+    summary = json.loads(
+        (result.output_dir / 'smoke_summary.json').read_text('utf-8'))
+    return [r for r in summary['all_results']
+            if r.get('status') == 'EXECUTED'
             and (item_id is None or r['item_id'] == item_id)]
 
 

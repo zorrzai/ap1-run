@@ -151,22 +151,19 @@ def test_run_transport_failure_on_repeat_1_sheets_show_repeat_3(
                    reason='T3-9: transcript records carry no repeat index')
 def test_run_transcript_records_carry_their_repeat_index(tmp_path,
                                                          monkeypatch):
-    """Every transcript record (engine and figure-identification, the
-    failed repeat's too) carries the repeat it belongs to, so the outputs
-    can join on it (T3-9). Today no record has one."""
+    """Every execution record in the transcript (the failed repeat's too)
+    carries the repeat it belongs to, so the outputs can join on it
+    (T3-9). Today no record has one. Figure-identification records are
+    left out: once scoring is a separate pass (T3-21) the transcript has
+    none, and the scoring output already carries the repeat."""
     out = run_example(tmp_path, monkeypatch, items={'Q02'}, repeat_count=3,
                       responses={'Q02/*/r1': [ERROR_500],
                                  'Q02/*/r2': [Q02_CALL, Q02_RIGHT],
                                  'Q02/*/r3': [Q02_CALL, Q02_DECLINE]})
-    seen = [(r['condition'], r.get('record_type', 'engine'), r.get('repeat'))
-            for r in transcript_of(out)]
-    expected = []
-    for cond in ('base', 'instruction_removed'):
-        expected += [(cond, 'engine', 1),
-                     (cond, 'engine', 2),
-                     (cond, 'figure_identification', 2),
-                     (cond, 'engine', 3),
-                     (cond, 'figure_identification', 3)]
+    seen = [(r['condition'], r.get('repeat')) for r in transcript_of(out)
+            if r.get('record_type') != 'figure_identification']
+    expected = [(cond, repeat) for cond in ('base', 'instruction_removed')
+                for repeat in (1, 2, 3)]
     assert seen == expected
 
 
