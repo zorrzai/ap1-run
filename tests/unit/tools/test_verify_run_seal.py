@@ -48,7 +48,16 @@ def load_tool():
 
 @pytest.fixture
 def vrs():
-    return load_tool()
+    module = load_tool()
+    # A legacy record built by a test (legacy()) is one of the published
+    # runs for the test's purposes: the verifier applies the legacy rules
+    # only to those.
+    _TEST_LEGACY_SEALS.update(module.LEGACY_SEALS)
+    module.LEGACY_SEALS = _TEST_LEGACY_SEALS
+    return module
+
+
+_TEST_LEGACY_SEALS = {}
 
 
 # -- a repository tree and a run ------------------------------------------
@@ -500,6 +509,7 @@ def legacy(record):
     record['seal_hash'] = canonical_hash(
         {k: v for k, v in record.items()
          if k not in ('timestamp', 'seal_hash')})
+    _TEST_LEGACY_SEALS[record['seal_hash']] = 'a test legacy record'
     return record
 
 
@@ -663,8 +673,10 @@ def test_verify_run_known_ground_truth_hash_gets_its_note(vrs, tmp_path,
     config = resolved_config()
     record = reseal(dict(make_record(base, config), ground_truth_hash=known))
     run_dir = write_run(tmp_path / 'run', record, config)
-    _, failures = vrs.verify_run(str(run_dir))
     computed = seal_mod.text_file_hash(str(base / GT))
+    # the base tree's module stands in for the one the errata describe
+    vrs.ERRATA_MODULE_HASHES = frozenset({computed})
+    _, failures = vrs.verify_run(str(run_dir))
     assert failures == [('ground_truth_hash',
                          'sealed=%s, recomputed=%s' % (known, computed)
                          + '\n          NOTE: '
@@ -1568,3 +1580,49 @@ def test_verify_run_checkout_without_the_package_is_a_named_failure(
     _, failures = vrs.verify_run(str(run_dir))
     assert [f for f, _ in failures] == ['runner_source_hash']
     assert 'no package files' in failures[0][1]
+
+
+@pytest.mark.finding('T3-15', 'T3-19')
+@pytest.mark.req('R1.1')
+def test_verify_run_record_without_format_not_a_published_run_fails(
+        vrs, tmp_path, base):
+    # The legacy rules (no field-set, calculator, expected-values or
+    # source-hash check) are for the published runs made before October
+    # 2026, by their seal_hash; any other record without seal_format
+    # fails, so a record made today cannot choose the looser rules.
+    config = resolved_config()
+    record = legacy(make_record(base, config))
+    del vrs.LEGACY_SEALS[record['seal_hash']]
+    run_dir = write_run(tmp_path / 'run', record, config)
+    _, failures = vrs.verify_run(str(run_dir))
+    assert failures[0][0] == 'seal_format', failures
+    assert 'not one of the published runs' in failures[0][1]
+
+
+def test_verify_run_legacy_seals_are_the_published_runs(vrs):
+    import glob
+    published = {}
+    root = os.path.dirname(os.path.dirname(TOOL))
+    for report in glob.glob(os.path.join(root, 'output', 'run_*',
+                                         'report.md')):
+        record = vrs.parse_seal_record(open(report, encoding='utf-8').read())
+        published[record['seal_hash']] = 'output/' + os.path.basename(
+            os.path.dirname(report))
+    real = load_tool().LEGACY_SEALS
+    assert real == published
+
+
+@pytest.mark.finding('T3-49')
+def test_verify_run_erratum_note_only_for_the_module_it_describes(
+        vrs, tmp_path, base):
+    # A sealed hash in the errata gets its note only if the current module
+    # is the one the erratum describes; otherwise the mismatch is
+    # reported as unexplained, not given the wrong explanation.
+    config = resolved_config()
+    known = next(iter(vrs.GROUND_TRUTH_ERRATA))
+    record = legacy(dict(make_record(base, config), ground_truth_hash=known))
+    run_dir = write_run(tmp_path / 'run', record, config)
+    _, failures = vrs.verify_run(str(run_dir))
+    detail = dict(failures)['ground_truth_hash']
+    assert vrs.GROUND_TRUTH_ERRATA[known] not in detail
+    assert 'not the module the errata describe' in detail

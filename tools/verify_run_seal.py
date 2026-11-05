@@ -86,6 +86,29 @@ GROUND_TRUTH_ERRATA = {
     ),
 }
 
+# The module the errata describe as current: the shipped
+# example/ground_truth_example.py, last changed in ff8c051 (its raw hash,
+# as a legacy record hashes it, and its text hash, T3-50). A note is given
+# only when the current file is that module (T3-49): any other mismatch is
+# reported as it is, not given an explanation that does not apply.
+ERRATA_MODULE_HASHES = frozenset({
+    '080ce4a7f4394878f9341edf33c97e42226adf7a1047f9f85e1de0e70c820812',
+    'aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778',
+})
+
+# The published runs made before October 2026, by seal_hash: the only
+# records the legacy rules (no seal_format) apply to (T3-15, T3-19).
+LEGACY_SEALS = {
+    '7312616b1a7d39c7f840215a5b52ccdb5c0d68a86e1d8bb75fa4d2f1aa5f1393':
+        'output/run_a_mini',
+    'ada88b4381fe51d4a68c18cf311af6591838078658f3254b71de6dddca867879':
+        'output/run_b_sol',
+    'd66a8d62765949c36387ec539afe56ce47b1ce709c63673524649cd6dfd368c4':
+        'output/run_e_mini',
+    'e9db37fb8696d9cf7ccd46a1836c376f748abfa1b9a8fe6a1926a652ae43be73':
+        'output/run_f_sol',
+}
+
 # How many offending transcript lines a failure lists.
 SHOWN_LINES = 5
 
@@ -352,6 +375,13 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
             checks.append(('seal record fields',
                            'all %d sealed fields present'
                            % len(SEALED_FIELDS)))
+    elif seal_record.get('seal_hash') not in LEGACY_SEALS:
+        failures.append(('seal_format', 'none, and the record is not one of '
+                         'the published runs made before October 2026 '
+                         '(LEGACY_SEALS): a record without seal_format is '
+                         'checked under the legacy rules only if it is one '
+                         'of those'))
+        return checks, failures
     else:
         warnings.append(('seal_format', 'none: a record made before '
                          'October 2026, checked under the rules it was made '
@@ -397,8 +427,13 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
             # A known ground-truth hash gets its erratum (T3-49)
             if field == 'ground_truth_hash':
                 erratum = GROUND_TRUTH_ERRATA.get(sealed_val)
-                if erratum:
+                if erratum and computed_val in ERRATA_MODULE_HASHES:
                     detail += '\n          NOTE: %s' % erratum
+                elif erratum:
+                    detail += ('\n          NOTE: the sealed hash is in the '
+                               'errata, but the current file is not the '
+                               'module the errata describe: the mismatch is '
+                               'not explained by them')
             failures.append((field, detail))
 
     # 4b. Expected values and runner source hash (current format only)
