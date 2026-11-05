@@ -229,6 +229,30 @@ def test_tracking_context_non_subscript_read_not_recorded(read):
     assert tc.accessed_fields() == set()
 
 
+@pytest.mark.req('R0.2', 'R2.4')
+def test_shown_context_and_delivered_context_agree_on_the_example():
+    # T3-56: no test checked that what the model is shown and what the
+    # provenance resolves against are the same values. For every shipped
+    # item, each field of the delivered context is shown under its
+    # account, as 'Label: value' with the same text. Passes today; it
+    # guards a change to either function.
+    import json
+    from pathlib import Path
+    example = Path(__file__).resolve().parents[3] / 'example'
+    fixture = json.loads((example / 'fixture.json').read_text('utf-8'))
+    items = json.loads((example / 'questions.json').read_text('utf-8'))
+    bad = []
+    for item in items['items']:
+        shown = format_fixture_context(fixture, item)
+        ctx = build_delivered_context(fixture, item['source_accounts'])
+        for fields in ctx.values():
+            for field, value in fields.items():
+                line = f"  {field.replace('_', ' ').title()}: {value}"
+                if line not in shown.split('\n'):
+                    bad.append((item['id'], field, value))
+    assert bad == []
+
+
 # --- Step 4: correct behaviour (failing until fixed) ---
 
 @pytest.mark.finding('T3-8')
