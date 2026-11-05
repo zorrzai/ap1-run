@@ -65,6 +65,7 @@ from ap1_run.foundation import adapter
 from ap1_run.foundation.config import load_config, validate_minimum_n
 from ap1_run.foundation.numeric import in_decimal_context
 from ap1_run.runner.credentials import get_api_key
+from ap1_run.runner.outputs import OUTPUT_FILES
 from ap1_run.runner.scoring_pass import CONDITIONS, score_run
 # The disclaimer is the scoring pass's; still importable as run.DISCLAIMER.
 from ap1_run.runner.scoring_pass import DISCLAIMER  # noqa: F401
@@ -136,9 +137,12 @@ def main(argv=None):
     os.makedirs(output_dir, exist_ok=True)
     transcript_path = os.path.join(output_dir, 'smoke_run.jsonl')
 
-    # Remove an old transcript and its pre-registration record if present
-    for old in (transcript_path,
-                os.path.join(output_dir, PRE_REGISTRATION)):
+    # Remove every file an earlier run wrote here: its transcript and
+    # pre-registration record, and its scoring outputs, so a run that stops
+    # before its own outputs leaves none of the earlier run's beside its
+    # transcript (T3-38)
+    for name in ('smoke_run.jsonl', PRE_REGISTRATION) + OUTPUT_FILES:
+        old = os.path.join(output_dir, name)
         if os.path.exists(old):
             os.remove(old)
 

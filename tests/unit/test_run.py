@@ -521,6 +521,36 @@ def test_main_default_output_dir_removes_an_old_transcript(r, monkeypatch):
     assert r.named('score_run')[0][1]['output_dir'] == str(default)
 
 
+@pytest.mark.finding('T3-38')
+@pytest.mark.parametrize('stage', ['scoring', 'execution'])
+def test_main_run_stopping_early_leaves_no_earlier_run_outputs(
+        r, monkeypatch, stage):
+    # T3-38: a run that stops before its outputs (here the scoring pass
+    # fails, or the execution pass) must not leave an earlier run's report,
+    # sheets, summary or disclaimer beside its new transcript, in output/
+    # (the default directory, where a run replaces what is there).
+    from ap1_run.foundation.transcript import TranscriptError
+    monkeypatch.setattr(run, 'BASE_DIR', str(r.tmp))
+    default = r.tmp / 'output'
+    default.mkdir()
+    stale = ('report.md', 'adjudication_sheets.md', 'smoke_summary.json',
+             'DISCLAIMER.txt', 'smoke_run.jsonl', 'pre_registration.json')
+    for name in stale:
+        (default / name).write_text('earlier run')
+    (default / 'keep.txt').write_text('kept')
+
+    def fail(*args, **kwargs):
+        raise TranscriptError('stopped')
+    monkeypatch.setattr(run, 'score_run' if stage == 'scoring'
+                        else 'execute_item', fail)
+    with pytest.raises(TranscriptError, match='stopped'):
+        run.main(r.argv(output_dir=False))
+    left = sorted(name for name in stale if (default / name).exists()
+                  and (default / name).read_text() == 'earlier run')
+    assert left == []
+    assert (default / 'keep.txt').read_text() == 'kept'
+
+
 @pytest.mark.parametrize('name', ['smoke_run.jsonl', 'report.md',
                                   'smoke_summary.json'])
 def test_main_refuses_an_explicit_output_dir_holding_a_run(r, capsys, name):

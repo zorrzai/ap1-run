@@ -12,6 +12,10 @@ import os
 from ap1_run.reporting import adjudication, report
 from ap1_run.runner.executions import as_recorded
 
+# The files write_outputs writes
+OUTPUT_FILES = ('report.md', 'adjudication_sheets.md', 'DISCLAIMER.txt',
+                'smoke_summary.json')
+
 
 def attach_scores(tr_records, all_results):
     """Copies of the transcript's records, each executed one given its
