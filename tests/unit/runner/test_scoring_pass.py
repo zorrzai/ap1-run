@@ -151,13 +151,15 @@ def p(tmp_path, monkeypatch):
 
 
 def script(p):
-    """Q1/base: UNMEASURED then EXECUTED; Q2/base: EXECUTED, then no
-    record (NOT-RUN); Q1/removed: VOID then EXECUTED; Q2/removed: none
-    (NOT-RUN twice). Written out of order: the run's order is the plan's."""
+    """The transcript of a run interrupted after Q1/removed/r2: Q1/base:
+    UNMEASURED then EXECUTED; Q2/base: EXECUTED then UNMEASURED;
+    Q1/removed: VOID then EXECUTED; Q2/removed: none (NOT-RUN twice).
+    Written out of order: the run's order is the plan's."""
     write(p.transcript, 'Q1', 'instruction_removed', 2, 'EXECUTED')
     write(p.transcript, 'Q1', 'base', 1, 'UNMEASURED')
     write(p.transcript, 'Q1', 'base', 2, 'EXECUTED')
     write(p.transcript, 'Q2', 'base', 1, 'EXECUTED')
+    write(p.transcript, 'Q2', 'base', 2, 'UNMEASURED')
     write(p.transcript, 'Q1', 'instruction_removed', 1, 'VOID')
 
 
@@ -174,7 +176,7 @@ def test_score_run_console(p, capsys):
     assert capsys.readouterr().out == (
         '  Q1/base/r1: UNMEASURED\n'
         '  Q1/base/r2:   Q3/base: VOID (underivable)\n'
-        '  Q2/base/r1:   Q2/base/r2: NOT-RUN\n'
+        '  Q2/base/r1:   Q2/base/r2: UNMEASURED\n'
         '  Q1/instruction_removed/r1: VOID\n'
         '  Q1/instruction_removed/r2:   '
         'Q3/instruction_removed: VOID (underivable)\n'
@@ -207,7 +209,8 @@ def test_score_run_calls(p, capsys):
     reads = p.named('read')
     assert [r for r, _ in reads] == [
         by_key[('Q1', 'base', 1)], by_key[('Q1', 'base', 2)],
-        by_key[('Q2', 'base', 1)], by_key[('Q1', 'instruction_removed', 1)],
+        by_key[('Q2', 'base', 1)], by_key[('Q2', 'base', 2)],
+        by_key[('Q1', 'instruction_removed', 1)],
         by_key[('Q1', 'instruction_removed', 2)]]
     assert reads[0][1] == {'gt': {'final': D('10.00'), 'item': 'Q1'},
                            'ctx': {'accounts': ['a']}, 'config': p.config}
@@ -232,8 +235,7 @@ def test_score_run_calls(p, capsys):
          'status': 'VOID'},
         {'status': 'EXECUTED'},
         {'item_id': 'Q2', 'condition': 'base', 'repeat': 2,
-         'status': 'NOT-RUN',
-         'cause': 'not reached: the transcript has no record of it'},
+         'status': 'UNMEASURED', 'cause': 'cause of UNMEASURED'},
         {'item_id': 'Q1', 'condition': 'instruction_removed', 'repeat': 1,
          'status': 'VOID', 'cause': 'cause of VOID'},
         {'status': 'EXECUTED'},
@@ -252,6 +254,8 @@ def test_score_run_calls(p, capsys):
     assert results == expected_results
     assert conditions == ['base', 'instruction_removed']
     unmeasured = [{'item_id': 'Q1', 'condition': 'base', 'repeat': 1,
+                   'cause': 'cause of UNMEASURED'},
+                  {'item_id': 'Q2', 'condition': 'base', 'repeat': 2,
                    'cause': 'cause of UNMEASURED'}]
     assert kw == {'disclaimer': DISCLAIMER, 'grammar_issues': [],
                   'decline_findings': [], 'tool_call_structures': [],
@@ -503,4 +507,68 @@ def test_score_run_round_records_out_of_sequence_refused(p, numbers):
     with pytest.raises(TranscriptError, match=(
             r'^execution Q1/base/r1: its round records are rounds '
             + re.escape(str(numbers)) + r', not 0 to \d+ in order$')):
+        p.run()
+
+
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.3')
+@pytest.mark.parametrize('write_first', [
+    lambda path: None,
+    lambda path: write_round(path, 'Q1', 'base', 1, 0),
+], ids=['no-record', 'rounds-only'])
+def test_score_run_missing_interior_execution_refused(p, write_first):
+    # The runner executes in the plan's order, so a run that stopped
+    # leaves a prefix of it. An execution with no record (or with rounds
+    # but no end) followed by a later execution's record is a damaged
+    # transcript, not a run that stopped: refused, naming both.
+    write_first(p.transcript)
+    write(p.transcript, 'Q1', 'base', 2, 'EXECUTED')
+    with pytest.raises(TranscriptError, match=(
+            r'^execution Q1/base/r1 has no record of its end, but the later '
+            r'execution Q1/base/r2 has records: the transcript is damaged, '
+            r'not cut short$')):
+        p.run()
+    assert p.named('read') == []
+
+
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.3')
+@pytest.mark.parametrize('kind', ['execution', 'round'])
+@pytest.mark.parametrize('item_id, condition, repeat, status, problem', [
+    ('Q9', 'base', 1, 'EXECUTED', "execution Q9/base/r1, which the run's "
+                                  "plan does not hold"),
+    ('Q1', 'other', 1, 'EXECUTED', "execution Q1/other/r1, which the "
+                                   "run's plan does not hold"),
+    ('Q1', 'base', 3, 'EXECUTED', "execution Q1/base/r3, which the run's "
+                                  "plan does not hold"),
+    ('Q1', 'base', 0, 'EXECUTED', "execution Q1/base/r0, which the run's "
+                                  "plan does not hold"),
+    ('Q1', 'base', '1', 'EXECUTED', "repeat '1', not a whole number"),
+    ('Q1', 'base', True, 'EXECUTED', 'repeat True, not a whole number'),
+    ('Q3', 'base', 1, 'EXECUTED', "execution Q3/base/r1, which the run's "
+                                  "plan does not hold"),
+], ids=['item', 'condition', 'repeat-high', 'repeat-zero', 'repeat-text',
+        'repeat-bool', 'underivable-item'])
+def test_score_run_record_outside_the_plan_refused(
+        p, kind, item_id, condition, repeat, status, problem):
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED')
+    if kind == 'round':
+        write_round(p.transcript, item_id, condition, repeat, 0)
+    else:
+        write(p.transcript, item_id, condition, repeat, status)
+    with pytest.raises(TranscriptError, match=(
+            '^record 2 is of ' if 'repeat ' not in problem
+            else '^record 2 has ') + re.escape(problem) + '$'):
+        p.run()
+    assert p.named('read') == []
+
+
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.3')
+@pytest.mark.parametrize('status', ['DONE', 'NOT-RUN', ''])
+def test_score_run_record_with_an_unknown_status_refused(p, status):
+    write(p.transcript, 'Q1', 'base', 1, status)
+    with pytest.raises(TranscriptError, match=(
+            '^record 1 has status ' + re.escape(repr(status))
+            + ', not one of EXECUTED, UNMEASURED, VOID$')):
         p.run()

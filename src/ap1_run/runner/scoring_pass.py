@@ -9,7 +9,13 @@ round records but no record of its end (the run was interrupted inside
 it) is UNMEASURED, cause interrupted, with its last round; a record that
 was not executed (UNMEASURED) is listed with its cause; every other
 execution is scored (runner/executions.py). An execution's round records
-must match the rounds on its record. Then come the consistency check,
+must match the rounds on its record.
+
+The transcript is checked against the run's plan first (check_plan):
+every record must be of an execution the run planned, with a known
+status, and, since the runner executes in the plan's order, the
+executions recorded must be a prefix of the plan. A transcript that is
+not is damaged, not cut short, and is refused. Then come the consistency check,
 the console report, D1, D2, the summary and the output files.
 
 The live run calls it after its execution pass; the re-scorer
@@ -40,6 +46,9 @@ from ap1_run.scoring.accuracy import summarise_accuracy
 
 CONDITIONS = ['base', 'instruction_removed']
 
+# The statuses an execution record can have (execution/engine.py)
+STATUSES = ('EXECUTED', 'UNMEASURED', 'VOID')
+
 # NOTE: This disclaimer is a hand correction (E4). It will be replaced
 # by a generated disclaimer once the conformance-declaration mechanism
 # (operator_declaration + conformance_checks) is built.
@@ -60,7 +69,8 @@ def index_records(records, seal_hash):
     Round records (index_rounds) are left out. Raises TranscriptError for
     a record of another run (another seal hash), a record without a status
     or repeat (a transcript written before the two passes were separated:
-    it holds scoring records and cannot be re-scored), or two records of
+    it holds scoring records and cannot be re-scored), a record whose
+    repeat is not a whole number (True is not repeat 1), or two records of
     one execution.
     """
     index = {}
@@ -70,12 +80,14 @@ def index_records(records, seal_hash):
                 f'record {number} has seal hash '
                 f'{record.get("seal_hash")!r}, not this run\'s {seal_hash!r}')
         if record.get('kind') == ROUND_RECORD:
+            _check_repeat(number, record)
             continue
         if record.get('status') is None or record.get('repeat') is None:
             raise TranscriptError(
                 f'record {number} has no status or repeat: the transcript '
                 f'was written by a runner before the scoring pass was '
                 f'separated, and cannot be scored by this one')
+        _check_repeat(number, record)
         key = (record['item_id'], record['condition'], record['repeat'])
         if key in index:
             raise TranscriptError(
@@ -83,6 +95,13 @@ def index_records(records, seal_hash):
                 f'r{key[2]}')
         index[key] = record
     return index
+
+
+def _check_repeat(number, record):
+    repeat = record.get('repeat')
+    if not isinstance(repeat, int) or isinstance(repeat, bool):
+        raise TranscriptError(
+            f'record {number} has repeat {repeat!r}, not a whole number')
 
 
 def index_rounds(records):
@@ -119,6 +138,45 @@ def check_rounds(by_execution, rounds_by_execution):
                 f'the rounds on its record')
 
 
+def check_plan(records, by_execution, rounds_by_execution, plan):
+    """The transcript against the run's plan: plan is the executions the
+    run makes, (item_id, condition, repeat), in its order.
+
+    Raises TranscriptError for a record of an execution the plan does not
+    hold, an execution record with an unknown status, or an execution
+    without a record of its end (none, or rounds only) before a later
+    execution with records: the runner executes in the plan's order, so a
+    run that stopped leaves a prefix of it.
+    """
+    planned = set(plan)
+    for number, record in enumerate(records, 1):
+        key = (record.get('item_id'), record.get('condition'),
+               record.get('repeat'))
+        if key not in planned:
+            raise TranscriptError(
+                f'record {number} is of execution {_name(key)}, which the '
+                f'run\'s plan does not hold')
+        status = record.get('status')
+        if record.get('kind') != ROUND_RECORD and status not in STATUSES:
+            raise TranscriptError(
+                f'record {number} has status {status!r}, not one of '
+                f'{", ".join(STATUSES)}')
+    recorded = [key in by_execution or key in rounds_by_execution
+                for key in plan]
+    if True not in recorded:
+        return
+    last = len(recorded) - 1 - recorded[::-1].index(True)
+    for position, key in enumerate(plan[:last]):
+        if key not in by_execution:
+            later = next(k for k, seen in zip(plan[position + 1:],
+                                              recorded[position + 1:])
+                         if seen)
+            raise TranscriptError(
+                f'execution {_name(key)} has no record of its end, but the '
+                f'later execution {_name(later)} has records: the '
+                f'transcript is damaged, not cut short')
+
+
 def score_run(transcript_path, *, config, seal_record, fixture, questions,
               ground_truth_compute, output_dir):
     """Score the run in transcript_path; write the output files to
@@ -144,51 +202,61 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
     decline_markers = config['decline_markers']
     currency_symbols = config['currency_symbols']
 
-    findings = Findings()
+    # The run's plan: every condition and item, and each derivable item's
+    # repeats, in the run's order
+    planned = []
     for condition in CONDITIONS:
         for item in questions['items']:
-            item_id = item['id']
             ctx = build_delivered_context(fixture, item['source_accounts'])
-            gt = ground_truth_compute(item_id, ctx)
+            planned.append((condition, item, ctx,
+                            ground_truth_compute(item['id'], ctx)))
+    check_plan(records, by_execution, rounds_by_execution, [
+        (item['id'], condition, rep)
+        for condition, item, _, gt in planned if gt.get('derivable', True)
+        for rep in range(1, repeat_count + 1)])
 
-            # Check derivability
-            if not gt.get('derivable', True):
-                print(f'  {item_id}/{condition}: VOID (underivable)')
-                record_underivable(findings, item_id, condition)
+    findings = Findings()
+    for condition, item, ctx, gt in planned:
+        item_id = item['id']
+
+        # Check derivability
+        if not gt.get('derivable', True):
+            print(f'  {item_id}/{condition}: VOID (underivable)')
+            record_underivable(findings, item_id, condition)
+            continue
+
+        expected = gt['final']
+        collision, _ = check_lookup_collision(expected, ctx)
+
+        for rep in range(1, repeat_count + 1):
+            print(f'  {item_id}/{condition}/r{rep}: ', end='', flush=True)
+            record = by_execution.get((item_id, condition, rep))
+            rounds = rounds_by_execution.get((item_id, condition, rep))
+            if record is None and rounds:
+                print('UNMEASURED (interrupted)')
+                record_interrupted(findings, item_id, condition, rep,
+                                   rounds[-1]['round'])
+                continue
+            if record is None:
+                print('NOT-RUN')
+                record_not_run(findings, item_id, condition, rep)
                 continue
 
-            expected = gt['final']
-            collision, _ = check_lookup_collision(expected, ctx)
+            result = result_from_record(record, gt=gt, ctx=ctx,
+                                        config=config)
+            status = result['status']
+            if status in ('VOID', 'UNMEASURED'):
+                print(f'{status}')
+                record_not_scored(findings, item_id, condition, rep,
+                                  status, result)
+                continue
 
-            for rep in range(1, repeat_count + 1):
-                print(f'  {item_id}/{condition}/r{rep}: ', end='', flush=True)
-                record = by_execution.get((item_id, condition, rep))
-                rounds = rounds_by_execution.get((item_id, condition, rep))
-                if record is None and rounds:
-                    print('UNMEASURED (interrupted)')
-                    record_interrupted(findings, item_id, condition, rep,
-                                       rounds[-1]['round'])
-                    continue
-                if record is None:
-                    print('NOT-RUN')
-                    record_not_run(findings, item_id, condition, rep)
-                    continue
-
-                result = result_from_record(record, gt=gt, ctx=ctx,
-                                            config=config)
-                status = result['status']
-                if status in ('VOID', 'UNMEASURED'):
-                    print(f'{status}')
-                    record_not_scored(findings, item_id, condition, rep,
-                                      status, result)
-                    continue
-
-                score_execution(
-                    findings, result, item_id=item_id, condition=condition,
-                    rep=rep, expected=expected, ctx=ctx, collision=collision,
-                    config=config, answer_tolerance=answer_tolerance,
-                    decline_markers=decline_markers,
-                    currency_symbols=currency_symbols)
+            score_execution(
+                findings, result, item_id=item_id, condition=condition,
+                rep=rep, expected=expected, ctx=ctx, collision=collision,
+                config=config, answer_tolerance=answer_tolerance,
+                decline_markers=decline_markers,
+                currency_symbols=currency_symbols)
 
     # -- D7.2 measurability per question, from all its executions --
     apply_question_measurability(findings)
