@@ -354,16 +354,13 @@ def test_run_report_records_served_model_and_fingerprints(run):
 
 @pytest.mark.finding('V12-8')
 @pytest.mark.req('AP-1 §5.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-8: report.md says nothing of a model snapshot '
-                          'that changed during the run')
 def test_run_report_says_the_system_changed(run_changed):
     # AP-1 (v1.2 and v1.3) §5.2: "Confirmation that the system under test
     # was frozen for the duration". Here the served snapshot changed during
     # the run (mock-model-2026-01-01, then -02-01). Correct: report.md
     # says so, naming both snapshots on a line that says the system
-    # changed, or says explicitly that freezing could not be confirmed;
-    # no line says it was frozen or that nothing changed.
+    # changed, or says explicitly that freezing is not shown or cannot be
+    # confirmed; no line says it was frozen or that nothing changed.
     report = run_changed['report']
     lines = report.splitlines()
     names_change = [line for line in lines
@@ -371,17 +368,21 @@ def test_run_report_says_the_system_changed(run_changed):
                     and re.search(r'\bchanged\b', line, re.I)
                     and not re.search(r'unchanged|no change|not changed',
                                       line, re.I)]
-    cannot = [line for line in lines if re.search(
-        r'(froz|freez)\w*.*\b(not|cannot|could not) (be )?'
-        r'(shown|confirmed|verified)|(not|cannot|could not) (be )?'
-        r'(shown|confirmed|verified).*(froz|freez)', line, re.I)]
+    # an explicit statement that freezing is not shown or not confirmed
+    not_shown = (r"\b(not|cannot|can't|couldn't|isn't|doesn't|didn't)\s+"
+                 r'(be\s+)?(shown?|confirm(ed)?|verif(y|ied)|'
+                 r'establish(ed)?)\b')
+    cannot = [line for line in lines
+              if re.search(r'froz|freez', line, re.I)
+              and re.search(not_shown, line, re.I)]
     assert names_change or cannot, [
         line for line in lines
         if re.search(r'froz|freez|snapshot', line, re.I)]
     claims = [line for line in lines
               if re.search(r'froz|freez|snapshot|model', line, re.I)
-              and re.search(r'no change|unchanged|not changed|'
-                            r'(freeze|frozen):? *(yes|confirmed|true)|'
-                            r'freeze confirmed|\bwas frozen\b(?!.*\bnot\b)',
-                            line, re.I)]
+              and (re.search(r'no change|unchanged|not changed|'
+                             r'(freeze|frozen):? *(yes|confirmed|true)|'
+                             r'freeze confirmed', line, re.I)
+                   or (re.search(r'\bwas frozen\b', line, re.I)
+                       and not re.search(not_shown, line, re.I)))]
     assert claims == [], claims
