@@ -377,7 +377,8 @@ def outcome_table(transcript_text, summary_text=None):
     transcript; the scores (provenance, operation, figure) from the
     scoring pass's results in smoke_summary.json, matched on item,
     condition and repeat. A run that stopped before writing its summary
-    has no scores.
+    has no scores. Round records (each round as it arrived) are left out:
+    the execution's own record carries its rounds too.
     """
     scored = {}
     if summary_text:
@@ -390,6 +391,8 @@ def outcome_table(transcript_text, summary_text=None):
         if not line.strip():
             continue
         rec = json.loads(line)
+        if rec.get('kind') == 'round':
+            continue
         key = (rec.get('item_id'), rec.get('condition'))
         n = seen.get(key, 0)
         seen[key] = n + 1

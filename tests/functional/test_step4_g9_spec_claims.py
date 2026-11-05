@@ -144,9 +144,11 @@ def ap1_run(tmp_path, monkeypatch, capsys):
         result.out, result.err = captured.out, captured.err
         result.output_dir = output_dir
         path = output_dir / 'smoke_run.jsonl'
-        result.transcript = ([json.loads(line) for line in
-                              path.read_text('utf-8').splitlines() if line]
-                             if path.exists() else [])
+        # the execution records (each round's own record left out)
+        result.transcript = ([r for r in (
+            json.loads(line) for line in
+            path.read_text('utf-8').splitlines() if line)
+            if r.get('kind') != 'round'] if path.exists() else [])
         return result
 
     return run

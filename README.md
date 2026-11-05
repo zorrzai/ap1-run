@@ -211,12 +211,14 @@ runner does, so a run made with other inputs is verified against those
 
 A run has two passes, as the build specification requires (docs/SPEC.md §2).
 The **execution pass** sends every request and writes the transcript,
-`smoke_run.jsonl`: one record per execution, with every round's request as sent
-and raw response, the tool calls and their returns, the evidence class and the
-execution's status. Nothing in it is a score. Before the first request it also
-writes `pre_registration.json`: the seal record and the resolved configuration
-it sealed. The **scoring pass** then reads the transcript, never writing to it,
-and writes `report.md`, `adjudication_sheets.md`, `smoke_summary.json` and
+`smoke_run.jsonl`. Each round of an execution is written as a record of its own
+(`"kind": "round"`) the moment its response arrives, before anything is done
+with it: the request as sent and the raw response. Then comes one record per
+execution, with every round again, the tool calls and their returns, the
+evidence class and the execution's status. Nothing in it is a score. Before the
+first request it also writes `pre_registration.json`: the seal record and the
+resolved configuration it sealed. The **scoring pass** then reads the
+transcript, never writing to it, and writes `report.md`, `adjudication_sheets.md`, `smoke_summary.json` and
 `DISCLAIMER.txt`. `ap1-run` runs both.
 
 ### Scoring a transcript again
@@ -240,7 +242,9 @@ sealed expected values, as the run does. It writes the four scoring outputs to `
 the transcript's directory. Re-scoring a finished run gives back its
 `smoke_summary.json`, `report.md` and adjudication sheets. Re-scoring the
 partial transcript of an interrupted run reports the executions it never
-reached as NOT-RUN, never as failures. From Python:
+reached as NOT-RUN, never as failures, and an execution it stopped inside
+(rounds recorded, no record of its end) as UNMEASURED with cause `interrupted`
+and its last round. From Python:
 `ap1_run.scoring.rescore.rescore_transcript(transcript_path, config_path=...,
 fixture_dir=..., output_dir=...)` returns the summary.
 

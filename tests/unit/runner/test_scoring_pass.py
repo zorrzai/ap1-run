@@ -11,6 +11,7 @@ tests/functional/test_step4_g4_transcript.py.
 """
 
 import os
+import re
 import stat
 from decimal import Decimal
 
@@ -411,3 +412,95 @@ def test_score_run_refuses_a_bad_transcript_before_scoring(p):
     with pytest.raises(TranscriptError, match='not this run'):
         p.run()
     assert p.calls == []
+
+
+# -- The transcript against the run's plan (SPEC R0.2, R0.3) ---------------
+
+def write_round(path, item_id, condition, repeat, number, seal_hash='SEAL',
+                error=None, **extra):
+    """A round record, as the engine writes one when the round arrives."""
+    transcript.append(
+        path, item_id=item_id, arm_id=condition, condition=condition,
+        request_sent={'request': number},
+        response_received=None if error else {'response': number},
+        tool_calls=[], evidence_class=None, error_state=error,
+        seal_hash=seal_hash, repeat=repeat, kind='round', round=number,
+        error=error, **extra)
+
+
+def entry(number, **fields):
+    return {'round': number, 'request': {'request': number},
+            'response': {'response': number}, **fields}
+
+
+INTERRUPTED = ('interrupted: round 1: the run stopped during this '
+               'execution, after the rounds the transcript holds')
+
+
+@pytest.mark.finding('V12-3', 'T3-52')
+@pytest.mark.req('R0.2', 'R0.3')
+def test_score_run_interrupted_execution_unmeasured_with_its_round(p, capsys):
+    # The run stopped inside Q1/base/r2's tool loop: its rounds 0 and 1
+    # are in the transcript, its execution record never was. It was sent,
+    # so it is not NOT-RUN: UNMEASURED, cause interrupted, with its round.
+    write_round(p.transcript, 'Q1', 'base', 1, 0)
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED', rounds=[entry(0)])
+    write_round(p.transcript, 'Q1', 'base', 2, 0)
+    write_round(p.transcript, 'Q1', 'base', 2, 1)
+    smoke = p.run()
+    assert smoke['all_results'][1] == {
+        'item_id': 'Q1', 'condition': 'base', 'repeat': 2,
+        'status': 'UNMEASURED', 'cause': INTERRUPTED}
+    assert smoke['unmeasured_cells'] == [{
+        'item_id': 'Q1', 'condition': 'base', 'repeat': 2,
+        'cause': INTERRUPTED}]
+    assert [r['status'] for r in smoke['all_results'][2:]] == [
+        'VOID', 'NOT-RUN', 'NOT-RUN', 'NOT-RUN', 'NOT-RUN', 'VOID',
+        'NOT-RUN', 'NOT-RUN']
+    assert [r['repeat'] for r, _ in p.named('read')] == [1]
+    # only execution records reach the outputs
+    (records, _), = p.named('attach')
+    assert [(r['repeat'], r['status']) for r in records] == [(1, 'EXECUTED')]
+    console = capsys.readouterr().out
+    assert '  Q1/base/r2: UNMEASURED (interrupted)\n' in console
+
+
+@pytest.mark.finding('V12-3')
+@pytest.mark.req('R0.3')
+def test_score_run_rounds_matching_their_execution_record_accepted(p):
+    write_round(p.transcript, 'Q1', 'base', 1, 0)
+    write_round(p.transcript, 'Q1', 'base', 1, 1, error='HTTP 502')
+    write(p.transcript, 'Q1', 'base', 1, 'UNMEASURED', rounds=[
+        entry(0), {'round': 1, 'request': {'request': 1},
+                   'error': 'HTTP 502'}])
+    assert p.run()['all_results'][0]['status'] == 'UNMEASURED'
+
+
+@pytest.mark.finding('V12-3')
+@pytest.mark.req('R0.3')
+@pytest.mark.parametrize('rounds', [
+    [entry(0, response={'response': 'other'})],
+    [entry(0), entry(1)],
+    [],
+], ids=['other-response', 'more-rounds', 'no-rounds'])
+def test_score_run_rounds_differing_from_their_execution_record_refused(
+        p, rounds):
+    write_round(p.transcript, 'Q1', 'base', 1, 0)
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED', rounds=rounds)
+    with pytest.raises(TranscriptError, match=(
+            '^execution Q1/base/r1: its round records do not match the '
+            'rounds on its record$')):
+        p.run()
+    assert p.named('read') == []
+
+
+@pytest.mark.finding('V12-3')
+@pytest.mark.req('R0.3')
+@pytest.mark.parametrize('numbers', [[0, 2], [1], [0, 0]])
+def test_score_run_round_records_out_of_sequence_refused(p, numbers):
+    for number in numbers:
+        write_round(p.transcript, 'Q1', 'base', 1, number)
+    with pytest.raises(TranscriptError, match=(
+            r'^execution Q1/base/r1: its round records are rounds '
+            + re.escape(str(numbers)) + r', not 0 to \d+ in order$')):
+        p.run()

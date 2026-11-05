@@ -58,8 +58,11 @@ class Run:
 
     @property
     def transcript(self):
+        """The transcript's execution records (each round's own record,
+        written as it arrived, left out)."""
         text = self.file('smoke_run.jsonl') or ''
-        return [json.loads(line) for line in text.splitlines() if line]
+        records = [json.loads(line) for line in text.splitlines() if line]
+        return [r for r in records if r.get('kind') != 'round']
 
     def results(self, item_id, condition):
         return [r for r in self.summary['all_results']

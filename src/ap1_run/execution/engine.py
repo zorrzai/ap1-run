@@ -5,12 +5,14 @@ Spec: AP-1 Runner Build Spec v0.3, section 4 R1.2.
 Iterate items and conditions; call R0.2; drive the tool loop;
 write to R0.3. PERFORM NO SCORING.
 
-This is the execution pass (SPEC §2): execute_item writes one transcript
-record per execution, with every round's request and raw response, the
-structural tool-call record, the evidence class (R1.3) and the execution's
-status (EXECUTED, UNMEASURED or VOID). Scoring (figure identification, D1,
-D2, D7.2, D7.3) is a separate pass over the transcript
-(runner/scoring_pass.py), which never writes to it.
+This is the execution pass (SPEC §2): execute_item writes each round's
+request and raw response to the transcript as a round record the moment
+it arrives, before the round is processed (SPEC R0.2), then one record of
+the execution, with every round again, the structural tool-call record,
+the evidence class (R1.3) and the execution's status (EXECUTED, UNMEASURED
+or VOID). A run interrupted inside an execution leaves its rounds.
+Scoring (figure identification, D1, D2, D7.2, D7.3) is a separate pass
+over the transcript (runner/scoring_pass.py), which never writes to it.
 
 Conditions in v1.0: 'base' and 'instruction_removed' (D7.1b).
 
@@ -83,8 +85,15 @@ def execute_item(item, *, condition, config, fixture,
 
     # Every round's request as sent and raw response, in order
     # (SPEC R0.2, AP-1 §5.6); a round whose request failed has its
-    # messages and the error instead of a response.
+    # messages and the error instead of a response. Each is written to
+    # the transcript as it arrives, before anything is done with it.
     rounds = []
+
+    def record_round(entry):
+        _write_round(transcript_path, entry, item_id=item_id,
+                     condition=condition, repeat=repeat,
+                     seal_hash=seal_hash)
+        rounds.append(entry)
 
     # Send to endpoint via adapter
     try:
@@ -94,7 +103,7 @@ def execute_item(item, *, condition, config, fixture,
             model=config.get('model'),
         )
     except Exception as e:
-        rounds.append(_failed_round(0, messages, e))
+        record_round(_failed_round(0, messages, e))
         cause = ('rate_limited' if isinstance(e, adapter.RateLimitError)
                  else 'transport_error')
         transcript.append(
@@ -116,14 +125,14 @@ def execute_item(item, *, condition, config, fixture,
             'cause': cause, 'ground_truth': gt,
         }
 
-    rounds.append({'round': 0, 'request': request_record,
-                   'response': response})
+    record_round({'round': 0, 'request': request_record,
+                  'response': response})
 
     # Drive tool loop
     tool_calls_record, final_response, round_shapes = _drive_tool_loop(
         response=response, messages=messages, config=config,
         tools=tools, adapter_send=adapter_send,
-        sampling=sampling, rounds=rounds,
+        sampling=sampling, rounds=rounds, record_round=record_round,
     )
 
     # A provider refusal or content-filter stop is EXECUTED, never an
@@ -257,16 +266,20 @@ def refusal_of(response):
 
 def _drive_tool_loop(*, response, messages, config, tools,
                      adapter_send, sampling, max_turns=MAX_TOOL_TURNS,
-                     rounds=None):
+                     rounds=None, record_round=None):
     """Drive the tool-call cycle.
 
     Returns (tool_calls, final_response, round_shapes).
     round_shapes: list of (shape_recognised, reason) per round.
     rounds, if given, receives each later round's request as sent and
     raw response (or, if the request failed, its messages and the error).
+    record_round(entry), if given, is called with each of those as it
+    arrives, before its tool calls run, in place of rounds.append.
     """
     if rounds is None:
         rounds = []
+    if record_round is None:
+        record_round = rounds.append
     all_tool_calls = []
     round_shapes = []
     current = response
@@ -317,12 +330,12 @@ def _drive_tool_loop(*, response, messages, config, tools,
             # D7.9 normative: any round that fails to complete is
             # recorded as unrecognised. The evidence class is EV-0,
             # never a definitive invocation finding.
-            rounds.append(_failed_round(turn, messages, exc))
+            record_round(_failed_round(turn, messages, exc))
             round_shapes.append(
                 (False, f'adapter_send failed on turn {turn}: {exc}'))
             break
-        rounds.append({'round': turn, 'request': request_record,
-                       'response': current})
+        record_round({'round': turn, 'request': request_record,
+                      'response': current})
         # Check shape of this round's response
         _record_shape(current, round_shapes)
 
@@ -348,6 +361,23 @@ def _unobservable_cause(round_shapes, rounds, tools_offered):
         return {'cause': f'unrecognised response shape: {reason}',
                 'round': number}
     return {'cause': 'no round of the loop could be read', 'round': None}
+
+
+def _write_round(transcript_path, entry, *, item_id, condition, repeat,
+                 seal_hash):
+    """Append one round (an entry of rounds) to the transcript as a round
+    record: the fields of SPEC R0.3, the round's number, and its error if
+    its request failed. Its evidence class is None: an execution is
+    classified once, on its own record."""
+    transcript.append(
+        transcript_path,
+        item_id=item_id, arm_id=condition, condition=condition,
+        request_sent=entry['request'],
+        response_received=entry.get('response'), tool_calls=[],
+        evidence_class=None, error_state=entry.get('error'),
+        seal_hash=seal_hash, repeat=repeat, kind=transcript.ROUND_RECORD,
+        round=entry['round'], error=entry.get('error'),
+    )
 
 
 def _failed_round(number, messages, error):

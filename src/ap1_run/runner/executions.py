@@ -74,6 +74,17 @@ def record_not_run(findings, item_id, condition, rep):
     })
 
 
+def record_interrupted(findings, item_id, condition, rep, last_round):
+    """The transcript holds this execution's rounds up to last_round but
+    no record of its end: the run stopped inside it. It was sent, so it
+    is not NOT-RUN: UNMEASURED, cause interrupted, with its round, listed
+    among the unmeasured cells and in no denominator."""
+    record_not_scored(findings, item_id, condition, rep, 'UNMEASURED', {
+        'cause': 'interrupted',
+        'error': f'round {last_round}: the run stopped during this '
+                 f'execution, after the rounds the transcript holds'})
+
+
 def record_not_scored(findings, item_id, condition, rep, status, result):
     """The engine returned VOID or UNMEASURED: recorded, not scored.
 

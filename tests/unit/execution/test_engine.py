@@ -1,8 +1,9 @@
 """Unit tests for the execution engine (execution/engine.py).
 
 execute_item builds the request, sends it through the adapter, drives the
-tool loop, classifies the evidence and writes one transcript record, with
-every round's request and response; it scores nothing (T3-21: D7.2 is
+tool loop, classifies the evidence and writes the transcript: each round's
+request and raw response as it arrives, then one record of the execution,
+with every round again; it scores nothing (T3-21: D7.2 is
 scored by the scoring pass, tests/unit/runner/test_executions.py). The
 adapter is a recording fake that returns scripted responses; the
 calculator is a fake module put in sys.modules. The transcript is real, in
@@ -104,6 +105,13 @@ def calculator(monkeypatch):
     return module
 
 
+def executions(records):
+    """The execution records of a transcript, without its round records
+    (each round as it arrived, tested in "Each round written as it
+    arrives")."""
+    return [r for r in records if r.get('kind') != 'round']
+
+
 def run(tmp_path, adapter_send, *, item=ITEM, gt=GT, config=CONFIG,
         tools=TOOLS, system_prompt='Use the calculator.', condition='base'):
     path = tmp_path / 'run.jsonl'
@@ -112,7 +120,7 @@ def run(tmp_path, adapter_send, *, item=ITEM, gt=GT, config=CONFIG,
         ground_truth_compute=lambda item_id, ctx: dict(gt),
         adapter_send=adapter_send, system_prompt=system_prompt,
         tools=tools, transcript_path=str(path), seal_hash='seal-1')
-    return result, transcript.read_all(path)
+    return result, executions(transcript.read_all(path))
 
 
 def without_timestamp(record):
@@ -268,7 +276,8 @@ def test_execute_item_writes_its_repeat_on_the_record(tmp_path, gt, replies):
         adapter_send=FakeAdapter(*replies), system_prompt='S',
         tools=TOOLS, transcript_path=str(path), seal_hash='seal-1',
         repeat=7)
-    assert [r['repeat'] for r in transcript.read_all(path)] == [7]
+    assert [r['repeat'] for r in transcript.read_all(path)] == [7] * (
+        1 + len(replies))
 
 
 # -- a plain answer ----------------------------------------------------
@@ -376,7 +385,13 @@ def test_execute_item_ev3_guard_raises_before_write(tmp_path, monkeypatch):
                         lambda *a, **k: (EV_3, 'INVOKED', None))
     with pytest.raises(EvidenceError):
         _, _ = run(tmp_path, FakeAdapter(answer()))
-    assert transcript.read_all(tmp_path / 'run.jsonl') == []
+    # No record of the execution, so no EV-3 class is written; the round
+    # received before it was classified is in the transcript (SPEC R0.2).
+    records = transcript.read_all(tmp_path / 'run.jsonl')
+    assert executions(records) == []
+    assert [(r['kind'], r['response_received']) for r in records] == [
+        ('round', answer())]
+    assert all(r['evidence_class'] is None for r in records)
 
 
 # -- the tool loop -----------------------------------------------------
@@ -934,7 +949,8 @@ def run_without_raising(tmp_path, adapter_send, **kwargs):
     try:
         return run(tmp_path, adapter_send, **kwargs) + (None,)
     except Exception as e:
-        return None, transcript.read_all(tmp_path / 'run.jsonl'), e
+        return None, executions(
+            transcript.read_all(tmp_path / 'run.jsonl')), e
 
 
 @pytest.mark.finding('T3-10')
@@ -1169,3 +1185,109 @@ def test_execute_item_without_refusal_records_no_refusal_field(tmp_path):
     # record is as before, so published runs replay unchanged.
     result, records = run(tmp_path, FakeAdapter(answer()))
     assert 'refusal' not in result and 'refusal' not in records[0]
+
+
+# -- Each round written as it arrives (SPEC R0.2, R0.3) --------------------
+
+def round_entry(record):
+    """A round record as an entry of the execution record's rounds."""
+    entry = {'round': record['round'], 'request': record['request_sent']}
+    if record.get('error') is not None:
+        entry['error'] = record['error']
+    else:
+        entry['response'] = record['response_received']
+    return entry
+
+
+def execute(tmp_path, send, **kwargs):
+    return execute_item(
+        ITEM, condition='base', config=CONFIG, fixture=FIXTURE,
+        ground_truth_compute=lambda item_id, ctx: dict(GT),
+        adapter_send=send, system_prompt='S', tools=TOOLS,
+        transcript_path=str(tmp_path / 'run.jsonl'), seal_hash='seal-1',
+        repeat=2, **kwargs)
+
+
+@pytest.mark.finding('V12-3', 'T3-52')
+@pytest.mark.req('R0.2', 'R0.3')
+def test_execute_item_interrupted_in_the_tool_loop_keeps_the_rounds_received(
+        tmp_path, calculator):
+    # SPEC R0.2: every request and response is written to the transcript
+    # before any other processing; R0.3: an interrupted run leaves a valid
+    # partial transcript. Interrupted while running round 1's tool call,
+    # the transcript still holds rounds 0 and 1 as received.
+    first, second = calls(tool_call()), calls(tool_call('stop', id='call_2'))
+
+    def execute_calculator(expression):
+        if expression == 'stop':
+            raise KeyboardInterrupt
+        return '15.2'
+    calculator.execute_calculator = execute_calculator
+    with pytest.raises(KeyboardInterrupt):
+        execute(tmp_path, FakeAdapter(first, second, answer()))
+    records = transcript.read_all(tmp_path / 'run.jsonl')
+    assert [(r['kind'], r['round']) for r in records] == [
+        ('round', 0), ('round', 1)]
+    assert [r['response_received'] for r in records] == [first, second]
+    assert [r['request_sent'] for r in records] == [
+        {'request_no': 1}, {'request_no': 2}]
+    for r in records:
+        assert (r['item_id'], r['arm_id'], r['condition'], r['repeat'],
+                r['seal_hash']) == ('Q01', 'base', 'base', 2, 'seal-1')
+        assert r['evidence_class'] is None and r['error_state'] is None
+        assert 'status' not in r
+
+
+@pytest.mark.finding('V12-3', 'T3-52')
+@pytest.mark.req('R0.2')
+def test_execute_item_writes_each_round_before_running_its_tool_calls(
+        tmp_path, calculator):
+    # When a round's tool call runs, that round is already in the
+    # transcript.
+    path = tmp_path / 'run.jsonl'
+    seen = []
+
+    def execute_calculator(expression):
+        seen.append([r['round'] for r in transcript.read_all(path)])
+        return '15.2'
+    calculator.execute_calculator = execute_calculator
+    execute(tmp_path, FakeAdapter(calls(tool_call()),
+                                  calls(tool_call(id='call_2')), answer()))
+    assert seen == [[0], [0, 1]]
+
+
+@pytest.mark.finding('V12-3', 'T3-52')
+@pytest.mark.req('R0.2', 'R0.3')
+@pytest.mark.parametrize('replies', [
+    [answer()],
+    [calls(tool_call()), calls(tool_call(id='call_2')), answer()],
+    [adapter.AdapterError('HTTP 500')],
+    [calls(tool_call()), adapter.AdapterError('HTTP 502')],
+    [answer('')],
+], ids=['one-round', 'three-rounds', 'transport-failure',
+        'failure-mid-loop', 'empty-response'])
+def test_execute_item_rounds_written_as_they_arrive_then_the_execution(
+        tmp_path, calculator, replies):
+    # Every round is a record of its own, in order, before the execution's
+    # record, which holds the same rounds.
+    execute(tmp_path, FakeAdapter(*replies))
+    records = transcript.read_all(tmp_path / 'run.jsonl')
+    *rounds, execution = records
+    assert [r.get('kind') for r in records] == ['round'] * len(replies) + [
+        None]
+    assert [r['round'] for r in rounds] == list(range(len(replies)))
+    assert [round_entry(r) for r in rounds] == execution['rounds']
+    failed = [r for r in rounds if r.get('error') is not None]
+    assert [r['response_received'] for r in failed] == [None] * len(failed)
+    assert all(r['error_state'] == r['error'] for r in failed)
+
+
+def test_execute_item_underivable_writes_no_round(tmp_path):
+    execute_item(
+        ITEM, condition='base', config=CONFIG, fixture=FIXTURE,
+        ground_truth_compute=lambda item_id, ctx: dict(GT, derivable=False),
+        adapter_send=FakeAdapter(), system_prompt='S', tools=TOOLS,
+        transcript_path=str(tmp_path / 'run.jsonl'), seal_hash='seal-1',
+        repeat=1)
+    records = transcript.read_all(tmp_path / 'run.jsonl')
+    assert [r['status'] for r in records] == ['VOID']

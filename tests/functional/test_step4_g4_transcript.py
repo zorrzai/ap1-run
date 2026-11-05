@@ -501,6 +501,51 @@ def test_interrupted_run_partial_transcript_scored_unreached_not_run(
     assert summary['unmeasured_cells'] == []
 
 
+@pytest.mark.finding('V12-3', 'T3-52')
+@pytest.mark.req('R0.2', 'R0.3')
+def test_run_interrupted_inside_a_tool_loop_keeps_its_rounds(
+        cli, tmp_path, monkeypatch):
+    # SPEC R0.2 ("Every request and response is written to the transcript
+    # before any other processing"), R0.3. The run is interrupted while
+    # running Q05/base's second tool turn (round 1's call): rounds 0 and 1
+    # were received, and both are in the transcript as received. Scored
+    # again, that execution is UNMEASURED (interrupted, round 1), not
+    # NOT-RUN; the one after it was never reached.
+    from ap1_run.execution import engine
+    real_tool = engine._execute_tool
+    seen = []
+
+    def tool(name, arguments):
+        seen.append(arguments)
+        if len(seen) == 3:   # round 0 asks for two calls, round 1 for one
+            raise KeyboardInterrupt
+        return real_tool(name, arguments)
+    monkeypatch.setattr(engine, '_execute_tool', tool)
+    r = cli(MULTI_ROUND, items=('Q05',), repeat=1)
+    assert isinstance(r.error, KeyboardInterrupt)
+    records = _read_jsonl(r.transcript)
+    assert [(rec.get('kind'), rec.get('round')) for rec in records] == [
+        ('round', 0), ('round', 1)]
+    received = [e['body'] for e in r.mock.log]
+    assert len(received) == 2
+    assert [rec['response_received'] for rec in records] == received
+    summary = _rescore(r.transcript, config_path=r.config_path,
+                       fixture_dir=r.fixture_dir,
+                       output_dir=tmp_path / 'rescored')
+    cause = ('interrupted: round 1: the run stopped during this execution, '
+             'after the rounds the transcript holds')
+    rows = {(row['item_id'], row['condition'], row['repeat']):
+            (row['status'], row.get('cause')) for row in summary['all_results']}
+    assert rows == {
+        ('Q05', 'base', 1): ('UNMEASURED', cause),
+        ('Q05', 'instruction_removed', 1): (
+            'NOT-RUN', 'not reached: the transcript has no record of it')}
+    assert summary['unmeasured_cells'] == [{
+        'item_id': 'Q05', 'condition': 'base', 'repeat': 1, 'cause': cause}]
+    report = (tmp_path / 'rescored' / 'report.md').read_text('utf-8')
+    assert 'interrupted' in report
+
+
 # -- T3-35 (engine part): the cause and round of an EV-0 --------------------
 
 ANTHROPIC = {'id': 'msg_mock', 'type': 'message', 'role': 'assistant',
@@ -534,7 +579,8 @@ def _ev0_error_state(cli, second_round):
             items=('Q01',), repeat=1)
     records = [rec for rec in _read_jsonl(r.transcript)
                if rec['condition'] == 'base'
-               and rec.get('record_type') != 'figure_identification']
+               and rec.get('record_type') != 'figure_identification'
+               and rec.get('kind') != 'round']
     assert [rec['evidence_class'] for rec in records] == [EV_0]
     return records[0]['error_state']
 
@@ -590,7 +636,8 @@ def _round0_request_messages(cli):
     assert (r.code, r.error) == (0, None)
     base = [rec for rec in _read_jsonl(r.transcript)
             if rec['condition'] == 'base'
-            and rec.get('record_type') != 'figure_identification']
+            and rec.get('record_type') != 'figure_identification'
+            and rec.get('kind') != 'round']
     sent = [e['request']['messages'] for e in r.mock.log
             if e['condition'] == 'base']
     return base[0]['request_sent']['request_record']['messages'], sent

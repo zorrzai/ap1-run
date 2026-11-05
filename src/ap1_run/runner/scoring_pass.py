@@ -4,9 +4,12 @@ score_run scores a run from its transcript alone: it opens the transcript
 read-only (R0.3), writes nothing back, and goes through the executions the
 run planned (every condition, item and repeat), in the run's order. An
 underivable item is VOID; an execution with no record in the transcript
-(the run was interrupted before it) is NOT-RUN, never a failure; a record
-that was not executed (UNMEASURED) is listed with its cause; every other
-execution is scored (runner/executions.py). Then come the consistency check,
+(the run was interrupted before it) is NOT-RUN, never a failure; one with
+round records but no record of its end (the run was interrupted inside
+it) is UNMEASURED, cause interrupted, with its last round; a record that
+was not executed (UNMEASURED) is listed with its cause; every other
+execution is scored (runner/executions.py). An execution's round records
+must match the rounds on its record. Then come the consistency check,
 the console report, D1, D2, the summary and the output files.
 
 The live run calls it after its execution pass; the re-scorer
@@ -19,11 +22,13 @@ from ap1_run.execution.context import (
 )
 from ap1_run.execution.perturbation_guard import HELD_CONSTANT
 from ap1_run.foundation import transcript
-from ap1_run.foundation.transcript import TranscriptError
+from ap1_run.foundation.transcript import (
+    ROUND_RECORD, TranscriptError, round_entry,
+)
 from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.executions import (
-    Findings, apply_question_measurability, record_not_run,
-    record_not_scored, record_underivable, result_from_record,
+    Findings, apply_question_measurability, record_interrupted,
+    record_not_run, record_not_scored, record_underivable, result_from_record,
     score_execution,
 )
 from ap1_run.runner.outputs import attach_scores, write_outputs
@@ -52,10 +57,11 @@ DISCLAIMER = (
 def index_records(records, seal_hash):
     """The transcript's records by execution: (item_id, condition, repeat).
 
-    Raises TranscriptError for a record of another run (another seal
-    hash), a record without a status or repeat (a transcript written
-    before the two passes were separated: it holds scoring records and
-    cannot be re-scored), or two records of one execution.
+    Round records (index_rounds) are left out. Raises TranscriptError for
+    a record of another run (another seal hash), a record without a status
+    or repeat (a transcript written before the two passes were separated:
+    it holds scoring records and cannot be re-scored), or two records of
+    one execution.
     """
     index = {}
     for number, record in enumerate(records, 1):
@@ -63,6 +69,8 @@ def index_records(records, seal_hash):
             raise TranscriptError(
                 f'record {number} has seal hash '
                 f'{record.get("seal_hash")!r}, not this run\'s {seal_hash!r}')
+        if record.get('kind') == ROUND_RECORD:
+            continue
         if record.get('status') is None or record.get('repeat') is None:
             raise TranscriptError(
                 f'record {number} has no status or repeat: the transcript '
@@ -75,6 +83,40 @@ def index_records(records, seal_hash):
                 f'r{key[2]}')
         index[key] = record
     return index
+
+
+def index_rounds(records):
+    """The transcript's round records by execution, (item_id, condition,
+    repeat), each execution's in the transcript's order."""
+    rounds = {}
+    for record in records:
+        if record.get('kind') == ROUND_RECORD:
+            key = (record.get('item_id'), record.get('condition'),
+                   record.get('repeat'))
+            rounds.setdefault(key, []).append(record)
+    return rounds
+
+
+def _name(key):
+    return f'{key[0]}/{key[1]}/r{key[2]}'
+
+
+def check_rounds(by_execution, rounds_by_execution):
+    """Each execution's round records are its rounds 0, 1, ... in order,
+    and, if the execution has a record, the rounds on it. Raises
+    TranscriptError naming the execution."""
+    for key, rounds in rounds_by_execution.items():
+        numbers = [r.get('round') for r in rounds]
+        if numbers != list(range(len(rounds))):
+            raise TranscriptError(
+                f'execution {_name(key)}: its round records are rounds '
+                f'{numbers}, not 0 to {len(rounds) - 1} in order')
+        record = by_execution.get(key)
+        if record is not None and (
+                [round_entry(r) for r in rounds] != record.get('rounds')):
+            raise TranscriptError(
+                f'execution {_name(key)}: its round records do not match '
+                f'the rounds on its record')
 
 
 def score_run(transcript_path, *, config, seal_record, fixture, questions,
@@ -92,6 +134,8 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
     records = transcript.read_all(transcript_path)
     seal_hash = seal_record['seal_hash']
     by_execution = index_records(records, seal_hash)
+    rounds_by_execution = index_rounds(records)
+    check_rounds(by_execution, rounds_by_execution)
 
     # Every one of these is a required field, validated by load_config
     # (repeat_count an int, answer_tolerance a Decimal): no defaults (R0.1).
@@ -119,6 +163,12 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
             for rep in range(1, repeat_count + 1):
                 print(f'  {item_id}/{condition}/r{rep}: ', end='', flush=True)
                 record = by_execution.get((item_id, condition, rep))
+                rounds = rounds_by_execution.get((item_id, condition, rep))
+                if record is None and rounds:
+                    print('UNMEASURED (interrupted)')
+                    record_interrupted(findings, item_id, condition, rep,
+                                       rounds[-1]['round'])
+                    continue
                 if record is None:
                     print('NOT-RUN')
                     record_not_run(findings, item_id, condition, rep)
@@ -190,8 +240,11 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
     }
 
     # -- Output files: report, adjudication sheets, disclaimer, summary --
+    execution_records = [r for r in records
+                         if r.get('kind') != ROUND_RECORD]
     write_outputs(
-        output_dir, records=attach_scores(records, findings.all_results),
+        output_dir, records=attach_scores(execution_records,
+                                          findings.all_results),
         summary=summary, config=config, seal_record=seal_record,
         questions=questions, fixture=fixture,
         release_coverage_results=findings.release_coverage_results,

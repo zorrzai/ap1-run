@@ -3,6 +3,11 @@
 Spec: AP-1 Runner Build Spec v0.3, section 3 R0.3.
 
 Owns run.jsonl: append-only, one line per interaction, never rewritten.
+
+An execution writes each round of its tool loop as a round record (kind
+ROUND_RECORD) the moment the round's response arrives, and then one record
+of the whole execution, which carries every round again (SPEC R0.2: every
+request and response is written before any other processing).
 """
 
 import json
@@ -13,6 +18,11 @@ from pathlib import Path
 
 class TranscriptError(Exception):
     """Transcript operation failure."""
+
+
+# The kind of a round record: one round's request as sent and raw response
+# (or, if its request failed, the error), written as it arrives.
+ROUND_RECORD = 'round'
 
 
 def append(path, *, item_id, arm_id, condition, request_sent,
@@ -89,6 +99,18 @@ def read_all(path):
                     f'invalid JSON at line {line_num}: {e}') from e
 
     return records
+
+
+def round_entry(record):
+    """A round record as the entry for its round in the execution
+    record's rounds: {'round', 'request', 'response'}, or 'error' in place
+    of 'response' for a round whose request failed."""
+    entry = {'round': record['round'], 'request': record['request_sent']}
+    if record.get('error') is not None:
+        entry['error'] = record['error']
+    else:
+        entry['response'] = record['response_received']
+    return entry
 
 
 def error_state_text(error_state):

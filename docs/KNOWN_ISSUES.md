@@ -171,9 +171,13 @@ re-score").
 overwritten on each loop iteration).
 
 **Fixed for new runs** (step 5 of the 2026-10 reorganization, V12-3). Each
-transcript record now has a `rounds` list: every round of the tool loop, in
-order, with the request as the adapter sent it and the raw response (or, for
-a request that failed, the messages it sent and the error). A run can be
+round of the tool loop is written to the transcript as a round record the
+moment it arrives, before its tool calls run (SPEC R0.2: "before any other
+processing"), with the request as the adapter sent it and the raw response
+(or, for a request that failed, the messages it sent and the error). Each
+execution record then has a `rounds` list with the same rounds, in order. A run
+interrupted inside an execution keeps the rounds it received, and the scoring
+pass reports that execution UNMEASURED, cause `interrupted`. A run can be
 replayed from its transcript. Scoring is a separate pass that only reads the
 transcript (T3-21), and `ap1-run --rescore` runs it alone on a run's
 transcript (README, "Scoring a transcript again"). The published runs in

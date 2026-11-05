@@ -26,7 +26,7 @@ def run_item(example, endpoint, tmp_path):
     """Execute one example item against the scripted endpoint; the
     engine's result, with an executed item's D7.2 scored from its
     transcript record (provenance_results, operation_correctness), and
-    the transcript."""
+    the transcript's execution records."""
     def run(item_id='Q01', *, script, condition='base'):
         endpoint.queue[:] = script
         config = dict(example['config'], endpoint_url=endpoint.url,
@@ -41,7 +41,8 @@ def run_item(example, endpoint, tmp_path):
             system_prompt=config['system_prompt_base'],
             tools=config['tools'], transcript_path=transcript,
             seal_hash='test-seal')
-        records = read_all(transcript)
+        # the execution records (each round's own record left out)
+        records = [r for r in read_all(transcript) if r.get('kind') != 'round']
         if result['status'] == 'EXECUTED':
             ctx = build_delivered_context(example['fixture'],
                                           item['source_accounts'])
