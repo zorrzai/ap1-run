@@ -223,18 +223,20 @@ def test_run_report_states_operands_unobservable_count(full_run):
     # AP-1 v1.3 D7.2(a): the unobservable case is declared and "its
     # proportion reported". Three unreadable calls per condition, one
     # repeat: 6 OPERANDS-UNOBSERVABLE invocations beside the grounded ones.
-    # The proportion is stated with its denominator, every calculator
-    # invocation of the run, counted from the test's own script (not from
-    # the run's output).
+    # The proportion is stated with its denominator on the unobservable
+    # row itself ('6/22' or '6 of 22'; a percentage alone is not enough),
+    # the denominator being every calculator invocation of the run,
+    # counted from the test's own script (not from the run's output).
     total = scripted_calculator_calls(UNREADABLE)
     assert total > 6
     code, _, report = full_run(UNREADABLE)
     assert code == 0
     provenance = section(report, '7b. D7.2(a)')
     assert table_count(provenance, 'OPERANDS-UNOBSERVABLE') == 6
-    share = f'{100 * 6 / total:.1f}'
-    assert re.search(rf'\b6\s*(/|of)\s*{total}\b|\b{share}\s*%',
-                     provenance), (total, share, provenance)
+    rows = [line for line in provenance.splitlines()
+            if line.startswith('| OPERANDS-UNOBSERVABLE |')]
+    assert any(re.search(rf'\b6\s*(/|of)\s*{total}\b', row)
+               for row in rows), (total, rows)
 
 
 @pytest.mark.finding('T3-16')
