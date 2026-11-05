@@ -97,6 +97,7 @@ tests/unit/execution/test_evidence_r41.py
 tests/unit/execution/test_perturbation_guard.py
 tests/unit/execution/test_seal.py
 tests/unit/execution/test_seal_constants.py
+tests/unit/execution/test_seal_constants_known_gaps.py
 tests/unit/execution/test_seal_r41.py
 tests/unit/execution/test_version.py
 tests/unit/foundation/test_adapter.py

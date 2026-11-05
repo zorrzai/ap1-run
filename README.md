@@ -294,11 +294,31 @@ intermediate, or a declared constant.
 > time it perturbs each declared source field and re-executes; if the output
 > does not move, the module is returning constants and the run is refused. The
 > run is also refused if the module reads a field it does not declare, or uses
-> a numeric literal it does not declare as a constant: in any code of the module
-> that runs for the item, `compute()` included, or in a module-level constant
-> that code reads. The checks catch mistakes, not a module written to evade
-> them: a number made without a literal (`len("abcdefghijkl")`), code in another
-> file, or a field read through `dict.get(account, ...)` is not seen.
+> a numeric literal it does not declare as a constant. That check reads the
+> lines of the module that run for the item (`compute()` included) and the plain
+> top-level assignments those lines name. A literal counts when it is a number
+> in the source or a string written inline as the first argument of `D`,
+> `Decimal`, `int` or `float`.
+>
+> The check is partial, and catches common mistakes only. Known gaps, each a
+> strict-xfail test in `tests/unit/execution/test_seal_constants_known_gaps.py`:
+> - a statement on the same line as another (`def f(): return D("1.05")`,
+>   `if x: y = D("1.05")`, `a; b`);
+> - a constant bound in a module-level `if`, `try`, `for` or walrus, in a class
+>   body, by a module function, or through `global`, or read as `globals()[...]`;
+> - a numeric string held in a name, passed by keyword or through `str()`, or
+>   given to an aliased constructor (`Decimal as Money`);
+> - a helper whose cache was filled by the earlier guards (`lru_cache`, a memo
+>   dict), so that the verdict can depend on the order of the items;
+> - code run in another thread, or compiled under a file-like name;
+> - a number made without a literal (`len("abcdefghijkl")`), a string built by an
+>   f-string or `join`, code in another file, and a field read through
+>   `dict.get(account, ...)`.
+>
+> It also refuses some legitimate modules: a local name that shadows a module
+> constant, a literal in a decorator argument or in `compute`'s own dispatch, a
+> dataclass default, and a constant written other than as declared (`-1` read as
+> `1`, `0.00`, `12.0` for `12`).
 
 **A config** — endpoint, model, sampling parameters (each with a value or an
 explicit declared omission and its reason), tolerance, quantisation policy,

@@ -1,32 +1,46 @@
 """R3.1 -- Declared-Constants Check (AST).
 
-Verifies that every numeric literal in a derive function's body
-is a member of the declared constants set.  A constant used but
-not declared is a silent dependency the perturbation check cannot
-detect.  This is the defect that caused E3.
+Checks that the numeric literals an item's computation uses are among
+its declared constants: an undeclared constant is a silent dependency
+the perturbation check cannot detect (the defect that caused E3).
 
 A numeric literal is a number in the source (4, 12.5), or a string
 passed to D(...), Decimal(...), int(...) or float(...) ("12", or "1" +
 ".05" folded).  Literals are compared with the declared constants as
 text.  The literal 0 is exempt.
 
-What is read for an item is what its computation runs: every top-level
-statement of the module that executes while compute(item) runs (compute
-itself, the function it dispatches to, helpers however they are called,
-a class whose method runs), the derive_<id> function, and the
-module-level assignments those statements read, followed through other
-module-level names.  A constant defined at module level is charged to
-each item whose computation reads it.
+What is read for an item: each statement of the module that executes
+while compute(item) runs, taken as the shortest statement containing an
+executed line (its own expressions, not its nested blocks); the
+derive_<id> function, whole, if it did not run; and the plain top-level
+assignments (Assign, AnnAssign, AugAssign) those statements name,
+followed through other such assignments.
 
 The check fails closed (T3-54): an item whose literals cannot be
-checked (compute raises, there is no derive_<id> function, or the
-module's source cannot be read or parsed) is a failure, named.
+checked (compute raises, there is no derive_<id> function, the module's
+source cannot be read or parsed, or the module calls code compiled under
+a name starting with "<") is a failure, named.
 
-Not caught (registered residue): a number made without a numeric
-literal (len("abcdefghijkl"), True + True), a string built other than by
-"+" of string literals (f-strings, join), code outside the module's own
-file, and a module that evades the field tracking deliberately
-(TrackingAccount, T3-8).
+The check is partial (S3-G3-1, partly fixed).  Known gaps, each a strict
+xfail in tests/unit/execution/test_seal_constants_known_gaps.py:
+  - a statement sharing its line with another (a one-line def, if or
+    for, or "a; b"): only the first is read;
+  - a module-level binding other than a plain top-level assignment (in
+    an if, try or for, a walrus, a class attribute, a value computed by a
+    module function, a global set by a function), and globals()[...];
+  - a numeric string not written inline as the first argument of D,
+    Decimal, int or float (held in a name, passed by keyword or through
+    str(), or given to an aliased constructor);
+  - a cached or memoised helper already run by the earlier guards, so
+    the verdict depends on call history and item order;
+  - code run in another thread, and exec code under a file-like name;
+  - a number made without a literal (len("abcdefghijkl")), an f-string
+    or join, code in another file, and deliberate evasion of the field
+    tracking (TrackingAccount, T3-8).
+Known false refusals: a local name that shares a module constant's name,
+a literal in a decorator argument or in compute's own code, a dataclass
+default (its generated __init__ has no source), and a literal written
+other than as declared (-1 read as 1, 0.00, 12.0 for 12).
 
 Separated from seal.py under SPEC §12.9's former 300-line module limit
 (removed in November 2026).
