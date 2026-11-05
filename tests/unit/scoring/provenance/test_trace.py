@@ -103,7 +103,7 @@ def test_extract_operands_non_numeric_constant_makes_expression_unreadable(
         expression):
     # A string, complex, None or boolean constant is not a number the
     # model wrote; the expression's operands can't be read, so none are
-    # returned (Steven's ruling on T3-39/F6: OPERANDS-UNOBSERVABLE).
+    # returned (the author's proposal for T3-39: OPERANDS-UNOBSERVABLE).
     assert extract_operands(expression) == []
 
 
@@ -494,7 +494,7 @@ def test_extract_operands_leading_whitespace_is_stripped(expression):
         (D('1520'), '1520'), (D('0.01'), '0.01')]
 
 
-@pytest.mark.finding('T3-58', 'F5')
+@pytest.mark.finding('T3-58')
 @pytest.mark.parametrize('literal', [
     '53.20',                    # trailing zero kept in the literal text
     '-53.20',
@@ -544,11 +544,6 @@ def extract_without_raising(expression):
     'T3-39/S3-G4-5: a boolean literal is not an operand (the boolean '
     'cases); proposed, not decided')
 @pytest.mark.finding('T3-39')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39: a boolean literal in the expression raises')
-
-
-@pytest.mark.finding('F6')
 def test_extract_operands_boolean_literal_not_an_operand_no_raise():
     # Correct (T3-39): "True + 1"
     # in a model's expression never raises; a boolean is not a numeric

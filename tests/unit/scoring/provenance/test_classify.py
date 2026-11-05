@@ -373,7 +373,7 @@ def test_classify_invocation_no_extractable_operands_is_unobservable(
     assert r['outcome'] == 'OPERANDS-UNOBSERVABLE'
 
 
-@pytest.mark.finding('T3-58', 'F5')
+@pytest.mark.finding('T3-58')
 def test_classify_invocation_operand_beyond_float_precision_is_originated():
     # 15200.0000000000000001 is not the source value 15200.00. Read
     # exactly (the maintainer's decision DEC-6, T3-58; SPEC R0.4.1/R0.4.2;
@@ -384,7 +384,7 @@ def test_classify_invocation_operand_beyond_float_precision_is_originated():
         '15200.0000000000000001']
 
 
-@pytest.mark.finding('T3-58', 'F5')
+@pytest.mark.finding('T3-58')
 def test_classify_invocation_quantisation_finding_keeps_operand_text():
     # The finding records the operand as written: 53.20 (T3-58:
     # operands are read exactly from the model's text).
@@ -484,7 +484,7 @@ def raw_call(arguments):
             'return_value': result_json('15.2')}
 
 
-@pytest.mark.finding('T3-39', 'F6')
+@pytest.mark.finding('T3-39')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}',
     pytest.param('{"expression": "True * 15.2"}', marks=BOOL_PROPOSAL),

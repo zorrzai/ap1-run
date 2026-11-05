@@ -5,7 +5,7 @@ Each test runs the real runner (ap1_run.run.main) in-process against the
 regression mock endpoint (tests/fixtures/mock_endpoint.py), on the shipped
 example with repeat_count 1, and reads the files it writes into tmp_path.
 Each test is marked xfail(strict=True) until its fix lands; the D7.3 tests
-(T3-26, T3-27, V12-6) pass since fix branch d73-transcription.
+(T3-26, T3-27, V12-6) pass since their fix.
 """
 
 import json

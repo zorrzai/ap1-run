@@ -55,7 +55,7 @@ def _eval_decimal(node, source):
 
     Only arithmetic operators and a minimal set of safe functions are
     permitted. Everything else raises ValueError. Literals are read from
-    their text in `source`, never through float (T3-58, F5).
+    their text in `source`, never through float (T3-58).
     """
     if isinstance(node, ast.Expression):
         return _eval_decimal(node.body, source)

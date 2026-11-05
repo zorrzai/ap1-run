@@ -1071,7 +1071,7 @@ def test_extract_calc_expression_non_object_json_none(arguments):
     assert found is None
 
 
-@pytest.mark.finding('T3-39', 'F6', 'S3-G2-4')
+@pytest.mark.finding('T3-39', 'S3-G2-4')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}',
     pytest.param('{"expression": "True * 15.2"}', marks=BOOL_PROPOSAL),

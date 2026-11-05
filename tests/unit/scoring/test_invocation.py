@@ -113,9 +113,9 @@ def test_measure_invocation_missing_evidence_class_raises_key_error():
 @pytest.mark.req('AP-1 D7.1')
 @pytest.mark.parametrize('first', [True, False])
 def test_measure_invocation_question_with_any_failed_repeat_fails(first):
-    # T3-11 (Steven's integrator decision): where a question's repeats
-    # disagree, the question counts as a failure if any repeat is
-    # NOT-INVOKED, whatever the order of the repeats.
+    # T3-11 (the fix's choice; no maintainer decision covers it): where a
+    # question's repeats disagree, the question counts as a failure if any
+    # repeat is NOT-INVOKED, whatever the order of the repeats.
     r = measure_invocation([item(first), item(not first),
                             item(True, item_id='Q02')])
     assert r['per_class'][EV_2] == {

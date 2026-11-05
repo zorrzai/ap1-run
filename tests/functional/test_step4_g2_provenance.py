@@ -305,7 +305,7 @@ def test_run_chained_item_without_intermediates_is_unmeasurable(
     #
     # Constants are declared only through intermediates' inputs, so this
     # module cannot declare Q01's 100 and 12, and the R3.1 declared-
-    # constants check, live since step 5 (seal-gt-guards, T3-7), refuses it
+    # constants check, live since the T3-7 fix, refuses it
     # at seal. That check is switched off here so the test reaches R2.4.
     import ap1_run.run as runner
     monkeypatch.setattr(runner, 'declared_constants_check',

@@ -96,7 +96,7 @@ def test_evaluate_expression_integer_literal_in_another_base_is_exact():
 
 
 def test_evaluate_expression_bool_constant_is_unreadable():
-    # True is not a number the model wrote (Steven's ruling on F6).
+    # True is not a number the model wrote (the author's proposal for T3-39).
     assert evaluate_expression('True + 1') is None
 
 
@@ -776,7 +776,7 @@ def test_reclassify_session_pairs_results_and_expressions_by_position():
 
 # --- Step 4: correct behaviour (failing until fixed) ---
 
-@pytest.mark.finding('T3-58', 'F5')
+@pytest.mark.finding('T3-58')
 @pytest.mark.parametrize('literal', ['15.20', '15200.0000000000000001',
                                      '0.12345678901234567890'])
 def test_evaluate_expression_reads_literal_text_exactly(literal):
@@ -787,7 +787,7 @@ def test_evaluate_expression_reads_literal_text_exactly(literal):
     assert str(evaluate_expression(literal)) == literal
 
 
-@pytest.mark.finding('T3-58', 'F5')
+@pytest.mark.finding('T3-58')
 def test_reclassify_session_operand_beyond_float_precision_is_not_the_result():
     # Read exactly, 0.1000000000000000001 is not the first call's result
     # 0.1, so the first call does not feed the second and stays

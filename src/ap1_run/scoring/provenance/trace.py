@@ -52,7 +52,7 @@ def parse_expression(expression_str):
     tree's positions refer to. None for anything that is not a string,
     does not parse as one Python expression, or contains a constant that
     is not a number (True, a string, 1j): the operands of such an
-    expression can't be read (T3-39, F6).
+    expression can't be read (T3-39).
     """
     if not isinstance(expression_str, str):
         return None
@@ -76,7 +76,7 @@ def literal_decimal(node, source):
     """(Decimal, text) for a numeric literal node, read from its text.
 
     The Decimal comes from the literal as the model wrote it, never
-    through float (SPEC R0.4.1, R0.4.2; T3-58, F5): '53.20' stays 53.20
+    through float (SPEC R0.4.1, R0.4.2; T3-58): '53.20' stays 53.20
     and '15200.0000000000000001' keeps every digit. An integer literal
     Decimal can't read ('0x1F') is exact as an int.
     """

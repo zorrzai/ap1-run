@@ -281,7 +281,7 @@ def test_tracking_context_non_subscript_read_recorded(read):
     assert 'savings.annual_rate' in tc.accessed_fields()
 
 
-# --- Step 5 (seal-gt-guards): the exact record of each access path ---
+# --- The exact record of each access path (T3-7) ---
 
 ACCT = {'balance': '1', 'annual_rate': '2'}
 BOTH = {'s.balance', 's.annual_rate'}

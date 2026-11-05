@@ -289,8 +289,8 @@ def test_summary_two_observed_classes_give_one_figure_each():
 
 @pytest.mark.finding('T3-11')
 def test_summary_d71_question_fails_if_any_repeat_not_invoked():
-    # Steven's integrator decision: a question whose repeats disagree
-    # counts as a failure.
+    # T3-11 (the fix's choice; no maintainer decision covers it): a
+    # question whose repeats disagree counts as a failure.
     s = build_summary([
         executed('Q01', repeat=1, evidence_class=EV2,
                  invocation_outcome='INVOKED'),

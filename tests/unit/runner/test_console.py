@@ -401,7 +401,7 @@ def test_run_report_3g_lists_each_unmeasured_cell_with_cause(capsys):
         assert cell['item_id'] in text and cell['cause'] in text, text
 
 
-# Step 5 (d71-invocation-aggregation): the 3h layout per evidence class.
+# The 3h layout per evidence class (T3-1, V12-5).
 
 @pytest.mark.finding('T3-1')
 @pytest.mark.req('R2.3', 'R1.3.1')

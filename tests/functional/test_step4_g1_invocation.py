@@ -347,11 +347,11 @@ _ABORTS = pytest.mark.xfail(
     reason='T3-39: model-controlled calculator input aborts the run')
 
 
-@pytest.mark.finding('T3-39', 'F6', 'S3-G2-4', 'S3-G4-5')
+@pytest.mark.finding('T3-39', 'S3-G2-4', 'S3-G4-5')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}',             # T3-39: not a string
     '{"expression": "True * 15.2"}',    # T3-39: boolean literal
-    '{"expression": "True + 1"}',       # F6
+    '{"expression": "True + 1"}',       # T3-39
     pytest.param('{"expression": "1e308*10"}',   # T3-39: calculator inf
                  marks=_ABORTS),
     '"15200 * 1.2 / 100 / 12"',         # S3-G2-4: JSON, not an object
