@@ -141,13 +141,18 @@ def check_reproducible(ground_truth_module, fixture, questions):
     GroundTruthNotReproducible, naming the items, if any result differs
     between the two computations (SPEC R3.1 "reproducible across two
     executions"). Called before the seal and before any request."""
-    first = compute_expected_values(ground_truth_module, fixture, questions)
-    second = compute_expected_values(ground_truth_module, fixture, questions)
-
     def text(result):
         return json.dumps(result, default=str, sort_keys=True)
-    changed = [item_id for item_id in first
-               if text(first[item_id]) != text(second.get(item_id))]
+
+    # Each computation is snapshotted (as text, and as a deep copy) before
+    # the next one runs: a module that returns one object and changes it
+    # in place must not compare equal to itself.
+    first = compute_expected_values(ground_truth_module, fixture, questions)
+    first_text = {item_id: text(r) for item_id, r in first.items()}
+    first = copy.deepcopy(first)
+    second = compute_expected_values(ground_truth_module, fixture, questions)
+    changed = [item_id for item_id in first_text
+               if first_text[item_id] != text(second.get(item_id))]
     if changed:
         raise GroundTruthNotReproducible(
             'ground truth not reproducible (R3.1): the module gave a '

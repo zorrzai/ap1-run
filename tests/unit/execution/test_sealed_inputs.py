@@ -238,3 +238,54 @@ def test_read_inputs_loads_the_calculator_from_the_bytes_read(tmp_path):
     import calculator_tool
     assert calculator_tool is inputs.calculator
     assert calculator_tool.execute_calculator('x') == '7'
+
+
+class _Module:
+    def __init__(self, compute):
+        self.compute = compute
+
+
+QS = {'items': [{'id': 'Q01', 'source_accounts': []}]}
+
+
+@pytest.mark.finding('T3-48')
+@pytest.mark.req('R3.1')
+def test_check_reproducible_compares_snapshots_not_shared_objects():
+    # A module that returns the same dict each time and changes it in
+    # place gives different results on the two computations; comparing the
+    # two references would see one object twice.
+    state = {'final': Decimal('1'), 'derivable': True}
+
+    def compute(item_id, ctx):
+        state['final'] += 1
+        return state
+    with pytest.raises(sealed_inputs.GroundTruthNotReproducible,
+                       match='Q01'):
+        sealed_inputs.check_reproducible(_Module(compute), {'accounts': []},
+                                         QS)
+
+
+@pytest.mark.finding('T3-48')
+@pytest.mark.req('R3.1')
+def test_check_reproducible_compares_the_whole_result():
+    # SPEC R3.1 "intermediates reproducible across two executions": a
+    # change in an intermediate alone, the final unchanged, is refused.
+    calls = []
+
+    def compute(item_id, ctx):
+        calls.append(1)
+        return {'final': Decimal('1'), 'intermediates': [
+            {'label': 'a', 'value': Decimal(len(calls))}]}
+    with pytest.raises(sealed_inputs.GroundTruthNotReproducible):
+        sealed_inputs.check_reproducible(_Module(compute), {'accounts': []},
+                                         QS)
+
+
+def test_check_reproducible_returns_a_snapshot():
+    # The values sealed are what was computed, not an object the module
+    # keeps and may change later.
+    state = {'final': Decimal('1')}
+    values = sealed_inputs.check_reproducible(
+        _Module(lambda i, c: state), {'accounts': []}, QS)
+    state['final'] = Decimal('9')
+    assert values == {'Q01': {'final': Decimal('1')}}
