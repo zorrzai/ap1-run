@@ -549,3 +549,39 @@ def test_identify_figure_real_locale_ambiguity_routes_to_adjudication():
                   "'1.780': separator '.' is configured as both decimal "
                   "and grouping -- cannot disambiguate",
         'extracted_tokens': None, 'matched_indices': []}
+
+
+# -- T3-3: the rule's false positives (conservative, never a wrong CORRECT) --
+
+FALSE_POSITIVE = pytest.mark.xfail(
+    strict=True, raises=AssertionError,
+    reason='T3-3: a figure after the answer that is not a rival answer (an '
+           'identifier, an explanatory amount) still routes the response to '
+           'adjudication; telling them apart is not decided')
+
+
+@FALSE_POSITIVE
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.0')
+@pytest.mark.parametrize('text, expected, kwargs', [
+    # the European end-to-end test's original wording
+    ('430,75 $ (Zinsen 1.006,25 $)', '430.75',
+     {'decimal_separator': ',', 'grouping_separator': '.'}),
+    # an explanatory amount after the answer (most of run F's moves)
+    ('$144.00 ($12 monthly fee x 12 months)', '144.00', {}),
+    ('The answer is $15.20 (Step 2 of 2).', '15.20', {}),
+], ids=['european-explanation', 'explanatory-amount', 'step-number'])
+def test_identify_figure_answer_followed_by_a_non_answer_figure(
+        text, expected, kwargs):
+    r = identify(response(text), expected, currency_symbols=['$'], **kwargs)
+    assert (r['outcome'], r['released_figure']) == (AUTO_MATCH, D(expected))
+
+
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.0', 'R0.4.2')
+def test_identify_figure_identifier_digits_are_not_a_competing_figure():
+    # The sheets end-to-end test's original wording: the digit in a word
+    # such as REP2-MARKER is not a figure, so it does not compete.
+    r = identify(response('The available credit is $2600.00. REP2-MARKER'),
+                 '2600.00', currency_symbols=['$'])
+    assert (r['outcome'], r['released_figure']) == (AUTO_MATCH, D('2600.00'))
