@@ -69,15 +69,18 @@ def read_all(path):
         return []
 
     records = []
-    with open(path, 'r', encoding='utf-8') as f:
-        for line_num, raw_line in enumerate(f, 1):
-            line = raw_line.strip()
-            if not line:
-                continue
+    # Read as bytes and decode line by line, so that a last line cut
+    # inside a multibyte character is a torn line like any other.
+    with open(path, 'rb') as f:
+        for line_num, raw_bytes in enumerate(f, 1):
+            complete = raw_bytes.endswith(b'\n')
             try:
+                line = raw_bytes.decode('utf-8').strip()
+                if not line:
+                    continue
                 records.append(json.loads(line))
-            except json.JSONDecodeError as e:
-                if not raw_line.endswith('\n'):
+            except (UnicodeDecodeError, json.JSONDecodeError) as e:
+                if not complete:
                     warnings.warn(
                         f'transcript {path}: line {line_num} is incomplete '
                         f'(interrupted write) and was left out: {e}')

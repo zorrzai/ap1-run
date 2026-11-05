@@ -249,3 +249,26 @@ def test_read_all_invalid_last_line_with_newline_still_raises(tmp_path):
     p.write_text('{"a": 1}\n{"a": 2\n', encoding='utf-8')
     with pytest.raises(TranscriptError, match='^invalid JSON at line 2'):
         read_all(p)
+
+
+@pytest.mark.finding('S3-G1-17')
+def test_read_all_torn_last_line_inside_a_multibyte_character(tmp_path):
+    # A write killed in the middle of a UTF-8 character leaves bytes that
+    # do not decode; the complete records before it are still returned,
+    # with the warning, as for any torn last line.
+    p = tmp_path / 'run.jsonl'
+    whole = json.dumps({'item_id': 'Q01'}) + '\n'
+    torn = json.dumps({'item_id': 'Q02', 'text': 'résumé'},
+                      ensure_ascii=False).encode('utf-8')
+    cut = torn.index('é'.encode('utf-8')) + 1     # inside the 2 bytes
+    p.write_bytes(whole.encode('utf-8') + torn[:cut])
+    with pytest.warns(UserWarning, match='line 2 is incomplete'):
+        assert transcript.read_all(p) == [{'item_id': 'Q01'}]
+
+
+@pytest.mark.finding('S3-G1-17')
+def test_read_all_bad_utf8_in_a_complete_line_raises(tmp_path):
+    p = tmp_path / 'run.jsonl'
+    p.write_bytes(b'{"item_id": "Q\xff1"}\n')
+    with pytest.raises(transcript.TranscriptError, match='line 1'):
+        transcript.read_all(p)
