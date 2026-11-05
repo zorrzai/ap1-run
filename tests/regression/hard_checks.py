@@ -18,8 +18,10 @@ scenario that seals needs the driver's capture first.
                            lists execution by execution
 """
 
+import decimal
 import json
 import os
+import re
 import time
 
 import hash_oracle
@@ -36,8 +38,12 @@ REPLAY_SUMMARY_EXCLUDED = ('seal_hash',)
 # fix makes on purpose, and is listed in this file: per published run, the
 # fields new in the replay, and each execution's moves as
 # [published value, replayed value]. A listed move that does not happen
-# fails too, so the list cannot go stale. Any other difference is
-# investigated, never added to the list by explanation alone.
+# fails too, so the list cannot go stale. A field listed under
+# "numeric_text_fields" is compared with every number in its strings read
+# as a Decimal, for a fix that changes only how a value is written (an
+# operand read from its literal text, '15.20', not through float, '15.2').
+# Any other difference is investigated, never added to the list by
+# explanation alone.
 REPLAY_EXPECTED = os.path.join(HERE, 'replay_expected.json')
 
 
@@ -132,7 +138,26 @@ def load_replay_expected(run_dir, path=None):
         'new_top_level_keys': listed.get('new_top_level_keys', []),
         'new_execution_fields': listed.get('new_execution_fields', []),
         'moves': listed.get('moves', {}),
+        'numeric_text_fields': listed.get('numeric_text_fields', []),
     }
+
+
+_NUMBER = re.compile(r'-?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?')
+
+
+def numeric_text(value):
+    """value with every number written in a string replaced by its
+    canonical Decimal form, so '15.20', '15.2' and '15.200' read alike and
+    '15.21' does not; dicts and lists are walked, other types kept."""
+    if isinstance(value, str):
+        return _NUMBER.sub(
+            lambda m: format(decimal.Decimal(m.group()).normalize(), 'f'),
+            value)
+    if isinstance(value, list):
+        return [numeric_text(v) for v in value]
+    if isinstance(value, dict):
+        return {k: numeric_text(v) for k, v in value.items()}
+    return value
 
 
 def execution_key(result):
@@ -189,7 +214,10 @@ def replay_differences(published, replayed, expected):
                         f'{listed[field][1]!r}, but {pub[field]!r} in the '
                         f'published run and {rep[field]!r} in the replay')
                 continue
-            found = first_difference(pub[field], rep[field], where)
+            want, got = pub[field], rep[field]
+            if field in expected['numeric_text_fields']:
+                want, got = numeric_text(want), numeric_text(got)
+            found = first_difference(want, got, where)
             if found:
                 problems.append(found)
     for key, fields in sorted(moves.items()):

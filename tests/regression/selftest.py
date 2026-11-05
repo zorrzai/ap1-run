@@ -406,7 +406,8 @@ class ReplayExpectedDifferences(unittest.TestCase):
 
     def expected(self, moves=None, new_fields=(), new_keys=()):
         return {'moves': moves or {}, 'new_execution_fields': list(new_fields),
-                'new_top_level_keys': list(new_keys)}
+                'new_top_level_keys': list(new_keys),
+                'numeric_text_fields': []}
 
     def diff(self, published, replayed, expected):
         return hard_checks.replay_differences(published, replayed, expected)
@@ -466,6 +467,19 @@ class ReplayExpectedDifferences(unittest.TestCase):
                                    self.expected()), [])
         found = self.diff(self.rows(), self.rows(repeat=2), self.expected())
         self.assertIn('Q01/base/r1 in the published run', found[0])
+
+    def test_numeric_text_fields_compare_numbers_as_decimals(self):
+        pub = self.rows(oc=[{'detail': 'result 15.20 matches 15.200',
+                             'operands': ['15200.0']}])
+        same = self.rows(oc=[{'detail': 'result 15.2 matches 15.200',
+                              'operands': ['15200.00']}])
+        moved = self.rows(oc=[{'detail': 'result 15.21 matches 15.200',
+                               'operands': ['15200.00']}])
+        listed = self.expected()
+        listed['numeric_text_fields'] = ['oc']
+        self.assertEqual(self.diff(pub, same, listed), [])
+        self.assertEqual(len(self.diff(pub, moved, listed)), 1)
+        self.assertEqual(len(self.diff(pub, same, self.expected())), 1)
 
     def test_the_committed_list_parses(self):
         for run in ('output/run_e_mini', 'output/run_f_sol'):
