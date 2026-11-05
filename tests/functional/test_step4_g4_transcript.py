@@ -37,6 +37,7 @@ shape; it then updates _rescore() and nothing else.
 
 import importlib.util
 import json
+from decimal import Decimal
 import os
 import shutil
 import stat
@@ -84,9 +85,23 @@ def _mock_endpoint_class():
 
 class MockEndpoint(_mock_endpoint_class()):
     """The regression mock, also keeping each reply's body: log entries
-    get 'body', the JSON sent back (the log's own 'reply' is the status)."""
+    get 'body', the JSON sent back (the log's own 'reply' is the status).
+    close_once: (item_id, condition, round) whose first request is
+    answered by closing the connection, so the adapter retries it."""
+
+    close_once = frozenset()
 
     def handle(self, body):
+        item_id, condition, rnd = self._identify(body)
+        key = (item_id, condition, rnd)
+        if key in self.close_once and key not in getattr(self, '_closed',
+                                                         set()):
+            self._closed = getattr(self, '_closed', set()) | {key}
+            self.log.append({'seq': None, 'item_id': item_id,
+                             'condition': condition, 'repeat': None,
+                             'round': rnd, 'reply': 'close',
+                             'request': body, 'retried': True})
+            return ('close',)
         action = super().handle(body)
         if action[0] == 'reply':
             payload = action[2]
@@ -320,34 +335,61 @@ def test_run_multi_round_every_raw_response_in_transcript(cli):
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='V12-3: the requests of the intermediate '
                           'tool-loop rounds are not in the transcript')
-def test_run_multi_round_every_request_in_transcript(cli):
+def test_run_multi_round_every_request_in_transcript(cli, monkeypatch):
     # Correct (SPEC R0.2 "Every request and response is written to the
     # transcript ... The request as sent", with its sampling parameters
     # and its attempts): every request sent, round by round, is in the
     # record of its own execution, complete: a request record with the
-    # model, messages and tools the endpoint received, every sampling
-    # parameter sent (in sampling_as_sent), and a non-empty list of
-    # attempts. Today only the first request is kept, and its messages
-    # are the list as it stood after the loop (S4-G4-1).
+    # model, messages and tools the endpoint received, the value of every
+    # sampling parameter sent (in sampling_as_sent), and the attempts made
+    # for it, each numbered and with a status or an error, the last one
+    # HTTP 200. Round 1 of the base condition is answered first by a
+    # dropped connection, so its record has two attempts, the first an
+    # error. Today only the first request is kept, and its messages are
+    # the list as it stood after the loop (S4-G4-1).
+    monkeypatch.setattr(MockEndpoint, 'close_once',
+                        frozenset({('Q05', 'base', 1)}))
     r = cli(MULTI_ROUND, items=('Q05',), repeat=1)
     assert (r.code, r.error) == (0, None)
     records = [rec for rec in _read_jsonl(r.transcript)
                if rec.get('record_type') != 'figure_identification']
-    assert [e['round'] for e in r.mock.log] == [0, 1, 2] * 2
+    served = [e for e in r.mock.log if not e.get('retried')]
+    assert [e['round'] for e in served] == [0, 1, 2] * 2
+
+    def same(a, b):
+        try:
+            return Decimal(str(a)) == Decimal(str(b))
+        except Exception:
+            return a == b
+
+    def attempts_ok(attempts, retried):
+        if not attempts or not all(
+                isinstance(a, dict) and isinstance(a.get('attempt'), int)
+                and (isinstance(a.get('status_code'), int)
+                     or isinstance(a.get('error'), str))
+                for a in attempts):
+            return False
+        if attempts[-1].get('status_code') != 200:
+            return False
+        return (len(attempts) == 2 and attempts[0].get('error')) \
+            if retried else len(attempts) == 1
 
     def complete(e):
         own = [rec for rec in records if rec['condition'] == e['condition']]
         sent = e['request']
         sampling = set(sent) - {'model', 'messages', 'tools'}
+        retried = (e['condition'], e['round']) == ('base', 1)
         return any(
             d.get('messages') == sent['messages']
             and d.get('model') == sent['model']
             and d.get('tools') == sent.get('tools')
-            and sampling <= set(d.get('sampling_as_sent') or {})
-            and d.get('attempts')
+            and all(k in (d.get('sampling_as_sent') or {})
+                    and same(d['sampling_as_sent'][k], sent[k])
+                    for k in sampling)
+            and attempts_ok(d.get('attempts'), retried)
             for d in _dicts(own))
 
-    missing = [(e['condition'], e['round']) for e in r.mock.log
+    missing = [(e['condition'], e['round']) for e in served
                if not complete(e)]
     assert missing == []
 
