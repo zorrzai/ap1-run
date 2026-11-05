@@ -343,27 +343,42 @@ NOT_SHOWN = (r"\b(not|cannot|can't|couldn't|isn't|doesn't|didn't)\s+"
              r'(be\s+)?(shown?|confirm(ed)?|verif(y|ied)|establish(ed)?)\b')
 
 
+# The report's one freeze status line, and its three forms (V12-8)
+FREEZE_LINE = '> Freezing (AP-1 \u00a75.2): '
+NOT_SHOWN_STATUS = ('not shown: more than one served model or backend '
+                    'fingerprint; the run does not show that the system '
+                    'under test was frozen for its duration.')
+FREEZE_STATUSES = (
+    re.escape(NOT_SHOWN_STATUS),
+    r'not verified: [^.]*\.',
+    r'not verified by the runner; consistent with a frozen system: all '
+    r'\d+ responses report one served model and one backend '
+    r'fingerprint\.',
+)
+
+
 def freeze_claims(lines):
-    """The lines that claim the system was frozen or did not change. "was
-    frozen" is a claim unless a negation governs it: one earlier in the
-    same clause ("does not show that ... was frozen"). A negation in
-    another clause ("was frozen; drift was not shown", "was frozen (not
-    verified)") does not take the claim back."""
+    """Every line that speaks of freezing, or of the model or system not
+    changing, other than the one status line in one of its three forms
+    (a "not verified" reason never mentions freezing). Checked by
+    structure, not by phrasing: "remained frozen", "is frozen" and
+    "Freezing: confirmed" are claims like "was frozen"."""
     claims = []
     for line in lines:
-        if not re.search(r'froz|freez|snapshot|model', line, re.I):
+        speaks = re.search(r'froz|freez', line, re.I) or (
+            re.search(r"did(n't| not) change|no change|unchanged|"
+                      r'not changed', line, re.I)
+            and re.search(r'model|system|snapshot|fingerprint', line, re.I))
+        if not speaks:
             continue
-        if re.search(r'no change|unchanged|not changed|'
-                     r'(freeze|frozen):? *(yes|confirmed|true)|'
-                     r'freeze confirmed', line, re.I):
-            claims.append(line)
+        status = line[len(FREEZE_LINE):] if line.startswith(
+            FREEZE_LINE) else None
+        if status is not None and any(
+                re.fullmatch(form, status) for form in FREEZE_STATUSES) \
+                and not (status.startswith('not verified: ')
+                         and re.search(r'froz|freez', status, re.I)):
             continue
-        for clause in re.split(r'[;:()\u2014]|\.\s', line):
-            frozen = re.search(r'\bwas frozen\b', clause, re.I)
-            if frozen and not re.search(NOT_SHOWN, clause[:frozen.start()],
-                                        re.I):
-                claims.append(line)
-                break
+        claims.append(line)
     return claims
 
 
@@ -373,28 +388,39 @@ def freeze_claims(lines):
     ('The system under test was frozen (not verified by fingerprint).',
      True),
     ('System frozen: yes', True),
-    ('> Freezing (AP-1 \u00a75.2): not shown: more than one served model or '
-     'backend fingerprint; the run does not show that the system under '
-     'test was frozen for its duration.', False),
-    ('> Freezing (AP-1 \u00a75.2): not verified: the responses report no '
-     'backend fingerprint.', False),
+    (FREEZE_LINE + 'confirmed: one served model.', True),
+    (FREEZE_LINE + 'verified.', True),
+    ('The system under test is frozen.', True),
+    ('The system remained frozen for the run.', True),
+    ('The model did not change during the run.', True),
+    ('It cannot be shown otherwise, so the system was frozen.', True),
+    ('Not shown to drift, the system was frozen for its duration.', True),
+    (FREEZE_LINE + 'not verified by fingerprint; the system remained '
+     'frozen throughout the run.', True),
+    (FREEZE_LINE + 'not verified: the system remained frozen.', True),
+    (FREEZE_LINE + NOT_SHOWN_STATUS, False),
+    (FREEZE_LINE + 'not verified: the responses report no backend '
+     'fingerprint.', False),
+    (FREEZE_LINE + 'not verified by the runner; consistent with a frozen '
+     'system: all 2 responses report one served model and one backend '
+     'fingerprint.', False),
+    ('D7.4 is unchanged from the last section.', False),
 ])
-def test_freeze_claims_catches_a_hedged_claim(line, claim):
-    # The check the next tests use: a hedge elsewhere on the line does
-    # not turn "was frozen" into a statement that freezing is not shown.
+def test_freeze_claims_catches_any_claim_beside_the_status(line, claim):
+    # The check the next tests use: only the status line, in one of its
+    # three forms, may speak of freezing.
     assert bool(freeze_claims([line])) is claim
 
 
 @pytest.mark.finding('V12-8')
 @pytest.mark.req('AP-1 §5.2')
 def test_run_report_states_the_freeze_status(run):
-    # Correct: report.md always states whether freezing was established,
-    # here not (two fingerprints), and never claims it.
+    # Correct: report.md states once whether freezing was established.
+    # The mock serves two fingerprints, so the status is "not shown"
+    # (not merely some "not verified"), and nothing else claims it.
     lines = run['report'].splitlines()
-    status = [line for line in lines
-              if line.startswith('> Freezing (AP-1 \u00a75.2): ')]
-    assert len(status) == 1, status
-    assert re.search(NOT_SHOWN, status[0], re.I), status
+    status = [line for line in lines if line.startswith(FREEZE_LINE)]
+    assert status == [FREEZE_LINE + NOT_SHOWN_STATUS], status
     assert freeze_claims(lines) == []
 
 
