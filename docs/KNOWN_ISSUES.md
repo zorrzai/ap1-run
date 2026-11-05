@@ -124,6 +124,14 @@ to `2` under HALF_EVEN but `3` under HALF_UP.
 D7.2(b)'s `round()` round half away from zero (ROUND_HALF_UP), as the example
 configs' `quantisation.rounding` declares: `round(2.5)` is 3.
 
+**Still true, by choice:** `round()` inside an expression is always half up,
+whatever `quantisation.rounding` a config declares (the loader accepts every
+mode the decimal module has). SPEC R0.4.1's declared rounding mode governs the
+runner's own quantisation, applied once at the declared point; `round()` is part
+of the calculator the model calls, and D7.2(b) judges an expression by the
+value that calculator returns. Under a `ROUND_HALF_EVEN` config, `round(2.5)`
+is still 3 in both, so tool and checker agree.
+
 ---
 
 ## 7. Transcript does not store intermediate API responses
