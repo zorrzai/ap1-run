@@ -197,20 +197,33 @@ def test_run_report_counts_transcriptions_rounded_under_declared_policy(
     # expression returns 15.200000000000001, itself a licensed rounding)
     # and the model releases $15.20: EXACT with no rounding, 4 more EXACT
     # results that must not be counted. The count
-    # (4) differs from the declared places (2) and from all EXACT (8), and
+    # (4) differs from the declared places (2), from all EXACT (8) and
+    # from every non-zero difference (8, with Q04's ALTERED control), and
     # is read as a value (": 4" or a table cell), not anywhere on a line.
     out = run_example(tmp_path, monkeypatch, {
         'Q07/*/*': [{'call': '42175 * (0.078 / 4) - (15 * 3)'},
                     {'say': 'The quarterly net growth after fees is '
                             '${result}.'}],
         'Q01/*/*': [{'call': '1520 / 100'},
-                    {'say': 'The monthly interest is $15.20.'}]},
+                    {'say': 'The monthly interest is $15.20.'}],
+        'Q04/*/*': [{'call': '1437.00 - 1006.25'},
+                    {'say': 'The principal portion of the first mortgage '
+                            'payment is $430.76.'}]},
         repeat_count='2')
     summary = json.loads((out / 'smoke_summary.json').read_text('utf-8'))
     exact = [(r['item_id'], r['condition'], r['repeat'])
              for r in summary['all_results']
              if r.get('transcription_outcome') == 'TRANSCRIBED-EXACT']
     assert len(exact) == 8, exact
+    # Control: Q04 releases 430.76 for the calculator's 430.75, within the
+    # answer tolerance (so AUTO-MATCH) but an alteration the policy does
+    # not license: 4 ALTERED results with a non-zero difference, which
+    # the count must leave out too.
+    altered = [(r['item_id'], r['condition'], r['repeat'])
+               for r in summary['all_results']
+               if r.get('transcription_outcome') == 'TRANSCRIBED-ALTERED']
+    assert len(altered) == 4 and {i for i, _, _ in altered} == {'Q04'}, \
+        altered
     report = (out / 'report.md').read_text('utf-8')
     d73 = report[report.index('## D7.3'):]
     d73 = d73[:d73.index('\n## ', 1)] if '\n## ' in d73[1:] else d73
