@@ -111,12 +111,12 @@ def compute_figures():
         v[f"{pfx}_ir_count"] = len(ir)
 
         # Invocation
-        v[f"{pfx}_invoked_base"] = sum(1 for r in base if r["invocation_outcome"] == "INVOKED")
-        v[f"{pfx}_not_invoked_ir"] = sum(1 for r in ir if r["invocation_outcome"] == "NOT-INVOKED")
-        v[f"{pfx}_invoked_ir"] = sum(1 for r in ir if r["invocation_outcome"] == "INVOKED")
+        v[f"{pfx}_invoked_base"] = sum(1 for r in base if r.get("invocation_outcome") == "INVOKED")
+        v[f"{pfx}_not_invoked_ir"] = sum(1 for r in ir if r.get("invocation_outcome") == "NOT-INVOKED")
+        v[f"{pfx}_invoked_ir"] = sum(1 for r in ir if r.get("invocation_outcome") == "INVOKED")
 
         # NOT-INVOKED by item
-        ni_items = Counter(r["item_id"] for r in ir if r["invocation_outcome"] == "NOT-INVOKED")
+        ni_items = Counter(r["item_id"] for r in ir if r.get("invocation_outcome") == "NOT-INVOKED")
         for item, count in ni_items.items():
             v[f"{pfx}_ni_{item}"] = count
 
@@ -159,7 +159,7 @@ def compute_figures():
         for r in results:
             for op in r.get("operation_correctness", []):
                 if op["outcome"] == "WRONG-OPERATION":
-                    fig = r["figure_outcome"]
+                    fig = r.get("figure_outcome")
                     if fig == "AUTO-MATCH":
                         wo_correct += 1
                     elif fig in ("AUTO-MISMATCH", "MISMATCH"):
@@ -253,13 +253,13 @@ def compute_figures():
                 v[f"{pfx}_orig_item_{item_id}_{mech_name}"] = count
 
         # D1
-        d1 = Counter(r["figure_outcome"] for r in results)
+        d1 = Counter(r.get("figure_outcome") for r in results)
         v[f"{pfx}_d1_auto_match"] = d1.get("AUTO-MATCH", 0)
 
         # Per-item detail
         for qid in ["Q07", "Q08", "Q10"]:
             qr = [r for r in results if r["item_id"] == qid]
-            qd1 = Counter(r["figure_outcome"] for r in qr)
+            qd1 = Counter(r.get("figure_outcome") for r in qr)
             qwo = sum(1 for r in qr for op in r.get("operation_correctness", [])
                        if op["outcome"] == "WRONG-OPERATION")
             qtot = sum(1 for r in qr for op in r.get("operation_correctness", []))
@@ -272,7 +272,7 @@ def compute_figures():
 
         # Q08 base only
         q08_base = [r for r in base if r["item_id"] == "Q08"]
-        v[f"{pfx}_Q08_base_am"] = sum(1 for r in q08_base if r["figure_outcome"] == "AUTO-MATCH")
+        v[f"{pfx}_Q08_base_am"] = sum(1 for r in q08_base if r.get("figure_outcome") == "AUTO-MATCH")
         v[f"{pfx}_Q08_base_total"] = len(q08_base)
 
         # Step-4 by item
@@ -355,7 +355,7 @@ def compute_figures():
     for pfx, run in [("a", run_a), ("b", run_b)]:
         base_r = [r for r in run["all_results"] if r["condition"] == "base"]
         v[f"{pfx}_not_invoked_base"] = sum(
-            1 for r in base_r if r["invocation_outcome"] == "NOT-INVOKED")
+            1 for r in base_r if r.get("invocation_outcome") == "NOT-INVOKED")
 
     # D7.5 Clopper-Pearson bounds for zero-failure figures
     # The zero item-wrong count holds over the AUTO-SCORED population only.
@@ -384,8 +384,13 @@ def compute_figures():
     # D7.5 bound for zero base non-invocations (D7.1b invocation figure)
     for pfx, run in [("a", run_a), ("b", run_b)]:
         k_val = v.get(f"{pfx}_not_invoked_base", 0)
-        # n is the run's own count of base-condition executions
-        n_val = sum(1 for r in run["all_results"] if r["condition"] == "base")
+        # n is the run's own count of base-condition executions with an
+        # invocation outcome: the executions the zero count is taken over
+        # (AP-1 D7.5). A VOID or UNMEASURED record has none.
+        n_val = sum(1 for r in run["all_results"]
+                    if r["condition"] == "base"
+                    and r.get("invocation_outcome") in ("INVOKED",
+                                                        "NOT-INVOKED"))
         if k_val == 0 and n_val > 0:
             bound = clopper_pearson_upper_k0(n_val)
             v[f"{pfx}_base_noninvoke_cp"] = (

@@ -737,6 +737,21 @@ def test_compute_base_noninvocation_bound_uses_the_runs_base_count(figures):
         % clopper_pearson_upper_k0(2))
 
 
+@pytest.mark.finding('S3-G8-7')
+@pytest.mark.req('AP-1 D7.5')
+def test_compute_base_noninvocation_bound_counts_observed_executions(figures):
+    # AP-1 v1.3 D7.5: the bound is over the executions the zero count is
+    # taken over, those with an invocation outcome. A VOID or UNMEASURED
+    # base record has none: 2 observed, not 4 (and no KeyError).
+    void = {'item_id': 'Q03', 'condition': 'base', 'status': 'VOID'}
+    unmeasured = {'item_id': 'Q04', 'condition': 'base',
+                  'status': 'UNMEASURED', 'error': 'HTTP 500'}
+    v = figures(a=[result('Q01'), result('Q02'), void, unmeasured])
+    assert v['a_base_noninvoke_cp'] == (
+        '0/2 (p_upper < %.4f, 95%% Clopper–Pearson)'
+        % clopper_pearson_upper_k0(2))
+
+
 @pytest.mark.finding('S3-G8-8')
 def test_compute_empty_run_b_no_zero_division(figures):
     # Correct: like run A's guarded average, an empty run B gives 0 ops per
