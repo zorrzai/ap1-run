@@ -532,3 +532,47 @@ def test_extract_operands_non_string_expression_no_raise():
     # extracting operands from a value that is not a string never raises.
     _, error = extract_without_raising(15.2)
     assert error is None, f'{type(error).__name__}: {error}'
+
+
+# T3-5, settled by the maintainer's decision DEC-4: "a negated source value
+# grounds only through a declared negation transformation, and a negated
+# constant does not." Only step 1b's magnitude match goes; a negative
+# operand can still ground by any other step (an exact declared constant,
+# test_resolve_step1_exact_constant_wins_over_magnitude).
+
+@pytest.mark.finding('T3-5')
+@pytest.mark.req('R2.4', 'AP-1 D7.2(a)')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-5: -12 is grounded at step 1b by a declared 12')
+def test_resolve_negated_declared_constant_is_originated():
+    # Nothing else matches -12, so it is originated (step 5).
+    r = resolve('-12', ctx={}, constants=[D('12')])
+    assert (r['step'], r['resolution']) == (5, 'originated'), r
+
+
+@pytest.mark.finding('T3-5')
+@pytest.mark.req('R2.4', 'AP-1 D7.2(a)')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-5: -1 is grounded at step 1b by the '
+                          'structural constant 1')
+def test_resolve_negated_structural_one_is_originated():
+    r = resolve('-1', ctx={}, constants=[D('1')])
+    assert (r['step'], r['resolution']) == (5, 'originated'), r
+
+
+@pytest.mark.finding('T3-5')
+@pytest.mark.req('R2.4', 'AP-1 D7.2(a)')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-5: step 1b grounds -12 before step 5 can '
+                          'report the sign inversion of a source field')
+def test_resolve_negated_constant_equal_to_negated_source_is_sign_inversion():
+    # The Q09 case: the checking fee 12 is in the context and 12 is also a
+    # declared constant (the months). -12 is originated with the
+    # SIGN-INVERSION finding against the source field, as it would be with
+    # no such constant.
+    ctx = {'checking': {'monthly_fee': '12'}}
+    r = resolve('-12', ctx=ctx, constants=[D('12')])
+    assert (r['step'], r['resolution']) == (5, 'originated'), r
+    assert r['sign_inversion_finding'] == {
+        'type': 'SIGN-INVERSION', 'matched_field': 'checking.monthly_fee',
+        'source_value': '12', 'operand_value': '-12'}
