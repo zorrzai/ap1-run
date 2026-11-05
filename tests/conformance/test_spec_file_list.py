@@ -31,43 +31,74 @@ HEADER = re.compile(r'^\| File \| Lines \| Classification \|$')
 RULE = re.compile(r'^\|(-+\|)+$')
 
 
+# The end of §12.10: the next numbered paragraph, heading or rule.
+BOUNDARY = re.compile(r'^(\*\*\d+\.\d+|#|---)')
+
+
 def table_rows():
-    """(parsed paths, lines that are table rows but could not be read)."""
+    """(parsed paths, lines that look like table rows but could not be
+    read). Every line from the §12.10 heading to the next section boundary
+    whose text, indentation stripped, starts with '|' is a table line; it
+    must be the header, the rule or a readable row, wherever it is (also
+    after a blank line)."""
     lines = SPEC.read_text(encoding='utf-8').splitlines()
     start = next((i for i, line in enumerate(lines)
                   if line.startswith('**12.10 File classification.**')), None)
     if start is None:
         return [], []  # test_spec_file_list_table_found says so
-    rows, unread, in_table = [], [], False
+    rows, unread = [], []
     for line in lines[start + 1:]:
-        if line.startswith('|'):
-            in_table = True
-            match = ROW.match(line)
-            if match:
-                rows.append(match.group(1))
-            elif not (HEADER.match(line) or RULE.match(line)):
-                unread.append(line)
-        elif in_table:
+        if BOUNDARY.match(line):
             break
+        text = line.strip()
+        if not text.startswith('|'):
+            continue
+        match = ROW.match(text)
+        if match:
+            rows.append(match.group(1))
+        elif not (HEADER.match(text) or RULE.match(text)):
+            unread.append(line)
     return rows, unread
 
 
 LISTED, UNREAD = table_rows()
 
 
+def _pattern(listed):
+    """A listed path as a regex with Path.glob's rules: '*' and '?' never
+    match '/'. The same rule decides both directions."""
+    return re.compile(re.escape(listed).replace(r'\*', '[^/]*')
+                      .replace(r'\?', '[^/]') + r'\Z')
+
+
+def _tracked_python_files():
+    """The repository's tracked .py files (git ls-files), or, outside a
+    checkout, every .py file under the root."""
+    import subprocess
+    try:
+        out = subprocess.run(['git', 'ls-files', '-z', '*.py'], cwd=ROOT,
+                             capture_output=True, check=True).stdout
+        files = [f for f in out.decode('utf-8').split('\0') if f]
+        if files:
+            return files
+    except (OSError, subprocess.CalledProcessError):
+        pass
+    return [p.relative_to(ROOT).as_posix() for p in ROOT.rglob('*.py')]
+
+
 def _shipped():
-    """Every tracked-looking .py file outside tests/ that needs a row."""
+    """Every tracked .py file outside tests/ that needs a row."""
     found = []
-    for path in ROOT.rglob('*.py'):
-        rel = path.relative_to(ROOT)
-        top = rel.parts[0]
-        if (path.name == '__init__.py' or '__pycache__' in rel.parts
+    for rel in _tracked_python_files():
+        parts = rel.split('/')
+        top = parts[0]
+        if (parts[-1] == '__init__.py' or '__pycache__' in parts
                 or top in ('tests', 'ap1_inspect', 'build', 'output',
                            'reference', 'docs', 'findings')
                 or top.startswith('.')):
             continue
-        if len(rel.parts) == 1 or top in ('src', 'tools', 'example'):
-            found.append(rel.as_posix())
+        if len(parts) == 1 or top in ('src', 'tools', 'example'):
+            found.append(rel)
     return sorted(found)
 
 
@@ -120,7 +151,8 @@ def _module_cases():
 @pytest.mark.req('SPEC §12.10')
 @pytest.mark.parametrize('module', list(_module_cases()))
 def test_spec_file_list_every_shipped_python_file_is_listed(module):
-    assert module in LISTED, f'{module} has no row in SPEC §12.10'
+    assert any(_pattern(listed).match(module) for listed in LISTED), \
+        f'{module} has no row in SPEC §12.10'
 
 
 def test_spec_file_list_unlisted_entries_are_src_modules():
