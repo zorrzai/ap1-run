@@ -88,6 +88,16 @@ def files(tmp_path):
                 'calculator_path': paths['calculator']})
 
 
+# T3-47's design, "the timestamp inside seal_hash", rests on an open
+# question; SPEC R1.1's "Sealing the same inputs twice yields identical
+# hashes" is unchanged until it is answered. The tests that pin that
+# design say so.
+TIMESTAMP_INSIDE = pytest.mark.provisional(
+    'T3-47: seal_hash binds the timestamp (so two seals of the same inputs '
+    'differ); the design rests on an open question, and SPEC R1.1 still '
+    'says sealing the same inputs twice yields identical hashes')
+
+
 def digest_entry(final, derivable=True, required_operation=None):
     """One item of the expected-values digest (T3-48)."""
     return {'final': final, 'derivable': derivable,
@@ -102,6 +112,7 @@ def make_seal(files, config=CONFIG, **kwargs):
 
 # -- seal(): the record --------------------------------------------------
 
+@TIMESTAMP_INSIDE
 @pytest.mark.finding('T3-68', 'T3-47', 'T3-48')
 def test_seal_record(files, frozen):
     record = make_seal(files, runner_source_hash='f' * 64)
@@ -1071,7 +1082,8 @@ def test_seal_same_inputs_sealed_twice_give_identical_input_hashes(
     first, second = full_seal(files), full_seal(files)
     assert first['timestamp'] != second['timestamp']
     inputs = ('fixture_hash', 'questions_hash', 'ground_truth_hash',
-              'config_hash', 'ap1_text_hash', 'runner_source_hash')
+              'calculator_hash', 'expected_values_hash', 'config_hash',
+              'ap1_text_hash', 'runner_source_hash')
     assert {k: first[k] for k in inputs} == {k: second[k] for k in inputs}
 
 
@@ -1099,6 +1111,7 @@ def test_verify_seal_timestamp_moved_one_second_refused(files):
     'T3-47: the timestamp inside seal_hash; SPEC R1.1 says sealing the '
     'same inputs twice gives identical hashes, and the register leaves '
     'the choice to the fix')
+@TIMESTAMP_INSIDE
 @pytest.mark.finding('T3-47')
 @pytest.mark.req('R1.1')
 def test_seal_hash_two_timestamps_give_two_hashes(files, monkeypatch):

@@ -152,6 +152,7 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/tools/test_verify_run_seal.py::test_verify_run_same_text_other_line_endings_verifies[bom]',
 )
 EXPECTED_PROVISIONAL_CASES = {
+    'tests/unit/execution/test_seal.py': 2,
     'tests/unit/reporting/test_adjudication.py': 4,
     'tests/unit/reporting/test_report.py': 17,
     'tests/unit/runner/test_console.py': 6,
@@ -205,8 +206,11 @@ def test_provisional_marks_have_a_dec5_reason_and_no_strict_xfail(collected):
     for t in collected:
         for mark in t['provisional']:
             args = mark['args']
+            # DEC-5 (a module without a SPEC section, the code its
+            # provisional definition), or T3-47 (a design that rests on an
+            # open question: the timestamp inside seal_hash)
             if (len(args) != 1 or not isinstance(args[0], str)
-                    or not args[0].startswith('DEC-5')):
+                    or not args[0].startswith(('DEC-5', 'T3-47'))):
                 bad.append((t['nodeid'], 'reason'))
         if t['provisional'] and t['strict_xfail']:
             bad.append((t['nodeid'], 'provisional strict xfail'))
