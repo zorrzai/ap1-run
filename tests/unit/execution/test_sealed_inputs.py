@@ -22,20 +22,27 @@ GT_SOURCE = (b'from decimal import Decimal\n'
 
 @pytest.fixture(autouse=True)
 def clean_module(monkeypatch):
-    """No ground_truth_example module or linecache entry leaks out."""
+    """No ground_truth_example or calculator_tool module or linecache entry
+    leaks out."""
     monkeypatch.delitem(sys.modules, 'ground_truth_example', raising=False)
+    monkeypatch.delitem(sys.modules, 'calculator_tool', raising=False)
     monkeypatch.setattr(linecache, 'cache', dict(linecache.cache))
     monkeypatch.setattr(sys, 'dont_write_bytecode', False)
     yield
     sys.modules.pop('ground_truth_example', None)
+    sys.modules.pop('calculator_tool', None)
+
+
+CALC_SOURCE = b'def execute_calculator(expression):\n    return "7"\n'
 
 
 def write_dir(root, fixture=b'{"accounts": []}\n',
-              questions=b'{"items": []}\n', gt=GT_SOURCE):
+              questions=b'{"items": []}\n', gt=GT_SOURCE, calc=CALC_SOURCE):
     root.mkdir(exist_ok=True)
     (root / 'fixture.json').write_bytes(fixture)
     (root / 'questions.json').write_bytes(questions)
     (root / 'ground_truth_example.py').write_bytes(gt)
+    (root / 'calculator_tool.py').write_bytes(calc)
     return root
 
 
@@ -48,10 +55,12 @@ def test_read_inputs_paths_bytes_and_parsed_values(tmp_path):
     assert inputs.paths == {
         'fixture': str(root / 'fixture.json'),
         'questions': str(root / 'questions.json'),
-        'ground_truth': str(root / 'ground_truth_example.py')}
+        'ground_truth': str(root / 'ground_truth_example.py'),
+        'calculator': str(root / 'calculator_tool.py')}
     assert inputs.data == {'fixture': b'{"accounts": [1]}\n',
                            'questions': '{"items": ["é"]}\n'.encode('utf-8'),
-                           'ground_truth': GT_SOURCE}
+                           'ground_truth': GT_SOURCE,
+                           'calculator': CALC_SOURCE}
     assert inputs.fixture == {'accounts': [1]}
     assert inputs.questions == {'items': ['é']}
     assert inputs.ground_truth.__file__ == str(root / 'ground_truth_example.py')
@@ -85,7 +94,7 @@ def test_read_inputs_reads_each_file_once(tmp_path, monkeypatch):
     read_inputs(str(root))
     assert opened == [(str(root / name), ('rb',), {}) for name in
                       ('fixture.json', 'questions.json',
-                       'ground_truth_example.py')]
+                       'ground_truth_example.py', 'calculator_tool.py')]
 
 
 # -- load_ground_truth ------------------------------------------------------
@@ -210,3 +219,22 @@ def test_sealed_compute_returns_a_copy_of_the_sealed_value():
     assert compute('Q01', {})['steps'][0]['v'] == 1
     with pytest.raises(KeyError):
         compute('Q02', {})
+
+
+@pytest.mark.finding('T3-72')
+@pytest.mark.req('R1.1')
+def test_read_inputs_loads_the_calculator_from_the_bytes_read(tmp_path):
+    # The calculator that runs is the one read and sealed: import of
+    # calculator_tool finds it, not the file as it is later, and not a
+    # package calculator_tool/ beside it.
+    root = write_dir(tmp_path / 'fx')
+    package = root / 'calculator_tool'
+    package.mkdir()
+    (package / '__init__.py').write_text(
+        'def execute_calculator(expression):\n    return "1"\n')
+    inputs = read_inputs(str(root))
+    (root / 'calculator_tool.py').write_bytes(
+        b'def execute_calculator(expression):\n    return "2"\n')
+    import calculator_tool
+    assert calculator_tool is inputs.calculator
+    assert calculator_tool.execute_calculator('x') == '7'

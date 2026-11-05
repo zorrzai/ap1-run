@@ -621,9 +621,10 @@ hashed with CRLF line endings (FINDINGS_ERRATA N2); the verifier checks such
 a record under those rules.
 
 **What a seal binds.** Since October 2026 a record (`seal_format` 2) also
-binds the run's timestamp, the expected values (what the ground-truth module
-returned for each item, computed before the seal and scored against), and
-the environment: `python_version`, `platform` and `package_versions`, which
+binds the run's timestamp, the calculator tool the run executes (it produces
+every tool result the model sees), the expected values (what the ground-truth
+module returned for each item, computed before the seal and scored against),
+and the environment: `python_version`, `platform` and `package_versions`, which
 are outside `runner_source_hash`. A run refuses to seal without the AP-1 text
 and a declared hash for it. Before the first request, and again before it
 reports, the run verifies its seal against its inputs and refuses, naming the
@@ -635,6 +636,7 @@ input, if any has changed.
 | `fixture_hash` | `example/fixture.json` | Financial data unchanged |
 | `questions_hash` | `example/questions.json` | Question set unchanged |
 | `ground_truth_hash` | `example/ground_truth_example.py` | Ground-truth module unchanged (see E3) |
+| `calculator_hash` | `example/calculator_tool.py` | Calculator tool unchanged (records with `seal_format` only) |
 | `expected_values_hash` | the ground-truth module's results | Expected values as scored (records with `seal_format` only) |
 | `ap1_text_hash` | `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` | AP-1 standard text unchanged |
 | `seal_hash` | All of the above | Composite integrity |

@@ -183,7 +183,8 @@ def report_seal_record(out):
 @pytest.mark.req('R1.1')
 @pytest.mark.parametrize('name, word', [
     ('fixture.json', 'fixture'), ('questions.json', 'questions'),
-    ('ground_truth_example.py', 'ground_truth')])
+    ('ground_truth_example.py', 'ground_truth'),
+    ('calculator_tool.py', 'calculator')])
 def test_run_sealed_input_changed_after_seal_refused_naming_it(
         runner, fixture_dir, name, word):
     # Correct (SPEC R1.1 verification item 1: "Modifying any sealed input
@@ -392,6 +393,66 @@ def test_run_ground_truth_executed_from_other_file_refused_or_sealed(
         digests(Path(executed).read_bytes()), (
             'executed %s, sealed %s' % (
                 executed, fixture_dir / 'ground_truth_example.py'))
+
+
+# -- The calculator is an executed input -----------------------------------
+
+DOCTORED = '\n\ndef execute_calculator(expression):\n    return "1"\n'
+
+
+@pytest.mark.finding('T3-72', 'T3-70')
+@pytest.mark.req('R1.1')
+def test_run_seals_the_calculator_it_executes(runner, fixture_dir):
+    # The calculator produces every tool result the model sees, so the
+    # seal binds the bytes of calculator_tool.py the run executes (SPEC
+    # R1.1: seal what the run executes).
+    path = fixture_dir / 'calculator_tool.py'
+    clean = runner(fixture_dir)
+    assert clean.code == 0, clean.console[-2000:]
+    sealed = clean.seals[0]['calculator_hash']
+    assert sealed in digests(path.read_bytes())
+    shutil.move(str(clean.out), str(clean.out) + '-clean')
+    path.write_text(path.read_text('utf-8') + DOCTORED, encoding='utf-8')
+    doctored = runner(fixture_dir)
+    assert doctored.code == 0, doctored.console[-2000:]
+    assert doctored.seals[0]['calculator_hash'] != sealed
+
+
+@pytest.mark.finding('T3-72', 'T3-70')
+@pytest.mark.req('R1.1')
+def test_verifier_fails_a_run_whose_calculator_has_changed(runner,
+                                                         fixture_dir):
+    # A run, then the calculator doctored. The
+    # run no longer verifies against its fixture directory, naming the
+    # calculator.
+    clean = runner(fixture_dir)
+    path = fixture_dir / 'calculator_tool.py'
+    path.write_text(path.read_text('utf-8') + DOCTORED, encoding='utf-8')
+    checks, failures = load_verifier().verify_run(
+        str(clean.out), fixture_dir=str(fixture_dir))
+    assert [f for f, _ in failures] == ['calculator_hash'], failures
+
+
+@pytest.mark.finding('T3-72')
+@pytest.mark.req('R1.1')
+def test_run_executes_the_calculator_it_read_not_a_shadowing_package(
+        runner, fixture_dir):
+    # A package calculator_tool/ beside calculator_tool.py would win
+    # Python's import; the run executes the file it sealed.
+    package = fixture_dir / 'calculator_tool'
+    package.mkdir()
+    (package / '__init__.py').write_text(
+        'def execute_calculator(expression):\n    return "1"\n',
+        encoding='utf-8')
+    result = runner(fixture_dir)
+    assert result.code == 0
+    report = (result.out / 'report.md').read_text('utf-8')
+    rows = [json.loads(line) for line in
+            (result.out / 'smoke_run.jsonl').read_text('utf-8').splitlines()]
+    returns = [c.get('return_value') for r in rows
+               for c in r.get('tool_calls') or []]
+    assert returns and all(v != json.dumps({'result': '1'}) for v in returns)
+    assert 'calculator_hash' in report
 
 
 # -- T3-30: the environment is recorded in the seal ---------------------------

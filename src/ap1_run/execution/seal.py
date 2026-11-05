@@ -26,7 +26,7 @@ SEAL_FORMAT = '2'
 # of them (T3-15, T3-47: the timestamp too).
 SEALED_FIELDS = (
     'seal_format', 'timestamp',
-    'fixture_hash', 'questions_hash', 'ground_truth_hash',
+    'fixture_hash', 'questions_hash', 'ground_truth_hash', 'calculator_hash',
     'expected_values_hash', 'config_hash',
     'ap1_version', 'ap1_version_doi', 'ap1_text_hash',
     'runner_version_tag', 'runner_version_commit', 'runner_source_hash',
@@ -35,7 +35,7 @@ SEALED_FIELDS = (
 )
 
 # The sealed text inputs, by name: the record field is '<name>_hash'.
-TEXT_INPUTS = ('fixture', 'questions', 'ground_truth')
+TEXT_INPUTS = ('fixture', 'questions', 'ground_truth', 'calculator')
 
 _BOM = b'\xef\xbb\xbf'
 
@@ -98,7 +98,7 @@ def _declared_ap1_hash(config):
 
 
 def seal(*, config, fixture_path, questions_path, ground_truth_path,
-         ap1_text_path=None, verification_keys=None,
+         calculator_path, ap1_text_path=None, verification_keys=None,
          runner_source_hash=None, expected_values=None, loaded=None):
     """Create a pre-registration record. R1.1.
 
@@ -113,9 +113,10 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
 
     expected_values: {item_id: ground-truth result}, computed before the
     seal (T3-48); its hash is sealed ('' if not given).
-    loaded: {name: bytes} for 'fixture', 'questions' and 'ground_truth',
-    the bytes the run read and executes. When given, these are hashed
-    instead of the files being read again (T3-72: seal what is executed).
+    loaded: {name: bytes} for 'fixture', 'questions', 'ground_truth' and
+    'calculator', the bytes the run read and executes. When given, these
+    are hashed instead of the files being read again (T3-72: seal what is
+    executed).
 
     Returns: dict with component hashes and seal_hash.
     """
@@ -137,7 +138,8 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
 
     loaded = loaded or {}
     paths = {'fixture': fixture_path, 'questions': questions_path,
-             'ground_truth': ground_truth_path}
+             'ground_truth': ground_truth_path,
+             'calculator': calculator_path}
     hashes = {name: (text_hash(loaded[name]) if name in loaded
                      else text_file_hash(str(paths[name])))
               for name in TEXT_INPUTS}
@@ -148,6 +150,7 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
         'fixture_hash': hashes['fixture'],
         'questions_hash': hashes['questions'],
         'ground_truth_hash': hashes['ground_truth'],
+        'calculator_hash': hashes['calculator'],
         'expected_values_hash': (
             '' if expected_values is None
             else expected_values_hash(expected_values)),
@@ -172,7 +175,7 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
 
 
 def verify_seal(record, *, config, fixture_path, questions_path,
-                ground_truth_path, ap1_text_path=None,
+                ground_truth_path, calculator_path, ap1_text_path=None,
                 runner_source_hash=None, expected_values=None):
     """Verify a pre-registration record against current files.
 
@@ -180,7 +183,7 @@ def verify_seal(record, *, config, fixture_path, questions_path,
     every mismatch: a field missing from the record, a seal_hash that
     does not match the record (so a rewritten field of any kind is
     refused), and each component that differs from the current inputs:
-    the three text inputs, the config, the AP-1 text (always compared
+    the four text inputs, the config, the AP-1 text (always compared
     with the config's declared hash, and with the file if its path is
     given), the DOI, and the runner source hash and expected values when
     given.
@@ -201,6 +204,8 @@ def verify_seal(record, *, config, fixture_path, questions_path,
          text_file_hash(str(questions_path))),
         ('ground_truth', record.get('ground_truth_hash'),
          text_file_hash(str(ground_truth_path))),
+        ('calculator', record.get('calculator_hash'),
+         text_file_hash(str(calculator_path))),
         ('config', record.get('config_hash'),
          canonical_hash(config)),
         ('ap1_text', record.get('ap1_text_hash'),

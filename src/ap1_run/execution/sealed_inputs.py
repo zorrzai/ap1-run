@@ -2,9 +2,12 @@
 
 A run reads each of its inputs from the fixture directory exactly once:
 the bytes it reads are the bytes it seals and the bytes it executes
-(T3-72). The ground-truth module is loaded from those bytes, from the file
-named ground_truth_example.py itself, never through Python's import path,
-where a package directory ground_truth_example/ beside the file would win.
+(T3-72). The ground-truth module and the calculator tool are loaded from
+those bytes, from the files named ground_truth_example.py and
+calculator_tool.py themselves, never through Python's import path, where a
+package directory of the same name beside the file would win. The
+calculator produces every tool result the model sees, so it is sealed as
+an executed input like the ground truth.
 
 The expected values are what the ground-truth module returns for each
 item. They are computed once, before the seal, sealed (T3-48), and the
@@ -29,15 +32,17 @@ INPUT_FILES = {
     'fixture': 'fixture.json',
     'questions': 'questions.json',
     'ground_truth': 'ground_truth_example.py',
+    'calculator': 'calculator_tool.py',
 }
 
 GROUND_TRUTH_MODULE = 'ground_truth_example'
+CALCULATOR_MODULE = 'calculator_tool'
 
 
 class SealedInputs:
     """The inputs of one run: for each name in INPUT_FILES, its path and
     the bytes read from it; the parsed fixture and questions; the loaded
-    ground-truth module."""
+    ground-truth and calculator modules."""
 
     def __init__(self, paths, data):
         self.paths = paths
@@ -46,6 +51,8 @@ class SealedInputs:
         self.questions = parse_json_input(data['questions'])
         self.ground_truth = load_ground_truth(paths['ground_truth'],
                                               data['ground_truth'])
+        self.calculator = load_sealed_module(
+            CALCULATOR_MODULE, paths['calculator'], data['calculator'])
 
 
 def parse_json_input(data):
@@ -55,8 +62,8 @@ def parse_json_input(data):
 
 
 def read_inputs(fixture_dir):
-    """Read the fixture, questions and ground-truth module from
-    fixture_dir once, and load them (SealedInputs)."""
+    """Read the fixture, questions, ground-truth module and calculator
+    from fixture_dir once, and load them (SealedInputs)."""
     paths = {name: os.path.join(fixture_dir, filename)
              for name, filename in INPUT_FILES.items()}
     data = {}
@@ -86,24 +93,29 @@ class _SealedSourceLoader(importlib.machinery.SourceFileLoader):
 
 def load_ground_truth(path, data):
     """Load the ground-truth module from `data`, the bytes read from
-    `path`, as the module ground_truth_example (in sys.modules, with
-    __file__ = path). linecache is primed with the same source, so
-    inspect (used by the R3.1 declared-constants guard) reads the source
-    that runs, not the file as it is later."""
+    `path`, as the module ground_truth_example (load_sealed_module)."""
+    return load_sealed_module(GROUND_TRUTH_MODULE, path, data)
+
+
+def load_sealed_module(name, path, data):
+    """Load a module from `data`, the bytes read from `path`, as module
+    `name` (in sys.modules, with __file__ = path), so an import of the
+    name finds it. linecache is primed with the same source, so inspect
+    (used by the R3.1 declared-constants guard) reads the source that
+    runs, not the file as it is later."""
     path = str(path)
     encoding, _ = tokenize.detect_encoding(io.BytesIO(data).readline)
     lines = data.decode(encoding).splitlines(True)
     # mtime None: linecache.checkcache never discards the entry.
     linecache.cache[path] = (len(data), None, lines, path)
-    loader = _SealedSourceLoader(GROUND_TRUTH_MODULE, path, data)
-    spec = importlib.util.spec_from_file_location(
-        GROUND_TRUTH_MODULE, path, loader=loader)
+    loader = _SealedSourceLoader(name, path, data)
+    spec = importlib.util.spec_from_file_location(name, path, loader=loader)
     module = importlib.util.module_from_spec(spec)
-    sys.modules[GROUND_TRUTH_MODULE] = module
+    sys.modules[name] = module
     try:
         loader.exec_module(module)
     except BaseException:
-        sys.modules.pop(GROUND_TRUTH_MODULE, None)
+        sys.modules.pop(name, None)
         raise
     return module
 

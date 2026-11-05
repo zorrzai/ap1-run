@@ -36,6 +36,11 @@ def compute(item_id, ctx):
     return {'final': Decimal('10.00'), 'derivable': True}
 '''
 
+CALCULATOR = '''
+def execute_calculator(expression):
+    return '0'
+'''
+
 CONFIG = {
     'endpoint_url': 'http://mock/v1',
     'model': 'mock-model',
@@ -99,6 +104,7 @@ class Run:
         (fx / 'fixture.json').write_text(json.dumps(FIXTURE))
         (fx / 'questions.json').write_text(json.dumps(QUESTIONS))
         (fx / 'ground_truth_example.py').write_text(GROUND_TRUTH)
+        (fx / 'calculator_tool.py').write_text(CALCULATOR)
 
     def argv(self, output_dir=True):
         return (['--config', str(self.fixture_dir / 'config.json'),
@@ -297,12 +303,14 @@ def test_main_full_run_calls(r, capsys):
         'fixture_path': os.path.join(fx, 'fixture.json'),
         'questions_path': os.path.join(fx, 'questions.json'),
         'ground_truth_path': os.path.join(fx, 'ground_truth_example.py'),
+        'calculator_path': os.path.join(fx, 'calculator_tool.py'),
         'ap1_text_path': str(r.tmp / 'ap1.md'),
         'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
         'expected_values': expected_values,
         'loaded': {'fixture': json.dumps(FIXTURE).encode(),
                    'questions': json.dumps(QUESTIONS).encode(),
-                   'ground_truth': GROUND_TRUTH.encode()}}
+                   'ground_truth': GROUND_TRUTH.encode(),
+                   'calculator': CALCULATOR.encode()}}
     # T3-17: the seal is verified, the whole record and every input,
     # before the first request and again before anything is reported.
     verified = {
@@ -310,6 +318,7 @@ def test_main_full_run_calls(r, capsys):
         'fixture_path': os.path.join(fx, 'fixture.json'),
         'questions_path': os.path.join(fx, 'questions.json'),
         'ground_truth_path': os.path.join(fx, 'ground_truth_example.py'),
+        'calculator_path': os.path.join(fx, 'calculator_tool.py'),
         'ap1_text_path': str(r.tmp / 'ap1.md'),
         'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
         'expected_values': expected_values}

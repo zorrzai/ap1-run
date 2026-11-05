@@ -72,6 +72,7 @@ CONFIG = {'ap1_version': '1.3', 'ap1_version_doi': '10.5281/z.1',
 def files(tmp_path):
     contents = {'fixture': b'{"accounts": []}\r\n', 'questions': b'{"items":[]}',
                 'ground_truth': b'def compute(i, c): pass\n',
+                'calculator': b'def execute_calculator(e): return e\n',
                 'ap1_text': AP1_TEXT}
     paths = {}
     for name, data in contents.items():
@@ -83,7 +84,8 @@ def files(tmp_path):
         paths=paths, hashes=hashes,
         kwargs={'fixture_path': paths['fixture'],
                 'questions_path': paths['questions'],
-                'ground_truth_path': paths['ground_truth']})
+                'ground_truth_path': paths['ground_truth'],
+                'calculator_path': paths['calculator']})
 
 
 def make_seal(files, config=CONFIG, **kwargs):
@@ -103,6 +105,7 @@ def test_seal_record(files, frozen):
         'fixture_hash': files.hashes['fixture'],
         'questions_hash': files.hashes['questions'],
         'ground_truth_hash': files.hashes['ground_truth'],
+        'calculator_hash': files.hashes['calculator'],
         'expected_values_hash': '',
         'config_hash': canon(CONFIG),
         'ap1_version': '1.3',
@@ -150,13 +153,15 @@ def test_seal_accepts_string_paths(files, frozen):
     by_str = seal(config=CONFIG, fixture_path=str(files.paths['fixture']),
                   questions_path=str(files.paths['questions']),
                   ground_truth_path=str(files.paths['ground_truth']),
+                  calculator_path=str(files.paths['calculator']),
                   ap1_text_path=str(files.paths['ap1_text']))
     assert by_str == make_seal(files, ap1_text_path=files.paths['ap1_text'])
 
 
 @pytest.mark.req('R1.1')
 @pytest.mark.parametrize('change', [
-    'fixture_path', 'questions_path', 'ground_truth_path', 'config',
+    'fixture_path', 'questions_path', 'ground_truth_path', 'calculator_path',
+    'config',
     'runner_source_hash', 'verification_keys', 'expected_values'])
 def test_seal_hash_binds_each_component(files, frozen, tmp_path, change):
     # T3-15 asks for this: seal_hash changes when any one component does.
@@ -317,6 +322,7 @@ def test_seal_shipped_ap1_text_matches_example_config_hash(frozen):
                   fixture_path=example / 'fixture.json',
                   questions_path=example / 'questions.json',
                   ground_truth_path=example / 'ground_truth_example.py',
+                  calculator_path=example / 'calculator_tool.py',
                   ap1_text_path=text)
     assert record['ap1_text_hash'] == declared
 
@@ -339,7 +345,8 @@ def test_verify_seal_same_text_other_line_endings_returns_true(files, frozen):
 
 
 @pytest.mark.req('R1.1')
-@pytest.mark.parametrize('name', ['fixture', 'questions', 'ground_truth'])
+@pytest.mark.parametrize('name', ['fixture', 'questions', 'ground_truth',
+                                  'calculator'])
 def test_verify_seal_changed_file_raises_naming_it(files, frozen, name):
     record = make_seal(files)
     files.paths[name].write_bytes(b'tampered')
@@ -1193,7 +1200,8 @@ VARIANTS = {'crlf': LF_TEXT.replace(b'\n', b'\r\n'),
 
 @pytest.mark.finding('T3-50')
 @pytest.mark.req('R0.4.3')
-@pytest.mark.parametrize('name', ['fixture', 'questions', 'ground_truth'])
+@pytest.mark.parametrize('name', ['fixture', 'questions', 'ground_truth',
+                                  'calculator'])
 @pytest.mark.parametrize('variant', [
     pytest.param(v, marks=BOM_PROPOSAL) if 'bom' in v else v
     for v in sorted(VARIANTS)])

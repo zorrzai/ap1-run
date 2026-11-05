@@ -370,7 +370,10 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
     # 4. Recompute file hashes
     paths = {name: os.path.join(fixture_dir, filename)
              for name, filename in INPUT_FILES.items()}
-    file_checks = [('%s_hash' % name, paths[name]) for name in INPUT_FILES]
+    # The calculator is sealed from seal format 2 on; an older record has
+    # no calculator_hash and is not checked for one.
+    file_checks = [('%s_hash' % name, paths[name]) for name in INPUT_FILES
+                   if current_format or name != 'calculator']
     file_checks.append(('ap1_text_hash',
                         _ap1_text_path(resolved_config, ap1_text)))
     for field, filepath in file_checks:
@@ -467,9 +470,9 @@ def parse_args(argv):
                     'directory.')
     parser.add_argument(
         '--fixture-dir',
-        help='the directory holding the run\'s fixture.json, questions.json '
-             'and ground_truth_example.py, as given to the runner '
-             '(default: example/)')
+        help='the directory holding the run\'s fixture.json, '
+             'questions.json, ground_truth_example.py and calculator_tool.py, '
+             'as given to the runner (default: example/)')
     parser.add_argument(
         '--ap1-text',
         help='the AP-1 text the run sealed, as given to the runner '

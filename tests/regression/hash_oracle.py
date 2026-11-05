@@ -111,6 +111,7 @@ SEAL_PATHS = {
     'fixture_path': 'example/fixture.json',
     'questions_path': 'example/questions.json',
     'ground_truth_path': 'example/ground_truth_example.py',
+    'calculator_path': 'example/calculator_tool.py',
     'ap1_text_path': 'reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md',
 }
 
@@ -122,8 +123,9 @@ SEALED_OUTPUTS = ('report.md', 'smoke_run.jsonl', 'smoke_summary.json')
 SEAL_FORMAT = '2'
 SEAL_KEYS = frozenset({
     'seal_format', 'timestamp', 'fixture_hash', 'questions_hash',
-    'ground_truth_hash', 'expected_values_hash', 'config_hash',
-    'ap1_version', 'ap1_version_doi', 'ap1_text_hash', 'runner_version_tag',
+    'ground_truth_hash', 'calculator_hash', 'expected_values_hash',
+    'config_hash', 'ap1_version', 'ap1_version_doi', 'ap1_text_hash',
+    'runner_version_tag',
     'runner_version_commit', 'runner_source_hash', 'python_version',
     'platform', 'package_versions', 'verification_keys', 'ev3_implemented',
     'seal_hash'})
@@ -133,7 +135,8 @@ RECORDED_PACKAGES = ('ap1-run', 'requests')
 
 # The text inputs a run may pass to the seal as bytes, by name.
 TEXT_INPUTS = {'fixture': 'fixture_path', 'questions': 'questions_path',
-               'ground_truth': 'ground_truth_path'}
+               'ground_truth': 'ground_truth_path',
+               'calculator': 'calculator_path'}
 
 
 class HashCheckError(Exception):
@@ -430,6 +433,7 @@ def expected_outcome(inputs, tree):
         'fixture_hash': hashes['fixture'],
         'questions_hash': hashes['questions'],
         'ground_truth_hash': hashes['ground_truth'],
+        'calculator_hash': hashes['calculator'],
         'expected_values_hash': ('' if expected_values is None
                                  else canonical_hash({
                                      k: (v.get('final') if isinstance(v, dict)
@@ -522,7 +526,8 @@ def _check_record(got, want, config, window):
                         f'recomputed from the record as returned {own!r}')
     problems += _check_timestamp(got.get('timestamp'), window)
     for key in ('fixture_hash', 'questions_hash', 'ground_truth_hash',
-                'config_hash', 'runner_source_hash', 'ap1_text_hash',
+                'calculator_hash', 'config_hash', 'runner_source_hash',
+                'ap1_text_hash',
                 'seal_hash') + (('expected_values_hash',)
                                 if want.get('expected_values_hash') else ()):
         if not _HEX64.match(str(got.get(key, ''))):

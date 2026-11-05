@@ -44,7 +44,7 @@ API_KEY = 'sk-regression-not-a-real-key-0000'
 # The seal function's path arguments, captured as strings; every other
 # argument is captured as it is.
 PATH_ARGS = ('fixture_path', 'questions_path', 'ground_truth_path',
-             'ap1_text_path')
+             'calculator_path', 'ap1_text_path')
 
 
 def snapshot(value):

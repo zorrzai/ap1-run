@@ -207,6 +207,7 @@ def main(argv=None):
         fixture_path=inputs.paths['fixture'],
         questions_path=inputs.paths['questions'],
         ground_truth_path=inputs.paths['ground_truth'],
+        calculator_path=inputs.paths['calculator'],
         ap1_text_path=ap1_text_path,
     )
     seal_record = create_seal(

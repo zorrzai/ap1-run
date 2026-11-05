@@ -66,6 +66,7 @@ def base(tmp_path, vrs, monkeypatch):
     (root / 'example' / 'fixture.json').write_bytes(b'{"fixture": 1}\n')
     (root / 'example' / 'questions.json').write_bytes(b'{"items": []}\n')
     (root / 'example' / 'ground_truth_example.py').write_bytes(b'X = 1\n')
+    (root / 'example' / 'calculator_tool.py').write_bytes(b'Y = 1\n')
     (root / AP1_TEXT).write_bytes(b'# AP-1 text\n')
     for name in ('config.json', 'config_mini.json'):
         (root / 'example' / name).write_text(json.dumps(
@@ -96,6 +97,7 @@ def make_record(base, config):
                 fixture_path=base / 'example' / 'fixture.json',
                 questions_path=base / 'example' / 'questions.json',
                 ground_truth_path=base / 'example' / 'ground_truth_example.py',
+                calculator_path=base / 'example' / 'calculator_tool.py',
                 ap1_text_path=base / AP1_TEXT,
                 runner_source_hash=TREE_SOURCE_HASH, expected_values={})
 
@@ -151,11 +153,12 @@ def run(tmp_path, base):
 def all_checks(record, lines=2):
     """Every check of a run that matches, in order."""
     return [
-        ('seal record fields', 'all 18 sealed fields present'),
+        ('seal record fields', 'all 19 sealed fields present'),
         ('config_hash', 'MATCH'),
         ('fixture_hash', 'MATCH'),
         ('questions_hash', 'MATCH'),
         ('ground_truth_hash', 'MATCH'),
+        ('calculator_hash', 'MATCH'),
         ('ap1_text_hash', 'MATCH'),
         ('expected_values_hash', 'MATCH'),
         ('runner_source_hash', 'MATCH'),
@@ -352,6 +355,7 @@ def test_verify_run_resolved_config_not_json_stops(vrs, tmp_path, base):
     ('fixture_hash', os.path.join('example', 'fixture.json')),
     ('questions_hash', os.path.join('example', 'questions.json')),
     ('ground_truth_hash', os.path.join('example', 'ground_truth_example.py')),
+    ('calculator_hash', os.path.join('example', 'calculator_tool.py')),
     ('ap1_text_hash', AP1_TEXT),
 ])
 def test_verify_run_missing_input_file_fails_with_its_path(vrs, run, base,
@@ -383,7 +387,8 @@ def test_verify_run_reads_these_paths(vrs, run, base, monkeypatch):
     b = str(base)
     inputs = [os.path.join(b, 'example', 'fixture.json'),
               os.path.join(b, 'example', 'questions.json'),
-              os.path.join(b, 'example', 'ground_truth_example.py')]
+              os.path.join(b, 'example', 'ground_truth_example.py'),
+              os.path.join(b, 'example', 'calculator_tool.py')]
     assert looked_up == [
         os.path.join(str(run_dir), 'report.md'),
         *inputs,
@@ -410,6 +415,7 @@ def test_verify_run_reads_text_files_as_utf8(vrs, run, monkeypatch):
         ('report.md', (), 'utf-8'), ('fixture.json', ('rb',), None),
         ('questions.json', ('rb',), None),
         ('ground_truth_example.py', ('rb',), None),
+        ('calculator_tool.py', ('rb',), None),
         ('smoke_run.jsonl', (), 'utf-8')]
 
 
@@ -486,8 +492,8 @@ def legacy(record):
     seal_format, expected values or environment, and a seal_hash without
     the timestamp."""
     record = {k: v for k, v in record.items() if k not in (
-        'seal_format', 'expected_values_hash', 'python_version', 'platform',
-        'package_versions')}
+        'seal_format', 'calculator_hash', 'expected_values_hash',
+        'python_version', 'platform', 'package_versions')}
     record['seal_hash'] = canonical_hash(
         {k: v for k, v in record.items()
          if k not in ('timestamp', 'seal_hash')})
@@ -504,8 +510,9 @@ LEGACY_SOURCE_WARNING = ('runner_source_hash', 'not recomputed: a record '
 
 def test_verify_run_legacy_record_checked_under_its_rules(vrs, tmp_path,
                                                          base):
-    # A record without seal_format: no field-set, expected-values or
-    # source-hash check; seal_hash without the timestamp; a warning.
+    # A record without seal_format: no field-set, calculator,
+    # expected-values or source-hash check; seal_hash without the
+    # timestamp; a warning.
     config = resolved_config()
     record = legacy(make_record(base, config))
     run_dir = write_run(tmp_path / 'run', record, config)
@@ -513,7 +520,8 @@ def test_verify_run_legacy_record_checked_under_its_rules(vrs, tmp_path,
     checks, failures = vrs.verify_run(str(run_dir), warnings=warnings)
     assert failures == []
     assert checks == without(all_checks(record), 'seal record fields',
-                             'expected_values_hash', 'runner_source_hash')
+                             'calculator_hash', 'expected_values_hash',
+                             'runner_source_hash')
     assert warnings == [LEGACY_WARNING, LEGACY_SOURCE_WARNING]
 
 
@@ -603,6 +611,8 @@ def test_verify_run_ap1_text_of_the_runs_version(vrs, tmp_path, base):
                   questions_path=base / 'example' / 'questions.json',
                   ground_truth_path=base / 'example' /
                   'ground_truth_example.py',
+                  calculator_path=base / 'example' /
+                  'calculator_tool.py',
                   ap1_text_path=v12, runner_source_hash=TREE_SOURCE_HASH,
                   expected_values={})
     run_dir = write_run(tmp_path / 'run', record, config)
@@ -632,6 +642,7 @@ def test_verify_run_inputs_from_the_fixture_dir_given(vrs, tmp_path, base):
     record = seal(config=config, fixture_path=other / 'fixture.json',
                   questions_path=other / 'questions.json',
                   ground_truth_path=other / 'ground_truth_example.py',
+                  calculator_path=other / 'calculator_tool.py',
                   ap1_text_path=base / AP1_TEXT,
                   runner_source_hash=TREE_SOURCE_HASH, expected_values={})
     run_dir = write_run(tmp_path / 'run', record, config)
@@ -640,6 +651,7 @@ def test_verify_run_inputs_from_the_fixture_dir_given(vrs, tmp_path, base):
 
 
 GT = os.path.join('example', 'ground_truth_example.py')
+CALC = os.path.join('example', 'calculator_tool.py')
 
 
 def test_verify_run_known_ground_truth_hash_gets_its_note(vrs, tmp_path,
@@ -680,7 +692,8 @@ def test_verify_run_expected_values_recomputed_from_the_module(
     record = seal(config=config,
                   fixture_path=base / 'example' / 'fixture.json',
                   questions_path=base / 'example' / 'questions.json',
-                  ground_truth_path=base / GT, ap1_text_path=base / AP1_TEXT,
+                  ground_truth_path=base / GT,
+                  calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
                   runner_source_hash=TREE_SOURCE_HASH, expected_values=values)
     run_dir = write_run(tmp_path / 'run', record, config)
     checks, failures = vrs.verify_run(str(run_dir))
@@ -690,7 +703,8 @@ def test_verify_run_expected_values_recomputed_from_the_module(
     record = seal(config=config,
                   fixture_path=base / 'example' / 'fixture.json',
                   questions_path=base / 'example' / 'questions.json',
-                  ground_truth_path=base / GT, ap1_text_path=base / AP1_TEXT,
+                  ground_truth_path=base / GT,
+                  calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
                   runner_source_hash=TREE_SOURCE_HASH, expected_values=values)
     run_dir = write_run(tmp_path / 'run2', record, config)
     _, failures = vrs.verify_run(str(run_dir))
@@ -712,7 +726,8 @@ def test_verify_run_expected_values_module_may_import_its_neighbours(
     record = seal(config=config,
                   fixture_path=base / 'example' / 'fixture.json',
                   questions_path=base / 'example' / 'questions.json',
-                  ground_truth_path=base / GT, ap1_text_path=base / AP1_TEXT,
+                  ground_truth_path=base / GT,
+                  calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
                   runner_source_hash=TREE_SOURCE_HASH,
                   expected_values={'Q01': {'final': '7'}})
     run_dir = write_run(tmp_path / 'run', record, config)
@@ -991,7 +1006,7 @@ def test_main_without_arguments_prints_usage_and_returns_1(vrs, monkeypatch,
 def test_main_argv_argument(vrs, run, capsys):
     run_dir, _, _ = run
     assert vrs.main([str(run_dir)]) == 0
-    assert capsys.readouterr().out.endswith('RESULT: PASS (11 checks)\n')
+    assert capsys.readouterr().out.endswith('RESULT: PASS (12 checks)\n')
 
 
 def test_main_passing_run_prints_each_check_and_counts_them(vrs, run,
@@ -1002,7 +1017,7 @@ def test_main_passing_run_prints_each_check_and_counts_them(vrs, run,
     assert code == 0
     expected = ['=== Verifying: %s ===' % run_dir, '']
     expected += ['  PASS  %s: %s' % c for c in all_checks(record)]
-    expected += ['', '  11 passed, 0 failed', '', 'RESULT: PASS (11 checks)',
+    expected += ['', '  12 passed, 0 failed', '', 'RESULT: PASS (12 checks)',
                  '']
     assert out == '\n'.join(expected)
 
@@ -1039,8 +1054,8 @@ def test_main_failures_print_after_checks_and_warnings(vrs, tmp_path, base,
               and line.split()[0] in ('PASS', 'WARN', 'FAIL')]
     # Every PASS first, then every WARN, then every FAIL (the fixture,
     # the expected values computed from it, the transcript).
-    assert status == ['PASS'] * 8 + ['WARN'] + ['FAIL'] * 3
-    assert lines[-3:] == ['  8 passed, 3 failed, 1 warnings', '',
+    assert status == ['PASS'] * 9 + ['WARN'] + ['FAIL'] * 3
+    assert lines[-3:] == ['  9 passed, 3 failed, 1 warnings', '',
                           'RESULT: FAIL (3 failures, 1 warnings)']
 
 
@@ -1062,7 +1077,7 @@ def test_main_totals_passes_over_passing_runs(vrs, run, monkeypatch,
     code, out = run_main(vrs, [str(run_dir), str(run_dir)], monkeypatch,
                          capsys)
     assert code == 0
-    assert out.endswith('RESULT: PASS (22 checks)\n')
+    assert out.endswith('RESULT: PASS (24 checks)\n')
 
 
 def test_main_totals_failures_over_failing_runs(vrs, tmp_path, base,
@@ -1098,6 +1113,7 @@ def test_main_options_relative_to_the_working_directory(
     record = seal(config=config, fixture_path=other / 'fixture.json',
                   questions_path=other / 'questions.json',
                   ground_truth_path=other / 'ground_truth_example.py',
+                  calculator_path=other / 'calculator_tool.py',
                   ap1_text_path=base / AP1_TEXT,
                   runner_source_hash=TREE_SOURCE_HASH, expected_values={})
     write_run(tmp_path / 'run', record, config)
@@ -1143,6 +1159,7 @@ def good_record(base, config, **kwargs):
                 fixture_path=base / 'example' / 'fixture.json',
                 questions_path=base / 'example' / 'questions.json',
                 ground_truth_path=base / 'example' / 'ground_truth_example.py',
+                calculator_path=base / 'example' / 'calculator_tool.py',
                 ap1_text_path=base / AP1_TEXT,
                 runner_source_hash=SOURCE_HASH, **kwargs)
 
@@ -1315,7 +1332,8 @@ def test_main_fixture_dir_and_ap1_text_options_name_the_inputs(
     # can be verified, by passing the same options to the verifier.
     other = tmp_path / 'my_fixture'
     other.mkdir()
-    for name in ('fixture.json', 'questions.json', 'ground_truth_example.py'):
+    for name in ('fixture.json', 'questions.json', 'ground_truth_example.py',
+                 'calculator_tool.py'):
         (other / name).write_text('mine: %s\n' % name)
     text = tmp_path / 'my_ap1.md'
     text.write_text('# my AP-1 text\n')
@@ -1323,11 +1341,13 @@ def test_main_fixture_dir_and_ap1_text_options_name_the_inputs(
     record = seal(config=config, fixture_path=other / 'fixture.json',
                   questions_path=other / 'questions.json',
                   ground_truth_path=other / 'ground_truth_example.py',
+                  calculator_path=other / 'calculator_tool.py',
                   ap1_text_path=text, runner_source_hash=SOURCE_HASH)
     run_dir = write_run(tmp_path / 'run', record, config)
     code, out = run_main(vrs, ['--fixture-dir', str(other), '--ap1-text',
                                str(text), str(run_dir)], monkeypatch, capsys)
     for field in ('fixture_hash', 'questions_hash', 'ground_truth_hash',
+                  'calculator_hash',
                   'ap1_text_hash'):
         assert '  PASS  %s: MATCH' % field in out, out
 
