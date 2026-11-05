@@ -46,6 +46,7 @@ class Fakes:
         self.figure = {'outcome': 'AUTO-MATCH', 'reason': 'one figure',
                        'released_figure': D('638.40')}
         self.tokens = {}       # content -> list of values, or an exception
+        self.accuracy = 'CORRECT'   # the D1 outcome score_accuracy returns
         for name in ('identify_figure', 'check_transcription',
                      'check_release_coverage', 'score_accuracy',
                      'extract_numeric_tokens'):
@@ -70,7 +71,7 @@ class Fakes:
 
     def score_accuracy(self, *args, **kwargs):
         self.record('score_accuracy', *args, **kwargs)
-        return {'scored': 'accuracy'}
+        return {'scored': 'accuracy', 'outcome': self.accuracy}
 
     def extract_numeric_tokens(self, content, *, currency_symbols):
         self.record('extract_numeric_tokens', content,
@@ -170,7 +171,8 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
     assert fakes.calls['score_accuracy'] == [((fakes.figure,), {
         'expected_value': D('638.40'), 'answer_tolerance': D('0.01'),
         'quantisation_digits': 3, 'quantisation_rounding': 'ROUND_HALF_EVEN'})]
-    assert findings.all_accuracy_results == [{'scored': 'accuracy'}]
+    assert findings.all_accuracy_results == [
+        {'scored': 'accuracy', 'outcome': 'CORRECT'}]
     assert findings.d2_responses == {('Q01', 'base'): [response(content)]}
 
     # evidence, tool-call structures, grammar (both token extractions)
@@ -199,6 +201,24 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
         'answer_outcome': 'COMPUTED',
         'answer_outcome_reason': 'correct figure; computation invoked; '
                                  'operands grounded'}]
+
+
+@pytest.mark.finding('T3-13')
+@pytest.mark.parametrize('accuracy, outcome', [
+    ('CORRECT', 'COMPUTED'), ('INCORRECT', None)])
+def test_score_execution_answer_outcome_follows_d1(fakes, tpath, accuracy,
+                                                   outcome):
+    # §6.8 COMPUTED is "Correct": the runner gives answer_outcome the D1
+    # result it scored for the same execution.
+    fakes.accuracy = accuracy
+    findings = Findings()
+    score(findings, {
+        'response': response('The total is $638.40.'),
+        'tool_calls': [calc('15200 * 0.042', '{"result": 638.4}')],
+        'evidence_class': 'EV-2', 'invocation_outcome': 'INVOKED',
+        'provenance_results': [{'outcome': 'OPERANDS-GROUNDED'}],
+    }, tpath)
+    assert findings.all_results[0]['answer_outcome'] == outcome
 
 
 @pytest.mark.finding('T3-27')

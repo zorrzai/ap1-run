@@ -259,7 +259,8 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
 
     # AP-1 v1.3 section 6.8: the answer-level outcome, where it is decided
     section_6_8, section_6_8_reason = answer_outcome(
-        outcome, inv_outcome, result.get('provenance_results', []))
+        outcome, inv_outcome, result.get('provenance_results', []),
+        accuracy_outcome=acc_result.get('outcome'))
 
     findings.all_results.append({
         'item_id': item_id, 'condition': condition,
