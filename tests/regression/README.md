@@ -110,9 +110,13 @@ golden difference, and `--update` cannot write over it.
   `replay_expected.json` lists (`check_replay`). That file lists, per
   published run, the fields new in the replay and each execution's moves as
   [published value, replayed value]; a listed move that does not happen
-  fails as well. A field listed under `numeric_text_fields` is compared
-  with the numbers in its strings read as Decimals, for a fix that changes
-  only how a value is written (`15.20` for `15.2`). A difference is investigated before it is listed, never
+  fails as well. A new execution field is listed with the count of each
+  value it takes, and every replayed execution must have it. The leaves
+  listed under `numeric_paths` (`field[].key`) are compared as exact
+  Decimals, and those under `numeric_text_paths` with their standalone
+  numbers so compared and the rest of the text verbatim, for a fix that
+  changes only how a value is written (`15.20` for `15.2`); identifiers
+  such as `acct01` are never read as numbers. A difference is investigated before it is listed, never
   added by explanation alone, and the commit that lists it says which fix
   makes it.
 - Each runner scenario states `"seal_attempts"`, how many times the run calls

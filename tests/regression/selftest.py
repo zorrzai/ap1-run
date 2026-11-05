@@ -404,10 +404,10 @@ class ReplayExpectedDifferences(unittest.TestCase):
         row.update(fields)
         return {'seal_hash': 'x', 'all_results': [row]}
 
-    def expected(self, moves=None, new_fields=(), new_keys=()):
-        return {'moves': moves or {}, 'new_execution_fields': list(new_fields),
+    def expected(self, moves=None, new_fields=None, new_keys=()):
+        return {'moves': moves or {}, 'new_execution_fields': new_fields or {},
                 'new_top_level_keys': list(new_keys),
-                'numeric_text_fields': []}
+                'numeric_paths': [], 'numeric_text_paths': []}
 
     def diff(self, published, replayed, expected):
         return hard_checks.replay_differences(published, replayed, expected)
@@ -449,9 +449,25 @@ class ReplayExpectedDifferences(unittest.TestCase):
         self.assertEqual(len(self.diff(self.rows(), self.rows(new=1),
                                        self.expected())), 1)
         self.assertEqual(self.diff(self.rows(), self.rows(new=1),
-                                   self.expected(new_fields=['new'])), [])
-        self.assertEqual(len(self.diff(self.rows(new=1), self.rows(),
-                                       self.expected(new_fields=['new']))), 1)
+                                   self.expected(new_fields={'new': {'1': 1}})),
+                         [])
+        self.assertEqual(len(self.diff(
+            self.rows(new=1), self.rows(),
+            self.expected(new_fields={'new': {'1': 1}}))), 2)
+
+    def test_new_field_missing_from_a_replayed_row_fails(self):
+        found = self.diff(self.rows(), self.rows(),
+                          self.expected(new_fields={'new': {'1': 1}}))
+        self.assertTrue(any('missing from the replay' in f for f in found),
+                        found)
+
+    def test_new_field_values_are_counted_against_the_list(self):
+        listed = self.expected(new_fields={'new': {'"COMPUTED"': 1}})
+        self.assertEqual(self.diff(self.rows(), self.rows(new='COMPUTED'),
+                                   listed), [])
+        found = self.diff(self.rows(), self.rows(new='ORIGINATED'), listed)
+        self.assertEqual(len(found), 1)
+        self.assertIn('new', found[0])
 
     def test_new_top_level_key_must_be_listed(self):
         rep = self.rows()
@@ -468,18 +484,43 @@ class ReplayExpectedDifferences(unittest.TestCase):
         found = self.diff(self.rows(), self.rows(repeat=2), self.expected())
         self.assertIn('Q01/base/r1 in the published run', found[0])
 
-    def test_numeric_text_fields_compare_numbers_as_decimals(self):
-        pub = self.rows(oc=[{'detail': 'result 15.20 matches 15.200',
-                             'operands': ['15200.0']}])
-        same = self.rows(oc=[{'detail': 'result 15.2 matches 15.200',
-                              'operands': ['15200.00']}])
-        moved = self.rows(oc=[{'detail': 'result 15.21 matches 15.200',
-                               'operands': ['15200.00']}])
+    def numeric(self):
         listed = self.expected()
-        listed['numeric_text_fields'] = ['oc']
-        self.assertEqual(self.diff(pub, same, listed), [])
-        self.assertEqual(len(self.diff(pub, moved, listed)), 1)
+        listed['numeric_paths'] = ['oc[].value']
+        listed['numeric_text_paths'] = ['oc[].detail']
+        return listed
+
+    def test_numeric_paths_compare_numbers_as_decimals(self):
+        pub = self.rows(oc=[{'detail': 'result 15.20 matches 15.200',
+                             'value': '15200.0', 'ref': 'acct01.balance'}])
+        same = self.rows(oc=[{'detail': 'result 15.2 matches 15.200',
+                              'value': '15200.00', 'ref': 'acct01.balance'}])
+        moved = self.rows(oc=[{'detail': 'result 15.21 matches 15.200',
+                               'value': '15200.00', 'ref': 'acct01.balance'}])
+        self.assertEqual(self.diff(pub, same, self.numeric()), [])
+        self.assertEqual(len(self.diff(pub, moved, self.numeric())), 1)
         self.assertEqual(len(self.diff(pub, same, self.expected())), 1)
+
+    def test_numeric_comparison_is_exact_beyond_any_precision(self):
+        # normalize() would round at the context precision: '1' and
+        # '1.000...0001' (60 zeros) must not compare equal.
+        long_one = '1.' + '0' * 60 + '1'
+        for field in ('value', 'detail'):
+            pub = self.rows(oc=[{field: '1'}])
+            rep = self.rows(oc=[{field: long_one}])
+            self.assertEqual(len(self.diff(pub, rep, self.numeric())), 1,
+                             field)
+
+    def test_numbers_inside_identifiers_and_unlisted_paths_compare_as_text(self):
+        # a reference acct01 -> acct1 is not a respelling of a number
+        pub = self.rows(oc=[{'ref': 'acct01.balance', 'detail': 'from acct01'}])
+        rep = self.rows(oc=[{'ref': 'acct1.balance', 'detail': 'from acct1'}])
+        found = self.diff(pub, rep, self.numeric())
+        self.assertEqual(len(found), 1)     # first difference in the field
+        self.assertIn('oc', found[0])
+        pub = self.rows(oc=[{'detail': 'from acct01'}])
+        rep = self.rows(oc=[{'detail': 'from acct1'}])
+        self.assertEqual(len(self.diff(pub, rep, self.numeric())), 1)
 
     def test_the_committed_list_parses(self):
         for run in ('output/run_e_mini', 'output/run_f_sol'):

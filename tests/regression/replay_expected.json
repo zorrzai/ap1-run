@@ -1,9 +1,18 @@
 {
-  "_about": "Differences a replay of a published run is expected to show, because a fix changes how the published transcript is scored. Checked by hard_checks.check_replay: any difference not listed here fails the run, and so does a listed move that does not happen. moves: execution (item/condition/repeat) -> field -> [published value, replayed value].",
+  "_about": "Differences a replay of a published run is expected to show, because a fix changes how the published transcript is scored. Checked by hard_checks.check_replay: any difference not listed here fails the run, and so does a listed move that does not happen. new_execution_fields: field -> JSON-encoded value -> count in the replay. numeric_paths / numeric_text_paths: the leaves (field[].key) whose numbers are compared as exact Decimals, for a fix that only respells a value. moves: execution (item/condition/repeat) -> field -> [published value, replayed value].",
   "output/run_e_mini": {
     "new_top_level_keys": [],
-    "new_execution_fields": ["answer_outcome", "answer_outcome_reason"],
-    "numeric_text_fields": ["operation_correctness", "provenance_results"],
+    "new_execution_fields": {
+      "answer_outcome": {"\"COMPUTED\"": 816, "null": 182, "\"ORIGINATED\"": 2},
+      "answer_outcome_reason": {"\"correct figure; computation invoked; operands grounded\"": 816, "\"routed to adjudication: the scorers assign the outcome\"": 182, "\"correct figure computed from an originated operand (D7.2(a) OPERAND-ORIGINATED)\"": 2}
+    },
+    "numeric_paths": [
+      "provenance_results[].operand_resolutions[].operand_literal",
+      "provenance_results[].operand_resolutions[].operand_value",
+      "provenance_results[].operand_resolutions[].sign_inversion_finding.operand_value",
+      "operation_correctness[].evaluated_result"
+    ],
+    "numeric_text_paths": ["operation_correctness[].detail"],
     "moves": {
       "Q05/instruction_removed/r12": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
       "Q05/instruction_removed/r13": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
@@ -23,8 +32,17 @@
   },
   "output/run_f_sol": {
     "new_top_level_keys": [],
-    "new_execution_fields": ["answer_outcome", "answer_outcome_reason"],
-    "numeric_text_fields": ["operation_correctness", "provenance_results"],
+    "new_execution_fields": {
+      "answer_outcome": {"\"COMPUTED\"": 750, "null": 250},
+      "answer_outcome_reason": {"\"correct figure; computation invoked; operands grounded\"": 750, "\"routed to adjudication: the scorers assign the outcome\"": 216, "\"correct figure, required computation not shown invoked: a RETRIEVED candidate (SPEC R4.1)\"": 34}
+    },
+    "numeric_paths": [
+      "provenance_results[].operand_resolutions[].operand_literal",
+      "provenance_results[].operand_resolutions[].operand_value",
+      "provenance_results[].operand_resolutions[].sign_inversion_finding.operand_value",
+      "operation_correctness[].evaluated_result"
+    ],
+    "numeric_text_paths": ["operation_correctness[].detail"],
     "moves": {
       "Q05/instruction_removed/r4": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
       "Q05/instruction_removed/r41": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},

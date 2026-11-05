@@ -38,10 +38,14 @@ REPLAY_SUMMARY_EXCLUDED = ('seal_hash',)
 # fix makes on purpose, and is listed in this file: per published run, the
 # fields new in the replay, and each execution's moves as
 # [published value, replayed value]. A listed move that does not happen
-# fails too, so the list cannot go stale. A field listed under
-# "numeric_text_fields" is compared with every number in its strings read
-# as a Decimal, for a fix that changes only how a value is written (an
-# operand read from its literal text, '15.20', not through float, '15.2').
+# fails too, so the list cannot go stale. A new execution field is listed
+# with the count of each value it takes (JSON-encoded), and every replayed
+# execution must have it. For a fix that changes only how a value is
+# written (an operand read from its literal text, '15.20', not through
+# float, '15.2'), "numeric_paths" names the leaf strings compared as exact
+# Decimals ('field[].key.key'), and "numeric_text_paths" the free-text
+# leaves whose standalone numbers are so compared, the rest of the text
+# verbatim. Every other value, identifiers included, is compared as is.
 # Any other difference is investigated, never added to the list by
 # explanation alone.
 REPLAY_EXPECTED = os.path.join(HERE, 'replay_expected.json')
@@ -136,28 +140,71 @@ def load_replay_expected(run_dir, path=None):
         listed = json.load(f).get(run_dir, {})
     return {
         'new_top_level_keys': listed.get('new_top_level_keys', []),
-        'new_execution_fields': listed.get('new_execution_fields', []),
+        'new_execution_fields': listed.get('new_execution_fields', {}),
         'moves': listed.get('moves', {}),
-        'numeric_text_fields': listed.get('numeric_text_fields', []),
+        'numeric_paths': listed.get('numeric_paths', []),
+        'numeric_text_paths': listed.get('numeric_text_paths', []),
     }
 
 
-_NUMBER = re.compile(r'-?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?')
+# A standalone number: not part of an identifier ('acct01') or of a
+# longer number.
+_NUMBER = re.compile(r'(?<![\w.])-?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?(?![\w.])')
 
 
-def numeric_text(value):
-    """value with every number written in a string replaced by its
-    canonical Decimal form, so '15.20', '15.2' and '15.200' read alike and
-    '15.21' does not; dicts and lists are walked, other types kept."""
-    if isinstance(value, str):
-        return _NUMBER.sub(
-            lambda m: format(decimal.Decimal(m.group()).normalize(), 'f'),
-            value)
-    if isinstance(value, list):
-        return [numeric_text(v) for v in value]
-    if isinstance(value, dict):
-        return {k: numeric_text(v) for k, v in value.items()}
-    return value
+def _same_number(want, got):
+    """Two numeric strings with the same value, compared exactly
+    (Decimal equality does not round; normalize() would)."""
+    try:
+        return decimal.Decimal(want) == decimal.Decimal(got)
+    except (decimal.InvalidOperation, TypeError, ValueError):
+        return False
+
+
+def _same_numeric_text(want, got):
+    """Two strings alike but for how their standalone numbers are
+    written: the text between numbers verbatim, each number exactly."""
+    if _NUMBER.split(want) != _NUMBER.split(got):
+        return False
+    a, b = _NUMBER.findall(want), _NUMBER.findall(got)
+    return len(a) == len(b) and all(map(_same_number, a, b))
+
+
+def compare_at_paths(want, got, where, path, numeric, numeric_text):
+    """first_difference, except at the leaf paths listed as numeric
+    (exact Decimal) or numeric text; `path` is the field-relative path
+    ('field[].key')."""
+    if isinstance(want, str) and isinstance(got, str):
+        if path in numeric:
+            return None if _same_number(want, got) else (
+                f'{where}: {want!r} in the published run, {got!r} in the '
+                f'replay (compared as exact Decimals)')
+        if path in numeric_text:
+            return None if _same_numeric_text(want, got) else (
+                f'{where}: {want!r} in the published run, {got!r} in the '
+                f'replay (numbers compared as exact Decimals)')
+    if isinstance(want, dict) and isinstance(got, dict):
+        for k in sorted(set(want) | set(got)):
+            if k not in got:
+                return f'{where}.{k}: missing from the replay'
+            if k not in want:
+                return f'{where}.{k}: not in the published run'
+            found = compare_at_paths(want[k], got[k], f'{where}.{k}',
+                                     f'{path}.{k}', numeric, numeric_text)
+            if found:
+                return found
+        return None
+    if isinstance(want, list) and isinstance(got, list):
+        if len(want) != len(got):
+            return (f'{where}: {len(want)} entries in the published run, '
+                    f'{len(got)} in the replay')
+        for i, (w, g) in enumerate(zip(want, got)):
+            found = compare_at_paths(w, g, f'{where}[{i}]', f'{path}[]',
+                                     numeric, numeric_text)
+            if found:
+                return found
+        return None
+    return first_difference(want, got, where)
 
 
 def execution_key(result):
@@ -189,6 +236,10 @@ def replay_differences(published, replayed, expected):
                         f'published run, {len(rep_rows)} in the replay')
         return problems
     moves = expected['moves']
+    new_fields = expected['new_execution_fields']
+    tallies = {field: {} for field in new_fields}
+    numeric = set(expected['numeric_paths'])
+    numeric_text = set(expected['numeric_text_paths'])
     seen = set()
     for i, (pub, rep) in enumerate(zip(pub_rows, rep_rows)):
         key = execution_key(pub)
@@ -197,13 +248,21 @@ def replay_differences(published, replayed, expected):
                             f'run, {execution_key(rep)} in the replay')
             continue
         listed = moves.get(key, {})
+        for field in new_fields:
+            if field not in rep:
+                problems.append(f'$.all_results[{i}] ({key}).{field}: '
+                                f'listed as new, missing from the replay')
+            else:
+                value = json.dumps(rep[field])
+                tallies[field][value] = tallies[field].get(value, 0) + 1
         for field in sorted(set(pub) | set(rep)):
             where = f'$.all_results[{i}] ({key}).{field}'
             if field not in rep:
-                problems.append(f'{where}: missing from the replay')
+                if field not in new_fields:     # reported above
+                    problems.append(f'{where}: missing from the replay')
                 continue
             if field not in pub:
-                if field not in expected['new_execution_fields']:
+                if field not in new_fields:
                     problems.append(f'{where}: not in the published run')
                 continue
             if field in listed:
@@ -214,12 +273,14 @@ def replay_differences(published, replayed, expected):
                         f'{listed[field][1]!r}, but {pub[field]!r} in the '
                         f'published run and {rep[field]!r} in the replay')
                 continue
-            want, got = pub[field], rep[field]
-            if field in expected['numeric_text_fields']:
-                want, got = numeric_text(want), numeric_text(got)
-            found = first_difference(want, got, where)
+            found = compare_at_paths(pub[field], rep[field], where, field,
+                                     numeric, numeric_text)
             if found:
                 problems.append(found)
+    for field, counts in sorted(new_fields.items()):
+        if tallies[field] != counts:
+            problems.append(f'new execution field {field}: values '
+                            f'{tallies[field]} in the replay, {counts} listed')
     for key, fields in sorted(moves.items()):
         for field in sorted(fields):
             if (key, field) not in seen:
