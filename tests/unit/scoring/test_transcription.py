@@ -351,10 +351,6 @@ def test_transcription_infinite_return_without_policy_is_altered():
 
 @pytest.mark.finding('T3-27')
 @pytest.mark.req('R2.5', 'R0.4.1')
-@pytest.mark.xfail(strict=True, raises=(TypeError, AssertionError),
-                   reason='T3-27: check_transcription quantises with the '
-                          'Decimal default HALF_EVEN; the fix must add a '
-                          'quantisation_rounding= keyword and use it')
 @pytest.mark.parametrize('tool, released, mode, expected_outcome', [
     ('430.745', '430.75', 'ROUND_HALF_UP', TRANSCRIBED_EXACT),
     ('430.745', '430.74', 'ROUND_HALF_UP', TRANSCRIBED_ALTERED),

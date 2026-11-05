@@ -153,7 +153,6 @@ def test_evaluate_expression_result_depends_on_context_precision():
         assert len(str(evaluate_expression('1 / 3'))) == 52
 
 
-@PROVISIONAL
 @pytest.mark.finding('T3-58')
 def test_evaluate_expression_huge_literal_is_exact_not_infinity():
     # Read from its text (T3-58), not through float.

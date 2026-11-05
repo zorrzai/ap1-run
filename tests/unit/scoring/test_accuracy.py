@@ -304,10 +304,6 @@ def test_summarise_accuracy_missing_auto_scored_raises_key_error():
 
 @pytest.mark.finding('T3-27')
 @pytest.mark.req('R2.1', 'R0.4.1')
-@pytest.mark.xfail(strict=True, raises=(TypeError, AssertionError),
-                   reason='T3-27: score_accuracy quantises with the Decimal '
-                          'default HALF_EVEN; the fix must add a '
-                          'quantisation_rounding= keyword and use it')
 @pytest.mark.parametrize('mode, outcome, difference', [
     ('ROUND_HALF_UP', CORRECT, '0.01'),
     ('ROUND_HALF_EVEN', INCORRECT, '0.02'),

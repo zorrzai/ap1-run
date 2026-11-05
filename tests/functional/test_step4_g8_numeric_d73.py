@@ -218,7 +218,10 @@ def test_run_report_counts_transcriptions_rounded_under_declared_policy(
     lines = [ln for ln in d73.splitlines()
              if re.search(r'rounded under (the )?declared '
                           r'(quantisation )?policy', ln, re.I)]
+    # The count as a value: ': 4', a table cell, or the sentence's
+    # subject ('Of the 8 ..., 4 were rounded under ...', the step-5 form).
     assert any(re.search(r'(:\s*|\|\s*\**)4\**\s*(\||$|\b)', ln)
+               or re.search(r'(^|[,;]\s*)4 were rounded under', ln)
                for ln in lines), lines
 
 
