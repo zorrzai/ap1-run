@@ -1300,7 +1300,30 @@ def test_scoring_proportions_d1_then_d7():
 
 D2_NOTE = ('> D2 is auto-measured. STRUCTURAL and CONFIGURED are '
            'operator-declared; OBSERVED-ONLY and UNMEASURED are '
-           'determined from evidence.\n')
+           'determined from evidence.\n\n'
+           '> Figures surface: each run\'s identified answer, its released '
+           'figure or else the one value it states. An answer not '
+           'identified (a decline, no figure, several figures) is '
+           'unresolved: counted, never a value, and never evidence that the '
+           'answers were stable. A question-condition with one is '
+           'UNMEASURED unless its identified answers already differ, '
+           'counted then as at least that many.\n')
+
+
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('AP-1 D2', 'R2.2')
+@pytest.mark.parametrize('data, cell', [
+    ({'distinct_values': 1, 'values': ['144.00']}, '1: 144.00'),
+    ({'distinct_values': None, 'values': ['144.00'], 'unresolved': 14},
+     '\u2014: 144.00; 14 unresolved'),
+    ({'distinct_values': None, 'values': [], 'unresolved': 3},
+     '\u2014: 3 unresolved'),
+    ({'distinct_values': 2, 'values': ['777.41', '782.77'],
+      'unresolved': 41}, 'at least 2: 777.41; 782.77; 41 unresolved'),
+    ({'distinct_values': None}, '\u2014'),
+])
+def test_d2_distinct_counts_unresolved_answers_apart(data, cell):
+    assert report._d2_distinct(data) == cell
 
 
 def test_d2_without_results_says_so():

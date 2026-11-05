@@ -345,6 +345,8 @@ Total operands resolved: 152
 
 > D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
 
+> Figures surface: each run's identified answer, its released figure or else the one value it states. An answer not identified (a decline, no figure, several figures) is unresolved: counted, never a value, and never evidence that the answers were stable. A question-condition with one is UNMEASURED unless its identified answers already differ, counted then as at least that many.
+
 Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20.
 
 | Question | Condition | Surface | Mechanism Class | Basis | Distinct Values | Runs | Parameter Echo |

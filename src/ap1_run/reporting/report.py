@@ -930,6 +930,14 @@ def _section_d2_mechanisms(summary):
     lines.append('> D2 is auto-measured. STRUCTURAL and CONFIGURED are '
                  'operator-declared; OBSERVED-ONLY and UNMEASURED are '
                  'determined from evidence.\n')
+    lines.append('> Figures surface: each run\'s identified answer, its '
+                 'released figure or else the one value it states. An '
+                 'answer not identified (a decline, no figure, several '
+                 'figures) is unresolved: counted, never a value, and never '
+                 'evidence that the answers were stable. A question-'
+                 'condition with one is UNMEASURED unless its identified '
+                 'answers already differ, counted then as at least that '
+                 'many.\n')
 
     d2 = summary.get('d2_results', {})
     if not d2:
@@ -973,12 +981,21 @@ def _d2_basis(data):
 def _d2_distinct(data):
     """The number of distinct values and, on the figures surface, the
     values themselves (AP-1 D2 "distinct numeric answers per question";
-    T3-4): '2: 2600.00; 2500.00'."""
+    T3-4): '2: 2600.00; 2500.00'. Answers not identified are counted
+    apart, never as a value: 'at least 2: 2600.00; 2500.00; 3
+    unresolved', or '—: 144.00; 14 unresolved' where they leave the
+    count unknown."""
     count = data.get('distinct_values')
-    values = data.get('values')
-    if count is None or not values:
+    values = list(data.get('values') or [])
+    unresolved = data.get('unresolved')
+    if unresolved:
+        values.append(f'{unresolved} unresolved')
+    if not values:
         return _cell(count)
-    return f'{count}: ' + _cell('; '.join(values))
+    shown = _cell(count)
+    if unresolved and count is not None:
+        shown = f'at least {count}'
+    return f'{shown}: ' + _cell('; '.join(values))
 
 
 def _d2_class_counts(d2):

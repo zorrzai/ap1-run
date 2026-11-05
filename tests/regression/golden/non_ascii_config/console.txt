@@ -139,7 +139,8 @@ result, by us or by anyone, in any document.
 
 3k. D2 REPRODUCIBILITY:
   CAP: D2.2 cap: temperature was platform-rejected. Detail: OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported.
-  OBSERVED-ONLY: 40
+  OBSERVED-ONLY: 39
+  UNMEASURED: 1
 
 3l. D7.2(a) OPERAND PROVENANCE:
   step 1 (source match):       50

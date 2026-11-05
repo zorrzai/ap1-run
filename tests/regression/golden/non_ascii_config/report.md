@@ -130,7 +130,7 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 59 records.
 | Dimension | Status | n | Result |
 |---|---|---|---|
 | D1 | **NOT MEASURED** | — | — |
-| D2 | Measured | 10 | figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20 (§9) |
+| D2 | Measured | 10 | figures: OBSERVED-ONLY 19, UNMEASURED 1; prose: OBSERVED-ONLY 20 (§9) |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
 | D5 | **NOT MEASURED** | — | — |
@@ -304,11 +304,13 @@ Total operands resolved: 84
 
 > D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
 
-Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20.
+> Figures surface: each run's identified answer, its released figure or else the one value it states. An answer not identified (a decline, no figure, several figures) is unresolved: counted, never a value, and never evidence that the answers were stable. A question-condition with one is UNMEASURED unless its identified answers already differ, counted then as at least that many.
+
+Classes per surface, over question-conditions: figures: OBSERVED-ONLY 19, UNMEASURED 1; prose: OBSERVED-ONLY 20.
 
 | Question | Condition | Surface | Mechanism Class | Basis | Distinct Values | Runs | Parameter Echo |
 |---|---|---|---|---|---|---|---|
-| Q01 | base | figures | `OBSERVED-ONLY` | evidence: observed over 1 run; not operator-declared | 1: no single figure | 1 | `UNVERIFIED` |
+| Q01 | base | figures | `UNMEASURED` | evidence: observed over 1 run; not operator-declared | —: 1 unresolved | 1 | `UNVERIFIED` |
 | Q01 | base | prose | `OBSERVED-ONLY` | evidence: observed over 1 run; not operator-declared | 1 | 1 | `UNVERIFIED` |
 | Q01 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 1 run; not operator-declared | 1: 15.20 | 1 | `UNVERIFIED` |
 | Q01 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 1 run; not operator-declared | 1 | 1 | `UNVERIFIED` |

@@ -52,11 +52,15 @@ def classify_mechanism(responses, *, surface, minimum_runs,
         operator_declared: str or None -- if the operator declares
             STRUCTURAL or CONFIGURED, this is that declaration.
         figures: list or None -- each response's answer figure (Decimal,
-            or None where it has no single figure; see
-            runner/executions.py). When given, the figures surface is
-            that figure (AP-1 D2 "distinct numeric answers"; T3-4),
-            compared exactly, with "no single figure" a value of its own.
-            When not, the figures the text states.
+            or None where the answer is unresolved; see
+            runner/executions.py d2_answer_figure). When given, the
+            figures surface is that figure (AP-1 D2 "distinct numeric
+            answers"; T3-4), compared exactly. An unresolved answer is
+            not a value: it is counted ('unresolved'), and a cell with
+            any is never classified on agreement it did not show. Two or
+            more identified values are variation, reported as at least
+            that many; otherwise the cell is UNMEASURED, stability not
+            established. When not given, the figures the text states.
 
     A response that is an error, rate limited or of a shape that cannot
     be read (SPEC R2.0 step 0) is not a run on either surface; how many
@@ -105,11 +109,41 @@ def classify_mechanism(responses, *, surface, minimum_runs,
         }
 
     # Extract the surface values
+    unresolved = 0
     if surface == 'figures' and figures is not None:
-        values = [_answer_key(figures[i]) for i in runs]
+        values = [_answer_key(figures[i]) for i in runs
+                  if figures[i] is not None]
+        unresolved = n_successful - len(values)
     else:
         values = _extract_surface_values(successful, surface)
     distinct = len(set(values))
+
+    # Unresolved answers (pending adjudication) are not values: they
+    # never count as agreement, and identified values that already
+    # differ are variation, at least that much (AP-1 D2; T3-4)
+    if unresolved and operator_declared not in (STRUCTURAL, CONFIGURED):
+        pending = (f'{unresolved} of {n_successful} runs have no '
+                   f'identified answer (pending adjudication)')
+        if distinct >= 2:
+            return {
+                'mechanism': OBSERVED_ONLY,
+                'operator_declared': False,
+                'distinct_values': distinct,
+                'unresolved': unresolved,
+                'successful_runs': n_successful,
+                'reason': (f'{n_successful} runs, at least {distinct} '
+                           f'distinct values; {pending}{note} '
+                           f'— OBSERVED-ONLY'),
+            }
+        return {
+            'mechanism': UNMEASURED,
+            'operator_declared': False,
+            'distinct_values': None,
+            'unresolved': unresolved,
+            'successful_runs': n_successful,
+            'reason': (f'{pending}{note}; stability not established '
+                       f'— UNMEASURED'),
+        }
 
     # If operator declares STRUCTURAL or CONFIGURED, mark it
     if operator_declared in (STRUCTURAL, CONFIGURED):
@@ -242,13 +276,10 @@ def _extract_surface_values(responses, surface):
     return values
 
 
-NO_SINGLE_FIGURE = 'no single figure'
-
-
 def _answer_key(figure):
     """An answer figure's identity: its exact value, whatever the Decimal
-    context; "no single figure" for None."""
-    return NO_SINGLE_FIGURE if figure is None else Fraction(figure)
+    context."""
+    return Fraction(figure)
 
 
 def _runs(responses, surface, figures):
@@ -275,15 +306,15 @@ def distinct_figures_shown(responses, figures=None):
     'no figures' for a text without one, 'unreadable' for one extraction
     refuses. First seen first (AP-1 D2 "distinct numeric answers per
     question"; T3-4). With figures (classify_mechanism), each distinct
-    released figure of the runs, as written."""
+    identified answer of the runs, as written; unresolved answers are
+    not values (classify_mechanism counts them)."""
     from ap1_run.execution.evidence import _read_message
     if figures is not None:
         runs, _ = _runs(responses, 'figures', figures)
         shown = {}
         for i in runs:
-            shown.setdefault(_answer_key(figures[i]),
-                             NO_SINGLE_FIGURE if figures[i] is None
-                             else str(figures[i]))
+            if figures[i] is not None:
+                shown.setdefault(_answer_key(figures[i]), str(figures[i]))
         return list(shown.values())
     shown = {}
     for r in responses:

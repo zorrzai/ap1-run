@@ -1338,7 +1338,15 @@ def test_d2_answer_figure_released_else_the_one_stated_else_none():
     assert d2_answer_figure({'released_figure': None, 'extracted_tokens':
                              one + [T(value=Decimal('1.2'), percent=True)]}
                             ) == Decimal('2500.00')
+    # one value stated twice is that value; two values, unresolved
     assert d2_answer_figure({'released_figure': None, 'extracted_tokens':
-                             one + one}) is None
+                             one + one}) == Decimal('2500.00')
+    assert d2_answer_figure({'released_figure': None, 'extracted_tokens':
+                             one + [T(value=Decimal('7'), percent=False)]}
+                            ) is None
+    # a decline is unresolved whatever it recites
+    assert d2_answer_figure({'released_figure': None,
+                             'outcome': 'ADJUDICATE-DECLINE',
+                             'extracted_tokens': one}) is None
     assert d2_answer_figure({'released_figure': None,
                              'extracted_tokens': None}) is None

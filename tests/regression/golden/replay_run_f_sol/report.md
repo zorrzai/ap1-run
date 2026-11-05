@@ -128,7 +128,7 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 2933 records.
 | Dimension | Status | n | Result |
 |---|---|---|---|
 | D1 | **NOT MEASURED** | — | — |
-| D2 | Measured | 10 | figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20 (§9) |
+| D2 | Measured | 10 | figures: OBSERVED-ONLY 4, UNMEASURED 16; prose: OBSERVED-ONLY 20 (§9) |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
 | D5 | **NOT MEASURED** | — | — |
@@ -1339,47 +1339,49 @@ Per evidence class (AP-1 D7.7: not comparable across classes):
 
 > D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
 
-Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20.
+> Figures surface: each run's identified answer, its released figure or else the one value it states. An answer not identified (a decline, no figure, several figures) is unresolved: counted, never a value, and never evidence that the answers were stable. A question-condition with one is UNMEASURED unless its identified answers already differ, counted then as at least that many.
+
+Classes per surface, over question-conditions: figures: OBSERVED-ONLY 4, UNMEASURED 16; prose: OBSERVED-ONLY 20.
 
 | Question | Condition | Surface | Mechanism Class | Basis | Distinct Values | Runs | Parameter Echo |
 |---|---|---|---|---|---|---|---|
-| Q01 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: no single figure; 15.20 | 50 | `UNVERIFIED` |
+| Q01 | base | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 15.20; 47 unresolved | 50 | `UNVERIFIED` |
 | Q01 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 5 | 50 | `UNVERIFIED` |
-| Q01 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1: no single figure | 50 | `UNVERIFIED` |
+| Q01 | instruction_removed | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 50 unresolved | 50 | `UNVERIFIED` |
 | Q01 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 4 | 50 | `UNVERIFIED` |
 | Q02 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1: 2600.00 | 50 | `UNVERIFIED` |
 | Q02 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2 | 50 | `UNVERIFIED` |
-| Q02 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: no single figure; 2600.00 | 50 | `UNVERIFIED` |
+| Q02 | instruction_removed | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 2600.00; 30 unresolved | 50 | `UNVERIFIED` |
 | Q02 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 13 | 50 | `UNVERIFIED` |
-| Q03 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1: no single figure | 50 | `UNVERIFIED` |
+| Q03 | base | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 50 unresolved | 50 | `UNVERIFIED` |
 | Q03 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 11 | 50 | `UNVERIFIED` |
-| Q03 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1: no single figure | 50 | `UNVERIFIED` |
+| Q03 | instruction_removed | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 50 unresolved | 50 | `UNVERIFIED` |
 | Q03 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 15 | 50 | `UNVERIFIED` |
-| Q04 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 430.75; no single figure | 50 | `UNVERIFIED` |
+| Q04 | base | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 430.75; 21 unresolved | 50 | `UNVERIFIED` |
 | Q04 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 12 | 50 | `UNVERIFIED` |
-| Q04 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: no single figure; 430.75 | 50 | `UNVERIFIED` |
+| Q04 | instruction_removed | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 430.75; 9 unresolved | 50 | `UNVERIFIED` |
 | Q04 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 23 | 50 | `UNVERIFIED` |
-| Q05 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 2411.00; no single figure | 50 | `UNVERIFIED` |
+| Q05 | base | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 2411.00; 12 unresolved | 50 | `UNVERIFIED` |
 | Q05 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 29 | 50 | `UNVERIFIED` |
-| Q05 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 2411.00; no single figure | 50 | `UNVERIFIED` |
+| Q05 | instruction_removed | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 2411.00; 11 unresolved | 50 | `UNVERIFIED` |
 | Q05 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 19 | 50 | `UNVERIFIED` |
-| Q06 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 144.00; no single figure | 50 | `UNVERIFIED` |
+| Q06 | base | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 144.00; 14 unresolved | 50 | `UNVERIFIED` |
 | Q06 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 4 | 50 | `UNVERIFIED` |
-| Q06 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: no single figure; 144.00 | 50 | `UNVERIFIED` |
+| Q06 | instruction_removed | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 144.00; 34 unresolved | 50 | `UNVERIFIED` |
 | Q06 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 12 | 50 | `UNVERIFIED` |
-| Q07 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 777.41; no single figure | 50 | `UNVERIFIED` |
+| Q07 | base | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 777.41; 16 unresolved | 50 | `UNVERIFIED` |
 | Q07 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 40 | 50 | `UNVERIFIED` |
-| Q07 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: no single figure; 777.41 | 50 | `UNVERIFIED` |
+| Q07 | instruction_removed | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 777.41; 41 unresolved | 50 | `UNVERIFIED` |
 | Q07 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 33 | 50 | `UNVERIFIED` |
-| Q08 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: no single figure; 287069.25 | 50 | `UNVERIFIED` |
+| Q08 | base | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 287069.25; 5 unresolved | 50 | `UNVERIFIED` |
 | Q08 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 21 | 50 | `UNVERIFIED` |
-| Q08 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: no single figure; 287069.25 | 50 | `UNVERIFIED` |
+| Q08 | instruction_removed | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 287069.25; 5 unresolved | 50 | `UNVERIFIED` |
 | Q08 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 16 | 50 | `UNVERIFIED` |
 | Q09 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1: 3.20 | 50 | `UNVERIFIED` |
 | Q09 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 12 | 50 | `UNVERIFIED` |
 | Q09 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1: 3.20 | 50 | `UNVERIFIED` |
 | Q09 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 20 | 50 | `UNVERIFIED` |
-| Q10 | base | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 2: 3109.65; no single figure | 50 | `UNVERIFIED` |
+| Q10 | base | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 3109.65; 2 unresolved | 50 | `UNVERIFIED` |
 | Q10 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 22 | 50 | `UNVERIFIED` |
 | Q10 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1: 3109.65 | 50 | `UNVERIFIED` |
 | Q10 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 12 | 50 | `UNVERIFIED` |

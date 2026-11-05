@@ -141,7 +141,9 @@ def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason,
                 operator_declared=None,
                 figures=figures,
             )
-            if surface == 'figures' and mech.get('distinct_values') is not None:
+            if surface == 'figures' and (
+                    mech.get('distinct_values') is not None
+                    or mech.get('unresolved')):
                 # the values themselves, for report section 9 (T3-4)
                 mech['values'] = distinct_figures_shown(responses, figures)
             # D2.2 cap: platform-rejected -> cap at OBSERVED-ONLY

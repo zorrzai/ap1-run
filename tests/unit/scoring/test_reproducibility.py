@@ -518,18 +518,18 @@ def test_figures_surface_counts_different_released_figures():
 
 
 @pytest.mark.finding('T3-4')
-@pytest.mark.req('R2.2', 'R2.0')
-def test_figures_surface_without_a_single_figure_is_its_own_value():
-    # A response with no single figure to its answer (None) is a value of
-    # its own, "no single figure": an answer that changes from a figure
-    # to none is variation.
+@pytest.mark.req('AP-1 D2', 'R2.2', 'R2.0')
+def test_figures_surface_unresolved_answer_is_not_a_value():
+    # An unresolved answer (None) is counted apart, never a value: one
+    # beside 15.20 is neither a second value nor agreement with it.
+    # (It was a value of its own, "no single figure", before.)
     responses = [response('15.20 or 182.40'), response('15.20')]
     r = classify_mechanism(responses, surface='figures', minimum_runs=2,
                            figures=[None, D('15.20')])
-    assert (r['mechanism'], r['successful_runs'], r['distinct_values']) == (
-        OBSERVED_ONLY, 2, 2)
+    assert (r['mechanism'], r['successful_runs'], r['distinct_values'],
+            r['unresolved']) == (UNMEASURED, 2, None, 1)
     assert distinct_figures_shown(responses, [None, D('15.20')]) == [
-        'no single figure', '15.20']
+        '15.20']
 
 
 @pytest.mark.finding('T3-4', 'S3-G2-1')

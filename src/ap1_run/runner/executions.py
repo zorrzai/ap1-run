@@ -13,13 +13,16 @@ those the run never reached. Nothing here writes to the transcript.
 import json
 from dataclasses import dataclass, field
 from decimal import Decimal
+from fractions import Fraction
 
 from ap1_run.execution.engine import _extract_calc_expression
 from ap1_run.foundation.numeric import extract_numeric_tokens
 from ap1_run.foundation.transcript import error_state_text
 from ap1_run.scoring.accuracy import score_accuracy
 from ap1_run.scoring.answer_outcome import answer_outcome, refusal_outcome
-from ap1_run.scoring.figure_id import ADJUDICATE_REFUSAL, identify_figure
+from ap1_run.scoring.figure_id import (
+    ADJUDICATE_DECLINE, ADJUDICATE_REFUSAL, identify_figure,
+)
 from ap1_run.scoring.operation_correctness import (
     classify_operation, reclassify_session,
 )
@@ -101,17 +104,39 @@ def record_not_run(findings, item_id, condition, rep):
     })
 
 
-def d2_answer_figure(fig_result):
+def d2_answer_figure(fig_result, content=None, *, currency_symbols=(),
+                     decimal_separator='.', grouping_separator=','):
     """The figure that is a response's answer for D2 (AP-1 D2 "distinct
-    numeric answers"; T3-4): its R2.0 released figure, else the one
-    figure it states if it states exactly one (a wrong answer is never
-    released, but it is the answer), else None (no single figure).
-    Percentages are not answers (S3-G4-2)."""
+    numeric answers"; T3-4), or None if it is unresolved.
+
+    Its R2.0 released figure; else the one value it states, if it states
+    exactly one (other than percentages, S3-G4-2): a wrong answer is never
+    released, but it is the answer. Where R2.0 stopped before extraction
+    (a lookup collision) the content is read under the configured grammar.
+    Anything else is unresolved: a decline (its numbers recite, they do
+    not answer), no figure, several different figures, or a text the
+    grammar cannot read. An unresolved answer is not a value
+    (reproducibility.classify_mechanism counts it apart)."""
     if fig_result.get('released_figure') is not None:
         return fig_result['released_figure']
-    figures = [t for t in fig_result.get('extracted_tokens') or []
-               if not t.percent]
-    return figures[0].value if len(figures) == 1 else None
+    if fig_result.get('outcome') == ADJUDICATE_DECLINE:
+        return None
+    tokens = fig_result.get('extracted_tokens')
+    if tokens is None:
+        if not content:
+            return None
+        try:
+            tokens = extract_numeric_tokens(
+                content, currency_symbols=currency_symbols,
+                decimal_sep=decimal_separator,
+                grouping_sep=grouping_separator)
+        except Exception:   # the grammar cannot read it: unresolved
+            return None
+    values = {}
+    for t in tokens:
+        if not t.percent:
+            values.setdefault(Fraction(t.value), t.value)
+    return next(iter(values.values())) if len(values) == 1 else None
 
 
 def record_interrupted(findings, item_id, condition, rep, last_round):
@@ -399,7 +424,10 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
     findings.d2_responses.setdefault(d2_key, []).append(
         result.get('response'))
     findings.d2_figures.setdefault(d2_key, []).append(
-        d2_answer_figure(fig_result))
+        d2_answer_figure(
+            fig_result, _rc_content, currency_symbols=currency_symbols,
+            decimal_separator=separators['decimal_sep'],
+            grouping_separator=separators['grouping_sep']))
 
     # -- D2.2: were the requested sampling parameters applied? In every
     # round's response, tool-call rounds included; a result without its

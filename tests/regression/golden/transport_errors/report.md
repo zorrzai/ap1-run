@@ -128,7 +128,7 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 111 records.
 | Dimension | Status | n | Result |
 |---|---|---|---|
 | D1 | **NOT MEASURED** | — | — |
-| D2 | Measured | 9 | figures: OBSERVED-ONLY 14, UNMEASURED 3; prose: OBSERVED-ONLY 14, UNMEASURED 3 (§9) |
+| D2 | Measured | 9 | figures: OBSERVED-ONLY 13, UNMEASURED 4; prose: OBSERVED-ONLY 14, UNMEASURED 3 (§9) |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
 | D5 | **NOT MEASURED** | — | — |
@@ -345,7 +345,9 @@ Per evidence class (AP-1 D7.7: not comparable across classes):
 
 > D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
 
-Classes per surface, over question-conditions: figures: OBSERVED-ONLY 14, UNMEASURED 3; prose: OBSERVED-ONLY 14, UNMEASURED 3.
+> Figures surface: each run's identified answer, its released figure or else the one value it states. An answer not identified (a decline, no figure, several figures) is unresolved: counted, never a value, and never evidence that the answers were stable. A question-condition with one is UNMEASURED unless its identified answers already differ, counted then as at least that many.
+
+Classes per surface, over question-conditions: figures: OBSERVED-ONLY 13, UNMEASURED 4; prose: OBSERVED-ONLY 14, UNMEASURED 3.
 
 | Question | Condition | Surface | Mechanism Class | Basis | Distinct Values | Runs | Parameter Echo |
 |---|---|---|---|---|---|---|---|
@@ -371,7 +373,7 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 14, UNMEAS
 | Q06 | base | prose | `UNMEASURED` | evidence: observed over 1 run; not operator-declared | — | 1 | `UNVERIFIED` |
 | Q06 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 144.00 | 2 | `UNVERIFIED` |
 | Q06 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
-| Q07 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 2: no single figure; 777.41 | 2 | `UNVERIFIED` |
+| Q07 | base | figures | `UNMEASURED` | evidence: observed over 2 runs; not operator-declared | —: 777.41; 1 unresolved | 2 | `UNVERIFIED` |
 | Q07 | base | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 2 | 2 | `UNVERIFIED` |
 | Q07 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 777.41 | 2 | `UNVERIFIED` |
 | Q07 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |

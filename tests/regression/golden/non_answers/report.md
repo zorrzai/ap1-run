@@ -128,7 +128,7 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 104 records.
 | Dimension | Status | n | Result |
 |---|---|---|---|
 | D1 | **NOT MEASURED** | — | — |
-| D2 | Measured | 8 | figures: OBSERVED-ONLY 16; prose: OBSERVED-ONLY 16 (§9) |
+| D2 | Measured | 8 | figures: OBSERVED-ONLY 8, UNMEASURED 8; prose: OBSERVED-ONLY 16 (§9) |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
 | D5 | **NOT MEASURED** | — | — |
@@ -314,29 +314,31 @@ Total operands resolved: 112
 
 > D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
 
-Classes per surface, over question-conditions: figures: OBSERVED-ONLY 16; prose: OBSERVED-ONLY 16.
+> Figures surface: each run's identified answer, its released figure or else the one value it states. An answer not identified (a decline, no figure, several figures) is unresolved: counted, never a value, and never evidence that the answers were stable. A question-condition with one is UNMEASURED unless its identified answers already differ, counted then as at least that many.
+
+Classes per surface, over question-conditions: figures: OBSERVED-ONLY 8, UNMEASURED 8; prose: OBSERVED-ONLY 16.
 
 | Question | Condition | Surface | Mechanism Class | Basis | Distinct Values | Runs | Parameter Echo |
 |---|---|---|---|---|---|---|---|
-| Q02 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: no single figure | 2 | `UNVERIFIED` |
+| Q02 | base | figures | `UNMEASURED` | evidence: observed over 2 runs; not operator-declared | —: 2 unresolved | 2 | `UNVERIFIED` |
 | Q02 | base | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
-| Q02 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: no single figure | 2 | `UNVERIFIED` |
+| Q02 | instruction_removed | figures | `UNMEASURED` | evidence: observed over 2 runs; not operator-declared | —: 2 unresolved | 2 | `UNVERIFIED` |
 | Q02 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
 | Q03 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 2400.00 | 2 | `UNVERIFIED` |
 | Q03 | base | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
 | Q03 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 2400.00 | 2 | `UNVERIFIED` |
 | Q03 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
-| Q04 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: no single figure | 2 | `UNVERIFIED` |
+| Q04 | base | figures | `UNMEASURED` | evidence: observed over 2 runs; not operator-declared | —: 2 unresolved | 2 | `UNVERIFIED` |
 | Q04 | base | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
-| Q04 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: no single figure | 2 | `UNVERIFIED` |
+| Q04 | instruction_removed | figures | `UNMEASURED` | evidence: observed over 2 runs; not operator-declared | —: 2 unresolved | 2 | `UNVERIFIED` |
 | Q04 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
-| Q06 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: no single figure | 2 | `UNVERIFIED` |
+| Q06 | base | figures | `UNMEASURED` | evidence: observed over 2 runs; not operator-declared | —: 2 unresolved | 2 | `UNVERIFIED` |
 | Q06 | base | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
-| Q06 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: no single figure | 2 | `UNVERIFIED` |
+| Q06 | instruction_removed | figures | `UNMEASURED` | evidence: observed over 2 runs; not operator-declared | —: 2 unresolved | 2 | `UNVERIFIED` |
 | Q06 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
-| Q07 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: no single figure | 2 | `UNVERIFIED` |
+| Q07 | base | figures | `UNMEASURED` | evidence: observed over 2 runs; not operator-declared | —: 2 unresolved | 2 | `UNVERIFIED` |
 | Q07 | base | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
-| Q07 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: no single figure | 2 | `UNVERIFIED` |
+| Q07 | instruction_removed | figures | `UNMEASURED` | evidence: observed over 2 runs; not operator-declared | —: 2 unresolved | 2 | `UNVERIFIED` |
 | Q07 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
 | Q08 | base | figures | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1: 287069.25 | 2 | `UNVERIFIED` |
 | Q08 | base | prose | `OBSERVED-ONLY` | evidence: observed over 2 runs; not operator-declared | 1 | 2 | `UNVERIFIED` |
