@@ -13,7 +13,7 @@ Reports auto-scored n and adjudicated n SEPARATELY; the two are
 never merged without both being stated.
 """
 
-from decimal import Decimal
+from decimal import MAX_PREC, Decimal, localcontext
 
 from ap1_run.foundation.numeric import quantise
 from ap1_run.scoring.figure_id import AUTO_MATCH, AUTO_NO_FIGURE, UNMEASURABLE
@@ -217,7 +217,10 @@ def clopper_pearson_interval(successes, n, alpha=Decimal('0.05')):
     """The exact two-sided 1 - alpha Clopper-Pearson interval for a
     proportion, (lower, upper), in Decimal: each end leaves alpha/2 in
     its tail. Uses the one bound implementation (invocation.py)."""
-    half = alpha / 2
-    upper = clopper_pearson_upper(successes, n, half)
-    lower = 1 - clopper_pearson_upper(n - successes, n, half)
+    with localcontext() as ctx:
+        # exact: half of alpha, and 1 minus a bound, are never rounded
+        ctx.prec = MAX_PREC
+        half = alpha / 2
+        upper = clopper_pearson_upper(successes, n, half)
+        lower = 1 - clopper_pearson_upper(n - successes, n, half)
     return lower, upper

@@ -110,7 +110,7 @@
       "figure_outcome": "ADJUDICATE-AMBIGUOUS",
       "figure_reason": "the one matching token '$430.75' is followed by 1 other figure(s) of the same kind, first '$1,006.25'; which figure is the released answer is undetermined",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "430.7500",
       "shape_ok": true,
       "operation_correctness": [
@@ -205,7 +205,7 @@
       "figure_outcome": "ADJUDICATE-AMBIGUOUS",
       "figure_reason": "the one matching token '$430.75' is followed by 1 other figure(s) of the same kind, first '$1,006.25'; which figure is the released answer is undetermined",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "430.7500",
       "shape_ok": true,
       "operation_correctness": [
@@ -1310,7 +1310,7 @@
       "figure_outcome": "ADJUDICATE-AMBIGUOUS",
       "figure_reason": "the one matching token '$430.75' is followed by 1 other figure(s) of the same kind, first '$1,006.25'; which figure is the released answer is undetermined",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "430.7500",
       "shape_ok": true,
       "operation_correctness": [
@@ -1405,7 +1405,7 @@
       "figure_outcome": "ADJUDICATE-AMBIGUOUS",
       "figure_reason": "the one matching token '$430.75' is followed by 1 other figure(s) of the same kind, first '$1,006.25'; which figure is the released answer is undetermined",
       "tool_calls_count": 1,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "430.7500",
       "shape_ok": true,
       "operation_correctness": [

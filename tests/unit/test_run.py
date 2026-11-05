@@ -97,16 +97,6 @@ class Run:
                      'create_seal', 'verify_seal', 'check_condition_guard',
                      'build_delivered_context', 'write_pre_registration',
                      'execute_item', 'score_run', 'rescore_transcript'):
-
-
-                     'create_seal', 'check_condition_guard',
-                     'build_delivered_context', 'check_lookup_collision',
-                     'execute_item', 'score_execution',
-                     'verify_invocation_consistency', 'print_run_report',
-                     'summarise_accuracy', 'summarise_accuracy_by_category',
-                     'find_d2_cap',
-                     'classify_reproducibility', 'build_summary',
-                     'print_scoring_report', 'write_outputs'):
             monkeypatch.setattr(run, name, getattr(self, name))
 
     def write_inputs(self, config=None):
@@ -210,39 +200,6 @@ class Run:
         return {'smoke': 'summary'}
 
 
-    def verify_invocation_consistency(self, results):
-        self.calls.append(('consistency', list(results)))
-
-    def print_run_report(self, results, conditions, **kwargs):
-        self.calls.append(('run_report', list(results), conditions, kwargs))
-
-    def summarise_accuracy(self, results):
-        self.calls.append(('summarise', list(results)))
-        return {'d1': True}
-
-    def summarise_accuracy_by_category(self, results, categories):
-        self.calls.append(('by_category', list(results), categories))
-        return {'by': 'category'}
-
-    def find_d2_cap(self, sampling):
-        self.calls.append(('d2_cap', sampling))
-        return 'CAP'
-
-    def classify_reproducibility(self, responses, repeat_count, cap):
-        self.calls.append(('d2', responses, repeat_count, cap))
-        return {'d2': 'results'}
-
-    def build_summary(self, results, evidence, **kwargs):
-        self.calls.append(('summary', list(results), evidence, kwargs))
-        return {'summary': True}
-
-    def print_scoring_report(self, *args):
-        self.calls.append(('scoring_report',) + args)
-
-    def write_outputs(self, output_dir, transcript_path, **kwargs):
-        self.calls.append(('outputs', output_dir, transcript_path, kwargs))
-
-
 @pytest.fixture
 def r(tmp_path, monkeypatch):
     return Run(tmp_path, monkeypatch)
@@ -342,6 +299,7 @@ def test_main_full_run_calls(r, capsys):
         'calculator_path': os.path.join(fx, 'calculator_tool.py'),
         'ap1_text_path': str(r.tmp / 'ap1.md'),
         'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
+        'lookup_collisions': [('Q2', 'b.fee')],
         'expected_values': expected_values,
         'loaded': {'fixture': json.dumps(FIXTURE).encode(),
                    'questions': json.dumps(QUESTIONS).encode(),
@@ -359,11 +317,8 @@ def test_main_full_run_calls(r, capsys):
         'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
         'expected_values': expected_values}
     assert r.named('verify_seal') == [
-        ({'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}, verified)] * 2
-
-
-        # T3-75: computed from the real contexts at seal (Q3 underivable)
-        'lookup_collisions': [('Q2', 'b.fee')]}
+        ({'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH',
+          'lookup_collisions': 'COLLISIONS'}, verified)] * 2
     assert config['endpoint_url'] == 'http://mock/v1'
     assert config['model'] == 'mock-model'
     assert (config['runner_version_tag'], config['runner_version_commit'],
@@ -375,7 +330,8 @@ def test_main_full_run_calls(r, capsys):
         'REMOVED PROMPT', CONFIG['tools'], {'temperature': 0})]
 
     # the pre-registration record, beside the transcript
-    seal_record = {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}
+    seal_record = {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH',
+                   'lookup_collisions': 'COLLISIONS'}
     assert r.named('pre_registration') == [(
         out, {'seal_record': seal_record, 'config': config})]
 
@@ -422,75 +378,6 @@ def test_main_full_run_calls(r, capsys):
         'questions': QUESTIONS,
         'ground_truth_compute': kwargs['ground_truth_compute'],
         'output_dir': out})]
-
-
-    # the collected results, in order
-    expected_results = [
-        {'item_id': 'Q1', 'condition': 'base', 'repeat': 1,
-         'status': 'UNMEASURED', 'cause': 'rate_limited'},
-        {'status': 'EXECUTED'},
-        {'item_id': 'Q3', 'condition': 'base', 'repeat': 0,
-         'status': 'VOID'},
-        {'item_id': 'Q2', 'condition': 'base', 'repeat': 1,
-         'status': 'UNMEASURED', 'cause': 'HTTP 500: boom'},
-        {'status': 'EXECUTED'},
-        {'item_id': 'Q1', 'condition': 'instruction_removed', 'repeat': 1,
-         'status': 'VOID', 'cause': 'no figure'},
-        {'status': 'EXECUTED'},
-        {'item_id': 'Q3', 'condition': 'instruction_removed', 'repeat': 0,
-         'status': 'VOID'},
-        {'item_id': 'Q2', 'condition': 'instruction_removed', 'repeat': 1,
-         'status': 'UNMEASURED', 'cause': 'cut off'},
-        {'status': 'EXECUTED'},
-    ]
-    assert r.named('consistency') == [(expected_results,)]
-
-    (results, conditions, kw), = r.named('run_report')
-    assert results == expected_results
-    assert conditions == ['base', 'instruction_removed']
-    assert kw['disclaimer'] == run.DISCLAIMER
-    assert kw['unmeasured_cells'] == [
-        {'item_id': 'Q1', 'condition': 'base', 'repeat': 1,
-         'cause': 'rate_limited'},
-        {'item_id': 'Q2', 'condition': 'base', 'repeat': 1,
-         'cause': 'HTTP 500: boom'}]
-    for name in ('grammar_issues', 'decline_findings', 'tool_call_structures',
-                 'evidence_findings', 'transcription_results',
-                 'release_coverage_results'):
-        assert kw[name] == [], name
-
-    assert r.named('summarise') == [([],)]
-    # T3-32: D1 per category, from questions.json's categories
-    assert r.named('by_category') == [([], {'Q1': 'interest', 'Q2': 'fees'})]
-    assert r.named('d2_cap') == [({'temperature': 0},)]
-    d2_responses = {'d2': [res for res, _ in scores]}
-    assert r.named('d2') == [(d2_responses, 2, 'CAP')]
-    (results, evidence, kw), = r.named('summary')
-    assert results == expected_results and evidence == []
-    d1 = {'d1': True, 'n': 0, 'by_category': {'by': 'category'}}
-    assert kw == {'d1_summary': d1,
-                  'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
-                  'transcription_results': [],
-                  'release_coverage_results': [],
-                  'held_constant': HELD_CONSTANT,
-                  'served': {'models': {}, 'fingerprints': {}}}
-    assert r.named('scoring_report') == [(
-        d1, {'d2': 'results'}, 'CAP', {'summary': True})]
-
-    (output_dir, transcript_path, kw), = r.named('outputs')
-    assert (output_dir, transcript_path) == (out, transcript)
-    assert kw == {
-        'summary': {'summary': True}, 'config': config,
-        'seal_record': {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH',
-                        'lookup_collisions': 'COLLISIONS'},
-        'questions': QUESTIONS, 'fixture': FIXTURE,
-        'release_coverage_results': [], 'disclaimer': run.DISCLAIMER,
-        'smoke_summary': {
-            'seal_hash': 'SEAL', 'all_results': expected_results,
-            'grammar_issues': [], 'decline_findings': [],
-            'tool_call_structures': [], 'evidence_findings': [],
-            'unmeasured_cells': kw['smoke_summary']['unmeasured_cells']}}
-    assert len(kw['smoke_summary']['unmeasured_cells']) == 2
 
     # the order of the stages
     stages = [c[0] for c in r.calls if c[0] in (
@@ -580,7 +467,8 @@ def test_main_ap1_text_of_the_declared_version(r, monkeypatch):
     # Without --ap1-text the seal takes the text of the config's version.
     r.config['ap1_version'] = 'v1.2'
     monkeypatch.setattr(r, 'create_seal', lambda **kw: r.calls.append(
-        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH})
+        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH,
+                          'lookup_collisions': 'none'})
     monkeypatch.setattr(run, 'create_seal', r.create_seal)
     assert run.main(r.argv()[:-2]) == 0
     assert r.named('seal')[0][0]['ap1_text_path'] == os.path.join(
@@ -606,20 +494,13 @@ def test_main_unknown_version_without_ap1_text_refused_before_seal(r):
 
 def test_main_adapter_send_binds_the_key(r, monkeypatch):
     sent = []
-    monkeypatch.setattr(
-        run.adapter, 'send', lambda url, **kw: sent.append((url, kw)) or (
-            {'model': 'served-M', 'system_fingerprint': 'fp'}, 'REC'))
-    served = []
-    monkeypatch.setattr(run, 'record_served',
-                        lambda findings, response: served.append(response))
+    monkeypatch.setattr(run.adapter, 'send',
+                        lambda url, **kw: sent.append((url, kw)) or 'RESP')
     r.main()
     adapter_send = r.named('execute')[0][1]['adapter_send']
-    resp = ({'model': 'served-M', 'system_fingerprint': 'fp'}, 'REC')
-    assert adapter_send('http://x', messages=['m']) == resp
+    assert adapter_send('http://x', messages=['m']) == 'RESP'
     assert adapter_send('http://y', messages=['n'], tools=['t'],
-                        sampling={'s': 1}, model='M', timeout=7) == resp
-    # V12-8: every response's served model is recorded
-    assert served == [resp[0]] * 2
+                        sampling={'s': 1}, model='M', timeout=7) == 'RESP'
     assert sent == [
         ('http://x', {'messages': ['m'], 'tools': None, 'sampling': None,
                       'model': None, 'api_key': 'sk-0123456789',
@@ -750,7 +631,8 @@ def test_main_minimum_n_counts_the_question_items(r, monkeypatch):
     r.config.update(dimensions_claimed=['D6'], ap1_version='v1.2')
     # V12-4: a v1.2 run must seal the v1.2 text.
     monkeypatch.setattr(run, 'create_seal', lambda **kw: r.calls.append(
-        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH})
+        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH,
+                          'lookup_collisions': 'none'})
     questions = json.loads(json.dumps(QUESTIONS))
     questions['items'][2]['conflict_class'] = 'stated twice'
     (r.fixture_dir / 'questions.json').write_text(json.dumps(questions))

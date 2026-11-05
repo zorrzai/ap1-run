@@ -508,23 +508,15 @@ def test_summary_non_outcome_cells():
     # T3-35: each cell names its repeat.
     results[1]['repeat'] = 7
     assert build_summary(results, [])['non_outcome_cells'] == [
-        {'item_id': 'Q03', 'condition': 'base', 'status': 'UNMEASURED',
-         'reason': 'rate_limited'},
-        {'item_id': 'Q04', 'condition': 'base', 'status': 'VOID',
-         'reason': 'underivable'},
-        {'item_id': 'Q05', 'condition': 'base', 'status': 'VOID',
-         'reason': ''},
-        # T3-52 / R0.3: an interrupted run's unreached execution
-        {'item_id': 'Q06', 'condition': 'base', 'status': 'NOT-RUN',
-         'reason': 'not reached'},
-
-
         {'item_id': 'Q03', 'condition': 'base', 'repeat': 7,
          'status': 'UNMEASURED', 'reason': 'rate_limited'},
         {'item_id': 'Q04', 'condition': 'base', 'repeat': None,
          'status': 'VOID', 'reason': 'underivable'},
         {'item_id': 'Q05', 'condition': 'base', 'repeat': None,
          'status': 'VOID', 'reason': ''},
+        # T3-52 / R0.3: an interrupted run's unreached execution
+        {'item_id': 'Q06', 'condition': 'base', 'repeat': None,
+         'status': 'NOT-RUN', 'reason': 'not reached'},
     ]
 
 
@@ -954,38 +946,6 @@ def test_summary_only_refusals_in_an_arm_leave_no_d71_figure():
     assert s['dpr'] == 'UNDEFINED (no instruction_removed observations)'
 
 
-# -- summarise_parameter_echo (D2.2) ----------------------------------------
-
-def echo(status, *findings):
-    return {'status': status, 'findings': list(findings)}
-
-
-@pytest.mark.finding('T3-22', 'T3-90')
-@pytest.mark.parametrize('statuses, status', [
-    ([], 'UNVERIFIED'),
-    (['VERIFIED', 'VERIFIED'], 'VERIFIED'),
-    (['VERIFIED', 'UNVERIFIED'], 'UNVERIFIED'),
-    (['UNVERIFIED'], 'UNVERIFIED'),
-    (['VERIFIED', 'MISMATCH', 'UNVERIFIED'], 'MISMATCH'),
-])
-def test_summarise_parameter_echo_status(statuses, status):
-    assert summarise_parameter_echo([echo(s) for s in statuses]) == {
-        'status': status, 'responses': len(statuses), 'findings': []}
-
-
-@pytest.mark.finding('T3-22', 'T3-90')
-def test_summarise_parameter_echo_findings_once_in_order():
-    checks = [echo('MISMATCH', 'b', 'a'), echo('VERIFIED'),
-              echo('MISMATCH', 'a', 'c')]
-    assert summarise_parameter_echo(checks)['findings'] == ['b', 'a', 'c']
-
-
-def test_build_summary_passes_parameter_echo():
-    s = build_summary([], [], parameter_echo=[echo('VERIFIED')])
-    assert s['parameter_echo'] == {'status': 'VERIFIED', 'responses': 1,
-                                   'findings': []}
-
-
 @pytest.mark.finding('T3-29')
 @pytest.mark.req('AP-1 D7.7', 'R3.3')
 def test_summary_d7_evidence_per_figure():
@@ -1044,3 +1004,35 @@ def test_summary_carries_served_only_when_given():
     served = {'models': {'m': 1}, 'fingerprints': {}}
     assert build_summary([], [], served=served)['served'] is served
     assert 'served' not in build_summary([], [])
+
+
+# -- summarise_parameter_echo (D2.2) ----------------------------------------
+
+def echo(status, *findings):
+    return {'status': status, 'findings': list(findings)}
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+@pytest.mark.parametrize('statuses, status', [
+    ([], 'UNVERIFIED'),
+    (['VERIFIED', 'VERIFIED'], 'VERIFIED'),
+    (['VERIFIED', 'UNVERIFIED'], 'UNVERIFIED'),
+    (['UNVERIFIED'], 'UNVERIFIED'),
+    (['VERIFIED', 'MISMATCH', 'UNVERIFIED'], 'MISMATCH'),
+])
+def test_summarise_parameter_echo_status(statuses, status):
+    assert summarise_parameter_echo([echo(s) for s in statuses]) == {
+        'status': status, 'responses': len(statuses), 'findings': []}
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+def test_summarise_parameter_echo_findings_once_in_order():
+    checks = [echo('MISMATCH', 'b', 'a'), echo('VERIFIED'),
+              echo('MISMATCH', 'a', 'c')]
+    assert summarise_parameter_echo(checks)['findings'] == ['b', 'a', 'c']
+
+
+def test_build_summary_passes_parameter_echo():
+    s = build_summary([], [], parameter_echo=[echo('VERIFIED')])
+    assert s['parameter_echo'] == {'status': 'VERIFIED', 'responses': 1,
+                                   'findings': []}

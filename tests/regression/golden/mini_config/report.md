@@ -8,6 +8,12 @@ Version DOI: 10.5281/zenodo.21755443
 
 Model: mock-model
 
+Served model (as the responses report it, with responses): mock-model (80)
+
+Backend fingerprints (system_fingerprint): not reported
+
+> **Demonstration run, not a conformance result.** ap1-run implements the AP-1 v1.3 Draft for Comment; v1.2 remains the version in force. A run of this instrument is a demonstration run, not a conformance result under either version (README, "Which version of AP-1").
+
 ---
 
 ## 1. Pre-Registration Record
@@ -23,6 +29,7 @@ Model: mock-model
 | `expected_values_hash` | `81d9b435264ddbb032c5744342df577d691e9766fd566dc75632b34bc6dd46ca` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
 | `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
+| `lookup_collisions` | `none` |
 | `package_versions` | `<ENVIRONMENT>` |
 | `platform` | `<ENVIRONMENT>` |
 | `python_version` | `<ENVIRONMENT>` |
@@ -120,16 +127,20 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 120 records.
 | Dimension | Status | n | Result |
 |---|---|---|---|
 | D1 | **NOT MEASURED** | — | — |
-| D2 | Measured | N/A | See §9 D2 Mechanism Classes |
+| D2 | Measured | 10 | figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20 (§9) |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
 | D5 | **NOT MEASURED** | — | — |
 | D6 | **NOT MEASURED** | — | — |
-| D7 | Measured | 40 | See §4-7 D7 Figures |
+| D7 | Partly measured | 40 | D7.1-D7.3 measured, D7.4 not measured (§12) |
+| D7.1 | Measured | see §5 | Invocation rate per condition: §5 |
+| D7.2 | Measured | see §6-7b | Operand provenance §6, §7b; operation correctness §7 |
+| D7.3 | Measured | 40 | Transcription fidelity: D7.3 section |
+| D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |
 
 ## 4. D7 Figures by Evidence Class
 
-> Figures resting on different evidence classes are not comparable (AP-1 v1.3 §6.4).
+> Figures resting on different evidence classes are not comparable (AP-1 v1.3 D7.7).
 
 | Evidence Class | Count |
 |---|---|
@@ -181,6 +192,8 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 120 records.
 | Q10 | instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | INVOKED |
 
 ## D7.3 Transcription Fidelity
+
+Evidence class (AP-1 D7.7), executions: `EV-2 PLATFORM-STRUCTURAL` (40).
 
 ### A. Transcription Check
 
@@ -244,6 +257,8 @@ DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 0.0%
 
 ## 7. D7.2(b) Operation Correctness
 
+Evidence class (AP-1 D7.7), executions: `EV-2 PLATFORM-STRUCTURAL` (40).
+
 Total operations evaluated: 40
 
 | Outcome | Count |
@@ -286,11 +301,12 @@ Total operands resolved: 176
 
 - Auto-scored: 40
 - Adjudicated: 0
+- Unmeasurable: 0 (response unreadable, routed to adjudication)
 - Total: 40
 - Auto-scored proportion: 40/40 = 100.00%
 - Accuracy rate: 1 (computed from 40 auto-scored items only; 0 adjudicated items are not represented in this rate)
 
-### D7 Provenance
+### D7 Computation invocation
 
 - Auto-scored: 40
 - Adjudicated: 0
@@ -305,8 +321,50 @@ Total operands resolved: 176
 
 > D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
 
-*No per-surface D2 data available.*
+Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20.
 
+| Question | Condition | Surface | Mechanism Class | Basis | Distinct Values | Runs | Parameter Echo |
+|---|---|---|---|---|---|---|---|
+| Q01 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q01 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q01 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q01 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q02 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q02 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q02 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q02 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q03 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q03 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q03 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q03 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q04 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q04 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q04 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q04 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q05 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q05 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q05 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q05 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q06 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q06 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q06 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q06 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q07 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q07 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q07 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q07 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q08 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q08 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q08 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q08 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q09 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q09 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q09 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q09 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q10 | base | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q10 | base | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q10 | instruction_removed | figures | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
+| Q10 | instruction_removed | prose | `OBSERVED-ONLY` | evidence | 1 | 2 | `UNVERIFIED` |
 
 ## 9b. D2.2 Execution Conditions
 
@@ -335,18 +393,20 @@ Total operands resolved: 176
 
 > A dimension not measured is declared, never omitted.
 
-The following dimensions were **not measured** in this evaluation and require human adjudication:
+The following dimensions were **not measured** in this evaluation:
 
-- **D1**: Accuracy — requires item-level scoring
-- **D3**: Completeness of explanation — requires human adjudication
-- **D4**: Appropriate caveats — requires human adjudication
-- **D5**: Source attribution — requires human adjudication
-- **D6**: Confidence calibration — requires human adjudication
+- **D1**: Accuracy — not claimed in this configuration (the runner auto-scores it)
+- **D3**: Provenance — requires human adjudication; the runner does not measure it
+- **D4**: Refusal integrity — requires human adjudication; the runner does not measure it
+- **D5**: Adversarial resistance — requires human adjudication; the runner does not measure it
+- **D6**: Conflicting input — requires human adjudication; the runner does not measure it
+
+D7 is claimed, but not all of it was measured (AP-1 v1.3 D7: "Report all four"):
+
+- **D7.4**: Invocation under pressure — not measured: the runner sends each item once, with no rephrasing, casual framing, escalating pressure or adversarial input
 
 ## 13. Declared Limitations
 
 ### Clopper-Pearson Bound (k > 0)
 
-An exact confidence bound for non-zero failure counts is not computed; AP-1 v1.3 D7.5 specifies the zero-failure form only. This is an author-identified defect in the standard, noted for resolution in the adopted version.
-
-For non-zero failure counts, the point estimate is reported with n. The full Beta quantile would require an external dependency or a specification extension.
+AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for any invocation figure but states its formula for zero failures only. For k > 0 failures the report gives the exact Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the general form DISPOSITION C-1 adopts for the next version. It is computed in Decimal (bisection on the binomial distribution) and every bound is shown rounded up.

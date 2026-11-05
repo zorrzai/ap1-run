@@ -36,15 +36,17 @@ from ap1_run.foundation.transcript import (
 from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.executions import (
     Findings, apply_question_measurability, record_interrupted,
-    record_not_run, record_not_scored, record_underivable, result_from_record,
-    score_execution,
+    record_not_run, record_not_scored, record_served, record_underivable,
+    result_from_record, score_execution,
 )
 from ap1_run.runner.outputs import attach_scores, write_outputs
 from ap1_run.runner.summary import (
     build_summary, classify_reproducibility, find_d2_cap,
     verify_invocation_consistency,
 )
-from ap1_run.scoring.accuracy import summarise_accuracy
+from ap1_run.scoring.accuracy import (
+    summarise_accuracy, summarise_accuracy_by_category,
+)
 
 CONDITIONS = ['base', 'instruction_removed']
 
@@ -249,6 +251,9 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
                 print('NOT-RUN')
                 record_not_run(findings, item_id, condition, rep)
                 continue
+            # V12-8: what served each response the record holds
+            for round_ in record.get('rounds') or []:
+                record_served(findings, round_.get('response'))
 
             result = result_from_record(record, gt=gt, ctx=ctx,
                                         config=config)
@@ -287,6 +292,11 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
     # -- D1 aggregation --
     d1_summary = summarise_accuracy(findings.all_accuracy_results)
     d1_summary['n'] = len(findings.all_accuracy_results)
+    # AP-1 D1: per category, with n and a 95% interval (T3-32)
+    d1_summary['by_category'] = summarise_accuracy_by_category(
+        findings.all_accuracy_results,
+        {q['id']: q['category'] for q in questions['items']
+         if q.get('category')})
 
     # -- D2 classification per (item, condition) per surface --
     d2_cap_reason = find_d2_cap(config['sampling'])
@@ -300,7 +310,7 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
         transcription_results=findings.transcription_results,
         release_coverage_results=findings.release_coverage_results,
         parameter_echo=findings.parameter_echo,
-        held_constant=HELD_CONSTANT)
+        held_constant=HELD_CONSTANT, served=findings.served)
 
     # 3j-3l. D1, D2, operand provenance
     print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary)

@@ -28,9 +28,11 @@ from ap1_run.runner.scoring_pass import (
 D = Decimal
 RULE = '=' * 60
 
-QUESTIONS = {'items': [{'id': 'Q1', 'source_accounts': ['a']},
+QUESTIONS = {'items': [{'id': 'Q1', 'source_accounts': ['a'],
+                        'category': 'interest'},
                        {'id': 'Q3', 'source_accounts': []},
-                       {'id': 'Q2', 'source_accounts': ['b']}]}
+                       {'id': 'Q2', 'source_accounts': ['b'],
+                        'category': 'fees'}]}
 FIXTURE = {'accounts': [{'id': 'a'}, {'id': 'b'}]}
 CONFIG = {'repeat_count': 2, 'sampling': {'temperature': '0'},
           'answer_tolerance': D('0.05'), 'decline_markers': ['cannot'],
@@ -74,7 +76,8 @@ class Pass:
         for name in ('build_delivered_context', 'check_lookup_collision',
                      'result_from_record', 'score_execution',
                      'verify_invocation_consistency', 'print_run_report',
-                     'summarise_accuracy', 'find_d2_cap',
+                     'summarise_accuracy', 'summarise_accuracy_by_category',
+                     'find_d2_cap',
                      'classify_reproducibility', 'build_summary',
                      'print_scoring_report', 'attach_scores',
                      'write_outputs'):
@@ -121,6 +124,10 @@ class Pass:
     def summarise_accuracy(self, results):
         self.calls.append(('summarise', list(results)))
         return {'d1': True}
+
+    def summarise_accuracy_by_category(self, results, categories):
+        self.calls.append(('by_category', list(results), categories))
+        return {'by': 'category'}
 
     def find_d2_cap(self, sampling):
         self.calls.append(('d2_cap', sampling))
@@ -269,14 +276,19 @@ def test_score_run_calls(p, capsys):
     assert p.named('d2') == [(d2_responses, 2, 'CAP')]
     (results, evidence, kw), = p.named('summary')
     assert results == expected_results and evidence == []
-    assert kw == {'d1_summary': {'d1': True, 'n': 3},
+    # T3-32: D1 per category, from questions.json's categories
+    assert p.named('by_category') == [(
+        [{'acc': 2}, {'acc': 1}, {'acc': 2}], {'Q1': 'interest', 'Q2': 'fees'})]
+    d1 = {'d1': True, 'n': 3, 'by_category': {'by': 'category'}}
+    assert kw == {'d1_summary': d1,
                   'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
                   'transcription_results': [],
                   'release_coverage_results': [],
                   'parameter_echo': [],
-                  'held_constant': HELD_CONSTANT}
+                  'held_constant': HELD_CONSTANT,
+                  'served': {'models': {}, 'fingerprints': {}}}
     assert p.named('scoring_report') == [(
-        {'d1': True, 'n': 3}, {'d2': 'results'}, 'CAP', {'summary': True})]
+        d1, {'d2': 'results'}, 'CAP', {'summary': True})]
 
     assert p.named('attach') == [(records, expected_results)]
     import hashlib
@@ -421,6 +433,24 @@ def test_score_run_refuses_a_bad_transcript_before_scoring(p):
     with pytest.raises(TranscriptError, match='not this run'):
         p.run()
     assert p.calls == []
+
+
+@pytest.mark.finding('V12-8')
+def test_score_run_counts_what_served_every_recorded_round(p):
+    # Every round's response in every record the run reads (executed or
+    # not), from the transcript, so a re-score gives the same counts.
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED', rounds=[
+        {'round': 0, 'response': {'model': 'm-1', 'system_fingerprint': 'a'}},
+        {'round': 1, 'response': {'model': 'm-1', 'system_fingerprint': 'b'}}])
+    write(p.transcript, 'Q1', 'base', 2, 'UNMEASURED', rounds=[
+        {'round': 0, 'error': 'HTTP 500'}])
+    write(p.transcript, 'Q2', 'base', 1, 'EXECUTED', rounds=[
+        {'round': 0, 'response': {'model': 'm-2'}}])
+    write(p.transcript, 'Q2', 'base', 2, 'EXECUTED')
+    p.run()
+    (_, _, kw), = p.named('summary')
+    assert kw['served'] == {'models': {'m-1': 2, 'm-2': 1},
+                            'fingerprints': {'a': 1, 'b': 1}}
 
 
 # -- The transcript against the run's plan (SPEC R0.2, R0.3) ---------------
