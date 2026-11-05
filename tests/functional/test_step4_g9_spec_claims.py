@@ -324,12 +324,6 @@ def assert_run_used_the_file(result, config_path):
     'T3-79/T3-67: one config file per run (config_mini.json valid, the '
     'AP1_SMOKE_* sampling overrides removed); proposed, not decided')
 @pytest.mark.finding('T3-79')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-79: config_mini.json is refused at load "
-                          "(reason 'model-unsupported')")
-
-
-@pytest.mark.finding('F1', 'T3-79')
 def test_run_with_config_mini_seals_exactly_that_files_settings(ap1_run,
                                                                 tmp_path):
     # Correct (T3-67, T3-79): a run with --config seals exactly that
@@ -343,13 +337,6 @@ def test_run_with_config_mini_seals_exactly_that_files_settings(ap1_run,
     'T3-79/T3-67: one config file per run (config_mini.json valid, the '
     'AP1_SMOKE_* sampling overrides removed); proposed, not decided')
 @pytest.mark.finding('T3-67', 'T3-79')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-67/T3-79: AP1_SMOKE_TEMPERATURE and '
-                          'AP1_SMOKE_REASONING_EFFORT rewrite the sampling '
-                          'block after validation')
-
-
-@pytest.mark.finding('T3-67', 'F1')
 @pytest.mark.req('R0.1')
 @pytest.mark.parametrize('env', [
     {'AP1_SMOKE_TEMPERATURE': '1'},
@@ -358,7 +345,7 @@ def test_run_with_config_mini_seals_exactly_that_files_settings(ap1_run,
 ])
 def test_run_sampling_environment_variable_changes_nothing(ap1_run, tmp_path,
                                                            env):
-    # Steven's ruling (choices-for-marcus entry 5): the two overrides are
+    # T3-79 (the author's proposal): the two overrides are
     # removed, so "no environment variable can change a sampling setting
     # after validation". AP1_SMOKE_REASONING_EFFORT=omit used to write the
     # reason 'not-supported', which load_config refuses, into the sealed
@@ -636,8 +623,8 @@ def test_r41_requested_temperature_ignored_is_a_d2_platform_finding(ap1_run):
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-30: report.md has no §2.5 statement of the '
                           'links cleared and not cleared; blocked: what '
-                          'clears each link (a)-(e) needs a ruling (step-5 '
-                          'spec-conformance-claims report)')
+                          'clears each link (a)-(e) needs a maintainer '
+                          'decision (no DEC covers it yet)')
 @pytest.mark.req('AP-1 §2.5')
 def test_report_states_which_defeat_condition_links_were_cleared(ap1_run):
     # AP-1 v1.3 §2.5 (l.146): "A refutation must clear (a) through (e).

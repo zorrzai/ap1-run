@@ -410,7 +410,7 @@ def test_identify_figure_locale_ambiguous_token_routes_to_adjudication():
     assert outcome.startswith('ADJUDICATE')
 
 
-# --- Step 5 numeric-hardening: the configured separators (T3-41) ---
+# --- The configured separators (T3-41) ---
 
 @pytest.mark.finding('T3-41')
 @pytest.mark.req('R0.4.2')

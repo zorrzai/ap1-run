@@ -459,7 +459,7 @@ def test_load_config_repeat_count_surrounding_spaces_accepted(load):
     assert load(repeat_count=' 5 ')['repeat_count'] == 5
 
 
-# -- load_config: value checks (step 5 numeric-hardening) ------------------
+# -- load_config: value checks (S3-G1) ------------------------------------
 
 @pytest.mark.finding('S3-G1-10')
 @pytest.mark.parametrize('places, message', [
@@ -908,15 +908,9 @@ def test_load_config_quantisation_unknown_rounding_mode_refused(load):
     assert msg is not None and 'rounding' in msg, msg
 
 
-@pytest.mark.proposal(
-    'T3-79/T3-67: one config file per run (config_mini.json valid, the '
-    'AP1_SMOKE_* sampling overrides removed); proposed, not decided')
-@pytest.mark.finding('T3-79')
-
-
-@pytest.mark.finding('T3-80', 'F1')
+@pytest.mark.finding('T3-80', 'T3-79')
 def test_load_config_example_config_sol_is_the_sol_runs_config():
-    # Integrator decision (step 5): each published model has its own
+    # The fix's choice (T3-79, T3-80): each published model has its own
     # config file, now that nothing overrides model and endpoint. The
     # values are those of output/run_f_sol/report.md section 2 (the
     # resolved config as sealed), apart from dimensions_claimed (D2, D7:
@@ -938,7 +932,10 @@ def test_load_config_example_config_sol_is_the_sol_runs_config():
     assert cfg['dimensions_claimed'] == ['D2', 'D7']
 
 
-@pytest.mark.finding('F1', 'T3-79')
+@pytest.mark.proposal(
+    'T3-79/T3-67: one config file per run (config_mini.json valid, the '
+    'AP1_SMOKE_* sampling overrides removed); proposed, not decided')
+@pytest.mark.finding('T3-79')
 def test_load_config_example_config_mini_is_the_mini_runs_config():
     # Correct (T3-79): config_mini.json is a
     # valid, complete config for the mini run, with the omission label

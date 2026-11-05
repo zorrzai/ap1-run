@@ -18,7 +18,7 @@ from ap1_run.runner.settings import (
 
 @pytest.mark.finding('T3-80')
 def test_no_endpoint_or_model_from_the_environment():
-    # Section B decision (T3-80), following the F1 ruling: model and
+    # T3-80, with T3-79 (the author's proposal): model and
     # endpoint come from the config file only; there is no environment
     # lookup and no gpt-4o-mini / api.openai.com default.
     for name in ('endpoint_and_model', 'DEFAULT_ENDPOINT', 'DEFAULT_MODEL'):
@@ -77,10 +77,10 @@ def test_print_sampling_without_sampling_block(capsys):
                                        '  reasoning_effort=None (from config)\n')
 
 
-@pytest.mark.finding('F1', 'T3-67')
+@pytest.mark.finding('T3-79', 'T3-67')
 def test_print_sampling_environment_changes_nothing(monkeypatch, capsys):
     # The AP1_SMOKE_TEMPERATURE and AP1_SMOKE_REASONING_EFFORT overrides
-    # are gone (Steven's ruling, choices-for-marcus entry 5).
+    # are gone (T3-79, the author's proposal).
     monkeypatch.setenv('AP1_SMOKE_TEMPERATURE', '0.5')
     monkeypatch.setenv('AP1_SMOKE_REASONING_EFFORT', 'omit')
     assert printed({'temperature': '1', 'reasoning_effort': 'none'},

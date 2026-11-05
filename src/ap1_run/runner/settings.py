@@ -87,7 +87,7 @@ def print_sampling(config):
     """Print the temperature and reasoning_effort the run will send, as
     the config declares them. No environment variable changes a sampling
     setting: the config file that is loaded, validated and sealed is the
-    only source (F1)."""
+    only source (T3-79)."""
     sampling = config.get('sampling', {})
     for name, suffix in (('temperature', ''),
                          ('reasoning_effort', ' (from config)')):

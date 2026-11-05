@@ -169,7 +169,7 @@ def test_answer_is_the_released_figure_as_text(score):
                    reason='S3-G7-3: ap1_scorer is declared with metrics=[]; '
                           'the metrics in ap1_inspect.metrics never run; '
                           'blocked: attach (exposes T3-43) or remove is '
-                          "Steven's call while Inspect is unsupported")
+                          "the maintainer's call while Inspect is unsupported")
 def test_scorer_attaches_every_metric_the_package_defines():
     # The correct behaviour is either of the two in the step-3 pin:
     # attach the metrics, or remove them. Both satisfy "no metric is

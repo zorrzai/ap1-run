@@ -211,7 +211,7 @@ def test_read_all_interrupted_last_line_keeps_complete_records(tmp_path):
     assert records[:1] == [{'a': 1}], records
 
 
-# --- Step 5 numeric-hardening ---
+# --- Number grammar and transport hardening (S3-G1) ---
 
 @pytest.mark.finding('S3-G1-16')
 def test_append_timestamp_extra_refused_and_nothing_written(tmp_path):

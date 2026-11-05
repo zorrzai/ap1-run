@@ -522,7 +522,7 @@ def test_extract_percent_with_space():
 @pytest.mark.finding('S3-G1-5')
 def test_extract_adjacent_tokens_both_kept():
     # T3-55: a mutant dropping the second token of '5-3' survived the
-    # legacy suites. S3-G1-5 (section B decision, 2026-10-20): a '-'
+    # legacy suites. S3-G1-5 (the fix's reading of R0.4.2): a '-'
     # directly after a number is an operator, so the tokens are 5 and 3
     # (this pinned 5 and -3 before the fix).
     assert tokens('5-3') == [('5', False, '', '5'), ('3', False, '', '3')]

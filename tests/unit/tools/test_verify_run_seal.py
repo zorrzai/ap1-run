@@ -328,7 +328,7 @@ def test_verify_run_reads_text_files_as_utf8(vrs, run, monkeypatch):
     assert all(e is not None and e.lower() == 'utf-8' for e in encodings)
 
 
-@pytest.mark.finding('F1', 'T3-79')
+@pytest.mark.finding('T3-79')
 def test_verify_run_ignores_config_files_on_disk(vrs, run, base):
     # The sealed config is checked against report.md section 2 only; a
     # config file in example/, matching or not, changes nothing.
@@ -1226,12 +1226,6 @@ def test_verify_run_same_text_other_line_endings_verifies(vrs, good_run, base,
     'T3-79/T3-67: one config file per run (config_mini.json valid, the '
     'AP1_SMOKE_* sampling overrides removed); proposed, not decided')
 @pytest.mark.finding('T3-79')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-79: verify_run reports two non-checks against '
-                          'the on-disk configs')
-
-
-@pytest.mark.finding('F1', 'T3-79')
 def test_verify_run_makes_no_check_against_on_disk_configs(vrs, run):
     # Correct (T3-79): verify_run_seal.py drops its two non-checks
     # against the on-disk files. They always print "does NOT match seal --

@@ -427,7 +427,7 @@ def test_send_sampling_key_cannot_overwrite_body_field(transport, key):
     assert outcome in ('refused', 'kept'), outcome
 
 
-# --- Step 5 numeric-hardening ---
+# --- Number grammar and transport hardening (S3-G1) ---
 
 @pytest.mark.finding('S3-G1-19')
 @pytest.mark.parametrize('value', ['NaN', 'Infinity', '-inf', 'sNaN'])

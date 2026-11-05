@@ -115,7 +115,7 @@ def main(argv=None):
     print(f'API key: present ({key_length} chars)')
     print()
 
-    # -- Sampling: exactly as the config declares it (F1) --
+    # -- Sampling: exactly as the config declares it (T3-79) --
     print_sampling(config)
 
     with open(os.path.join(fixture_dir, 'fixture.json'), 'r', encoding='utf-8') as f:

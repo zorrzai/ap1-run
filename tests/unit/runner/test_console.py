@@ -340,11 +340,6 @@ def test_run_report_wrong_operation_in_unreadable_or_no_figure_not_item_wrong(
     'T3-80: the 3h2 heading laid out like the others; a presentation '
     'choice')
 @pytest.mark.finding('T3-80')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-80: section 3h2 prints a literal backslash-n')
-
-
-@pytest.mark.finding('F3', 'T3-80')
 def test_run_report_section_3h2_heading_starts_after_a_blank_line(capsys):
     # Correct (T3-80): the literal "\n" is fixed; 3h2 is laid out like
     # every other section heading.

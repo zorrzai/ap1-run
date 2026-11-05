@@ -517,7 +517,7 @@ def test_main_creates_a_missing_output_dir(r):
 
 @pytest.mark.finding('T3-80')
 def test_main_endpoint_and_model_from_the_config_only(r, monkeypatch, capsys):
-    # Section B decision (T3-80): the environment supplies only the key.
+    # T3-80 (the author's proposal): the environment supplies only the key.
     monkeypatch.setenv('AP1_SMOKE_ENDPOINT', 'http://elsewhere/v1')
     monkeypatch.setenv('AP1_SMOKE_MODEL', 'other-model')
     r.config.update(endpoint_url='http://from-config/v1', model='cfg-model')
