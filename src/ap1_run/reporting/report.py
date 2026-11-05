@@ -348,9 +348,43 @@ def _status_of(statuses):
     return PARTLY
 
 
+# Outcomes that are an observation of invocation (D7.1), and the
+# statuses of a planned computable execution never observed
+_OBSERVED_INVOCATION = ('INVOKED', 'NOT-INVOKED')
+_NOT_OBSERVED = ('UNMEASURED', 'NOT-RUN')
+
+
+def _never_observed(summary, cond=None):
+    """The planned computable executions (of arm cond, or of the run)
+    with no response observed: UNMEASURED (transport failure, rate
+    limit, interrupted) or NOT-RUN. VOID items are not computable."""
+    return sum(1 for c in summary.get('non_outcome_cells', [])
+               if c.get('status') in _NOT_OBSERVED
+               and (cond is None or c.get('condition') == cond))
+
+
+def _arm_questions(summary, cond):
+    """(computable questions, questions with an observed outcome) of an
+    arm, from the per-execution evidence and the cells never observed;
+    None if the summary has no per-execution evidence."""
+    evidence = summary.get('item_evidence')
+    if not evidence:
+        return None
+    seen = [e for e in evidence if e.get('condition') == cond]
+    computable = {e.get('item_id') for e in seen} | {
+        c.get('item_id') for c in summary.get('non_outcome_cells', [])
+        if c.get('status') in _NOT_OBSERVED and c.get('condition') == cond}
+    observed = {e.get('item_id') for e in seen
+                if e.get('invocation_outcome') in _OBSERVED_INVOCATION}
+    return computable, observed
+
+
 def _d71_arms(summary):
-    """D7.1 per arm: [(status, text)], from the questions each arm has in
-    n per evidence class and its UNOBSERVABLE executions (§5)."""
+    """D7.1 per arm: [(status, text)]. An arm is measured only if every
+    planned computable execution of it was observed: its questions in n
+    per evidence class (§5), its UNOBSERVABLE executions, its executions
+    never observed (UNMEASURED or not run), and the computable questions
+    left out of n."""
     evidence = summary.get('invocation_evidence', {})
     figures = summary.get('invocation_figures', {}).values()
     arms = []
@@ -358,22 +392,55 @@ def _d71_arms(summary):
         classes = evidence.get(cond, {}).get('classes', {}).values()
         executions = sum(c['executions'] for c in classes)
         unobservable = sum(c['unobservable_executions'] for c in classes)
+        never = _never_observed(summary, cond)
         observed = [f'n = {f["n"]}, {f.get("evidence_class") or "no class"}'
                     for f in figures
                     if f.get('condition') == cond and f.get('n')]
         if len(observed) > 1:
             observed.append('not comparable')
-        unread = f'{unobservable} of {executions} executions UNOBSERVABLE'
-        if not executions:
+        gaps = []
+        if unobservable:
+            gaps.append(f'{unobservable} of {executions} executions '
+                        f'UNOBSERVABLE')
+        if never:
+            gaps.append(f'{_executions(never)} UNMEASURED or not run')
+        questions = _arm_questions(summary, cond)
+        if questions and len(questions[1]) < len(questions[0]):
+            computable, seen = questions
+            gaps.append(f'{len(computable) - len(seen)} of '
+                        f'{len(computable)} computable questions not in n')
+        if not executions and not never:
             status, text = NOT_MEASURED, 'no executions'
         elif not observed:
-            status, text = NOT_MEASURED, f'no observed outcome; {unread}'
-        elif unobservable:
-            status, text = PARTLY, '; '.join(observed + [unread])
+            status, text = NOT_MEASURED, '; '.join(
+                ['no observed outcome'] + gaps)
+        elif gaps:
+            status, text = PARTLY, '; '.join(observed + gaps)
         else:
             status, text = MEASURED, '; '.join(observed)
         arms.append((status, f'{cond} {status} ({text})'))
     return arms
+
+
+def _inventory_gap(summary):
+    """'call inventory incomplete for k executions (...)' where calls may
+    have gone unseen: EV-0 executions (no invocation signal, AP-1 D7.7)
+    and executions never observed; None if there are none."""
+    ev0 = sum(c for ec, c in summary.get('evidence_class_counts',
+                                         {}).items()
+              if ec.startswith('EV-0'))
+    never = _never_observed(summary)
+    if not ev0 and not never:
+        return None
+    why = ([f'{ev0} EV-0 UNOBSERVABLE'] if ev0 else []) + (
+        [f'{never} UNMEASURED or not run'] if never else [])
+    return (f'call inventory incomplete for {_executions(ev0 + never)} '
+            f'({", ".join(why)})')
+
+
+def _executions(count):
+    """'1 execution', '2 executions'."""
+    return f'{count} execution{"" if count == 1 else "s"}'
 
 
 def _d72_parts(summary):
@@ -402,16 +469,32 @@ def _d72_parts(summary):
     return parts
 
 
+def _d72_status(summary, parts):
+    """D7.2's status: its parts', and at most partly measured where the
+    call inventory is incomplete."""
+    status = _status_of([s for s, _, _ in parts])
+    if status == MEASURED and _inventory_gap(summary):
+        return PARTLY
+    return status
+
+
 def _d73_part(summary):
-    """D7.3: (status, text), from its UNOBSERVABLE executions."""
+    """D7.3: (status, text), from its UNOBSERVABLE executions and the
+    executions never observed (UNMEASURED or not run)."""
     tr = summary.get('transcription_results', [])
     unobservable = sum(1 for r in tr if r.get('outcome') == 'UNOBSERVABLE')
+    never = _never_observed(summary)
+    unread = [f'{_executions(never)} UNMEASURED or not run'] if never else []
     if not tr:
-        return NOT_MEASURED, 'no executions'
+        return NOT_MEASURED, '; '.join(['no executions'] + unread)
     if unobservable == len(tr):
-        return NOT_MEASURED, f'all {len(tr)} executions UNOBSERVABLE'
+        return NOT_MEASURED, '; '.join(
+            [f'all {len(tr)} executions UNOBSERVABLE'] + unread)
     if unobservable:
-        return PARTLY, f'{unobservable} of {len(tr)} executions UNOBSERVABLE'
+        return PARTLY, '; '.join(
+            [f'{unobservable} of {len(tr)} executions UNOBSERVABLE'] + unread)
+    if unread:
+        return PARTLY, '; '.join(unread)
     return MEASURED, f'{len(tr)} executions'
 
 
@@ -433,12 +516,13 @@ def _d7_rows(summary, d7):
     arms = _d71_arms(summary)
     d71 = _status_of([status for status, _ in arms])
     d72_parts = _d72_parts(summary)
-    d72 = _status_of([status for status, _, _ in d72_parts])
+    d72 = _d72_status(summary, d72_parts)
     d73, d73_text = _d73_part(summary)
     measured = (d71, d72, d73)
     whole = (NOT_MEASURED if all(s == NOT_MEASURED for s in measured)
              else PARTLY)
     (_, a, a_where), (_, b, b_where) = d72_parts
+    gap = _inventory_gap(summary)
     tr = summary.get('transcription_results', [])
     return [
         f'| D7 | {_STATUS_CELL[whole]} | {d7.get("n", "N/A")} | D7.1 '
@@ -446,7 +530,7 @@ def _d7_rows(summary, d7):
         f'| D7.1 | {_STATUS_CELL[d71]} | see \u00a75 | Invocation rate per '
         f'condition (\u00a75): {"; ".join(text for _, text in arms)} |',
         f'| D7.2 | {_STATUS_CELL[d72]} | see \u00a76-7b | {a} ({a_where}); '
-        f'{b} ({b_where})'
+        f'{b} ({b_where})' + (f'; {gap}' if gap else '') +
         f'{_classes_note(summary, ("D7.2(a)", "D7.2(b)"), "§7, §7b")} |',
         f'| D7.3 | {_STATUS_CELL[d73]} | {len(tr)} | Transcription fidelity '
         f'(D7.3 section): {d73}: {d73_text}'
@@ -1276,28 +1360,33 @@ def _section_unmeasured_dimensions(config, summary=None):
                          '; '.join(text for status, text in arms
                                    if status != MEASURED))
         parts = _d72_parts(summary)
-        d72 = _status_of([status for status, _, _ in parts])
+        d72 = _d72_status(summary, parts)
         if d72 != MEASURED:
+            gap = _inventory_gap(summary)
             lines.append(f'- **D7.2**: Computation correctness \u2014 '
-                         f'{d72}: ' + '; '.join(text for status, text, _
-                                                in parts
-                                                if status != MEASURED))
+                         f'{d72}: ' + '; '.join(
+                             [text for status, text, _ in parts
+                              if status != MEASURED] + ([gap] if gap
+                                                        else [])))
         tr = summary.get('transcription_results', [])
         unobservable = sum(1 for r in tr
                            if r.get('outcome') == 'UNOBSERVABLE')
+        never = _never_observed(summary)
         why = ('(no single released figure to compare: routed to '
                'adjudication, or no return of the required operation)')
+        d73 = []
         if not tr:
-            lines.append('- **D7.3**: Transcription fidelity \u2014 not '
-                         'measured: no executions')
+            d73.append('no executions')
         elif unobservable == len(tr):
-            lines.append(f'- **D7.3**: Transcription fidelity \u2014 not '
-                         f'measured: all {len(tr)} executions are '
-                         f'UNOBSERVABLE {why}')
+            d73.append(f'all {len(tr)} executions are UNOBSERVABLE {why}')
         elif unobservable:
-            lines.append(f'- **D7.3**: Transcription fidelity \u2014 partly '
-                         f'measured: {unobservable} of {len(tr)} executions '
-                         f'are UNOBSERVABLE {why}')
+            d73.append(f'{unobservable} of {len(tr)} executions are '
+                       f'UNOBSERVABLE {why}')
+        if never:
+            d73.append(f'{_executions(never)} UNMEASURED or not run')
+        if d73:
+            lines.append(f'- **D7.3**: Transcription fidelity \u2014 '
+                         f'{_d73_part(summary)[0]}: ' + '; '.join(d73))
         lines.append('- **D7.4**: Invocation under pressure \u2014 not '
                      'measured: the runner sends each item once, with no '
                      'rephrasing, casual framing, escalating pressure or '

@@ -378,7 +378,7 @@ EV2 = 'EV-2 PLATFORM-STRUCTURAL'
 
 
 def d7_summary(arms, prov=None, ops=None, transcription=(), by_class=None,
-               n=40):
+               n=40, cells=(), seen=None, ev_counts=None):
     """A summary with what D7.1-D7.3 computed. arms: {condition: [(class,
     executions, questions in n, unobservable executions)]}; prov and ops:
     the D7.2(a) and (b) outcome counts; transcription: D7.3 outcomes."""
@@ -401,7 +401,14 @@ def d7_summary(arms, prov=None, ops=None, transcription=(), by_class=None,
             'transcription_results': [
                 {'item_id': f'Q{i:02d}', 'condition': 'base', 'repeat': i,
                  'outcome': o} for i, o in enumerate(transcription, 1)],
-            'd7_outcomes_by_class': by_class or {}}
+            'd7_outcomes_by_class': by_class or {},
+            'non_outcome_cells': [
+                {'item_id': i, 'condition': c, 'repeat': r, 'status': st}
+                for i, c, r, st in cells],
+            'item_evidence': [
+                {'item_id': i, 'condition': c, 'evidence_class': ec,
+                 'invocation_outcome': o} for i, c, ec, o in seen or ()],
+            'evidence_class_counts': ev_counts or {}}
 
 
 def d7_rows(summary):
@@ -509,6 +516,86 @@ def test_dimension_results_d72_partly_or_not_measured_by_its_counts():
         arms, prov={'OPERANDS-GROUNDED': 2},
         ops={'OPERATION-UNOBSERVABLE': 2}))[2].startswith(
             '| D7.2 | Partly measured |')
+
+
+def transport_errors_summary():
+    """The transport-errors run: base Q03, Q04, Q06 r1 and Q05, Q08 r1, r2
+    UNMEASURED, Q07 r1 EV-0; instruction_removed Q08 r1, r2 UNMEASURED
+    (HTTP 401)."""
+    cells = [('Q03', 'base', 1, 'UNMEASURED'), ('Q04', 'base', 1,
+                                                 'UNMEASURED'),
+             ('Q05', 'base', 1, 'UNMEASURED'), ('Q05', 'base', 2,
+                                                 'UNMEASURED'),
+             ('Q06', 'base', 1, 'UNMEASURED'),
+             ('Q08', 'base', 1, 'UNMEASURED'), ('Q08', 'base', 2,
+                                                 'UNMEASURED'),
+             ('Q08', 'instruction_removed', 1, 'UNMEASURED'),
+             ('Q08', 'instruction_removed', 2, 'UNMEASURED'),
+             ('Q00', 'base', 0, 'VOID')]
+    evidence = [(f'Q{i:02d}', 'instruction_removed', EV2, 'INVOKED')
+                for i in range(1, 11) if i != 8 for _ in (1, 2)]
+    evidence += [(f'Q{i:02d}', 'base', EV2, 'INVOKED')
+                 for i in (1, 2, 9, 10) for _ in (1, 2)]
+    evidence += [(f'Q{i:02d}', 'base', EV2, 'INVOKED') for i in (3, 4, 6, 7)]
+    evidence += [('Q07', 'base', EV0, None)]
+    return d7_summary(
+        {'base': [(EV0, 1, 0, 1), (EV2, 12, 8, 0)],
+         'instruction_removed': [(EV2, 18, 9, 0)]},
+        prov={'OPERANDS-GROUNDED': 31}, ops={'OPERATION-CORRECT': 31},
+        transcription=['TRANSCRIBED-EXACT'] * 30 + ['UNOBSERVABLE'],
+        cells=cells, seen=evidence,
+        ev_counts={EV0: 1, EV2: 30})
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7', 'R3.3')
+def test_dimension_results_d7_counts_executions_never_observed():
+    # A question lost to transport failures left "instruction_removed
+    # measured (n = 9)" beside §10's two UNMEASURED Q08 cells. An arm is
+    # measured only if every computable execution of it was observed.
+    rows = d7_rows(transport_errors_summary())
+    assert rows[1] == (
+        '| D7.1 | Partly measured | see \u00a75 | Invocation rate per '
+        'condition (\u00a75): base partly measured (n = 8, EV-2 '
+        'PLATFORM-STRUCTURAL; 1 of 13 executions UNOBSERVABLE; 7 '
+        'executions UNMEASURED or not run; 2 of 10 computable questions '
+        'not in n); instruction_removed partly measured (n = 9, EV-2 '
+        'PLATFORM-STRUCTURAL; 2 executions UNMEASURED or not run; 1 of 10 '
+        'computable questions not in n) |')
+    assert rows[2].startswith(
+        '| D7.2 | Partly measured | see \u00a76-7b | (a) operand provenance '
+        'measured: 31 calls (\u00a76, \u00a77b); (b) operation correctness '
+        'measured: 31 operations (\u00a77); call inventory incomplete for '
+        '10 executions (1 EV-0 UNOBSERVABLE, 9 UNMEASURED or not run)')
+    assert rows[3].startswith(
+        '| D7.3 | Partly measured | 31 | Transcription fidelity (D7.3 '
+        'section): partly measured: 1 of 31 executions UNOBSERVABLE; 9 '
+        'executions UNMEASURED or not run')
+    s12 = report._section_unmeasured_dimensions(CONFIG,
+                                                transport_errors_summary())
+    assert ('instruction_removed partly measured (n = 9, EV-2 '
+            'PLATFORM-STRUCTURAL; 2 executions UNMEASURED or not run; 1 of '
+            '10 computable questions not in n)') in s12
+    assert ('- **D7.2**: Computation correctness \u2014 partly measured: '
+            'call inventory incomplete for 10 executions (1 EV-0 '
+            'UNOBSERVABLE, 9 UNMEASURED or not run)') in s12
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7', 'AP-1 D7.7', 'R3.3')
+def test_dimension_results_d72_partly_measured_with_unreadable_inventory():
+    # One execution with a readable, grounded, correct call; another of
+    # an unrecognised shape (EV-0) whose calls were never seen. The
+    # counts hold only the first call; D7.2 is not fully measured.
+    summary = d7_summary(
+        {'base': [(EV2, 1, 1, 0), (EV0, 1, 0, 1)]},
+        prov={'OPERANDS-GROUNDED': 1}, ops={'OPERATION-CORRECT': 1},
+        ev_counts={EV2: 1, EV0: 1})
+    assert d7_rows(summary)[2].startswith(
+        '| D7.2 | Partly measured | see \u00a76-7b | (a) operand provenance '
+        'measured: 1 calls (\u00a76, \u00a77b); (b) operation correctness '
+        'measured: 1 operations (\u00a77); call inventory incomplete for 1 '
+        'execution (1 EV-0 UNOBSERVABLE)')
 
 
 @pytest.mark.finding('T3-29')

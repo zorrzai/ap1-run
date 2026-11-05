@@ -133,10 +133,10 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 111 records.
 | D4 | **NOT MEASURED** | — | — |
 | D5 | **NOT MEASURED** | — | — |
 | D6 | **NOT MEASURED** | — | — |
-| D7 | Partly measured | 31 | D7.1 partly measured, D7.2 measured, D7.3 partly measured; D7.4 not measured (§12) |
-| D7.1 | Partly measured | see §5 | Invocation rate per condition (§5): base partly measured (n = 8, EV-2 PLATFORM-STRUCTURAL; 1 of 13 executions UNOBSERVABLE); instruction_removed measured (n = 9, EV-2 PLATFORM-STRUCTURAL) |
-| D7.2 | Measured | see §6-7b | (a) operand provenance measured: 31 calls (§6, §7b); (b) operation correctness measured: 31 operations (§7); on 2 evidence classes, not comparable (per class: §7, §7b) |
-| D7.3 | Partly measured | 31 | Transcription fidelity (D7.3 section): partly measured: 1 of 31 executions UNOBSERVABLE; on 2 evidence classes, not comparable (per class: D7.3 section) |
+| D7 | Partly measured | 31 | D7.1 partly measured, D7.2 partly measured, D7.3 partly measured; D7.4 not measured (§12) |
+| D7.1 | Partly measured | see §5 | Invocation rate per condition (§5): base partly measured (n = 8, EV-2 PLATFORM-STRUCTURAL; 1 of 13 executions UNOBSERVABLE; 7 executions UNMEASURED or not run; 2 of 10 computable questions not in n); instruction_removed partly measured (n = 9, EV-2 PLATFORM-STRUCTURAL; 2 executions UNMEASURED or not run; 1 of 10 computable questions not in n) |
+| D7.2 | Partly measured | see §6-7b | (a) operand provenance measured: 31 calls (§6, §7b); (b) operation correctness measured: 31 operations (§7); call inventory incomplete for 10 executions (1 EV-0 UNOBSERVABLE, 9 UNMEASURED or not run); on 2 evidence classes, not comparable (per class: §7, §7b) |
+| D7.3 | Partly measured | 31 | Transcription fidelity (D7.3 section): partly measured: 1 of 31 executions UNOBSERVABLE; 9 executions UNMEASURED or not run; on 2 evidence classes, not comparable (per class: D7.3 section) |
 | D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |
 
 ## 4. D7 Figures by Evidence Class
@@ -438,8 +438,9 @@ The following dimensions were **not measured** in this evaluation:
 
 D7 is claimed, but not all of it was measured (AP-1 v1.3 D7: "Report all four"):
 
-- **D7.1**: Invocation rate — partly measured: base partly measured (n = 8, EV-2 PLATFORM-STRUCTURAL; 1 of 13 executions UNOBSERVABLE)
-- **D7.3**: Transcription fidelity — partly measured: 1 of 31 executions are UNOBSERVABLE (no single released figure to compare: routed to adjudication, or no return of the required operation)
+- **D7.1**: Invocation rate — partly measured: base partly measured (n = 8, EV-2 PLATFORM-STRUCTURAL; 1 of 13 executions UNOBSERVABLE; 7 executions UNMEASURED or not run; 2 of 10 computable questions not in n); instruction_removed partly measured (n = 9, EV-2 PLATFORM-STRUCTURAL; 2 executions UNMEASURED or not run; 1 of 10 computable questions not in n)
+- **D7.2**: Computation correctness — partly measured: call inventory incomplete for 10 executions (1 EV-0 UNOBSERVABLE, 9 UNMEASURED or not run)
+- **D7.3**: Transcription fidelity — partly measured: 1 of 31 executions are UNOBSERVABLE (no single released figure to compare: routed to adjudication, or no return of the required operation); 9 executions UNMEASURED or not run
 - **D7.4**: Invocation under pressure — not measured: the runner sends each item once, with no rephrasing, casual framing, escalating pressure or adversarial input
 
 ## 13. Declared Limitations
