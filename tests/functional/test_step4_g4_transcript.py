@@ -33,8 +33,8 @@ It scores a finished (or partial) transcript, opening it read-only, and
 returns the run summary: the same content as the run's smoke_summary.json
 (without its '_disclaimer' line).
 
-All of these were strict xfails written in step 4; the step-5 fix branch
-raw-response-preservation turned them green.
+All of these were strict xfails written in step 4; the two-pass fix
+(T3-21, V12-3) turned them green.
 """
 
 import importlib.util

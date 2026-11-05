@@ -108,7 +108,7 @@ def execute_item(item, *, condition, config, fixture,
             seal_hash=seal_hash, repeat=repeat,
             rounds=rounds, status='UNMEASURED', cause=cause,
         )
-        # F4/T3-65: the runner lists the cell with its cause (recorded,
+        # T3-65: the runner lists the cell with its cause (recorded,
         # so the scoring pass reads it from the transcript)
         return {
             'item_id': item_id, 'condition': condition,

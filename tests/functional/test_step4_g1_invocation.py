@@ -337,7 +337,7 @@ def test_run_report_states_invocation_headline_with_k_n_and_bound(full_run):
 
 # -- T3-65: round-0 transport errors fill the unmeasured cells -------
 
-@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.finding('T3-65')
 def test_run_round0_transport_errors_listed_as_unmeasured_cells_with_cause(
         full_run):
     """Round 0 of Q03/base/r1 is rate limited (429), of Q04/base/r1 an
@@ -403,7 +403,7 @@ def test_run_call_to_unoffered_tool_recorded_not_invoked_run_completes(
 
 # -- T3-39, S3-G2-4: model-controlled input never aborts the run ------
 
-@pytest.mark.finding('T3-39', 'F6', 'S3-G2-4', 'S3-G4-5')
+@pytest.mark.finding('T3-39', 'S3-G2-4', 'S3-G4-5')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}',             # T3-39: not a string
     '{"expression": "True * 15.2"}',    # T3-39: boolean literal

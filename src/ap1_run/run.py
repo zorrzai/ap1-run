@@ -279,7 +279,7 @@ def main(argv=None):
 
                 # === CALL engine.execute_item — THE TESTED PATH ===
                 # A failed request (rate limit or transport error) comes
-                # back UNMEASURED with its cause (F4, T3-65).
+                # back UNMEASURED with its cause (T3-65).
                 result = execute_item(
                     item,
                     condition=condition,

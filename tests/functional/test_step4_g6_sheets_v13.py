@@ -152,8 +152,7 @@ def test_run_transcript_records_carry_their_repeat_index(tmp_path,
 
 
     """Every transcript record (the failed repeat's too) carries the
-    repeat it belongs to, so the outputs can join on it. Fix plan §2
-    branch 6: "Write a repeat index on every record and join on it".
+    repeat it belongs to, so the outputs can join on it (T3-9).
     Since the two passes were separated (T3-21), the transcript holds one
     record per execution and no figure-identification records."""
     out = run_example(tmp_path, monkeypatch, items={'Q02'}, repeat_count=3,

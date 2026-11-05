@@ -204,7 +204,7 @@ def test_execute_item_no_system_prompt_user_message_only(tmp_path, prompt):
 
 # -- round-0 transport failure -----------------------------------------
 
-@pytest.mark.finding('F4', 'T3-65')
+@pytest.mark.finding('T3-65')
 @pytest.mark.parametrize('error, cause', [
     (adapter.RateLimitError('Rate limit reached'), 'rate_limited'),
     (adapter.HTTPError('HTTP 500: server error', 500, '{}'),
@@ -213,7 +213,7 @@ def test_execute_item_no_system_prompt_user_message_only(tmp_path, prompt):
     (RuntimeError('anything'), 'transport_error'),
 ], ids=['rate-limit', 'http', 'adapter', 'other'])
 def test_execute_item_first_send_fails_unmeasured(tmp_path, error, cause):
-    # F4 / T3-65 (Steven, choices-for-marcus #7): every exception from the
+    # T3-65 (the author's proposal): every exception from the
     # first send is caught here, written to the transcript and returned
     # as UNMEASURED with its cause (a rate limit or a transport error);
     # the runner lists the cell (runner/executions.record_not_scored).
@@ -237,8 +237,8 @@ def test_execute_item_first_send_fails_unmeasured(tmp_path, error, cause):
 @pytest.mark.finding('V12-3', 'S3-G1-18')
 def test_execute_item_failed_round_keeps_the_adapter_attempt_log(tmp_path):
     # A failed round records the adapter's request record with its
-    # attempt log where the error carries one (numeric-hardening,
-    # S3-G1-18), not just the messages.
+    # attempt log where the error carries one (S3-G1-18), not just the
+    # messages.
     error = adapter.AdapterError('transport failure after 3 attempts: x')
     error.request_record = {'messages': INITIAL, 'attempts': [1, 2, 3]}
     _, records = run(tmp_path, FakeAdapter(error))

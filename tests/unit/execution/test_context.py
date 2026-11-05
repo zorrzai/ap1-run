@@ -334,7 +334,7 @@ def test_tracking_account_setdefault_without_default_inserts_none():
     assert dict.__getitem__(acct, 'nope') is None
 
 
-# --- Step 5: the text the model sees agrees with the scored context ---
+# --- The text the model sees agrees with the scored context (T3-56) ---
 
 def _shipped_items():
     import json

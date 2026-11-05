@@ -53,7 +53,7 @@ def test_attach_scores_leaves_the_records_unchanged():
 @pytest.mark.req('R3.2')
 def test_attach_scores_joins_on_item_condition_and_repeat():
     # Repeat 1 failed in transport: it has no scores, and repeats 2 and 3
-    # keep their own (fix plan §2 branch 6).
+    # keep their own (T3-9).
     records = [engine('Q01', 'base', repeat=1,
                       error_state='TRANSPORT_FAILURE: HTTP 500'),
                engine('Q01', 'base', repeat=2),

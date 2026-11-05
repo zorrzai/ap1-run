@@ -405,7 +405,7 @@ def test_run_report_3h_rate_counts_questions_not_repeats(capsys):
     assert '0/1 failures' in text, text
 
 
-@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.finding('T3-65')
 def test_run_report_3g_lists_each_unmeasured_cell_with_cause(capsys):
     # Correct (T3-65; SPEC R0.2): section 3g
     # names each unmeasured cell with its cause.

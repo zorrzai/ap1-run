@@ -78,7 +78,7 @@ def record_not_scored(findings, item_id, condition, rep, status, result):
 
     An UNMEASURED cell (a failed request, rate limited or a transport
     error, or an empty response) is also listed among the unmeasured
-    cells with its cause (F4, T3-65); it is in no denominator.
+    cells with its cause (T3-65); it is in no denominator.
     """
     cause = result.get('error', result.get('reason', ''))
     if result.get('cause'):

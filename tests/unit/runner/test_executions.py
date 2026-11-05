@@ -469,7 +469,7 @@ def test_record_not_run():
     assert findings.unmeasured_cells == []
 
 
-@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.finding('T3-65')
 @pytest.mark.parametrize('result, cause', [
     ({'error': 'rate limited (HTTP 429): x', 'cause': 'rate_limited'},
      'rate_limited: rate limited (HTTP 429): x'),
@@ -478,7 +478,7 @@ def test_record_not_run():
     ({'error': 'empty response'}, 'empty response'),
 ], ids=['rate-limited', 'transport', 'empty'])
 def test_record_not_scored_unmeasured_cell_cause(result, cause):
-    # F4/T3-65 (Steven, choices-for-marcus #7): every UNMEASURED cell is
+    # T3-65 (the author's proposal): every UNMEASURED cell is
     # listed with its cause, the engine's kind first where it gives one.
     findings = Findings()
     record_not_scored(findings, 'Q05', 'base', 3, 'UNMEASURED',
@@ -775,7 +775,7 @@ def test_result_from_record_unmeasured_with_its_cause(recorders, error_state,
     assert recorders.calls == {}
 
 
-@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.finding('T3-65')
 @pytest.mark.parametrize('cause', ['rate_limited', 'transport_error'])
 def test_result_from_record_unmeasured_carries_the_recorded_cause(
         recorders, cause):
@@ -1076,7 +1076,7 @@ def test_score_execution_no_released_figure_recorded_as_null(fakes):
                for r in transcript.read_all(tpath) if 'released_figure' in r)
 
 
-@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.finding('T3-65')
 @pytest.mark.parametrize('error, word', [
     ('rate limited (HTTP 429): {"error": "Rate limit"}', 'rate'),
     ('transport failure after 3 attempts: reset', 'transport'),

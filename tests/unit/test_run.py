@@ -207,7 +207,7 @@ RULE = '=' * 60
 def script_statuses(r):
     # Each not-executed status is on a first repeat; the second still runs.
     # A failed request comes back from the engine UNMEASURED with its
-    # cause (F4, T3-65); nothing is raised.
+    # cause (T3-65); nothing is raised.
     r.results[('Q1', 'base', 1)] = {'status': 'UNMEASURED',
                                     'error': 'slow down',
                                     'cause': 'rate_limited'}
@@ -852,7 +852,7 @@ def test_main_ground_truth_computes_in_the_shared_context(r):
 
 
 # Step 5 (run-robustness): removing the runner's dead transport handlers
-# (F4, T3-65) removed the code whose mutants they killed, so the ratchet
+# (T3-65) removed the code whose mutants they killed, so the ratchet
 # needs these mutants of main() killed instead.
 
 # (test_main_reads_fixture_and_questions_as_utf8_text was removed on the
