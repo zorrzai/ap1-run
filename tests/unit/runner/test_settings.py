@@ -247,7 +247,11 @@ def test_parse_args_help_text(capsys, monkeypatch):
         'directory given here that already holds a run is refused\n'
         '  --ap1-text AP1_TEXT   the AP-1 text to seal; its hash must match '
         'the one the runner expects '
-        '(default: reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md)\n')
+        # AP1_TEXT is built with os.path.join, so its help shows the native
+        # separator (a backslash on Windows); the other defaults are literals
+        '(default: '
+        + os.path.join('reference', 'AP-1_v1.3_DRAFT_FOR_COMMENT.md')
+        + ')\n')
 
 
 def test_parse_args_output_dir_given_as_the_default_path_is_explicit():
