@@ -345,10 +345,9 @@ def test_declared_constants_check_passes_example_module():
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
-# Group g3-seal-guards; see inbox/2026-10-20_step4-g3-seal-guards-report.md.
-# The D("0") exemption (also listed under T3-54) has no test here: whether
-# 0 is a structural constant is the STRUCTURAL_CONSTANTS question awaiting
-# Marcus (step-4 protocol, rule 6).
+# The D("0") exemption (also listed under T3-54) has no test here: the
+# maintainer's decision DEC-2 settles which values are structural constants
+# in operand provenance, not whether this seal-time check may exempt 0.
 
 def refusal_of(mod, qs):
     """The SealError message, or None if the check passed. (Not

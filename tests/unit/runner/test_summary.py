@@ -505,8 +505,6 @@ def test_summary_wrong_operation_in_no_figure_execution_not_item_wrong():
     assert s['wrong_operation_split']['item_wrong'] == 0
 
 
-# Group g1-invocation (fix plan branch 1).
-
 @pytest.mark.finding('T3-38')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-38: NOT-INVOKED with a call to an unoffered '

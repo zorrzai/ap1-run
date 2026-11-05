@@ -1,5 +1,5 @@
 """Step 4, group g9: correct behaviour for the SPEC conformance claims and
-the config rulings, end to end (failing until fixed).
+one config file per run, end to end (failing until fixed).
 
 Each test drives the real runner (``ap1_run.run.main``) against the mock
 chat-completions endpoint the regression scenarios use
@@ -8,8 +8,9 @@ and repeat), on a copy of the shipped example in ``tmp_path``, with
 ``--fixture-dir`` and ``--output-dir`` there. Nothing is written into the
 repository.
 
-Tests marked ``xfail(strict=True)`` assert what SPEC (or Steven's ruling)
-says is correct and fail on today's code; the fix removes the marker.
+Tests marked ``xfail(strict=True)`` assert what SPEC (or, where SPEC is
+silent, the finding) says is correct and fail on today's code; the fix
+removes the marker.
 Unmarked tests assert R4.1 rows that today's live path already gets right.
 """
 
@@ -171,7 +172,6 @@ def refused_before_any_request(result):
     return stopped and not result.requests and not result.transcript, why
 
 
-
 def script(**items):
     """The clean script with the given items' turns replaced (both
     conditions, every repeat)."""
@@ -262,7 +262,7 @@ def test_r41_d6_claimed_with_nine_items_refused_at_load(ap1_run):
     assert 'D6' in f'{result.exception} {result.out[-500:]}'
 
 
-# --- F1 / T3-79 / T3-67: one config file per run ------------------------------
+# --- T3-79 / T3-67: one config file per run ------------------------------
 
 def sampling_sent(body, sampling):
     """The sampling fields of one request body that disagree with the
@@ -299,23 +299,22 @@ def assert_run_used_the_file(result, config_path):
         assert sampling_sent(entry['request'], declared) == {}
 
 
-@pytest.mark.finding('F1', 'T3-79')
+@pytest.mark.finding('T3-79')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="F1/T3-79: config_mini.json is refused at load "
+                   reason="T3-79: config_mini.json is refused at load "
                           "(reason 'model-unsupported')")
 def test_run_with_config_mini_seals_exactly_that_files_settings(ap1_run,
                                                                 tmp_path):
-    # Steven's ruling (choices-for-marcus entry 5; decisions file, F1,
-    # "Steven's Response 2"): "a run with --config seals exactly that
-    # file's settings", with example/config_mini.json the mini run's
+    # Correct (T3-67, T3-79): a run with --config seals exactly that
+    # file's settings, with example/config_mini.json the mini run's
     # valid, complete config.
     result = ap1_run(config_file='config_mini.json')
     assert_run_used_the_file(result, tmp_path / 'example' / 'config_mini.json')
 
 
-@pytest.mark.finding('T3-67', 'F1')
+@pytest.mark.finding('T3-67', 'T3-79')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-67/F1: AP1_SMOKE_TEMPERATURE and '
+                   reason='T3-67/T3-79: AP1_SMOKE_TEMPERATURE and '
                           'AP1_SMOKE_REASONING_EFFORT rewrite the sampling '
                           'block after validation')
 @pytest.mark.req('R0.1')
@@ -326,9 +325,9 @@ def test_run_with_config_mini_seals_exactly_that_files_settings(ap1_run,
 ])
 def test_run_sampling_environment_variable_changes_nothing(ap1_run, tmp_path,
                                                            env):
-    # Steven's ruling (choices-for-marcus entry 5): the two overrides are
-    # removed, so "no environment variable can change a sampling setting
-    # after validation". Today AP1_SMOKE_REASONING_EFFORT=omit writes the
+    # Correct (T3-79): the two overrides are removed, so no environment
+    # variable can change a sampling setting after validation. Today
+    # AP1_SMOKE_REASONING_EFFORT=omit writes the
     # reason 'not-supported', which load_config refuses, into the sealed
     # config (T3-67). A run that refuses to start while such a variable
     # is set would also be correct.
@@ -537,7 +536,7 @@ def test_r41_grouped_currency_and_parenthesised_figures_parse(ap1_run, text,
 @pytest.mark.req('R4.1', 'R0.2')
 def test_r41_rate_limit_error_is_unmeasured(ap1_run):
     # Row "Rate-limit error | UNMEASURED" (the unmeasured-cells count is
-    # F4/T3-65, not asserted here).
+    # T3-65, not asserted here).
     result = ap1_run(responses=script(Q01=[
         {'http': 429, 'body': '{"error": {"message": "rate limited"}}'}]))
     record = base_record(result, 'Q01')

@@ -172,7 +172,7 @@ def test_scorer_attaches_every_metric_the_package_defines():
     # The correct behaviour is either of the two in the step-3 pin:
     # attach the metrics, or remove them. Both satisfy "no metric is
     # defined and never computed". (Inspect is unsupported for now,
-    # Marcus 2026-10-16; attaching them exposes T3-43's metric defects.)
+    # as README says; attaching them exposes T3-43's metric defects.)
     import ap1_inspect.metrics as metrics_module
     from inspect_ai._util.registry import is_registry_object, registry_info
     defined = {registry_info(obj).name

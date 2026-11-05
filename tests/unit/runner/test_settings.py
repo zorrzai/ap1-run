@@ -327,7 +327,6 @@ def test_check_output_dir_allows_the_default_dir_holding_a_run(tmp_path,
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
-# Group g3-seal-guards; see inbox/2026-10-20_step4-g3-seal-guards-report.md.
 
 @pytest.mark.finding('T3-46')
 @pytest.mark.req('R1.2', 'AP-1 D7.8')

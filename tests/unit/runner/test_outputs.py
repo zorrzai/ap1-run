@@ -152,7 +152,7 @@ def test_write_outputs_writes_four_files_and_says_where(
                           'records by position, not by repeat')
 def test_attach_joins_figure_outcomes_on_the_repeat_index():
     # Repeat 1 failed in transport: an engine record, no figure record.
-    # Correct (fix plan §2 branch 6): every record carries its repeat and
+    # Correct (T3-9): every record carries its repeat and
     # the join uses it, so repeats 2 and 3 keep their own outcomes and
     # repeat 1 gets none. Today repeat 1 takes repeat 2's outcome.
     records = [engine('Q01', 'base', repeat=1,

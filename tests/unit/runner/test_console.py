@@ -2,8 +2,6 @@
 
 import pytest
 
-import pytest
-
 from ap1_run.runner.console import print_run_report, print_scoring_report
 
 RULE = '=' * 60
@@ -46,7 +44,7 @@ def test_run_report_with_no_results(capsys):
             '    failure rate: no observations\n'
             '  instruction_removed: invoked=0 not_invoked=0 n=0\n'
             '    failure rate: no observations\n'
-            # F3: a literal backslash-n, pinned as it is today
+            # T3-80: a literal backslash-n, pinned as it is today
             '\\n3h2. D7.3 TRANSCRIPTION:\n'
             '  TRANSCRIBED-EXACT: 0\n'
             '  TRANSCRIBED-ALTERED: 0\n'
@@ -299,24 +297,16 @@ def test_run_report_wrong_operation_in_unreadable_or_no_figure_not_item_wrong(
     assert line.split()[-1] == '0'
 
 
-import pytest  # noqa: E402
-
-
-@pytest.mark.finding('F3', 'T3-80')
+@pytest.mark.finding('T3-80')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F3: section 3h2 prints a literal backslash-n')
+                   reason='T3-80: section 3h2 prints a literal backslash-n')
 def test_run_report_section_3h2_heading_starts_after_a_blank_line(capsys):
-    # Steven's ruling (choices-for-marcus entry 4): the literal "\n" is
-    # fixed; 3h2 is laid out like every other section heading.
+    # Correct (T3-80): the literal "\n" is fixed; 3h2 is laid out like
+    # every other section heading.
     out = run_report(capsys, [], conditions=['base'])
     assert '\\n' not in out
     assert '    failure rate: no observations\n\n3h2. D7.3 TRANSCRIPTION:\n' \
         in out
-
-
-# Group g1-invocation (fix plan branches 1 and 10).
-
-import pytest  # noqa: E402  (the step-3 tests above need no marks)
 
 
 def section(out, label):
@@ -354,11 +344,11 @@ def test_run_report_3h_rate_counts_questions_not_repeats(capsys):
     assert '0/1 failures' in text, text
 
 
-@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.finding('T3-65')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-65/F4: console 3g prints only a count')
+                   reason='T3-65: console 3g prints only a count')
 def test_run_report_3g_lists_each_unmeasured_cell_with_cause(capsys):
-    # Correct (Steven's ruling on F4, choices-for-marcus #7): section 3g
+    # Correct (T3-65; SPEC R0.2): section 3g
     # names each unmeasured cell with its cause.
     cells = [{'item_id': 'Q03', 'condition': 'base', 'repeat': 1,
               'cause': 'rate limited (HTTP 429)'},

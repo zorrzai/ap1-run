@@ -349,7 +349,7 @@ def test_identify_figure_extractor_returning_nothing_is_auto_no_figure():
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
-# Group g7-report (fix branch 7). xfail(strict=True) until the fix.
+# xfail(strict=True) until the fix.
 
 @pytest.mark.finding('T3-3')
 @pytest.mark.xfail(strict=True, raises=AssertionError,

@@ -304,9 +304,9 @@ def test_source_hash_prefix_exclusion_drops_output_named_files(tmp_path):
     assert compute_runner_source_hash(root) == expected_hash(files)
 
 
-@pytest.mark.finding('F2', 'T3-70')
+@pytest.mark.finding('T3-70')
 def test_source_hash_includes_venv_tests_and_scratch_files(tmp_path):
-    # Current behaviour (F2): every .py under the root is hashed: an
+    # Current behaviour (T3-70): every .py under the root is hashed: an
     # in-tree venv, the tests, and untracked scratch files, so a user
     # with a venv in the clone gets a different runner_source_hash.
     # Correct: hash the shipped runner (src/, plus whatever the release
@@ -320,8 +320,7 @@ def test_source_hash_includes_venv_tests_and_scratch_files(tmp_path):
 
 # --- Step 4: correct behaviour (failing until fixed) ---
 
-# F2 / T3-70, Steven's ruling (choices-for-marcus.md entry 6, step-4
-# decisions "F2"): runner_source_hash covers src/ap1_run/ and VERSION only,
+# T3-70: runner_source_hash covers src/ap1_run/ and VERSION only,
 # not tests, tools/ or an in-tree venv. A test never runs during a
 # measurement, so adding one must not make a run look like it used
 # different code.
@@ -345,34 +344,34 @@ def hash_after(tmp_path, change, files=CLONE):
     return before, compute_runner_source_hash(str(root))
 
 
-@pytest.mark.finding('F2', 'T3-70')
+@pytest.mark.finding('T3-70')
 @pytest.mark.parametrize('change', [
     {'tests/unit/test_run.py': b'def test_x(): assert 1\n'},
     {'tests/unit/test_new.py': b'def test_y(): pass\n'},
     {'tests/functional/conftest.py': b'X = 2\n'}],
     ids=['edit', 'add', 'other-dir'])
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F2/T3-70: runner_source_hash covers the tests')
+                   reason='T3-70: runner_source_hash covers the tests')
 def test_source_hash_editing_tests_leaves_it_unchanged(tmp_path, change):
     before, after = hash_after(tmp_path, change)
     assert after == before
 
 
-@pytest.mark.finding('F2', 'T3-70')
+@pytest.mark.finding('T3-70')
 @pytest.mark.parametrize('change', [
     {'tools/verify_run_seal.py': b'print(2)\n'},
     {'tools/new_tool.py': b'print(3)\n'}], ids=['edit', 'add'])
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F2/T3-70: runner_source_hash covers tools/')
+                   reason='T3-70: runner_source_hash covers tools/')
 def test_source_hash_editing_tools_leaves_it_unchanged(tmp_path, change):
     before, after = hash_after(tmp_path, change)
     assert after == before
 
 
-@pytest.mark.finding('F2', 'T3-70')
+@pytest.mark.finding('T3-70')
 @pytest.mark.parametrize('venv', ['.venv', 'venv'])
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F2/T3-70: an in-tree venv changes '
+                   reason='T3-70: an in-tree venv changes '
                           'runner_source_hash')
 def test_source_hash_venv_inside_clone_leaves_it_unchanged(tmp_path, venv):
     before, after = hash_after(tmp_path, {
@@ -392,7 +391,7 @@ def test_source_hash_scratch_file_outside_package_leaves_it_unchanged(
     assert after == before
 
 
-@pytest.mark.finding('F2', 'T3-70')
+@pytest.mark.finding('T3-70')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-70: VERSION is not part of runner_source_hash')
 def test_source_hash_editing_version_file_changes_it(tmp_path):
@@ -400,13 +399,13 @@ def test_source_hash_editing_version_file_changes_it(tmp_path):
     assert after != before
 
 
-@pytest.mark.finding('F2')
+@pytest.mark.finding('T3-70')
 @pytest.mark.parametrize('change', [
     {'src/ap1_run/scoring/accuracy.py': b'X = 2\n'},
     {'src/ap1_run/scoring/new_module.py': b'Y = 1\n'}], ids=['edit', 'add'])
 def test_source_hash_editing_package_module_changes_it(tmp_path, change):
-    # Passes today and must keep passing after F2: the scope narrows to
-    # src/ap1_run/ and VERSION, it does not drop the package.
+    # Passes today and must keep passing after T3-70's fix: the scope
+    # narrows to src/ap1_run/ and VERSION, it does not drop the package.
     before, after = hash_after(tmp_path, change)
     assert after != before
 

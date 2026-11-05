@@ -230,7 +230,6 @@ def test_tracking_context_non_subscript_read_not_recorded(read):
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
-# Group g3-seal-guards; see inbox/2026-10-20_step4-g3-seal-guards-report.md.
 
 @pytest.mark.finding('T3-8')
 @pytest.mark.req('R3.1')

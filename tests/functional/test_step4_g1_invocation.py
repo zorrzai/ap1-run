@@ -1,6 +1,6 @@
 """Step 4, group g1-invocation: the correct behaviour of a whole run, for
-the D7.1 aggregation and run-robustness findings (fix plan branches 1 and
-10). Every test here fails on today's code and is marked xfail(strict).
+the D7.1 aggregation and run-robustness findings. Every test here fails
+on today's code and is marked xfail(strict).
 
 Each test runs the real runner (ap1_run.run.main, nothing replaced)
 against the regression mock endpoint (tests/fixtures/mock_endpoint.py) on
@@ -262,7 +262,7 @@ def test_run_d71_bound_counts_questions_not_repeats(full_run):
 def test_run_report_states_invocation_headline_with_k_n_and_bound(full_run):
     """Correct (AP-1 v1.2/v1.3 §6.2 template "Deterministic computation
     was invoked on [X]% of computable questions, under [conditions]";
-    fix plan row 1): the report states the rate as a percentage, with
+    T3-1): the report states the rate as a percentage, with
     k/n and the bound, for each condition. Today §5 prints only "10/10"
     and the bound, and no percentage of questions."""
     r = full_run({})
@@ -274,18 +274,17 @@ def test_run_report_states_invocation_headline_with_k_n_and_bound(full_run):
         assert '10/10' in line and re.search(r'25\.8[89]|25\.9', line), line
 
 
-# -- T3-65 / F4: round-0 transport errors fill the unmeasured cells -------
+# -- T3-65: round-0 transport errors fill the unmeasured cells -------
 
-@pytest.mark.finding('T3-65', 'F4')
+@pytest.mark.finding('T3-65')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-65/F4: unmeasured-cells list empty after '
+                   reason='T3-65: unmeasured-cells list empty after '
                           'round-0 transport errors')
 def test_run_round0_transport_errors_listed_as_unmeasured_cells_with_cause(
         full_run):
     """Round 0 of Q03/base/r1 is rate limited (429), of Q04/base/r1 an
     HTTP 500, and Q05/base/r1's connection drops (three attempts).
-    Correct (Steven's ruling, step-4 decisions F4 option 1;
-    choices-for-marcus #7; SPEC R0.2): the engine keeps the transcript
+    Correct (T3-65; SPEC R0.2): the engine keeps the transcript
     record and returns UNMEASURED, the run continues, and the runner's
     unmeasured-cells list (smoke_summary.json and console 3g) names each
     cell with its cause, a rate limit distinct from a transport error;
@@ -347,16 +346,16 @@ def test_run_call_to_unoffered_tool_recorded_not_invoked_run_completes(
         ['python']
 
 
-# -- T3-39, F6, S3-G2-4: model-controlled input never aborts the run ------
+# -- T3-39, S3-G2-4: model-controlled input never aborts the run ------
 
-@pytest.mark.finding('T3-39', 'F6', 'S3-G2-4', 'S3-G4-5')
+@pytest.mark.finding('T3-39', 'S3-G2-4', 'S3-G4-5')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39/F6/S3-G2-4/S3-G4-5: model-controlled '
+                   reason='T3-39/S3-G2-4/S3-G4-5: model-controlled '
                           'calculator input aborts the run')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}',             # T3-39: not a string
     '{"expression": "True * 15.2"}',    # T3-39: boolean literal
-    '{"expression": "True + 1"}',       # F6
+    '{"expression": "True + 1"}',       # T3-39
     '{"expression": "1e308*10"}',       # T3-39: the calculator returns inf
     '"15200 * 1.2 / 100 / 12"',         # S3-G2-4: JSON, not an object
     '["15200 * 1.2 / 100 / 12"]',       # S3-G2-4
@@ -365,9 +364,8 @@ def test_run_call_to_unoffered_tool_recorded_not_invoked_run_completes(
 def test_run_model_controlled_calculator_input_run_completes(full_run,
                                                              arguments):
     """Q01/base calls the calculator with arguments the model controls.
-    Correct (T3 review T3-39; Steven's ruling on F6, choices-for-marcus
-    #9; S3-G2-4): no exception escapes, the run completes with its
-    report, the call is recorded, and every other execution is scored.
+    Correct (T3-39; S3-G2-4): no exception escapes, the run completes
+    with its report, the call is recorded, and every other execution is scored.
     (The call's operands being unreadable/unobservable is asserted at
     unit level.) Today the run aborts after its paid requests. The
     boolean cases also cover S3-G4-5: with provenance fixed, the same

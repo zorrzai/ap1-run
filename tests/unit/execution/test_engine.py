@@ -237,7 +237,7 @@ def test_execute_item_no_system_prompt_user_message_only(tmp_path, prompt):
 
 # -- round-0 transport failure -----------------------------------------
 
-@pytest.mark.finding('F4', 'T3-65')
+@pytest.mark.finding('T3-65')
 @pytest.mark.parametrize('error', [
     adapter.RateLimitError('Rate limit reached'),
     adapter.HTTPError('HTTP 500: server error', 500, '{}'),
@@ -245,7 +245,7 @@ def test_execute_item_no_system_prompt_user_message_only(tmp_path, prompt):
     RuntimeError('anything'),
 ], ids=['rate-limit', 'http', 'adapter', 'other'])
 def test_execute_item_first_send_fails_unmeasured(tmp_path, error):
-    # F4 / T3-65: every exception from the first send is caught here and
+    # T3-65: every exception from the first send is caught here and
     # returned as UNMEASURED, so run.py's RateLimitError/AdapterError
     # handlers never fire on this path. Correct: either let adapter
     # errors reach the runner, or drop the dead handlers and keep the
@@ -795,7 +795,7 @@ def _contains(tree, target):
                           'the transcript record')
 def test_execute_item_record_has_no_scoring_fields(tmp_path, calculator):
     # Correct (SPEC §2 "R1 EXECUTE: no scoring occurs here"; R1.2 "Perform
-    # no scoring"; Steven's ruling, choices-for-marcus.md entry 1): the
+    # no scoring"; the maintainer's decision DEC-6, T3-21): the
     # record holds what happened; D7.2 is scored by the separate pass.
     _, records = run(tmp_path, FakeAdapter(calls(tool_call()), answer()))
     assert sorted(set(records[0]) & {'operation_correctness',
@@ -866,8 +866,6 @@ def test_execute_item_unrecognised_later_response_error_state_names_round(
     assert re.search(r'\b(round|turn)\D{0,3}[12]\b', text)
 
 
-# Group g1-invocation (fix plan branches 1 and 10).
-
 def run_without_raising(tmp_path, adapter_send, **kwargs):
     """run(), with any exception returned instead of raised, so a test
     can assert that there was none."""
@@ -897,7 +895,7 @@ def test_execute_item_empty_response_unmeasured(tmp_path, content):
                    reason='T3-67: tool-loop exhaustion is silent')
 def test_execute_item_tool_loop_exhausted_flagged_in_transcript(
         tmp_path, calculator):
-    # Correct (T3 review T3-67; SPEC R0.1, R1.3 "the accumulation is
+    # Correct (T3-67; SPEC R0.1, R1.3 "the accumulation is
     # incomplete"): when the 11th response still asks for a tool after
     # ten turns, the exhaustion is recorded in the transcript record
     # (error_state) and in the result, not passed off as a completed
@@ -982,9 +980,9 @@ def test_extract_calc_expression_non_object_json_none(arguments):
     assert found is None
 
 
-@pytest.mark.finding('T3-39', 'F6', 'S3-G2-4')
+@pytest.mark.finding('T3-39', 'S3-G2-4')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39/F6/S3-G2-4: model-controlled calculator '
+                   reason='T3-39/S3-G2-4: model-controlled calculator '
                           'input raises out of execute_item')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}', '{"expression": "True * 15.2"}',
@@ -992,9 +990,8 @@ def test_extract_calc_expression_non_object_json_none(arguments):
 ], ids=['number', 'true-times', 'true-plus', 'json-string', 'json-list'])
 def test_execute_item_model_controlled_arguments_recorded_no_raise(
         tmp_path, calculator, arguments):
-    # Correct (T3 review T3-39; Steven's ruling on F6, choices-for-marcus
-    # #9; S3-G2-4): input the model controls never raises out of the
-    # engine; the call is recorded and the execution written to the
+    # Correct (T3-39; S3-G2-4): input the model controls never raises out
+    # of the engine; the call is recorded and the execution written to the
     # transcript, with that call's operands unobservable.
     send = FakeAdapter(calls(tool_call(arguments=arguments)), answer())
     result, records, error = run_without_raising(tmp_path, send)

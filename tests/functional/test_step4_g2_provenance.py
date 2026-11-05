@@ -1,5 +1,5 @@
 """Step 4, group g2-provenance: the correct D7.2(a) behaviour end to end
-(fix plan branch 2, D7.2(a) fail-closed), failing until fixed.
+(D7.2(a) fails closed), failing until fixed.
 
 Each test drives the real runner (ap1_run.run.main) against the scripted
 mock endpoint the regression scenarios use (tests/fixtures/mock_endpoint.py),
