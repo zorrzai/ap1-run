@@ -860,6 +860,31 @@ def named(entries, word):
     return [name for name, _ in entries if word in name]
 
 
+def transcript_after(record, *seconds):
+    """Transcript lines carrying the record's seal_hash and timestamps the
+    given seconds after its timestamp (5 and 9 by default), so that a
+    verifier comparing the two times finds nothing wrong with them."""
+    from datetime import datetime, timedelta
+    t0 = datetime.fromisoformat(record['timestamp'])
+    return [{'seal_hash': record['seal_hash'], 'n': i + 1,
+             'timestamp': (t0 + timedelta(seconds=s)).isoformat()}
+            for i, s in enumerate(seconds or (5, 9))]
+
+
+@pytest.mark.req('R1.1')
+def test_verify_run_good_record_with_timed_transcript_has_no_failure(
+        vrs, tmp_path, base):
+    # The control for the T3-47 and T3-15 tests below: the same fixture
+    # with nothing edited verifies cleanly, today and after their fixes,
+    # so a failure there comes from the edit, not from the fixture.
+    config = good_config(base)
+    record = good_record(base, config)
+    run_dir = write_run(tmp_path / 'run', record, config,
+                        transcript=transcript_after(record))
+    _, failures, error = outcome(vrs, run_dir)
+    assert (error, failures) == (None, [])
+
+
 @pytest.mark.finding('T3-18')
 @pytest.mark.req('R1.1')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -1071,12 +1096,19 @@ def test_main_reports_runner_modified(vrs, tmp_path, base, monkeypatch,
 def test_verify_run_edited_timestamp_fails(vrs, tmp_path, base):
     # Correct (AP-1 v1.3 §5.3, SPEC R1.1): the timestamp is bound by
     # seal_hash, so a timestamp edited in report.md fails verification.
+    # The transcript is timed after the real seal (so after the backdated
+    # one too): only the binding of the timestamp can catch the edit.
+    # Whether seal_hash or another hash binds it is the fix's choice
+    # (SPEC R1.1 vs T3-47), so either name is accepted.
     config = good_config(base)
-    record = dict(good_record(base, config),
-                  timestamp='2020-01-01T00:00:00+00:00')
-    run_dir = write_run(tmp_path / 'run', record, config)
-    _, failures, _ = outcome(vrs, run_dir)
-    assert failures
+    sealed = good_record(base, config)
+    record = dict(sealed, timestamp='2020-01-01T00:00:00+00:00')
+    run_dir = write_run(tmp_path / 'run', record, config,
+                        transcript=transcript_after(sealed))
+    _, failures, error = outcome(vrs, run_dir)
+    assert error is None, error
+    assert named(failures, 'seal_hash') or named(failures, 'timestamp'), \
+        failures
 
 
 @pytest.mark.finding('T3-47')
@@ -1161,14 +1193,21 @@ def test_verify_run_seal_with_verification_keys_verifies(vrs, tmp_path, base,
 def test_verify_run_record_missing_sealed_fields_fails(vrs, tmp_path, base):
     # Correct: the verifier knows which fields a seal binds; a record with
     # sealed fields deleted (and seal_hash recomputed over the rest) fails.
+    # Each dropped field is named in the failures (as a failure's name or
+    # its detail), so another mismatch can't stand in for this check.
     config = good_config(base)
     record = good_record(base, config)
-    for dropped in ('ap1_version', 'runner_source_hash', 'verification_keys',
-                    'ev3_implemented'):
-        del record[dropped]
-    run_dir = write_run(tmp_path / 'run', reseal(record), config)
-    _, failures, _ = outcome(vrs, run_dir)
-    assert failures
+    dropped = ('ap1_version', 'runner_source_hash', 'verification_keys',
+               'ev3_implemented')
+    for field in dropped:
+        del record[field]
+    record = reseal(record)
+    run_dir = write_run(tmp_path / 'run', record, config,
+                        transcript=transcript_after(record))
+    _, failures, error = outcome(vrs, run_dir)
+    assert error is None, error
+    text = json.dumps(failures)
+    assert [f for f in dropped if f not in text] == [], failures
 
 
 @pytest.mark.proposal(
