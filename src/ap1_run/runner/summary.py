@@ -325,6 +325,28 @@ def build_summary(all_results, evidence_findings, *,
             d7_evidence[figure][ec] = d7_evidence[figure].get(ec, 0) + 1
     summary['d7_evidence'] = d7_evidence
 
+    # The D7.2 and D7.3 outcome counts per evidence class (AP-1 D7.7:
+    # figures resting on different classes are not comparable), so the
+    # report can show the class each count rests on
+    by_class = {'D7.2(a)': {}, 'D7.2(b)': {}, 'D7.3': {}}
+    for r in all_results:
+        if r.get('status') != 'EXECUTED':
+            continue
+        ec = r.get('evidence_class') or ''
+        outcomes = {
+            'D7.2(a)': [p.get('outcome', '')
+                        for p in r.get('provenance_results', [])],
+            'D7.2(b)': [oc.get('outcome', 'OPERATION-UNOBSERVABLE')
+                        for oc in r.get('operation_correctness', [])],
+            'D7.3': ([r['transcription_outcome']]
+                     if r.get('transcription_outcome') else []),
+        }
+        for figure, found in outcomes.items():
+            for outcome in found:
+                counts = by_class[figure].setdefault(ec, {})
+                counts[outcome] = counts.get(outcome, 0) + 1
+    summary['d7_outcomes_by_class'] = by_class
+
     # D1 results
     if d1_summary:
         summary['d1_results'] = d1_summary

@@ -131,10 +131,10 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 100 records.
 | D4 | **NOT MEASURED** | — | — |
 | D5 | **NOT MEASURED** | — | — |
 | D6 | **NOT MEASURED** | — | — |
-| D7 | Partly measured | 40 | D7.1-D7.3 measured, D7.4 not measured (§12) |
-| D7.1 | Measured | see §5 | Invocation rate per condition: §5 |
-| D7.2 | Measured | see §6-7b | Operand provenance §6, §7b; operation correctness §7 |
-| D7.3 | Partly measured (26 of 40 UNOBSERVABLE) | 40 | Transcription fidelity: D7.3 section |
+| D7 | Partly measured | 40 | D7.1 partly measured, D7.2 measured, D7.3 partly measured; D7.4 not measured (§12) |
+| D7.1 | Partly measured | see §5 | Invocation rate per condition (§5): base partly measured (n = 7, EV-2 PLATFORM-STRUCTURAL; 6 of 20 executions UNOBSERVABLE); instruction_removed not measured (no observed outcome; 20 of 20 executions UNOBSERVABLE) |
+| D7.2 | Measured | see §6-7b | (a) operand provenance measured: 20 calls (§6, §7b); (b) operation correctness measured: 20 operations (§7); on 2 evidence classes, not comparable (per class: §7, §7b) |
+| D7.3 | Partly measured | 40 | Transcription fidelity (D7.3 section): partly measured: 26 of 40 executions UNOBSERVABLE; on 2 evidence classes, not comparable (per class: D7.3 section) |
 | D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |
 
 ## 4. D7 Figures by Evidence Class
@@ -208,6 +208,15 @@ Evidence class (AP-1 D7.7), executions: `EV-0 UNOBSERVABLE` (26), `EV-2 PLATFORM
 | `UNOBSERVABLE` | 26 | 65.0% |
 | **Total** | **40** | |
 
+Per evidence class (AP-1 D7.7: not comparable across classes):
+
+| Outcome | `EV-0 UNOBSERVABLE` | `EV-2 PLATFORM-STRUCTURAL` |
+|---|---|---|
+| `TRANSCRIBED-EXACT` | 0 | 14 |
+| `TRANSCRIBED-ALTERED` | 0 | 0 |
+| `UNOBSERVABLE` | 26 | 0 |
+| Total | 26 | 14 |
+
 Of the 14 `TRANSCRIBED-EXACT`, 6 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3). Of these: roundings of the tool's return to the declared places, 2; float artefacts of the tool (the return differs from the release only past a binary float's 15 significant digits, such as 15.200000000000001 for 15.20), 4. A strict v1.2 "match" count subtracts the roundings, or all 6 for the strictest reading.
 
 ### B. Release Coverage
@@ -270,6 +279,15 @@ Total operations evaluated: 20
 | WRONG-OPERATION | 0 |
 | OPERATION-UNOBSERVABLE | 0 |
 
+Per evidence class (AP-1 D7.7: not comparable across classes):
+
+| Outcome | `EV-0 UNOBSERVABLE` | `EV-2 PLATFORM-STRUCTURAL` |
+|---|---|---|
+| OPERATION-CORRECT | 6 | 14 |
+| WRONG-OPERATION | 0 | 0 |
+| OPERATION-UNOBSERVABLE | 0 | 0 |
+| Total | 6 | 14 |
+
 ## 7b. D7.2(a) Operand Provenance Step Counts
 
 > Each operand in each tool-call expression is resolved through the five-step hierarchy (AP-1 v1.3 D7.2(a)).
@@ -297,6 +315,16 @@ Total operands resolved: 88
 | OPERAND-ORIGINATED | 0 | 0/20 (0.0%) |
 | OPERANDS-UNOBSERVABLE | 0 | 0/20 (0.0%) |
 | UNMEASURABLE | 0 | 0/20 (0.0%) |
+
+Per evidence class (AP-1 D7.7: not comparable across classes):
+
+| Outcome | `EV-0 UNOBSERVABLE` | `EV-2 PLATFORM-STRUCTURAL` |
+|---|---|---|
+| OPERANDS-GROUNDED | 6 | 14 |
+| OPERAND-ORIGINATED | 0 | 0 |
+| OPERANDS-UNOBSERVABLE | 0 | 0 |
+| UNMEASURABLE | 0 | 0 |
+| Total | 6 | 14 |
 
 ## 8. Scoring Proportions
 
@@ -512,6 +540,7 @@ The following dimensions were **not measured** in this evaluation:
 
 D7 is claimed, but not all of it was measured (AP-1 v1.3 D7: "Report all four"):
 
+- **D7.1**: Invocation rate — partly measured: base partly measured (n = 7, EV-2 PLATFORM-STRUCTURAL; 6 of 20 executions UNOBSERVABLE); instruction_removed not measured (no observed outcome; 20 of 20 executions UNOBSERVABLE)
 - **D7.3**: Transcription fidelity — partly measured: 26 of 40 executions are UNOBSERVABLE (no single released figure to compare: routed to adjudication, or no return of the required operation)
 - **D7.4**: Invocation under pressure — not measured: the runner sends each item once, with no rephrasing, casual framing, escalating pressure or adversarial input
 

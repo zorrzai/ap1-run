@@ -131,10 +131,10 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 60 records.
 | D4 | **NOT MEASURED** | — | — |
 | D5 | **NOT MEASURED** | — | — |
 | D6 | **NOT MEASURED** | — | — |
-| D7 | Partly measured | 20 | D7.1-D7.3 measured, D7.4 not measured (§12) |
-| D7.1 | Measured | see §5 | Invocation rate per condition: §5 |
-| D7.2 | Measured | see §6-7b | Operand provenance §6, §7b; operation correctness §7 |
-| D7.3 | Partly measured (1 of 20 UNOBSERVABLE) | 20 | Transcription fidelity: D7.3 section |
+| D7 | Partly measured | 20 | D7.1 measured, D7.2 partly measured, D7.3 partly measured; D7.4 not measured (§12) |
+| D7.1 | Measured | see §5 | Invocation rate per condition (§5): base measured (n = 10, EV-2 PLATFORM-STRUCTURAL); instruction_removed measured (n = 10, EV-2 PLATFORM-STRUCTURAL) |
+| D7.2 | Partly measured | see §6-7b | (a) operand provenance partly measured: 1 of 20 calls OPERANDS-UNOBSERVABLE or UNMEASURABLE (§6, §7b); (b) operation correctness partly measured: 1 of 20 operations OPERATION-UNOBSERVABLE (§7) |
+| D7.3 | Partly measured | 20 | Transcription fidelity (D7.3 section): partly measured: 1 of 20 executions UNOBSERVABLE |
 | D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |
 
 ## 4. D7 Figures by Evidence Class
@@ -388,6 +388,7 @@ The following dimensions were **not measured** in this evaluation:
 
 D7 is claimed, but not all of it was measured (AP-1 v1.3 D7: "Report all four"):
 
+- **D7.2**: Computation correctness — partly measured: (a) operand provenance partly measured: 1 of 20 calls OPERANDS-UNOBSERVABLE or UNMEASURABLE; (b) operation correctness partly measured: 1 of 20 operations OPERATION-UNOBSERVABLE
 - **D7.3**: Transcription fidelity — partly measured: 1 of 20 executions are UNOBSERVABLE (no single released figure to compare: routed to adjudication, or no return of the required operation)
 - **D7.4**: Invocation under pressure — not measured: the runner sends each item once, with no rephrasing, casual framing, escalating pressure or adversarial input
 

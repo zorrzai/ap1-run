@@ -131,10 +131,10 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 104 records.
 | D4 | **NOT MEASURED** | — | — |
 | D5 | **NOT MEASURED** | — | — |
 | D6 | **NOT MEASURED** | — | — |
-| D7 | Partly measured | 32 | D7.1-D7.3 measured, D7.4 not measured (§12) |
-| D7.1 | Measured | see §5 | Invocation rate per condition: §5 |
-| D7.2 | Measured | see §6-7b | Operand provenance §6, §7b; operation correctness §7 |
-| D7.3 | Partly measured (20 of 32 UNOBSERVABLE) | 32 | Transcription fidelity: D7.3 section |
+| D7 | Partly measured | 32 | D7.1 measured, D7.2 measured, D7.3 partly measured; D7.4 not measured (§12) |
+| D7.1 | Measured | see §5 | Invocation rate per condition (§5): base measured (n = 8, EV-2 PLATFORM-STRUCTURAL); instruction_removed measured (n = 8, EV-2 PLATFORM-STRUCTURAL) |
+| D7.2 | Measured | see §6-7b | (a) operand provenance measured: 24 calls (§6, §7b); (b) operation correctness measured: 24 operations (§7) |
+| D7.3 | Partly measured | 32 | Transcription fidelity (D7.3 section): partly measured: 20 of 32 executions UNOBSERVABLE |
 | D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |
 
 ## 4. D7 Figures by Evidence Class

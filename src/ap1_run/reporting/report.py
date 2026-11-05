@@ -297,24 +297,155 @@ def _round_down(value):
     return value.quantize(Decimal('0.1'), rounding=ROUND_DOWN)
 
 
-def _d7_rows(summary, d7):
-    """§3 rows for a claimed D7: one per sub-dimension (AP-1 v1.3 D7
-    "Report all four"; T3-29). D7.4 is never measured; D7.3 is partly
-    unobservable when any execution has no single released figure."""
+# What a run measured of each part of D7 (AP-1 v1.3 D7 "Report all
+# four"; T3-29): a part is measured when every observation it needs was
+# made, partly measured when some were not, and not measured when none
+# was. Each status follows from the counts the run computed, per arm and
+# evidence class, never from the part being claimed.
+MEASURED, PARTLY, NOT_MEASURED = 'measured', 'partly measured', 'not measured'
+_STATUS_CELL = {MEASURED: 'Measured', PARTLY: 'Partly measured',
+                NOT_MEASURED: '**NOT MEASURED**'}
+
+# The two arms of D7.1 (AP-1 D7.1 and D7.6, with the instruction removed)
+D7_ARMS = ('base', 'instruction_removed')
+
+
+def _status_of(statuses):
+    """The status of a part made of parts with these statuses."""
+    if all(s == MEASURED for s in statuses):
+        return MEASURED
+    if all(s == NOT_MEASURED for s in statuses):
+        return NOT_MEASURED
+    return PARTLY
+
+
+def _d71_arms(summary):
+    """D7.1 per arm: [(status, text)], from the questions each arm has in
+    n per evidence class and its UNOBSERVABLE executions (§5)."""
+    evidence = summary.get('invocation_evidence', {})
+    figures = summary.get('invocation_figures', {}).values()
+    arms = []
+    for cond in list(D7_ARMS) + [c for c in evidence if c not in D7_ARMS]:
+        classes = evidence.get(cond, {}).get('classes', {}).values()
+        executions = sum(c['executions'] for c in classes)
+        unobservable = sum(c['unobservable_executions'] for c in classes)
+        observed = [f'n = {f["n"]}, {f.get("evidence_class") or "no class"}'
+                    for f in figures
+                    if f.get('condition') == cond and f.get('n')]
+        if len(observed) > 1:
+            observed.append('not comparable')
+        unread = f'{unobservable} of {executions} executions UNOBSERVABLE'
+        if not executions:
+            status, text = NOT_MEASURED, 'no executions'
+        elif not observed:
+            status, text = NOT_MEASURED, f'no observed outcome; {unread}'
+        elif unobservable:
+            status, text = PARTLY, '; '.join(observed + [unread])
+        else:
+            status, text = MEASURED, '; '.join(observed)
+        arms.append((status, f'{cond} {status} ({text})'))
+    return arms
+
+
+def _d72_parts(summary):
+    """D7.2(a) and (b): [(status, text, where)], from the calls whose
+    operands could not be read and the operations not observed."""
+    parts = []
+    for label, counts, unread_as, unit, where in (
+            ('(a) operand provenance', summary.get('provenance_outcomes', {}),
+             ('OPERANDS-UNOBSERVABLE', 'UNMEASURABLE'), 'calls',
+             '\u00a76, \u00a77b'),
+            ('(b) operation correctness',
+             summary.get('operation_correctness_counts', {}),
+             ('OPERATION-UNOBSERVABLE',), 'operations', '\u00a77')):
+        total = sum(counts.values())
+        unread = sum(counts.get(name, 0) for name in unread_as)
+        names = ' or '.join(unread_as)
+        if not total:
+            status, text = NOT_MEASURED, f'no {unit[:-1]} evaluated'
+        elif unread == total:
+            status, text = NOT_MEASURED, f'all {total} {unit} {names}'
+        elif unread:
+            status, text = PARTLY, f'{unread} of {total} {unit} {names}'
+        else:
+            status, text = MEASURED, f'{total} {unit}'
+        parts.append((status, f'{label} {status}: {text}', where))
+    return parts
+
+
+def _d73_part(summary):
+    """D7.3: (status, text), from its UNOBSERVABLE executions."""
     tr = summary.get('transcription_results', [])
     unobservable = sum(1 for r in tr if r.get('outcome') == 'UNOBSERVABLE')
-    d73_status = (f'Partly measured ({unobservable} of {len(tr)} '
-                  f'UNOBSERVABLE)' if unobservable else 'Measured')
+    if not tr:
+        return NOT_MEASURED, 'no executions'
+    if unobservable == len(tr):
+        return NOT_MEASURED, f'all {len(tr)} executions UNOBSERVABLE'
+    if unobservable:
+        return PARTLY, f'{unobservable} of {len(tr)} executions UNOBSERVABLE'
+    return MEASURED, f'{len(tr)} executions'
+
+
+def _classes_note(summary, figures, where):
+    """'; on k evidence classes, not comparable ...' where the counts of
+    these figures rest on more than one class (AP-1 D7.7), else ''."""
+    by_class = summary.get('d7_outcomes_by_class', {})
+    classes = {ec for figure in figures for ec in by_class.get(figure, {})}
+    if len(classes) < 2:
+        return ''
+    return (f'; on {len(classes)} evidence classes, not comparable (per '
+            f'class: {where})')
+
+
+def _d7_rows(summary, d7):
+    """§3 rows for a claimed D7: one per sub-dimension (AP-1 v1.3 D7
+    "Report all four"; T3-29). D7.4 is never measured; the status of
+    D7.1-D7.3 follows from what was computed for each arm and class."""
+    arms = _d71_arms(summary)
+    d71 = _status_of([status for status, _ in arms])
+    d72_parts = _d72_parts(summary)
+    d72 = _status_of([status for status, _, _ in d72_parts])
+    d73, d73_text = _d73_part(summary)
+    measured = (d71, d72, d73)
+    whole = (NOT_MEASURED if all(s == NOT_MEASURED for s in measured)
+             else PARTLY)
+    (_, a, a_where), (_, b, b_where) = d72_parts
+    tr = summary.get('transcription_results', [])
     return [
-        f'| D7 | Partly measured | {d7.get("n", "N/A")} | D7.1-D7.3 '
-        f'measured, D7.4 not measured (§12) |',
-        '| D7.1 | Measured | see §5 | Invocation rate per condition: §5 |',
-        '| D7.2 | Measured | see §6-7b | Operand provenance §6, §7b; '
-        'operation correctness §7 |',
-        f'| D7.3 | {d73_status} | {len(tr)} | Transcription fidelity: '
-        f'D7.3 section |',
-        '| D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |',
+        f'| D7 | {_STATUS_CELL[whole]} | {d7.get("n", "N/A")} | D7.1 '
+        f'{d71}, D7.2 {d72}, D7.3 {d73}; D7.4 not measured (\u00a712) |',
+        f'| D7.1 | {_STATUS_CELL[d71]} | see \u00a75 | Invocation rate per '
+        f'condition (\u00a75): {"; ".join(text for _, text in arms)} |',
+        f'| D7.2 | {_STATUS_CELL[d72]} | see \u00a76-7b | {a} ({a_where}); '
+        f'{b} ({b_where})'
+        f'{_classes_note(summary, ("D7.2(a)", "D7.2(b)"), "§7, §7b")} |',
+        f'| D7.3 | {_STATUS_CELL[d73]} | {len(tr)} | Transcription fidelity '
+        f'(D7.3 section): {d73}: {d73_text}'
+        f'{_classes_note(summary, ("D7.3",), "D7.3 section")} |',
+        '| D7.4 | **NOT MEASURED** | \u2014 | Invocation under pressure '
+        '(\u00a712) |',
     ]
+
+
+def _per_class_table(summary, figure, outcomes, label=str):
+    """The outcome counts of a D7 figure per evidence class, where they
+    rest on more than one (AP-1 D7.7: not comparable across classes);
+    [] otherwise. label gives an outcome's row name."""
+    by_class = summary.get('d7_outcomes_by_class', {}).get(figure, {})
+    if len(by_class) < 2:
+        return []
+    classes = sorted(by_class)
+    lines = ['Per evidence class (AP-1 D7.7: not comparable across '
+             'classes):\n',
+             '| Outcome | ' + ' | '.join(f'`{ec or "no class"}`'
+                                       for ec in classes) + ' |',
+             '|---' * (len(classes) + 1) + '|']
+    for outcome in outcomes:
+        lines.append(f'| {label(outcome)} | ' + ' | '.join(
+            str(by_class[ec].get(outcome, 0)) for ec in classes) + ' |')
+    lines.append('| Total | ' + ' | '.join(
+        str(sum(by_class[ec].values())) for ec in classes) + ' |\n')
+    return lines
 
 
 def _evidence_line(summary, figure):
@@ -404,6 +535,12 @@ def _section_d73(summary):
             pct = _share(c, total) if total > 0 else '\u2014'
             lines.append(f'| `{outcome}` | {c} | {pct}% |')
         lines.append(f'| **Total** | **{total}** | |')
+        per_class = _per_class_table(
+            summary, 'D7.3', ['TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED',
+                              'UNOBSERVABLE'], label=lambda o: f'`{o}`')
+        if per_class:
+            lines.append('')
+            lines.extend(per_class[:-1] + [per_class[-1].rstrip('\n')])
 
         rounded = [r for r in tr_results
                    if r['outcome'] == 'TRANSCRIBED-EXACT'
@@ -656,10 +793,15 @@ def _section_d72b_counts(summary):
     lines.append(f'Total operations evaluated: {total}\n')
     lines.append('| Outcome | Count |')
     lines.append('|---|---|')
-    for outcome in ['OPERATION-CORRECT', 'WRONG-OPERATION',
-                    'OPERATION-UNOBSERVABLE']:
+    op_outcomes = ['OPERATION-CORRECT', 'WRONG-OPERATION',
+                   'OPERATION-UNOBSERVABLE']
+    for outcome in op_outcomes:
         count = op_counts.get(outcome, 0)
         lines.append(f'| {outcome} | {count} |')
+    per_class = _per_class_table(summary, 'D7.2(b)', op_outcomes)
+    if per_class:
+        lines.append('')
+        lines.extend(per_class[:-1] + [per_class[-1].rstrip('\n')])
 
     # WRONG-OPERATION split by item-level correctness
     wo_split = summary.get('wrong_operation_split', {})
@@ -1055,8 +1197,8 @@ def _section_unmeasured_dimensions(config, summary=None):
     """Section 12: Declaration of which dimensions were NOT measured.
 
     A dimension not measured is declared, never omitted. With D7
-    claimed, the parts of D7 not measured are declared too: D7.4 always,
-    and D7.3 where some executions are UNOBSERVABLE (T3-29).
+    claimed, the parts of D7 not fully measured are declared too: D7.4
+    always, and D7.1-D7.3 by what the run computed for them (T3-29).
     """
     lines = ['## 12. Unmeasured Dimensions Declaration\n']
     lines.append('> A dimension not measured is declared, never omitted.\n')
@@ -1078,17 +1220,38 @@ def _section_unmeasured_dimensions(config, summary=None):
         lines.append('All seven dimensions were claimed for measurement.')
 
     if 'D7' in dims_claimed:
+        summary = summary or {}
         lines.append('\nD7 is claimed, but not all of it was measured (AP-1 '
                      'v1.3 D7: "Report all four"):\n')
-        tr = (summary or {}).get('transcription_results', [])
+        arms = _d71_arms(summary)
+        d71 = _status_of([status for status, _ in arms])
+        if d71 != MEASURED:
+            lines.append(f'- **D7.1**: Invocation rate \u2014 {d71}: ' +
+                         '; '.join(text for status, text in arms
+                                   if status != MEASURED))
+        parts = _d72_parts(summary)
+        d72 = _status_of([status for status, _, _ in parts])
+        if d72 != MEASURED:
+            lines.append(f'- **D7.2**: Computation correctness \u2014 '
+                         f'{d72}: ' + '; '.join(text for status, text, _
+                                                in parts
+                                                if status != MEASURED))
+        tr = summary.get('transcription_results', [])
         unobservable = sum(1 for r in tr
                            if r.get('outcome') == 'UNOBSERVABLE')
-        if unobservable:
+        why = ('(no single released figure to compare: routed to '
+               'adjudication, or no return of the required operation)')
+        if not tr:
+            lines.append('- **D7.3**: Transcription fidelity \u2014 not '
+                         'measured: no executions')
+        elif unobservable == len(tr):
+            lines.append(f'- **D7.3**: Transcription fidelity \u2014 not '
+                         f'measured: all {len(tr)} executions are '
+                         f'UNOBSERVABLE {why}')
+        elif unobservable:
             lines.append(f'- **D7.3**: Transcription fidelity \u2014 partly '
                          f'measured: {unobservable} of {len(tr)} executions '
-                         f'are UNOBSERVABLE (no single released figure to '
-                         f'compare: routed to adjudication, or no return of '
-                         f'the required operation)')
+                         f'are UNOBSERVABLE {why}')
         lines.append('- **D7.4**: Invocation under pressure \u2014 not '
                      'measured: the runner sends each item once, with no '
                      'rephrasing, casual framing, escalating pressure or '
@@ -1196,6 +1359,8 @@ def _section_operand_provenance(summary):
             lines.append(f'| {outcome} | {count} | {count}/{total_inv} '
                          f'({_share(count, total_inv)}%) |')
         lines.append('')
+        lines.extend(_per_class_table(summary, 'D7.2(a)',
+                                      PROVENANCE_OUTCOMES))
 
     # Executions for which D7.2 is UNMEASURABLE, with the reason (R3.3)
     unmeasurable = summary.get('provenance_unmeasurable')

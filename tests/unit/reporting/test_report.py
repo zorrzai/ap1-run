@@ -372,40 +372,188 @@ def test_dimension_results_d1_rate_zero_is_printed():
                        '(auto-scored 0; 0 adjudicated not in rate) |')
 
 
+EV0 = 'EV-0 UNOBSERVABLE'
+EV1 = 'EV-1 SELF-REPORTED'
+EV2 = 'EV-2 PLATFORM-STRUCTURAL'
+
+
+def d7_summary(arms, prov=None, ops=None, transcription=(), by_class=None,
+               n=40):
+    """A summary with what D7.1-D7.3 computed. arms: {condition: [(class,
+    executions, questions in n, unobservable executions)]}; prov and ops:
+    the D7.2(a) and (b) outcome counts; transcription: D7.3 outcomes."""
+    figures, evidence = {}, {}
+    for cond, classes in arms.items():
+        evidence[cond] = {'classes': {
+            ec: {'executions': e, 'questions': max(q, 1),
+                 'observed_questions': q, 'unobservable_executions': u}
+            for ec, e, q, u in classes}, 'cross_class_warning': None}
+        observed = [(ec, q) for ec, _, q, _ in classes if q]
+        for ec, q in observed or [(None, 0)]:
+            key = f'd7_invocation_{cond}' + (
+                f' ({ec})' if len(observed) > 1 else '')
+            figures[key] = {'failures': 0, 'n': q, 'condition': cond,
+                            'evidence_class': ec}
+    return {'d7_results': {'n': n},
+            'invocation_figures': figures, 'invocation_evidence': evidence,
+            'provenance_outcomes': prov or {},
+            'operation_correctness_counts': ops or {},
+            'transcription_results': [
+                {'item_id': f'Q{i:02d}', 'condition': 'base', 'repeat': i,
+                 'outcome': o} for i, o in enumerate(transcription, 1)],
+            'd7_outcomes_by_class': by_class or {}}
+
+
+def d7_rows(summary):
+    text = report._section_dimension_results(summary,
+                                             {'dimensions_claimed': ['D7']})
+    return [line for line in text.split('\n') if line.startswith('| D7')]
+
+
+# Every part of D7.1-D7.3 measured, on one evidence class
+MEASURED_D7 = d7_summary(
+    {'base': [(EV2, 20, 10, 0)], 'instruction_removed': [(EV2, 20, 10, 0)]},
+    prov={'OPERANDS-GROUNDED': 40}, ops={'OPERATION-CORRECT': 40},
+    transcription=['TRANSCRIBED-EXACT'] * 40,
+    by_class={'D7.2(a)': {EV2: {'OPERANDS-GROUNDED': 40}},
+              'D7.2(b)': {EV2: {'OPERATION-CORRECT': 40}},
+              'D7.3': {EV2: {'TRANSCRIBED-EXACT': 40}}})
+
+
 @pytest.mark.finding('T3-29')
 def test_dimension_results_d7_reported_per_sub_dimension():
     # Fixed (T3-29; AP-1 v1.3 D7 "Report all four"): D7.1-D7.4 each have
-    # a row; D7.4 is not measured; D7.3 says how much is UNOBSERVABLE.
+    # a row; D7.4 is not measured; each other part's status follows from
+    # what was computed for it.
     text = report._section_dimension_results(
-        {'d7_results': {'n': 40, 'auto_scored_n': 22, 'adjudicated_n': 18},
-         'transcription_results': [tr('TRANSCRIBED-EXACT', 1),
-                                   tr('UNOBSERVABLE', 2),
-                                   tr('TRANSCRIBED-ALTERED', 3)]},
-        {'dimensions_claimed': ['D7']})
+        MEASURED_D7, {'dimensions_claimed': ['D7']})
     assert text.split('\n')[-6:] == [
-        '| D7 | Partly measured | 40 | D7.1-D7.3 measured, D7.4 not '
-        'measured (\u00a712) |',
-        '| D7.1 | Measured | see \u00a75 | Invocation rate per condition: '
-        '\u00a75 |',
-        '| D7.2 | Measured | see \u00a76-7b | Operand provenance \u00a76, '
-        '\u00a77b; operation correctness \u00a77 |',
-        '| D7.3 | Partly measured (1 of 3 UNOBSERVABLE) | 3 | Transcription '
-        'fidelity: D7.3 section |',
+        '| D7 | Partly measured | 40 | D7.1 measured, D7.2 measured, D7.3 '
+        'measured; D7.4 not measured (\u00a712) |',
+        '| D7.1 | Measured | see \u00a75 | Invocation rate per condition '
+        '(\u00a75): base measured (n = 10, EV-2 PLATFORM-STRUCTURAL); '
+        'instruction_removed measured (n = 10, EV-2 PLATFORM-STRUCTURAL) |',
+        '| D7.2 | Measured | see \u00a76-7b | (a) operand provenance '
+        'measured: 40 calls (\u00a76, \u00a77b); (b) operation correctness '
+        'measured: 40 operations (\u00a77) |',
+        '| D7.3 | Measured | 40 | Transcription fidelity (D7.3 section): '
+        'measured: 40 executions |',
         '| D7.4 | **NOT MEASURED** | \u2014 | Invocation under pressure '
         '(\u00a712) |',
         '']
     assert len(dim_rows(text)) == 7
 
 
-def test_dimension_results_d7_without_unobservable_and_without_n():
-    text = report._section_dimension_results(
-        {'d7_results': {'auto_scored_n': 1},
-         'transcription_results': [tr('TRANSCRIBED-EXACT', 1)]},
-        {'dimensions_claimed': ['D7']})
-    assert '| D7 | Partly measured | N/A |' in text
-    assert '| D7.3 | Measured | 1 |' in text
-    assert '| D7.3 | Measured | 0 |' in report._section_dimension_results(
-        {'d7_results': {'n': 1}}, {'dimensions_claimed': ['D7']})
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7', 'R3.3')
+def test_dimension_results_d7_parts_follow_each_arm_and_class():
+    # The unrecognised-shape run: base has 6 EV-0 executions beside 14
+    # EV-2, and instruction_removed has no observed outcome at all; the
+    # report said "D7.1 | Measured" beside "D7.1 is not measured" in §5.
+    rows = d7_rows(d7_summary(
+        {'base': [(EV0, 6, 0, 6), (EV2, 14, 7, 0)],
+         'instruction_removed': [(EV0, 20, 0, 20)]},
+        prov={'OPERANDS-GROUNDED': 20}, ops={'OPERATION-CORRECT': 20},
+        transcription=['TRANSCRIBED-EXACT'] * 14 + ['UNOBSERVABLE'] * 26,
+        by_class={'D7.2(a)': {EV0: {'OPERANDS-GROUNDED': 6},
+                              EV2: {'OPERANDS-GROUNDED': 14}},
+                  'D7.2(b)': {EV0: {'OPERATION-CORRECT': 6},
+                              EV2: {'OPERATION-CORRECT': 14}},
+                  'D7.3': {EV0: {'UNOBSERVABLE': 26},
+                           EV2: {'TRANSCRIBED-EXACT': 14}}}))
+    assert rows[:4] == [
+        '| D7 | Partly measured | 40 | D7.1 partly measured, D7.2 '
+        'measured, D7.3 partly measured; D7.4 not measured (\u00a712) |',
+        '| D7.1 | Partly measured | see \u00a75 | Invocation rate per '
+        'condition (\u00a75): base partly measured (n = 7, EV-2 '
+        'PLATFORM-STRUCTURAL; 6 of 20 executions UNOBSERVABLE); '
+        'instruction_removed not measured (no observed outcome; 20 of 20 '
+        'executions UNOBSERVABLE) |',
+        '| D7.2 | Measured | see \u00a76-7b | (a) operand provenance '
+        'measured: 20 calls (\u00a76, \u00a77b); (b) operation correctness '
+        'measured: 20 operations (\u00a77); on 2 evidence classes, not '
+        'comparable (per class: \u00a77, \u00a77b) |',
+        '| D7.3 | Partly measured | 40 | Transcription fidelity (D7.3 '
+        'section): partly measured: 26 of 40 executions UNOBSERVABLE; on 2 '
+        'evidence classes, not comparable (per class: D7.3 section) |']
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7', 'R3.3')
+def test_dimension_results_d72_partly_or_not_measured_by_its_counts():
+    # The malformed-calls run: 12 of 44 calls OPERANDS-UNOBSERVABLE and 16
+    # of 44 operations OPERATION-UNOBSERVABLE, labelled "Measured".
+    arms = {'base': [(EV2, 20, 10, 0)],
+            'instruction_removed': [(EV2, 20, 10, 0)]}
+    partly = d7_rows(d7_summary(
+        arms, prov={'OPERANDS-GROUNDED': 32, 'OPERANDS-UNOBSERVABLE': 12},
+        ops={'OPERATION-CORRECT': 28, 'OPERATION-UNOBSERVABLE': 16},
+        transcription=['TRANSCRIBED-EXACT'] * 40))[2]
+    assert partly == (
+        '| D7.2 | Partly measured | see \u00a76-7b | (a) operand provenance '
+        'partly measured: 12 of 44 calls OPERANDS-UNOBSERVABLE or '
+        'UNMEASURABLE (\u00a76, \u00a77b); (b) operation correctness '
+        'partly measured: 16 of 44 operations OPERATION-UNOBSERVABLE '
+        '(\u00a77) |')
+    # Every call unreadable: not measured, (a) and (b)
+    none_read = d7_rows(d7_summary(
+        arms, prov={'OPERANDS-UNOBSERVABLE': 3, 'UNMEASURABLE': 1},
+        ops={'OPERATION-UNOBSERVABLE': 4}))[2]
+    assert none_read == (
+        '| D7.2 | **NOT MEASURED** | see \u00a76-7b | (a) operand provenance '
+        'not measured: all 4 calls OPERANDS-UNOBSERVABLE or UNMEASURABLE '
+        '(\u00a76, \u00a77b); (b) operation correctness not measured: all 4 '
+        'operations OPERATION-UNOBSERVABLE (\u00a77) |')
+    # (a) read, (b) not: partly
+    assert d7_rows(d7_summary(
+        arms, prov={'OPERANDS-GROUNDED': 2},
+        ops={'OPERATION-UNOBSERVABLE': 2}))[2].startswith(
+            '| D7.2 | Partly measured |')
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7', 'R3.3')
+def test_dimension_results_d7_with_nothing_observed_is_not_measured():
+    # A run of transport failures only: no invocation outcome, no call,
+    # no executed response. It read "D7.1-D7.3 measured" and
+    # "D7.3 | Measured | 0".
+    rows = d7_rows({'d7_results': {'n': 0}})
+    assert rows == [
+        '| D7 | **NOT MEASURED** | 0 | D7.1 not measured, D7.2 not '
+        'measured, D7.3 not measured; D7.4 not measured (\u00a712) |',
+        '| D7.1 | **NOT MEASURED** | see \u00a75 | Invocation rate per '
+        'condition (\u00a75): base not measured (no executions); '
+        'instruction_removed not measured (no executions) |',
+        '| D7.2 | **NOT MEASURED** | see \u00a76-7b | (a) operand '
+        'provenance not measured: no call evaluated (\u00a76, \u00a77b); '
+        '(b) operation correctness not measured: no operation evaluated '
+        '(\u00a77) |',
+        '| D7.3 | **NOT MEASURED** | 0 | Transcription fidelity (D7.3 '
+        'section): not measured: no executions |',
+        '| D7.4 | **NOT MEASURED** | \u2014 | Invocation under pressure '
+        '(\u00a712) |']
+    assert d7_rows({'d7_results': {'auto_scored_n': 1}})[0].startswith(
+        '| D7 | **NOT MEASURED** | N/A |')
+    # Every execution UNOBSERVABLE for D7.3: not measured
+    assert d7_rows(d7_summary(
+        {}, transcription=['UNOBSERVABLE'] * 3))[3] == (
+            '| D7.3 | **NOT MEASURED** | 3 | Transcription fidelity (D7.3 '
+            'section): not measured: all 3 executions UNOBSERVABLE |')
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7.7')
+def test_dimension_results_d71_per_class_within_an_arm():
+    # An arm whose observations span classes has a figure per class; the
+    # row names each, and says they are not comparable.
+    row = d7_rows(d7_summary(
+        {'base': [(EV1, 10, 4, 0), (EV2, 10, 6, 0)],
+         'instruction_removed': [(EV2, 20, 10, 0)]}))[1]
+    assert row == (
+        '| D7.1 | Measured | see \u00a75 | Invocation rate per condition '
+        '(\u00a75): base measured (n = 4, EV-1 SELF-REPORTED; n = 6, EV-2 '
+        'PLATFORM-STRUCTURAL; not comparable); instruction_removed measured '
+        '(n = 10, EV-2 PLATFORM-STRUCTURAL) |')
 
 
 @pytest.mark.finding('T3-29')
@@ -1587,7 +1735,7 @@ def test_unmeasured_dimensions_names_d3_to_d6_as_ap1():
     # T3-33 (fixed): AP-1 v1.3 §4 names D3 Provenance, D4 Refusal
     # integrity, D5 Adversarial resistance, D6 Conflicting input.
     # T3-29 (fixed): with D7 claimed, D7.4 is declared not measured.
-    text = report._section_unmeasured_dimensions(CONFIG)
+    text = report._section_unmeasured_dimensions(CONFIG, MEASURED_D7)
     assert text == md(
         *DIMS_HEAD,
         'The following dimensions were **not measured** in this '
@@ -1602,10 +1750,10 @@ def test_unmeasured_dimensions_names_d3_to_d6_as_ap1():
 
 @pytest.mark.finding('T3-29')
 def test_unmeasured_dimensions_declares_d73_unobservable_count():
-    text = report._section_unmeasured_dimensions(CONFIG, {
-        'transcription_results': [tr('UNOBSERVABLE', 1),
-                                  tr('TRANSCRIBED-EXACT', 2),
-                                  tr('UNOBSERVABLE', 3)]})
+    text = report._section_unmeasured_dimensions(CONFIG, dict(
+        MEASURED_D7, transcription_results=[tr('UNOBSERVABLE', 1),
+                                            tr('TRANSCRIBED-EXACT', 2),
+                                            tr('UNOBSERVABLE', 3)]))
     assert text.endswith(md(
         D7_HEAD,
         '- **D7.3**: Transcription fidelity \u2014 partly measured: 2 of 3 '
@@ -1616,6 +1764,45 @@ def test_unmeasured_dimensions_declares_d73_unobservable_count():
     # Nothing unobservable: only D7.4.
     assert 'D7.3' not in report._section_unmeasured_dimensions(
         CONFIG, {'transcription_results': [tr('TRANSCRIBED-EXACT', 1)]})
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7', 'R3.3')
+def test_unmeasured_dimensions_declares_d71_and_d72_parts():
+    # Each part of D7 not fully measured is declared, with what was not:
+    # here instruction_removed has no observed outcome and 12 of 44 calls
+    # have unreadable operands.
+    summary = d7_summary(
+        {'base': [(EV0, 6, 0, 6), (EV2, 14, 7, 0)],
+         'instruction_removed': [(EV0, 20, 0, 20)]},
+        prov={'OPERANDS-GROUNDED': 32, 'OPERANDS-UNOBSERVABLE': 12},
+        ops={'OPERATION-CORRECT': 44},
+        transcription=['TRANSCRIBED-EXACT'] * 40)
+    text = report._section_unmeasured_dimensions(CONFIG, summary)
+    assert text.endswith(md(
+        D7_HEAD,
+        '- **D7.1**: Invocation rate \u2014 partly measured: base partly '
+        'measured (n = 7, EV-2 PLATFORM-STRUCTURAL; 6 of 20 executions '
+        'UNOBSERVABLE); instruction_removed not measured (no observed '
+        'outcome; 20 of 20 executions UNOBSERVABLE)',
+        '- **D7.2**: Computation correctness \u2014 partly measured: (a) '
+        'operand provenance partly measured: 12 of 44 calls '
+        'OPERANDS-UNOBSERVABLE or UNMEASURABLE',
+        D74, ''))
+    # Nothing computed: every part is declared not measured.
+    for nothing in ({}, None):
+        text = report._section_unmeasured_dimensions(CONFIG, nothing)
+        assert text.endswith(md(
+            D7_HEAD,
+            '- **D7.1**: Invocation rate \u2014 not measured: base not '
+            'measured (no executions); instruction_removed not measured (no '
+            'executions)',
+            '- **D7.2**: Computation correctness \u2014 not measured: (a) '
+            'operand provenance not measured: no call evaluated; (b) '
+            'operation correctness not measured: no operation evaluated',
+            '- **D7.3**: Transcription fidelity \u2014 not measured: no '
+            'executions',
+            D74, ''))
 
 
 @pytest.mark.finding('T3-33', 'S3-G6-2')
@@ -1640,9 +1827,10 @@ def test_unmeasured_dimensions_all_unclaimed():
 
 @pytest.mark.finding('T3-29')
 def test_unmeasured_dimensions_all_claimed():
-    # T3-29: D7.4 is declared even when every dimension is claimed.
+    # T3-29: D7.4 is declared even when every dimension is claimed and
+    # the rest of D7 was measured.
     assert report._section_unmeasured_dimensions(
-        {'dimensions_claimed': ALL_DIMENSIONS}) == md(
+        {'dimensions_claimed': ALL_DIMENSIONS}, MEASURED_D7) == md(
         *DIMS_HEAD, 'All seven dimensions were claimed for measurement.',
         D7_HEAD, D74, '')
 
@@ -1933,6 +2121,63 @@ def test_d72b_and_d73_figures_carry_their_evidence_class():
                                             tr('GOVERNED-RELEASE', 2)]}
     assert 'EV-2' in report._section_d72b_counts(summary)
     assert 'EV-2' in report._section_d73(summary)
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7.7', 'R3.3')
+def test_d7_outcome_counts_per_evidence_class_when_classes_differ():
+    # One EV-1 wrong operation beside one EV-2 correct one pools to the
+    # same counts as the reverse; per class, the sections differ.
+    def summary(wrong, right):
+        return {
+            'operation_correctness_counts': {'OPERATION-CORRECT': 1,
+                                             'WRONG-OPERATION': 1},
+            'provenance_outcomes': {'OPERANDS-GROUNDED': 1,
+                                    'OPERAND-ORIGINATED': 1},
+            'operand_step_counts': {1: 1, 5: 1},
+            'transcription_results': [tr('TRANSCRIBED-ALTERED', 1),
+                                      tr('TRANSCRIBED-EXACT', 2)],
+            'd7_outcomes_by_class': {
+                'D7.2(a)': {wrong: {'OPERAND-ORIGINATED': 1},
+                            right: {'OPERANDS-GROUNDED': 1}},
+                'D7.2(b)': {wrong: {'WRONG-OPERATION': 1},
+                            right: {'OPERATION-CORRECT': 1}},
+                'D7.3': {wrong: {'TRANSCRIBED-ALTERED': 1},
+                         right: {'TRANSCRIBED-EXACT': 1}}}}
+    one, other = summary(EV1, EV2), summary(EV2, EV1)
+    for section in (report._section_d72b_counts,
+                    report._section_operand_provenance,
+                    report._section_d73):
+        assert section(one) != section(other), section.__name__
+    head = ('Per evidence class (AP-1 D7.7: not comparable across '
+            'classes):\n',
+            '| Outcome | `EV-1 SELF-REPORTED` | `EV-2 PLATFORM-STRUCTURAL` |',
+            '|---|---|---|')
+    assert md(*head,
+              '| OPERATION-CORRECT | 0 | 1 |',
+              '| WRONG-OPERATION | 1 | 0 |',
+              '| OPERATION-UNOBSERVABLE | 0 | 0 |',
+              '| Total | 1 | 1 |\n') in report._section_d72b_counts(one)
+    assert md(*head,
+              '| OPERANDS-GROUNDED | 0 | 1 |',
+              '| OPERAND-ORIGINATED | 1 | 0 |',
+              '| OPERANDS-UNOBSERVABLE | 0 | 0 |',
+              '| UNMEASURABLE | 0 | 0 |',
+              '| Total | 1 | 1 |\n') in report._section_operand_provenance(one)
+    assert md(*head,
+              '| `TRANSCRIBED-EXACT` | 0 | 1 |',
+              '| `TRANSCRIBED-ALTERED` | 1 | 0 |',
+              '| `UNOBSERVABLE` | 0 | 0 |',
+              '| Total | 1 | 1 |\n') in report._section_d73(one)
+    # One class: the pooled table is the class's, and no per-class table
+    single = dict(one, d7_outcomes_by_class={
+        'D7.2(a)': {EV2: {'OPERANDS-GROUNDED': 2}},
+        'D7.2(b)': {EV2: {'OPERATION-CORRECT': 2}},
+        'D7.3': {EV2: {'TRANSCRIBED-EXACT': 2}}})
+    for section in (report._section_d72b_counts,
+                    report._section_operand_provenance,
+                    report._section_d73):
+        assert 'Per evidence class' not in section(single)
 
 
 AP1_NAMES = {'D3': 'Provenance', 'D4': 'Refusal integrity', 'D5': 'Adversarial resistance',

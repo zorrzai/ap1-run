@@ -149,6 +149,7 @@ EMPTY = {
                               'undetermined': 0, 'no_figure': 0},
     'd7_results': {'n': 0, 'auto_scored_n': 0, 'adjudicated_n': 0},
     'd7_evidence': {'D7.2(b)': {}, 'D7.3': {}},
+    'd7_outcomes_by_class': {'D7.2(a)': {}, 'D7.2(b)': {}, 'D7.3': {}},
     'operand_step_counts': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
     'step_1_source': 0,
     'step_1_constant': 0,
@@ -982,6 +983,48 @@ def test_summary_d7_evidence_per_figure():
     ]
     assert build_summary(results, [])['d7_evidence'] == {
         'D7.2(b)': {EV2: 2}, 'D7.3': {EV2: 3, EV0: 1, '': 1}}
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7.7', 'R3.3')
+def test_summary_d7_outcome_counts_per_evidence_class():
+    # One EV-1 wrong operation and one EV-2 correct one give the same
+    # pooled counts as the reverse; per class they differ, so the report
+    # can show which class each figure rests on.
+    EV1 = 'EV-1 SELF-REPORTED'
+
+    def by_class(wrong, right):
+        return build_summary([
+            executed('Q01', evidence_class=wrong,
+                     operation_correctness=[{'outcome': 'WRONG-OPERATION'}],
+                     provenance_results=[{'outcome': 'OPERAND-ORIGINATED'}],
+                     transcription_outcome='TRANSCRIBED-ALTERED'),
+            executed('Q02', evidence_class=right,
+                     operation_correctness=[
+                         {'outcome': 'OPERATION-CORRECT'}],
+                     provenance_results=[{'outcome': 'OPERANDS-GROUNDED'}],
+                     transcription_outcome='TRANSCRIBED-EXACT'),
+            executed('Q03', evidence_class=EV0,
+                     transcription_outcome='UNOBSERVABLE'),
+            {'item_id': 'Q04', 'status': 'UNMEASURED', 'evidence_class': EV0,
+             'transcription_outcome': 'UNOBSERVABLE'},
+        ], [])['d7_outcomes_by_class']
+
+    assert by_class(EV1, EV2) == {
+        'D7.2(a)': {EV1: {'OPERAND-ORIGINATED': 1},
+                    EV2: {'OPERANDS-GROUNDED': 1}},
+        'D7.2(b)': {EV1: {'WRONG-OPERATION': 1},
+                    EV2: {'OPERATION-CORRECT': 1}},
+        'D7.3': {EV1: {'TRANSCRIBED-ALTERED': 1},
+                 EV2: {'TRANSCRIBED-EXACT': 1},
+                 EV0: {'UNOBSERVABLE': 1}}}
+    assert by_class(EV2, EV1) != by_class(EV1, EV2)
+    # An operation with no outcome is OPERATION-UNOBSERVABLE, as in the
+    # pooled counts.
+    assert build_summary([executed(evidence_class=EV2,
+                                   operation_correctness=[{}])], [])[
+        'd7_outcomes_by_class']['D7.2(b)'] == {
+            EV2: {'OPERATION-UNOBSERVABLE': 1}}
 
 
 @pytest.mark.finding('T3-34')
