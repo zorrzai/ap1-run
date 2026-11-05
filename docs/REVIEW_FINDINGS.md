@@ -431,6 +431,9 @@ Grouped by severity, in ID order.
   `src/ap1_run/foundation/numeric.py:286-287` (`canonical_json`);
   `src/ap1_run/scoring/operation_correctness.py:40-41` (`_ALLOWED_NAMES`), `:61` (`_eval_decimal`)
 - Breaks: SPEC R0.4.3 verification items 1 and 2; SPEC Phase A exit criterion (`SPEC.md:794`)
+- Status note (5 November 2026): since #5 (`41ba658`) `hash_digest.txt` is untracked and
+  `verify_hashes.py` fails unless the digest equals its pinned `EXPECTED_DIGEST`, on each of the three
+  platforms; the rest of this finding is open.
 
 **T3-21 · medium · The two-pass architecture SPEC calls a conformance requirement is not realised**
 - What's wrong: D7.2(a)/(b) are computed before the transcript write and stored in the record, the
