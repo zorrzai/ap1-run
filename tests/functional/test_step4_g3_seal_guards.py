@@ -1,4 +1,4 @@
-"""Step 4, group g3-seal-guards: end-to-end tests of the correct behaviour
+"""Step 4: end-to-end tests of the correct behaviour
 of the seal-time ground-truth guards (SPEC R3.1) and the condition guard
 (SPEC R1.2, AP-1 v1.3 D7.8). They fail on today's code and are marked
 xfail(strict).

@@ -1,4 +1,4 @@
-"""Step 4, group g1-invocation: the correct behaviour of a whole run, for
+"""Step 4: the correct behaviour of a whole run, for
 the D7.1 aggregation and run-robustness findings. Every test here fails
 on today's code and is marked xfail(strict).
 

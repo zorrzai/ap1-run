@@ -1,4 +1,4 @@
-"""Step 4, group g6-sheets-v13: failing-first tests of the correct
+"""Step 4: failing-first tests of the correct
 behaviour, end to end. The real runner (ap1_run.run.main) runs the shipped
 example, cut down to the items each test needs, against the scripted mock
 endpoint the regression scenarios use (tests/fixtures/mock_endpoint.py),

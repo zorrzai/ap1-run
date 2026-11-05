@@ -1,4 +1,4 @@
-"""Step 4, group g4-transcript: the transcript and the two-pass design,
+"""Step 4: the transcript and the two-pass design,
 end to end (raw-response preservation).
 
 Correct behaviour, failing on today's code (each test is a strict xfail

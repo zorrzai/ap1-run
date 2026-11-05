@@ -1,4 +1,4 @@
-"""Step 4, group g5 (seal and seal verifier): failing tests of the correct
+"""Step 4, the seal and its verifier: failing tests of the correct
 behaviour where the defect is in the wiring, not in one function.
 
 Each test drives the real runner (ap1_run.run.main) in this process against
