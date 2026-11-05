@@ -774,17 +774,39 @@ def _section_d2_mechanisms(summary):
     for key, surfaces in sorted(d2.items()):
         item, _, condition = key.partition('/')
         for surface_name, data in sorted(surfaces.items()):
-            basis = ('operator-declared' if data.get('operator_declared')
-                     else 'evidence')
             lines.append(
                 f'| {item} | {_cell(condition)} | {surface_name} '
-                f'| `{data.get("mechanism", "unknown")}` | {basis} '
-                f'| {_cell(data.get("distinct_values"))} '
+                f'| `{data.get("mechanism", "unknown")}` | {_d2_basis(data)} '
+                f'| {_d2_distinct(data)} '
                 f'| {_cell(data.get("successful_runs"))} '
                 f'| `{data.get("parameter_echo_status", "UNVERIFIED")}` |')
 
     lines.append('')
     return '\n'.join(lines)
+
+
+def _d2_basis(data):
+    """The evidence basis of a D2 class (SPEC R3.3 "with evidence basis
+    and operator-declared marking"; T3-4): operator-declared, or what was
+    observed and that the class is not operator-declared."""
+    if data.get('operator_declared'):
+        return 'operator-declared'
+    runs = data.get('successful_runs')
+    if runs is None:
+        return 'evidence: no runs recorded; not operator-declared'
+    return (f'evidence: observed over {runs} run{"" if runs == 1 else "s"}; '
+            f'not operator-declared')
+
+
+def _d2_distinct(data):
+    """The number of distinct values and, on the figures surface, the
+    values themselves (AP-1 D2 "distinct numeric answers per question";
+    T3-4): '2: 2600.00; 2500.00'."""
+    count = data.get('distinct_values')
+    values = data.get('values')
+    if count is None or not values:
+        return _cell(count)
+    return f'{count}: ' + _cell('; '.join(values))
 
 
 def _d2_class_counts(d2):

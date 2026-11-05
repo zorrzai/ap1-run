@@ -717,6 +717,23 @@ def test_reproducibility_of_nothing():
     assert classify_reproducibility({}, 3, None) == {}
 
 
+@pytest.mark.finding('T3-4')
+def test_reproducibility_figures_carry_their_distinct_values():
+    # Report section 9 shows the distinct values on the figures surface
+    # (AP-1 D2 "distinct numeric answers per question"); prose and an
+    # unmeasured surface carry none.
+    def reply(text):
+        return {'choices': [{'message': {'role': 'assistant',
+                                         'content': text}}]}
+    result = classify_reproducibility(
+        {('Q02', 'base'): [reply('2600.00'), reply('2500.00')],
+         ('Q03', 'base'): [reply('7')]}, 2, None)
+    assert result['Q02/base']['figures']['values'] == ['2600.00', '2500.00']
+    assert result['Q02/base']['figures']['distinct_values'] == 2
+    assert 'values' not in result['Q02/base']['prose']
+    assert 'values' not in result['Q03/base']['figures']
+
+
 # --- Step 4: correct behaviour (failing until fixed) ---
 
 @pytest.mark.finding('T3-34')

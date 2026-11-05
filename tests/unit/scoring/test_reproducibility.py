@@ -6,7 +6,7 @@ import pytest
 from ap1_run.scoring.reproducibility import (
     CONFIGURED, OBSERVED_ONLY, STRUCTURAL, UNMEASURED, VALID_CLASSES,
     ReproducibilityError, _extract_surface_values, _is_error_or_limited,
-    check_parameter_echo, classify_mechanism,
+    check_parameter_echo, classify_mechanism, distinct_figures_shown,
 )
 
 
@@ -164,6 +164,37 @@ def test_classify_mechanism_errored_runs_are_left_out_of_the_values():
     r = classify_mechanism(responses, surface='prose', minimum_runs=3)
     assert r['successful_runs'] == 3
     assert r['distinct_values'] == 1
+
+
+# -- distinct_figures_shown (T3-4) --------------------------------------------
+
+@pytest.mark.finding('T3-4')
+def test_distinct_figures_shown_lists_each_value_as_first_stated():
+    # AP-1 D2: "distinct numeric answers per question". 15.2 and 15.20 are
+    # one figure (as classify_mechanism counts them), shown as first
+    # written; errored and rate-limited runs are left out.
+    responses = [response('It is $2,600.00 after 5% growth.'),
+                 LIMITED,
+                 response('The answer: 2500.00'),
+                 response('2600.0 after 5.0% growth'),
+                 {'error': 'boom'},
+                 response('I cannot say.'),
+                 response('2500 again')]
+    assert distinct_figures_shown(responses) == [
+        '2600.00, 5%', '2500.00', 'no figures']
+
+
+@pytest.mark.finding('T3-4')
+def test_distinct_figures_shown_count_matches_the_classifier():
+    responses = [response(f'${v}') for v in ('1', '2', '2.0', '3', '1')]
+    shown = distinct_figures_shown(responses)
+    r = classify_mechanism(responses, surface='figures', minimum_runs=3)
+    assert shown == ['1', '2', '3']
+    assert len(shown) == r['distinct_values']
+
+
+def test_distinct_figures_shown_of_nothing():
+    assert distinct_figures_shown([]) == []
 
 
 @pytest.mark.finding('S3-G5-3')

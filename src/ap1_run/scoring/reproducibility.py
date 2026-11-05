@@ -226,6 +226,36 @@ def _extract_surface_values(responses, surface):
     return values
 
 
+def distinct_figures_shown(responses):
+    """Each distinct figures value of the successful responses (told
+    apart as classify_mechanism tells them), as the first response to
+    give it states it: the figures in text order, each value as written
+    in Decimal ('2600.00', with '%' for a percent), joined by ', ';
+    'no figures' for a text without one, 'unreadable' for one extraction
+    refuses. First seen first (AP-1 D2 "distinct numeric answers per
+    question"; T3-4)."""
+    from ap1_run.execution.evidence import _read_message
+    shown = {}
+    for r in responses:
+        if _is_error_or_limited(r):
+            continue
+        text = (_read_message(r)[0] or {}).get('content', '') or ''
+        key = _figures(text)
+        if key in shown:
+            continue
+        if key and key[0] == 'unreadable':
+            shown[key] = 'unreadable'
+            continue
+        figures, seen = [], set()
+        for t in extract_numeric_tokens(text):
+            k = (str(t.value.normalize()), t.percent)
+            if k not in seen:
+                seen.add(k)
+                figures.append(f'{t.value}{"%" if t.percent else ""}')
+        shown[key] = ', '.join(figures) or 'no figures'
+    return list(shown.values())
+
+
 def _figures(text):
     """The numeric figures a text states, as a sorted tuple of
     (value, percent) pairs, each value normalised (15.2 and 15.20 are

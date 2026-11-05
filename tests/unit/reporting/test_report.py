@@ -1177,7 +1177,9 @@ def test_d2_cap_reason_shown_before_note():
 
 @pytest.mark.finding('T3-4')
 def test_d2_live_shape_table_per_question_condition_and_surface():
-    # Fixed (T3-4): §9 reads the live shape, keyed '<item>/<condition>'.
+    # Fixed (T3-4): §9 reads the live shape, keyed '<item>/<condition>',
+    # with each row's evidence basis and, on figures, the distinct
+    # values.
     text = report._section_d2_mechanisms({'d2_results': {
         'Q02/instruction_removed': {'figures': {
             'mechanism': 'UNMEASURED', 'operator_declared': False,
@@ -1187,7 +1189,8 @@ def test_d2_live_shape_table_per_question_condition_and_surface():
                       'distinct_values': 1, 'successful_runs': 3,
                       'parameter_echo_status': 'VERIFIED'},
             'figures': {'mechanism': 'OBSERVED-ONLY',
-                        'distinct_values': 2, 'successful_runs': 3}},
+                        'distinct_values': 2, 'values': ['15.20', '15.21'],
+                        'successful_runs': 3}},
         'Q03': {'figures': {}}}})
     assert text == md(
         '## 9. D2 Reproducibility Mechanism Classes\n',
@@ -1197,14 +1200,16 @@ def test_d2_live_shape_table_per_question_condition_and_surface():
         '| Question | Condition | Surface | Mechanism Class | Basis '
         '| Distinct Values | Runs | Parameter Echo |',
         '|---|---|---|---|---|---|---|---|',
-        '| Q01 | base | figures | `OBSERVED-ONLY` | evidence | 2 | 3 '
+        '| Q01 | base | figures | `OBSERVED-ONLY` | evidence: observed over '
+        '3 runs; not operator-declared | 2: 15.20; 15.21 | 3 '
         '| `UNVERIFIED` |',
         '| Q01 | base | prose | `STRUCTURAL` | operator-declared | 1 | 3 '
         '| `VERIFIED` |',
-        '| Q02 | instruction_removed | figures | `UNMEASURED` | evidence '
-        '| \u2014 | 1 | `UNVERIFIED` |',
-        '| Q03 | \u2014 | figures | `unknown` | evidence | \u2014 | \u2014 '
+        '| Q02 | instruction_removed | figures | `UNMEASURED` | evidence: '
+        'observed over 1 run; not operator-declared | \u2014 | 1 '
         '| `UNVERIFIED` |',
+        '| Q03 | \u2014 | figures | `unknown` | evidence: no runs recorded; '
+        'not operator-declared | \u2014 | \u2014 | `UNVERIFIED` |',
         '')
 
 

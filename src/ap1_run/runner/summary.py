@@ -8,7 +8,9 @@ report.generate_report() reads.
 
 from ap1_run.scoring.invocation import compute_dpr, measure_invocation
 
-from ap1_run.scoring.reproducibility import classify_mechanism
+from ap1_run.scoring.reproducibility import (
+    classify_mechanism, distinct_figures_shown,
+)
 
 _OUTCOME_OBSERVED = {'INVOKED': True, 'NOT-INVOKED': False}
 
@@ -119,7 +121,9 @@ def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason):
     """D2 mechanism class per (item, condition) and per surface.
 
     d2_responses maps (item_id, condition) to the responses of its
-    repeats. Returns {'<item_id>/<condition>': {surface: mechanism}}.
+    repeats. Returns {'<item_id>/<condition>': {surface: mechanism}};
+    a measured figures surface also carries 'values', its distinct
+    values as stated (T3-4).
     """
     d2_results = {}
     for (item_id, cond), responses in d2_responses.items():
@@ -132,6 +136,9 @@ def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason):
                 minimum_runs=repeat_count,
                 operator_declared=None,
             )
+            if surface == 'figures' and mech.get('distinct_values') is not None:
+                # the values themselves, for report section 9 (T3-4)
+                mech['values'] = distinct_figures_shown(responses)
             # D2.2 cap: platform-rejected -> cap at OBSERVED-ONLY
             if d2_cap_reason and mech['mechanism'] not in ('UNMEASURED',):
                 mech['mechanism'] = 'OBSERVED-ONLY'
