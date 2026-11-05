@@ -1091,24 +1091,31 @@ def test_main_reports_runner_modified(vrs, tmp_path, base, monkeypatch,
 
 @pytest.mark.finding('T3-47')
 @pytest.mark.req('R1.1')
+@pytest.mark.parametrize('moved', [
+    'six-years-earlier', 'one-second-later'])
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-47: an edited timestamp still verifies')
-def test_verify_run_edited_timestamp_fails(vrs, tmp_path, base):
-    # Correct (AP-1 v1.3 §5.3, SPEC R1.1): the timestamp is bound by
-    # seal_hash, so a timestamp edited in report.md fails verification.
-    # The transcript is timed after the real seal (so after the backdated
-    # one too): only the binding of the timestamp can catch the edit.
-    # Whether seal_hash or another hash binds it is the fix's choice
-    # (SPEC R1.1 vs T3-47), so either name is accepted.
+def test_verify_run_edited_timestamp_fails(vrs, tmp_path, base, moved):
+    # Correct (AP-1 v1.3 §5.3, SPEC R1.1): the timestamp is bound by a
+    # hash the verifier checks, so a timestamp edited in report.md fails
+    # verification with that hash named. Two edits: back to 2020, and one
+    # second later (still 4 s before the first transcript record, so a
+    # plausibility check on the timestamp alone can't see it). The
+    # transcript is timed after the real seal. Whether seal_hash or another
+    # hash binds the timestamp is the fix's choice, so any failure whose
+    # name contains 'hash' is accepted, a 'timestamp'-only one is not.
+    from datetime import datetime, timedelta
     config = good_config(base)
     sealed = good_record(base, config)
-    record = dict(sealed, timestamp='2020-01-01T00:00:00+00:00')
+    stamp = ('2020-01-01T00:00:00+00:00' if moved == 'six-years-earlier'
+             else (datetime.fromisoformat(sealed['timestamp'])
+                   + timedelta(seconds=1)).isoformat())
+    record = dict(sealed, timestamp=stamp)
     run_dir = write_run(tmp_path / 'run', record, config,
                         transcript=transcript_after(sealed))
     _, failures, error = outcome(vrs, run_dir)
     assert error is None, error
-    assert named(failures, 'seal_hash') or named(failures, 'timestamp'), \
-        failures
+    assert named(failures, 'hash'), failures
 
 
 @pytest.mark.finding('T3-47')
