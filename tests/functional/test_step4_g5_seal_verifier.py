@@ -479,6 +479,22 @@ def test_run_seals_the_calculator_it_executes(runner, fixture_dir):
     assert doctored.seals[0]['calculator_hash'] != sealed
 
 
+@pytest.mark.finding('T3-75', 'T3-15')
+@pytest.mark.req('R1.1')
+def test_verifier_passes_a_clean_run(runner, fixture_dir):
+    # A genuine run verifies against its own inputs with no failure: every
+    # field the runner seals (the lookup collisions too) is one the
+    # verifier knows.
+    clean = runner(fixture_dir)
+    assert clean.code == 0, clean.console[-2000:]
+    record = json.loads((clean.out / 'pre_registration.json').read_text(
+        'utf-8'))['seal_record']
+    assert 'lookup_collisions' in record
+    checks, failures = load_verifier().verify_run(
+        str(clean.out), fixture_dir=str(fixture_dir))
+    assert failures == [], failures
+
+
 @pytest.mark.finding('T3-72', 'T3-70')
 @pytest.mark.req('R1.1')
 def test_verifier_fails_a_run_whose_calculator_has_changed(runner,

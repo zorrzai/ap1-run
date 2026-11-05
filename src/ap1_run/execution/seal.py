@@ -34,6 +34,11 @@ SEALED_FIELDS = (
     'verification_keys', 'ev3_implemented',
 )
 
+# The fields a record of this format carries when the run gives them;
+# seal_hash covers them too. The live run always records the R3.1 lookup
+# collisions it found at seal (T3-75).
+OPTIONAL_SEALED_FIELDS = ('lookup_collisions',)
+
 # The sealed text inputs, by name: the record field is '<name>_hash'.
 TEXT_INPUTS = ('fixture', 'questions', 'ground_truth', 'calculator')
 

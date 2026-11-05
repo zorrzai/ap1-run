@@ -56,8 +56,8 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'src'))
 
 from ap1_run.execution.ap1_texts import ap1_text_entry  # noqa: E402
 from ap1_run.execution.seal import (  # noqa: E402
-    SEAL_FORMAT, SEALED_FIELDS, SealError, expected_values_hash,
-    text_file_hash,
+    OPTIONAL_SEALED_FIELDS, SEAL_FORMAT, SEALED_FIELDS, SealError,
+    expected_values_hash, text_file_hash,
 )
 from ap1_run.execution.sealed_inputs import (  # noqa: E402
     INPUT_FILES, compute_expected_values, load_ground_truth, parse_json_input,
@@ -379,10 +379,11 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
                          'reads %r)' % (record_format, SEAL_FORMAT)))
         return checks, failures
     if current_format:
-        # T3-15: the record holds exactly the fields a seal binds
+        # T3-15: the record holds exactly the fields a seal binds (the
+        # optional ones only if the run gave them)
         missing = [f for f in SEALED_FIELDS if f not in seal_record]
         extra = sorted(set(seal_record) - set(SEALED_FIELDS)
-                       - {'seal_hash'})
+                       - set(OPTIONAL_SEALED_FIELDS) - {'seal_hash'})
         if missing or extra:
             failures.append(('seal record fields', '; '.join(
                 part for part in (
