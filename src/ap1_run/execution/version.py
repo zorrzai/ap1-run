@@ -29,6 +29,8 @@ MIN_COMMIT_PREFIX = 7
 
 # What runner_source_hash covers, relative to the repository root.
 SOURCE_PACKAGE = os.path.join('src', 'ap1_run')
+# Importable code with no .py source (outside __pycache__).
+_SOURCELESS = ('.pyc', '.pyo', '.so', '.pyd')
 VERSION_FILE = 'VERSION'
 
 # The packages whose versions the seal records (T3-30, T3-70): the runner's own
@@ -113,6 +115,18 @@ def _source_files(base_dir):
     files = []
     for root, dirs, names in os.walk(package):
         dirs[:] = [d for d in dirs if d != '__pycache__']
+        for name in dirs + names:
+            path = os.path.join(root, name)
+            # Code the hash cannot see, which would run unhashed (T3-70): a
+            # symlink (os.walk does not follow one into a subpackage), or a
+            # sourceless module beside the .py files.
+            if os.path.islink(path) or name.endswith(_SOURCELESS):
+                from ap1_run.execution.seal import SealError
+                kind = ('a symlink' if os.path.islink(path)
+                        else 'sourceless code')
+                raise SealError(
+                    f'runner source: {os.path.relpath(path, base_dir)} is '
+                    f'{kind}, which runs without being hashed; remove it')
         files.extend(os.path.relpath(os.path.join(root, name), base_dir)
                      for name in names if name.endswith('.py'))
     if os.path.isfile(os.path.join(base_dir, VERSION_FILE)):

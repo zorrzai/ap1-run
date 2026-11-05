@@ -3,6 +3,7 @@ the runner source hash. Every tree is a small fake under tmp_path; the
 real repository is never hashed."""
 
 import hashlib
+import os
 import shutil
 import subprocess
 import warnings
@@ -274,11 +275,12 @@ def test_source_hash_changes_with_file_name(tmp_path):
 
 @pytest.mark.finding('T3-70')
 def test_source_hash_package_non_python_files_ignored(tmp_path):
-    # Inside the package only .py files count (no .pyc, backups or
-    # editor files); VERSION is the one other file hashed.
+    # Inside the package only .py files count (no backups or editor
+    # files); VERSION is the one other file hashed. (A sourceless .pyc
+    # beside them is refused: see below.)
     files = {PKG + 'a.py': b'1', 'VERSION': b'v1 abc'}
     root = make_tree(tmp_path, {**files, 'example/config.json': b'{}',
-                                PKG + 'a.pyc': b'', PKG + 'a.py.bak': b'',
+                                PKG + 'a.py.bak': b'',
                                 PKG + '.DS_Store': b'x',
                                 'sub/VERSION': b'v9'})
     assert compute_runner_source_hash(root) == expected_hash(files)
@@ -477,3 +479,38 @@ def test_runner_source_hash_of_a_tree_without_the_package_refused(tmp_path):
     (tmp_path / 'VERSION').write_text('v1\n')
     with pytest.raises(SealError, match='no package files'):
         compute_runner_source_hash(str(tmp_path))
+
+
+@pytest.mark.finding('T3-70')
+@pytest.mark.req('R1.1')
+def test_runner_source_with_a_symlinked_subpackage_refused(tmp_path):
+    # os.walk does not follow a directory symlink, so a subpackage reached
+    # through one would run without being hashed.
+    from ap1_run.execution.seal import SealError
+    root = make_tree(tmp_path / 'tree', {PKG + 'a.py': b'1'})
+    elsewhere = tmp_path / 'elsewhere'
+    elsewhere.mkdir()
+    (elsewhere / 'mod.py').write_text('X = 1\n')
+    os.symlink(elsewhere, os.path.join(root, 'src', 'ap1_run', 'sub'))
+    with pytest.raises(SealError, match='symlink'):
+        compute_runner_source_hash(root)
+
+
+@pytest.mark.finding('T3-70')
+@pytest.mark.req('R1.1')
+@pytest.mark.parametrize('name', ['helper.pyc', 'fast.so'])
+def test_runner_source_with_sourceless_code_refused(tmp_path, name):
+    # A sourceless module beside the package's .py files is importable and
+    # runs, but is not hashed.
+    from ap1_run.execution.seal import SealError
+    root = make_tree(tmp_path / 'tree', {PKG + 'a.py': b'1',
+                                         PKG + name: b'\x00'})
+    with pytest.raises(SealError, match=name):
+        compute_runner_source_hash(root)
+
+
+def test_runner_source_bytecode_cache_is_not_refused(tmp_path):
+    root = make_tree(tmp_path / 'tree', {PKG + 'a.py': b'1',
+                                         PKG + '__pycache__/a.cpython.pyc':
+                                         b'\x00'})
+    assert compute_runner_source_hash(root)
