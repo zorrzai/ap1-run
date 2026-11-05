@@ -32,11 +32,19 @@ REPO = os.path.dirname(os.path.dirname(HERE))
 LIST = os.path.join(HERE, 'source_hash_files.txt')
 
 
+def git_env():
+    """The environment for a git command on this clone: without GIT_*
+    variables, so a GIT_DIR or GIT_WORK_TREE set by a caller (the harness
+    sets GIT_DIR, pointing nowhere, for its runs) cannot point git at
+    another repository or none."""
+    return {k: v for k, v in os.environ.items() if not k.startswith('GIT_')}
+
+
 def tracked_files():
     """The tracked .py files, as '/'-separated paths."""
     try:
         out = subprocess.run(['git', 'ls-files', '-z'], cwd=REPO, check=True,
-                             capture_output=True).stdout
+                             capture_output=True, env=git_env()).stdout
     except (OSError, subprocess.CalledProcessError) as e:
         print(f'check_source_files: git ls-files failed: {e}', file=sys.stderr)
         raise SystemExit(2)

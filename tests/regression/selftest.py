@@ -244,8 +244,7 @@ class SourceFileList(unittest.TestCase):
                 os.makedirs(os.path.dirname(path), exist_ok=True)
                 with open(path, 'w') as f:
                     f.write('x = 1\n')
-            env = {k: v for k, v in os.environ.items()
-                   if not k.startswith('GIT_')}
+            env = check_source_files.git_env()
             subprocess.run(['git', 'init', '-q', root], check=True, env=env)
             subprocess.run(['git', '-C', root, 'add', '--']
                            + [r for r, kind in files.items()
@@ -295,11 +294,9 @@ class PublishedSourceHash(unittest.TestCase):
     def git(self, *args, stdin=None):
         # The clone this file is in, whatever GIT_DIR a caller has set.
         repo = os.path.dirname(os.path.dirname(HERE))
-        env = {k: v for k, v in os.environ.items()
-               if not k.startswith('GIT_')}
         return subprocess.run(['git', '-C', repo, *args], input=stdin,
                               capture_output=True, check=True,
-                              env=env).stdout
+                              env=check_source_files.git_env()).stdout
 
     def write_tag_tree(self):
         try:
