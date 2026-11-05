@@ -2129,3 +2129,42 @@ def test_d2_conditions_section_without_sampling_or_echo():
     assert text.endswith('- Sampling parameters sent:\n  - none\n'
                          '- Parameter echo: `UNVERIFIED` '
                          '(0 responses checked)\n')
+
+
+def _served(model, fingerprint=None):
+    body = {'model': model, 'choices': []}
+    if fingerprint is not None:
+        body['system_fingerprint'] = fingerprint
+    return {'item_id': 'Q01', 'condition': 'base', 'response_received': body}
+
+
+@pytest.mark.finding('T3-30')
+@pytest.mark.req('AP-1 D2.2')
+def test_d2_conditions_serving_stack_from_the_responses():
+    # AP-1 v1.3 D2.2: "the serving stack and version". The responses
+    # name the served model and backend fingerprint: the section reports
+    # them, with response counts, and says "not disclosed" only when no
+    # response carries either.
+    records = [_served('m-2025-04-14', 'fp_b'), _served('m-2025-04-14', 'fp_a'),
+               _served('m-2025-04-14', 'fp_a'),
+               {'record_type': 'figure_identification', 'response_received': None}]
+    text = report._section_d2_conditions({}, {}, records)
+    assert ('- Serving stack and version: as the responses report it, '
+            'model m-2025-04-14 (3); backend fingerprints '
+            '(system_fingerprint) fp_a (2), fp_b (1); the runner observes '
+            'nothing more.\n') in text
+    text = report._section_d2_conditions({}, {}, [_served('m')])
+    assert ('- Serving stack and version: as the responses report it, '
+            'model m (1); backend fingerprints (system_fingerprint) not '
+            'reported; the runner observes nothing more.\n') in text
+    assert '- Serving stack and version: not disclosed by the endpoint' in \
+        report._section_d2_conditions({}, {}, [])
+
+
+@pytest.mark.finding('T3-30')
+@pytest.mark.req('AP-1 D2.2')
+def test_d2_conditions_names_a_seed_sent():
+    text = report._section_d2_conditions({}, {'sampling': {'seed': '7'}}, [])
+    assert ('- Deterministic or batch-invariant mode: none requested by the '
+            'runner beyond the `seed` sent (`7`); whether the endpoint honours '
+            'it, or enables such a mode, is not disclosed.\n') in text

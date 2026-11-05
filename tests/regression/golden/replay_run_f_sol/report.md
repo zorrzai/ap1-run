@@ -1291,7 +1291,7 @@ Total operands resolved: 4722
 
 ## 9b. D2.2 Execution Conditions
 
-- Serving stack and version: not disclosed by the endpoint; the runner cannot observe it.
+- Serving stack and version: as the responses report it, model gpt-5.6-sol (1000); backend fingerprints (system_fingerprint) not reported; the runner observes nothing more.
 - Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
 - Concurrency: one request at a time, sequentially, from a single process.
 - Sampling parameters sent:
