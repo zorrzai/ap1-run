@@ -465,17 +465,18 @@ def test_send_transport_error_text_is_masked(transport):
                    reason='S3-G1-21: a sampling key named like a body field '
                           'overwrites it; the request record disagrees with '
                           'what was sent')
-@pytest.mark.parametrize('key', ['model', 'messages'])
+@pytest.mark.parametrize('key', ['model', 'messages', 'tools'])
 def test_send_sampling_key_cannot_overwrite_body_field(transport, key):
     # SPEC R0.2: the request record is "the request AS SENT". A sampling
     # key that names a body field is refused before anything is sent, or
-    # cannot change that field: the caller's own model and messages are
-    # what is sent and what is recorded. (Recording the overwritten value
-    # faithfully is not enough.)
-    original = {'model': 'm', 'messages': MESSAGES}[key]
+    # cannot change that field: the caller's own model, messages and tools
+    # are what is sent and what is recorded. (Recording the overwritten
+    # value faithfully is not enough.)
+    tools = [{'type': 'function', 'function': {'name': 'calculator'}}]
+    original = {'model': 'm', 'messages': MESSAGES, 'tools': tools}[key]
     t = transport(FakeResponse(200, OK))
     try:
-        _, record = send(URL, messages=MESSAGES, model='m',
+        _, record = send(URL, messages=MESSAGES, model='m', tools=tools,
                          sampling={key: 'other'})
         sent = t.calls[0]['json'][key]
         outcome = ('kept' if sent == record[key] == original
