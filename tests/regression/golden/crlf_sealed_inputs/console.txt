@@ -8,7 +8,7 @@ Runner version: v1.3.1 (e0d9ec9)
 Runner source hash: <RUNNER_SOURCE_HASH>...
 
 Seal hash: <SEAL_HASH>
-AP-1 text hash: 48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56
+AP-1 text hash: 6ecd964a48939adcc0e555f91a57c7fd8135307071bfe25a77951d22b9e93f98
 
 Perturbation guard: PASSED (single-variable: system_prompt only)
 
