@@ -274,15 +274,15 @@ def test_run_ground_truth_executed_from_other_file_refused_or_sealed(
                 executed, fixture_dir / 'ground_truth_example.py'))
 
 
-# -- F2: the environment is recorded in the seal ---------------------------
+# -- T3-30: the environment is recorded in the seal ---------------------------
 
-@pytest.mark.finding('F2', 'T3-70')
+@pytest.mark.finding('T3-30', 'T3-70')
 @pytest.mark.req('R1.1')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F2: the seal records no Python version, platform '
-                          'or package versions')
+                   reason='T3-30: the seal records no Python version, '
+                          'platform or package versions')
 def test_run_seal_record_carries_environment_fields(runner, fixture_dir):
-    # Correct (Steven's ruling, choices-for-marcus.md entry 6): Python
+    # Correct (T3-30; AP-1 v1.3 §1.5.1, the declared environment): Python
     # version, platform and package versions are recorded in the seal as
     # separate fields, outside runner_source_hash. Field names are the
     # fix's choice; they contain 'python', 'platform' and 'package'.
@@ -304,7 +304,7 @@ def test_run_seal_record_carries_environment_fields(runner, fixture_dir):
                           'v1.3 draft; the fix adds a version table entry '
                           'for v1.2 (text 14659fc1..., DOI)')
 def test_run_v12_config_seals_the_v12_text(runner, fixture_dir):
-    # Correct (fix plan §2a, V12-4; AP-1 v1.2 §0.4 "A claim of compliance
+    # Correct (V12-4; AP-1 v1.2 §0.4 "A claim of compliance
     # must cite the specific version evaluated against"): the AP-1 text is
     # a per-version table entry, so a run whose config declares v1.2 and
     # the v1.2 text's hash seals the v1.2 text, without --ap1-text.

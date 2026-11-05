@@ -1391,8 +1391,8 @@ def test_clopper_pearson_section_bounds_nonzero_failures():
                          for v in shown), cell
 
 
-# Group g7-report (fix branch 7, report honesty). Each test asserts what
-# SPEC/AP-1 require and is xfail(strict=True) until the fix lands.
+# Report honesty. Each test asserts what SPEC/AP-1 require and is
+# xfail(strict=True) until the fix lands.
 
 # D1 with adjudication pending: 22 auto-scored (all CORRECT), 18 routed to
 # adjudication and not yet scored, as on every live run.
@@ -1669,7 +1669,7 @@ def test_cells_non_string_error_state_with_colon_is_listed():
                    reason='T3-45: report.md has no demonstration-run / '
                           'non-conformance statement')
 def test_report_header_says_demonstration_run_not_conformance_result():
-    # Marcus (2026-10-13): runs are described as demonstration runs, not
+    # README: runs are described as demonstration runs, not
     # conformance results; the README says so (lines 21-22). Correct: the
     # report says so before its first section, since report.md is the
     # artifact most likely to be forwarded. (If the fix passes the
@@ -1721,7 +1721,7 @@ def test_scoring_proportions_d1_total_is_n_with_unmeasurable_shown():
                           'EXACT results were rounded under the declared '
                           'policy')
 def test_d73_reports_count_of_exact_rounded_under_declared_policy():
-    # Fix plan §2a, V12-6 (in scope, Steven 2026-10-19): keep v1.3's
+    # V12-6: keep v1.3's
     # TRANSCRIBED-EXACT and report the count of EXACT results that were
     # rounded under the declared policy, so a v1.2 reader can subtract
     # them. Wording is the fix's; this asserts a line naming "rounded
@@ -1737,8 +1737,6 @@ def test_d73_reports_count_of_exact_rounded_under_declared_policy():
                           r'(quantisation )?policy', ln, re.I)]
     assert any(re.search(r'\b2\b', ln) for ln in lines), lines
 
-
-# Group g1-invocation (fix plan branch 1).
 
 @pytest.mark.finding('V12-5')
 @pytest.mark.xfail(strict=True, raises=AssertionError,

@@ -6,8 +6,8 @@ with every output in tmp_path. Each test then reads the files the run
 wrote: adjudication_sheets.md, report.md, smoke_summary.json and the
 transcript smoke_run.jsonl.
 
-Every test here is xfail(strict=True) until its fix lands (fix plan §2,
-branch 6 "adjudication sheets", and the v1.3-only findings).
+Every test here is xfail(strict=True) until its fix lands (the adjudication
+sheets, and the v1.3-only findings).
 """
 
 import json
@@ -122,8 +122,8 @@ def test_run_transport_failure_on_repeat_1_sheets_show_repeat_3(
     """A transport failure on repeat 1 must not shift repeats 2..n.
 
     Correct (SPEC R3.2: a sheet holds everything a scorer needs, for the
-    right execution; fix plan §2 branch 6: every record carries a repeat
-    index and the sheets join on it): repeat 3, the only one routed to
+    right execution; T3-9: every record carries a repeat index and the
+    sheets join on it): repeat 3, the only one routed to
     adjudication, gets the sheets (2 conditions x 2 scorers = 4), and
     neither repeat 2's auto-scored response nor the failed repeat 1's
     empty one is on any sheet.
@@ -149,8 +149,7 @@ def test_run_transcript_records_carry_their_repeat_index(tmp_path,
                                                          monkeypatch):
     """Every transcript record (engine and figure-identification, the
     failed repeat's too) carries the repeat it belongs to, so the outputs
-    can join on it. Fix plan §2 branch 6: "Write a repeat index on every
-    record and join on it". Today no record has one."""
+    can join on it (T3-9). Today no record has one."""
     out = run_example(tmp_path, monkeypatch, items={'Q02'}, repeat_count=3,
                       responses={'Q02/*/r1': [ERROR_500],
                                  'Q02/*/r2': [Q02_CALL, Q02_RIGHT],
@@ -179,8 +178,8 @@ def test_run_sheet_coverage_finding_is_its_own_executions(tmp_path,
                                                           monkeypatch):
     """Repeat 1 releases 2600.00 from a call that returned 2601
     (PARTIALLY-GOVERNED, auto-scored); repeat 2 declines with a grounded
-    call (GOVERNED-RELEASE, adjudicated). Correct (SPEC R3.2; fix plan §2
-    branch 6): the sheet of repeat 2 carries repeat 2's coverage only, so
+    call (GOVERNED-RELEASE, adjudicated). Correct (SPEC R3.2; T3-9):
+    the sheet of repeat 2 carries repeat 2's coverage only, so
     no Release Coverage Finding. Today the lookup is keyed on
     (item, condition) and lists repeat 1's finding."""
     out = run_example(

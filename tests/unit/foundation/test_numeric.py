@@ -946,7 +946,7 @@ def test_extract_percent_then_currency_token_kept():
 ], ids=['spaced', 'unspaced'])
 def test_extract_minus_between_operands_is_an_operator(text, expected):
     # A '-' that follows a number is a binary operator, not the sign of
-    # the next token (G1 report, S3-g1-5). Reading it as a sign negates an
+    # the next token (S3-G1-5). Reading it as a sign negates an
     # operand quoted in the prose, which changes R2.0's match count (see
     # the end-to-end test in tests/functional/test_step4_g8_numeric_d73.py).
     # A leading sign elsewhere ('was -5') stays a sign. Note: the step-3
@@ -1015,11 +1015,11 @@ VERIFY_HASHES_DIGEST = \
     '831709b2231846ed20fd63ff0bc0764d73cee50db271f733e6a2f1c377c7cff3'
 
 
-@pytest.mark.finding('T3-20', 'F8')
+@pytest.mark.finding('T3-20')
 @pytest.mark.req('R0.4.3')
 def test_canonical_hash_pinned_digest_same_on_every_platform():
     # Not an xfail: passes today and must pass on every OS CI runs.
-    # T3-20/F8 (Steven's ruling and Marcus's request, 2026-10-16): the CI
+    # T3-20: the CI
     # job wrote this digest on three platforms and compared nothing; the
     # expected value is now pinned in the test, so a platform that hashes
     # differently fails here (SPEC R0.4.3 verification item 1). Inputs are

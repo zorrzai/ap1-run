@@ -716,35 +716,34 @@ def test_reclassify_session_pairs_results_and_expressions_by_position():
 
 # --- Step 4: correct behaviour (failing until fixed) ---
 
-@pytest.mark.finding('T3-58', 'F5')
+@pytest.mark.finding('T3-58')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-58/F5: expression literals are read through '
+                   reason='T3-58: expression literals are read through '
                           'float before the Decimal evaluation')
 @pytest.mark.parametrize('literal', ['15.20', '15200.0000000000000001',
                                      '0.12345678901234567890'])
 def test_evaluate_expression_reads_literal_text_exactly(literal):
-    # Correct (Steven, 2026-10-20, choices-for-marcus #8; SPEC R0.4.1 "All
+    # Correct (DEC-6, T3-58; SPEC R0.4.1 "All
     # numeric values on any comparison path are Decimal, parsed from
     # string"; R0.4.2 "never through float"): a literal evaluates to the
     # Decimal of its text, digits and trailing zeros kept.
     assert str(evaluate_expression(literal)) == literal
 
 
-@pytest.mark.finding('T3-58', 'F5')
+@pytest.mark.finding('T3-58')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-58/F5: 0.1000000000000000001 is read as the '
+                   reason='T3-58: 0.1000000000000000001 is read as the '
                           'float 0.1 and taken for the earlier result 0.1')
 def test_reclassify_session_operand_beyond_float_precision_is_not_the_result():
     # Read exactly, 0.1000000000000000001 is not the first call's result
     # 0.1, so the first call does not feed the second and stays
-    # WRONG-OPERATION (same ruling and SPEC lines as above).
+    # WRONG-OPERATION (same decision and SPEC lines as above).
     out = reclassify_session([wo('0.1'), oc('1')],
                              ['1 / 10', '0.1000000000000000001 + 0.9'])
     assert out[0]['outcome'] == WO
 
 
-# Group g7-report (assigned S3-G4-3/4 in the step-4 brief). xfail(strict=True)
-# until the fix.
+# S3-G4-3 and S3-G4-4: xfail(strict=True) until the fix.
 
 def _evaluated(expression):
     """evaluate_expression's result, or the exception it raised (so a
@@ -814,8 +813,6 @@ def test_classify_operation_round_uses_declared_half_up():
     assert (result['outcome'], result['evaluated_result']) == (OC, '3')
 
 
-# Group g1-invocation (fix plan branch 10).
-
 @pytest.mark.finding('S3-G4-5')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='S3-G4-5: reclassify_session raises on '
@@ -823,8 +820,8 @@ def test_classify_operation_round_uses_declared_half_up():
 @pytest.mark.parametrize('expression', ['True + 1', '-' * 5000 + '1'],
                          ids=['bool-literal', 'deep-nesting'])
 def test_reclassify_session_unreadable_expression_kept_no_raise(expression):
-    # Correct (S3-G4-5; Steven's ruling on F6, choices-for-marcus #9: a
-    # boolean is not an operand): an expression whose operands cannot be
+    # Correct (S3-G4-5; as for T3-39, a boolean is not an
+    # operand): an expression whose operands cannot be
     # read gives no operands and no exception; the lone wrong call stays
     # WRONG-OPERATION.
     try:

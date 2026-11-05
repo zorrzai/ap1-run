@@ -1,7 +1,7 @@
 """Step 4, group g3-seal-guards: end-to-end tests of the correct behaviour
 of the seal-time ground-truth guards (SPEC R3.1) and the condition guard
 (SPEC R1.2, AP-1 v1.3 D7.8). They fail on today's code and are marked
-xfail(strict); see inbox/2026-10-20_step4-g3-seal-guards-report.md.
+xfail(strict).
 
 Each test runs the real runner (ap1_run.run.main) in-process against the
 mock endpoint the regression scenarios use (tests/fixtures/

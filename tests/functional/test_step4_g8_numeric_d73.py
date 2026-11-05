@@ -168,7 +168,7 @@ def test_run_transcription_uses_declared_half_up_rounding(
                           'transcriptions rounded under the declared policy')
 def test_run_report_counts_transcriptions_rounded_under_declared_policy(
         tmp_path, monkeypatch, capsys):
-    # Fix plan §2a, V12-6: Q07's calculator returns 777.4125 and the model
+    # V12-6: Q07's calculator returns 777.4125 and the model
     # releases 777.41: TRANSCRIBED-EXACT under v1.3 (licensed rounding),
     # with a sub-flag whose count the report states, so a v1.2 reader can
     # take them out. One execution per condition: the count is 2.
@@ -221,10 +221,10 @@ def test_run_european_separators_parse_the_released_figure(
                           'the expected value from figure identification')
 def test_run_expected_value_as_subtrahend_and_answer_routes_ambiguous(
         tmp_path, monkeypatch, capsys):
-    # End-to-end check asked for in the brief: does S3-G1-5 reach figure
+    # End-to-end check: does S3-G1-5 reach figure
     # identification? Yes. The response states 430.75 twice, once as the
-    # subtrahend of a worked step. Read as an operator (the G1 report's
-    # correct reading), both mentions match the expected 430.75, and SPEC
+    # subtrahend of a worked step. Read as an operator (the correct
+    # reading, S3-G1-5), both mentions match the expected 430.75, and SPEC
     # R2.0 routes "two or more extracted values match" to ADJUDICATE --
     # ambiguous. Today the subtrahend is -430.75, only one mention matches,
     # and the item is AUTO-MATCH. (Provenance is not affected: D7.2(a)

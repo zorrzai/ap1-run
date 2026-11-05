@@ -624,7 +624,7 @@ def test_sheets_transport_failure_record_never_gets_a_sheet():
                    reason="T3-37: a sheet's coverage finding lists every "
                           'repeat of the item and condition')
 def test_sheets_coverage_finding_is_the_sheets_own_repeat():
-    # Correct (SPEC R3.2; fix plan §2 branch 6): coverage joins on the
+    # Correct (SPEC R3.2; T3-9): coverage joins on the
     # repeat too. Repeat 1 was GOVERNED-RELEASE, so its two sheets carry
     # no Release Coverage Finding; repeat 2's two sheets carry its own.
     text = sheets_for(

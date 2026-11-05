@@ -685,8 +685,7 @@ def test_source_fields_check_passes_example_module(example):
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
-# Group g3-seal-guards. Each test asserts the correct behaviour and is
-# xfail(strict) until the fix; see inbox/2026-10-20_step4-g3-seal-guards-report.md.
+# Each test asserts the correct behaviour and is xfail(strict) until the fix.
 
 def refusal_of(check, *args, **kwargs):
     """The SealError message of a guard, or None if the guard passed.

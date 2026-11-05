@@ -329,7 +329,7 @@ def test_parameter_echo_numerically_equal_values_can_mismatch():
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
-# Group g7-report (fix branch 7). xfail(strict=True) until the fix.
+# xfail(strict=True) until the fix.
 
 def _answer(text):
     return {'choices': [{'message': {'role': 'assistant', 'content': text}}]}

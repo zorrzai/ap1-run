@@ -326,8 +326,6 @@ def test_format_rate_displayed_bound_is_never_below_the_exact_bound(n):
     assert shown >= _exact_upper_bound(n) * 100, text
 
 
-# Group g3-seal-guards; see inbox/2026-10-20_step4-g3-seal-guards-report.md.
-
 @pytest.mark.finding('S3-G4-1')
 @pytest.mark.req('R2.3', 'AP-1 D7.8')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -420,8 +418,6 @@ def test_measure_invocation_unobservable_records_leave_the_denominator():
     assert summary['n'] == 2, summary
     assert summary['failure_rate'].startswith('0/2 '), summary
 
-
-# Group g1-invocation (fix plan branch 1).
 
 @pytest.mark.finding('T3-1')
 @pytest.mark.xfail(strict=True, raises=AssertionError,

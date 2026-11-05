@@ -305,7 +305,7 @@ def test_load_config_omission_unknown_reason_refused(load):
         f'Permitted reasons: {REASONS}')
 
 
-@pytest.mark.finding('F1', 'T3-79')
+@pytest.mark.finding('T3-79')
 def test_load_config_model_unsupported_reason_refused(load):
     # Current behaviour: 'model-unsupported', the reason used in
     # example/config_mini.json, is not a permitted reason. Correct: either
@@ -317,7 +317,7 @@ def test_load_config_model_unsupported_reason_refused(load):
         "'model-unsupported'.")
 
 
-@pytest.mark.finding('F1', 'T3-79')
+@pytest.mark.finding('T3-79')
 def test_load_config_example_config_mini_refused():
     # Current behaviour: the shipped example/config_mini.json does not
     # load (regression scenario mini_config). Correct: it loads.
@@ -629,7 +629,6 @@ def test_minimum_n_d5_counts_every_question():
                        questions(20, 'ordinary'))
 
 
-
 # --- Step 4: correct behaviour (failing until fixed) ---
 
 def load_outcome(load, **overrides):
@@ -806,11 +805,11 @@ def test_minimum_n_d5_d6_ordinary_items_not_counted_refused(dim, minimum):
                                                     ('D6', '1', '10')])
 def test_minimum_n_minimum_named_is_the_declared_versions(dim, v12_min,
                                                           v13_min):
-    # The minimums are per AP-1 version (choices-for-marcus entry 2; fix
-    # plan §2a V12-7): v1.3 D5 20 (l.279), D6 10 (l.301); v1.2 D5 5
-    # (v1.2 l.149), D6 1 (v1.2 §11.6, l.292). With no eligible items both
-    # versions refuse, and the refusal names the declared version's
-    # minimum. 'v1.2' is the ap1_version a v1.2 config would declare.
+    # The minimums are per AP-1 version (V12-7): v1.3 D5 20 (l.279), D6 10
+    # (l.301); v1.2 D5 5 (v1.2 l.149), D6 1 (v1.2 §11.6, l.292). With no
+    # eligible items both versions refuse, and the refusal names the
+    # declared version's minimum. 'v1.2' is the ap1_version a v1.2 config
+    # would declare.
     v13 = config_error(validate_minimum_n,
                        {'dimensions_claimed': [dim], 'ap1_version': V13}, [])
     v12 = config_error(validate_minimum_n,
@@ -852,12 +851,12 @@ def test_load_config_quantisation_unknown_rounding_mode_refused(load):
     assert msg is not None and 'rounding' in msg, msg
 
 
-@pytest.mark.finding('F1', 'T3-79')
+@pytest.mark.finding('T3-79')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='F1/T3-79: example/config_mini.json is refused '
+                   reason='T3-79: example/config_mini.json is refused '
                           "(reason 'model-unsupported')")
 def test_load_config_example_config_mini_is_the_mini_runs_config():
-    # Steven's ruling (choices-for-marcus entry 5): config_mini.json is a
+    # Correct (T3-79): config_mini.json is a
     # valid, complete config for the mini run, with the omission label
     # platform-unsupported and an accurate detail. The published mini runs
     # sent temperature "1" and omitted reasoning_effort
