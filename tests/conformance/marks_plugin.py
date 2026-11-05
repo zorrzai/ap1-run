@@ -18,6 +18,8 @@ def pytest_collection_modifyitems(session, config, items):
             'finding': [list(m.args) for m in item.iter_markers('finding')],
             'proposal': [{'args': list(m.args), 'kwargs': dict(m.kwargs)}
                          for m in item.iter_markers('proposal')],
+            'provisional': [{'args': list(m.args), 'kwargs': dict(m.kwargs)}
+                            for m in item.iter_markers('provisional')],
             'strict_xfail': any(m.kwargs.get('strict')
                                 for m in item.iter_markers('xfail')),
         })
