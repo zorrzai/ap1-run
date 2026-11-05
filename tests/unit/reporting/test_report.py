@@ -2170,38 +2170,47 @@ def _shown(value):
 
 @pytest.mark.proposal(
     "T3-32: the summary carries D1 per category as d1_results['by_category']"
-    "[category] with n, correct and incorrect (the step-3 pin's shape), and "
-    'the 95 % interval is Clopper-Pearson or Wilson; both are the '
-    "author's proposal")
+    "[category] in the shape summarise_accuracy_by_category returns (n "
+    "questions, correct_questions, interval); the 95 % interval is "
+    "Clopper-Pearson or Wilson; both are the author's proposal")
 @pytest.mark.finding('T3-32')
 @pytest.mark.req('AP-1 D1', 'R3.3')
-@pytest.mark.xfail(strict=True, raises=(AssertionError, KeyError),
-                   reason="T3-32: the fix's D1-by-category summary has "
-                          "another shape than this test's synthetic one "
-                          "(no 'interval' per category)")
 def test_dimension_results_d1_per_category_with_n_and_interval():
     # AP-1 v1.3 D1: "Results reported per category, with 95% confidence
     # intervals, and with n stated"; SPEC R0.1: at least 10 items per
-    # category. Two categories at or above the minimum, every item
-    # auto-scored (no adjudication, so T3-3 does not apply): interest 9 of
-    # 12 correct, fees 10 of 10. Each category's row in section 3 states
-    # its n and both bounds of its interval, computed here.
-    by_category = {'interest': {'n': 12, 'correct': 9, 'incorrect': 3},
-                   'fees': {'n': 10, 'correct': 10, 'incorrect': 0}}
+    # category. Two categories at or above the minimum, every execution
+    # auto-scored (no adjudication, so T3-3 does not apply), two
+    # executions per question: interest 9 of 12 questions correct, fees
+    # 10 of 10. The summary is built from those executions by the
+    # summariser; each category's row in section 3 states its n, its
+    # result and both bounds of its interval, each computed here.
+    from ap1_run.scoring.accuracy import (
+        CORRECT, INCORRECT, summarise_accuracy_by_category)
+    counts = {'interest': (12, 9), 'fees': (10, 10)}
+    categories, results = {}, []
+    for category, (n, k) in counts.items():
+        for i in range(n):
+            item_id = f'{category}-{i:02d}'
+            categories[item_id] = category
+            second = CORRECT if i < k else INCORRECT
+            results += [{'item_id': item_id, 'outcome': CORRECT},
+                        {'item_id': item_id, 'outcome': second}]
     d1 = {'n': 22, 'auto_scored_n': 22, 'adjudicated_n': 0,
-          'unmeasurable_n': 0, 'correct': 19, 'incorrect': 3,
+          'unmeasurable_n': 0, 'correct': 41, 'incorrect': 3,
           'no_figure': 0, 'accuracy_rate': Decimal(19) / Decimal(22),
-          'by_category': by_category}
+          'by_category': summarise_accuracy_by_category(results,
+                                                        categories)}
     text = report._section_dimension_results(
         {'d1_results': d1}, {'dimensions_claimed': ['D1']})
     bad = []
-    for category, c in by_category.items():
+    for category, (n, k) in counts.items():
         rows = [line for line in text.splitlines()
                 if re.search(rf'\b{category}\b', line)]
-        intervals = [_clopper_pearson(c['correct'], c['n']),
-                     _wilson(c['correct'], c['n'])]
+        intervals = [_clopper_pearson(k, n), _wilson(k, n)]
         ok = [line for line in rows
-              if re.search(rf'(\bn\s*=\s*|\|\s*){c["n"]}\b', line)
+              if re.search(rf'(\bn\s*=\s*|\|\s*){n}\b', line)
+              and f'{k}/{n}' in line
+              and any(f'{s}%' in line for s in _shown(k / n))
               and any(any(s in line for s in _shown(lo))
                       and any(s in line for s in _shown(hi))
                       for lo, hi in intervals)]
