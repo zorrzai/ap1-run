@@ -215,7 +215,14 @@ class PublishedSourceHash(unittest.TestCase):
     the tag, .py files are stored as they were on disk when the runs were
     sealed (-text, mixed CRLF and LF), and reading the blobs directly keeps
     a checkout's line-ending conversion out of it. Needs the tag in the
-    clone (CI checks out with full history)."""
+    clone (CI checks out with full history).
+
+    What this pins: the byte reading (the tag has CRLF and LF files), the
+    path encoding, the NUL framing and the sort, over a nearly flat tree
+    (44 .py files at the top, 7 in ap1_inspect/, 2 in example/; no tests/,
+    src/ or tools/). It cannot see a rule change that only affects deeper
+    or other directories, such as no longer hashing tests/: which files
+    are in scope is pinned by check_source_files.py."""
 
     TAG = 'e7-quantise-fix'
     # docs/REPRODUCING.md, and report.md section 1 of both September runs.

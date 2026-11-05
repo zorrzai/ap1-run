@@ -36,7 +36,9 @@ VERSION not hashed). A fix to T3-70 changes this rule and the runner's in
 the same commit; check_source_files.py then shows the change in the file
 list, and selftest.py's recomputation of the published September hash
 from the tag e7-quantise-fix shows whether the old seals can still be
-reproduced.
+reproduced. That tree is nearly flat (no tests/ or src/), so the tag
+check pins how files are read, framed and sorted; the file list pins
+which files are in scope.
 
 Version fields: the tag and commit are read from the tree's VERSION file
 here, independently (first line that is not blank or a comment; 'unknown'
