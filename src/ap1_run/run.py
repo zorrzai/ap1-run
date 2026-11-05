@@ -51,7 +51,7 @@ from ap1_run.execution.seal import (
     verify_seal,
 )
 from ap1_run.execution.sealed_inputs import (
-    compute_expected_values, read_inputs, sealed_compute,
+    check_reproducible, read_inputs, sealed_compute,
 )
 from ap1_run.execution.seal_constants import declared_constants_check
 from ap1_run.execution.version import (
@@ -181,6 +181,10 @@ def main(argv=None):
     print(f'Runner source hash: {runner_source_hash[:16]}...')
     print()
 
+    # -- Expected values: computed twice on the same contexts and refused
+    # if they differ (R3.1, T3-48), then sealed and scored against --
+    expected_values = check_reproducible(gt_module, fixture, questions)
+
     # -- R3.1 seal-time ground-truth guards --
     # The module must compute its expected values from its declared
     # source fields: refused (SealError) before sealing and before any
@@ -192,9 +196,6 @@ def main(argv=None):
     print('Ground-truth guards (R3.1): PASSED (perturbation, source fields, '
           'declared constants)')
     print()
-
-    # -- Expected values: computed once, sealed, and scored against (T3-48)
-    expected_values = compute_expected_values(gt_module, fixture, questions)
 
     # -- SEAL: R1.1 pre-registration record --
     # The real seal, not a sentinel. A live run without a valid seal

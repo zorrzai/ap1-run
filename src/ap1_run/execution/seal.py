@@ -64,12 +64,17 @@ def text_file_hash(path):
 
 
 def expected_values_hash(expected_values):
-    """The canonical hash of the expected values: what the ground-truth
-    module returned for each item, {item_id: result} (R1.1, T3-48).
-    Raises SealError if a result cannot be hashed (a float, or a value
-    JSON cannot hold)."""
+    """The canonical hash of the expected values: each item's final value,
+    {item_id: final}, from what the ground-truth module returned for it
+    (R1.1, T3-48). The digest covers the finals the run scores against;
+    a result without a final (an underivable item) contributes None.
+    Raises SealError if a value cannot be hashed (a float, or a value JSON
+    cannot hold)."""
+    finals = {item_id: (result.get('final') if isinstance(result, dict)
+                        else result)
+              for item_id, result in expected_values.items()}
     try:
-        return canonical_hash(expected_values)
+        return canonical_hash(finals)
     except (TypeError, ValueError) as e:
         raise SealError(f'expected values cannot be sealed: {e}') from e
 

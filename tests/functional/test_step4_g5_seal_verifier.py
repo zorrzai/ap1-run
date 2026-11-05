@@ -241,8 +241,6 @@ DRIFT = (
     'places); the format is the author\'s proposal')
 @pytest.mark.finding('T3-48')
 @pytest.mark.req('R1.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-48: the seal has no expected-values component')
 def test_run_seal_record_binds_expected_values(runner):
     # Correct (SPEC R1.1: "hash and timestamp the fixture, question set,
     # expected values, ground-truth module, ..."; AP-1 v1.3 §13.4): the
@@ -321,9 +319,6 @@ def test_run_ground_truth_drifting_after_the_seal_is_not_scored(
     'reading of SPEC R3.1')
 @pytest.mark.finding('T3-48')
 @pytest.mark.req('R1.1', 'R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-48: a ground-truth module whose values change '
-                          'between computations runs unnoticed')
 def test_run_ground_truth_values_changing_between_computations_refused(
         runner, fixture_dir):
     # SPEC R3.1 "Intermediates reproducible across two executions", in

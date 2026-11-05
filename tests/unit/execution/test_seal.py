@@ -184,13 +184,13 @@ def test_seal_hash_binds_the_environment(files, frozen, monkeypatch, field):
 
 @pytest.mark.req('R1.1')
 def test_seal_expected_values_hashed_canonically(files, frozen):
-    # T3-48: the ground-truth results, Decimals as their exact strings.
+    # T3-48: each item's final value, Decimals as their exact strings
+    # (the format step 4's binding test computes on its own).
     values = {'Q02': {'final': Decimal('1.50'), 'derivable': True},
               'Q01': {'final': None, 'derivable': False}}
     record = make_seal(files, expected_values=values)
     assert record['expected_values_hash'] == canon(
-        {'Q01': {'derivable': False, 'final': None},
-         'Q02': {'derivable': True, 'final': '1.50'}})
+        {'Q01': None, 'Q02': '1.50'})
 
 
 def test_seal_empty_expected_values_are_sealed_as_such(files, frozen):
@@ -457,8 +457,8 @@ def test_verify_seal_expected_values_compared_when_given(files, frozen):
         verify(record, files, expected_values=other)
     assert str(exc.value) == (
         "seal verification failed:\n  expected_values: "
-        f"sealed={canon({'Q01': {'final': '2'}})!r}, "
-        f"current={canon({'Q01': {'final': '3'}})!r}")
+        f"sealed={canon({'Q01': '2'})!r}, "
+        f"current={canon({'Q01': '3'})!r}")
 
 
 # -- perturbation_check -----------------------------------------------------

@@ -25,8 +25,9 @@ writing):
   config_hash      canonical hash of the resolved config, as passed to the
                    seal function (captured by driver.py before the call)
   expected_values_hash
-                   canonical hash of the expected values passed to the
-                   seal ('' if none); the values themselves are pinned by
+                   canonical hash of {item: final} of the expected values
+                   passed to the seal ('' if none; None for a result
+                   without a final); the values themselves are pinned by
                    the goldens, which print this hash (T3-48)
   environment      python_version, platform and package_versions of this
                    interpreter (the driver runs on the same one), outside
@@ -430,7 +431,10 @@ def expected_outcome(inputs, tree):
         'questions_hash': hashes['questions'],
         'ground_truth_hash': hashes['ground_truth'],
         'expected_values_hash': ('' if expected_values is None
-                                 else canonical_hash(expected_values)),
+                                 else canonical_hash({
+                                     k: (v.get('final') if isinstance(v, dict)
+                                         else v)
+                                     for k, v in expected_values.items()})),
         'config_hash': canonical_hash(config),
         'ap1_version': config.get('ap1_version', ''),
         'ap1_version_doi': config.get('ap1_version_doi', ''),

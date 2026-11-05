@@ -22,6 +22,7 @@ import sys
 import tokenize
 
 from ap1_run.execution.context import build_delivered_context
+from ap1_run.execution.seal import SealError
 
 # The input files of a fixture directory, by sealed-input name.
 INPUT_FILES = {
@@ -116,6 +117,31 @@ def compute_expected_values(ground_truth_module, fixture, questions):
             item['id'],
             build_delivered_context(fixture, item.get('source_accounts', [])))
         for item in questions.get('items', [])}
+
+
+class GroundTruthNotReproducible(SealError):
+    """The ground-truth module gave different results for the same item
+    and context (SPEC R3.1, T3-48)."""
+
+
+def check_reproducible(ground_truth_module, fixture, questions):
+    """The expected values, computed twice on the same delivered contexts;
+    GroundTruthNotReproducible, naming the items, if any result differs
+    between the two computations (SPEC R3.1 "reproducible across two
+    executions"). Called before the seal and before any request."""
+    first = compute_expected_values(ground_truth_module, fixture, questions)
+    second = compute_expected_values(ground_truth_module, fixture, questions)
+
+    def text(result):
+        return json.dumps(result, default=str, sort_keys=True)
+    changed = [item_id for item_id in first
+               if text(first[item_id]) != text(second.get(item_id))]
+    if changed:
+        raise GroundTruthNotReproducible(
+            'ground truth not reproducible (R3.1): the module gave a '
+            'different result when computed again on the same context for '
+            + ', '.join(changed))
+    return first
 
 
 def sealed_compute(expected_values):
