@@ -464,10 +464,15 @@ def test_zero_failure_bound_is_one_minus_alpha_to_the_one_over_n():
     > p_upper = 1 - α^(1/n), with α = 0.05
     (AP-1 v1.3 D7.5, L394-398)
     """
+    from decimal import localcontext
+    from ap1_run.foundation.numeric import DECIMAL_CONTEXT
     from ap1_run.scoring.invocation import _exact_upper_bound
     bound = _exact_upper_bound(20)
     assert type(bound) is Decimal
-    assert bound == Decimal(1) - Decimal('0.05') ** (Decimal(1) / Decimal(20))
+    # the closed form, at the precision the runner computes in
+    with localcontext(DECIMAL_CONTEXT):
+        expected = Decimal(1) - Decimal('0.05') ** (Decimal(1) / Decimal(20))
+    assert bound == expected
     assert str(bound)[:8] == '0.139108'
 
 

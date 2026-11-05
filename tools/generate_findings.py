@@ -16,7 +16,8 @@ import os
 import re
 import sys
 from collections import Counter, defaultdict
-from decimal import Decimal, getcontext, ROUND_HALF_UP
+import functools
+from decimal import Context, Decimal, ROUND_HALF_UP, localcontext
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # This clone's src/ goes first, before any ap1_run import, so the tool
@@ -26,7 +27,18 @@ sys.path.insert(0, os.path.join(ROOT, 'src'))
 
 from ap1_run.reporting.report import clopper_pearson_upper_k0  # noqa: E402
 
-getcontext().prec = 50
+# The tool's figures are computed at precision 50, in a local context:
+# importing it leaves the caller's decimal context as it was.
+CONTEXT = Context(prec=50)
+
+
+def _at_precision_50(function):
+    """Run `function` in CONTEXT."""
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        with localcontext(CONTEXT):
+            return function(*args, **kwargs)
+    return wrapper
 
 OUTPUT = os.path.join(ROOT, "output")
 TEMPLATE = os.path.join(ROOT, "findings", "FINDINGS.template.md")
@@ -38,6 +50,7 @@ def load_json(path):
         return json.load(f)
 
 
+@_at_precision_50
 def pct(num, denom, places=1):
     """Compute percentage using Decimal, quantised to `places` decimal places."""
     if denom == 0:
@@ -77,6 +90,7 @@ def classify_originated_mechanism(provenance_result):
         return "untraceable"
 
 
+@_at_precision_50
 def compute_figures():
     """Compute every placeholder value from the run artifacts."""
     run_a = load_json(os.path.join(OUTPUT, "run_a_mini", "smoke_summary.json"))
@@ -451,6 +465,7 @@ def compute_figures():
     return v
 
 
+@_at_precision_50
 def generate(values=None, template_path=None, target_path=None):
     """Generate FINDINGS.md from template and computed values.
 
@@ -517,6 +532,7 @@ def generate(values=None, template_path=None, target_path=None):
     return result
 
 
+@_at_precision_50
 def main():
     values = compute_figures()
     result = generate(values, target_path=TARGET)

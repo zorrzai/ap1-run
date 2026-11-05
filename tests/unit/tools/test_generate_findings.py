@@ -105,9 +105,24 @@ def test_pct_zero_denominator_is_unquantised_zero(gf):
     assert str(gf.pct(5, 0)) == '0'
 
 
-def test_import_sets_decimal_precision_50(gf):
-    from decimal import getcontext
-    assert getcontext().prec == 50
+def test_import_leaves_the_decimal_context_alone():
+    # Importing the tool must not change the caller's precision (it once
+    # set the global precision to 50, which other tests then ran under).
+    from decimal import getcontext, localcontext
+    with localcontext() as ctx:
+        ctx.prec = 28
+        load_tool()
+        assert getcontext().prec == 28
+
+
+def test_figures_are_computed_at_precision_50(gf):
+    # pct, compute_figures, generate and main run at precision 50 whatever
+    # the caller's context: 45 places of 1/3 % need 47 digits.
+    from decimal import localcontext
+    with localcontext() as ctx:
+        ctx.prec = 28
+        assert str(gf.pct(1, 3, places=45)) == '33.' + '3' * 45
+        assert ctx.prec == 28
 
 
 def test_fmt_int_with_thousands_separator(gf):
