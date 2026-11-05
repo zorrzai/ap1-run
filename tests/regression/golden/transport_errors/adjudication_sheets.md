@@ -11,7 +11,7 @@ Version DOI: 10.5281/zenodo.21755443
 
 ## Item 1: Q07, repeat 1 — Scorer 1
 
-Execution id: `48f9aa332c30`
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -107,7 +107,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 1: Q07, repeat 1 — Scorer 2
 
-Execution id: `48f9aa332c30`
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 

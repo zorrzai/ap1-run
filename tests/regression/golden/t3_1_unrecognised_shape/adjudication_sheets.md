@@ -11,7 +11,7 @@ Version DOI: 10.5281/zenodo.21755443
 
 ## Item 1: Q01, repeat 1 — Scorer 1
 
-Execution id: `e2e3e5db04e2`
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -107,7 +107,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 1: Q01, repeat 1 — Scorer 2
 
-Execution id: `e2e3e5db04e2`
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -203,7 +203,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 2: Q01, repeat 2 — Scorer 1
 
-Execution id: `2a5025bee42e`
+Execution id: `<EXECUTION_ID_2>`
 
 ### Question
 
@@ -299,7 +299,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 2: Q01, repeat 2 — Scorer 2
 
-Execution id: `2a5025bee42e`
+Execution id: `<EXECUTION_ID_2>`
 
 ### Question
 
@@ -395,7 +395,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 3: Q02, repeat 1 — Scorer 1
 
-Execution id: `f12fb5661809`
+Execution id: `<EXECUTION_ID_3>`
 
 ### Question
 
@@ -497,7 +497,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 3: Q02, repeat 1 — Scorer 2
 
-Execution id: `f12fb5661809`
+Execution id: `<EXECUTION_ID_3>`
 
 ### Question
 
@@ -599,7 +599,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 4: Q02, repeat 2 — Scorer 1
 
-Execution id: `bd23801dafd2`
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
@@ -701,7 +701,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 4: Q02, repeat 2 — Scorer 2
 
-Execution id: `bd23801dafd2`
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
@@ -803,7 +803,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 5: Q03, repeat 1 — Scorer 1
 
-Execution id: `6069c5a4b9f4`
+Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
@@ -905,7 +905,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 5: Q03, repeat 1 — Scorer 2
 
-Execution id: `6069c5a4b9f4`
+Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
@@ -1007,7 +1007,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 6: Q03, repeat 2 — Scorer 1
 
-Execution id: `bca4171111c2`
+Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
@@ -1109,7 +1109,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 6: Q03, repeat 2 — Scorer 2
 
-Execution id: `bca4171111c2`
+Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
@@ -1211,7 +1211,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 7: Q01, repeat 1 — Scorer 1
 
-Execution id: `ec9336a6da35`
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -1298,7 +1298,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 7: Q01, repeat 1 — Scorer 2
 
-Execution id: `ec9336a6da35`
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -1385,7 +1385,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 8: Q01, repeat 2 — Scorer 1
 
-Execution id: `6dc7a0d4cb85`
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -1472,7 +1472,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 8: Q01, repeat 2 — Scorer 2
 
-Execution id: `6dc7a0d4cb85`
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -1559,7 +1559,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 9: Q02, repeat 1 — Scorer 1
 
-Execution id: `46caa8774b7c`
+Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
@@ -1652,7 +1652,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 9: Q02, repeat 1 — Scorer 2
 
-Execution id: `46caa8774b7c`
+Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
@@ -1745,7 +1745,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 10: Q02, repeat 2 — Scorer 1
 
-Execution id: `2021d7b660d9`
+Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
@@ -1838,7 +1838,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 10: Q02, repeat 2 — Scorer 2
 
-Execution id: `2021d7b660d9`
+Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
@@ -1931,7 +1931,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 11: Q03, repeat 1 — Scorer 1
 
-Execution id: `cb4326097cfb`
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -2024,7 +2024,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 11: Q03, repeat 1 — Scorer 2
 
-Execution id: `cb4326097cfb`
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -2117,7 +2117,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 12: Q03, repeat 2 — Scorer 1
 
-Execution id: `731179a4aff7`
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
@@ -2210,7 +2210,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 12: Q03, repeat 2 — Scorer 2
 
-Execution id: `731179a4aff7`
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
@@ -2303,7 +2303,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 13: Q04, repeat 1 — Scorer 1
 
-Execution id: `e025075d457c`
+Execution id: `<EXECUTION_ID_13>`
 
 ### Question
 
@@ -2392,7 +2392,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 13: Q04, repeat 1 — Scorer 2
 
-Execution id: `e025075d457c`
+Execution id: `<EXECUTION_ID_13>`
 
 ### Question
 
@@ -2481,7 +2481,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 14: Q04, repeat 2 — Scorer 1
 
-Execution id: `c72dde677622`
+Execution id: `<EXECUTION_ID_14>`
 
 ### Question
 
@@ -2570,7 +2570,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 14: Q04, repeat 2 — Scorer 2
 
-Execution id: `c72dde677622`
+Execution id: `<EXECUTION_ID_14>`
 
 ### Question
 
@@ -2659,7 +2659,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 15: Q05, repeat 1 — Scorer 1
 
-Execution id: `8c6ad498d9d2`
+Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
@@ -2752,7 +2752,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 15: Q05, repeat 1 — Scorer 2
 
-Execution id: `8c6ad498d9d2`
+Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
@@ -2845,7 +2845,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 16: Q05, repeat 2 — Scorer 1
 
-Execution id: `8202746367f4`
+Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
@@ -2938,7 +2938,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 16: Q05, repeat 2 — Scorer 2
 
-Execution id: `8202746367f4`
+Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
@@ -3031,7 +3031,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 17: Q06, repeat 1 — Scorer 1
 
-Execution id: `a1b0bdf19aba`
+Execution id: `<EXECUTION_ID_17>`
 
 ### Question
 
@@ -3118,7 +3118,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 17: Q06, repeat 1 — Scorer 2
 
-Execution id: `a1b0bdf19aba`
+Execution id: `<EXECUTION_ID_17>`
 
 ### Question
 
@@ -3205,7 +3205,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 18: Q06, repeat 2 — Scorer 1
 
-Execution id: `1a6428e5f981`
+Execution id: `<EXECUTION_ID_18>`
 
 ### Question
 
@@ -3292,7 +3292,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 18: Q06, repeat 2 — Scorer 2
 
-Execution id: `1a6428e5f981`
+Execution id: `<EXECUTION_ID_18>`
 
 ### Question
 
@@ -3379,7 +3379,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 19: Q07, repeat 1 — Scorer 1
 
-Execution id: `173f23720b69`
+Execution id: `<EXECUTION_ID_19>`
 
 ### Question
 
@@ -3466,7 +3466,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 19: Q07, repeat 1 — Scorer 2
 
-Execution id: `173f23720b69`
+Execution id: `<EXECUTION_ID_19>`
 
 ### Question
 
@@ -3553,7 +3553,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 20: Q07, repeat 2 — Scorer 1
 
-Execution id: `0c67f90db34a`
+Execution id: `<EXECUTION_ID_20>`
 
 ### Question
 
@@ -3640,7 +3640,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 20: Q07, repeat 2 — Scorer 2
 
-Execution id: `0c67f90db34a`
+Execution id: `<EXECUTION_ID_20>`
 
 ### Question
 
@@ -3727,7 +3727,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 21: Q08, repeat 1 — Scorer 1
 
-Execution id: `42bdc5e54d90`
+Execution id: `<EXECUTION_ID_21>`
 
 ### Question
 
@@ -3816,7 +3816,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 21: Q08, repeat 1 — Scorer 2
 
-Execution id: `42bdc5e54d90`
+Execution id: `<EXECUTION_ID_21>`
 
 ### Question
 
@@ -3905,7 +3905,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 22: Q08, repeat 2 — Scorer 1
 
-Execution id: `7f014e39c6ec`
+Execution id: `<EXECUTION_ID_22>`
 
 ### Question
 
@@ -3994,7 +3994,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 22: Q08, repeat 2 — Scorer 2
 
-Execution id: `7f014e39c6ec`
+Execution id: `<EXECUTION_ID_22>`
 
 ### Question
 
@@ -4083,7 +4083,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 23: Q09, repeat 1 — Scorer 1
 
-Execution id: `7cbec86e0181`
+Execution id: `<EXECUTION_ID_23>`
 
 ### Question
 
@@ -4181,7 +4181,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 23: Q09, repeat 1 — Scorer 2
 
-Execution id: `7cbec86e0181`
+Execution id: `<EXECUTION_ID_23>`
 
 ### Question
 
@@ -4279,7 +4279,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 24: Q09, repeat 2 — Scorer 1
 
-Execution id: `ee2edbfb64a0`
+Execution id: `<EXECUTION_ID_24>`
 
 ### Question
 
@@ -4377,7 +4377,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 24: Q09, repeat 2 — Scorer 2
 
-Execution id: `ee2edbfb64a0`
+Execution id: `<EXECUTION_ID_24>`
 
 ### Question
 
@@ -4475,7 +4475,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 25: Q10, repeat 1 — Scorer 1
 
-Execution id: `7d1996ce3b52`
+Execution id: `<EXECUTION_ID_25>`
 
 ### Question
 
@@ -4562,7 +4562,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 25: Q10, repeat 1 — Scorer 2
 
-Execution id: `7d1996ce3b52`
+Execution id: `<EXECUTION_ID_25>`
 
 ### Question
 
@@ -4649,7 +4649,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 26: Q10, repeat 2 — Scorer 1
 
-Execution id: `b28aed7f81fa`
+Execution id: `<EXECUTION_ID_26>`
 
 ### Question
 
@@ -4736,7 +4736,7 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 
 ## Item 26: Q10, repeat 2 — Scorer 2
 
-Execution id: `b28aed7f81fa`
+Execution id: `<EXECUTION_ID_26>`
 
 ### Question
 

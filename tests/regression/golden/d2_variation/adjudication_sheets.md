@@ -11,7 +11,7 @@ Version DOI: 10.5281/zenodo.21755443
 
 ## Item 1: Q02, repeat 3 — Scorer 1
 
-Execution id: `a6796a004786`
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -113,7 +113,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 1: Q02, repeat 3 — Scorer 2
 
-Execution id: `a6796a004786`
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -215,7 +215,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 2: Q02, repeat 3 — Scorer 1
 
-Execution id: `abf75d1f90bc`
+Execution id: `<EXECUTION_ID_2>`
 
 ### Question
 
@@ -317,7 +317,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 2: Q02, repeat 3 — Scorer 2
 
-Execution id: `abf75d1f90bc`
+Execution id: `<EXECUTION_ID_2>`
 
 ### Question
 

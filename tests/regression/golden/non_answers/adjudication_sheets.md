@@ -11,7 +11,7 @@ Version DOI: 10.5281/zenodo.21755443
 
 ## Item 1: Q02, repeat 1 — Scorer 1
 
-Execution id: `027cc0a8be96`
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -104,7 +104,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 1: Q02, repeat 1 — Scorer 2
 
-Execution id: `027cc0a8be96`
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -197,7 +197,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 2: Q02, repeat 2 — Scorer 1
 
-Execution id: `b34aedda5d62`
+Execution id: `<EXECUTION_ID_2>`
 
 ### Question
 
@@ -290,7 +290,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 2: Q02, repeat 2 — Scorer 2
 
-Execution id: `b34aedda5d62`
+Execution id: `<EXECUTION_ID_2>`
 
 ### Question
 
@@ -383,7 +383,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 3: Q03, repeat 1 — Scorer 1
 
-Execution id: `78332b9bbe0f`
+Execution id: `<EXECUTION_ID_3>`
 
 ### Question
 
@@ -476,7 +476,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 3: Q03, repeat 1 — Scorer 2
 
-Execution id: `78332b9bbe0f`
+Execution id: `<EXECUTION_ID_3>`
 
 ### Question
 
@@ -569,7 +569,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 4: Q03, repeat 2 — Scorer 1
 
-Execution id: `6ea6e300f23a`
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
@@ -662,7 +662,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 4: Q03, repeat 2 — Scorer 2
 
-Execution id: `6ea6e300f23a`
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
@@ -755,7 +755,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 5: Q07, repeat 1 — Scorer 1
 
-Execution id: `1d39a44c89f9`
+Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
@@ -851,7 +851,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 5: Q07, repeat 1 — Scorer 2
 
-Execution id: `1d39a44c89f9`
+Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
@@ -947,7 +947,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 6: Q07, repeat 2 — Scorer 1
 
-Execution id: `7e97473190f0`
+Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
@@ -1043,7 +1043,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 6: Q07, repeat 2 — Scorer 2
 
-Execution id: `7e97473190f0`
+Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
@@ -1139,7 +1139,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 7: Q02, repeat 1 — Scorer 1
 
-Execution id: `e1147fbedade`
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -1232,7 +1232,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 7: Q02, repeat 1 — Scorer 2
 
-Execution id: `e1147fbedade`
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -1325,7 +1325,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 8: Q02, repeat 2 — Scorer 1
 
-Execution id: `4a20c1bcf15a`
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -1418,7 +1418,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 8: Q02, repeat 2 — Scorer 2
 
-Execution id: `4a20c1bcf15a`
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -1511,7 +1511,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ## Item 9: Q03, repeat 1 — Scorer 1
 
-Execution id: `9e388d9b30da`
+Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
@@ -1604,7 +1604,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 9: Q03, repeat 1 — Scorer 2
 
-Execution id: `9e388d9b30da`
+Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
@@ -1697,7 +1697,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 10: Q03, repeat 2 — Scorer 1
 
-Execution id: `50abca6c1d78`
+Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
@@ -1790,7 +1790,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 10: Q03, repeat 2 — Scorer 2
 
-Execution id: `50abca6c1d78`
+Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
@@ -1883,7 +1883,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 11: Q07, repeat 1 — Scorer 1
 
-Execution id: `876f5b77af7a`
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -1979,7 +1979,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 11: Q07, repeat 1 — Scorer 2
 
-Execution id: `876f5b77af7a`
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -2075,7 +2075,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 12: Q07, repeat 2 — Scorer 1
 
-Execution id: `35028e9c0f91`
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
@@ -2171,7 +2171,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ## Item 12: Q07, repeat 2 — Scorer 2
 
-Execution id: `35028e9c0f91`
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
