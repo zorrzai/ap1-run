@@ -5,11 +5,13 @@ on:
     branches: [main]
   # Pull requests to any base, so a PR stacked on another PR's branch is
   # checked too. "edited" covers a change of base (a stacked PR retargeted
-  # to main): the jobs run again on the merge with the new base. Before
-  # that, the checks on the head commit tested the merge with the old base.
-  # A title or body edit also runs them: a job skipped by an "if" reports
-  # success, even for a required check, so filtering those edits out could
-  # turn a failed check green.
+  # to main), so the checks run again after it; until then they tested the
+  # merge with the old base. What such a run checks out depends on when
+  # GitHub has recomputed the PR's merge commit, so the guarantee that a PR
+  # is checked against main as it is now is the ruleset's "require branches
+  # to be up to date before merging". A title or body edit also runs them:
+  # a job skipped by an "if" reports success, even for a required check, so
+  # filtering those edits out could turn a failed check green.
   pull_request:
     types: [opened, synchronize, reopened, edited]
 
