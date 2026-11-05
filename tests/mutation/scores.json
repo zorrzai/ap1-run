@@ -5,10 +5,10 @@
     "score": 1.0
   },
   "execution/engine": {
-    "killed": 491,
-    "mutants": 514,
-    "notes": "All 23 survivors are equivalent or unreachable. Two pass tool_calls=None instead of [] in the VOID and transport-failure records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Two drop the f'call_{turn}' default for a missing tool-call id and three change the '' default of tool_call_id in the tool message: a call without an id raises EngineError on the return-value lookup right after (S3-G2-2), so neither default is ever observed. Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). Two change the [] default of choices in _extract_tool_calls to None: both falsy, both give []. Step 5 (d72a-fail-closed, T3-16) rewrote the D7.2(b) loop with 3 fewer mutants, all killed, so the score moved from 0.9552 to 0.9549 with the same 23 survivors.",
-    "score": 0.9553
+    "killed": 543,
+    "mutants": 567,
+    "notes": "All 24 survivors are equivalent or unreachable. Three pass tool_calls=None instead of [] in the VOID, transport-failure and empty-response (T3-10) records: transcript.append writes None as []. One passes config=None to _build_messages, which does not use config. One replaces copy.deepcopy(messages) by copy.copy: the loop only appends to the list, never changes a message. Five change classify_attestation's arguments, which it ignores (always EV-1). Two drop the f'call_{turn}' default for a missing tool-call id and three change the '' default of tool_call_id in the tool message: a call without an id raises EngineError on the return-value lookup right after (S3-G2-2), so neither default is ever observed. Four change the defaults in current.get('choices', [{}])[0].get('message', {}) in the tool loop: only reached when the response has tool calls, so choices and message exist. Three change the '{}' default of arguments in _extract_calc_expression: None and 'XX{}XX' raise TypeError/JSONDecodeError, which are caught and give None, the same as '{}' (no expression). Two change the [] default of choices in _extract_tool_calls to None: both falsy, both give [].",
+    "score": 0.9577
   },
   "execution/evidence": {
     "killed": 216,
@@ -71,10 +71,10 @@
     "score": 0.9725
   },
   "reporting/report": {
-    "killed": 1586,
-    "mutants": 1637,
-    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan').",
-    "score": 0.9688
+    "killed": 1758,
+    "mutants": 1804,
+    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Integrator, step 5: re-recorded after merging the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after the merge.] [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
+    "score": 0.9745
   },
   "run": {
     "killed": 581,
@@ -83,10 +83,10 @@
     "score": 0.9748
   },
   "runner/console": {
-    "killed": 501,
-    "mutants": 504,
-    "notes": "All 3 survivors are equivalent. Two let n = 0 reach format_rate, which itself returns 'no observations' for n = 0. One changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
-    "score": 0.994
+    "killed": 523,
+    "mutants": 524,
+    "notes": "The one survivor is equivalent: it changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
+    "score": 0.9981
   },
   "runner/credentials": {
     "killed": 116,
@@ -112,10 +112,10 @@
     "score": 1.0
   },
   "runner/summary": {
-    "killed": 595,
-    "mutants": 607,
-    "notes": "All 12 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One changes n > 0 to n >= 0 where n is always at least 1. One drops operator_declared=None, which is classify_mechanism's default.",
-    "score": 0.9802
+    "killed": 709,
+    "mutants": 720,
+    "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default. [Integrator, step 5: re-recorded on the merge of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after the merge.]",
+    "score": 0.9847
   },
   "scoring/accuracy": {
     "killed": 149,

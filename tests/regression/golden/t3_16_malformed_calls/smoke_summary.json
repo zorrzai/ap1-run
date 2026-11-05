@@ -365,8 +365,8 @@
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
       "release_coverage_outcome": "GOVERNED-RELEASE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "operands not shown grounded (D7.2(a))"
     },
     {
       "item_id": "Q04",
@@ -473,8 +473,8 @@
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
       "release_coverage_outcome": "GOVERNED-RELEASE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "operands not shown grounded (D7.2(a))"
     },
     {
       "item_id": "Q05",
@@ -1955,8 +1955,8 @@
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
       "release_coverage_outcome": "GOVERNED-RELEASE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "operands not shown grounded (D7.2(a))"
     },
     {
       "item_id": "Q04",
@@ -2063,8 +2063,8 @@
       ],
       "transcription_outcome": "TRANSCRIBED-EXACT",
       "release_coverage_outcome": "GOVERNED-RELEASE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "operands not shown grounded (D7.2(a))"
     },
     {
       "item_id": "Q05",

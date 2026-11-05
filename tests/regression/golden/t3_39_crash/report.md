@@ -157,8 +157,9 @@ Model: mock-model
 
 ### A. Transcription Check
 
-> Compares the LAST tool return value to the single 
-> figure R2.0 identified as released (AUTO-MATCH items only).
+> Compares EVERY return of the required operation to the single 
+> figure R2.0 identified as released (AUTO-MATCH items only), 
+> under the declared quantisation policy (places and rounding mode).
 
 | Outcome | Count | % |
 |---|---|---|
@@ -166,6 +167,8 @@ Model: mock-model
 | `TRANSCRIBED-ALTERED` | 0 | 0.0% |
 | `UNOBSERVABLE` | 1 | 5.0% |
 | **Total** | **20** | |
+
+Of the 19 `TRANSCRIBED-EXACT`, 7 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3; subtract them for a strict v1.2 "match" count).
 
 ### B. Release Coverage
 
@@ -183,10 +186,30 @@ Model: mock-model
 
 > AP-1 v1.3 D7.5: any invocation figure, including 100%, shall be reported with the exact one-sided 95% upper confidence bound.
 
-| Metric | k (failures) | n | Rate | 95% Upper Bound |
-|---|---|---|---|---|
-| d7_invocation_base | 0 | 10 | 10/10 | 0.258866 (25.8866%) |
-| d7_invocation_instruction_removed | 0 | 10 | 10/10 | 0.258866 (25.8866%) |
+> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
+
+| Metric | k (failures) | n | Rate | 95% Upper Bound | Evidence Class |
+|---|---|---|---|---|---|
+| d7_invocation_base | 0 | 10 | 10/10 (100.0%) | 0.258866 (25.8866%) | `EV-2 PLATFORM-STRUCTURAL` |
+| d7_invocation_instruction_removed | 0 | 10 | 10/10 (100.0%) | 0.258866 (25.8866%) | `EV-2 PLATFORM-STRUCTURAL` |
+
+**Headline (AP-1 §6.2):**
+
+- Deterministic computation was invoked on 100.0% of computable questions (10/10; 0 not invoked; one-sided 95% upper bound on the failure rate 25.8866%), under base, on evidence class EV-2 PLATFORM-STRUCTURAL.
+- Deterministic computation was invoked on 100.0% of computable questions (10/10; 0 not invoked; one-sided 95% upper bound on the failure rate 25.8866%), under instruction_removed, on evidence class EV-2 PLATFORM-STRUCTURAL.
+
+**Executions by evidence class:**
+
+| Condition | Evidence Class | Executions | Questions | Questions in n | Unobservable Executions |
+|---|---|---|---|---|---|
+| base | `EV-2 PLATFORM-STRUCTURAL` | 10 | 10 | 10 | 0 |
+| instruction_removed | `EV-2 PLATFORM-STRUCTURAL` | 10 | 10 | 10 | 0 |
+
+### 5a. Instruction-Removal Contrast (D7.8)
+
+Held constant between base and instruction_removed (compared before execution, R1.2): tool declarations, tool_choice, sampling parameters, fixture content, message structure template. Varied: the system prompt only.
+
+DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 0.0%
 
 ## 6. D7.2(a) Originated-Operand Audit
 
