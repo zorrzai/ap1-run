@@ -123,8 +123,7 @@ def d1_run(tmp_path_factory):
                 if name.startswith('AP1_SMOKE_'):
                     mp.delenv(name)
             mp.setenv('AP1_SMOKE_API_KEY', KEY)
-            # the runner takes the endpoint and model from the config only
-            # (T3-80)
+            # The endpoint and model come from the config only (T3-80).
             mock.point_config(config_path)
             mp.setattr(time, 'sleep', lambda seconds: None)
             from ap1_run import run as runner
@@ -171,9 +170,6 @@ def _shown(value):
     'interval is Clopper-Pearson; both are the author\'s proposal')
 @pytest.mark.finding('T3-32')
 @pytest.mark.req('AP-1 D1', 'R3.3', 'R0.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-32: D1 is one pooled rate, not per category '
-                          'with a 95 % interval')
 def test_run_report_d1_per_category_with_n_result_and_interval(d1_run):
     # AP-1 v1.3 D1: "Results reported per category, with 95% confidence
     # intervals, and with n stated." Every item here is answered

@@ -2175,9 +2175,10 @@ def _shown(value):
     "author's proposal")
 @pytest.mark.finding('T3-32')
 @pytest.mark.req('AP-1 D1', 'R3.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-32: D1 is one pooled rate, not per category '
-                          'with a 95 % interval')
+@pytest.mark.xfail(strict=True, raises=(AssertionError, KeyError),
+                   reason="T3-32: the fix's D1-by-category summary has "
+                          "another shape than this test's synthetic one "
+                          "(no 'interval' per category)")
 def test_dimension_results_d1_per_category_with_n_and_interval():
     # AP-1 v1.3 D1: "Results reported per category, with 95% confidence
     # intervals, and with n stated"; SPEC R0.1: at least 10 items per

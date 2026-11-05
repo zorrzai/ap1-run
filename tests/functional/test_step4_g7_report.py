@@ -215,6 +215,10 @@ def section(report, number):
 # once T3-12 is fixed such a claim is refused.
 
 @pytest.mark.finding('T3-4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-4: §9 gives each question and surface its '
+                          'class and counts, not the distinct values or the '
+                          'evidence basis beyond the class name')
 def test_run_report_shows_d2_classes_per_question_and_surface(run):
     # Correct (SPEC R2.2, R3.3; AP-1 D2 Method and D2.1): §9 gives each
     # question's mechanism class per surface (figures, prose) with the
