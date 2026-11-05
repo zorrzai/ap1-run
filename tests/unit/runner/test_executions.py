@@ -650,6 +650,51 @@ def test_score_d72_real_scorers_correct_call():
     assert len(operation) == 1
 
 
+# S3-G2-5: a call without a calculator expression (here a python call)
+# must not put the results and expressions of the session-level
+# reclassification out of step. The reference is what the same calls give
+# with no such call first.
+
+def outcome_of(operation, value):
+    """The D7.2(b) outcome of the call that evaluated to `value`."""
+    [r] = [r for r in operation if r.get('evaluated_result') is not None
+           and D(r['evaluated_result']) == D(value)]
+    return r['outcome']
+
+
+def returning(expression, result, id):
+    return tool_call(expression, id=id,
+                     return_value=json.dumps({'result': result}))
+
+
+@pytest.mark.finding('S3-G2-5')
+@pytest.mark.req('AP-1 D7.2(b)')
+def test_score_d72_skipped_call_value_fed_forward_is_operation_correct():
+    # 15200*0.012 = 182.4 is wrong on its own and feeds 182.4/12 = 15.2,
+    # so it is reclassified OPERATION-CORRECT, as an operand of the later
+    # call; a python call before it does not change that.
+    calls = [returning('15200*0.012', '182.4', 'b'),
+             returning('182.4/12', '15.2', 'c')]
+    python = tool_call(name='python', id='a', return_value='{}')
+    for tcs in (calls, [python] + calls):
+        _, operation = score_d72(tcs, CTX_D72, GT_D72, CONFIG_D72)
+        assert outcome_of(operation, '182.4') == 'OPERATION-CORRECT', tcs
+
+
+@pytest.mark.finding('S3-G2-5')
+@pytest.mark.req('AP-1 D7.2(b)')
+def test_score_d72_skipped_call_value_feeding_nothing_stays_wrong():
+    # 15*1 = 15 is wrong and feeds nothing (15.2*1 has operands 15.2 and
+    # 1), so it stays WRONG-OPERATION, with or without a python call first
+    # (with the lists out of step, 15 was looked up in the operands of
+    # '15*1' itself and became OPERATION-CORRECT).
+    calls = [returning('15*1', '15', 'b'), returning('15.2*1', '15.2', 'c')]
+    python = tool_call(name='python', id='a', return_value='{}')
+    for tcs in (calls, [python] + calls):
+        _, operation = score_d72(tcs, CTX_D72, GT_D72, CONFIG_D72)
+        assert outcome_of(operation, '15') == 'WRONG-OPERATION', tcs
+
+
 def test_score_d72_no_calls_nothing_scored():
     assert score_d72([], CTX_D72, GT_D72, CONFIG_D72) == ([], [])
 

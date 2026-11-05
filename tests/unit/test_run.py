@@ -408,7 +408,7 @@ def test_main_seal_verification_refused_before_any_request(r, capsys):
     r.verify_refusals = [1]
     with pytest.raises(SealError, match='fixture: changed'):
         r.main()
-    assert r.named('execute') == [] and r.named('outputs') == []
+    assert r.named('execute') == [] and r.named('score_run') == []
 
 
 @pytest.mark.finding('T3-17')
@@ -418,7 +418,7 @@ def test_main_seal_verification_refused_before_anything_is_reported(r):
     with pytest.raises(SealError, match='fixture: changed'):
         r.main()
     assert len(r.named('execute')) == 8
-    assert r.named('consistency') == [] and r.named('outputs') == []
+    assert r.named('consistency') == [] and r.named('score_run') == []
 
 
 @pytest.mark.finding('T3-48', 'T3-72')
@@ -518,7 +518,7 @@ def test_main_default_output_dir_removes_an_old_transcript(r, monkeypatch):
     assert not old.exists()
     assert not old_record.exists()   # the fake did not write a new one
     assert other.read_text() == 'kept'
-    assert r.named('outputs')[0][0] == str(default)
+    assert r.named('score_run')[0][1]['output_dir'] == str(default)
 
 
 @pytest.mark.parametrize('name', ['smoke_run.jsonl', 'report.md',
@@ -545,7 +545,7 @@ def test_main_refuses_an_explicit_output_dir_holding_a_run(r, capsys, name):
 def test_main_allows_an_explicit_empty_output_dir(r):
     os.makedirs(r.output_dir)
     assert r.main() == 0
-    assert r.named('outputs')[0][0] == str(r.output_dir)
+    assert r.named('score_run')[0][1]['output_dir'] == str(r.output_dir)
 
 
 def test_main_allows_an_explicit_output_dir_with_other_files(r):
