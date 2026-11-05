@@ -4,8 +4,14 @@ on:
   push:
     branches: [main]
   # Pull requests to any base, so a PR stacked on another PR's branch is
-  # checked too, and arrives at main with these checks on its head commit.
+  # checked too. "edited" covers a change of base (a stacked PR retargeted
+  # to main): the jobs run again on the merge with the new base. Before
+  # that, the checks on the head commit tested the merge with the old base.
+  # A title or body edit also runs them: a job skipped by an "if" reports
+  # success, even for a required check, so filtering those edits out could
+  # turn a failed check green.
   pull_request:
+    types: [opened, synchronize, reopened, edited]
 
 permissions:
   contents: read
