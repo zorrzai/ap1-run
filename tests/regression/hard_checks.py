@@ -13,7 +13,9 @@ scenario that seals needs the driver's capture first.
   check_transport          the mock refused no request (wrong method,
                            path or credential)
   hash_oracle.check_seals  every seal value recomputed independently
-  check_replay             a replay re-scores its published run exactly
+  check_replay             a replay re-scores its published run exactly,
+                           apart from the differences replay_expected.json
+                           lists execution by execution
 """
 
 import json
@@ -25,11 +27,18 @@ import hash_oracle
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
 
-# The only top-level smoke_summary.json key a replay may change: the seal
-# covers the mock's endpoint, the runner's source and the timestamp-free
-# record, none of which can equal the published run's. Any other
-# difference is investigated, never added here by explanation alone.
+# The only top-level smoke_summary.json key a replay may change freely: the
+# seal covers the mock's endpoint, the runner's source and the
+# timestamp-free record, none of which can equal the published run's.
 REPLAY_SUMMARY_EXCLUDED = ('seal_hash',)
+
+# Every other difference between a replay and its published run is one a
+# fix makes on purpose, and is listed in this file: per published run, the
+# fields new in the replay, and each execution's moves as
+# [published value, replayed value]. A listed move that does not happen
+# fails too, so the list cannot go stale. Any other difference is
+# investigated, never added to the list by explanation alone.
+REPLAY_EXPECTED = os.path.join(HERE, 'replay_expected.json')
 
 
 # Expectations frozen before each run, by tree.
@@ -114,9 +123,87 @@ def first_difference(want, got, path='$'):
     return None
 
 
+def load_replay_expected(run_dir, path=None):
+    """The listed differences for the published run in run_dir, with
+    empty defaults."""
+    with open(path or REPLAY_EXPECTED, encoding='utf-8') as f:
+        listed = json.load(f).get(run_dir, {})
+    return {
+        'new_top_level_keys': listed.get('new_top_level_keys', []),
+        'new_execution_fields': listed.get('new_execution_fields', []),
+        'moves': listed.get('moves', {}),
+    }
+
+
+def execution_key(result):
+    return f"{result['item_id']}/{result['condition']}/r{result['repeat']}"
+
+
+def replay_differences(published, replayed, expected):
+    """Each difference between a published and a replayed summary that
+    `expected` does not list, and each listed move that did not happen,
+    as a list of messages (empty when the replay is as listed)."""
+    problems = []
+    for key in REPLAY_SUMMARY_EXCLUDED:
+        published.pop(key, None)
+        replayed.pop(key, None)
+    for key in sorted(set(replayed) - set(published)):
+        if key not in expected['new_top_level_keys']:
+            problems.append(f'$.{key}: not in the published run')
+    for key in sorted(set(published)):
+        if key not in replayed:
+            problems.append(f'$.{key}: missing from the replay')
+        elif key != 'all_results':
+            found = first_difference(published[key], replayed[key], f'$.{key}')
+            if found:
+                problems.append(found)
+    pub_rows = published.get('all_results', [])
+    rep_rows = replayed.get('all_results', [])
+    if len(pub_rows) != len(rep_rows):
+        problems.append(f'$.all_results: {len(pub_rows)} entries in the '
+                        f'published run, {len(rep_rows)} in the replay')
+        return problems
+    moves = expected['moves']
+    seen = set()
+    for i, (pub, rep) in enumerate(zip(pub_rows, rep_rows)):
+        key = execution_key(pub)
+        if key != execution_key(rep):
+            problems.append(f'$.all_results[{i}]: {key} in the published '
+                            f'run, {execution_key(rep)} in the replay')
+            continue
+        listed = moves.get(key, {})
+        for field in sorted(set(pub) | set(rep)):
+            where = f'$.all_results[{i}] ({key}).{field}'
+            if field not in rep:
+                problems.append(f'{where}: missing from the replay')
+                continue
+            if field not in pub:
+                if field not in expected['new_execution_fields']:
+                    problems.append(f'{where}: not in the published run')
+                continue
+            if field in listed:
+                seen.add((key, field))
+                if [pub[field], rep[field]] != listed[field]:
+                    problems.append(
+                        f'{where}: listed move {listed[field][0]!r} -> '
+                        f'{listed[field][1]!r}, but {pub[field]!r} in the '
+                        f'published run and {rep[field]!r} in the replay')
+                continue
+            found = first_difference(pub[field], rep[field], where)
+            if found:
+                problems.append(found)
+    for key, fields in sorted(moves.items()):
+        for field in sorted(fields):
+            if (key, field) not in seen:
+                problems.append(f'listed move {key}.{field} matches no '
+                                f'execution field of the published run')
+    return problems
+
+
 def check_replay(scenario, raw):
     """The replayed smoke_summary.json equals the published run's, except
-    the top-level keys in REPLAY_SUMMARY_EXCLUDED."""
+    the top-level keys in REPLAY_SUMMARY_EXCLUDED and the differences
+    replay_expected.json lists for that run."""
     run_dir = os.path.dirname(scenario['replay'])
     published_path = os.path.join(REPO, *run_dir.split('/'),
                                   'smoke_summary.json')
@@ -126,11 +213,11 @@ def check_replay(scenario, raw):
     with open(published_path, encoding='utf-8') as f:
         published = json.load(f)
     replayed = json.loads(raw['smoke_summary.json'])
-    for summary in (published, replayed):
-        for key in REPLAY_SUMMARY_EXCLUDED:
-            summary.pop(key, None)
-    found = first_difference(published, replayed)
-    if found:
+    problems = replay_differences(published, replayed,
+                                  load_replay_expected(run_dir))
+    if problems:
+        shown = '; '.join(problems[:5])
+        more = f' (and {len(problems) - 5} more)' if len(problems) > 5 else ''
         raise HardCheckError(
             f'replay of {run_dir}: smoke_summary.json differs from the '
-            f'published run at {found}')
+            f'published run, beyond replay_expected.json: {shown}{more}')

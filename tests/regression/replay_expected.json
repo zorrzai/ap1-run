@@ -1,0 +1,15 @@
+{
+  "_about": "Differences a replay of a published run is expected to show, because a fix changes how the published transcript is scored. Checked by hard_checks.check_replay: any difference not listed here fails the run, and so does a listed move that does not happen. moves: execution (item/condition/repeat) -> field -> [published value, replayed value].",
+  "output/run_e_mini": {
+    "new_top_level_keys": [],
+    "new_execution_fields": [],
+    "moves": {
+    }
+  },
+  "output/run_f_sol": {
+    "new_top_level_keys": [],
+    "new_execution_fields": [],
+    "moves": {
+    }
+  }
+}

@@ -103,11 +103,16 @@ golden difference, and `--update` cannot write over it.
 - The mock refused no request (`check_transport`): a request with any
   method but POST, to the wrong path or without the driver's bearer
   credential fails the run.
-- A replay must re-score its published run exactly: the replayed
-  `smoke_summary.json` equals `output/run_*/smoke_summary.json` in every
-  key, value, type and list order, except the top-level `seal_hash`
-  (`check_replay`). Any other difference is investigated, not added to the
-  exclusions.
+- A replay must re-score its published run exactly, apart from what the
+  fixes change on purpose: the replayed `smoke_summary.json` equals
+  `output/run_*/smoke_summary.json` in every key, value, type and list
+  order, except the top-level `seal_hash` and the differences
+  `replay_expected.json` lists (`check_replay`). That file lists, per
+  published run, the fields new in the replay and each execution's moves as
+  [published value, replayed value]; a listed move that does not happen
+  fails as well. A difference is investigated before it is listed, never
+  added by explanation alone, and the commit that lists it says which fix
+  makes it.
 - Each runner scenario states `"seal_attempts"`, how many times the run calls
   the seal function, and `"seal_records"`, how many records it makes: 1 and
   1 for a run that seals, 1 and 0 for a refused seal, 0 and 0 for a run that
@@ -207,11 +212,13 @@ one is wrapped in a standard envelope. A recorded loop that ended mid-way
 (EV-0) is replayed as a failure of the next request.
 
 The replayed `smoke_summary.json` files equal the published ones except the
-top-level `seal_hash`, and the harness checks this on every run (above). The
-replayed `report.md` files agree with the published `output/run_e_mini` and
-`output/run_f_sol` reports in every scored figure. Only run metadata
-differs: model name, endpoint, hashes (seal, config, runner source and
-`ground_truth_hash`), timestamps, runner commit and `runner_modified`.
+top-level `seal_hash` and the moves listed in `replay_expected.json`, and the
+harness checks this on every run (above). Before the step-5 fixes, the
+replayed `report.md` files agreed with the published `output/run_e_mini` and
+`output/run_f_sol` reports in every scored figure, with only run metadata
+differing (model name, endpoint, hashes, timestamps, runner commit and
+`runner_modified`); the figures the fixes move are those the listed moves
+feed.
 
 ## Coverage (at `77514b4`, Python 3.11, with inspect-ai installed)
 

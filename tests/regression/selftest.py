@@ -396,6 +396,87 @@ class ReplayComparison(unittest.TestCase):
                       hard_checks.first_difference([1, 2], [1]))
 
 
+class ReplayExpectedDifferences(unittest.TestCase):
+
+    def rows(self, **fields):
+        row = {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+               'transcription_outcome': 'TRANSCRIBED-EXACT'}
+        row.update(fields)
+        return {'seal_hash': 'x', 'all_results': [row]}
+
+    def expected(self, moves=None, new_fields=(), new_keys=()):
+        return {'moves': moves or {}, 'new_execution_fields': list(new_fields),
+                'new_top_level_keys': list(new_keys)}
+
+    def diff(self, published, replayed, expected):
+        return hard_checks.replay_differences(published, replayed, expected)
+
+    def test_identical_passes(self):
+        self.assertEqual(self.diff(self.rows(), self.rows(), self.expected()), [])
+
+    def test_unlisted_move_fails(self):
+        found = self.diff(self.rows(), self.rows(
+            transcription_outcome='TRANSCRIBED-ALTERED'), self.expected())
+        self.assertEqual(len(found), 1)
+        self.assertIn('(Q01/base/r1).transcription_outcome', found[0])
+
+    def test_listed_move_passes(self):
+        moves = {'Q01/base/r1': {'transcription_outcome': [
+            'TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED']}}
+        self.assertEqual(self.diff(self.rows(), self.rows(
+            transcription_outcome='TRANSCRIBED-ALTERED'),
+            self.expected(moves)), [])
+
+    def test_listed_move_to_another_value_fails(self):
+        moves = {'Q01/base/r1': {'transcription_outcome': [
+            'TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED']}}
+        found = self.diff(self.rows(), self.rows(
+            transcription_outcome='UNOBSERVABLE'), self.expected(moves))
+        self.assertEqual(len(found), 1)
+        self.assertIn('listed move', found[0])
+
+    def test_listed_move_that_does_not_happen_fails(self):
+        moves = {'Q01/base/r1': {'transcription_outcome': [
+            'TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED']}}
+        found = self.diff(self.rows(), self.rows(), self.expected(moves))
+        self.assertEqual(len(found), 1)
+        moves = {'Q02/base/r1': {'transcription_outcome': ['a', 'b']}}
+        found = self.diff(self.rows(), self.rows(), self.expected(moves))
+        self.assertIn('matches no execution', found[0])
+
+    def test_new_field_must_be_listed(self):
+        self.assertEqual(len(self.diff(self.rows(), self.rows(new=1),
+                                       self.expected())), 1)
+        self.assertEqual(self.diff(self.rows(), self.rows(new=1),
+                                   self.expected(new_fields=['new'])), [])
+        self.assertEqual(len(self.diff(self.rows(new=1), self.rows(),
+                                       self.expected(new_fields=['new']))), 1)
+
+    def test_new_top_level_key_must_be_listed(self):
+        rep = self.rows()
+        rep['extra'] = []
+        self.assertEqual(len(self.diff(self.rows(), rep, self.expected())), 1)
+        rep = self.rows()
+        rep['extra'] = []
+        self.assertEqual(self.diff(self.rows(), rep,
+                                   self.expected(new_keys=['extra'])), [])
+
+    def test_seal_hash_and_order(self):
+        self.assertEqual(self.diff(self.rows(), dict(self.rows(), seal_hash='y'),
+                                   self.expected()), [])
+        found = self.diff(self.rows(), self.rows(repeat=2), self.expected())
+        self.assertIn('Q01/base/r1 in the published run', found[0])
+
+    def test_the_committed_list_parses(self):
+        for run in ('output/run_e_mini', 'output/run_f_sol'):
+            listed = hard_checks.load_replay_expected(run)
+            for key, fields in listed['moves'].items():
+                self.assertRegex(key, r'^Q\d\d/[a-z_]+/r\d+$')
+                for move in fields.values():
+                    self.assertEqual(len(move), 2)
+                    self.assertNotEqual(move[0], move[1])
+
+
 class MockTransportContract(unittest.TestCase):
 
     KEY = 'sk-selftest'
