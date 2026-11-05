@@ -344,6 +344,9 @@ def hash_after(tmp_path, change, files=CLONE):
     return before, compute_runner_source_hash(str(root))
 
 
+@pytest.mark.proposal(
+    'T3-70: runner_source_hash covers src/ap1_run/ and VERSION only; the '
+    'scope is proposed, not decided')
 @pytest.mark.finding('T3-70')
 @pytest.mark.parametrize('change', [
     {'tests/unit/test_run.py': b'def test_x(): assert 1\n'},
@@ -357,6 +360,9 @@ def test_source_hash_editing_tests_leaves_it_unchanged(tmp_path, change):
     assert after == before
 
 
+@pytest.mark.proposal(
+    'T3-70: runner_source_hash covers src/ap1_run/ and VERSION only; the '
+    'scope is proposed, not decided')
 @pytest.mark.finding('T3-70')
 @pytest.mark.parametrize('change', [
     {'tools/verify_run_seal.py': b'print(2)\n'},
@@ -368,6 +374,9 @@ def test_source_hash_editing_tools_leaves_it_unchanged(tmp_path, change):
     assert after == before
 
 
+@pytest.mark.proposal(
+    'T3-70: runner_source_hash covers src/ap1_run/ and VERSION only; the '
+    'scope is proposed, not decided')
 @pytest.mark.finding('T3-70')
 @pytest.mark.parametrize('venv', ['.venv', 'venv'])
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -380,6 +389,9 @@ def test_source_hash_venv_inside_clone_leaves_it_unchanged(tmp_path, venv):
     assert after == before
 
 
+@pytest.mark.proposal(
+    'T3-70: runner_source_hash covers src/ap1_run/ and VERSION only; the '
+    'scope is proposed, not decided')
 @pytest.mark.finding('T3-70')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-70: untracked scratch files outside src/ap1_run '
@@ -391,6 +403,9 @@ def test_source_hash_scratch_file_outside_package_leaves_it_unchanged(
     assert after == before
 
 
+@pytest.mark.proposal(
+    'T3-70: runner_source_hash covers src/ap1_run/ and VERSION only; the '
+    'scope is proposed, not decided')
 @pytest.mark.finding('T3-70')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-70: VERSION is not part of runner_source_hash')

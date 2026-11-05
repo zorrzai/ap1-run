@@ -446,6 +446,9 @@ def test_measure_invocation_unobservable_left_out_of_class_rate():
     assert r['per_class'][EV_2]['failure_rate'] == '1/1 (100.0%)'
 
 
+@pytest.mark.proposal(
+    'T3-11: n counts questions, not executions; no decision covers what n '
+    'counts')
 @pytest.mark.finding('T3-11')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-11: repeats of a question pooled as n')

@@ -796,6 +796,9 @@ def test_minimum_n_d5_d6_ordinary_items_not_counted_refused(dim, minimum):
     assert {'0', minimum} <= numbers_in(msg), msg
 
 
+@pytest.mark.proposal(
+    "V12-n: v1.2 behaviour alongside v1.3 is the author's proposal; field "
+    "and key names are the fix's")
 @pytest.mark.finding('V12-7', 'T3-12')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='V12-7: minimum-n ignores ap1_version; v1.2 '
@@ -851,6 +854,9 @@ def test_load_config_quantisation_unknown_rounding_mode_refused(load):
     assert msg is not None and 'rounding' in msg, msg
 
 
+@pytest.mark.proposal(
+    'T3-79/T3-67: one config file per run (config_mini.json valid, the '
+    'AP1_SMOKE_* sampling overrides removed); proposed, not decided')
 @pytest.mark.finding('T3-79')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-79: example/config_mini.json is refused '

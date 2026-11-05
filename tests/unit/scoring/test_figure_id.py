@@ -351,6 +351,10 @@ def test_identify_figure_extractor_returning_nothing_is_auto_no_figure():
 # --- Step 4: correct behaviour (failing until fixed) ---
 # xfail(strict=True) until the fix.
 
+@pytest.mark.proposal(
+    'T3-3: R2.0 step 4 changed (one matching token that is not the final '
+    'answer is not AUTO-MATCH); needs a SPEC change the maintainer has '
+    'not decided')
 @pytest.mark.finding('T3-3')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-3: a matching non-final token is taken as the '

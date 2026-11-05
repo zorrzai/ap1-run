@@ -860,6 +860,10 @@ def _refused(fn):
     return None
 
 
+@pytest.mark.proposal(
+    'T3-47: the timestamp inside seal_hash; SPEC R1.1 says sealing the '
+    'same inputs twice gives identical hashes, and the register leaves '
+    'the choice to the fix')
 @pytest.mark.finding('T3-47')
 @pytest.mark.req('R1.1')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
@@ -998,6 +1002,9 @@ VARIANTS = {'crlf': LF_TEXT.replace(b'\n', b'\r\n'),
             'bom_crlf': b'\xef\xbb\xbf' + LF_TEXT.replace(b'\n', b'\r\n')}
 
 
+@pytest.mark.proposal(
+    'T3-50: a BOM, like CRLF, does not change the text input hash; a '
+    'proposed normalisation')
 @pytest.mark.finding('T3-50')
 @pytest.mark.req('R0.4.3')
 @pytest.mark.parametrize('name', ['fixture', 'questions', 'ground_truth'])

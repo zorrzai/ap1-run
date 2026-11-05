@@ -307,6 +307,9 @@ def assert_run_used_the_file(result, config_path):
         assert sampling_sent(entry['request'], declared) == {}
 
 
+@pytest.mark.proposal(
+    'T3-79/T3-67: one config file per run (config_mini.json valid, the '
+    'AP1_SMOKE_* sampling overrides removed); proposed, not decided')
 @pytest.mark.finding('T3-79')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason="T3-79: config_mini.json is refused at load "
@@ -320,6 +323,9 @@ def test_run_with_config_mini_seals_exactly_that_files_settings(ap1_run,
     assert_run_used_the_file(result, tmp_path / 'example' / 'config_mini.json')
 
 
+@pytest.mark.proposal(
+    'T3-79/T3-67: one config file per run (config_mini.json valid, the '
+    'AP1_SMOKE_* sampling overrides removed); proposed, not decided')
 @pytest.mark.finding('T3-67', 'T3-79')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-67/T3-79: AP1_SMOKE_TEMPERATURE and '

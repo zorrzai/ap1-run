@@ -555,6 +555,9 @@ def test_summary_d71_all_ev0_has_no_observations():
     assert all(f['n'] == 0 for f in figures.values()), figures
 
 
+@pytest.mark.proposal(
+    'T3-11: n counts questions, not executions; no decision covers what n '
+    'counts')
 @pytest.mark.finding('T3-11')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-11: D7.1 n pools repeats')
