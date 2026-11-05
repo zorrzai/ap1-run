@@ -1,6 +1,10 @@
 {
   "_disclaimer": "THIS IS AN INSTRUMENT SMOKE TEST, NOT AN AP-1 EVALUATION.  It is not conformant: no adjudication, no second scorer, no blind set, the fixture is the shipped example (10 items, burned under AP-1 §5.8), and the D1 minimum of 40 items is not met. No figure from it may be reported, cited, quoted or described as an AP-1 result, by us or by anyone, in any document.",
   "seal_hash": "<SEAL_HASH>",
+  "scored_transcript": {
+    "sha256": "<TRANSCRIPT_SHA256>",
+    "records": 59
+  },
   "all_results": [
     {
       "item_id": "Q01",

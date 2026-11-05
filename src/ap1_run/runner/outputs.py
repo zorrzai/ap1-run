@@ -44,13 +44,14 @@ def attach_scores(tr_records, all_results):
 
 def write_outputs(output_dir, *, records, summary, config, seal_record,
                   questions, fixture, release_coverage_results, disclaimer,
-                  smoke_summary):
+                  smoke_summary, scored_transcript=None):
     """Generate and write the output files, printing where each went.
 
     records are the transcript's records with their scores attached
     (attach_scores). smoke_summary holds the content of smoke_summary.json
     after its '_disclaimer' line (seal_hash and the run's collected
-    findings).
+    findings). scored_transcript is the SHA-256 and record count of the
+    transcript the scoring pass read, shown in the report.
     """
     # -- Generate formal report (report.py) --
     print('\n' + '=' * 60)
@@ -62,6 +63,7 @@ def write_outputs(output_dir, *, records, summary, config, seal_record,
         config=config,
         seal_record=seal_record,
         transcript_records=records,
+        scored_transcript=scored_transcript,
     )
 
     report_path = os.path.join(output_dir, 'report.md')

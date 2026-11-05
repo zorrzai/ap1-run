@@ -10,8 +10,9 @@ read-only and never writes to it. A finished run's transcript gives the
 run's own smoke_summary.json back; a partial one (an interrupted run)
 reports its unreached executions NOT-RUN.
 
-Before scoring, the run's seal (format 2) is verified against the inputs
-given (execution/seal.py verify_seal): the record's own seal_hash, the
+The inputs are read once. Before scoring, the run's seal (format 2) is
+verified against the bytes read (execution/seal.py verify_seal, loaded),
+not the files read again: the record's own seal_hash, the
 config (with the values the runner resolved at run time, taken from the
 pre-registration record), the fixture, questions, ground-truth and
 calculator files, the AP-1 text hash the config declares, and the
@@ -19,8 +20,9 @@ expected values, which the ground-truth module computes again and which
 must hash to the sealed ones. The runner's source hash is not compared:
 a corrected scorer must be able to re-score. Every transcript record
 must carry the seal hash. A mismatch is refused with SealError, naming
-it. The executions are then scored against the sealed expected values,
-as in the run.
+it. The executions are then scored from the same inputs, against the
+sealed expected values, as in the run; the scoring pass names the
+transcript it scored by the SHA-256 of its bytes.
 
 From the command line: ap1-run --rescore <transcript> (README, "Scoring
 a transcript again").
@@ -125,7 +127,7 @@ def rescore_transcript(transcript_path, *, config_path, fixture_dir,
                 questions_path=inputs.paths['questions'],
                 ground_truth_path=inputs.paths['ground_truth'],
                 calculator_path=inputs.paths['calculator'],
-                expected_values=expected_values)
+                expected_values=expected_values, loaded=inputs.data)
 
     os.makedirs(output_dir, exist_ok=True)
     return score_run(transcript_path, config=config, seal_record=seal_record,

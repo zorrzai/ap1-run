@@ -294,6 +294,13 @@ def test_rescore_of_finished_run_reproduces_its_summary(cli, tmp_path):
     published.pop('_disclaimer')
     assert json.loads(json.dumps(summary, default=str)) == published
     assert r.transcript.read_bytes() == before
+    # both name the transcript they scored, by the digest of its bytes
+    import hashlib
+    digest = hashlib.sha256(before).hexdigest()
+    assert summary['scored_transcript']['sha256'] == digest
+    for out in (r.out, tmp_path / 'rescored'):
+        assert f'Transcript scored: SHA-256 `{digest}`' in (
+            out / 'report.md').read_text('utf-8')
 
 
 # -- V12-3 / T3-52: every round in the transcript ---------------------------

@@ -74,29 +74,41 @@ def read_all(path):
     records before it are returned (S3-G1-17). Invalid JSON anywhere
     else raises TranscriptError.
     """
+    return parse(read_bytes(path), path)
+
+
+def read_bytes(path):
+    """A transcript's bytes, read once (b'' if there is no file), for a
+    reader that must hash and parse the same bytes (parse)."""
     path = Path(path)
     if not path.exists():
-        return []
-
-    records = []
-    # Read as bytes and decode line by line, so that a last line cut
-    # inside a multibyte character is a torn line like any other.
+        return b''
     with open(path, 'rb') as f:
-        for line_num, raw_bytes in enumerate(f, 1):
-            complete = raw_bytes.endswith(b'\n')
-            try:
-                line = raw_bytes.decode('utf-8').strip()
-                if not line:
-                    continue
-                records.append(json.loads(line))
-            except (UnicodeDecodeError, json.JSONDecodeError) as e:
-                if not complete:
-                    warnings.warn(
-                        f'transcript {path}: line {line_num} is incomplete '
-                        f'(interrupted write) and was left out: {e}')
-                    break
-                raise TranscriptError(
-                    f'invalid JSON at line {line_num}: {e}') from e
+        return f.read()
+
+
+def parse(data, path='transcript'):
+    """The records in a transcript's bytes, as read_all reads them; path
+    names the transcript in a warning."""
+    records = []
+    # Decode line by line, so that a last line cut inside a multibyte
+    # character is a torn line like any other.
+    lines = data.split(b'\n')
+    for line_num, raw_bytes in enumerate(lines, 1):
+        complete = line_num < len(lines)   # a newline follows it
+        try:
+            line = raw_bytes.decode('utf-8').strip()
+            if not line:
+                continue
+            records.append(json.loads(line))
+        except (UnicodeDecodeError, json.JSONDecodeError) as e:
+            if not complete:
+                warnings.warn(
+                    f'transcript {path}: line {line_num} is incomplete '
+                    f'(interrupted write) and was left out: {e}')
+                break
+            raise TranscriptError(
+                f'invalid JSON at line {line_num}: {e}') from e
 
     return records
 

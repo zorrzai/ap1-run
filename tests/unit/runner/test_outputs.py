@@ -100,8 +100,10 @@ def test_attach_scores_of_nothing():
 def stubs(monkeypatch):
     seen = {}
 
-    def generate_report(*, summary, config, seal_record, transcript_records):
-        seen['report'] = (summary, config, seal_record, transcript_records)
+    def generate_report(*, summary, config, seal_record, transcript_records,
+                        scored_transcript):
+        seen['report'] = (summary, config, seal_record, transcript_records,
+                          scored_transcript)
         return 'REPORT § TEXT\n'
 
     def generate_sheets(records, questions, fixture, config, *,
@@ -127,10 +129,11 @@ def test_write_outputs_writes_four_files_and_says_where(
         release_coverage_results=['rc'],
         disclaimer='LINE ONE\nLINE § TWO\n',
         smoke_summary={'seal_hash': 'h', 'all_results': [{'v': '1.50'}],
-                       'other': object})
+                       'other': object},
+        scored_transcript={'sha256': 'd', 'records': 1})
 
     assert stubs['report'] == ({'s': 1}, {'c': 2}, {'seal_hash': 'h'},
-                               records)
+                               records, {'sha256': 'd', 'records': 1})
     assert stubs['sheets'] == (records, {'q': 3}, {'f': 4},
                                {'c': 2}, ['rc'])
 

@@ -38,6 +38,9 @@ Normalisation (in the comparison, never in the runner):
   - this run's seal_hash, config_hash and runner_source_hash, read from
     the seal the run actually made (the config hash covers the mock's
     port; the source hash covers the code, and changes when files move)
+  - the digest of the transcript scored, in report.md and
+    smoke_summary.json (the transcript holds timestamps; the digest is
+    tested in tests/unit/runner/test_scoring_pass.py)
   - each adjudication sheet's execution id (derived from the seal hash),
     as <EXECUTION_ID_k> numbered in order of first appearance, so the
     golden still shows which sheets share an id
@@ -426,6 +429,9 @@ _ENVIRONMENT_ROW = re.compile(
 
 
 _EXECUTION_ID = re.compile(r'(Execution id: `)([0-9a-f]{12})(`)')
+# The digest of the transcript scored (report.md, smoke_summary.json)
+_TRANSCRIPT_DIGEST = re.compile(
+    r'(Transcript scored: SHA-256 `|"sha256": ")[0-9a-f]{64}')
 
 
 def normalise(text, roots, seals):
@@ -444,6 +450,7 @@ def normalise(text, roots, seals):
             m.group(2), f'<EXECUTION_ID_{len(ids) + 1}>') + m.group(3),
         text)
     text = _ENVIRONMENT_ROW.sub(r'\1<ENVIRONMENT>\2', text)
+    text = _TRANSCRIPT_DIGEST.sub(r'\1<TRANSCRIPT_SHA256>', text)
     for seal in seals:
         for field, label in (('seal_hash', '<SEAL_HASH>'),
                              ('config_hash', '<CONFIG_HASH>'),

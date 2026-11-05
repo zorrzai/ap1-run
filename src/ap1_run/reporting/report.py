@@ -57,7 +57,8 @@ AUTO_MEASURED = {'D1', 'D2', 'D7'}
 HUMAN_ADJUDICATED = {'D3', 'D4', 'D5', 'D6'}
 
 
-def generate_report(*, summary, config, seal_record, transcript_records=None):
+def generate_report(*, summary, config, seal_record, transcript_records=None,
+                    scored_transcript=None):
     """Generate the evaluation report.
 
     Args:
@@ -66,6 +67,8 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
         seal_record: dict -- pre-registration record from seal
         transcript_records: list of transcript dicts (optional, for
             cell-level detail)
+        scored_transcript: {'sha256', 'records'} of the transcript the
+            scoring pass read (optional), shown under section 1
 
     Returns:
         str -- complete markdown report.
@@ -81,7 +84,8 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
     sections.append('---\n')
 
     # 1. Pre-registration record
-    sections.append(_section_preregistration(seal_record, config))
+    sections.append(_section_preregistration(seal_record, config,
+                                             scored_transcript))
 
     # 2. Resolved configuration
     sections.append(_section_configuration(config))
@@ -137,8 +141,8 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
 
 # -- Section generators ------------------------------------------------
 
-def _section_preregistration(seal_record, config):
-    """Section 1: Pre-registration record."""
+def _section_preregistration(seal_record, config, scored_transcript=None):
+    """Section 1: Pre-registration record, and the transcript scored."""
     lines = ['## 1. Pre-Registration Record\n']
     if seal_record:
         lines.append('| Field | Value |')
@@ -148,6 +152,11 @@ def _section_preregistration(seal_record, config):
     else:
         lines.append('*No seal record available.*')
     lines.append('')
+    if scored_transcript:
+        lines.append(
+            f'Transcript scored: SHA-256 `{scored_transcript["sha256"]}`, '
+            f'{scored_transcript["records"]} records.')
+        lines.append('')
     return '\n'.join(lines)
 
 

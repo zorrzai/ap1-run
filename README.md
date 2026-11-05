@@ -234,16 +234,18 @@ ap1-run --rescore runs/today/smoke_run.jsonl \
 ```
 
 Give the run's own config and fixture directory; `pre_registration.json` must
-be beside the transcript. Before scoring, the re-scorer verifies the run's seal
-against the inputs given (the config, the fixture, questions, ground-truth and
-calculator files, and the expected values, computed again), and refuses any mismatch,
-naming it, as well as a transcript of another run. It scores against the
-sealed expected values, as the run does. It writes the four scoring outputs to
-`--output-dir`, which must not be the transcript's directory, by any name (a
-symlink, another case), and must hold no run or scoring output: a correction is
-made by addition, so nothing already written is replaced. Re-scoring a finished
-run gives back its `smoke_summary.json`, `report.md` and adjudication sheets.
-Re-scoring the
+be beside the transcript. The re-scorer reads each input once, and before
+scoring verifies those bytes against the run's seal: the config, the fixture,
+questions, ground-truth and calculator files, and the expected values, computed
+again. It refuses any mismatch, naming it, as well as a transcript of another
+run. It scores from the same bytes, against the sealed expected values, as the
+run does. It writes the four scoring outputs to `--output-dir`, which must not
+be the transcript's directory, by any name (a symlink, another case), and must
+hold no run or scoring output: a correction is made by addition, so nothing
+already written is replaced. A run and a re-score both name the transcript they
+scored by the SHA-256 of its bytes and its record count (`smoke_summary.json`,
+and below section 1 of `report.md`). Re-scoring a finished run gives back its
+`smoke_summary.json`, `report.md` and adjudication sheets. Re-scoring the
 partial transcript of an interrupted run reports the executions it never
 reached as NOT-RUN, never as failures, and an execution it stopped inside
 (rounds recorded, no record of its end) as UNMEASURED with cause `interrupted`

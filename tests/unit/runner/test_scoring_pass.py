@@ -279,8 +279,12 @@ def test_score_run_calls(p, capsys):
         {'d1': True, 'n': 3}, {'d2': 'results'}, 'CAP', {'summary': True})]
 
     assert p.named('attach') == [(records, expected_results)]
+    import hashlib
+    scored = {'sha256': hashlib.sha256(
+        open(p.transcript, 'rb').read()).hexdigest(), 'records': 6}
     smoke_summary = {
-        'seal_hash': 'SEAL', 'all_results': expected_results,
+        'seal_hash': 'SEAL', 'scored_transcript': scored,
+        'all_results': expected_results,
         'grammar_issues': [], 'decline_findings': [],
         'tool_call_structures': [], 'evidence_findings': [],
         'unmeasured_cells': unmeasured}
@@ -288,7 +292,8 @@ def test_score_run_calls(p, capsys):
         'records': ['SCORED RECORDS'], 'summary': {'summary': True},
         'config': p.config, 'seal_record': SEAL, 'questions': QUESTIONS,
         'fixture': FIXTURE, 'release_coverage_results': [],
-        'disclaimer': DISCLAIMER, 'smoke_summary': smoke_summary})]
+        'disclaimer': DISCLAIMER, 'smoke_summary': smoke_summary,
+        'scored_transcript': scored})]
     assert smoke == smoke_summary
 
     stages = [c[0] for c in p.calls if c[0] in (
@@ -572,3 +577,37 @@ def test_score_run_record_with_an_unknown_status_refused(p, status):
             '^record 1 has status ' + re.escape(repr(status))
             + ', not one of EXECUTED, UNMEASURED, VOID$')):
         p.run()
+
+
+# -- The transcript scored, by its digest (T3-21) --------------------------
+
+@pytest.mark.finding('T3-21')
+@pytest.mark.req('R0.3')
+def test_score_run_records_the_digest_of_the_transcript_it_scored(p):
+    # The scoring pass reads the transcript once and records the SHA-256
+    # of the bytes it scored and their record count, in the summary and
+    # in what goes to the report, so two reports can be traced to the
+    # transcript each scored.
+    import hashlib
+    script(p)
+    data = open(p.transcript, 'rb').read()
+    smoke = p.run()
+    scored = {'sha256': hashlib.sha256(data).hexdigest(), 'records': 6}
+    assert smoke['scored_transcript'] == scored
+    (_, kwargs), = p.named('outputs')
+    assert kwargs['scored_transcript'] == scored
+
+
+@pytest.mark.finding('T3-21')
+def test_score_run_reads_the_transcript_once(p, monkeypatch):
+    script(p)
+    opened = []
+    real_open = open
+
+    def counting_open(file, *args, **kwargs):
+        if str(file) == p.transcript:
+            opened.append(args[0] if args else kwargs.get('mode', 'r'))
+        return real_open(file, *args, **kwargs)
+    monkeypatch.setattr('builtins.open', counting_open)
+    p.run()
+    assert opened == ['rb']

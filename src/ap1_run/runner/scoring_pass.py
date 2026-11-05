@@ -23,6 +23,8 @@ The live run calls it after its execution pass; the re-scorer
 give the same results for the same transcript.
 """
 
+import hashlib
+
 from ap1_run.execution.context import (
     build_delivered_context, check_lookup_collision,
 )
@@ -189,7 +191,12 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
     expected values (sealed_inputs.sealed_compute, T3-48). The transcript
     is only read.
     """
-    records = transcript.read_all(transcript_path)
+    # The transcript is read once; the records scored and the digest
+    # recorded are of the same bytes.
+    data = transcript.read_bytes(transcript_path)
+    records = transcript.parse(data, transcript_path)
+    scored_transcript = {'sha256': hashlib.sha256(data).hexdigest(),
+                         'records': len(records)}
     seal_hash = seal_record['seal_hash']
     by_execution = index_records(records, seal_hash)
     rounds_by_execution = index_rounds(records)
@@ -299,6 +306,7 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
 
     smoke_summary = {
         'seal_hash': seal_hash,
+        'scored_transcript': scored_transcript,
         'all_results': findings.all_results,
         'grammar_issues': findings.grammar_issues,
         'decline_findings': findings.decline_findings,
@@ -316,6 +324,7 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
         summary=summary, config=config, seal_record=seal_record,
         questions=questions, fixture=fixture,
         release_coverage_results=findings.release_coverage_results,
-        disclaimer=DISCLAIMER, smoke_summary=smoke_summary)
+        disclaimer=DISCLAIMER, smoke_summary=smoke_summary,
+        scored_transcript=scored_transcript)
 
     return smoke_summary

@@ -34,6 +34,8 @@ Model: mock-model
 | `timestamp` | `<TIMESTAMP>` |
 | `verification_keys` | `[]` |
 
+Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 60 records.
+
 ## 2. Resolved Configuration
 
 ```json

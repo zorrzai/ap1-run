@@ -260,6 +260,38 @@ def test_rescore_input_not_matching_the_seal_refused(r, name, edit, field):
     assert r.scored == []
 
 
+@pytest.mark.finding('T3-72', 'T3-21')
+@pytest.mark.req('R1.1')
+@pytest.mark.parametrize('name, edit, field', [
+    # a field no derivation reads, so the expected values do not change;
+    # in the delivered context it could still ground an operand
+    ('fixture.json', lambda c: c.replace(
+        '"balance": "15200.00",', '"balance": "15200.00", "bonus": "7.77",'),
+     'fixture'),
+    ('questions.json', lambda c: c + '\n\n', 'questions'),
+    ('ground_truth_example.py', lambda c: c + '\n# edited\n',
+     'ground_truth'),
+])
+def test_rescore_verifies_the_inputs_it_scores_with(r, monkeypatch, name,
+                                                    edit, field):
+    # An input changed when the re-scorer reads it and put back before the
+    # seal is checked: the bytes it would score with are not the sealed
+    # ones, although the file now is. Refused, naming the input.
+    path = r.fx / name
+    sealed = path.read_text('utf-8')
+    path.write_text(edit(sealed), 'utf-8')
+    real = rescore.read_inputs
+
+    def read_then_restore(fixture_dir):
+        inputs = real(fixture_dir)
+        path.write_text(sealed, 'utf-8')
+        return inputs
+    monkeypatch.setattr(rescore, 'read_inputs', read_then_restore)
+    with pytest.raises(SealError, match=f'\n  {field}: sealed='):
+        r.rescore()
+    assert r.scored == []
+
+
 @pytest.mark.finding('T3-48')
 @pytest.mark.req('R1.1')
 def test_rescore_ground_truth_giving_other_values_refused(r):

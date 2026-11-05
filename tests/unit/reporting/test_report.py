@@ -203,6 +203,16 @@ def test_preregistration_lists_seal_fields_sorted():
         '')
 
 
+@pytest.mark.finding('T3-21')
+def test_preregistration_names_the_transcript_scored():
+    text = report._section_preregistration(
+        {'seal_hash': 'h'}, CONFIG, {'sha256': 'ab' * 32, 'records': 7})
+    assert text.endswith(
+        f'Transcript scored: SHA-256 `{"ab" * 32}`, 7 records.\n')
+    assert 'Transcript scored' not in report._section_preregistration(
+        {'seal_hash': 'h'}, CONFIG)
+
+
 def test_preregistration_without_seal_says_so():
     assert report._section_preregistration({}, CONFIG) == md(
         '## 1. Pre-Registration Record\n',
