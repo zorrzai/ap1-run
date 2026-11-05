@@ -152,6 +152,7 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/scoring/test_figure_id.py::test_identify_figure_any_later_figure_competes_whatever_its_symbol',
     'tests/unit/scoring/test_figure_id.py::test_identify_figure_earlier_figures_are_the_working',
     'tests/unit/scoring/test_figure_id.py::test_identify_figure_matching_non_final_token_is_not_auto_matched',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_percentage_valued_answer_auto_matches',
     'tests/unit/scoring/test_figure_id.py::test_identify_figure_structured_field_never_skips_decline_or_collision[False-markers1-ADJUDICATE-DECLINE]',
     'tests/unit/scoring/test_figure_id.py::test_identify_figure_structured_field_never_skips_decline_or_collision[True-markers0-ADJUDICATE-DECLINE]',
     'tests/unit/scoring/test_figure_id.py::test_identify_figure_structured_field_never_skips_decline_or_collision[True-markers2-ADJUDICATE-COLLISION]',
@@ -182,7 +183,7 @@ EXPECTED_PROVISIONAL_CASES = {
     'tests/unit/scoring/test_operation_correctness.py': 109,
     'tests/unit/scoring/test_release_coverage.py': 31,
 }
-MIN_STRICT_XFAIL_CASES = 52
+MIN_STRICT_XFAIL_CASES = 53
 
 
 @pytest.fixture(scope='module')

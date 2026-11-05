@@ -1844,7 +1844,8 @@ def test_unmeasured_reason_unknown_dimension():
 @pytest.mark.finding('T3-81')
 def test_declared_limitations_text():
     # T3-81 (fixed): the k > 0 bound is computed; the section declares
-    # which form it is and where that form comes from.
+    # which form it is and where that form comes from. And that an answer
+    # that is a percentage is never auto-scored (S3-G4-2's fix).
     assert report._section_declared_limitations() == md(
         '## 13. Declared Limitations\n',
         '### Clopper-Pearson Bound (k > 0)\n',
@@ -1854,7 +1855,17 @@ def test_declared_limitations_text():
         'Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the '
         'general form DISPOSITION C-1 adopts for the next version. It is '
         'computed in Decimal (bisection on the binomial distribution) and '
-        'every bound is shown rounded up.\n')
+        'every bound is shown rounded up.\n',
+        '### Percentage Answers\n',
+        'A percentage in a response (a figure written with %) is never '
+        'compared with the expected value: SPEC R0.4.2 records the percent '
+        'flag, and 15.20% is not the money figure 15.20 (S3-G4-2). The '
+        'expected value has no unit (SPEC R3.1: final is a Decimal), so '
+        'the runner cannot tell an answer that is a rate from one that is '
+        'an amount. An item whose answer is a percentage ("What is the '
+        'APR?", 18.5%) is therefore never auto-scored: it routes to '
+        'adjudication as figures present, none matching. No item of the '
+        'example question set has a percentage answer.\n')
 
 
 # -- _format_dim_result ---------------------------------------------------

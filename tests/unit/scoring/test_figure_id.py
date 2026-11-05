@@ -519,6 +519,21 @@ def test_identify_figure_percentage_is_never_the_match():
         ADJUDICATE_NO_MATCH
 
 
+@pytest.mark.xfail(
+    strict=True, raises=AssertionError,
+    reason='S3-G4-2: a percentage is never compared, and the expected '
+           'value carries no unit (SPEC R3.1), so an answer that is a rate '
+           'cannot auto-match; declared in report section 13')
+@pytest.mark.proposal('matching a percentage only to an expected value '
+                      'the ground truth declares a percentage: SPEC R3.1 '
+                      'has no such field')
+@pytest.mark.finding('S3-G4-2')
+@pytest.mark.req('R0.4.2', 'R2.0', 'R3.1')
+def test_identify_figure_percentage_valued_answer_auto_matches():
+    r = identify(response('The APR is 18.5%.'), '18.5')
+    assert (r['outcome'], r['released_figure']) == (AUTO_MATCH, D('18.5'))
+
+
 # --- The configured separators (T3-41) ---
 
 @pytest.mark.finding('T3-41')

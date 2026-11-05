@@ -17,17 +17,18 @@ Steps, as SPEC R2.0 numbers them, applied in the order 0, 2, 3, 1, 4
   1  Structured answer field where configured
   4  Extract per R0.4.2 -> AUTO-MATCH / AUTO-NO-FIGURE / ADJUDICATE
 
-In step 4 figures are compared like with like. A percentage token is
-not compared with the expected value (R0.4.2 records the percent flag;
-15.20% is not the figure 15.20, S3-G4-2). One matching token is
+In step 4 a percentage token is never compared with the expected value
+(R0.4.2 records the percent flag; 15.20% is not the figure 15.20,
+S3-G4-2). The expected value has no unit (R3.1), so an answer that is a
+percentage cannot auto-match: it is ADJUDICATE-FIGURES-PRESENT-NONE-
+MATCHING, as the report declares (section 13). One matching token is
 AUTO-MATCH only if no competing figure follows it: a response that
 mentions the expected value on the way and concludes with another
 figure has not released it, and the runner does not guess which figure
 was the answer (R2.0 normative; T3-3), so it is ADJUDICATE-AMBIGUOUS. A
-competing figure is a later token that is not a percentage and, where
-the match carries a currency symbol, carries one too: '$15.20, assuming
-the 1.2% rate over 12 months' releases $15.20; '15.20 a year? No:
-$182.40' does not.
+competing figure is any later token that is not a percentage, whatever
+its currency symbol: '$15.20, assuming the 1.2% rate' releases $15.20;
+'15.20 a year? No: $182.40' does not.
 """
 
 from decimal import Decimal

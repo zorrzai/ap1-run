@@ -412,3 +412,7 @@ D7 is claimed, but not all of it was measured (AP-1 v1.3 D7: "Report all four"):
 ### Clopper-Pearson Bound (k > 0)
 
 AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for any invocation figure but states its formula for zero failures only. For k > 0 failures the report gives the exact Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the general form DISPOSITION C-1 adopts for the next version. It is computed in Decimal (bisection on the binomial distribution) and every bound is shown rounded up.
+
+### Percentage Answers
+
+A percentage in a response (a figure written with %) is never compared with the expected value: SPEC R0.4.2 records the percent flag, and 15.20% is not the money figure 15.20 (S3-G4-2). The expected value has no unit (SPEC R3.1: final is a Decimal), so the runner cannot tell an answer that is a rate from one that is an amount. An item whose answer is a percentage ("What is the APR?", 18.5%) is therefore never auto-scored: it routes to adjudication as figures present, none matching. No item of the example question set has a percentage answer.
