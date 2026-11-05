@@ -189,11 +189,25 @@ def build_summary(all_results, evidence_findings, *,
     # ratio DPR = (I_base - I_removed) / I_base (R2.3; UNDEFINED where
     # I_base is zero or an arm has no observations)
     summary['held_constant'] = list(held_constant or [])
-    no_figures = dict.fromkeys(('n', 'failures'), 0)
-    arms = [inv_figures.get(f'd7_invocation_{cond}', no_figures)
-            for cond in ('base', 'instruction_removed')]
-    _, summary['dpr'] = compute_dpr(
-        *[a['n'] - a['failures'] for a in arms], *[a['n'] for a in arms])
+    # D7.1 figures are not comparable across evidence classes, so a DPR
+    # is computed only where both arms' observations are in one and the
+    # same class.
+    arm_conditions = ('base', 'instruction_removed')
+    observed = {cond: sorted(f['evidence_class'] for f in inv_figures.values()
+                             if f['condition'] == cond and f['n'] > 0)
+                for cond in arm_conditions}
+    classes = {ec for ecs in observed.values() for ec in ecs}
+    if len(classes) > 1:
+        summary['dpr'] = ('UNDEFINED (the arms span evidence classes: ' +
+                          '; '.join(f'{cond} {", ".join(observed[cond])}'
+                                    for cond in arm_conditions
+                                    if observed[cond]) + ')')
+    else:
+        no_figures = dict.fromkeys(('n', 'failures'), 0)
+        arms = [inv_figures.get(f'd7_invocation_{cond}', no_figures)
+                for cond in arm_conditions]
+        _, summary['dpr'] = compute_dpr(
+            *[a['n'] - a['failures'] for a in arms], *[a['n'] for a in arms])
 
     # Operation correctness counts
     op_counts = {'OPERATION-CORRECT': 0, 'WRONG-OPERATION': 0,

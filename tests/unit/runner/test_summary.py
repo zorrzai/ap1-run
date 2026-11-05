@@ -224,6 +224,37 @@ def test_summary_dpr_from_the_invocation_figures(base, removed, dpr):
 
 
 @pytest.mark.finding('T3-46')
+@pytest.mark.req('R2.3', 'AP-1 D7.8')
+@pytest.mark.parametrize('base_classes, removed_classes, dpr', [
+    # base spans EV-2 and EV-1 (4 observed questions)
+    (['EV-2', 'EV-2', 'EV-2', 'EV-1'], ['EV-2'] * 4,
+     'UNDEFINED (the arms span evidence classes: base EV-1, EV-2; '
+     'instruction_removed EV-2)'),
+    # one class each, but not the same one
+    (['EV-1'] * 2, ['EV-2'] * 2,
+     'UNDEFINED (the arms span evidence classes: base EV-1; '
+     'instruction_removed EV-2)'),
+    # the same single class: computed (Q01 invoked in both, Q02 only in base)
+    (['EV-2'] * 2, ['EV-2'] * 2, '50.0%'),
+])
+def test_summary_dpr_across_evidence_classes_is_undefined_with_that_reason(
+        base_classes, removed_classes, dpr):
+    # D7.1 figures are not comparable across evidence classes, so neither
+    # is a DPR built from them; and "no base observations" would be false
+    # here, where base has observations.
+    removed_outcomes = ['INVOKED', 'NOT-INVOKED', 'NOT-INVOKED',
+                        'NOT-INVOKED']
+    results = [executed(item_id=f'Q{i:02d}', condition='base',
+                        invocation_outcome='INVOKED', evidence_class=ec)
+               for i, ec in enumerate(base_classes, 1)] + [
+        executed(item_id=f'Q{i:02d}', condition='instruction_removed',
+                 invocation_outcome=removed_outcomes[i - 1],
+                 evidence_class=ec)
+        for i, ec in enumerate(removed_classes, 1)]
+    assert build_summary(results, [])['dpr'] == dpr
+
+
+@pytest.mark.finding('T3-46')
 def test_summary_held_constant_listed():
     s = build_summary([], [], held_constant=('tools', 'sampling'))
     assert s['held_constant'] == ['tools', 'sampling']
