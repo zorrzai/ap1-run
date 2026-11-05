@@ -30,13 +30,13 @@ if _EXAMPLE_DIR not in sys.path:
 
 from ap1_run.execution.evidence import classify_invocation, EV_0, EV_2
 from ap1_run.scoring.operation_correctness import classify_operation, reclassify_session
-from ap1_run.scoring.provenance.provenance_classify import classify_invocations_sequential
+from ap1_run.scoring.provenance.classify import classify_invocations_sequential
 from ap1_run.scoring.figure_id import identify_figure, AUTO_MATCH
 from ap1_run.scoring.accuracy import score_accuracy
 from ap1_run.execution.context import build_delivered_context, check_lookup_collision
 from ap1_run.scoring.transcription import check_transcription
 from ap1_run.scoring.release_coverage import check_release_coverage
-from ap1_run.scoring.provenance.provenance_classify import _parse_return_value
+from ap1_run.scoring.provenance.classify import _parse_return_value
 import ground_truth_example as gt_module
 
 WRAPPER_EXISTS = os.path.exists(

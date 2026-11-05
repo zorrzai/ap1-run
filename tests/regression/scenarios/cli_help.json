@@ -1,0 +1,14 @@
+{
+  "description": "ap1-run --help: the options and their defaults, exit 0, no key needed. COLUMNS is fixed so the wrapping does not depend on the terminal.",
+  "exercises": [
+    "ap1_run.runner.settings.parse_args"
+  ],
+  "command": [
+    "-m",
+    "ap1_run.run",
+    "--help"
+  ],
+  "env": {
+    "COLUMNS": "80"
+  }
+}

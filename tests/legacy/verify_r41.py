@@ -10,7 +10,7 @@ Run:
     python -m pytest verify_r41.py (pytest discovery)
 
 Design: each test_b<NN>_* function exercises one planted behaviour
-from the R4.1 table.  Where a behaviour exercises provenance.py
+from the R4.1 table.  Where a behaviour exercises provenance/trace.py
 (B2-B7, B25-B30), the mock is a hand-built expression + context +
 ground-truth dict.  Where it exercises figure_id / evidence /
 transcription / config / seal, the mock is a constructed response or
@@ -27,14 +27,14 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
 from decimal import Decimal
 
 # -- Provenance imports ------------------------------------------------
-from ap1_run.scoring.provenance.provenance import (
+from ap1_run.scoring.provenance.trace import (
     extract_operands, resolve_operand, TRANSFORMATIONS,
 )
-from ap1_run.scoring.provenance.provenance_classify import (
+from ap1_run.scoring.provenance.classify import (
     classify_invocation as classify_prov, classify_item,
     classify_invocations_sequential,
 )
-from ap1_run.scoring.provenance.provenance_audit import build_audit_listing
+from ap1_run.scoring.provenance.audit import build_audit_listing
 from ap1_run.execution.context import build_delivered_context
 
 # -- Figure identification imports ------------------------------------
@@ -64,7 +64,6 @@ from ap1_run.foundation.numeric import parse_decimal, extract_numeric_tokens
 from ap1_run.scoring.reproducibility import check_parameter_echo
 
 # -- Perturbation imports ---------------------------------------------
-from ap1_run.execution.perturbation import perturbation_check, PerturbationError
 
 # -- Config imports ---------------------------------------------------
 from ap1_run.foundation.config import load_config, ConfigError, validate_minimum_n

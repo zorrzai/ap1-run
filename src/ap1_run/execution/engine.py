@@ -21,7 +21,7 @@ from ap1_run.execution.evidence import (
     extract_attestation, check_ev3_guard, EV_0,
 )
 from ap1_run.scoring.operation_correctness import classify_operation, reclassify_session
-from ap1_run.scoring.provenance.provenance_classify import classify_invocations_sequential
+from ap1_run.scoring.provenance.classify import classify_invocations_sequential
 
 
 class EngineError(Exception):

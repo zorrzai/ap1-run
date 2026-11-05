@@ -12,7 +12,7 @@ import math
 from decimal import Decimal, InvalidOperation
 
 from ap1_run.foundation.numeric import quantise
-from ap1_run.scoring.provenance.provenance import TRANSFORMATIONS
+from ap1_run.scoring.provenance.trace import TRANSFORMATIONS
 
 # -- Outcome constants ------------------------------------------------
 

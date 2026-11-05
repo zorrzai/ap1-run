@@ -1,6 +1,6 @@
 """AP-1 Inspect Scorer.
 
-Imports evidence, provenance, provenance_classify, operation_correctness,
+Imports evidence, provenance (trace, classify), operation_correctness,
 figure_id, and accuracy FROM THE RUNNER. Calls the runner's classifiers.
 Returns Score with all AP-1 outcomes in metadata.
 
@@ -26,7 +26,7 @@ from ap1_run.scoring.figure_id import identify_figure, AUTO_MATCH
 from ap1_run.execution.context import check_lookup_collision
 from ap1_run.scoring.accuracy import score_accuracy
 from ap1_run.scoring.operation_correctness import classify_operation, reclassify_session
-from ap1_run.scoring.provenance.provenance_classify import classify_invocations_sequential
+from ap1_run.scoring.provenance.classify import classify_invocations_sequential
 from ap1_run.scoring.release_coverage import check_release_coverage
 from ap1_run.foundation.numeric import extract_numeric_tokens
 from ap1_run.execution.evidence import _extract_content

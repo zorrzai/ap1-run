@@ -15,6 +15,12 @@ It measures whether the numbers a deployed AI system produces can be traced back
 > If you run it and something breaks, that is the report we most want. Open an
 > issue.
 
+> ### Which version of AP-1
+>
+> ap1-run implements the **AP-1 v1.3 Draft for Comment**. **v1.2 remains the
+> version in force.** The runs published here are **demonstration runs, not
+> conformance results** under either version. See [Conformance](#conformance).
+
 ---
 
 ## What it does
@@ -115,6 +121,14 @@ python run_all_tests.py       # offline, reports its own totals
 change the hash (T3-70 in `docs/REVIEW_FINDINGS.md`). For the same reason,
 keep virtual environments outside the clone.
 
+For development, `pip install -e .[dev]` adds pytest, mutmut and coverage:
+
+```bash
+python -m pytest                            # unit tests (tests/unit/)
+python tests/regression/run_regression.py   # the regression baseline, about 2 minutes
+python tests/mutation/run_mutation.py       # mutation scores, against tests/mutation/scores.json
+```
+
 Then run the worked example against your own endpoint:
 
 ```bash
@@ -130,13 +144,39 @@ The `ap1-run` command and `python -m ap1_run.run` do not: they run whichever
 clone is installed in the environment, and that clone's `output/` receives the
 results. Use one environment per clone, or run `python smoke_test.py`, which
 always uses its own clone's `src/`.
-The runner reads `example/` and `reference/` and writes `output/` relative to
-the clone, so run it from a clone (an editable install), not from a wheel.
+
+By default the runner reads `example/` and `reference/` and writes `output/`
+in the clone. Options move them (`ap1-run --help`):
+
+```bash
+ap1-run --config my/config.json \
+        --fixture-dir my/fixture/ \
+        --output-dir runs/today/ \
+        --ap1-text reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md
+```
+
+`--fixture-dir` holds `fixture.json`, `questions.json` and
+`ground_truth_example.py`. A run replaces the files it writes in the default
+`output/`, as before; a directory given with `--output-dir` that already holds
+a run's `smoke_run.jsonl`, `report.md` or `smoke_summary.json` is refused
+(exit status 2) before anything is read or written, so a published run cannot
+be overwritten by mistake. This holds for `--output-dir output` too: giving the
+option, even with the default path, turns the check on; leaving it out keeps
+the default behaviour. The AP-1 text must be the one the seal expects. The
+runner still takes its version and source hash from the clone, so run it from
+a clone (an editable install), not from a wheel.
+
+Two limits for now: `tools/verify_run_seal.py` checks a run only against
+`example/` and `reference/`, so a run made with other inputs fails
+verification even when its seal is sound (S3-G8-4); and keep fixture copies
+outside the clone, because the source hash covers every `.py` file in it, so
+a copied `ground_truth_example.py` changes `runner_source_hash` and the run
+is reported as modified (T3-70).
 
 `run_all_tests.py` reports two columns. `verify.py` counts individual
-assertions; the other suites count test functions. Running `pytest` directly
-reports the function count only — both numbers are shown so neither is mistaken
-for the other.
+assertions; the other suites count test functions. Running pytest on
+`tests/legacy/` directly reports the function count only — both numbers are
+shown so neither is mistaken for the other.
 
 ---
 
@@ -299,8 +339,10 @@ decides whether it is adequate for their use.
 > **AP-1 v1.3 is a draft for public comment and is not adopted.** v1.2 remains
 > the version in force. This instrument targets the v1.3 draft because it
 > incorporates requirements arising from documented defects in the v1.2
-> reference evaluation. Conformance will be re-verified against the adopted
-> text.
+> reference evaluation. There will be no final v1.3: the changes accepted in the
+> comment cycle go into v1.4, and ap1-run will carry the differences to v1.4
+> once it is adopted. The runs in `output/` are demonstration runs, not
+> conformance results under v1.2 or v1.3.
 
 The runner claims conformance to specific clauses of AP-1 v1.3. That claim is
 executable:
@@ -351,6 +393,13 @@ smoke_test.py                shim: `python smoke_test.py` runs ap1_run.run
 
 src/ap1_run/
   run.py                     drives a live endpoint (was smoke_test.py)
+  runner/                    the parts run.py drives
+    console.py               the console report, sections 3a to 3l
+    credentials.py           the API key: environment, or Windows Credential Manager
+    executions.py            scores each execution and collects the findings
+    outputs.py               writes report.md, the adjudication sheets and the summary
+    settings.py              endpoint, model and sampling overrides; the R1.2 guard
+    summary.py               invocation consistency check, D2 per item, the summary report.py reads
   foundation/                SPEC Layer 0
     config.py                configuration; refuses defaults that affect a result
     adapter.py               HTTP transport; records the request as sent
@@ -363,7 +412,6 @@ src/ap1_run/
     engine.py                execution loop
     context.py               delivered-context construction
     perturbation_guard.py    refuses a condition that varies more than one quantity
-    perturbation.py          unused; to be removed
     evidence.py              invocation evidence classification
   scoring/                   SPEC Layer 2
     figure_id.py             which figure in the response is the answer
@@ -374,9 +422,9 @@ src/ap1_run/
     transcription.py         D7.3
     release_coverage.py      D7.3 release coverage
     provenance/              D7.2(a)
-      provenance.py          the five-step resolution ladder
-      provenance_classify.py invocation, item and sequential classification
-      provenance_audit.py    originated-operand listing
+      trace.py               the five-step resolution ladder
+      classify.py            invocation, item and sequential classification
+      audit.py               originated-operand listing
   reporting/                 SPEC Layer 3
     adjudication.py          printable sheets for the human-scored dimensions
     report.py                the result artifact
@@ -386,6 +434,8 @@ tools/
   generate_findings.py       regenerates findings/FINDINGS.md from the published runs
 
 tests/
+  unit/                      pytest unit tests, mirroring src/ap1_run/
+  mutation/                  mutation scores per module (mutmut), a ratchet
   legacy/                    the original verify_*.py suites, run by run_all_tests.py
   regression/                the regression baseline: canned model responses, golden output
   fixtures/                  mock endpoint and test modules
@@ -416,9 +466,10 @@ those records are not edited. To follow such a reference today:
 |---|---|
 | `smoke_test.py` | `src/ap1_run/run.py` (the root `smoke_test.py` is now a shim) |
 | `config.py`, `adapter.py`, `transcript.py`, `numeric.py` | `src/ap1_run/foundation/` |
-| `seal.py`, `seal_constants.py`, `version.py`, `engine.py`, `context.py`, `perturbation_guard.py`, `perturbation.py`, `evidence.py` | `src/ap1_run/execution/` |
+| `seal.py`, `seal_constants.py`, `version.py`, `engine.py`, `context.py`, `perturbation_guard.py`, `evidence.py` | `src/ap1_run/execution/` |
+| `perturbation.py` | deleted (it was never used; the seal's own `perturbation_check` is the one that runs) |
 | `figure_id.py`, `accuracy.py`, `reproducibility.py`, `invocation.py`, `operation_correctness.py`, `transcription.py`, `release_coverage.py` | `src/ap1_run/scoring/` |
-| `provenance.py`, `provenance_classify.py`, `provenance_audit.py` | `src/ap1_run/scoring/provenance/` |
+| `provenance.py`, `provenance_classify.py`, `provenance_audit.py` | `src/ap1_run/scoring/provenance/`, renamed in step 2 to `trace.py`, `classify.py`, `audit.py` |
 | `report.py`, `adjudication.py` | `src/ap1_run/reporting/` |
 | `generate_findings.py`, `verify_run_seal.py` | `tools/` |
 | `verify*.py`, `test_findings_mutation.py` | `tests/legacy/` |

@@ -39,13 +39,13 @@ multiplicative perturbation (`0 × 1.1 = 0`).
 
 ## 3. Step-4 ordering: first-match behaviour
 
-`provenance.py`, step-4 resolution: when a model's output matches a
+`provenance/trace.py`, step-4 resolution: when a model's output matches a
 computed-in-session intermediate, the resolver returns the first matching
 intermediate in declaration order. If multiple intermediates share the same
 numeric value (possible in multi-step derivations), the attribution may be
 non-deterministic or order-dependent.
 
-**File:** `src/ap1_run/scoring/provenance/provenance.py`, step-4 computed-in-session resolution.
+**File:** `src/ap1_run/scoring/provenance/trace.py`, step-4 computed-in-session resolution.
 
 ---
 

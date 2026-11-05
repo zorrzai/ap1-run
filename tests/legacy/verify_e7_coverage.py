@@ -27,7 +27,7 @@ _RUNNER_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__
 _EXAMPLE_DIR = os.path.join(_RUNNER_DIR, 'example')
 sys.path.insert(0, _EXAMPLE_DIR)
 
-from ap1_run.scoring.provenance.provenance import resolve_operand, extract_operands
+from ap1_run.scoring.provenance.trace import resolve_operand, extract_operands
 from ap1_run.execution.context import build_delivered_context
 from ap1_run.scoring.transcription import (
     check_transcription, TRANSCRIBED_EXACT,
@@ -308,7 +308,7 @@ def test_e3_q07_constant_4_resolves():
     ctx = build_delivered_context(fixture, q07.get('source_accounts', []))
     gt = gt_module.compute('Q07', ctx)
 
-    from ap1_run.scoring.provenance.provenance import _collect_constants
+    from ap1_run.scoring.provenance.trace import _collect_constants
     constants = _collect_constants(gt)
 
     assert Decimal('4') in constants, \
@@ -436,7 +436,7 @@ def test_q09_q05_unaffected():
     ctx = build_delivered_context(fixture, q05.get('source_accounts', []))
     gt = gt_module.compute('Q05', ctx)
 
-    from ap1_run.scoring.provenance.provenance import _collect_constants
+    from ap1_run.scoring.provenance.trace import _collect_constants
     constants = _collect_constants(gt)
 
     # Q05 uses: balance(2400), rate(18.0), min_payment(25), 100, 12
@@ -461,7 +461,7 @@ def test_q09_q08_unaffected():
     ctx = build_delivered_context(fixture, q08.get('source_accounts', []))
     gt = gt_module.compute('Q08', ctx)
 
-    from ap1_run.scoring.provenance.provenance import _collect_constants
+    from ap1_run.scoring.provenance.trace import _collect_constants
     constants = _collect_constants(gt)
 
     for c in [Decimal('100'), Decimal('12')]:
