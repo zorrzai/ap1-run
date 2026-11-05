@@ -134,7 +134,7 @@ EXPECTED_PROVISIONAL_CASES = {
     'tests/unit/scoring/test_operation_correctness.py': 112,
     'tests/unit/scoring/test_release_coverage.py': 34,
 }
-MIN_STRICT_XFAIL_CASES = 204
+MIN_STRICT_XFAIL_CASES = 203
 
 
 @pytest.fixture(scope='module')

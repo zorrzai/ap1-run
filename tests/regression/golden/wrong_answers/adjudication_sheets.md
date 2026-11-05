@@ -1603,6 +1603,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 9: Q06, repeat 1 — Scorer 1
 
+Execution id: `<EXECUTION_ID_9>`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -1687,6 +1689,8 @@ The released figure matches the expected value, but the required computation was
 
 
 ## Item 9: Q06, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
@@ -1773,6 +1777,8 @@ The released figure matches the expected value, but the required computation was
 
 ## Item 10: Q06, repeat 2 — Scorer 1
 
+Execution id: `<EXECUTION_ID_10>`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -1857,6 +1863,8 @@ The released figure matches the expected value, but the required computation was
 
 
 ## Item 10: Q06, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
@@ -1943,7 +1951,7 @@ The released figure matches the expected value, but the required computation was
 
 ## Item 11: Q01, repeat 1 — Scorer 1
 
-Execution id: `<EXECUTION_ID_9>`
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -2039,7 +2047,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 11: Q01, repeat 1 — Scorer 2
 
-Execution id: `<EXECUTION_ID_9>`
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -2135,7 +2143,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 12: Q01, repeat 2 — Scorer 1
 
-Execution id: `<EXECUTION_ID_10>`
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
@@ -2231,7 +2239,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 12: Q01, repeat 2 — Scorer 2
 
-Execution id: `<EXECUTION_ID_10>`
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
@@ -2327,7 +2335,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 13: Q02, repeat 1 — Scorer 1
 
-Execution id: `<EXECUTION_ID_11>`
+Execution id: `<EXECUTION_ID_13>`
 
 ### Question
 
@@ -2429,7 +2437,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 13: Q02, repeat 1 — Scorer 2
 
-Execution id: `<EXECUTION_ID_11>`
+Execution id: `<EXECUTION_ID_13>`
 
 ### Question
 
@@ -2531,7 +2539,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 14: Q02, repeat 2 — Scorer 1
 
-Execution id: `<EXECUTION_ID_12>`
+Execution id: `<EXECUTION_ID_14>`
 
 ### Question
 
@@ -2633,7 +2641,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 14: Q02, repeat 2 — Scorer 2
 
-Execution id: `<EXECUTION_ID_12>`
+Execution id: `<EXECUTION_ID_14>`
 
 ### Question
 
@@ -2735,7 +2743,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 15: Q03, repeat 1 — Scorer 1
 
-Execution id: `<EXECUTION_ID_13>`
+Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
@@ -2837,7 +2845,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 15: Q03, repeat 1 — Scorer 2
 
-Execution id: `<EXECUTION_ID_13>`
+Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
@@ -2939,7 +2947,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 16: Q03, repeat 2 — Scorer 1
 
-Execution id: `<EXECUTION_ID_14>`
+Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
@@ -3041,7 +3049,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 16: Q03, repeat 2 — Scorer 2
 
-Execution id: `<EXECUTION_ID_14>`
+Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
@@ -3143,7 +3151,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 17: Q04, repeat 1 — Scorer 1
 
-Execution id: `<EXECUTION_ID_15>`
+Execution id: `<EXECUTION_ID_17>`
 
 ### Question
 
@@ -3241,7 +3249,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 17: Q04, repeat 1 — Scorer 2
 
-Execution id: `<EXECUTION_ID_15>`
+Execution id: `<EXECUTION_ID_17>`
 
 ### Question
 
@@ -3339,7 +3347,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 18: Q04, repeat 2 — Scorer 1
 
-Execution id: `<EXECUTION_ID_16>`
+Execution id: `<EXECUTION_ID_18>`
 
 ### Question
 
@@ -3437,7 +3445,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 18: Q04, repeat 2 — Scorer 2
 
-Execution id: `<EXECUTION_ID_16>`
+Execution id: `<EXECUTION_ID_18>`
 
 ### Question
 
@@ -3535,6 +3543,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 19: Q06, repeat 1 — Scorer 1
 
+Execution id: `<EXECUTION_ID_19>`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -3619,6 +3629,8 @@ The released figure matches the expected value, but the required computation was
 
 
 ## Item 19: Q06, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_19>`
 
 ### Question
 
@@ -3705,6 +3717,8 @@ The released figure matches the expected value, but the required computation was
 
 ## Item 20: Q06, repeat 2 — Scorer 1
 
+Execution id: `<EXECUTION_ID_20>`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -3789,6 +3803,8 @@ The released figure matches the expected value, but the required computation was
 
 
 ## Item 20: Q06, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_20>`
 
 ### Question
 
@@ -3875,7 +3891,7 @@ The released figure matches the expected value, but the required computation was
 
 ## Item 21: Q08, repeat 1 — Scorer 1
 
-Execution id: `<EXECUTION_ID_17>`
+Execution id: `<EXECUTION_ID_21>`
 
 ### Question
 
@@ -3964,7 +3980,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 21: Q08, repeat 1 — Scorer 2
 
-Execution id: `<EXECUTION_ID_17>`
+Execution id: `<EXECUTION_ID_21>`
 
 ### Question
 
@@ -4053,7 +4069,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 22: Q08, repeat 2 — Scorer 1
 
-Execution id: `<EXECUTION_ID_18>`
+Execution id: `<EXECUTION_ID_22>`
 
 ### Question
 
@@ -4142,7 +4158,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 22: Q08, repeat 2 — Scorer 2
 
-Execution id: `<EXECUTION_ID_18>`
+Execution id: `<EXECUTION_ID_22>`
 
 ### Question
 

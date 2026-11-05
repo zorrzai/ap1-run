@@ -389,6 +389,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 ## Item 3: Q01, repeat 3 — Scorer 1
 
+Execution id: `<EXECUTION_ID_3>`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -474,6 +476,8 @@ The released figure matches the expected value, but the required computation was
 
 ## Item 3: Q01, repeat 3 — Scorer 2
 
+Execution id: `<EXECUTION_ID_3>`
+
 ### Question
 
 > What is the monthly interest earned on the savings account?
@@ -558,6 +562,8 @@ The released figure matches the expected value, but the required computation was
 
 
 ## Item 4: Q02, repeat 3 — Scorer 1
+
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
@@ -658,6 +664,8 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ## Item 4: Q02, repeat 3 — Scorer 2
+
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
