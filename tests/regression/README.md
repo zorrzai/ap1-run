@@ -137,7 +137,8 @@ golden difference, and `--update` cannot write over it.
   stops before sealing. A refused seal must be one the contract refuses,
   with the exception the contract names. A run that seals must write
   `report.md`, `smoke_run.jsonl` and `smoke_summary.json`, unless the
-  scenario states otherwise in `"sealed_outputs"` (`t3_38_unknown_tool`, which stops early).
+  scenario states otherwise in `"sealed_outputs"` (none does since the
+  T3-38 and T3-39 fixes: both scenarios now run to the end).
 - **Command scenarios** (`"command"`) run an entry point directly and get
   none of these checks. None of them seals today; a command scenario that
   seals needs the driver's capture first.
@@ -206,7 +207,7 @@ each of their checks went.
 | `t3_2_leading_whitespace` | **T3-2**: a leading space or tab before the expression; since the fix it is stripped and read, so the chained launder is ORIGINATED, ORIGINATED, as the no-space contrast |
 | `t3_16_malformed_calls` | **T3-16**: malformed or wrongly keyed calls are INVOKED; since the fix they are OPERANDS-/OPERATION-UNOBSERVABLE in D7.2(a)/(b), not dropped; a call with a name the calculator does not know (`2400 * rate / 12`), which errors and, since the unknown-name fix, is OPERANDS-UNOBSERVABLE, not grounded |
 | `t3_5_constant_magnitude` | **T3-5**: `-12` and `-1` grounded by `constant_magnitude`; a sign-inverted source field for contrast |
-| `t3_38_unknown_tool` | **T3-38**: an unoffered tool trips the FATAL consistency check; no report |
+| `t3_38_unknown_tool` | **T3-38**: a call to a tool that was not offered; since the fix it is recorded, the execution is NOT-INVOKED and the run completes |
 | `t3_39_crash` | **T3-39**: a non-string calculator expression; since the fix its operands are unreadable and the run completes |
 | `non_ascii_config` | a decline marker with U+2019 in the resolved config: the config hash's UTF-8 rule through the real seal |
 | `crlf_sealed_inputs` | `clean` with the fixture, questions, ground-truth module and calculator in CRLF bytes: they seal as their LF form (T3-50), so `fixture_hash`, `questions_hash`, `ground_truth_hash` and `calculator_hash` equal `clean`'s; a runner that hashed them as they are on disk fails the hash oracle |
