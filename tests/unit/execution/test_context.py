@@ -229,13 +229,34 @@ def test_tracking_context_non_subscript_read_not_recorded(read):
     assert tc.accessed_fields() == set()
 
 
+# What the model is shown for each fixture field: the label a reader of
+# the prompt sees. Written out, not rebuilt from the formatter's rule.
+SHOWN_LABELS = {'annual_rate': 'Annual Rate', 'balance': 'Balance',
+                'credit_limit': 'Credit Limit', 'direction': 'Direction',
+                'min_payment': 'Min Payment', 'monthly_fee': 'Monthly Fee',
+                'reward_rate': 'Reward Rate'}
+
+
+def _shown_blocks(shown, fixture):
+    """{account id: the lines shown under that account's name}."""
+    names = {f"{a['name']}:": a['id'] for a in fixture['accounts']}
+    blocks, current = {}, None
+    for line in shown.split('\n'):
+        if line.strip() in names:
+            current = names[line.strip()]
+            blocks[current] = []
+        elif current is not None:
+            blocks[current].append(line)
+    return blocks
+
+
 @pytest.mark.req('R0.2', 'R2.4')
 def test_shown_context_and_delivered_context_agree_on_the_example():
     # T3-56: no test checked that what the model is shown and what the
     # provenance resolves against are the same values. For every shipped
-    # item, each field of the delivered context is shown under its
-    # account, as 'Label: value' with the same text. Passes today; it
-    # guards a change to either function.
+    # item, each field of the delivered context is shown in its own
+    # account's block, on the line with that field's label, with the same
+    # value. Passes today; it guards a change to either function.
     import json
     from pathlib import Path
     example = Path(__file__).resolve().parents[3] / 'example'
@@ -243,13 +264,16 @@ def test_shown_context_and_delivered_context_agree_on_the_example():
     items = json.loads((example / 'questions.json').read_text('utf-8'))
     bad = []
     for item in items['items']:
-        shown = format_fixture_context(fixture, item)
+        blocks = _shown_blocks(format_fixture_context(fixture, item),
+                               fixture)
         ctx = build_delivered_context(fixture, item['source_accounts'])
-        for fields in ctx.values():
+        for account, fields in ctx.items():
             for field, value in fields.items():
-                line = f"  {field.replace('_', ' ').title()}: {value}"
-                if line not in shown.split('\n'):
-                    bad.append((item['id'], field, value))
+                label = SHOWN_LABELS[field]
+                if not any(line.strip().startswith(f'{label}:')
+                           and line.strip().split(':', 1)[1].strip() == value
+                           for line in blocks.get(account, [])):
+                    bad.append((item['id'], account, field, value))
     assert bad == []
 
 
