@@ -270,7 +270,9 @@ def test_execute_item_first_send_fails_unmeasured(tmp_path, error):
 @pytest.mark.parametrize('gt, replies', [
     (dict(GT, derivable=False), []),
     (GT, [adapter.AdapterError('HTTP 500')]),
-    (GT, [answer()])], ids=['void', 'transport-failure', 'executed'])
+    (GT, [answer()]),
+    (GT, [answer('')])],
+    ids=['void', 'transport-failure', 'executed', 'empty-response'])
 def test_execute_item_writes_its_repeat_on_the_record(tmp_path, gt, replies):
     # Every record the engine writes carries the repeat it was given, so
     # the outputs can join a record to its own execution.
@@ -356,15 +358,6 @@ def test_execute_item_unrecognised_empty_shape_is_ev0_not_unmeasured(
     # response.
     result, _ = run(tmp_path, FakeAdapter({'choices': []}))
     assert (result['status'], result['evidence_class']) == ('EXECUTED', EV_0)
-
-
-@pytest.mark.finding('T3-10')
-def test_execute_item_whitespace_response_is_not_empty(tmp_path):
-    # As in R2.0 figure identification ("response has no text content"),
-    # only no content at all is empty.
-    result, _ = run(tmp_path, FakeAdapter(answer(' ')))
-    assert (result['status'], result['invocation_outcome']) == (
-        'EXECUTED', 'NOT-INVOKED')
 
 
 @pytest.mark.parametrize('tools', [None, []])
@@ -972,7 +965,8 @@ def run_without_raising(tmp_path, adapter_send, **kwargs):
 
 
 @pytest.mark.finding('T3-10')
-@pytest.mark.parametrize('content', ['', None], ids=['empty', 'null'])
+@pytest.mark.parametrize('content', ['', None, '   \n\t'],
+                         ids=['empty', 'null', 'whitespace-only'])
 def test_execute_item_empty_response_unmeasured(tmp_path, content):
     # Correct (SPEC R4.1 "Empty response -> UNMEASURED", R0.2; AP-1 v1.3
     # §13.2 "an empty response shall never be counted as an answer"): a

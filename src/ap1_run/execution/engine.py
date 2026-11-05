@@ -120,7 +120,7 @@ def execute_item(item, *, condition, config, fixture,
                           'request_record': request_record},
             response_received=final_response, tool_calls=[],
             evidence_class=None, error_state='UNMEASURED: empty response',
-            seal_hash=seal_hash,
+            seal_hash=seal_hash, repeat=repeat,
         )
         return {
             'item_id': item_id, 'condition': condition,
@@ -329,9 +329,10 @@ def _build_messages(*, system_prompt, item, fixture, config):
 
 def _is_empty_response(response):
     """True for a recognised chat-completion response whose message has no
-    text content (empty or null). The caller checks for tool calls."""
+    text content (empty, null or whitespace only). The caller checks for
+    tool calls."""
     content, recognised, _ = _extract_content(response)
-    return recognised and not content
+    return recognised and not (content or '').strip()
 
 
 def _extract_tool_calls(response):
