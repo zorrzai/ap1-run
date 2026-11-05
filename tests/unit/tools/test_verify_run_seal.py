@@ -1626,3 +1626,16 @@ def test_verify_run_erratum_note_only_for_the_module_it_describes(
     detail = dict(failures)['ground_truth_hash']
     assert vrs.GROUND_TRUTH_ERRATA[known] not in detail
     assert 'not the module the errata describe' in detail
+
+
+@pytest.mark.finding('S3-G8-1')
+@pytest.mark.parametrize('config', [[1, 2], 'text', 3, None],
+                         ids=['list', 'string', 'number', 'null'])
+def test_verify_run_resolved_config_not_an_object_is_a_named_failure(
+        vrs, tmp_path, base, config):
+    # Section 2 must hold a JSON object; anything else is a named failure,
+    # not an exception out of the verifier.
+    record = make_record(base, resolved_config())
+    run_dir = write_run(tmp_path / 'run', record, config)
+    checks, failures = vrs.verify_run(str(run_dir))
+    assert [f for f, _ in failures] == ['resolved config parsed'], failures

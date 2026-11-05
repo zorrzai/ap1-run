@@ -352,6 +352,11 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
         failures.append(('resolved config parsed',
                          'no resolved config found in report.md section 2'))
         return checks, failures
+    if not isinstance(resolved_config, dict):
+        failures.append(('resolved config parsed',
+                         'report.md section 2 holds a JSON %s, not an object'
+                         % type(resolved_config).__name__))
+        return checks, failures
 
     # The record's format decides the rules (see the module docstring).
     record_format = seal_record.get('seal_format')
