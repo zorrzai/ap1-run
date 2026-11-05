@@ -11,6 +11,8 @@ Version DOI: 10.5281/zenodo.21755443
 
 ## Item 1: Q06, repeat 1 — Scorer 1
 
+Execution id: `<EXECUTION_ID_1>`
+
 ### Question
 
 > What is the total annual cost of maintaining the checking account?
@@ -96,6 +98,8 @@ The released figure matches the expected value, but the required computation was
 
 
 ## Item 1: Q06, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 

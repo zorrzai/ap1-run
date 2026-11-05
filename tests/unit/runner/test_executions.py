@@ -193,8 +193,7 @@ def test_score_execution_collects_every_record(fakes, capsys):
 @pytest.mark.finding('T3-13')
 @pytest.mark.parametrize('accuracy, outcome', [
     ('CORRECT', 'COMPUTED'), ('INCORRECT', None)])
-def test_score_execution_answer_outcome_follows_d1(fakes, tpath, accuracy,
-                                                   outcome):
+def test_score_execution_answer_outcome_follows_d1(fakes, accuracy, outcome):
     # §6.8 COMPUTED is "Correct": the runner gives answer_outcome the D1
     # result it scored for the same execution.
     fakes.accuracy = accuracy
@@ -204,7 +203,7 @@ def test_score_execution_answer_outcome_follows_d1(fakes, tpath, accuracy,
         'tool_calls': [calc('15200 * 0.042', '{"result": 638.4}')],
         'evidence_class': 'EV-2', 'invocation_outcome': 'INVOKED',
         'provenance_results': [{'outcome': 'OPERANDS-GROUNDED'}],
-    }, tpath)
+    })
     assert findings.all_results[0]['answer_outcome'] == outcome
 
 
