@@ -455,8 +455,19 @@ def test_load_config_repeat_count_not_an_integer_refused(load):
         "repeat_count: cannot parse as integer: '5.0'"
 
 
-def test_load_config_repeat_count_surrounding_spaces_accepted(load):
-    assert load(repeat_count=' 5 ')['repeat_count'] == 5
+@pytest.mark.finding('S3-G1-10', 'S3-G1-12')
+@pytest.mark.req('R0.1')
+@pytest.mark.parametrize('text', ['5_0', '\u0665', ' 5 ', '+5', '5\n'])
+def test_load_config_integers_are_plain_ascii_digits(load, text):
+    # repeat_count and quantisation.places are quoted integers written in
+    # ASCII digits only, as the figure grammar refuses '1_000'; Python's
+    # int() would also take underscores, other scripts' digits, padding
+    # and a sign.
+    assert refused(load, repeat_count=text) == \
+        f'repeat_count: cannot parse as integer: {text!r}'
+    assert refused(load, quantisation={'places': text,
+                                       'rounding': 'ROUND_HALF_UP'}) == \
+        f'quantisation.places: cannot parse as integer: {text!r}'
 
 
 # -- load_config: value checks (S3-G1) ------------------------------------

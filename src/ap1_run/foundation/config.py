@@ -11,6 +11,7 @@ A bare numeric literal in config.json is refused at load.
 """
 
 import json
+import re
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
@@ -143,10 +144,9 @@ def load_config(path):
     if not isinstance(rc, str):
         raise ConfigError(
             f'repeat_count: expected quoted string, got {type(rc).__name__}')
-    try:
-        config['repeat_count'] = int(rc)
-    except ValueError:
+    if not _ASCII_INTEGER.fullmatch(rc):
         raise ConfigError(f'repeat_count: cannot parse as integer: {rc!r}')
+    config['repeat_count'] = int(rc)
     if config['repeat_count'] < 1:
         raise ConfigError(f'repeat_count: must be at least 1: {rc!r}')
 
@@ -278,17 +278,22 @@ def _parse_decimal_field(raw, field):
     return value
 
 
+# A quoted integer: ASCII digits, with an optional leading '-' (refused
+# later by range); int() would also take '5_0', other scripts' digits,
+# padding and '+'.
+_ASCII_INTEGER = re.compile(r'-?[0-9]+')
+
+
 def _parse_places(val):
     """quantisation.places: a quoted non-negative integer (S3-G1-10)."""
     if not isinstance(val, str):
         raise ConfigError(
             f'quantisation.places: expected quoted string, got '
             f'{type(val).__name__}: {val!r}')
-    try:
-        places = int(val)
-    except ValueError:
+    if not _ASCII_INTEGER.fullmatch(val):
         raise ConfigError(
             f'quantisation.places: cannot parse as integer: {val!r}')
+    places = int(val)
     if places < 0:
         raise ConfigError(
             f'quantisation.places: must be a non-negative integer: {val!r}')
