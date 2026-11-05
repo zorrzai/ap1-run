@@ -56,7 +56,10 @@ def fx(tmp_path, monkeypatch):
     questions = json.loads((path / 'questions.json').read_text('utf-8'))
     questions['items'] = questions['items'][:2]
     (path / 'questions.json').write_text(json.dumps(questions), 'utf-8')
-    edit_config(path, repeat_count='1')
+    # The shipped config claims D1 on 10 items, which minimum-n (R0.1)
+    # refuses once wired (T3-12); claim only dimensions R0.1 sets no
+    # minimum for, as tests/functional/test_step4_g9_spec_claims.py does.
+    edit_config(path, repeat_count='1', dimensions_claimed=['D2', 'D7'])
     monkeypatch.setattr(sys, 'path', list(sys.path))
     saved = sys.modules.pop('ground_truth_example', None)
     yield path

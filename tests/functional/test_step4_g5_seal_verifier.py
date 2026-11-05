@@ -70,7 +70,11 @@ def runner(tmp_path, monkeypatch, capsys):
 
     def go(fixture_dir, config=None, args=(), hooks=None):
         base = json.loads((EXAMPLE / 'config.json').read_text('utf-8'))
-        base.update({'repeat_count': '1'}, **(config or {}))
+        # The shipped config claims D1 on 10 items, which minimum-n (R0.1)
+        # refuses once wired (T3-12); claim only dimensions R0.1 sets no
+        # minimum for, as tests/functional/test_step4_g9_spec_claims.py does.
+        base.update({'repeat_count': '1', 'dimensions_claimed': ['D2', 'D7']},
+                    **(config or {}))
         config_path = tmp_path / 'config.json'
         config_path.write_text(json.dumps(base, indent=2), encoding='utf-8')
         out = tmp_path / 'out'

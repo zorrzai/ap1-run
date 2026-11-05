@@ -140,7 +140,8 @@ def ap1_run(tmp_path, monkeypatch, capsys):
         result.seals = seals
         result.sealed_configs = sealed_configs
         result.requests = mock.log
-        result.out = capsys.readouterr().out
+        captured = capsys.readouterr()
+        result.out, result.err = captured.out, captured.err
         result.output_dir = output_dir
         path = output_dir / 'smoke_run.jsonl'
         result.transcript = ([json.loads(line) for line in
@@ -243,7 +244,8 @@ def test_run_shipped_config_d1_claim_on_ten_items_refused_before_any_request(
                              shipped['dimensions_claimed']})
     refused, why = refused_before_any_request(result)
     assert refused, why
-    assert 'D1' in f'{result.exception} {result.out[-500:]}'
+    # The refusal may be printed to stdout or stderr.
+    assert 'D1' in f'{result.exception} {result.out[-500:]} {result.err}'
 
 
 @pytest.mark.finding('T3-12', 'T3-22')
@@ -259,7 +261,8 @@ def test_r41_d6_claimed_with_nine_items_refused_at_load(ap1_run):
     result = ap1_run(config={'dimensions_claimed': ['D6']}, questions=items)
     refused, why = refused_before_any_request(result)
     assert refused, why
-    assert 'D6' in f'{result.exception} {result.out[-500:]}'
+    # The refusal may be printed to stdout or stderr.
+    assert 'D6' in f'{result.exception} {result.out[-500:]} {result.err}'
 
 
 # --- T3-79 / T3-67: one config file per run ------------------------------

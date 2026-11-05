@@ -38,6 +38,10 @@ def run_example(tmp_path, monkeypatch, responses, **config_changes):
 
     config = json.loads((EXAMPLE / 'config.json').read_text('utf-8'))
     config['repeat_count'] = '1'
+    # The shipped config claims D1 on 10 items, which minimum-n (R0.1)
+    # refuses once wired (T3-12); claim only dimensions R0.1 sets no
+    # minimum for, as tests/functional/test_step4_g9_spec_claims.py does.
+    config['dimensions_claimed'] = ['D2', 'D7']
     config.update(config_changes)
     config_path = tmp_path / 'config.json'
     config_path.write_text(json.dumps(config), 'utf-8')
