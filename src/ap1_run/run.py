@@ -53,6 +53,7 @@ from ap1_run.execution.version import (
 )
 from ap1_run.foundation import adapter
 from ap1_run.foundation.config import load_config, validate_minimum_n
+from ap1_run.foundation.numeric import in_decimal_context
 from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.credentials import get_api_key
 from ap1_run.runner.executions import (
@@ -130,6 +131,9 @@ def main(argv=None):
     # -- Load ground-truth module --
     sys.path.insert(0, fixture_dir)
     import ground_truth_example as gt_module
+    # Its arithmetic runs in the shared Decimal context, for every guard,
+    # the seal and the engine alike (T3-60; SPEC R0.4.1).
+    gt_module.compute = in_decimal_context(gt_module.compute)
 
     # -- Output directory --
     output_dir = args.output_dir

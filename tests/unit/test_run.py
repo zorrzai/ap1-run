@@ -729,3 +729,22 @@ def test_main_end_to_end_against_the_mock_endpoint(tmp_path, monkeypatch,
         'DISCLAIMER.txt', 'adjudication_sheets.md', 'report.md',
         'smoke_run.jsonl', 'smoke_summary.json']
     assert len(mock.log) == 8   # 2 items x 2 conditions x 2 rounds
+
+
+@pytest.mark.finding('T3-60')
+@pytest.mark.req('R0.4.1')
+def test_main_ground_truth_computes_in_the_shared_context(r):
+    # The ground truth's arithmetic runs at DECIMAL_CONTEXT's precision,
+    # not the caller's: with precision 28 in force, 1/3 still has 50
+    # digits, as every guard, the seal and the engine see it.
+    (r.fixture_dir / 'ground_truth_example.py').write_text(
+        'from decimal import Decimal\n\n'
+        'def compute(item_id, ctx):\n'
+        "    return {'final': Decimal(1) / Decimal(3), 'derivable': True}\n")
+    assert r.main() == 0
+    from decimal import localcontext
+    compute = sys.modules['ground_truth_example'].compute
+    with localcontext() as ctx:
+        ctx.prec = 28
+        final = compute('Q1', {})['final']
+    assert len(final.as_tuple().digits) == 50

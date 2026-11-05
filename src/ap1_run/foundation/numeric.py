@@ -11,6 +11,7 @@ compared, quantised, or reported.
 import decimal
 from decimal import (Context, Decimal, DivisionByZero, InvalidOperation,
                      Overflow, ROUND_HALF_EVEN, localcontext)
+import functools
 import hashlib
 import json
 import re
@@ -336,6 +337,21 @@ DECIMAL_CONTEXT = Context(
     prec=50, rounding=ROUND_HALF_EVEN, Emin=-999999, Emax=999999,
     capitals=1, clamp=0, flags=[],
     traps=[InvalidOperation, DivisionByZero, Overflow])
+
+
+def in_decimal_context(function):
+    """function, run in DECIMAL_CONTEXT whatever the caller's context
+    (T3-60): for code whose arithmetic is not ours to wrap, such as the
+    ground-truth module's compute."""
+    if getattr(function, 'in_decimal_context', False):
+        return function
+
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        with localcontext(DECIMAL_CONTEXT):
+            return function(*args, **kwargs)
+    wrapper.in_decimal_context = True
+    return wrapper
 
 
 # -- R0.4.1 Quantisation ---------------------------------------------
