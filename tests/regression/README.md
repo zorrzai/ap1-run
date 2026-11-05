@@ -120,7 +120,10 @@ golden difference, and `--update` cannot write over it.
   seals needs the driver's capture first.
 
 `python tests/regression/selftest.py` tests these checks directly, with known
-answers.
+answers. One of them recomputes the published September `runner_source_hash`
+(`da0739eb…`, docs/REPRODUCING.md) with the oracle's rule from the tag
+`e7-quantise-fix`, so the clone needs its tags (`git fetch --tags`; CI checks
+out full history).
 
 **The files the source hash covers** are listed in `source_hash_files.txt`:
 the files the hash oracle's rule (`hash_oracle.source_hash_files()`) finds in

@@ -13,6 +13,7 @@ import hashlib
 import json
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 import types
@@ -190,6 +191,79 @@ class SourceHash(unittest.TestCase):
             b'a.py\x00A\x00b.py\x00B\x00pkg/c.py\x00C\x00').hexdigest()
         self.assertEqual(hash_oracle.runner_source_hash(self.root), want)
 
+
+
+class PublishedSourceHash(unittest.TestCase):
+    """The oracle's source-hash rule, on the code of the September runs,
+    gives the runner_source_hash their seals record (docs/REPRODUCING.md).
+
+    The tree is the tag's blobs as stored, written out byte for byte: at
+    the tag, .py files are stored as they were on disk when the runs were
+    sealed (-text, mixed CRLF and LF), and reading the blobs directly keeps
+    a checkout's line-ending conversion out of it. Needs the tag in the
+    clone (CI checks out with full history)."""
+
+    TAG = 'e7-quantise-fix'
+    # docs/REPRODUCING.md, and report.md section 1 of both September runs.
+    PUBLISHED = ('da0739eb396e65468d33adb7953aa828fdde9bee6ec1c78e56c83c345'
+                 'defd795')
+    RUNS = ('run_e_mini', 'run_f_sol')
+
+    def setUp(self):
+        self.root = tempfile.mkdtemp(prefix='ap1-oracle-tag-')
+
+    def tearDown(self):
+        shutil.rmtree(self.root)
+
+    def git(self, *args, stdin=None):
+        repo = os.path.dirname(os.path.dirname(HERE))
+        return subprocess.run(['git', '-C', repo, *args], input=stdin,
+                              capture_output=True, check=True).stdout
+
+    def write_tag_tree(self):
+        try:
+            listing = self.git('ls-tree', '-r', '-z', self.TAG + '^{tree}')
+        except (OSError, subprocess.CalledProcessError) as e:
+            self.fail(f'cannot read tag {self.TAG} (fetch the tags, e.g. '
+                      f'git fetch --tags): {getattr(e, "stderr", e)!r}')
+        entries = []
+        for entry in listing.split(b'\0'):
+            if entry:
+                meta, path = entry.split(b'\t', 1)
+                mode, kind, sha = meta.split()
+                self.assertEqual((kind, mode in (b'100644', b'100755')),
+                                 (b'blob', True), path)
+                entries.append((path.decode('utf-8'), sha))
+        out = self.git('cat-file', '--batch',
+                       stdin=b''.join(sha + b'\n' for _, sha in entries))
+        pos = 0
+        for rel, sha in entries:
+            header_end = out.index(b'\n', pos)
+            got_sha, kind, size = out[pos:header_end].split()
+            self.assertEqual((got_sha, kind), (sha, b'blob'))
+            start = header_end + 1
+            data = out[start:start + int(size)]
+            pos = start + int(size) + 1
+            path = os.path.join(self.root, *rel.split('/'))
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, 'wb') as f:
+                f.write(data)
+        return entries
+
+    def test_the_published_value_is_the_sealed_one(self):
+        repo = os.path.dirname(os.path.dirname(HERE))
+        for run in self.RUNS:
+            with open(os.path.join(repo, 'output', run, 'report.md'),
+                      encoding='utf-8') as f:
+                rows = [line.strip() for line in f
+                        if line.startswith('| `runner_source_hash` |')]
+            self.assertEqual(
+                rows, [f'| `runner_source_hash` | `{self.PUBLISHED}` |'], run)
+
+    def test_rule_recomputes_the_published_hash_from_the_tag(self):
+        self.write_tag_tree()
+        self.assertEqual(hash_oracle.runner_source_hash(self.root),
+                         self.PUBLISHED)
 
 class ReplayComparison(unittest.TestCase):
 

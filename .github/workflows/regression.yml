@@ -18,6 +18,10 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Full history and tags: selftest.py recomputes the published
+          # September source hash from the tag e7-quantise-fix.
+          fetch-depth: 0
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
