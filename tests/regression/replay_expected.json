@@ -4,12 +4,34 @@
     "new_top_level_keys": [],
     "new_execution_fields": [],
     "moves": {
+      "Q05/instruction_removed/r12": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r13": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r16": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r22": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r29": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r41": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r42": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r47": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r49": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r50": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q06/instruction_removed/r6": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q06/instruction_removed/r32": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q06/instruction_removed/r41": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q06/instruction_removed/r46": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]}
     }
   },
   "output/run_f_sol": {
     "new_top_level_keys": [],
     "new_execution_fields": [],
     "moves": {
+      "Q05/instruction_removed/r4": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r41": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r47": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q07/base/r1": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q07/base/r17": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q07/base/r20": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q07/base/r32": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q07/base/r46": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]}
     }
   }
 }
