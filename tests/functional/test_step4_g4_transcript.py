@@ -106,6 +106,17 @@ def _contains(tree, target):
     return False
 
 
+def _dicts(tree):
+    """Every dict nested in tree (dicts and lists), tree included."""
+    if isinstance(tree, dict):
+        yield tree
+        for v in tree.values():
+            yield from _dicts(v)
+    elif isinstance(tree, list):
+        for v in tree:
+            yield from _dicts(v)
+
+
 def _read_jsonl(path):
     with open(path, encoding='utf-8') as f:
         return [json.loads(line) for line in f if line.strip()]
@@ -311,17 +322,33 @@ def test_run_multi_round_every_raw_response_in_transcript(cli):
                           'tool-loop rounds are not in the transcript')
 def test_run_multi_round_every_request_in_transcript(cli):
     # Correct (SPEC R0.2 "Every request and response is written to the
-    # transcript ... The request as sent"): the messages of every request
-    # sent, round by round, are in the transcript. Today only the first
-    # request's messages are kept, plus the message list as it stood
-    # after the loop (the round-0 request_record holds the list the loop
-    # kept appending to), which equals the last request's.
+    # transcript ... The request as sent", with its sampling parameters
+    # and its attempts): every request sent, round by round, is in the
+    # record of its own execution, complete: a request record with the
+    # model, messages and tools the endpoint received, every sampling
+    # parameter sent (in sampling_as_sent), and a non-empty list of
+    # attempts. Today only the first request is kept, and its messages
+    # are the list as it stood after the loop (S4-G4-1).
     r = cli(MULTI_ROUND, items=('Q05',), repeat=1)
     assert (r.code, r.error) == (0, None)
-    records = _read_jsonl(r.transcript)
+    records = [rec for rec in _read_jsonl(r.transcript)
+               if rec.get('record_type') != 'figure_identification']
     assert [e['round'] for e in r.mock.log] == [0, 1, 2] * 2
+
+    def complete(e):
+        own = [rec for rec in records if rec['condition'] == e['condition']]
+        sent = e['request']
+        sampling = set(sent) - {'model', 'messages', 'tools'}
+        return any(
+            d.get('messages') == sent['messages']
+            and d.get('model') == sent['model']
+            and d.get('tools') == sent.get('tools')
+            and sampling <= set(d.get('sampling_as_sent') or {})
+            and d.get('attempts')
+            for d in _dicts(own))
+
     missing = [(e['condition'], e['round']) for e in r.mock.log
-               if not _contains(records, e['request']['messages'])]
+               if not complete(e)]
     assert missing == []
 
 
