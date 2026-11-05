@@ -1217,18 +1217,24 @@ def test_verify_run_record_missing_sealed_fields_fails(vrs, tmp_path, base):
     assert [f for f in dropped if f not in text] == [], failures
 
 
-@pytest.mark.proposal(
+# Only the BOM cases rest on a proposal; CRLF is T3-50's own case (DEC-6
+# lists T3-50, line endings).
+BOM_PROPOSAL = pytest.mark.proposal(
     'T3-50: a BOM, like CRLF, does not change the text input hash; a '
     'proposed normalisation')
+
+
 @pytest.mark.finding('T3-50')
 @pytest.mark.req('R0.4.3')
 @pytest.mark.parametrize('field, relpath, data', [
     ('fixture_hash', os.path.join('example', 'fixture.json'),
      b'{"fixture": 1}\r\n'),
-    ('questions_hash', os.path.join('example', 'questions.json'),
-     b'\xef\xbb\xbf{"items": []}\n'),
-    ('ground_truth_hash', os.path.join('example', 'ground_truth_example.py'),
-     b'\xef\xbb\xbfX = 1\r\n')], ids=['crlf', 'bom', 'bom-crlf'])
+    pytest.param('questions_hash', os.path.join('example', 'questions.json'),
+                 b'\xef\xbb\xbf{"items": []}\n', marks=BOM_PROPOSAL),
+    pytest.param('ground_truth_hash',
+                 os.path.join('example', 'ground_truth_example.py'),
+                 b'\xef\xbb\xbfX = 1\r\n', marks=BOM_PROPOSAL)],
+    ids=['crlf', 'bom', 'bom-crlf'])
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-50: sealed file hashes depend on line endings '
                           'and a BOM')
