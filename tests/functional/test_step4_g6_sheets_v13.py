@@ -301,8 +301,9 @@ def test_run_near_miss_operand_listed_in_report_section_11(tmp_path,
                           '"not computed"')
 def test_run_report_prints_upper_bound_for_nonzero_failures(tmp_path,
                                                              monkeypatch):
-    """Instruction-removed arm: repeat 1 answers without the calculator
-    (NOT-INVOKED), repeat 2 calls it: k = 1 failure in n = 2. AP-1 v1.3
+    """Instruction-removed arm, two questions with one repeat each: Q01
+    answers without the calculator (NOT-INVOKED), Q02 calls it: k = 1
+    failure in n = 2, whether n counts questions or executions (T3-11). AP-1 v1.3
     D7.5: "Any invocation figure ... shall be reported with n and with the
     exact one-sided 95% upper confidence bound on the failure rate";
     disposition C-1 adopts the general Clopper-Pearson form, the 0.95
@@ -310,15 +311,13 @@ def test_run_report_prints_upper_bound_for_nonzero_failures(tmp_path,
     0.974679... . Correct: report §5 prints it (in any rounding at or
     above the exact value). Today: "not computed"."""
     out = run_example(
-        tmp_path, monkeypatch, items={'Q01'}, repeat_count=2,
+        tmp_path, monkeypatch, items={'Q01', 'Q02'}, repeat_count=1,
         responses={
             'Q01/base/*': [{'call': '15200.00 * 1.2 / 100 / 12'},
                            {'say': 'The monthly interest is ${result}.'}],
-            'Q01/instruction_removed/r1': [
+            'Q01/instruction_removed/*': [
                 {'say': 'The monthly interest is $15.20.'}],
-            'Q01/instruction_removed/r2': [
-                {'call': '15200.00 * 1.2 / 100 / 12'},
-                {'say': 'The monthly interest is ${result}.'}]})
+            'Q02/*/*': [Q02_CALL, Q02_RIGHT]})
     row = next(line for line in report_section(out, '5').splitlines()
                if line.startswith('| d7_invocation_instruction_removed '))
     assert row.split('|')[2:4] == [' 1 ', ' 2 ']
