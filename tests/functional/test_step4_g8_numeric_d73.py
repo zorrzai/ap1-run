@@ -165,6 +165,9 @@ def test_run_transcription_uses_declared_half_up_rounding(
 
 # -- V12-6: the "rounded under declared policy" count ------------------------
 
+@pytest.mark.proposal(
+    "V12-n: v1.2 behaviour alongside v1.3 is the author's proposal; field "
+    "and key names are the fix's")
 @pytest.mark.finding('V12-6')
 @pytest.mark.req('R2.5', 'R3.3')
 @pytest.mark.xfail(strict=True, raises=AssertionError,

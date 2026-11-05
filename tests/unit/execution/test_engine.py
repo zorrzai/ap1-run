@@ -980,6 +980,9 @@ def test_extract_calc_expression_non_object_json_none(arguments):
     assert found is None
 
 
+@pytest.mark.proposal(
+    'T3-39/S3-G4-5: a boolean literal is not an operand (the boolean '
+    'cases); proposed, not decided')
 @pytest.mark.finding('T3-39', 'S3-G2-4')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-39/S3-G2-4: model-controlled calculator '

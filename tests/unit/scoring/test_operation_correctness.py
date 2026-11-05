@@ -813,6 +813,9 @@ def test_classify_operation_round_uses_declared_half_up():
     assert (result['outcome'], result['evaluated_result']) == (OC, '3')
 
 
+@pytest.mark.proposal(
+    'T3-39/S3-G4-5: a boolean literal is not an operand (the boolean '
+    'cases); proposed, not decided')
 @pytest.mark.finding('S3-G4-5')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='S3-G4-5: reclassify_session raises on '

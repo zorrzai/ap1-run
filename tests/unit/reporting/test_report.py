@@ -1714,6 +1714,9 @@ def test_scoring_proportions_d1_total_is_n_with_unmeasurable_shown():
     assert re.search(r'nmeasurable: 1\b', text), text
 
 
+@pytest.mark.proposal(
+    "V12-n: v1.2 behaviour alongside v1.3 is the author's proposal; field "
+    "and key names are the fix's")
 @pytest.mark.finding('V12-6')
 @pytest.mark.req('R2.5', 'R3.3')
 @pytest.mark.xfail(strict=True, raises=AssertionError,

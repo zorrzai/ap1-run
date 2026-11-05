@@ -49,6 +49,7 @@ src/ap1_run/scoring/transcription.py
 tests/conformance/conftest.py
 tests/conformance/test_ap1_clauses.py
 tests/conformance/test_clause_quotes.py
+tests/conformance/test_marks.py
 tests/conformance/test_r41_catalogue.py
 tests/conformance/test_spec_file_list.py
 tests/fixtures/_t16_mock_gt.py

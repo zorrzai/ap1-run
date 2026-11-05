@@ -418,6 +418,9 @@ def raw_call(arguments):
             'return_value': result_json('15.2')}
 
 
+@pytest.mark.proposal(
+    'T3-39/S3-G4-5: a boolean literal is not an operand (the boolean '
+    'cases); proposed, not decided')
 @pytest.mark.finding('T3-39')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-39: model-controlled expression raises out '

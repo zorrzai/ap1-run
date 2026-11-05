@@ -239,6 +239,9 @@ def test_run_empty_response_unmeasured_outside_d71(full_run):
 
 # -- T3-11: the unit of D7.1 is the question ------------------------------
 
+@pytest.mark.proposal(
+    'T3-11: n counts questions, not executions; no decision covers what n '
+    'counts')
 @pytest.mark.finding('T3-11')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-11: D7.1 bound pools repeats as n')

@@ -1171,6 +1171,9 @@ def test_verify_run_record_missing_sealed_fields_fails(vrs, tmp_path, base):
     assert failures
 
 
+@pytest.mark.proposal(
+    'T3-50: a BOM, like CRLF, does not change the text input hash; a '
+    'proposed normalisation')
 @pytest.mark.finding('T3-50')
 @pytest.mark.req('R0.4.3')
 @pytest.mark.parametrize('field, relpath, data', [
@@ -1195,6 +1198,9 @@ def test_verify_run_same_text_other_line_endings_verifies(vrs, good_run, base,
     assert (field, 'MATCH') in checks, failures
 
 
+@pytest.mark.proposal(
+    'T3-79/T3-67: one config file per run (config_mini.json valid, the '
+    'AP1_SMOKE_* sampling overrides removed); proposed, not decided')
 @pytest.mark.finding('T3-79')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-79: verify_run reports two non-checks against '
