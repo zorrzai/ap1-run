@@ -236,10 +236,24 @@ def test_run_report_shows_d2_classes_per_question_and_surface(run):
     # question's mechanism class per surface (figures, prose) with the
     # distinct values; Q02's two releases (2600.00, 2500.00) are visible;
     # §3 states D2's n.
+    # R3.3: "D2 mechanism classes per surface with evidence basis and
+    # operator-declared marking". No class is declared here, so Q02's
+    # surfaces are OBSERVED-ONLY (R2.2: the runner cannot establish
+    # STRUCTURAL or CONFIGURED); each Q02 surface row states its 2 runs;
+    # the figures row shows both values; the section states the
+    # evidence basis.
     s9 = section(run['report'], '9')
     assert 'No per-surface D2 data' not in s9, s9
-    assert re.search(r'figures', s9) and re.search(r'prose', s9), s9
-    assert 'Q02' in s9, s9
+    q02 = [line for line in s9.splitlines() if 'Q02' in line]
+    figures = [line for line in q02 if re.search(r'figure', line, re.I)]
+    prose = [line for line in q02 if re.search(r'prose', line, re.I)]
+    assert figures and prose, s9
+    for line in figures + prose:
+        assert 'OBSERVED-ONLY' in line, line
+        assert re.search(r'(\bn\s*=\s*|\|\s*)2\b|\b2 runs\b', line), line
+    assert any('2600.00' in line and '2500.00' in line for line in figures), \
+        figures
+    assert re.search(r'evidence', s9, re.I), s9
     d2 = next(line for line in section(run['report'], '3').split('\n')
               if line.startswith('| D2 |'))
     assert '| N/A |' not in d2, d2
@@ -422,3 +436,24 @@ def test_run_report_records_served_model_and_fingerprints(run):
     assert SERVED_MODEL in report, report[:report.index('## 1.')]
     for fp in FINGERPRINTS:
         assert fp in report, fp
+
+
+@pytest.mark.finding('V12-8')
+@pytest.mark.req('AP-1 §5.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='V12-8: report.md neither confirms the system was '
+                          'frozen nor says it changed')
+def test_run_report_says_the_system_was_not_shown_frozen(run):
+    # AP-1 (v1.2 and v1.3) §5.2: "Confirmation that the system under test
+    # was frozen for the duration". Two system_fingerprint values were
+    # served, so the run can't confirm it: report.md says so (a change
+    # finding, or that freezing could not be verified), on a line that
+    # names the freeze, and nowhere claims the system was frozen.
+    report = run['report']
+    lines = [line for line in report.splitlines()
+             if re.search(r'froz|freez', line, re.I)]
+    assert any(re.search(r'not|chang|could not|unverif|cannot', line,
+                         re.I) for line in lines), lines
+    assert not any(re.search(r'\bwas frozen\b', line, re.I)
+                   and not re.search(r'\bnot\b', line, re.I)
+                   for line in lines), lines
