@@ -480,7 +480,7 @@ def test_run_report_3h_lists_failing_questions_with_counts(capsys):
             '    failure rate: 2/3 (66.7%)') in text, text
 
 
-# Step 5 (run-robustness): executions the engine flagged are named under 3a
+# Executions the engine flagged are named under 3a
 # (T3-67).
 
 @pytest.mark.finding('T3-67')

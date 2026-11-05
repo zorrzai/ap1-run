@@ -984,7 +984,7 @@ def test_execute_item_malformed_response_shape_ev0_recorded(tmp_path, final):
 ], ids=['dict-tool-calls', 'str-call', 'str-function', 'list-content'])
 def test_execute_item_unreadable_message_part_ev0_no_tool_run(
         tmp_path, calculator, message):
-    # Step 5 (run-robustness): a message part the evidence code cannot
+    # A message part the evidence code cannot
     # read is an unrecognised shape: EV-0 with outcome None, nothing is
     # executed, the execution is recorded.
     final = {'choices': [{'message': {'role': 'assistant', **message}}]}

@@ -359,7 +359,7 @@ def test_extract_content_missing_or_null_content_empty(msg):
         '', True, None)
 
 
-# Step 5 (run-robustness): message parts the evidence code cannot read make
+# Message parts the evidence code cannot read make
 # the round unrecognised (EV-0) instead of an exception further on (S3-G2-1).
 
 TOOL_CALLS_REASON = ('choices[0].message.tool_calls is not a list of '

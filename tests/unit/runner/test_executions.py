@@ -1201,7 +1201,7 @@ def test_apply_question_measurability_without_a_chain_changes_nothing():
     assert findings.all_results[0]['answer_outcome'] == 'COMPUTED'
 
 
-# Step 5 (run-robustness): an execution the engine flagged is flagged in
+# An execution the engine flagged is flagged in
 # the runner too (T3-67).
 
 @pytest.mark.finding('T3-67')

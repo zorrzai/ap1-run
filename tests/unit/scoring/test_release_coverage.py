@@ -340,7 +340,7 @@ def test_release_coverage_unquantisable_return_governs_nothing(result):
     assert r['outcome'] in (PARTIALLY_GOVERNED, COVERAGE_UNOBSERVABLE), r
 
 
-# Step 5 (run-robustness): values that cannot be quantised (T3-39).
+# Values that cannot be quantised (T3-39).
 
 @pytest.mark.finding('T3-39')
 def test_release_coverage_unquantisable_return_beside_governing_one():

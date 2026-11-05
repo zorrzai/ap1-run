@@ -416,7 +416,7 @@ def test_classify_mechanism_no_observations_is_unmeasured():
     assert r['mechanism'] == UNMEASURED
 
 
-# Step 5 (run-robustness): a response whose shape cannot be read has no
+# A response whose shape cannot be read has no
 # surface value, as one without choices; never an exception (S3-G2-1).
 
 @pytest.mark.finding('S3-G2-1')

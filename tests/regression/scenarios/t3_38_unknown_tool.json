@@ -1,5 +1,5 @@
 {
-  "description": "T3-38: a call to a tool that was not offered. Until step 5 (run-robustness) it tripped the FATAL consistency check after every request was spent, and no report was written; the call is now recorded, the execution is NOT-INVOKED, and the run completes.",
+  "description": "T3-38: a call to a tool that was not offered. Until the T3-38 fix it tripped the FATAL consistency check after every request was spent, and no report was written; the call is now recorded, the execution is NOT-INVOKED, and the run completes.",
   "seal_attempts": 1,
   "seal_records": 1,
   "exercises": ["T3-38", "unknown tool", "runner.summary.verify_invocation_consistency"],

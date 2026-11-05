@@ -407,7 +407,7 @@ def test_run_call_to_unoffered_tool_recorded_not_invoked_run_completes(
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}',             # T3-39: not a string
     '{"expression": "True * 15.2"}',    # T3-39: boolean literal
-    '{"expression": "True + 1"}',       # F6
+    '{"expression": "True + 1"}',       # T3-39
     '{"expression": "1e308*10"}',       # T3-39: calculator inf
     '{"expression": "1e308*10 - 1e308*10"}',  # T3-39: calculator nan
     '"15200 * 1.2 / 100 / 12"',         # S3-G2-4: JSON, not an object
@@ -477,7 +477,7 @@ def test_run_tool_call_without_id_executed_and_scored(full_run):
     assert 'result' in json.loads(record['tool_calls'][0]['return_value'])
 
 
-# Step 5 (run-robustness): tool-loop exhaustion is flagged end to end ------
+# Tool-loop exhaustion is flagged end to end (T3-67) ------------------------
 
 @pytest.mark.finding('T3-67')
 def test_run_tool_loop_exhausted_flagged_run_completes(full_run):

@@ -480,7 +480,9 @@ def test_transcription_exact_and_altered_are_not_float_artefacts():
                                 figure_outcome=AUTO_MATCH,
                                 quantisation_digits=2)
         assert r['float_artefact'] is False
-# Step 5 (run-robustness): values that cannot be quantised or ordered
+
+
+# Values that cannot be quantised or ordered
 # (T3-39).
 
 @pytest.mark.finding('T3-39')

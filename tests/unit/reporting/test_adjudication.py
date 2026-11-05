@@ -968,7 +968,7 @@ def test_sheets_route_a_refusal():
     assert 'Total items requiring adjudication: 1' in text
 
 
-# Step 5 (run-robustness): a response shape the evidence code cannot read
+# A response shape the evidence code cannot read
 # is named on the sheet, never an exception (S3-G2-1).
 
 @pytest.mark.finding('S3-G2-1')

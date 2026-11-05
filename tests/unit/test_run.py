@@ -851,11 +851,11 @@ def test_main_ground_truth_computes_in_the_shared_context(r):
     assert len(final.as_tuple().digits) == 50
 
 
-# Step 5 (run-robustness): removing the runner's dead transport handlers
+# Removing the runner's dead transport handlers
 # (T3-65) removed the code whose mutants they killed, so the ratchet
 # needs these mutants of main() killed instead.
 
-# (test_main_reads_fixture_and_questions_as_utf8_text was removed on the
-# merge with seal-verifier-hardening: main() no longer opens these files;
+# (test_main_reads_fixture_and_questions_as_utf8_text was removed with
+# the T3-72 fix: main() no longer opens these files;
 # execution/sealed_inputs.py reads every input once, as UTF-8, and
 # tests/unit/execution/test_sealed_inputs.py covers that.)
