@@ -233,7 +233,7 @@ Of the 14 `TRANSCRIBED-EXACT`, 6 were rounded under the declared quantisation po
 
 Held constant between base and instruction_removed (compared before execution, R1.2): tool declarations, tool_choice, sampling parameters, fixture content, message structure template. Varied: the system prompt only.
 
-DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 0.0%
+DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): UNDEFINED (no instruction_removed observations)
 
 ## 6. D7.2(a) Originated-Operand Audit
 
