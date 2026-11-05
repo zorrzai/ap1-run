@@ -854,13 +854,22 @@ def test_main_end_to_end_against_the_mock_endpoint(tmp_path, monkeypatch,
     assert (out / 'smoke_run.jsonl').read_bytes() == before
     assert sorted(os.listdir(again)) == [
         'DISCLAIMER.txt', 'adjudication_sheets.md', 'report.md',
-        'smoke_summary.json']
+        'rescore.json', 'smoke_summary.json']
     def text(path):   # the report's own generation time aside
         return re.sub(r'(Generated: \S+?)T[\d:.+]+', r'\1',
                       path.read_text('utf-8'))
-    for name in ('smoke_summary.json', 'report.md', 'adjudication_sheets.md',
+    for name in ('smoke_summary.json', 'adjudication_sheets.md',
                  'DISCLAIMER.txt'):
         assert text(again / name) == text(out / name), name
+    # the report is the run's, with the re-score said and its scorer named
+    rescored = text(again / 'report.md')
+    note = re.search(r'\*\*Re-scored\*\*.*?\| the scorer \|[^\n]*\n\n',
+                     rescored, re.S)
+    assert note, rescored[:3000]
+    assert rescored.replace(note.group(0), '') == text(out / 'report.md')
+    record = json.loads((again / 'rescore.json').read_text('utf-8'))
+    assert record['scorer']['runner_source_hash'] in note.group(0)
+    assert record['run']['runner_source_hash'] in note.group(0)
 
 @pytest.mark.finding('T3-60')
 @pytest.mark.req('R0.4.1')

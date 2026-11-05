@@ -293,7 +293,7 @@ def test_score_run_calls(p, capsys):
         'config': p.config, 'seal_record': SEAL, 'questions': QUESTIONS,
         'fixture': FIXTURE, 'release_coverage_results': [],
         'disclaimer': DISCLAIMER, 'smoke_summary': smoke_summary,
-        'scored_transcript': scored})]
+        'scored_transcript': scored, 'rescore': None})]
     assert smoke == smoke_summary
 
     stages = [c[0] for c in p.calls if c[0] in (

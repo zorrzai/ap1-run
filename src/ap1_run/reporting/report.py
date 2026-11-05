@@ -58,7 +58,7 @@ HUMAN_ADJUDICATED = {'D3', 'D4', 'D5', 'D6'}
 
 
 def generate_report(*, summary, config, seal_record, transcript_records=None,
-                    scored_transcript=None):
+                    scored_transcript=None, rescore=None):
     """Generate the evaluation report.
 
     Args:
@@ -69,6 +69,8 @@ def generate_report(*, summary, config, seal_record, transcript_records=None,
             cell-level detail)
         scored_transcript: {'sha256', 'records'} of the transcript the
             scoring pass read (optional), shown under section 1
+        rescore: a re-score's record (scoring/rescore.py), if this is one:
+            section 1 says so and names the run's runner and the scorer
 
     Returns:
         str -- complete markdown report.
@@ -85,7 +87,7 @@ def generate_report(*, summary, config, seal_record, transcript_records=None,
 
     # 1. Pre-registration record
     sections.append(_section_preregistration(seal_record, config,
-                                             scored_transcript))
+                                             scored_transcript, rescore))
 
     # 2. Resolved configuration
     sections.append(_section_configuration(config))
@@ -141,8 +143,14 @@ def generate_report(*, summary, config, seal_record, transcript_records=None,
 
 # -- Section generators ------------------------------------------------
 
-def _section_preregistration(seal_record, config, scored_transcript=None):
-    """Section 1: Pre-registration record, and the transcript scored."""
+_RUNNER_FIELDS = ('runner_version_tag', 'runner_version_commit',
+                  'runner_modified', 'runner_source_hash')
+
+
+def _section_preregistration(seal_record, config, scored_transcript=None,
+                             rescore=None):
+    """Section 1: Pre-registration record, the transcript scored, and,
+    for a re-score, that it is one and which runner scored it."""
     lines = ['## 1. Pre-Registration Record\n']
     if seal_record:
         lines.append('| Field | Value |')
@@ -156,6 +164,19 @@ def _section_preregistration(seal_record, config, scored_transcript=None):
         lines.append(
             f'Transcript scored: SHA-256 `{scored_transcript["sha256"]}`, '
             f'{scored_transcript["records"]} records.')
+        lines.append('')
+    if rescore:
+        lines.append(
+            f'**Re-scored** on {rescore["rescored_at"]}: the figures in '
+            f'this report were computed by a re-score of the run\'s '
+            f'transcript, not by the run.')
+        lines.append('')
+        lines.append('| | ' + ' | '.join(_RUNNER_FIELDS) + ' |')
+        lines.append('|---' * (len(_RUNNER_FIELDS) + 1) + '|')
+        for label, key in (('the run (sealed)', 'run'),
+                           ('the scorer', 'scorer')):
+            lines.append(f'| {label} | ' + ' | '.join(
+                f'`{rescore[key].get(f)}`' for f in _RUNNER_FIELDS) + ' |')
         lines.append('')
     return '\n'.join(lines)
 

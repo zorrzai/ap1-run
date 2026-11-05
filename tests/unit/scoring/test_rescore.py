@@ -133,6 +133,39 @@ def test_rescore_scores_with_the_sealed_run_s_inputs(r):
 
 
 @pytest.mark.finding('T3-21')
+def test_rescore_records_that_it_re_scored_and_with_which_scorer(r, capsys):
+    # AP-1 §13.10, §13.11: a corrected scorer may re-score, so a re-scored
+    # report must say it was re-scored, when, and which scorer computed its
+    # figures, beside the runner the run sealed. The scoring pass gets that
+    # record for the report, and rescore.json holds it.
+    from ap1_run.execution.version import (
+        compute_runner_source_hash, resolve_runner_version,
+    )
+    r.rescore()
+    (_, kw), = r.scored
+    record = kw['rescore']
+    version = resolve_runner_version(REPO)
+    assert record['run'] == {
+        'seal_hash': r.seal_record['seal_hash'],
+        'runner_source_hash': 'feed' * 16, 'runner_version_tag': 'v9',
+        'runner_version_commit': 'abc', 'runner_modified': True}
+    assert record['scorer'] == {
+        'runner_source_hash': compute_runner_source_hash(REPO),
+        'runner_version_tag': version['version_tag'],
+        'runner_version_commit': version['version_commit'],
+        'runner_modified': version.get('version_modified', False)}
+    assert re.fullmatch(r'\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d+\+00:00',
+                        record['rescored_at'])
+    written = json.loads((r.out / 'rescore.json').read_text('utf-8'))
+    assert written == dict(record, transcript=str(r.transcript),
+                           scored_transcript=None)
+    console = capsys.readouterr().out
+    assert (f"Scorer: runner source hash "
+            f"{record['scorer']['runner_source_hash']}") in console
+    assert f"Run: runner source hash {'feed' * 16} (sealed)" in console
+
+
+@pytest.mark.finding('T3-21')
 @pytest.mark.req('R1.1')
 def test_rescore_scores_against_the_sealed_expected_values(r):
     # T3-48: the scoring pass gets the sealed expected values (copies),
@@ -170,13 +203,15 @@ def test_rescore_into_an_existing_empty_directory(r):
 
 
 OUTPUTS = ('report.md', 'adjudication_sheets.md', 'DISCLAIMER.txt',
-           'smoke_summary.json', 'smoke_run.jsonl', PRE_REGISTRATION)
+           'smoke_summary.json', 'smoke_run.jsonl', PRE_REGISTRATION,
+           'rescore.json')
 
 
 @pytest.mark.finding('T3-21')
-@pytest.mark.parametrize('names', [('report.md',), OUTPUTS,
-                                   ('smoke_summary.json',)],
-                         ids=['a-report', 'another-run', 'a-summary'])
+@pytest.mark.parametrize('names', [('report.md',), OUTPUTS[:6],
+                                   ('smoke_summary.json',), ('rescore.json',)],
+                         ids=['a-report', 'another-run', 'a-summary',
+                              'another-re-score'])
 def test_rescore_into_a_directory_holding_outputs_refused(r, names):
     # AP-1 §13.12: a correction is made by addition. A re-score never
     # replaces outputs already written, its own run's or another's.

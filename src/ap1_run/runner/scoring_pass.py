@@ -180,7 +180,7 @@ def check_plan(records, by_execution, rounds_by_execution, plan):
 
 
 def score_run(transcript_path, *, config, seal_record, fixture, questions,
-              ground_truth_compute, output_dir):
+              ground_truth_compute, output_dir, rescore=None):
     """Score the run in transcript_path; write the output files to
     output_dir; return the content of smoke_summary.json after its
     '_disclaimer' line.
@@ -189,7 +189,8 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
     pre-registration record (R1.1); fixture and questions are the sealed
     inputs, and ground_truth_compute(item_id, ctx) gives the sealed
     expected values (sealed_inputs.sealed_compute, T3-48). The transcript
-    is only read.
+    is only read. rescore, for a re-score (scoring/rescore.py), is its
+    record (when, the run's runner, the scorer), which the report shows.
     """
     # The transcript is read once; the records scored and the digest
     # recorded are of the same bytes.
@@ -325,6 +326,6 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
         questions=questions, fixture=fixture,
         release_coverage_results=findings.release_coverage_results,
         disclaimer=DISCLAIMER, smoke_summary=smoke_summary,
-        scored_transcript=scored_transcript)
+        scored_transcript=scored_transcript, rescore=rescore)
 
     return smoke_summary

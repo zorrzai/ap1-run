@@ -30,16 +30,27 @@ a transcript again").
 
 import json
 import os
+from datetime import datetime, timezone
 
 from ap1_run.execution.seal import verify_seal
 from ap1_run.execution.sealed_inputs import (
     compute_expected_values, read_inputs, sealed_compute,
+)
+from ap1_run.execution.version import (
+    compute_runner_source_hash, resolve_runner_version,
 )
 from ap1_run.foundation.config import load_config
 from ap1_run.runner.outputs import OUTPUT_FILES
 from ap1_run.runner.scoring_pass import score_run
 
 PRE_REGISTRATION = 'pre_registration.json'
+
+# The re-score's own record: when, of which run, by which scorer
+RESCORE_RECORD = 'rescore.json'
+
+# The repository root: this file is src/ap1_run/scoring/rescore.py.
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__)))))
 
 # The configuration values the runner resolves at run time, after loading
 # the config file and before sealing it (run.py main()).
@@ -60,7 +71,20 @@ def write_pre_registration(output_dir, *, seal_record, config):
 
 
 # What a run or a re-score writes, which a re-score never replaces
-WRITTEN_FILES = ('smoke_run.jsonl', PRE_REGISTRATION) + OUTPUT_FILES
+WRITTEN_FILES = ('smoke_run.jsonl', PRE_REGISTRATION, RESCORE_RECORD) \
+    + OUTPUT_FILES
+
+
+def scorer_identity(base_dir):
+    """The runner doing the scoring now: its source hash and version, the
+    fields the seal records for the run's runner."""
+    version = resolve_runner_version(base_dir)
+    return {
+        'runner_source_hash': compute_runner_source_hash(base_dir),
+        'runner_version_tag': version['version_tag'],
+        'runner_version_commit': version['version_commit'],
+        'runner_modified': version.get('version_modified', False),
+    }
 
 
 def _same_directory(a, b):
@@ -86,7 +110,8 @@ def _check_output_dir(output_dir, run_dir):
 
 
 def rescore_transcript(transcript_path, *, config_path, fixture_dir,
-                       output_dir, pre_registration_path=None):
+                       output_dir, pre_registration_path=None,
+                       base_dir=None):
     """Score the transcript again; return the summary (the content of
     smoke_summary.json after its '_disclaimer' line).
 
@@ -100,6 +125,12 @@ def rescore_transcript(transcript_path, *, config_path, fixture_dir,
     output, its own run's or another's, not even a symlink by that name:
     a correction is made by addition (AP-1 §13.12), and nothing already
     written is replaced. Refused with ValueError.
+
+    The re-score is recorded (AP-1 §13.10, §13.11: a corrected scorer
+    may re-score, so its figures must be traceable to it): when, the run's
+    runner as sealed, and the scorer, the runner in base_dir (default:
+    this repository). The report says so, the console prints both
+    runners, and rescore.json in output_dir holds the record.
     """
     transcript_path = os.path.abspath(transcript_path)
     output_dir = os.path.abspath(output_dir)
@@ -129,8 +160,35 @@ def rescore_transcript(transcript_path, *, config_path, fixture_dir,
                 calculator_path=inputs.paths['calculator'],
                 expected_values=expected_values, loaded=inputs.data)
 
+    rescore = {
+        'rescored_at': datetime.now(timezone.utc).isoformat(),
+        'run': {
+            'seal_hash': seal_record['seal_hash'],
+            'runner_source_hash': seal_record.get('runner_source_hash'),
+            'runner_version_tag': seal_record.get('runner_version_tag'),
+            'runner_version_commit': seal_record.get('runner_version_commit'),
+            'runner_modified': resolved.get('runner_modified'),
+        },
+        'scorer': scorer_identity(base_dir or BASE_DIR),
+    }
+    print(f"Run: runner source hash {rescore['run']['runner_source_hash']} "
+          f"(sealed), version {rescore['run']['runner_version_tag']} "
+          f"({rescore['run']['runner_version_commit']})")
+    print(f"Scorer: runner source hash "
+          f"{rescore['scorer']['runner_source_hash']}, version "
+          f"{rescore['scorer']['runner_version_tag']} "
+          f"({rescore['scorer']['runner_version_commit']})")
+
     os.makedirs(output_dir, exist_ok=True)
-    return score_run(transcript_path, config=config, seal_record=seal_record,
-                     fixture=inputs.fixture, questions=inputs.questions,
-                     ground_truth_compute=sealed_compute(expected_values),
-                     output_dir=output_dir)
+    summary = score_run(
+        transcript_path, config=config, seal_record=seal_record,
+        fixture=inputs.fixture, questions=inputs.questions,
+        ground_truth_compute=sealed_compute(expected_values),
+        output_dir=output_dir, rescore=rescore)
+    with open(os.path.join(output_dir, RESCORE_RECORD), 'w',
+              encoding='utf-8') as f:
+        json.dump(dict(rescore, transcript=transcript_path,
+                       scored_transcript=summary.get('scored_transcript')),
+                  f, indent=2, sort_keys=True, ensure_ascii=False)
+        f.write('\n')
+    return summary

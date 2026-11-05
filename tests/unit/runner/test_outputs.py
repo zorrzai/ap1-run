@@ -101,9 +101,9 @@ def stubs(monkeypatch):
     seen = {}
 
     def generate_report(*, summary, config, seal_record, transcript_records,
-                        scored_transcript):
+                        scored_transcript, rescore):
         seen['report'] = (summary, config, seal_record, transcript_records,
-                          scored_transcript)
+                          scored_transcript, rescore)
         return 'REPORT § TEXT\n'
 
     def generate_sheets(records, questions, fixture, config, *,
@@ -130,10 +130,12 @@ def test_write_outputs_writes_four_files_and_says_where(
         disclaimer='LINE ONE\nLINE § TWO\n',
         smoke_summary={'seal_hash': 'h', 'all_results': [{'v': '1.50'}],
                        'other': object},
-        scored_transcript={'sha256': 'd', 'records': 1})
+        scored_transcript={'sha256': 'd', 'records': 1},
+        rescore={'rescored_at': 't'})
 
     assert stubs['report'] == ({'s': 1}, {'c': 2}, {'seal_hash': 'h'},
-                               records, {'sha256': 'd', 'records': 1})
+                               records, {'sha256': 'd', 'records': 1},
+                               {'rescored_at': 't'})
     assert stubs['sheets'] == (records, {'q': 3}, {'f': 4},
                                {'c': 2}, ['rc'])
 

@@ -239,17 +239,21 @@ scoring verifies those bytes against the run's seal: the config, the fixture,
 questions, ground-truth and calculator files, and the expected values, computed
 again. It refuses any mismatch, naming it, as well as a transcript of another
 run. It scores from the same bytes, against the sealed expected values, as the
-run does. It writes the four scoring outputs to `--output-dir`, which must not
-be the transcript's directory, by any name (a symlink, another case), and must
-hold no run or scoring output: a correction is made by addition, so nothing
-already written is replaced. A run and a re-score both name the transcript they
-scored by the SHA-256 of its bytes and its record count (`smoke_summary.json`,
-and below section 1 of `report.md`). Re-scoring a finished run gives back its
-`smoke_summary.json`, `report.md` and adjudication sheets. Re-scoring the
-partial transcript of an interrupted run reports the executions it never
-reached as NOT-RUN, never as failures, and an execution it stopped inside
-(rounds recorded, no record of its end) as UNMEASURED with cause `interrupted`
-and its last round. From Python:
+run does. It writes the four scoring outputs, and `rescore.json`, to
+`--output-dir`, which must not be the transcript's directory, by any name (a
+symlink, another case), and must hold no run or scoring output: a correction is
+made by addition, so nothing already written is replaced. A run and a re-score
+both name the transcript they scored by the SHA-256 of its bytes and its record
+count (`smoke_summary.json`, and below section 1 of `report.md`). A re-scored
+report says so below its section 1: when it was re-scored, and which runner
+computed its figures (version and source hash) beside the runner the run
+sealed; the console prints both, and `rescore.json` records them. A corrected
+scorer may re-score a run, so its figures must be traceable to it. Re-scoring a
+finished run gives back its `smoke_summary.json` and adjudication sheets, and
+its `report.md` with that note added. Re-scoring the partial transcript of an
+interrupted run reports the executions it never reached as NOT-RUN, never as
+failures, and an execution it stopped inside (rounds recorded, no record of its
+end) as UNMEASURED with cause `interrupted` and its last round. From Python:
 `ap1_run.scoring.rescore.rescore_transcript(transcript_path, config_path=...,
 fixture_dir=..., output_dir=...)` returns the summary.
 
