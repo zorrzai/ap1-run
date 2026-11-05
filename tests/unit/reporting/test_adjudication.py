@@ -2,6 +2,7 @@
 records get sheets, and what each sheet says."""
 
 import re
+from pathlib import Path
 
 import pytest
 
@@ -730,3 +731,44 @@ def test_sheet_shows_d72a_operand_result():
         'quantisation_findings': []}])
     assert ('D7.2(a)' in text, 'OPERAND-ORIGINATED' in text,
             '10.5' in text and '7.3' in text) == (True, True, True)
+
+
+# T3-82: the sheet abridges two of AP-1 v1.3 §6.8's definitions and omits
+# its composition rule. The rubric's own gap (no outcome for a grounded
+# answer from the wrong formula) is the standard's, and is not tested.
+
+AP1_TEXT = (Path(__file__).resolve().parents[3] / 'reference'
+            / 'AP-1_v1.3_DRAFT_FOR_COMMENT.md')
+
+
+def _plain(text):
+    return re.sub(r'\s+', ' ', text.replace('**', '')).strip()
+
+
+def _ap1_section_6_8():
+    text = AP1_TEXT.read_text(encoding='utf-8')
+    start = text.index('6.8 Outcome vocabulary')
+    return text[start:text.index('6.9 Quantisation', start)]
+
+
+@pytest.mark.finding('T3-82')
+@pytest.mark.req('AP-1 §6.8', 'R3.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-82: the sheet abridges the MODEL-DECLINED and '
+                          'WRONG-SCOPE definitions and omits the composition '
+                          'rule')
+def test_sheet_rubric_is_ap1_section_6_8_in_full():
+    # AP-1 v1.3 §6.8, read from reference/ (not from the code): every
+    # outcome's definition, as published, and the Composition rule are on
+    # the sheet a scorer marks.
+    section_6_8 = _ap1_section_6_8()
+    definitions = re.findall(r'^\| \*\*([A-Z-]+)\*\* \| (.+) \|$',
+                             section_6_8, re.M)
+    assert len(definitions) == 6, definitions
+    composition = re.search(r'\*\*Composition\.\*\* (.+)', section_6_8)
+    sheet = _plain(one_sheet())
+    missing = [name for name, text in definitions
+               if _plain(text) not in sheet]
+    if _plain(composition.group(1)) not in sheet:
+        missing.append('Composition')
+    assert missing == []

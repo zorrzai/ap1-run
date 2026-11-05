@@ -195,10 +195,19 @@ def test_run_report_states_operands_unobservable_count(full_run):
     # AP-1 v1.3 D7.2(a): the unobservable case is declared and "its
     # proportion reported". Three unreadable calls per condition, one
     # repeat: 6 OPERANDS-UNOBSERVABLE invocations beside the grounded ones.
-    code, _, report = full_run(UNREADABLE)
+    # The proportion is stated with its denominator: every calculator
+    # invocation the run made, counted from the executions' tool calls
+    # (what the model sent, not a score).
+    code, summary, report = full_run(UNREADABLE)
     assert code == 0
     provenance = section(report, '7b. D7.2(a)')
     assert table_count(provenance, 'OPERANDS-UNOBSERVABLE') == 6
+    total = sum(r.get('tool_calls_count') or 0
+                for r in summary['all_results']
+                if r.get('status') == 'EXECUTED')
+    share = f'{100 * 6 / total:.1f}'
+    assert re.search(rf'\b6\s*(/|of)\s*{total}\b|\b{share}\s*%',
+                     provenance), (total, share, provenance)
 
 
 @pytest.mark.finding('T3-16')
