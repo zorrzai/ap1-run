@@ -145,12 +145,21 @@ def load_sealed_module(name, path, data):
 def compute_expected_values(ground_truth_module, fixture, questions):
     """{item_id: result} of the ground-truth module for every item of the
     question set, each on the item's delivered context: the expected
-    values the seal binds (R1.1, T3-48)."""
-    return {
-        item['id']: ground_truth_module.compute(
-            item['id'],
-            build_delivered_context(fixture, item.get('source_accounts', [])))
-        for item in questions.get('items', [])}
+    values the seal binds (R1.1, T3-48). A module that raises for an item
+    is a SealError naming the item and the error (S3-G3-3), as the R3.1
+    guards name it."""
+    values, failures = {}, []
+    for item in questions.get('items', []):
+        ctx = build_delivered_context(fixture, item.get('source_accounts', []))
+        try:
+            values[item['id']] = ground_truth_module.compute(item['id'], ctx)
+        except Exception as exc:
+            failures.append(f'{item["id"]}: computation raised '
+                            f'{type(exc).__name__}: {exc}')
+    if failures:
+        raise SealError('ground truth cannot be computed (R3.1): '
+                        + '; '.join(failures))
+    return values
 
 
 class GroundTruthNotReproducible(SealError):

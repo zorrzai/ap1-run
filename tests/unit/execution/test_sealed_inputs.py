@@ -289,3 +289,21 @@ def test_check_reproducible_returns_a_snapshot():
         _Module(lambda i, c: state), {'accounts': []}, QS)
     state['final'] = Decimal('9')
     assert values == {'Q01': {'final': Decimal('1')}}
+
+
+@pytest.mark.finding('S3-G3-3')
+@pytest.mark.req('R3.1')
+def test_compute_expected_values_names_every_item_that_raises():
+    def compute(item_id, ctx):
+        if item_id != 'Q02':
+            raise KeyError('boom')
+        return {'final': Decimal('1')}
+    qs = {'items': [{'id': 'Q01', 'source_accounts': []},
+                    {'id': 'Q02', 'source_accounts': []},
+                    {'id': 'Q03', 'source_accounts': []}]}
+    with pytest.raises(sealed_inputs.SealError) as exc:
+        sealed_inputs.compute_expected_values(_Module(compute),
+                                              {'accounts': []}, qs)
+    assert str(exc.value) == (
+        "ground truth cannot be computed (R3.1): Q01: computation raised "
+        "KeyError: 'boom'; Q03: computation raised KeyError: 'boom'")

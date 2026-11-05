@@ -751,8 +751,9 @@ def test_verify_run_expected_values_module_error_fails(vrs, tmp_path, base):
     path_before = list(sys.path)
     _, failures = vrs.verify_run(str(run_dir))
     assert failures == [('expected_values_hash', "cannot recompute: "
-                         "AttributeError: module 'ground_truth_example' has "
-                         "no attribute 'compute'")]
+                         "SealError: ground truth cannot be computed (R3.1): "
+                         "Q01: computation raised AttributeError: module "
+                         "'ground_truth_example' has no attribute 'compute'")]
     assert sys.path == path_before
 
 

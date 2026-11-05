@@ -700,3 +700,22 @@ def test_run_other_label_over_the_v13_text_refused(runner, fixture_dir,
     assert refused_naming(result, 'ap1_version') or refused_naming(
         result, 'AP-1 v1.3'), (result.code, result.refusal)
     assert result.requests == []
+
+
+@pytest.mark.finding('S3-G3-3')
+@pytest.mark.req('R3.1')
+def test_run_ground_truth_that_raises_is_a_named_refusal(runner, fixture_dir):
+    # A module whose compute raises for one item is refused before any
+    # request, naming the item and the error, as the R3.1 guards name it;
+    # not a traceback of the module's own exception.
+    gt = fixture_dir / 'ground_truth_example.py'
+    gt.write_text(gt.read_text('utf-8') + (
+        '\n\n_compute = compute\n\n\n'
+        'def compute(item_id, delivered_context):\n'
+        '    if item_id == "Q03":\n'
+        '        raise KeyError("boom")\n'
+        '    return _compute(item_id, delivered_context)\n'), 'utf-8')
+    result = runner(fixture_dir)
+    assert result.refusal is not None, (result.code, result.console[-500:])
+    assert 'Q03' in str(result.refusal) and 'KeyError' in str(result.refusal)
+    assert result.requests == []
