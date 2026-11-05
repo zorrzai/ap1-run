@@ -495,10 +495,10 @@ ANTHROPIC = {'id': 'msg_mock', 'type': 'message', 'role': 'assistant',
              'stop_reason': 'end_turn'}
 
 
-EV0_STATE = ("error_state as {'cause': <non-empty text>, 'round': <int, the "
-             "first request is round 0>}; the field names and the counting "
-             "are this test's proposal, SPEC R1.3 says only 'the round "
-             "identified'")
+EV0_STATE = ("T3-35: error_state as {'cause': <non-empty text>, 'round': "
+             "<int, the first request is round 0>}; the field names and the "
+             "counting are this test's proposal, SPEC R1.3 says only 'the "
+             "round identified'")
 
 
 def _ev0_error_state(cli, second_round):
