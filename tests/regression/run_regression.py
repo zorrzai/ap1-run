@@ -494,6 +494,11 @@ def main(argv=None):
 
     names = args.scenarios or sorted(
         f[:-5] for f in os.listdir(SCENARIOS) if f.endswith('.json'))
+    if not names:
+        # A run that checked nothing must not read as a pass (REORG-1).
+        print(f'no scenarios found in {SCENARIOS}: nothing was checked',
+              file=sys.stderr)
+        return 1
     if args.coverage:
         os.makedirs(args.coverage, exist_ok=True)
 

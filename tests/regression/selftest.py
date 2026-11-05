@@ -33,6 +33,7 @@ import check_source_files  # noqa: E402
 import driver  # noqa: E402  (snapshot() only; main() is not run)
 import hard_checks  # noqa: E402
 import hash_oracle  # noqa: E402
+import run_regression  # noqa: E402
 from mock_endpoint import MockEndpoint  # noqa: E402
 
 
@@ -209,6 +210,28 @@ class SourceHash(unittest.TestCase):
         self.assertEqual(hash_oracle.runner_source_hash(self.root), want)
 
 
+
+class NothingRunIsNotAPass(unittest.TestCase):
+    """REORG-1: the harness exits non-zero when it runs no scenario."""
+
+    def test_no_scenarios(self):
+        empty = tempfile.mkdtemp(prefix='ap1-no-scenarios-')
+        saved, run_regression.SCENARIOS = run_regression.SCENARIOS, empty
+        try:
+            with contextlib.redirect_stdout(io.StringIO()), \
+                    contextlib.redirect_stderr(io.StringIO()) as err:
+                code = run_regression.main([])
+        finally:
+            run_regression.SCENARIOS = saved
+            shutil.rmtree(empty)
+        self.assertNotEqual(code, 0)
+        self.assertIn('nothing was checked', err.getvalue())
+
+    def test_zero_runs(self):
+        with contextlib.redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit) as cm:
+                run_regression.main(['--runs', '0'])
+        self.assertNotEqual(cm.exception.code, 0)
 
 class SourceFileList(unittest.TestCase):
     """check_source_files.py takes its list from the oracle's rule."""

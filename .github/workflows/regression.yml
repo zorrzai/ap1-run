@@ -60,8 +60,9 @@ jobs:
         run: |
           log="$RUNNER_TEMP/regression.log"
           python tests/regression/run_regression.py 2>&1 | tee "$log"
-          # The harness exits 0 when it runs no scenarios, so also require
-          # the summary line to show at least one run and every run matching.
+          # Also require the summary line to show at least one run and every
+          # run matching, not only the exit code (the harness exits non-zero
+          # when it finds no scenarios, REORG-1; this stays as a second check).
           summary=$(grep -E '^[0-9]+/[0-9]+ scenario runs match golden output' "$log" | tail -n 1 || true)
           if [[ "$summary" =~ ^([0-9]+)/([0-9]+)\  ]] \
               && (( BASH_REMATCH[2] >= 1 && BASH_REMATCH[1] == BASH_REMATCH[2] )); then
