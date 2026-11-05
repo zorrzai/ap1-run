@@ -1631,6 +1631,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
   never falsely passes.
 - Where: `verify_run_seal.py:139-168`
 - After the reorg: `tools/verify_run_seal.py:142-171` (`verify_run`)
+- Deferred to #3 by DEC-7 (see "Maintainer decisions" at the end), which sets a deadline: fixed
+  before anyone outside the project runs with `--fixture-dir`.
 
 **S3-G8-5 · low · A relative run path is joined to the repository root, not the working directory**
 - What's wrong: from another directory, an existing path is reported as "report.md not found".
@@ -1732,9 +1734,10 @@ Some findings don't say on their own what correct behaviour is. SPEC.md might co
 say nothing, or disagree with the code. The decisions below settle those cases, so that a test
 can assert one behaviour. Each has an ID that tests and PRs can cite.
 
-They are the maintainer's decisions of 20 October 2026 on a list of every SPEC-versus-code
-disagreement that affects what a test asserts. Quotations are the maintainer's words. The list
-named no finding IDs; the IDs below are this register's mapping of its items.
+DEC-1 to DEC-6 are the maintainer's decisions of 20 October 2026 on a list of every
+SPEC-versus-code disagreement that affects what a test asserts. The list named no finding IDs;
+the IDs below are this register's mapping of its items. Later decisions give their own date and
+source. Quotations are the maintainer's words.
 
 ### DEC-1: where SPEC and the code disagree, follow SPEC
 > "where SPEC and the code disagree, follow SPEC, unless SPEC is out of date. The published
@@ -1819,3 +1822,14 @@ covered by any decision.
 
 The Inspect wrapper is unsupported for now; README.md says so under its requirements, from the
 move to `src/ap1_run/` on. That bears on T3-43, T3-44 and S3-G7-3 to S3-G7-5.
+
+### DEC-7: S3-G8-4 waits for the verifier work in #3, but not past an outside `--fixture-dir` run
+The review of #6 made S3-G8-4 a merge condition. The reply asked to defer it to #3; the
+reviewer agreed on #4, and the maintainer approved it on 4 November 2026:
+> "I'm happy with the deferrals as agreed in review, including S3-G8-4 on the condition that it's
+> fixed before anyone outside runs with --fixture-dir, so please record that as DEC-7."
+
+The verifier's options for a run's inputs outside `example/` and `reference/` come with the
+verifier work in #3. Until then README.md says that the verifier reads only those two
+directories. The fix lands before anyone outside the project runs the instrument with
+`--fixture-dir`.
