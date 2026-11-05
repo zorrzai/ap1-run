@@ -78,6 +78,7 @@ def runner(tmp_path, monkeypatch, capsys):
         questions = json.loads(
             (Path(fixture_dir) / 'questions.json').read_text('utf-8'))
         mock = MockEndpoint(
+            api_key='sk-g5-not-a-real-key-0000',
             questions=questions,
             system_prompts={base['system_prompt_base']: 'base',
                             base['system_prompt_instruction_removed']:

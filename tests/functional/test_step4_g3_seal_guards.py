@@ -101,6 +101,7 @@ def run_example(path, tmp_path, monkeypatch, capsys,
                'instruction_removed',
                config['system_prompt_base']: 'base'}
     mock = MockEndpoint(questions=questions, system_prompts=prompts,
+                        api_key='sk-test',
                         responses=responses).start()
     for name in list(os.environ):
         if name.startswith('AP1_SMOKE_'):

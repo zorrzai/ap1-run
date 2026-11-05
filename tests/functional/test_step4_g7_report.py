@@ -124,6 +124,7 @@ def run(tmp_path_factory):
             mp.delitem(sys.modules, name, raising=False)
         from mock_endpoint import MockEndpoint
         mock = MockEndpoint(
+            api_key='sk-step4-not-a-real-key-0000',
             questions=questions,
             system_prompts={
                 config['system_prompt_base']: 'base',

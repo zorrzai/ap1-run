@@ -51,6 +51,7 @@ def run_example(tmp_path, monkeypatch, *, items, responses, repeat_count):
     (fx / 'config.json').write_text(json.dumps(config), 'utf-8')
 
     mock = MockEndpoint(
+        api_key='sk-test',
         questions=questions,
         system_prompts={config['system_prompt_base']: 'base',
                         config['system_prompt_instruction_removed']:
