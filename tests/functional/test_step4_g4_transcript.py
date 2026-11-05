@@ -155,6 +155,7 @@ def cli(tmp_path, monkeypatch):
         config['repeat_count'] = str(repeat)
         (fx / 'config.json').write_text(json.dumps(config), 'utf-8')
         mock = MockEndpoint(
+            api_key='sk-test',
             questions=questions,
             system_prompts={config['system_prompt_base']: 'base',
                             config['system_prompt_instruction_removed']:

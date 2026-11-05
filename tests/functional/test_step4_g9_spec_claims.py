@@ -98,6 +98,7 @@ def ap1_run(tmp_path, monkeypatch, capsys):
                 json.dumps(q, indent=2), 'utf-8')
 
         mock = MockEndpoint(
+            api_key='sk-test-not-a-real-key-0000',
             questions=q, responses=responses,
             system_prompts={
                 cfg['system_prompt_base']: 'base',

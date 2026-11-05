@@ -103,6 +103,7 @@ def full_run(tmp_path, monkeypatch, capsys):
             script = dict(json.load(f)['responses'])
         script.update(responses)
         mock = MockEndpoint(
+            api_key='sk-step4-not-a-real-key',
             questions=questions,
             system_prompts={config['system_prompt_base']: 'base',
                             config['system_prompt_instruction_removed']:

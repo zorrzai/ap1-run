@@ -59,6 +59,7 @@ def full_run(tmp_path, monkeypatch):
         questions = json.loads(
             (fixture_dir / 'questions.json').read_text('utf-8'))
         mock = MockEndpoint(
+            api_key='sk-step4-not-a-real-key-0000',
             questions=questions,
             system_prompts={
                 config['system_prompt_base']: 'base',
