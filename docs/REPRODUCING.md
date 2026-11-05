@@ -149,10 +149,10 @@ restoring the original ground-truth module".
   them on purpose: `tests/regression/replay_expected.json` lists every
   execution whose scored outcome moves, and the harness fails a replay that
   differs in anything else. Two allowances are listed there too: the new
-  per-execution fields, with the count of each value they take; and the
-  numeric leaves (operands, evaluated results, the operation detail text)
-  where a fix only respells a number (`15200.0` read as `15200.00`), compared
-  as exact Decimals:
+  per-execution fields, each checked in every execution against the value the
+  harness computes from the published fields; and the numeric leaves
+  (operands, evaluated results, the operation detail text) where a fix only
+  respells a number with trailing zeros (`15200.0` read as `15200.00`):
 
   ```bash
   pip install -e .

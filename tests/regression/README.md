@@ -110,13 +110,20 @@ golden difference, and `--update` cannot write over it.
   `replay_expected.json` lists (`check_replay`). That file lists, per
   published run, the fields new in the replay and each execution's moves as
   [published value, replayed value]; a listed move that does not happen
-  fails as well. A new execution field is listed with the count of each
-  value it takes, and every replayed execution must have it. The leaves
-  listed under `numeric_paths` (`field[].key`) are compared as exact
-  Decimals, and those under `numeric_text_paths` with their standalone
-  numbers so compared and the rest of the text verbatim, for a fix that
-  changes only how a value is written (`15.20` for `15.2`); identifiers
-  such as `acct01` are never read as numbers. A difference is investigated before it is listed, never
+  fails as well, and a listed move is compared type-aware. A new
+  execution field must be in every replayed execution, and its value in
+  each one must equal the one `hard_checks.py` computes from that
+  execution's published fields, with the listed moves applied, and the
+  scoring config (`NEW_FIELD_EXPECTATIONS`; for the AP-1 v1.3 §6.8
+  `answer_outcome` and its reason); nothing is read from the replay being
+  checked. The leaves listed under `numeric_paths` (`field[].key`) are
+  compared as numbers, and those under `numeric_text_paths` with their
+  standalone numbers so compared and the rest of the text verbatim, for a
+  fix that changes only how a value is written: the one respelling
+  accepted is trailing zeros in plain ASCII decimals (`15.20` for `15.2`;
+  not padding, an exponent, other digits or a sign of zero). Identifiers
+  such as `acct01` or `acct-01` are never read as numbers. Both summaries
+  are read with JSON numbers as exact Decimals. A difference is investigated before it is listed, never
   added by explanation alone, and the commit that lists it says which fix
   makes it.
 - Each runner scenario states `"seal_attempts"`, how many times the run calls
@@ -218,8 +225,10 @@ one is wrapped in a standard envelope. A recorded loop that ended mid-way
 (EV-0) is replayed as a failure of the next request.
 
 The replayed `smoke_summary.json` files equal the published ones except the
-top-level `seal_hash` and the moves listed in `replay_expected.json`, and the
-harness checks this on every run (above). The replayed `report.md` files agree
+top-level `seal_hash`, the moves listed in `replay_expected.json`, and its two
+allowances (the new per-execution fields, checked against values computed from
+the published fields, and the respelled numeric leaves), and the harness checks
+this on every run (above). The replayed `report.md` files agree
 with the published `output/run_e_mini` and `output/run_f_sol` reports in every
 scored figure except those step 5 corrected: the D7.1 figures of §5 (and
 console 3h) (T3-1, T3-11, V12-5), where n is now the 10 computable questions,
