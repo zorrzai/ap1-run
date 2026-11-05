@@ -123,9 +123,10 @@ golden difference, and `--update` cannot write over it.
 answers.
 
 **The files the source hash covers** are listed in `source_hash_files.txt`:
-the tracked `.py` files (from `git ls-files`, tests included) that the
-`runner_source_hash` rule takes in. `check_source_files.py` compares the list
-with the tree and runs as its own CI step, so a move, a new module or a
+the files the hash oracle's rule (`hash_oracle.source_hash_files()`) finds in
+the checkout, tests included, less any that git does not track (named on
+stderr, not listed). `check_source_files.py` compares the list with the tree
+and runs as its own CI step, so a move, a new module or a
 deletion shows as a reviewed diff of the list. It is checked at each PR head;
 a commit that changes the set updates the list (`--update`).
 
