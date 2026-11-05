@@ -38,7 +38,6 @@ shape; it then updates _rescore() and nothing else.
 import importlib.util
 import json
 import os
-import re
 import shutil
 import stat
 import sys
