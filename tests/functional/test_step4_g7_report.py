@@ -94,8 +94,7 @@ def _script():
     return script
 
 
-@pytest.fixture(scope='module')
-def run(tmp_path_factory):
+def _run(tmp_path_factory, dimensions_claimed):
     """One run of the real runner; returns its output files."""
     tmp = tmp_path_factory.mktemp('g7run')
     fixture_dir = tmp / 'inputs'
@@ -110,6 +109,7 @@ def run(tmp_path_factory):
                                               'utf-8')
     config = json.loads((EXAMPLE / 'config.json').read_text('utf-8'))
     config['repeat_count'] = '2'
+    config['dimensions_claimed'] = dimensions_claimed
     config['structured_answer_field'] = 'answer'
     config_path = tmp / 'config.json'
     config_path.write_text(json.dumps(config, indent=2), 'utf-8')
@@ -158,7 +158,12 @@ def run(tmp_path_factory):
             mock.stop()
         for name in ('ground_truth_example', 'calculator_tool'):
             sys.modules.pop(name, None)
-    assert exit_code == 0
+    if exit_code != 0:
+        # Not an AssertionError: a run that does not complete must not
+        # pass for one of the strict xfails below.
+        raise RuntimeError(
+            f'the run did not complete (exit {exit_code}) with '
+            f'dimensions_claimed {dimensions_claimed}')
     report = (output_dir / 'report.md').read_text('utf-8')
     return {
         'report': report,
@@ -168,6 +173,25 @@ def run(tmp_path_factory):
                        (output_dir / 'smoke_run.jsonl').read_text(
                            'utf-8').splitlines() if line.strip()],
     }
+
+
+@pytest.fixture(scope='module')
+def run(tmp_path_factory):
+    # The shipped config claims D1 on 10 items, which minimum-n (R0.1)
+    # refuses once wired (T3-12). Tests not about D1 claim only the
+    # dimensions R0.1 sets no minimum for, as test_step4_g9_spec_claims.py
+    # does.
+    return _run(tmp_path_factory, ['D2', 'D7'])
+
+
+@pytest.fixture(scope='module')
+def run_d1(tmp_path_factory):
+    # The D1 tests need a D1 claim, and the example's 10 items are below
+    # D1's minimum (R0.1: 10 per category). Once T3-12 is fixed this run
+    # is refused and the D1 tests error (RuntimeError above) instead of
+    # passing or failing for the wrong reason: they then need a question
+    # set that meets the minimum.
+    return _run(tmp_path_factory, ['D1', 'D2', 'D7'])
 
 
 def section(report, number):
@@ -193,7 +217,8 @@ def d1_row(report):
                    reason='T3-3: report.md prints "Accuracy: 1" with wrong '
                           'answers in the run and items awaiting '
                           'adjudication')
-def test_run_report_prints_no_accuracy_of_one_with_adjudication_pending(run):
+def test_run_report_prints_no_accuracy_of_one_with_adjudication_pending(run_d1):
+    run = run_d1
     # The run has wrong final answers (Q01 concludes $182.40, Q02 r2 and
     # Q03 release wrong figures) and 14 items routed to adjudication that
     # nobody scores. Correct (T3-3): report.md carries
@@ -238,7 +263,8 @@ def test_run_report_declares_d74_not_measured(run):
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-32: D1 is one pooled rate, not per category '
                           'with a 95 % CI')
-def test_run_report_d1_per_category_with_confidence_interval(run):
+def test_run_report_d1_per_category_with_confidence_interval(run_d1):
+    run = run_d1
     # AP-1 v1.3 D1: "Results reported per category, with 95% confidence
     # intervals, and with n stated." The example has six categories.
     # Correct: §3 (per-dimension results, SPEC R3.3) gives D1 for each
@@ -318,7 +344,8 @@ def test_run_report_originated_operand_audit_names_the_operand(run):
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-66: §3 D1 n 36, §8 total 32; the four '
                           'UNMEASURABLE items are in neither split')
-def test_run_report_d1_n_agrees_between_sections(run):
+def test_run_report_d1_n_agrees_between_sections(run_d1):
+    run = run_d1
     # Correct (SPEC R2.1; T3-66): §3's D1 n equals §8's D1 total, and §8
     # shows the UNMEASURABLE count.
     report = run['report']
