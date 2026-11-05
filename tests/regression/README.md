@@ -184,7 +184,8 @@ and `run_all_tests.py` records the new count in the same commit.
 | `t3_39_crash` | **T3-39**: a non-string expression crashes the run |
 | `non_ascii_config` | a decline marker with U+2019 in the resolved config: the config hash's UTF-8 rule through the real seal |
 | `crlf_sealed_inputs` | `clean` with the fixture, questions, ground-truth module and AP-1 text in CRLF bytes (the config declares the CRLF text's hash): a runner that read any sealed input, or its source files, in text mode fails the hash oracle; `ground_truth_hash` is the September seals' (`033ce73d…`) |
-| `decimal_trailing_zero` | `answer_tolerance` `"0.0100"` in the resolved config: the config hash keeps a Decimal's exact string (a runner that normalised it to `0.01`, also only for exponents below -3, fails the hash oracle) |
+| `decimal_trailing_zero` | `answer_tolerance` `"0.010"` in the resolved config: the config hash keeps a Decimal's exact string (a runner that normalised it to `0.01` fails the hash oracle) |
+| `decimal_two_trailing_zeros` | the same with `"0.0100"` (exponent -4), so a normaliser limited to some exponents fails one of the two |
 | `decimal_integral` | `answer_tolerance` `"10"`: the same for an integral Decimal (a runner that wrote it as `1E+1` or through float as `10.0` fails the hash oracle) |
 | `seal_refused` | AP-1 text hash mismatch: SealError before any request |
 | `config_no_tools` | config without tools: exit 1 |

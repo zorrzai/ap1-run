@@ -1,0 +1,11 @@
+{
+  "description": "A resolved config with two trailing zeros in a Decimal: answer_tolerance \"0.0100\" (exponent -4), numerically the shipped 0.01. The companion of decimal_trailing_zero (\"0.010\", exponent -3): the config has one Decimal field, so each shape needs its own scenario. Canonical JSON writes a Decimal as its exact string (R0.4.3); a runner that normalised it to \"0.01\", fully or only for some exponents, fails the hash oracle on one of the two.",
+  "seal_attempts": 1,
+  "seal_records": 1,
+  "exercises": ["R0.4.3 canonical JSON of a Decimal with two trailing zeros", "answer_tolerance \"0.0100\""],
+  "extends": "clean",
+  "config": {
+    "repeat_count": "1",
+    "answer_tolerance": "0.0100"
+  }
+}

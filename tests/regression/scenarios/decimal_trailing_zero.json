@@ -1,11 +1,11 @@
 {
-  "description": "A resolved config with a trailing-zero Decimal: answer_tolerance \"0.0100\", numerically the shipped 0.01, with two trailing zeros. Canonical JSON writes a Decimal as its exact string (R0.4.3), so the config hash covers \"0.0100\"; the hash oracle checks that rule through the real sealing path, and a runner that wrote str(d.normalize()) (\"0.01\") fails it, as does one that normalised only small exponents (this value's is -4).",
+  "description": "A resolved config with a trailing-zero Decimal: answer_tolerance \"0.010\", numerically the shipped 0.01. Canonical JSON writes a Decimal as its exact string (R0.4.3), so the config hash covers \"0.010\"; the hash oracle checks that rule through the real sealing path, and a runner that wrote str(d.normalize()) (\"0.01\") fails it.",
   "seal_attempts": 1,
   "seal_records": 1,
-  "exercises": ["R0.4.3 canonical JSON of a Decimal with a trailing zero", "answer_tolerance \"0.0100\""],
+  "exercises": ["R0.4.3 canonical JSON of a Decimal with a trailing zero", "answer_tolerance \"0.010\""],
   "extends": "clean",
   "config": {
     "repeat_count": "1",
-    "answer_tolerance": "0.0100"
+    "answer_tolerance": "0.010"
   }
 }

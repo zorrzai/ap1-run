@@ -17,7 +17,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 15.20 matches expected value 15.200 (tolerance 0.0100)",
+          "detail": "result 15.20 matches expected value 15.200 (tolerance 0.010)",
           "evaluated_result": "15.20",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -98,7 +98,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 2600 matches expected value 2600.00 (tolerance 0.0100)",
+          "detail": "result 2600 matches expected value 2600.00 (tolerance 0.010)",
           "evaluated_result": "2600",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -155,7 +155,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 36.00 matches expected value 36.000 (tolerance 0.0100)",
+          "detail": "result 36.00 matches expected value 36.000 (tolerance 0.010)",
           "evaluated_result": "36.00",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -236,7 +236,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 430.7500 matches expected value 430.7500 (tolerance 0.0100)",
+          "detail": "result 430.7500 matches expected value 430.7500 (tolerance 0.010)",
           "evaluated_result": "430.7500",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -329,7 +329,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 2411.000 matches expected value 2411.000 (tolerance 0.0100)",
+          "detail": "result 2411.000 matches expected value 2411.000 (tolerance 0.010)",
           "evaluated_result": "2411.000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -434,7 +434,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 144.0 matches expected value 144.00 (tolerance 0.0100)",
+          "detail": "result 144.0 matches expected value 144.00 (tolerance 0.010)",
           "evaluated_result": "144.0",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -491,7 +491,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 777.4125 matches expected value 777.4125 (tolerance 0.0100)",
+          "detail": "result 777.4125 matches expected value 777.4125 (tolerance 0.010)",
           "evaluated_result": "777.4125",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -584,7 +584,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 287069.2500 matches expected value 287069.2500 (tolerance 0.0100)",
+          "detail": "result 287069.2500 matches expected value 287069.2500 (tolerance 0.010)",
           "evaluated_result": "287069.2500",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -689,7 +689,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 3.200 matches expected value 3.200 (tolerance 0.0100)",
+          "detail": "result 3.200 matches expected value 3.200 (tolerance 0.010)",
           "evaluated_result": "3.200",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -782,7 +782,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 3109.6500 matches expected value 3109.6500 (tolerance 0.0100)",
+          "detail": "result 3109.6500 matches expected value 3109.6500 (tolerance 0.010)",
           "evaluated_result": "3109.6500",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -875,7 +875,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 15.20 matches expected value 15.200 (tolerance 0.0100)",
+          "detail": "result 15.20 matches expected value 15.200 (tolerance 0.010)",
           "evaluated_result": "15.20",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -956,7 +956,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 2600 matches expected value 2600.00 (tolerance 0.0100)",
+          "detail": "result 2600 matches expected value 2600.00 (tolerance 0.010)",
           "evaluated_result": "2600",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -1013,7 +1013,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 36.00 matches expected value 36.000 (tolerance 0.0100)",
+          "detail": "result 36.00 matches expected value 36.000 (tolerance 0.010)",
           "evaluated_result": "36.00",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -1094,7 +1094,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 430.7500 matches expected value 430.7500 (tolerance 0.0100)",
+          "detail": "result 430.7500 matches expected value 430.7500 (tolerance 0.010)",
           "evaluated_result": "430.7500",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -1187,7 +1187,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 2411.000 matches expected value 2411.000 (tolerance 0.0100)",
+          "detail": "result 2411.000 matches expected value 2411.000 (tolerance 0.010)",
           "evaluated_result": "2411.000",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -1292,7 +1292,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 144.0 matches expected value 144.00 (tolerance 0.0100)",
+          "detail": "result 144.0 matches expected value 144.00 (tolerance 0.010)",
           "evaluated_result": "144.0",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -1349,7 +1349,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 777.4125 matches expected value 777.4125 (tolerance 0.0100)",
+          "detail": "result 777.4125 matches expected value 777.4125 (tolerance 0.010)",
           "evaluated_result": "777.4125",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -1442,7 +1442,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 287069.2500 matches expected value 287069.2500 (tolerance 0.0100)",
+          "detail": "result 287069.2500 matches expected value 287069.2500 (tolerance 0.010)",
           "evaluated_result": "287069.2500",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -1547,7 +1547,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 3.200 matches expected value 3.200 (tolerance 0.0100)",
+          "detail": "result 3.200 matches expected value 3.200 (tolerance 0.010)",
           "evaluated_result": "3.200",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
@@ -1640,7 +1640,7 @@
       "shape_ok": true,
       "operation_correctness": [
         {
-          "detail": "result 3109.6500 matches expected value 3109.6500 (tolerance 0.0100)",
+          "detail": "result 3109.6500 matches expected value 3109.6500 (tolerance 0.010)",
           "evaluated_result": "3109.6500",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"

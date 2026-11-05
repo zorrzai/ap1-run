@@ -726,6 +726,14 @@ def test_canonical_json_sorted_compact_decimal_as_string():
 def test_canonical_json_keeps_decimal_text_exactly():
     obj = {'a': D('1.0'), 'b': D('1E+2'), 'c': D('-0')}
     assert canonical_json(obj) == '{"a":"1.0","b":"1E+2","c":"-0"}'
+    # One shape per row: trailing zeros at several exponents, integral
+    # values, exponent notation, signed and scaled zeros. Each is written
+    # as its exact string, never normalised or passed through float.
+    for text, written in [
+            ('0.010', '"0.010"'), ('0.0100', '"0.0100"'),
+            ('1.0', '"1.0"'), ('10', '"10"'), ('100', '"100"'),
+            ('1E+1', '"1E+1"'), ('-0.00', '"-0.00"'), ('0E-7', '"0E-7"')]:
+        assert canonical_json(D(text)) == written, text
 
 
 def test_canonical_json_non_ascii_written_as_is():

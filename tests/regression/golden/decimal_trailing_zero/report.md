@@ -33,7 +33,7 @@ Model: mock-model
 
 ```json
 {
-  "answer_tolerance": "0.0100",
+  "answer_tolerance": "0.010",
   "ap1_text_hash": "48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56",
   "ap1_version": "v1.3-draft-for-comment-20260730",
   "ap1_version_doi": "10.5281/zenodo.21755443",
