@@ -212,16 +212,61 @@ def test_run_sealed_input_changed_after_seal_refused_naming_it(
 @pytest.mark.req('R1.1')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-48: the seal has no expected-values component')
-def test_run_seal_record_binds_expected_values(runner, fixture_dir):
+def test_run_seal_record_binds_expected_values(runner):
     # Correct (SPEC R1.1: "hash and timestamp the fixture, question set,
     # expected values, ground-truth module, ..."; AP-1 v1.3 §13.4): the
-    # expected values are computed before the seal and hashed into it, so
-    # a nondeterministic ground-truth module cannot change them unseen.
-    # The record's field name is the fix's choice; it contains 'expected'.
-    result = runner(fixture_dir)
+    # expected values are computed before the seal and hashed into it.
+    # The field's name is the fix's choice (it contains 'expected'); its
+    # value is a SHA-256 digest, and it is bound: editing it in report.md
+    # makes the published-run verifier fail where it passed before. A
+    # field added to the record but left out of the composite fails the
+    # unedited check already. The run reads example/ in place, so the
+    # verifier's fixed input paths match.
+    result = runner(EXAMPLE)
     assert result.code == 0, result.console[-2000:]
     record = report_seal_record(result.out)
-    assert [k for k in record if 'expected' in k], sorted(record)
+    fields = [k for k in record if 'expected' in k]
+    assert len(fields) == 1, sorted(record)
+    digest = record[fields[0]]
+    assert re.fullmatch(r'[0-9a-f]{64}', digest), digest
+    vrs = load_verifier()
+    _, before = vrs.verify_run(str(result.out))
+    report = result.out / 'report.md'
+    report.write_text(report.read_text('utf-8').replace(digest, '0' * 64),
+                      'utf-8')
+    _, after = vrs.verify_run(str(result.out))
+    new = {name for name, _ in after} - {name for name, _ in before}
+    assert any('seal_hash' in n or 'expected' in n for n in new), \
+        (before, after)
+
+
+@pytest.mark.finding('T3-48')
+@pytest.mark.req('R1.1', 'R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-48: a ground-truth module whose values change '
+                          'between computations runs unnoticed')
+def test_run_ground_truth_values_changing_between_computations_refused(
+        runner, fixture_dir):
+    # Correct (SPEC R3.1 "Intermediates reproducible across two
+    # executions", in T3-48's Breaks; R1.1 expected values sealed): a
+    # module that returns a different value when asked again for the same
+    # item and context is caught before any request. Here every repeated
+    # call (same item, same context) adds 1 to the final value. Today the
+    # run computes expected values per execution, after the seal, and
+    # scores the two conditions against different values.
+    path = fixture_dir / 'ground_truth_example.py'
+    path.write_text(path.read_text('utf-8') + (
+        '\n\n_seen = {}\n_compute = compute\n\n\n'
+        'def compute(item_id, delivered_context):\n'
+        '    result = _compute(item_id, delivered_context)\n'
+        '    key = (item_id, repr(sorted(delivered_context.items())))\n'
+        '    _seen[key] = _seen.get(key, 0) + 1\n'
+        '    if _seen[key] > 1:\n'
+        '        result = dict(result, final=result["final"] + 1)\n'
+        '    return result\n'), 'utf-8')
+    result = runner(fixture_dir)
+    refused = result.refusal is not None or result.code not in (0, None)
+    assert refused, 'the run completed: exit %r' % (result.code,)
 
 
 # -- T3-72: what is sealed is not what is executed -------------------------
