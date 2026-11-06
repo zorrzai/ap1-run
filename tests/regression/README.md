@@ -148,6 +148,7 @@ python tests/regression/check_imports.py               # every module imports
 python tests/regression/check_source_files.py          # source-hash file list
 python tests/regression/selftest.py                    # the harness's own checks
 python tests/regression/check_own_src.py               # entry points use their own src/
+python tests/regression/verify_hashes.py               # pinned canonical-hash digest (hashes.yml)
 python tests/regression/coverage_report.py OUTDIR      # legacy suites + scenarios
 ```
 

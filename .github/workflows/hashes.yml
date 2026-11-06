@@ -50,4 +50,4 @@ jobs:
         run: pip install -e .
 
       - name: Verify sealed hash
-        run: python tests/legacy/verify_hashes.py
+        run: python tests/regression/verify_hashes.py
