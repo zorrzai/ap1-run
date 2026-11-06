@@ -15,7 +15,7 @@ python tests/mutation/run_mutation.py                  # check every recorded mo
 python tests/mutation/run_mutation.py scoring/accuracy # check one
 python tests/mutation/run_mutation.py --record scoring/accuracy
 python tests/mutation/run_mutation.py --survivors scoring/accuracy
-python tests/mutation/run_mutation.py --tests tests/legacy/verify_phase_c.py scoring/accuracy
+python tests/mutation/run_mutation.py --tests tests/conformance/test_ap1_clauses.py scoring/accuracy
                                                        # another test set's strength, not recorded
 ```
 
@@ -38,7 +38,7 @@ score with `--record`, and the entry's notes account for every survivor.
 
 A mutant that no test runs counts as a survivor. A score is only
 comparable with itself: it measures the unit tests of one module, not
-the legacy suites or the regression baseline.
+the whole suite or the regression baseline.
 
 ## Running mutmut directly
 

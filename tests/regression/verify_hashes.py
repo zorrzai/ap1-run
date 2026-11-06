@@ -7,6 +7,7 @@ windows-latest, after a plain `pip install -e .` (no test dependencies). It
 was tests/legacy/verify_hashes.py, and stayed when the other legacy suites
 were retired; tests/unit/foundation/test_numeric.py pins the same digest
 under pytest.
+
 Computes a deterministic digest from known inputs and checks it against
 EXPECTED_DIGEST, so every platform must produce the same digest. Also
 writes it to hash_digest.txt (not tracked).

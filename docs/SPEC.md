@@ -1089,11 +1089,7 @@ a module-level constant definition, not added logic.
 | `src/ap1_run/runner/summary.py` | 242 | Demonstration tooling |
 | `example/ground_truth_example.py` | 571 | Example / demonstration |
 | `example/calculator_tool.py` | 224 | Example / demonstration |
-| `tests/legacy/verify_*.py` | varies | Verification test suites |
-| `tests/legacy/verify_findings.py` | 127 | Findings reconciliation guard |
 | `tools/generate_findings.py` | 524 | FINDINGS.md generator from artifacts |
-| `tests/legacy/test_findings_mutation.py` | 197 | Mutation tests for findings pipeline |
-| `run_all_tests.py` | 234 | Test runner |
 
 **Research questions are not held in this document.** Those on which the field
 has no settled answer are put to reviewers in AP-1 v1.3 §14. The standard asks;

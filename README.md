@@ -111,8 +111,8 @@ Running the test suites requires none of this — they are offline.
 ```bash
 git clone <this repo>
 cd <clone directory>
-pip install -e .              # the ap1_run package and its one dependency, requests
-python run_all_tests.py       # offline, reports its own totals
+pip install -e .[dev]         # the ap1_run package, requests, and the test tools
+python -m pytest              # offline: unit, conformance, functional and Inspect tests
 ```
 
 **Only the editable install, `pip install -e .`, is supported.** A plain
@@ -121,10 +121,10 @@ python run_all_tests.py       # offline, reports its own totals
 change the hash (T3-70 in `docs/REVIEW_FINDINGS.md`). For the same reason,
 keep virtual environments outside the clone.
 
-For development, `pip install -e .[dev]` adds pytest, mutmut and coverage:
+`pip install -e .` alone installs the package and its one dependency,
+`requests`; the `[dev]` extra adds pytest, mutmut and coverage. Beyond pytest:
 
 ```bash
-python -m pytest                            # unit, conformance, functional and Inspect tests
 python tests/regression/run_regression.py   # the regression baseline, about 2 minutes
 python tests/mutation/run_mutation.py       # mutation scores, against tests/mutation/scores.json
 ```
@@ -172,11 +172,6 @@ verification even when its seal is sound (S3-G8-4); and keep fixture copies
 outside the clone, because the source hash covers every `.py` file in it, so
 a copied `ground_truth_example.py` changes `runner_source_hash` and the run
 is reported as modified (T3-70).
-
-`run_all_tests.py` reports two columns. `verify.py` counts individual
-assertions; the other suites count test functions. Running pytest on
-`tests/legacy/` directly reports the function count only — both numbers are
-shown so neither is mistaken for the other.
 
 ---
 
@@ -348,22 +343,26 @@ The runner claims conformance to specific clauses of AP-1 v1.3. That claim is
 executable:
 
 ```bash
-python tests/legacy/verify_conformance.py
+python -m pytest tests/conformance
 ```
 
-One test per clause. Each names the clause, quotes it verbatim from the sealed
-standard text with line numbers, and asserts the behaviour it requires. Clauses
-the runner **cannot** enforce — independent key implementation and authorship
-disclosure, both process obligations — have tests asserting the runner *declares*
-the limitation rather than staying silent.
+One group of tests per clause (`test_ap1_clauses.py`). Each test quotes its
+clause from the sealed standard text with line numbers, and asserts the
+behaviour it requires; `test_clause_quotes.py` checks that every quote is
+verbatim at the lines cited. Clauses the runner **cannot** enforce — the
+independent key implementer and instrument provenance, both process
+obligations, among others — have tests asserting that the specification
+*declares* the limitation (SPEC §10, NOT ENFORCEABLE) rather than staying
+silent.
 
 ```bash
-python tests/legacy/verify_spec.py
+python -m pytest tests/conformance/test_spec_file_list.py
 ```
 
-The build specification records line counts and a size constraint. This suite
-parses those claims and compares them against the files, so the specification
-cannot drift from the code without failing.
+The build specification lists the files of the runner and classifies each
+(SPEC §12.10). This test compares that list with the repository both ways, so
+a module cannot be added, moved or deleted without the specification
+following.
 
 **This instrument alone cannot produce a conformance claim.** AP-1 v1.3 §4
 states that a system may not claim compliance having omitted any dimension. D3
@@ -388,7 +387,6 @@ The package follows the layers of the build specification (docs/SPEC.md).
 
 ```
 pyproject.toml               package metadata; `pip install -e .`; the `ap1-run` command
-run_all_tests.py             one command, all legacy suites
 smoke_test.py                shim: `python smoke_test.py` runs ap1_run.run
 
 src/ap1_run/
@@ -439,10 +437,9 @@ tests/
   functional/                tests across several modules
   inspect/                   tests of ap1_inspect/ (skipped without inspect-ai)
   mutation/                  mutation scores per module (mutmut), a ratchet
-  legacy/                    the original verify_*.py suites, run by run_all_tests.py;
-                             RETIREMENT.md maps each of their checks to the new tests
   regression/                the regression baseline: canned model responses, golden output
   fixtures/                  mock endpoint and test modules
+  RETIREMENT.md              where each check of the retired verify_*.py suites went
 
 ap1_inspect/                 the optional Inspect wrapper (its own package)
 docs/                        build specification (SPEC.md), KNOWN_ISSUES.md,
@@ -476,7 +473,7 @@ those records are not edited. To follow such a reference today:
 | `provenance.py`, `provenance_classify.py`, `provenance_audit.py` | `src/ap1_run/scoring/provenance/`, renamed in step 2 to `trace.py`, `classify.py`, `audit.py` |
 | `report.py`, `adjudication.py` | `src/ap1_run/reporting/` |
 | `generate_findings.py`, `verify_run_seal.py` | `tools/` |
-| `verify*.py`, `test_findings_mutation.py` | `tests/legacy/` |
+| `verify*.py`, `test_findings_mutation.py` | `tests/legacy/`, then retired: `tests/RETIREMENT.md` maps each check to its new test; `verify_hashes.py` is `tests/regression/verify_hashes.py` |
 | `_t16_mock_gt.py` | `tests/fixtures/` |
 | `SPEC.md`, `KNOWN_ISSUES.md`, `RELATED_WORK_REVIEW.md`, `REPRODUCING.md` | `docs/` |
 | `FINDINGS.md`, `FINDINGS.template.md`, `FINDINGS_ERRATA.md` | `findings/` |

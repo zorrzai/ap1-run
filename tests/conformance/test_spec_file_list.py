@@ -6,9 +6,9 @@ checked is the list itself:
 
 - every row of the table can be read (a row that can't is an error, not
   silently skipped);
-- every file the table names exists as a file (a row with a wildcard,
-  such as ``tests/legacy/verify_*.py``, matches at least one), so a file
-  that is moved, renamed or deleted takes its row with it;
+- every file the table names exists as a file (a row with a wildcard
+  must match at least one), so a file that is moved, renamed or deleted
+  takes its row with it;
 - every Python file shipped outside ``tests/`` has a row: the modules
   under ``src/``, the scripts in ``tools/``, the example's modules and the
   root scripts, so a new one is classified when it is added. Package
@@ -16,7 +16,7 @@ checked is the list itself:
   ``ap1_inspect/`` is unsupported for now (README), so neither needs one.
 
 The legacy verify_spec.py checked the table with its line counts; this is
-the part of that tie that stays when the legacy suites are retired.
+the part of that tie that stayed when the legacy suites were retired.
 """
 
 import re
