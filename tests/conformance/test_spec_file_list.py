@@ -4,8 +4,8 @@ File-list conformance only: the table's "Classification" column is not
 checked, and the table has no line counts (SPEC §12.9: line counts are not
 behaviour). What is checked is the list itself:
 
-- every row of the table can be read (a row that can't is an error, not
-  silently skipped);
+- the table has its two-column header and rule, and every row of it can
+  be read (a row that can't is an error, not silently skipped);
 - every file the table names exists as a file (a row with a wildcard
   must match at least one), so a file that is moved, renamed or deleted
   takes its row with it;
@@ -28,37 +28,52 @@ ROOT = Path(__file__).resolve().parents[2]
 SPEC = ROOT / 'docs' / 'SPEC.md'
 ROW = re.compile(r'^\| `([^`]+)` \| ([^|]+) \|$')
 HEADER = re.compile(r'^\| File \| Classification \|$')
-RULE = re.compile(r'^\|(-+\|)+$')
+RULE = re.compile(r'^\|-+\|-+\|$')
 
 
 # The end of §12.10: the next numbered paragraph, heading or rule.
 BOUNDARY = re.compile(r'^(\*\*\d+\.\d+|#|---)')
 
 
+def parse_table(lines):
+    """(parsed paths, problems) for the lines of §12.10 after its heading,
+    up to the next section boundary. Every line whose text, indentation
+    stripped, starts with '|' is a table line, also after a blank line.
+    The first table line must be the two-column header, the second the
+    two-column rule, and every other one a readable row; any other table
+    line is a problem, and so is a missing header or rule."""
+    table = []
+    for line in lines:
+        if BOUNDARY.match(line):
+            break
+        if line.strip().startswith('|'):
+            table.append(line)
+    rows, problems = [], []
+    if not table or not HEADER.match(table[0].strip()):
+        problems.append('<no "| File | Classification |" header line>')
+        body = table
+    elif len(table) < 2 or not RULE.match(table[1].strip()):
+        problems.append('<no two-column rule under the header>')
+        body = table[1:]
+    else:
+        body = table[2:]
+    for line in body:
+        match = ROW.match(line.strip())
+        if match:
+            rows.append(match.group(1))
+        else:
+            problems.append(line)
+    return rows, problems
+
+
 def table_rows():
-    """(parsed paths, lines that look like table rows but could not be
-    read). Every line from the §12.10 heading to the next section boundary
-    whose text, indentation stripped, starts with '|' is a table line; it
-    must be the header, the rule or a readable row, wherever it is (also
-    after a blank line)."""
+    """(parsed paths, problems) for SPEC §12.10's table; see parse_table."""
     lines = SPEC.read_text(encoding='utf-8').splitlines()
     start = next((i for i, line in enumerate(lines)
                   if line.startswith('**12.10 File classification.**')), None)
     if start is None:
         return [], []  # test_spec_file_list_table_found says so
-    rows, unread = [], []
-    for line in lines[start + 1:]:
-        if BOUNDARY.match(line):
-            break
-        text = line.strip()
-        if not text.startswith('|'):
-            continue
-        match = ROW.match(text)
-        if match:
-            rows.append(match.group(1))
-        elif not (HEADER.match(text) or RULE.match(text)):
-            unread.append(line)
-    return rows, unread
+    return parse_table(lines[start + 1:])
 
 
 LISTED, UNREAD = table_rows()
@@ -125,6 +140,34 @@ def test_spec_file_list_table_found():
     assert len(LISTED) >= 30, LISTED
     assert 'src/ap1_run/run.py' in LISTED
     assert UNREAD == [], UNREAD
+
+
+GOOD_TABLE = ['| File | Classification |', '|------|----------------|',
+              '| `run.py` | Instrument module |']
+
+
+@pytest.mark.parametrize('table, problem', [
+    # A count cell put back in a row, or in the header.
+    (GOOD_TABLE[:2] + ['| `run.py` | 120 | Instrument module |'],
+     '| `run.py` | 120 | Instrument module |'),
+    (['| File | Lines | Classification |'] + GOOD_TABLE[1:],
+     '<no "| File | Classification |" header line>'),
+    # The old three-column rule under the two-column header.
+    ([GOOD_TABLE[0], '|---|---|---|', GOOD_TABLE[2]],
+     '<no two-column rule under the header>'),
+    # No header at all, or no rule.
+    (GOOD_TABLE[1:], '<no "| File | Classification |" header line>'),
+    ([GOOD_TABLE[0], GOOD_TABLE[2]], '<no two-column rule under the header>'),
+    # A second rule, or a row without backticks.
+    (GOOD_TABLE + ['|---|---|'], '|---|---|'),
+    (GOOD_TABLE + ['| run.py | Instrument module |'],
+     '| run.py | Instrument module |'),
+])
+def test_spec_file_list_parser_reports_malformed_table(table, problem):
+    # Guards the parser itself: each malformed table is reported, so
+    # test_spec_file_list_table_found fails on it.
+    assert parse_table(GOOD_TABLE) == (['run.py'], [])
+    assert problem in parse_table(table)[1]
 
 
 @pytest.mark.req('SPEC §12.10')
