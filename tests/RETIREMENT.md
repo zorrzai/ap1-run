@@ -5,9 +5,12 @@
 from the suites and the group maps beside it (`tests/legacy/retirement/g1-…md` to `g7-…md`), and
 rebuilt for the last time just before they were deleted; it was then moved here from
 `tests/legacy/RETIREMENT.md`, with only this paragraph changed. The script, the group maps and
-the suites are in git history, in the parent of the commit that deletes them
-(`git log --diff-filter=D -- tests/legacy/verify.py`). Paths into `tests/legacy/` and line numbers
-below refer to that commit; the new tests named here may have moved on since.
+the suites are in git history, in the parent of the commit that deletes them:
+`git log --diff-filter=D -- tests/legacy/verify.py` prints that commit, and its hash with `^` is
+the parent. Paths into `tests/legacy/` and line numbers below refer to that parent; the new tests
+named here may have moved on since. `verify_hashes.py` is the exception: it moved to
+`tests/regression/` one commit earlier, and its section's line numbers predate a later edit of
+the file, so its checks' function and text are the guide.
 
 The build took an inventory of every legacy check (see below), joins it to the group maps that
 the test groups G1–G7 wrote, adds the rows that G9 (the retirement audit) settled, and stops if a
