@@ -1,8 +1,8 @@
 """SPEC §12.10's file list matches the repository, both ways.
 
-File-list conformance only: the table's "Lines" column (line counts are
-not behaviour) and its "Classification" column are not checked. What is
-checked is the list itself:
+File-list conformance only: the table's "Classification" column is not
+checked, and the table has no line counts (SPEC §12.9: line counts are not
+behaviour). What is checked is the list itself:
 
 - every row of the table can be read (a row that can't is an error, not
   silently skipped);
@@ -26,8 +26,8 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 SPEC = ROOT / 'docs' / 'SPEC.md'
-ROW = re.compile(r'^\| `([^`]+)` \| [^|]* \| ([^|]+) \|$')
-HEADER = re.compile(r'^\| File \| Lines \| Classification \|$')
+ROW = re.compile(r'^\| `([^`]+)` \| ([^|]+) \|$')
+HEADER = re.compile(r'^\| File \| Classification \|$')
 RULE = re.compile(r'^\|(-+\|)+$')
 
 
