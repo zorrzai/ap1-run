@@ -54,6 +54,10 @@ updated, and the standard governs.
   no longer records line counts; the declared exceptions for `report.py` and
   `trace.py` go with the limit. `tests/conformance/test_spec_file_list.py`
   checks §12.10's file list against the repository instead, without counts.
+  The measurement note for the counts goes too. §12.9 keeps the definition
+  of an instrument module, and now names what is not one by location:
+  demonstration tooling, the tools in `tools/` and the example modules (the
+  test suites are no longer named there).
   (`trace.py`'s exception recorded why `STRUCTURAL_CONSTANTS` exists: in the
   first 1000-execution live run, 288 of 818 originated operands were the
   literal value 1; R2.4 states the rule.)
@@ -1043,8 +1047,9 @@ recorded every file's line count in §12.10. Both were removed in November 2026
 (see "Revision, November 2026" above): a line count is not behaviour, git
 already records file sizes, and a table of counts needed a specification edit
 with every fix. What is checked instead is the file list: the conformance test
-`tests/conformance/test_spec_file_list.py` compares §12.10's list with the
-repository both ways, without counts.
+`tests/conformance/test_spec_file_list.py` checks that every file §12.10 lists
+exists, and that every Python module outside `tests/` and `ap1_inspect/` has a
+row (package markers aside; the known gaps are registered), without counts.
 
 Instrument modules are the `.py` files under `src/ap1_run/` that implement
 R0–R3. Demonstration tooling (`src/ap1_run/run.py`, the parts it drives in
