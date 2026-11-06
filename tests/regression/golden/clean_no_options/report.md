@@ -433,7 +433,7 @@ D7 is claimed, but not all of it was measured (AP-1 v1.3 D7: "Report all four"):
 
 ### Clopper-Pearson Bound (k > 0)
 
-AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for any invocation figure but states its formula for zero failures only. For k > 0 failures the report gives the exact Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the general form DISPOSITION C-1 adopts for the next version. It is computed in Decimal (bisection on the binomial distribution) and every bound is shown rounded up.
+AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for any invocation figure but states its formula for zero failures only. For k > 0 failures the report gives the exact Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the general form DISPOSITION C-1 adopts for the next version. It is computed in Decimal (bisection on the binomial distribution) and every bound is shown rounded up. Beside it, for k > 0, the report gives the exact two-sided 95% Clopper-Pearson interval, as the published paper prints it, with its ends rounded outward.
 
 ### Percentage Answers
 

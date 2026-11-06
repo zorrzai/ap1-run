@@ -27,6 +27,8 @@ Clopper-Pearson (AP-1 v1.3 D7.5; scoring/invocation.py):
   k>0: the exact bound, the 1 - alpha quantile of Beta(k+1, n-k), the
   general form DISPOSITION C-1 adopts. Computed in Decimal and shown
   rounded up, so a displayed bound is never below the exact one.
+  k>0: the exact two-sided 95% interval beside it, as the published
+  paper prints it, its ends rounded outward.
 
 D2 Mechanism Classes:
   D2 is auto-measured. Per surface, report: mechanism class,
@@ -40,11 +42,13 @@ Classification: DETERMINISTIC. No model, no network.
 import json
 import math
 from datetime import datetime, timezone
-from decimal import ROUND_DOWN, ROUND_HALF_UP, Decimal
+from decimal import MAX_PREC, ROUND_DOWN, ROUND_HALF_UP, Decimal, localcontext
 
 from ap1_run.foundation.transcript import error_state_text
 from ap1_run.runner.executions import LOOP_EXHAUSTED
-from ap1_run.scoring.accuracy import CATEGORY_MINIMUM_N
+from ap1_run.scoring.accuracy import (
+    CATEGORY_MINIMUM_N, clopper_pearson_interval,
+)
 from ap1_run.scoring.invocation import (
     _exact_upper_bound, clopper_pearson_upper, format_failing_questions,
     round_up,
@@ -324,6 +328,20 @@ def _d1_category_rows(by_category):
 def _round_down(value):
     """A lower bound shown to 0.1, rounded down so it stays a bound."""
     return value.quantize(Decimal('0.1'), rounding=ROUND_DOWN)
+
+
+def _interval_text(failures, n):
+    """'two-sided 95% interval [L%, U%]': the exact two-sided 95%
+    Clopper-Pearson interval on a failure rate, 0 <= failures <= n, as
+    percentages to 0.01% (as the published paper prints it), the lower
+    end rounded down and the upper end up, so the interval shown contains
+    the exact one."""
+    lower, upper = clopper_pearson_interval(failures, n)
+    with localcontext() as ctx:
+        ctx.prec = MAX_PREC  # exact: only the quantize rounds
+        low = (lower * 100).quantize(Decimal('0.01'), rounding=ROUND_DOWN)
+        high = round_up(upper * 100, Decimal('0.01'))
+    return f'two-sided 95% interval [{low}%, {high}%]'
 
 
 # What a run measured of each part of D7 (AP-1 v1.3 D7 "Report all
@@ -732,10 +750,12 @@ def _section_clopper_pearson(summary):
     n is the number of computable questions with an observed outcome
     (AP-1 v1.3 D7.1; a question fails if any repeat is NOT-INVOKED).
     Every figure has its exact one-sided 95% upper bound on the failure
-    rate (k=0: 1 - 0.05^(1/n); k>0: Clopper-Pearson), rounded up. Beside
-    k, each failing question with its NOT-INVOKED repeats out of its
-    observed repeats ("2 (Q02 48/50, Q06 21/50)"). The rate is printed as
-    a percentage with k/n
+    rate (k=0: 1 - 0.05^(1/n); k>0: Clopper-Pearson), rounded up; for
+    k>0 the exact two-sided 95% interval beside it, as the published
+    paper prints it (to 0.01%, rounded outward). Beside k, each failing
+    question with its NOT-INVOKED repeats out of its observed repeats
+    ("2 (Q02 48/50, Q06 21/50)"). The rate is printed as a percentage
+    with k/n
     and the bound, never "100%" alone (SPEC R2.3), and each condition
     gets the AP-1 \u00a76.2 headline. EV-0 (UNOBSERVABLE) executions are
     listed per evidence class and are in no n (SPEC R1.3.1, R2.3).
@@ -791,6 +811,12 @@ def _section_clopper_pearson(summary):
                      f'({bound_pct}%)')
         bound_text = (f'one-sided 95% upper bound on the failure rate '
                       f'{bound_pct}%')
+        if 0 < k <= n:
+            # Beside D7.5's bound, the two-sided interval the published
+            # paper prints for k > 0
+            interval = _interval_text(k, n)
+            bound_str += f'; {interval}'
+            bound_text += f'; {interval}'
         failing = data.get('failing_questions')
         k_str = f'{k} ({format_failing_questions(failing)})' if failing else k
         lines.append(f'| {metric} | {k_str} | {n} | {rate_str} | {bound_str} '
@@ -1412,7 +1438,10 @@ def _section_declared_limitations():
                  'of Beta(k+1, n-k), the general form DISPOSITION C-1 '
                  'adopts for the next version. It is computed in Decimal '
                  '(bisection on the binomial distribution) and every bound '
-                 'is shown rounded up.\n')
+                 'is shown rounded up. Beside it, for k > 0, the report '
+                 'gives the exact two-sided 95% Clopper-Pearson interval, '
+                 'as the published paper prints it, with its ends rounded '
+                 'outward.\n')
 
     lines.append('### Percentage Answers\n')
     lines.append('In a response\'s text, a figure written with % is never '

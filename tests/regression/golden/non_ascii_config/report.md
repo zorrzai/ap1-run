@@ -213,12 +213,12 @@ Of the 19 `TRANSCRIBED-EXACT`, 7 were rounded under the declared quantisation po
 
 | Metric | k (failures) | n | Rate | 95% Upper Bound | Evidence Class |
 |---|---|---|---|---|---|
-| d7_invocation_base | 1 | 10 | 9/10 (90.0%) | 0.394164 (39.4164%) | `EV-2 PLATFORM-STRUCTURAL` |
+| d7_invocation_base | 1 | 10 | 9/10 (90.0%) | 0.394164 (39.4164%); two-sided 95% interval [0.25%, 44.51%] | `EV-2 PLATFORM-STRUCTURAL` |
 | d7_invocation_instruction_removed | 0 | 10 | 10/10 (100.0%) | 0.258866 (25.8866%) | `EV-2 PLATFORM-STRUCTURAL` |
 
 **Headline (AP-1 §6.2):**
 
-- Deterministic computation was invoked on 90.0% of computable questions (9/10; 1 not invoked; one-sided 95% upper bound on the failure rate 39.4164%), under base, on evidence class EV-2 PLATFORM-STRUCTURAL.
+- Deterministic computation was invoked on 90.0% of computable questions (9/10; 1 not invoked; one-sided 95% upper bound on the failure rate 39.4164%; two-sided 95% interval [0.25%, 44.51%]), under base, on evidence class EV-2 PLATFORM-STRUCTURAL.
 - Deterministic computation was invoked on 100.0% of computable questions (10/10; 0 not invoked; one-sided 95% upper bound on the failure rate 25.8866%), under instruction_removed, on evidence class EV-2 PLATFORM-STRUCTURAL.
 
 **Executions by evidence class:**
@@ -399,7 +399,7 @@ D7 is claimed, but not all of it was measured (AP-1 v1.3 D7: "Report all four"):
 
 ### Clopper-Pearson Bound (k > 0)
 
-AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for any invocation figure but states its formula for zero failures only. For k > 0 failures the report gives the exact Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the general form DISPOSITION C-1 adopts for the next version. It is computed in Decimal (bisection on the binomial distribution) and every bound is shown rounded up.
+AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for any invocation figure but states its formula for zero failures only. For k > 0 failures the report gives the exact Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the general form DISPOSITION C-1 adopts for the next version. It is computed in Decimal (bisection on the binomial distribution) and every bound is shown rounded up. Beside it, for k > 0, the report gives the exact two-sided 95% Clopper-Pearson interval, as the published paper prints it, with its ends rounded outward.
 
 ### Percentage Answers
 

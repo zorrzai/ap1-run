@@ -417,6 +417,56 @@ def test_clopper_pearson_interval_known_values(x, n, lower, upper):
     assert (round(lo, 4), round(hi, 4)) == (D(lower), D(upper))
 
 
+def binomial_cdf(k, n, p):
+    """P(X <= k) for X ~ Binomial(n, p), from math.comb, at precision 60:
+    independent of the bisection's own sums."""
+    import decimal
+    import math
+    with decimal.localcontext() as ctx:
+        ctx.prec = 60
+        return sum(math.comb(n, i) * p ** i * (1 - p) ** (n - i)
+                   for i in range(k + 1))
+
+
+@pytest.mark.req('AP-1 D7.5')
+@pytest.mark.parametrize('k, n', [(0, 10), (2, 10), (0, 500), (2, 500),
+                                  (92, 500)])
+def test_clopper_pearson_interval_solves_both_binomial_tails(k, n):
+    # The two-sided 95% interval on a failure rate, printed beside the
+    # D7.5 bound for k > 0, leaves 0.025 in each tail: at the upper end
+    # U, P(X <= k; n, U) = 0.025; at the lower end L, P(X >= k; n, L) =
+    # 0.025 (L = 0 for k = 0). Just inside each end the tail is above
+    # 0.025, at it at most 0.025. (For k = 0 the upper end is the closed
+    # form at precision 50, which may sit about 1e-50 below the exact
+    # root; every display rounds it up.)
+    import decimal
+    lower, upper = clopper_pearson_interval(k, n)
+    tail = D('0.025')
+    slack = D('1e-45') if k == 0 else 0
+    with decimal.localcontext() as ctx:
+        ctx.prec = 60
+        assert binomial_cdf(k, n, upper) <= tail + slack
+        assert binomial_cdf(k, n, upper - D('1e-30')) > tail
+        if k == 0:
+            assert lower == 0
+        else:
+            assert 1 - binomial_cdf(k - 1, n, lower) <= tail
+            assert 1 - binomial_cdf(k - 1, n, lower + D('1e-30')) > tail
+
+
+@pytest.mark.req('AP-1 D7.5')
+@pytest.mark.parametrize('n', [10, 500])
+def test_clopper_pearson_interval_k0_upper_end_is_the_closed_form(n):
+    # k = 0: (1 - U)^n = 0.025, so U = 1 - 0.025^(1/n).
+    import decimal
+    lower, upper = clopper_pearson_interval(0, n)
+    with decimal.localcontext() as ctx:
+        ctx.prec = 80
+        closed = 1 - D('0.025') ** (D(1) / D(n))
+        assert lower == 0
+        assert abs(upper - closed) < D('1e-40'), (upper, closed)
+
+
 def test_clopper_pearson_interval_alpha():
     # 90%: each tail 0.05; at 1/2, 1 - p^2 = 0.95 ... upper sqrt(0.95)
     import decimal

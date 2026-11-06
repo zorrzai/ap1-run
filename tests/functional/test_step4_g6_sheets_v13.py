@@ -314,8 +314,9 @@ def test_run_report_prints_upper_bound_for_nonzero_failures(tmp_path,
 
 def bound_values(cell):
     """The numbers in a bound cell, as fractions (a '%' one divided by
-    100)."""
+    100); not those of the two-sided interval beside the bound."""
     values = []
+    cell = cell.split('; two-sided')[0]
     for number, percent in re.findall(r'(\d+(?:\.\d+)?)\s*(%?)', cell):
         value = Decimal(number)
         values.append(value / 100 if percent else value)

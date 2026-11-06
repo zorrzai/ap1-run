@@ -1001,7 +1001,9 @@ def test_clopper_pearson_section_zero_failures_ignores_given_rate():
 @pytest.mark.finding('T3-81')
 def test_clopper_pearson_section_failures_show_rate_and_bound():
     # k > 0 (fixed, T3-81): the rate and the exact Clopper-Pearson bound,
-    # rounded up (1/5: 0.6574084...; 2/20: 0.2826185...).
+    # rounded up (1/5: 0.6574084...; 2/20: 0.2826185...), and beside it
+    # the exact two-sided 95% interval, its ends rounded outward to 0.01%
+    # (1/5: 0.50%-71.65%; 2/20: 1.23%-31.70%).
     text = report._section_clopper_pearson({'invocation_figures': {
         'b': {'failures': 2, 'n': 20, 'rate': '18/20'},
         'a': {'failures': 1, 'n': 5}}})
@@ -1009,12 +1011,15 @@ def test_clopper_pearson_section_failures_show_rate_and_bound():
     # percentage, rounded down (4/5 is 80.0 %).
     assert md(
         '|---|---|---|---|---|---|',
-        '| a | 1 | 5 | 4/5 (80.0%) | 0.657409 (65.7409%) | \u2014 |',
-        '| b | 2 | 20 | 18/20 (90.0%) | 0.282619 (28.2619%) | \u2014 |',
+        '| a | 1 | 5 | 4/5 (80.0%) | 0.657409 (65.7409%); two-sided 95% '
+        'interval [0.50%, 71.65%] | \u2014 |',
+        '| b | 2 | 20 | 18/20 (90.0%) | 0.282619 (28.2619%); two-sided 95% '
+        'interval [1.23%, 31.70%] | \u2014 |',
         '') in text
     assert ('- Deterministic computation was invoked on 80.0% of computable '
             'questions (4/5; 1 not invoked; one-sided 95% upper bound on the '
-            'failure rate 65.7409%), under a.') in text
+            'failure rate 65.7409%; two-sided 95% interval [0.50%, 71.65%]), '
+            'under a.') in text
     assert '**Executions by evidence class:**' not in text
 
 
@@ -1988,7 +1993,9 @@ def test_declared_limitations_text():
         'Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the '
         'general form DISPOSITION C-1 adopts for the next version. It is '
         'computed in Decimal (bisection on the binomial distribution) and '
-        'every bound is shown rounded up.\n',
+        'every bound is shown rounded up. Beside it, for k > 0, the report '
+        'gives the exact two-sided 95% Clopper-Pearson interval, as the '
+        'published paper prints it, with its ends rounded outward.\n',
         '### Percentage Answers\n',
         'In a response\'s text, a figure written with % is never compared '
         'with the expected value: SPEC R0.4.2 records the percent flag, '
@@ -2085,6 +2092,54 @@ def test_cells_ev0_record_without_ids_reads_dashes():
 
 # --- Step 4: correct behaviour (failing until fixed) ---
 
+@pytest.mark.req('AP-1 D7.5')
+def test_clopper_pearson_section_k_above_zero_shows_bound_and_interval():
+    # For k > 0, §5 prints the one-sided 95% upper bound (D7.5) and,
+    # beside it, the two-sided 95% interval the published paper prints
+    # (2/10: 50.6902 %, and [2.52 %, 55.61 %]); for k = 0 the bound alone
+    # (0/10: 25.8866 %). The same at n = 500.
+    text = report._section_clopper_pearson({'invocation_figures': {
+        'a_k2_n10': {'failures': 2, 'n': 10},
+        'b_k0_n10': {'failures': 0, 'n': 10},
+        'c_k2_n500': {'failures': 2, 'n': 500},
+        'd_k0_n500': {'failures': 0, 'n': 500}}})
+    assert md(
+        '| a_k2_n10 | 2 | 10 | 8/10 (80.0%) | 0.506902 (50.6902%); '
+        'two-sided 95% interval [2.52%, 55.61%] | \u2014 |',
+        '| b_k0_n10 | 0 | 10 | 10/10 (100.0%) | 0.258866 (25.8866%) '
+        '| \u2014 |',
+        '| c_k2_n500 | 2 | 500 | 498/500 (99.6%) | 0.012538 (1.2538%); '
+        'two-sided 95% interval [0.04%, 1.44%] | \u2014 |',
+        '| d_k0_n500 | 0 | 500 | 500/500 (100.0%) | 0.005974 (0.5974%) '
+        '| \u2014 |') in text
+    assert ('(8/10; 2 not invoked; one-sided 95% upper bound on the failure '
+            'rate 50.6902%; two-sided 95% interval [2.52%, 55.61%]), under '
+            'a_k2_n10.') in text
+    assert ('(10/10; 0 not invoked; one-sided 95% upper bound on the '
+            'failure rate 25.8866%), under b_k0_n10.') in text
+
+
+@pytest.mark.req('AP-1 D7.5')
+@pytest.mark.parametrize('k, n, one_sided, two_sided', [
+    (2, 10, '50.6902', '[2.52%, 55.61%]'),
+    (0, 10, '25.8866', '[0.00%, 30.85%]'),
+    (2, 500, '1.2538', '[0.04%, 1.44%]'),
+    (0, 500, '0.5974', '[0.00%, 0.74%]')])
+def test_one_sided_bound_and_two_sided_interval_as_printed(
+        k, n, one_sided, two_sided):
+    # Both numbers as §5 prints them: the one-sided 95% upper bound (D7.5)
+    # to 0.0001% rounded up, and the two-sided 95% interval the published
+    # paper prints (2/10: [2.52 %, 55.61 %]; 0/10: [0.00 %, 30.85 %]), its
+    # ends rounded outward to 0.01%. The exact ends, from the closed forms
+    # and the binomial tails: 2/10 0.0252107..., 0.5560954...; 0/10 0,
+    # 0.3084971...; 2/500 0.0004847..., 0.0143740...; 0/500 0, 0.0073506...
+    shown = report.round_up(report.clopper_pearson_upper(k, n) * 100,
+                            Decimal('0.0001'))
+    assert str(shown) == one_sided
+    assert report._interval_text(k, n) == \
+        f'two-sided 95% interval {two_sided}'
+
+
 def exact_cp_upper(k, n, alpha=Decimal('0.05')):
     """The exact one-sided 95 % Clopper-Pearson upper bound for k failures
     in n: the p at which P(X <= k; n, p) = alpha, i.e. the 1 - alpha
@@ -2113,10 +2168,11 @@ def exact_cp_upper(k, n, alpha=Decimal('0.05')):
 
 def bound_cell_values(text, metric):
     """The numbers in the 95% Upper Bound cell of `metric`'s row in §5,
-    as fractions (a number followed by '%' divided by 100)."""
+    as fractions (a number followed by '%' divided by 100); not those of
+    the two-sided interval beside the bound."""
     row = next(line for line in text.splitlines()
                if line.startswith(f'| {metric} |'))
-    cell = row.split('|')[5]
+    cell = row.split('|')[5].split('; two-sided')[0]
     return cell, [Decimal(num) / (100 if pct else 1) for num, pct in
                   re.findall(r'(\d+(?:\.\d+)?)\s*(%?)', cell)]
 
@@ -2688,7 +2744,8 @@ def test_clopper_pearson_section_lists_failing_questions_beside_k():
             'failures': 0, 'n': 10, 'condition': 'base',
             'evidence_class': EV2, 'failing_questions': []}}})
     assert (f'| d7_invocation_instruction_removed | 2 (Q02 48/50, Q06 21/50) '
-            f'| 10 | 8/10 (80.0%) | 0.506902 (50.6902%) | `{EV2}` |') in text
+            f'| 10 | 8/10 (80.0%) | 0.506902 (50.6902%); two-sided 95% '
+            f'interval [2.52%, 55.61%] | `{EV2}` |') in text
     assert f'| d7_invocation_base | 0 | 10 | 10/10 (100.0%) |' in text
 
 
