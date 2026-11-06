@@ -4,6 +4,14 @@ import pytest
 
 from ap1_run.runner.console import print_run_report, print_scoring_report
 
+
+# DEC-5: D7.2(b) operation correctness, release coverage and sign inversion
+# have no SPEC section, so the tests below that show their results are
+# provisional (the code is the definition for now). Strict xfails are not.
+PROVISIONAL = pytest.mark.provisional(
+    'DEC-5: shows D7.2(b) operation-correctness, release-coverage or '
+    'sign-inversion results; the code is the provisional definition')
+
 RULE = '=' * 60
 
 
@@ -27,6 +35,7 @@ def run_report(capsys, all_results, conditions=('base',), **lists):
 HEADER = f'\n{RULE}\nSMOKE TEST REPORT\n{RULE}\n\nDISCLAIMER TEXT\n\n'
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-80')
 def test_run_report_with_no_results(capsys):
     assert run_report(capsys, [], conditions=['base', 'instruction_removed']) \
@@ -90,6 +99,7 @@ RESULTS = [
 ]
 
 
+@PROVISIONAL
 def test_run_report_with_results(capsys):
     out = run_report(
         capsys, RESULTS, conditions=['base', 'instruction_removed'],
@@ -201,6 +211,7 @@ PROVENANCE = (
     '  OPERAND-ORIGINATED: 4\n')
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-16')
 def test_scoring_report_full(capsys):
     d1 = {'auto_scored_n': 50, 'adjudicated_n': 10, 'correct': 40,
@@ -224,6 +235,7 @@ def test_scoring_report_full(capsys):
         '  UNMEASURED: 1\n' + PROVENANCE)
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-16')
 def test_scoring_report_defaults_when_values_are_missing(capsys):
     print_scoring_report({'n': 0}, {}, None, {})
@@ -248,6 +260,7 @@ def test_scoring_report_defaults_when_values_are_missing(capsys):
         '  OPERAND-ORIGINATED: 0\n')
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-16')
 def test_scoring_report_without_d1_summary(capsys):
     print_scoring_report({}, {}, None, SUMMARY)
@@ -256,6 +269,7 @@ def test_scoring_report_without_d1_summary(capsys):
         '\n3k. D2 REPRODUCIBILITY:\n' + PROVENANCE)
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-63')
 def test_run_report_single_execution(capsys):
     # Thresholds at one: one scored figure, one execution in a condition,

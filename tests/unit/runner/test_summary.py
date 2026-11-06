@@ -10,6 +10,14 @@ from ap1_run.runner.summary import (
 )
 
 
+# DEC-5: D7.2(b) operation correctness, release coverage and sign inversion
+# have no SPEC section, so the tests below that show their results are
+# provisional (the code is the definition for now). Strict xfails are not.
+PROVISIONAL = pytest.mark.provisional(
+    'DEC-5: shows D7.2(b) operation-correctness, release-coverage or '
+    'sign-inversion results; the code is the provisional definition')
+
+
 def executed(item_id='Q01', condition='base', repeat=1, **fields):
     record = {'item_id': item_id, 'condition': condition, 'repeat': repeat,
               'status': 'EXECUTED'}
@@ -116,6 +124,7 @@ EMPTY = {
 }
 
 
+@PROVISIONAL
 def test_summary_of_nothing():
     assert build_summary([], []) == EMPTY
 
@@ -171,6 +180,7 @@ def test_summary_invocation_figures_without_condition():
         'd7_invocation_': {'failures': 0, 'n': 1, 'rate': '1/1'}}
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-63')
 def test_summary_operation_correctness_and_wrong_operation_split():
     def oc(*outcomes):
@@ -213,6 +223,7 @@ def prov(outcome, *resolutions, originated=()):
             'originated_operands': list(originated)}
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-16', 'T3-5')
 def test_summary_operand_provenance_counts():
     results = [
@@ -281,6 +292,7 @@ def test_consistency_checks_rows_after_a_non_executed_row():
         ])
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-1', 'T3-11', 'T3-63')
 def test_summary_counts_accumulate_after_non_executed_rows():
     def oc(outcome):

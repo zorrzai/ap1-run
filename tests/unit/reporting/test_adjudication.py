@@ -12,6 +12,14 @@ from ap1_run.reporting.adjudication import (
 )
 
 
+# DEC-5: D7.2(b) operation correctness, release coverage and sign inversion
+# have no SPEC section, so the tests below that show their results are
+# provisional (the code is the definition for now). Strict xfails are not.
+PROVISIONAL = pytest.mark.provisional(
+    'DEC-5: shows D7.2(b) operation-correctness, release-coverage or '
+    'sign-inversion results; the code is the provisional definition')
+
+
 CONFIG = {'ap1_version': '1.3', 'ap1_version_doi': '10.5281/zenodo.1'}
 
 
@@ -369,6 +377,7 @@ def test_sheet_without_tool_calls_says_so_and_defaults_unknown():
         '\n\n**Invocation outcome:** `unknown`\n')
 
 
+@PROVISIONAL
 def test_sheet_operation_correctness_listed():
     text = one_sheet(operation_correctness=[
         {'outcome': 'WRONG-OPERATION', 'reason': 'divides by 10'}, {}])
@@ -495,6 +504,7 @@ def coverage(repeat, outcome='PARTIALLY-GOVERNED', item_id='Q01',
     return rc
 
 
+@PROVISIONAL
 def test_sheet_coverage_partially_governed_listed_with_figures():
     text = one_sheet(coverage_records=[
         coverage(1, finding='430.75 not returned',
@@ -508,11 +518,13 @@ def test_sheet_coverage_partially_governed_listed_with_figures():
         '\n')
 
 
+@PROVISIONAL
 def test_sheet_coverage_missing_fields_read_question_mark_and_blank():
     text = one_sheet(coverage_records=[{'outcome': 'PARTIALLY-GOVERNED'}])
     assert '\n- Repeat ?: \n' in text
 
 
+@PROVISIONAL
 def test_sheet_coverage_only_governed_has_no_finding():
     text = one_sheet(coverage_records=[
         coverage(1, 'GOVERNED-RELEASE'), coverage(2, 'COVERAGE-UNOBSERVABLE')])

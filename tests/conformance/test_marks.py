@@ -5,7 +5,8 @@
   rests on the author's proposal rather than SPEC, AP-1 or a maintainer
   decision.
 - ``provisional(reason)``: DEC-5's tests of today's behaviour in a module
-  SPEC does not define; never on a strict xfail.
+  SPEC does not define, and the report, summary, console and sheet tests
+  that show those modules' results; never on a strict xfail.
 - A strict xfail is a test of the correct behaviour for a finding, so it
   carries a ``finding`` mark.
 - Both marks match an explicit inventory below, so a mark added, lost or
@@ -95,6 +96,10 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/tools/test_verify_run_seal.py::test_verify_run_same_text_other_line_endings_verifies[bom]',
 )
 EXPECTED_PROVISIONAL_CASES = {
+    'tests/unit/reporting/test_adjudication.py': 4,
+    'tests/unit/reporting/test_report.py': 17,
+    'tests/unit/runner/test_console.py': 6,
+    'tests/unit/runner/test_summary.py': 4,
     'tests/unit/scoring/provenance/test_classify.py': 2,
     'tests/unit/scoring/provenance/test_trace.py': 4,
     'tests/unit/scoring/test_operation_correctness.py': 120,
