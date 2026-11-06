@@ -40,9 +40,9 @@ from mock_endpoint import MockEndpoint  # noqa: E402
 class CanonicalHash(unittest.TestCase):
 
     def test_known_answer_with_decimal_and_unicode(self):
-        # The vector tests/legacy/verify_hashes.py checks on three platforms
-        # (hashes.yml); its digest is that script's EXPECTED_DIGEST, the
-        # value hash_digest.txt held while it was committed.
+        # The vector tests/regression/verify_hashes.py checks on three
+        # platforms (hashes.yml); its digest is that script's EXPECTED_DIGEST,
+        # the value hash_digest.txt held while it was committed.
         obj = {
             'z_last': 'should sort last',
             'a_first': 'should sort first',
@@ -64,7 +64,7 @@ class CanonicalHash(unittest.TestCase):
 
     def test_verify_hashes_pins_the_same_digest(self):
         # Parsed, not imported: importing the script would import the runner.
-        path = os.path.join(os.path.dirname(HERE), 'legacy', 'verify_hashes.py')
+        path = os.path.join(HERE, 'verify_hashes.py')
         with open(path, encoding='utf-8') as f:
             tree = ast.parse(f.read(), path)
         pins = [ast.literal_eval(node.value) for node in tree.body

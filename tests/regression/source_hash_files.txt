@@ -86,7 +86,6 @@ tests/legacy/verify_conformance.py
 tests/legacy/verify_d72b.py
 tests/legacy/verify_e7_coverage.py
 tests/legacy/verify_findings.py
-tests/legacy/verify_hashes.py
 tests/legacy/verify_inspect.py
 tests/legacy/verify_integration.py
 tests/legacy/verify_phase_b.py
@@ -105,6 +104,7 @@ tests/regression/hard_checks.py
 tests/regression/hash_oracle.py
 tests/regression/run_regression.py
 tests/regression/selftest.py
+tests/regression/verify_hashes.py
 tests/unit/execution/test_context.py
 tests/unit/execution/test_engine.py
 tests/unit/execution/test_evidence.py
