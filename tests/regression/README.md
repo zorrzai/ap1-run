@@ -152,7 +152,8 @@ python tests/regression/verify_hashes.py               # pinned canonical-hash d
 python tests/regression/coverage_report.py OUTDIR      # pytest suite + scenarios
 ```
 
-It needs `requests`, and `coverage` for the coverage report. CI pins
+It needs `requests`; the coverage report also needs pytest and `coverage`
+(`pip install -e '.[dev]'`), and fails if its pytest or scenario run fails. CI pins
 `requests` and `urllib3` with `constraints.txt`, because the
 `transport_errors` golden output contains urllib3's own error text. The
 golden files were made on macOS with Python 3.11; CI runs this harness on
