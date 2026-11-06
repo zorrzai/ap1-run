@@ -6,8 +6,8 @@ import pytest
 
 
 def minimal_config(**overrides):
-    """A config dict with every R0.1 required field, as legacy
-    verify_conformance.py builds it. Keyword overrides replace or add
+    """A config dict with every R0.1 required field, as the retired
+    verify_conformance.py built it. Keyword overrides replace or add
     fields; an override of None deletes the field."""
     cfg = {
         'endpoint_url': 'http://test', 'model': 'test',
