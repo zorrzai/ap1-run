@@ -73,9 +73,9 @@ The Inspect wrapper is unsupported for now: its scoring differs from the
 runner's and it cannot seal against the AP-1 v1.3 text, so nothing it
 produces is an AP-1 result.
 
-**Operating system:** Linux, macOS or Windows. The instrument and all thirteen test
-suites are platform-independent — no OS-specific calls exist in any instrument
-module.
+**Operating system:** Linux, macOS or Windows. The instrument and its tests are
+platform-independent — no OS-specific calls exist in any instrument module. CI
+runs the pytest suite on Linux, macOS and Windows with Python 3.11 and 3.12.
 
 **No GPU, no container, no database, no cloud account, no admin rights.** The
 instrument makes no network call except to the endpoint under test.
@@ -111,8 +111,9 @@ Running the test suites requires none of this — they are offline.
 ```bash
 git clone <this repo>
 cd <clone directory>
-pip install -e .[dev]         # the ap1_run package, requests, and the test tools
-python -m pytest              # offline: unit, conformance, functional and Inspect tests
+pip install -e '.[dev]'       # the ap1_run package, requests, and the test tools
+python -m pytest              # offline: unit, conformance and functional tests
+                              # (the Inspect tests need inspect-ai; see ap1_inspect/)
 ```
 
 **Only the editable install, `pip install -e .`, is supported.** A plain
@@ -122,7 +123,9 @@ change the hash (T3-70 in `docs/REVIEW_FINDINGS.md`). For the same reason,
 keep virtual environments outside the clone.
 
 `pip install -e .` alone installs the package and its one dependency,
-`requests`; the `[dev]` extra adds pytest, mutmut and coverage. Beyond pytest:
+`requests`; the `[dev]` extra adds pytest, mutmut and coverage. Quote it,
+`'.[dev]'`, as above: zsh, the macOS default shell, otherwise reads the
+brackets as a pattern. Beyond pytest:
 
 ```bash
 python tests/regression/run_regression.py   # the regression baseline, about 2 minutes
@@ -350,8 +353,8 @@ One group of tests per clause (`test_ap1_clauses.py`). Each test quotes its
 clause from the sealed standard text with line numbers, and asserts the
 behaviour it requires; `test_clause_quotes.py` checks that every quote is
 verbatim at the lines cited. Clauses the runner **cannot** enforce — the
-independent key implementer and instrument provenance, both process
-obligations, among others — have tests asserting that the specification
+independent key implementer, instrument provenance and other process
+obligations — have tests asserting that the specification
 *declares* the limitation (SPEC §10, NOT ENFORCEABLE) rather than staying
 silent.
 
@@ -360,9 +363,9 @@ python -m pytest tests/conformance/test_spec_file_list.py
 ```
 
 The build specification lists the files of the runner and classifies each
-(SPEC §12.10). This test compares that list with the repository both ways, so
-a module cannot be added, moved or deleted without the specification
-following.
+(SPEC §12.10). This test checks that every listed file exists and that every
+shipped module has a row, so a module cannot be added, moved or deleted
+without the specification following.
 
 **This instrument alone cannot produce a conformance claim.** AP-1 v1.3 §4
 states that a system may not claim compliance having omitted any dimension. D3
