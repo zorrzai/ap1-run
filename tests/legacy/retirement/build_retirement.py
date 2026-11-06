@@ -546,9 +546,14 @@ def join(inv, groups):
             x = next(x for x in groups if x['suite'] == 'verify_spec'
                      and x['check'].startswith(pat))
             new_text, note, src = '', x['note'], x['group']
-            # Proposed for dropping; the maintainer decides with the
-            # legacy-suite retirement. No replacement test, as for 'dropped'.
-            status = 'proposed'
+            # Dropped with the legacy-suite retirement (decision of
+            # 2026-10-20, put to the maintainer on 2026-11-05); SPEC's
+            # §12.9 limit and §12.10 counts go in the same change.
+            note += ('; the limit and §12.10\'s line counts are removed '
+                     'from SPEC with the retirement, and '
+                     '`conformance/test_spec_file_list.py` checks §12.10\'s '
+                     'file list without counts')
+            status = 'dropped'
         elif suite == 'test_findings_mutation.py':
             name = row['check'].strip('`')
             x = next(x for x in groups if x['suite'] == 'test_findings_mutation'

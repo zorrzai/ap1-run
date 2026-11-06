@@ -16,16 +16,16 @@ differs from `run_all_tests.py`'s `SUITES`.
 A legacy suite is retired (deleted, removed from `run_all_tests.py`, noted in the changelog) when:
 
 1. **Every check is mapped** to a new test, or dropped on purpose with a reason. *Status:* 410 of
-   410 checks accounted for: 347 mapped and 63 with no replacement, each with its reason; none
-   pending (summary below). One is dropped. The other 62, `verify_spec.py`'s SPEC line-count
-   checks, are proposed drops: the maintainer decides on them with the legacy-suite retirement,
-   and until then `verify_spec.py` keeps running them.
+   410 checks accounted for: 347 mapped and 63 dropped, each with its reason; none pending
+   (summary below). 62 of the 63 are `verify_spec.py`'s SPEC line-count checks, dropped by the
+   decision of 20 October 2026 that line counts get no test, put to the maintainer on 5 November
+   2026; SPEC's §12.9 limit and §12.10 counts are removed in the same change.
 2. **No coverage is lost**: the new tests execute every line and branch the suite did. *Status:* met
    for every suite, with no exception (section "Coverage" at the end).
 3. **Strength is not lost**: on the modules the suite covers, the new tests' mutation score is at
    least the suite's. *Status:* met for every module (section "Mutation" at the end).
 
-What still blocks deleting each suite is listed at the end ("Blockers").
+How the suites were retired is recorded at the end ("Retirement").
 
 ## How to read the tables
 
@@ -44,8 +44,7 @@ What still blocks deleting each suite is listed at the end ("Blockers").
   type; "test defect" marks a legacy check that passes for a reason other than the one it states (a
   test-infrastructure issue, not a runner defect); finding IDs (`T3-n`, `S3-…`, listed in
   `docs/REVIEW_FINDINGS.md`) are pinned as today's behaviour, to be fixed in later PRs.
-- **dropped**: no new test on purpose, with the reason. **proposed drop**: no new test, with the
-  reason, proposed to the maintainer and not yet decided; the legacy check still runs.
-  **pending**: no mapping or proposal yet; none at present.
+- **dropped**: no new test on purpose, with the reason. **proposed drop** (no new test, proposed
+  to the maintainer and not yet decided) and **pending** (no mapping or proposal yet): none.
 - **Steps**: step 2 is the reorganisation that moved the code into `src/ap1_run/` and added its
   first unit tests; step 3 is the work that wrote the tests mapped here, in groups G1–G9.

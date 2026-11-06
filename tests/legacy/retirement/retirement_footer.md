@@ -107,23 +107,23 @@ legacy numbers from being exact, both test-infrastructure issues, not runner def
   run cleanly but execute none of the mutated code (mutmut stops early: "could not find any test
   case for any mutant"). That is the `audit` / `verify_r41` case above; read it as 0.
 
-## Blockers to deleting the suites
+## Retirement
 
-- **All suites:** the maintainer's approval, the gate before the fixes.
-- **`verify_spec.py`:** the maintainer's decision on its 62 checks, which this map proposes to
-  drop: line counts are not behaviour, and the ≤300-line limit would go with them. If they are
-  dropped, what they check, SPEC §12.9 (the limit) and the §12.10 line-count table, should go in
-  the same change (with README's sentence on the limit), or they go stale unchecked. Nothing else
-  blocks it.
-- **`verify_hashes.py`:** `.github/workflows/hashes.yml` runs it; switch the workflow to
-  `pytest tests/unit/foundation/test_numeric.py -k verify_hashes_input` (or to the whole unit
-  suite) in the same change that deletes it.
-- **`run_all_tests.py` and the docs:** the registry, `.github/workflows/full_suite.yml` (runs
-  `run_all_tests.py`), and the docs that cite "14 offline suites" (README, SPEC, the paper's next
-  revision) change with the deletion. The regression baseline also runs in CI (`regression.yml`,
-  Ubuntu, Python 3.11 and 3.12); it is not registered in `run_all_tests.py`, so it is unaffected.
-- **`verify_inspect.py`:** not a blocker, but note that its replacement tests in `tests/inspect/`
-  need inspect-ai and skip without it, as the legacy agreement test did. The full-suite workflow
-  installs `.[dev]`, without the `inspect` extra, so in CI both skip; run them in an environment
-  with inspect-ai (`ap1-run-inspect`).
-- None of the suites is blocked by a missing test, a coverage gap or a lower mutation score.
+Every criterion above is met, and the maintainer agreed on 16 October 2026 to retiring the suites
+"once every old check is covered by a new test"; the 62 line-count checks are dropped as stated
+under criterion 1. The suites are deleted in the change that follows this map's last rebuild. In
+the same change:
+
+- `run_all_tests.py` and its step in `.github/workflows/full_suite.yml` go; the workflow runs
+  `python -m pytest`, as it already did;
+- `verify_hashes.py` stays, moved to `tests/regression/verify_hashes.py`: the cross-platform job
+  (`.github/workflows/hashes.yml`) runs it on Linux, macOS and Windows without the dev extras;
+- SPEC §12.9's 300-line limit and the "Lines" column of §12.10 are removed, and
+  `conformance/test_spec_file_list.py` checks §12.10's file list against the repository without
+  counts;
+- `verify_inspect.py`'s replacement tests in `tests/inspect/` need inspect-ai and skip without it,
+  as the legacy agreement test did; CI installs `.[dev]` only, so run them in an environment with
+  inspect-ai.
+
+This map, the build script and the group maps it reads are frozen at that change (the map moves to
+`tests/RETIREMENT.md`); paths and line numbers in it refer to the suites as they were before it.
