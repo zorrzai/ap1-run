@@ -1,6 +1,6 @@
 # Unit tests
 
-Run with `python -m pytest` (after `pip install -e .[dev]`). The
+Run with `python -m pytest` (after `pip install -e '.[dev]'`). The
 configuration is in `pyproject.toml`.
 
 ## Layout

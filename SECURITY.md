@@ -63,7 +63,7 @@ rejects attribute access, imports, function calls, subscripting,
 comprehensions and name resolution. Its self-test asserts that each of these
 is refused.
 
-**Execution mechanisms present in the codebase:**
+**Execution mechanisms in the shipped code (`src/`, `tools/`, `example/`):**
 
 - `re.compile` in `adapter.py` and `numeric.py` — compiles regular
   expressions for credential masking and numeric parsing. No user-supplied
@@ -73,12 +73,17 @@ is refused.
 - `import` in `run.py` — imports the operator’s ground-truth module,
   `ground_truth_example.py`, from the fixture directory (`--fixture-dir`,
   default `example/`), which it puts first on `sys.path`.
-- `subprocess` in `version.py` — runs `git rev-parse HEAD` to cross-check the
-  runner version.
+- `subprocess` in `version.py` — runs `git rev-parse HEAD` and
+  `git status --porcelain` to cross-check the runner version.
+
+The test and CI scripts under `tests/` also use `subprocess`, to run `git`,
+pytest and the runner.
 
 **Network.** The tests that drive the runner end to end, and the regression
 baseline, send their requests to a local mock HTTP server on loopback
-(`tests/fixtures/mock_endpoint.py`), not to a model endpoint.
+(`tests/fixtures/mock_endpoint.py`), not to a model endpoint. Those are the
+only HTTP requests the tests are written to make; the suite needs no network
+access (see "Verifying this" above).
 
 **This matters because the expression being evaluated originates from the
 system under test.** A model that emits a malicious expression must not be
