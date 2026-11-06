@@ -88,16 +88,6 @@ def files(tmp_path):
                 'calculator_path': paths['calculator']})
 
 
-# T3-47's design, "the timestamp inside seal_hash", rests on an open
-# question; SPEC R1.1's "Sealing the same inputs twice yields identical
-# hashes" is unchanged until it is answered. The tests that pin that
-# design say so.
-TIMESTAMP_INSIDE = pytest.mark.provisional(
-    'T3-47: seal_hash binds the timestamp (so two seals of the same inputs '
-    'differ); the design rests on an open question, and SPEC R1.1 still '
-    'says sealing the same inputs twice yields identical hashes')
-
-
 def digest_entry(final, derivable=True, required_operation=None):
     """One item of the expected-values digest (T3-48)."""
     return {'final': final, 'derivable': derivable,
@@ -112,7 +102,6 @@ def make_seal(files, config=CONFIG, **kwargs):
 
 # -- seal(): the record --------------------------------------------------
 
-@TIMESTAMP_INSIDE
 @pytest.mark.finding('T3-68', 'T3-47', 'T3-48')
 def test_seal_record(files, frozen):
     record = make_seal(files, runner_source_hash='f' * 64)
@@ -1066,12 +1055,10 @@ def _refused(fn):
 @pytest.mark.req('R1.1')
 def test_seal_same_inputs_sealed_twice_give_identical_input_hashes(
         files, monkeypatch):
-    # SPEC R1.1's verification contract: "Sealing the same inputs twice
-    # yields identical hashes." Whatever T3-47's fix does with the
-    # timestamp (inside seal_hash, or a separate hash beside it), every
-    # hash of an input stays the same at two times. The input hashes are
-    # named, so a new hash that binds the timestamp is not mistaken for an
-    # input hash. Passes today.
+    # SPEC R1.1's verification contract: the hash of each sealed input
+    # does not depend on the time of sealing (the timestamp is inside
+    # seal_hash only, T3-47). The input hashes are named, so a hash that
+    # binds the timestamp is not mistaken for an input hash.
     stamps = iter(['2020-01-01T00:00:00+00:00', '2026-10-15T00:00:00+00:00'])
 
     class Clock:
@@ -1107,17 +1094,13 @@ def test_verify_seal_timestamp_moved_one_second_refused(files):
     assert 'timestamp' in str(error) or 'hash' in str(error), error
 
 
-@pytest.mark.proposal(
-    'T3-47: the timestamp inside seal_hash; SPEC R1.1 says sealing the '
-    'same inputs twice gives identical hashes, and the register leaves '
-    'the choice to the fix')
-@TIMESTAMP_INSIDE
 @pytest.mark.finding('T3-47')
 @pytest.mark.req('R1.1')
 def test_seal_hash_two_timestamps_give_two_hashes(files, monkeypatch):
     # Correct (AP-1 v1.3 §5.3 "hashed and timestamped before execution";
-    # SPEC R1.1 "hash and timestamp"): the timestamp is bound by seal_hash,
-    # so a backdated timestamp no longer matches the hash.
+    # SPEC R1.1: the same inputs give the same seal_hash only at the same
+    # timestamp): the timestamp is bound by seal_hash, so a backdated
+    # timestamp no longer matches the hash.
     stamps = iter(['2020-01-01T00:00:00+00:00', '2026-10-15T00:00:00+00:00'])
 
     class Clock:

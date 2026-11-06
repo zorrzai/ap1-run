@@ -77,7 +77,6 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/execution/test_engine.py::test_execute_item_refusal_is_executed_not_unmeasured[refusal]',
     'tests/unit/execution/test_engine.py::test_execute_item_unrecognised_later_response_error_state_names_round',
     'tests/unit/execution/test_evidence_r41.py::test_r41_ev3_rows_are_declared_exceptions_while_ev3_is_not_built',
-    'tests/unit/execution/test_seal.py::test_seal_hash_two_timestamps_give_two_hashes',
     'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom-calculator]',
     'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom-fixture]',
     'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom-ground_truth]',
@@ -152,7 +151,6 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/tools/test_verify_run_seal.py::test_verify_run_same_text_other_line_endings_verifies[bom]',
 )
 EXPECTED_PROVISIONAL_CASES = {
-    'tests/unit/execution/test_seal.py': 2,
     'tests/unit/reporting/test_adjudication.py': 4,
     'tests/unit/reporting/test_report.py': 17,
     'tests/unit/runner/test_console.py': 6,
@@ -206,11 +204,10 @@ def test_provisional_marks_have_a_dec5_reason_and_no_strict_xfail(collected):
     for t in collected:
         for mark in t['provisional']:
             args = mark['args']
-            # DEC-5 (a module without a SPEC section, the code its
-            # provisional definition), or T3-47 (a design that rests on an
-            # open question: the timestamp inside seal_hash)
+            # DEC-5: a module without a SPEC section, the code its
+            # provisional definition
             if (len(args) != 1 or not isinstance(args[0], str)
-                    or not args[0].startswith(('DEC-5', 'T3-47'))):
+                    or not args[0].startswith('DEC-5')):
                 bad.append((t['nodeid'], 'reason'))
         if t['provisional'] and t['strict_xfail']:
             bad.append((t['nodeid'], 'provisional strict xfail'))
