@@ -109,8 +109,8 @@ Declared before a reviewer finds them:
   a sealed evaluation set.
 
 - **EV-2 on the Inspect path is argued structurally and is NOT
-  mechanically verified by verify_conformance.py.** The conformance
-  suite tests runner internals; it does not trace the Inspect
+  mechanically verified by the conformance tests (tests/conformance/).**
+  They test runner internals; it does not trace the Inspect
   provider-to-scorer chain. The argument below (in Evidence Class) is
   a prose argument, not a machine-checked proof. The EV-2 claim is
   scoped to the OpenAI Responses chain at inspect-ai 0.3.255;

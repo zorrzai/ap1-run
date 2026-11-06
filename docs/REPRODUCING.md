@@ -152,7 +152,9 @@ restoring the original ground-truth module".
   ```
 
 - **Commands:** `python smoke_test.py` still works; it is now a shim for
-  `ap1_run.run`, also available as the `ap1-run` command. The test suites are
-  in `tests/legacy/`; `python run_all_tests.py` runs them as before, with
-  or without the install step: it puts this clone's `src/` first on the
-  suites' path.
+  `ap1_run.run`, also available as the `ap1-run` command. The original test
+  suites moved to `tests/legacy/` and were later retired, with
+  `run_all_tests.py`: `python -m pytest` runs their replacements, and
+  `tests/RETIREMENT.md` maps each old check to its new test. At the
+  September runs' commit, `python run_all_tests.py` still works as shown
+  above.
