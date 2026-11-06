@@ -35,16 +35,19 @@ real adapter and HTTP transport:
   give the runner command-line `args`, make `copy_paths` inside the copy
   (`{"from": "to"}`, after the config edits), and name the `output_dir` the
   outputs are read from; the default `output/` must then stay empty
-  (`default_output.txt`). `copy_paths`, `output_dir` and `copy_output`
-  (published runs copied into the copy's `output/`) need a scratch copy.
+  (`default_output.txt`). `crlf_paths` lists files given CRLF line endings
+  in the copy, made at setup so that git's line-ending handling cannot
+  change them. `copy_paths`, `output_dir`, `copy_output` (published runs
+  copied into the copy's `output/`) and `crlf_paths` need a scratch copy.
 - **Scratch copy.** A scenario that sets `"scratch_copy"` (its value says
   why) runs in a scratch copy of the repository, without `.git` and
-  `output/`, instead of the real tree. Three do: `cli_paths` (it checks that
+  `output/`, instead of the real tree. Four do: `cli_paths` (it checks that
   the default `output/` stays empty, which needs a disposable one),
   `tool_generate_findings` (the tool writes `findings/FINDINGS.md` at a
   fixed path) and `clean_no_options` (with no options the runner reads
   `example/config.json` and writes to the default `output/`, so the config
-  edit and the outputs need a disposable tree).
+  edit and the outputs need a disposable tree) and `crlf_sealed_inputs` (it
+  turns tracked files to CRLF).
 - **No git.** Every run gets `GIT_DIR` pointing nowhere. The runner
   cross-checks `VERSION` against git `HEAD` and records `runner_modified`;
   the golden output pins a run without git (as in a copy without `.git`),
@@ -117,12 +120,18 @@ golden difference, and `--update` cannot write over it.
   seals needs the driver's capture first.
 
 `python tests/regression/selftest.py` tests these checks directly, with known
-answers.
+answers. One of them recomputes the published September `runner_source_hash`
+(`da0739eb…`, docs/REPRODUCING.md) with the oracle's rule from the tag
+`e7-quantise-fix`, so the clone needs its tags (`git fetch --tags`; CI checks
+out full history). That tree is nearly flat (no `tests/` or `src/`), so this
+pins how the files are read, framed and sorted; `check_source_files.py` pins
+which files are in scope.
 
 **The files the source hash covers** are listed in `source_hash_files.txt`:
-the tracked `.py` files (from `git ls-files`, tests included) that the
-`runner_source_hash` rule takes in. `check_source_files.py` compares the list
-with the tree and runs as its own CI step, so a move, a new module or a
+the files the hash oracle's rule (`hash_oracle.source_hash_files()`) finds in
+the checkout, tests included, less any that git does not track (named on
+stderr, not listed). `check_source_files.py` compares the list with the tree
+and runs as its own CI step, so a move, a new module or a
 deletion shows as a reviewed diff of the list. It is checked at each PR head;
 a commit that changes the set updates the list (`--update`).
 
@@ -174,6 +183,10 @@ and `run_all_tests.py` records the new count in the same commit.
 | `t3_38_unknown_tool` | **T3-38**: an unoffered tool trips the FATAL consistency check; no report |
 | `t3_39_crash` | **T3-39**: a non-string expression crashes the run |
 | `non_ascii_config` | a decline marker with U+2019 in the resolved config: the config hash's UTF-8 rule through the real seal |
+| `crlf_sealed_inputs` | `clean` with the fixture, questions, ground-truth module and AP-1 text in CRLF bytes (the config declares the CRLF text's hash): a runner that read any sealed input, or its source files, in text mode fails the hash oracle; `ground_truth_hash` is the September seals' (`033ce73d…`) |
+| `decimal_trailing_zero` | `answer_tolerance` `"0.010"` in the resolved config: the config hash keeps a Decimal's exact string (a runner that normalised it to `0.01` fails the hash oracle) |
+| `decimal_two_trailing_zeros` | the same with `"0.0100"` (exponent -4), so a normaliser limited to some exponents fails one of the two |
+| `decimal_integral` | `answer_tolerance` `"10"`: the same for an integral Decimal (a runner that wrote it as `1E+1` or through float as `10.0` fails the hash oracle) |
 | `seal_refused` | AP-1 text hash mismatch: SealError before any request |
 | `config_no_tools` | config without tools: exit 1 |
 | `mini_config` | the shipped `example/config_mini.json` is refused at load today (`model-unsupported` is not a permitted omission reason) |

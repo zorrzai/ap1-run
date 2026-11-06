@@ -9,10 +9,14 @@ rules with known answers, so a broken oracle cannot pass by agreeing with
 a broken runner.
 """
 
+import ast
+import contextlib
 import hashlib
+import io
 import json
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 import types
@@ -25,17 +29,20 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(os.path.dirname(HERE), 'fixtures'))
 
+import check_source_files  # noqa: E402
 import driver  # noqa: E402  (snapshot() only; main() is not run)
 import hard_checks  # noqa: E402
 import hash_oracle  # noqa: E402
+import run_regression  # noqa: E402
 from mock_endpoint import MockEndpoint  # noqa: E402
 
 
 class CanonicalHash(unittest.TestCase):
 
     def test_known_answer_with_decimal_and_unicode(self):
-        # The vector verify_hashes.py checks on three platforms; its digest
-        # is the committed hash_digest.txt.
+        # The vector tests/legacy/verify_hashes.py checks on three platforms
+        # (hashes.yml); its digest is that script's EXPECTED_DIGEST, the
+        # value hash_digest.txt held while it was committed.
         obj = {
             'z_last': 'should sort last',
             'a_first': 'should sort first',
@@ -54,6 +61,18 @@ class CanonicalHash(unittest.TestCase):
         self.assertEqual(
             hash_oracle.canonical_hash(obj),
             '831709b2231846ed20fd63ff0bc0764d73cee50db271f733e6a2f1c377c7cff3')
+
+    def test_verify_hashes_pins_the_same_digest(self):
+        # Parsed, not imported: importing the script would import the runner.
+        path = os.path.join(os.path.dirname(HERE), 'legacy', 'verify_hashes.py')
+        with open(path, encoding='utf-8') as f:
+            tree = ast.parse(f.read(), path)
+        pins = [ast.literal_eval(node.value) for node in tree.body
+                if isinstance(node, ast.Assign)
+                and [getattr(t, 'id', None) for t in node.targets]
+                == ['EXPECTED_DIGEST']]
+        self.assertEqual(pins, [
+            '831709b2231846ed20fd63ff0bc0764d73cee50db271f733e6a2f1c377c7cff3'])
 
     def test_float_is_refused(self):
         with self.assertRaises(hash_oracle.HashCheckError):
@@ -190,6 +209,170 @@ class SourceHash(unittest.TestCase):
             b'a.py\x00A\x00b.py\x00B\x00pkg/c.py\x00C\x00').hexdigest()
         self.assertEqual(hash_oracle.runner_source_hash(self.root), want)
 
+
+
+class NothingRunIsNotAPass(unittest.TestCase):
+    """REORG-1: the harness exits non-zero when it runs no scenario."""
+
+    def test_no_scenarios(self):
+        empty = tempfile.mkdtemp(prefix='ap1-no-scenarios-')
+        saved, run_regression.SCENARIOS = run_regression.SCENARIOS, empty
+        try:
+            with contextlib.redirect_stdout(io.StringIO()), \
+                    contextlib.redirect_stderr(io.StringIO()) as err:
+                code = run_regression.main([])
+        finally:
+            run_regression.SCENARIOS = saved
+            shutil.rmtree(empty)
+        self.assertNotEqual(code, 0)
+        self.assertIn('nothing was checked', err.getvalue())
+
+    def test_zero_runs(self):
+        with contextlib.redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit) as cm:
+                run_regression.main(['--runs', '0'])
+        self.assertNotEqual(cm.exception.code, 0)
+
+class SourceFileList(unittest.TestCase):
+    """check_source_files.py takes its list from the oracle's rule."""
+
+    def test_a_rule_change_shows_in_the_list(self):
+        # A rule change git ls-files with the excluded prefixes cannot see:
+        # the oracle stops hashing __init__.py files.
+        rule = hash_oracle.source_hash_files
+
+        def narrower(base_dir):
+            return [p for p in rule(base_dir)
+                    if os.path.basename(p) != '__init__.py']
+        with open(check_source_files.LIST, encoding='utf-8') as f:
+            pinned = f.read().splitlines()
+        hash_oracle.source_hash_files = narrower
+        try:
+            listed = check_source_files.tracked_source_files()
+        finally:
+            hash_oracle.source_hash_files = rule
+        self.assertEqual(
+            sorted(set(pinned) - set(listed)),
+            sorted(p for p in pinned if p.endswith('/__init__.py')))
+        self.assertTrue(set(listed) < set(pinned))
+
+    def test_untracked_files_are_named_not_listed(self):
+        root = tempfile.mkdtemp(prefix='ap1-source-list-')
+        try:
+            files = {'a.py': 'tracked', 'pkg/b.py': 'tracked',
+                     'output/c.py': 'tracked', 'scratch.py': 'untracked',
+                     'notes.txt': 'tracked'}
+            for rel in files:
+                path = os.path.join(root, *rel.split('/'))
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                with open(path, 'w') as f:
+                    f.write('x = 1\n')
+            env = check_source_files.git_env()
+            subprocess.run(['git', 'init', '-q', root], check=True, env=env)
+            subprocess.run(['git', '-C', root, 'add', '--']
+                           + [r for r, kind in files.items()
+                              if kind == 'tracked'], check=True, env=env)
+            repo, check_source_files.REPO = check_source_files.REPO, root
+            err = io.StringIO()
+            try:
+                with contextlib.redirect_stderr(err):
+                    listed = check_source_files.tracked_source_files()
+            finally:
+                check_source_files.REPO = repo
+            self.assertEqual(listed, ['a.py', 'pkg/b.py'])
+            self.assertIn('1 untracked file(s)', err.getvalue())
+            self.assertIn('scratch.py', err.getvalue())
+        finally:
+            shutil.rmtree(root)
+
+class PublishedSourceHash(unittest.TestCase):
+    """The oracle's source-hash rule, on the code of the September runs,
+    gives the runner_source_hash their seals record (docs/REPRODUCING.md).
+
+    The tree is the tag's blobs as stored, written out byte for byte: at
+    the tag, .py files are stored as they were on disk when the runs were
+    sealed (-text, mixed CRLF and LF), and reading the blobs directly keeps
+    a checkout's line-ending conversion out of it. Needs the tag in the
+    clone (CI checks out with full history).
+
+    What this pins: the byte reading (the tag has CRLF and LF files), the
+    path encoding, the NUL framing and the sort, over a nearly flat tree
+    (44 .py files at the top, 7 in ap1_inspect/, 2 in example/; no tests/,
+    src/ or tools/). It cannot see a rule change that only affects deeper
+    or other directories, such as no longer hashing tests/: which files
+    are in scope is pinned by check_source_files.py."""
+
+    TAG = 'e7-quantise-fix'
+    # docs/REPRODUCING.md, and report.md section 1 of both September runs.
+    PUBLISHED = ('da0739eb396e65468d33adb7953aa828fdde9bee6ec1c78e56c83c345'
+                 'defd795')
+    RUNS = ('run_e_mini', 'run_f_sol')
+
+    def setUp(self):
+        self.root = tempfile.mkdtemp(prefix='ap1-oracle-tag-')
+
+    def tearDown(self):
+        shutil.rmtree(self.root)
+
+    def git(self, *args, stdin=None):
+        # The clone this file is in, whatever GIT_DIR a caller has set.
+        repo = os.path.dirname(os.path.dirname(HERE))
+        return subprocess.run(['git', '-C', repo, *args], input=stdin,
+                              capture_output=True, check=True,
+                              env=check_source_files.git_env()).stdout
+
+    def write_tag_tree(self):
+        try:
+            listing = self.git('ls-tree', '-r', '-z', self.TAG + '^{tree}')
+        except (OSError, subprocess.CalledProcessError) as e:
+            # Fails rather than skips: a skip would let a CI checkout
+            # without tags pass this check silently.
+            self.fail(
+                f'cannot read the tag {self.TAG} from this clone '
+                f'({getattr(e, "stderr", None) or e!r}). This test needs '
+                f'git and the tag: a shallow clone, a clone without tags, '
+                f'or a copy without .git does not have it. Run '
+                f'"git fetch --tags" (CI checks out with fetch-depth: 0). '
+                f'It fails rather than skips so that a missing tag cannot '
+                f'pass silently.')
+        entries = []
+        for entry in listing.split(b'\0'):
+            if entry:
+                meta, path = entry.split(b'\t', 1)
+                mode, kind, sha = meta.split()
+                self.assertEqual((kind, mode in (b'100644', b'100755')),
+                                 (b'blob', True), path)
+                entries.append((path.decode('utf-8'), sha))
+        out = self.git('cat-file', '--batch',
+                       stdin=b''.join(sha + b'\n' for _, sha in entries))
+        pos = 0
+        for rel, sha in entries:
+            header_end = out.index(b'\n', pos)
+            got_sha, kind, size = out[pos:header_end].split()
+            self.assertEqual((got_sha, kind), (sha, b'blob'))
+            start = header_end + 1
+            data = out[start:start + int(size)]
+            pos = start + int(size) + 1
+            path = os.path.join(self.root, *rel.split('/'))
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, 'wb') as f:
+                f.write(data)
+        return entries
+
+    def test_the_published_value_is_the_sealed_one(self):
+        repo = os.path.dirname(os.path.dirname(HERE))
+        for run in self.RUNS:
+            with open(os.path.join(repo, 'output', run, 'report.md'),
+                      encoding='utf-8') as f:
+                rows = [line.strip() for line in f
+                        if line.startswith('| `runner_source_hash` |')]
+            self.assertEqual(
+                rows, [f'| `runner_source_hash` | `{self.PUBLISHED}` |'], run)
+
+    def test_rule_recomputes_the_published_hash_from_the_tag(self):
+        self.write_tag_tree()
+        self.assertEqual(hash_oracle.runner_source_hash(self.root),
+                         self.PUBLISHED)
 
 class ReplayComparison(unittest.TestCase):
 

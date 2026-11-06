@@ -1,0 +1,11 @@
+{
+  "description": "A resolved config with an integral Decimal: answer_tolerance \"10\" (the clean answers are exact, so the scoring is clean's). Canonical JSON writes a Decimal as its exact string (R0.4.3), so the config hash covers \"10\"; a runner that wrote str(d.normalize()) (\"1E+1\") or an integral Decimal through float (\"10.0\") fails the hash oracle. The second Decimal shape beside decimal_trailing_zero: the config has one Decimal field, so each shape needs its own scenario.",
+  "seal_attempts": 1,
+  "seal_records": 1,
+  "exercises": ["R0.4.3 canonical JSON of an integral Decimal", "answer_tolerance \"10\""],
+  "extends": "clean",
+  "config": {
+    "repeat_count": "1",
+    "answer_tolerance": "10"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "description": "The clean run with all four sealed input files in CRLF bytes: the fixture, the question set, the ground-truth module and the AP-1 text. The seal hashes each file's raw bytes, so a runner that read any of them in text mode would hash the LF form and fail the hash oracle. The ground-truth module is CRLF as the published September seals hashed it (FINDINGS_ERRATA N2): its ground_truth_hash is theirs, 033ce73d…. It is also a .py file the runner source hash covers, so a text-mode read there fails too. The config declares the CRLF AP-1 text's hash, 6ecd964a… (computed outside the runner: shasum -a 256 of the file with every line ending CRLF), so the seal's declared-hash comparison also runs on the CRLF bytes.",
+  "seal_attempts": 1,
+  "seal_records": 1,
+  "exercises": ["file hashes of raw bytes (R0.4.3)", "sealed inputs with CRLF line endings", "the declared AP-1 text hash against CRLF bytes (R1.1)", "runner_source_hash over a CRLF .py file"],
+  "scratch_copy": "Runs in a scratch copy: the CRLF files are made there, at the sealed default paths, which in the real tree are tracked LF files.",
+  "extends": "clean",
+  "config": {
+    "repeat_count": "1",
+    "ap1_text_hash": "6ecd964a48939adcc0e555f91a57c7fd8135307071bfe25a77951d22b9e93f98"
+  },
+  "crlf_paths": [
+    "example/fixture.json",
+    "example/questions.json",
+    "example/ground_truth_example.py",
+    "reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md"
+  ]
+}

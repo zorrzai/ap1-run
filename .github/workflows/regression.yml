@@ -3,7 +3,28 @@ name: Regression Baseline
 on:
   push:
     branches: [main]
+  # Pull requests to any base, so a PR stacked on another PR's branch is
+  # checked too. "edited" covers a change of base (a stacked PR retargeted
+  # to main), so the checks run again after it; until then they tested the
+  # merge with the old base. What such a run checks out depends on when
+  # GitHub has recomputed the PR's merge commit. Only a branch rule on main
+  # ("require branches to be up to date before merging", with these checks
+  # required; main has none yet) guarantees a PR is checked against main as
+  # it is now. A title or body edit also runs them:
+  # a job skipped by an "if" reports success, even for a required check, so
+  # filtering those edits out could turn a failed check green.
   pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+# One run per PR and workflow at a time: a newer event cancels the PR's
+# older run, so a series of edits or pushes ends in one run of the latest
+# state. Each push to main gets its own group (its commit SHA), so no main
+# run is cancelled or replaced and every main commit keeps its own result.
+# A cancelled run reports "cancelled", which does not satisfy a required
+# check.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
@@ -18,6 +39,10 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Full history and tags: selftest.py recomputes the published
+          # September source hash from the tag e7-quantise-fix.
+          fetch-depth: 0
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -38,8 +63,9 @@ jobs:
         run: |
           log="$RUNNER_TEMP/regression.log"
           python tests/regression/run_regression.py 2>&1 | tee "$log"
-          # The harness exits 0 when it runs no scenarios, so also require
-          # the summary line to show at least one run and every run matching.
+          # Also require the summary line to show at least one run and every
+          # run matching, not only the exit code (the harness exits non-zero
+          # when it finds no scenarios, REORG-1; this stays as a second check).
           summary=$(grep -E '^[0-9]+/[0-9]+ scenario runs match golden output' "$log" | tail -n 1 || true)
           if [[ "$summary" =~ ^([0-9]+)/([0-9]+)\  ]] \
               && (( BASH_REMATCH[2] >= 1 && BASH_REMATCH[1] == BASH_REMATCH[2] )); then
