@@ -150,7 +150,13 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/scoring/test_answer_outcome.py::test_refusal_outcome_is_provisional_and_routed[content-filter]',
     'tests/unit/scoring/test_answer_outcome.py::test_refusal_outcome_is_provisional_and_routed[refusal]',
     'tests/unit/scoring/test_figure_id.py::test_identify_figure_any_later_figure_competes_whatever_its_symbol',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_digits_extraction_cannot_read_go_to_adjudication[Total 144.00x]',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_digits_extraction_cannot_read_go_to_adjudication[Total: 144.00USD]',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_digits_extraction_cannot_read_go_to_adjudication[Total: USD144.00]',
     'tests/unit/scoring/test_figure_id.py::test_identify_figure_earlier_figures_are_the_working',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_later_percentage_answer_is_not_auto_matched[15.20 was my first guess, the real answer is 182.40%]',
+    'tests/unit/scoring/test_figure_id.py::test_identify_figure_later_percentage_answer_is_not_auto_matched[I first got $15.20 but the right answer is 182.4%]',
+    "tests/unit/scoring/test_figure_id.py::test_identify_figure_later_percentage_answer_is_not_auto_matched[Monthly interest is $15.20. Actually no, it's 18.24%]",
     'tests/unit/scoring/test_figure_id.py::test_identify_figure_matching_non_final_token_is_not_auto_matched',
     'tests/unit/scoring/test_figure_id.py::test_identify_figure_percentage_valued_answer_auto_matches',
     'tests/unit/scoring/test_figure_id.py::test_identify_figure_structured_field_never_skips_decline_or_collision[False-markers1-ADJUDICATE-DECLINE]',
@@ -183,7 +189,7 @@ EXPECTED_PROVISIONAL_CASES = {
     'tests/unit/scoring/test_operation_correctness.py': 109,
     'tests/unit/scoring/test_release_coverage.py': 31,
 }
-MIN_STRICT_XFAIL_CASES = 53
+MIN_STRICT_XFAIL_CASES = 59
 
 
 @pytest.fixture(scope='module')

@@ -555,6 +555,50 @@ def test_identify_figure_percentage_answer_as_report_section_13_says(
     assert identify(resp, '18.5', **kwargs)['outcome'] == outcome
 
 
+LATER_PERCENTAGE = pytest.mark.xfail(
+    strict=True, raises=AssertionError,
+    reason='T3-3: a percentage after the match never competes (so "assuming '
+           'the 1.2% rate" is no rival answer); a final answer written as a '
+           'percentage is therefore still AUTO-MATCH on the earlier figure')
+
+
+@LATER_PERCENTAGE
+@T3_3_RULE
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.0')
+@pytest.mark.parametrize('text', [
+    'I first got $15.20 but the right answer is 182.4%',
+    '15.20 was my first guess, the real answer is 182.40%',
+    'Monthly interest is $15.20. Actually no, it\'s 18.24%',
+])
+def test_identify_figure_later_percentage_answer_is_not_auto_matched(text):
+    # T3-3's residue beside the earlier-figure cases: the response's own
+    # answer is the percentage that follows the match.
+    assert identify(response(text))['outcome'] != AUTO_MATCH
+
+
+DIGITS_NOT_READ = pytest.mark.xfail(
+    strict=True, raises=AssertionError,
+    reason='SPEC R2.0 step 4: AUTO-NO-FIGURE when no numeric token is '
+           'present; a figure glued to letters is not an R0.4.2 token, so a '
+           'response whose only figure is "144.00USD" is auto-scored as no '
+           'figure, and counts against the D1 rate')
+
+
+@DIGITS_NOT_READ
+@pytest.mark.proposal('a response with digits but no R0.4.2 token routed to '
+                      'adjudication, not AUTO-NO-FIGURE: SPEC R2.0 step 4 '
+                      'defines AUTO-NO-FIGURE by tokens, not digits')
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.0', 'R0.4.2', 'AP-1 D1')
+@pytest.mark.parametrize('text', [
+    'Total: 144.00USD', 'Total: USD144.00', 'Total 144.00x'])
+def test_identify_figure_digits_extraction_cannot_read_go_to_adjudication(
+        text):
+    # A correct answer the extractor cannot read is not "no figure".
+    assert identify(response(text), '144.00')['outcome'] != AUTO_NO_FIGURE
+
+
 # --- The configured separators (T3-41) ---
 
 @pytest.mark.finding('T3-41')
