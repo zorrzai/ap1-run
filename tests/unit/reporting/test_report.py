@@ -18,6 +18,14 @@ from ap1_run.reporting.report import (
 )
 
 
+# DEC-5: D7.2(b) operation correctness, release coverage and sign inversion
+# have no SPEC section, so the tests below that show their results are
+# provisional (the code is the definition for now). Strict xfails are not.
+PROVISIONAL = pytest.mark.provisional(
+    'DEC-5: shows D7.2(b) operation-correctness, release-coverage or '
+    'sign-inversion results; the code is the provisional definition')
+
+
 def md(*lines):
     return '\n'.join(lines)
 
@@ -379,6 +387,7 @@ RC_HEAD = (
 )
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-62')
 def test_d73_without_data_says_so_for_both_parts():
     # T3-62: part B describes coverage as a comparison against every tool
@@ -445,6 +454,7 @@ def test_d73_altered_transcriptions_twenty_has_no_more_row():
     assert 'more) |' not in text
 
 
+@PROVISIONAL
 def test_d73_release_coverage_counts_and_percentages():
     text = report._section_d73({'release_coverage_results': [
         tr('GOVERNED-RELEASE'), tr('COVERAGE-UNOBSERVABLE'),
@@ -460,12 +470,14 @@ def test_d73_release_coverage_counts_and_percentages():
         ''))
 
 
+@PROVISIONAL
 def test_d73_release_coverage_percentage_one_decimal():
     text = report._section_d73({'release_coverage_results': [
         tr('GOVERNED-RELEASE'), tr('X'), tr('X')]})
     assert '| `GOVERNED-RELEASE` | 1 | 33.3% |' in text
 
 
+@PROVISIONAL
 def test_d73_partially_governed_listed():
     text = report._section_d73({'release_coverage_results': [
         tr('PARTIALLY-GOVERNED', 4, finding='430.75 not returned'),
@@ -480,6 +492,7 @@ def test_d73_partially_governed_listed():
         ''))
 
 
+@PROVISIONAL
 def test_d73_partially_governed_capped_at_twenty():
     text = report._section_d73({'release_coverage_results': [
         tr('PARTIALLY-GOVERNED', i) for i in range(1, 24)]})
@@ -488,6 +501,7 @@ def test_d73_partially_governed_capped_at_twenty():
     assert text.endswith('| ... | ... | ... | (3 more) |\n')
 
 
+@PROVISIONAL
 def test_d73_partially_governed_twenty_has_no_more_row():
     text = report._section_d73({'release_coverage_results': [
         tr('PARTIALLY-GOVERNED', i) for i in range(1, 21)]})
@@ -603,6 +617,7 @@ def test_d72b_without_counts_says_so():
         '*No operation correctness data available.*\n')
 
 
+@PROVISIONAL
 def test_d72b_counts_in_fixed_order_with_total():
     text = report._section_d72b_counts({'operation_correctness_counts': {
         'WRONG-OPERATION': 8, 'OPERATION-CORRECT': 26, 'OTHER': 1}})
@@ -617,6 +632,7 @@ def test_d72b_counts_in_fixed_order_with_total():
         '')
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-63')
 def test_d72b_wrong_operation_split_shown_when_non_zero():
     text = report._section_d72b_counts({
@@ -635,6 +651,7 @@ def test_d72b_wrong_operation_split_shown_when_non_zero():
         ''))
 
 
+@PROVISIONAL
 def test_d72b_wrong_operation_split_missing_keys_read_zero():
     text = report._section_d72b_counts({
         'operation_correctness_counts': {'WRONG-OPERATION': 1},
@@ -644,6 +661,7 @@ def test_d72b_wrong_operation_split_missing_keys_read_zero():
     assert '| Item answer undetermined (adjudicated) | 0 |' in text
 
 
+@PROVISIONAL
 def test_d72b_wrong_operation_split_all_zero_is_omitted():
     text = report._section_d72b_counts({
         'operation_correctness_counts': {'OPERATION-CORRECT': 1},
@@ -666,6 +684,7 @@ def test_provenance_without_data_says_so():
         *PROV_HEAD, '*No operand provenance data available.*\n')
 
 
+@PROVISIONAL
 def test_provenance_step_table_with_split_steps():
     text = report._section_operand_provenance({
         'operand_step_counts': {1: 6, 2: 1, 3: 0, 4: 1, 5: 2},
@@ -688,6 +707,7 @@ def test_provenance_step_table_with_split_steps():
         '')
 
 
+@PROVISIONAL
 def test_provenance_step_percentages_one_decimal():
     text = report._section_operand_provenance({
         'operand_step_counts': {1: 1, 2: 1, 3: 1},
@@ -708,6 +728,7 @@ def test_provenance_source_count_falls_back_to_step_1_count():
     assert '| 1 | Declared constant | 0 | 0.0% |' in text
 
 
+@PROVISIONAL
 def test_provenance_split_keys_missing_read_zero():
     text = report._section_operand_provenance({'operand_step_counts': {2: 0}})
     assert '| 1 | Source match | 0 |' in text
@@ -717,6 +738,7 @@ def test_provenance_split_keys_missing_read_zero():
     assert '| 5 | Originated, no traceable basis | 0 |' in text
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-16')
 def test_provenance_outcomes_only_shows_dashes_for_percentages():
     text = report._section_operand_provenance({
@@ -1234,6 +1256,7 @@ def test_format_dim_result_d1_defaults_counts_to_zero():
 
 # -- Boundaries: one observation, twenty-one rows -------------------------
 
+@PROVISIONAL
 def test_d73_single_result_is_one_hundred_percent():
     text = report._section_d73({
         'transcription_results': [tr('TRANSCRIBED-EXACT')],
@@ -1242,6 +1265,7 @@ def test_d73_single_result_is_one_hundred_percent():
     assert '| `GOVERNED-RELEASE` | 1 | 100.0% |' in text
 
 
+@PROVISIONAL
 def test_d73_twenty_one_rows_show_one_more():
     text = report._section_d73({
         'transcription_results': [tr('TRANSCRIBED-ALTERED', i)
@@ -1252,6 +1276,7 @@ def test_d73_twenty_one_rows_show_one_more():
     assert text.endswith('\n| ... | ... | ... | (1 more) |\n')
 
 
+@PROVISIONAL
 def test_d72b_wrong_operation_split_item_wrong_missing_reads_zero():
     text = report._section_d72b_counts({
         'operation_correctness_counts': {'WRONG-OPERATION': 1},
