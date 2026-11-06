@@ -48,6 +48,19 @@ updated, and the standard governs.
   and closes with the disclosure of interests. No contract, evidence class or
   scoring rule changes. The entries above are left as published.
 
+### Revision, November 2026
+
+- **§12.9** no longer limits instrument modules to 300 lines, and **§12.10**
+  no longer records line counts; the declared exceptions for `report.py` and
+  `trace.py` go with the limit. `tests/conformance/test_spec_file_list.py`
+  checks §12.10's file list against the repository instead, without counts.
+  (`trace.py`'s exception recorded why `STRUCTURAL_CONSTANTS` exists: in the
+  first 1000-execution live run, 288 of 818 originated operands were the
+  literal value 1; R2.4 states the rule.)
+- **§12.10** drops the rows of the retired legacy test suites
+  (`tests/legacy/`) and `run_all_tests.py`. No contract, evidence class or
+  scoring rule changes.
+
 ---
 
 ## 1. Purpose, and the one property that matters
@@ -1024,72 +1037,57 @@ published with it — presuppose an open licence, and a licence prohibiting
 commercial use or modification would contradict AP-1 §10.2 and make R4.2
 unsatisfiable.
 
-**12.9 Module size constraint: ≤300 lines.**  Each instrument module (the
-`.py` files under `src/ap1_run/` that implement R0–R3) is kept at or under 300
-lines.  The constraint is ≤300, not <300; a module at exactly 300 complies.
-This was stated explicitly when the counts were corrected on 2 August 2026.
+**12.9 No module size limit.**  Earlier versions of this specification kept
+each instrument module at or under 300 lines, with declared exceptions, and
+recorded every file's line count in §12.10. Both were removed in November 2026
+(see "Revision, November 2026" above): a line count is not behaviour, git
+already records file sizes, and a table of counts needed a specification edit
+with every fix. What is checked instead is the file list: the conformance test
+`tests/conformance/test_spec_file_list.py` compares §12.10's list with the
+repository both ways, without counts.
 
-Line counts are measured by `(Get-Content).Count`, which counts every line
-including blank lines.  Earlier figures in this specification were measured by
-`Measure-Object -Line`, which excludes blank lines and produced systematically
-lower numbers.  Those figures were wrong and have been corrected.
-
-Test suites (`tests/legacy/verify_*.py`, `run_all_tests.py`), demonstration tooling
-(`src/ap1_run/run.py`, the parts it drives in `src/ap1_run/runner/`, and its
-`smoke_test.py` shim), and the example ground-truth module
-(`example/ground_truth_example.py`) are **not** instrument modules and are
-**excluded** from this constraint.
-
-**Declared exception — `src/ap1_run/reporting/report.py` (768 lines).**  `report.py` is a cohesive
-renderer with thirteen sections.  Fragmenting it would make the rendering flow
-harder to follow without improving auditability.  This exception is documented,
-not implicit.
-
-**Declared exception — `src/ap1_run/scoring/provenance/trace.py` (371 lines).**  The expansion
-adds `STRUCTURAL_CONSTANTS` (the additive and multiplicative identities 0 and
-1) to the provenance classifier.  These are structural in standard financial
-formulae and their addition was established by the first 1000-execution live
-run: 288 of 818 originated operands were the literal value 1.  The change is
-a module-level constant definition, not added logic.
-
-19 of 21 instrument modules comply.
+Instrument modules are the `.py` files under `src/ap1_run/` that implement
+R0–R3. Demonstration tooling (`src/ap1_run/run.py`, the parts it drives in
+`src/ap1_run/runner/`, and its `smoke_test.py` shim), the tools in `tools/`,
+and the example modules (`example/ground_truth_example.py`,
+`example/calculator_tool.py`) are not.
 
 **12.10 File classification.**
 
-| File | Lines | Classification |
-|---|---|---|
-| `src/ap1_run/reporting/report.py` | 768 | Instrument module (excepted §12.9) |
-| `src/ap1_run/scoring/provenance/trace.py` | 371 | Instrument module (excepted §12.9) |
-| `src/ap1_run/scoring/provenance/classify.py` | 232 | Instrument module |
-| `src/ap1_run/scoring/provenance/audit.py` | 38 | Instrument module |
-| `src/ap1_run/foundation/numeric.py` | 300 | Instrument module |
-| `src/ap1_run/execution/engine.py` | 300 | Instrument module |
-| `src/ap1_run/execution/evidence.py` | 296 | Instrument module |
-| `src/ap1_run/scoring/operation_correctness.py` | 300 | Instrument module |
-| `src/ap1_run/reporting/adjudication.py` | 284 | Instrument module |
-| `src/ap1_run/execution/seal.py` | 282 | Instrument module |
-| `src/ap1_run/execution/seal_constants.py` | 89 | Instrument module |
-| `src/ap1_run/foundation/config.py` | 257 | Instrument module |
-| `src/ap1_run/scoring/reproducibility.py` | 197 | Instrument module |
-| `src/ap1_run/scoring/figure_id.py` | 194 | Instrument module |
-| `src/ap1_run/foundation/adapter.py` | 180 | Instrument module |
-| `src/ap1_run/scoring/invocation.py` | 171 | Instrument module |
-| `src/ap1_run/scoring/accuracy.py` | 142 | Instrument module |
-| `src/ap1_run/execution/context.py` | 121 | Instrument module |
-| `src/ap1_run/execution/perturbation_guard.py` | 116 | Instrument module |
-| `src/ap1_run/scoring/transcription.py` | 110 | Instrument module |
-| `src/ap1_run/scoring/release_coverage.py` | 169 | Instrument module |
-| `src/ap1_run/foundation/transcript.py` | 74 | Instrument module |
-| `src/ap1_run/run.py` | 339 | Demonstration tooling |
-| `src/ap1_run/runner/console.py` | 185 | Demonstration tooling |
-| `src/ap1_run/runner/credentials.py` | 98 | Demonstration tooling |
-| `src/ap1_run/runner/executions.py` | 259 | Demonstration tooling |
-| `src/ap1_run/runner/outputs.py` | 99 | Demonstration tooling |
-| `src/ap1_run/runner/settings.py` | 165 | Demonstration tooling |
-| `src/ap1_run/runner/summary.py` | 242 | Demonstration tooling |
-| `example/ground_truth_example.py` | 571 | Example / demonstration |
-| `example/calculator_tool.py` | 224 | Example / demonstration |
-| `tools/generate_findings.py` | 524 | FINDINGS.md generator from artifacts |
+| File | Classification |
+|---|---|
+| `src/ap1_run/reporting/report.py` | Instrument module |
+| `src/ap1_run/scoring/provenance/trace.py` | Instrument module |
+| `src/ap1_run/scoring/provenance/classify.py` | Instrument module |
+| `src/ap1_run/scoring/provenance/audit.py` | Instrument module |
+| `src/ap1_run/foundation/numeric.py` | Instrument module |
+| `src/ap1_run/execution/engine.py` | Instrument module |
+| `src/ap1_run/execution/evidence.py` | Instrument module |
+| `src/ap1_run/scoring/operation_correctness.py` | Instrument module |
+| `src/ap1_run/reporting/adjudication.py` | Instrument module |
+| `src/ap1_run/execution/seal.py` | Instrument module |
+| `src/ap1_run/execution/seal_constants.py` | Instrument module |
+| `src/ap1_run/foundation/config.py` | Instrument module |
+| `src/ap1_run/scoring/reproducibility.py` | Instrument module |
+| `src/ap1_run/scoring/figure_id.py` | Instrument module |
+| `src/ap1_run/foundation/adapter.py` | Instrument module |
+| `src/ap1_run/scoring/invocation.py` | Instrument module |
+| `src/ap1_run/scoring/accuracy.py` | Instrument module |
+| `src/ap1_run/execution/context.py` | Instrument module |
+| `src/ap1_run/execution/perturbation_guard.py` | Instrument module |
+| `src/ap1_run/scoring/transcription.py` | Instrument module |
+| `src/ap1_run/scoring/release_coverage.py` | Instrument module |
+| `src/ap1_run/foundation/transcript.py` | Instrument module |
+| `src/ap1_run/run.py` | Demonstration tooling |
+| `src/ap1_run/runner/console.py` | Demonstration tooling |
+| `src/ap1_run/runner/credentials.py` | Demonstration tooling |
+| `src/ap1_run/runner/executions.py` | Demonstration tooling |
+| `src/ap1_run/runner/outputs.py` | Demonstration tooling |
+| `src/ap1_run/runner/settings.py` | Demonstration tooling |
+| `src/ap1_run/runner/summary.py` | Demonstration tooling |
+| `example/ground_truth_example.py` | Example / demonstration |
+| `example/calculator_tool.py` | Example / demonstration |
+| `tools/generate_findings.py` | FINDINGS.md generator from artifacts |
 
 **Research questions are not held in this document.** Those on which the field
 has no settled answer are put to reviewers in AP-1 v1.3 §14. The standard asks;

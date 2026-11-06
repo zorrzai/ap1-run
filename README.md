@@ -453,11 +453,6 @@ example/                     a worked fixture, questions, ground truth and confi
 reference/                   the sealed AP-1 text
 ```
 
-Instrument modules are kept at or under 300 lines so a reviewer can read
-the instrument in an afternoon, with one declared exception recorded in
-the build specification. Test suites, the worked example and the smoke
-test sit outside that constraint by design and are longer.
-
 Full architecture, verification contracts per module, threat model and
 conformance mapping: [`docs/SPEC.md`](docs/SPEC.md).
 
