@@ -55,7 +55,9 @@ so that selftest.py can recompute the September runs' published hash
 shows those seals can still be reproduced. That tree is nearly flat (no
 tests/ or src/), so the tag check pins how files are read, framed and
 sorted under the old rule; the file list pins which files the current
-rule takes in.
+rule takes in. tools/verify_run_seal.py has its own legacy rules for
+those records (no seal_format; LEGACY_SEALS): it does not recompute their
+runner_source_hash, and warns that it did not.
 
 Version fields: the tag and commit are read from the tree's VERSION file
 here, independently (first line that is not blank or a comment; 'unknown'
