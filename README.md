@@ -71,7 +71,9 @@ The optional Inspect integration (`ap1_inspect/`) additionally requires
 `inspect-ai` and is not needed to run AP-1 directly.
 The Inspect wrapper is unsupported for now: its scoring differs from the
 runner's and it cannot seal against the AP-1 v1.3 text, so nothing it
-produces is an AP-1 result.
+produces is an AP-1 result. CI does not install `inspect-ai`, so no CI job
+checks the wrapper's scorer or task: the tests in `tests/inspect/` that run
+them skip there.
 
 **Operating system:** Linux, macOS or Windows. The instrument and its tests are
 platform-independent — no OS-specific calls exist in any instrument module. CI

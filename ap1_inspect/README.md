@@ -5,7 +5,9 @@ Thin integration layer that runs AP-1 evaluations inside the
 
 **Unsupported for now.** This wrapper's scoring differs from the runner's, and
 it cannot seal against the AP-1 v1.3 text, so nothing it produces is an AP-1
-result.
+result. CI does not check it: the tests in `tests/inspect/` that need
+`inspect-ai` skip there, because CI installs `.[dev]` only. Run them in an
+environment with the `inspect` extra installed after changing anything here.
 
 **No measurement logic lives here.** Every classification call — evidence,
 invocation, accuracy, operation correctness, provenance — goes to the
