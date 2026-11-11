@@ -905,6 +905,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/execution/context.py:62-80` (`format_fixture_context`);
   `src/ap1_run/execution/engine.py:285` (`_build_messages`)
 - Breaks: SPEC R2.4 (provenance resolved against the delivered context)
+- Addressed by: fixed; commits 8968c7ef; test
+  `tests/unit/execution/test_context.py::test_shown_text_carries_exactly_the_delivered_values`
 
 ### Low
 
