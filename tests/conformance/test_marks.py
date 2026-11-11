@@ -50,6 +50,8 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/functional/test_step4_g1_invocation.py::test_run_d71_bound_counts_questions_not_repeats',
     'tests/functional/test_step4_g1_invocation.py::test_run_refusal_executed_adjudicated_outside_d71_and_d1[content-filter]',
     'tests/functional/test_step4_g1_invocation.py::test_run_refusal_executed_adjudicated_outside_d71_and_d1[refusal]',
+    'tests/functional/test_step4_g1_invocation.py::test_run_refusal_rate_and_non_ascii_digit_reach_the_report[arabic-indic]',
+    'tests/functional/test_step4_g1_invocation.py::test_run_refusal_rate_and_non_ascii_digit_reach_the_report[full-width]',
     'tests/functional/test_step4_g2_provenance.py::test_run_question_with_mixed_executions_is_unmeasurable_in_every_one',
     'tests/functional/test_step4_g2_provenance.py::test_run_report_states_operands_unobservable_count',
     'tests/functional/test_step4_g2_provenance.py::test_run_unknown_name_in_expression_is_operands_unobservable',
