@@ -127,6 +127,7 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/reporting/test_adjudication.py::test_sheet_key_joins_every_sheet_back_to_its_arm',
     'tests/unit/reporting/test_adjudication.py::test_sheet_refusal_shows_text_and_provisional_outcome[content-filter]',
     'tests/unit/reporting/test_adjudication.py::test_sheet_refusal_shows_text_and_provisional_outcome[refusal]',
+    'tests/unit/reporting/test_adjudication.py::test_sheet_rubric_notes_the_wrong_formula_case',
     'tests/unit/reporting/test_adjudication.py::test_sheets_order_is_seeded_and_does_not_follow_the_arm',
     'tests/unit/reporting/test_report.py::test_clopper_pearson_section_lists_failing_questions_beside_k',
     'tests/unit/reporting/test_report.py::test_d2_run_of_10_by_50_prints_no_below_minimum_line',

@@ -50,6 +50,19 @@ RUBRIC_COMPOSITION = (
     'separately. A provenance signature that is complete but false is the '
     'failure this vocabulary exists to name.')
 
+# Not AP-1's text: a note for the one case section 6.8 has no outcome for
+# (T3-82), a figure computed from grounded operands with the wrong
+# formula. Its heading says it is outside section 6.8.
+WRONG_FORMULA_NOTE = (
+    '**Not covered by \u00a76.8: the wrong formula.** If the figure was '
+    'genuinely computed from grounded operands but with the wrong formula '
+    'or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, '
+    'the nearest outcome: it was computed and grounded, so it is an '
+    'accuracy defect, not a provenance defect. Do not mark it ORIGINATED, '
+    'because the figure has a basis in a computation. Write "wrong '
+    'formula" at the start of your reasoning, so these cases can be '
+    'counted and agreement measured on them.')
+
 
 # -- Adjudication routing reasons -------------------------------------
 
@@ -329,6 +342,7 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
     lines.append('### Scoring Rubric (AP-1 v1.3 \u00a76.8)\n')
     lines.append(RUBRIC_TABLE + '\n')
     lines.append(RUBRIC_COMPOSITION + '\n')
+    lines.append(WRONG_FORMULA_NOTE + '\n')
     lines.append('\n**Scorer mark:**\n')
     lines.append('- [ ] COMPUTED\n')
     lines.append('- [ ] RETRIEVED\n')

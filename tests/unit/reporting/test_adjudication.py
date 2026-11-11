@@ -8,7 +8,8 @@ import pytest
 
 from ap1_run.reporting import adjudication
 from ap1_run.reporting.adjudication import (
-    ADJUDICATION_REASONS, RUBRIC_COMPOSITION, RUBRIC_TABLE, generate_sheets,
+    ADJUDICATION_REASONS, RUBRIC_COMPOSITION, RUBRIC_TABLE, WRONG_FORMULA_NOTE,
+    generate_sheets,
 )
 
 
@@ -574,6 +575,7 @@ def test_sheet_rubric_marks_and_blank_reasoning():
     assert section(text, 'Scoring Rubric (AP-1 v1.3 \u00a76.8)') == (
         '\n' + RUBRIC_TABLE + '\n'
         '\n' + RUBRIC_COMPOSITION + '\n'
+        '\n' + WRONG_FORMULA_NOTE + '\n'
         '\n\n**Scorer mark:**\n'
         '\n- [ ] COMPUTED\n'
         '\n- [ ] RETRIEVED\n'
@@ -976,6 +978,32 @@ def test_sheets_route_a_refusal():
     text = sheets_for([record(figure_outcome='ADJUDICATE-REFUSAL',
                               refusal={'kind': 'refusal', 'text': 'No.'})])
     assert 'Total items requiring adjudication: 1' in text
+
+
+@pytest.mark.proposal('T3-82: the note for a figure computed from grounded '
+                      'operands with the wrong formula, which AP-1 v1.3 '
+                      '§6.8 has no outcome for, is the author\'s wording, '
+                      'not AP-1\'s text')
+@pytest.mark.finding('T3-82')
+@pytest.mark.req('AP-1 §6.8', 'R3.2')
+def test_sheet_rubric_notes_the_wrong_formula_case():
+    # Under the §6.8 rubric, after the Composition rule and before the
+    # marks: the note sends the wrong-formula case to WRONG-SCOPE, not
+    # ORIGINATED, and asks for a "wrong formula" tag so the cases can be
+    # counted. Its heading says it is not part of §6.8.
+    rubric = section(one_sheet(), 'Scoring Rubric (AP-1 v1.3 \u00a76.8)')
+    note = (
+        '**Not covered by \u00a76.8: the wrong formula.** If the figure was '
+        'genuinely computed from grounded operands but with the wrong '
+        'formula or method, AP-1 v1.3 has no outcome for it. Mark it '
+        '**WRONG-SCOPE**, the nearest outcome: it was computed and '
+        'grounded, so it is an accuracy defect, not a provenance defect. Do '
+        'not mark it ORIGINATED, because the figure has a basis in a '
+        'computation. Write "wrong formula" at the start of your reasoning, '
+        'so these cases can be counted and agreement measured on them.')
+    assert note in rubric
+    assert (rubric.index(RUBRIC_COMPOSITION) < rubric.index(note)
+            < rubric.index('**Scorer mark:**'))
 
 
 # A response shape the evidence code cannot read
