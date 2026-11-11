@@ -437,9 +437,10 @@ declared alongside its reason.
 result on a sample is still a sample, so the runner prints the exact one-sided
 95% upper bound on the failure rate — `1 − 0.05^(1/n)`, the Clopper–Pearson
 bound at zero failures. Forty-nine items with no failures reads *"0/49; upper
-bound 5.9%"*, not *"100%"*. The familiar 3/n rule is its large-n approximation
-and is shown only for n ≥ 30; below that it overstates, and at n < 3 it returns
-a value above 1, which is not a rate.
+bound 6.0%"*, not *"100%"*: the exact bound is 5.93%, and an upper bound is
+rounded up, so the figure shown is never below it. The familiar 3/n rule is its
+large-n approximation and is shown only for n ≥ 30; below that it overstates,
+and at n < 3 it returns a value above 1, which is not a rate.
 
 **For D7.1, n counts computable questions, not executions.** Repeats of a
 question are not independent trials, so ten questions run fifty times each are
