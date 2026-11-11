@@ -380,6 +380,10 @@ AP-1 v1.3: [10.5281/zenodo.21755443](https://doi.org/10.5281/zenodo.21755443) ·
 concept DOI [10.5281/zenodo.21324954](https://doi.org/10.5281/zenodo.21324954) ·
 [standard repository](https://github.com/zorrzai/admissibility-protocol)
 
+Paper: *Did You Actually Compute That? Numerical Admissibility for AI Systems*
+(Rupp, Mandrake, Lewis, 2026):
+[10.5281/zenodo.24029707](https://doi.org/10.5281/zenodo.24029707)
+
 ---
 
 ## Layout
