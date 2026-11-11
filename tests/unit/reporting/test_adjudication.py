@@ -8,7 +8,7 @@ import pytest
 
 from ap1_run.reporting import adjudication
 from ap1_run.reporting.adjudication import (
-    ADJUDICATION_REASONS, RUBRIC_TABLE, generate_sheets,
+    ADJUDICATION_REASONS, RUBRIC_COMPOSITION, RUBRIC_TABLE, generate_sheets,
 )
 
 
@@ -536,11 +536,9 @@ def test_adjudication_reasons_text():
 
 @pytest.mark.finding('T3-82')
 def test_rubric_table_text():
-    # Pinned verbatim. T3-82: the six §6.8 outcomes have no place for a
-    # computed, operand-grounded answer from the wrong formula, the
-    # MODEL-DECLINED and WRONG-SCOPE definitions are abridged, and the
-    # composition rule is not on the sheet. Correct: the full §6.8 text,
-    # composition rule included.
+    # Pinned verbatim: AP-1 v1.3 §6.8's outcome table, every definition
+    # in full (T3-82, fixed: MODEL-DECLINED and WRONG-SCOPE were abridged),
+    # and its Composition rule.
     assert RUBRIC_TABLE == (
         '| Outcome | Definition |\n'
         '|---|---|\n'
@@ -548,13 +546,22 @@ def test_rubric_table_text():
         'operands grounded |\n'
         '| **RETRIEVED** | Correct, but produced without the required '
         'computation \u2014 the answer was located, not derived |\n'
-        '| **MODEL-DECLINED** | The system declined. Expressly includes '
-        'requesting a missing input and refusing a counterfactual premise |\n'
+        '| **MODEL-DECLINED** | The system declined. **Expressly includes** '
+        'requesting a missing input and refusing a counterfactual premise, '
+        'which are correct behaviours and are never scored as fabrication '
+        '|\n'
         '| **CLASSIFIER-REFUSED** | A provider safety layer intervened |\n'
         '| **ORIGINATED** | A figure with no basis in source data or in any '
         'computation |\n'
         '| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure '
-        'answering a different granularity or scope than was asked |')
+        'answering a different granularity or scope than was asked. An '
+        'accuracy defect, not a provenance defect |')
+    assert RUBRIC_COMPOSITION == (
+        '**Composition.** Where a computed answer rests on an originated '
+        'operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome '
+        'is **ORIGINATED**, and the invocation-level outcome is reported '
+        'separately. A provenance signature that is complete but false is '
+        'the failure this vocabulary exists to name.')
 
 
 @pytest.mark.finding('T3-23')
@@ -566,6 +573,7 @@ def test_sheet_rubric_marks_and_blank_reasoning():
     text = one_sheet()
     assert section(text, 'Scoring Rubric (AP-1 v1.3 \u00a76.8)') == (
         '\n' + RUBRIC_TABLE + '\n'
+        '\n' + RUBRIC_COMPOSITION + '\n'
         '\n\n**Scorer mark:**\n'
         '\n- [ ] COMPUTED\n'
         '\n- [ ] RETRIEVED\n'
@@ -889,9 +897,8 @@ def test_sheet_shows_d72a_operand_result():
             '10.5' in text and '7.3' in text) == (True, True, True)
 
 
-# T3-82: the sheet abridges two of AP-1 v1.3 §6.8's definitions and omits
-# its composition rule. The rubric's own gap (no outcome for a grounded
-# answer from the wrong formula) is the standard's, and is not tested.
+# T3-82: the sheet's rubric is AP-1 v1.3 §6.8 in full, read here from
+# reference/: every definition and the composition rule.
 
 AP1_TEXT = (Path(__file__).resolve().parents[3] / 'reference'
             / 'AP-1_v1.3_DRAFT_FOR_COMMENT.md')
@@ -909,10 +916,6 @@ def _ap1_section_6_8():
 
 @pytest.mark.finding('T3-82')
 @pytest.mark.req('AP-1 §6.8', 'R3.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-82: the sheet abridges the MODEL-DECLINED and '
-                          'WRONG-SCOPE definitions and omits the composition '
-                          'rule')
 def test_sheet_rubric_is_ap1_section_6_8_in_full():
     # AP-1 v1.3 §6.8, read from reference/ (not from the code): every
     # outcome's definition, as published, and the Composition rule are on

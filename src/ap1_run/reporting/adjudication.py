@@ -16,7 +16,8 @@ Verification Contract (SPEC.md l.685-686):
   fixture files, or transcript.
 
 Rubric source: AP-1 v1.3 section 6.8 (reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md
-lines 524-535). Six outcomes:
+lines 524-537), in full: the six outcomes and the Composition rule. Six
+outcomes:
   COMPUTED, RETRIEVED, MODEL-DECLINED, CLASSIFIER-REFUSED, ORIGINATED, WRONG-SCOPE.
 """
 
@@ -28,16 +29,26 @@ from ap1_run.scoring.answer_outcome import refusal_outcome
 
 
 # -- Six-outcome rubric from AP-1 v1.3 section 6.8 --------------------
-# Verified against reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md lines 528-535
+# AP-1 v1.3 section 6.8 word for word: the outcome table and the
+# Composition rule (reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md lines 528-537).
+# The section's last paragraph, on response statuses, is not a rubric
+# entry: an UNMEASURED or VOID record never gets a sheet.
 
 RUBRIC_TABLE = """| Outcome | Definition |
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation \u2014 the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |"""
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |"""
+
+RUBRIC_COMPOSITION = (
+    '**Composition.** Where a computed answer rests on an originated '
+    'operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is '
+    '**ORIGINATED**, and the invocation-level outcome is reported '
+    'separately. A provenance signature that is complete but false is the '
+    'failure this vocabulary exists to name.')
 
 
 # -- Adjudication routing reasons -------------------------------------
@@ -317,6 +328,7 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
     # 6. Six-outcome rubric with space for mark and reasoning
     lines.append('### Scoring Rubric (AP-1 v1.3 \u00a76.8)\n')
     lines.append(RUBRIC_TABLE + '\n')
+    lines.append(RUBRIC_COMPOSITION + '\n')
     lines.append('\n**Scorer mark:**\n')
     lines.append('- [ ] COMPUTED\n')
     lines.append('- [ ] RETRIEVED\n')
