@@ -319,3 +319,28 @@ def test_run_chained_item_without_intermediates_is_unmeasurable(
     provenance = section(report, '7b. D7.2(a)')
     assert table_count(provenance, 'OPERANDS-GROUNDED') == 18
     assert 'UNMEASURABLE' in provenance
+
+
+# -- a name the calculator does not know ----------------------------------
+
+@pytest.mark.proposal(
+    'T3-2: a name the calculator does not know (2400 * rate / 12) hides '
+    'the value the model meant by it, so the call is OPERANDS-UNOBSERVABLE '
+    'like any expression whose operands cannot all be read; AP-1 D7.2(a) '
+    'does not name this case')
+@pytest.mark.finding('T3-2')
+def test_run_unknown_name_in_expression_is_operands_unobservable(full_run):
+    # Q03 calls '2400 * rate / 12'; the calculator errors on 'rate', and
+    # the reply states the right figure anyway. 2400 and 12 trace, but the
+    # value meant by 'rate' is invisible: the call is OPERANDS-UNOBSERVABLE
+    # and the answer is not COMPUTED from grounded operands.
+    code, summary, _ = full_run({'Q03/*/*': [
+        {'call': '2400 * rate / 12'},
+        {'say': 'The calculator returned an error, but the monthly '
+                'interest charge is $36.00.'}]})
+    assert code == 0
+    runs = executions(summary, 'Q03')
+    assert len(runs) == 2
+    assert [[p['outcome'] for p in r['provenance_results']] for r in runs] \
+        == [['OPERANDS-UNOBSERVABLE']] * 2
+    assert [r['answer_outcome'] for r in runs] == [None, None]

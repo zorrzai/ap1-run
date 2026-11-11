@@ -196,7 +196,7 @@ each of their checks went.
 | `transport_errors` | 429, 500 and 401 in round 0 and mid-loop, a dropped connection with retries, a non-JSON body |
 | `t3_1_unrecognised_shape` | **T3-1** (fixed): EV-0 (Anthropic- and Responses-shaped bodies, mid-loop failure) is UNOBSERVABLE, out of the D7.1 n and listed per evidence class; an all-EV-0 arm has no D7.1 figure |
 | `t3_2_leading_whitespace` | **T3-2**: a leading space or tab before the expression; since the fix it is stripped and read, so the chained launder is ORIGINATED, ORIGINATED, as the no-space contrast |
-| `t3_16_malformed_calls` | **T3-16**: malformed or wrongly keyed calls are INVOKED; since the fix they are OPERANDS-/OPERATION-UNOBSERVABLE in D7.2(a)/(b), not dropped; a calculator error |
+| `t3_16_malformed_calls` | **T3-16**: malformed or wrongly keyed calls are INVOKED; since the fix they are OPERANDS-/OPERATION-UNOBSERVABLE in D7.2(a)/(b), not dropped; a call with a name the calculator does not know (`2400 * rate / 12`), which errors and, since the unknown-name fix, is OPERANDS-UNOBSERVABLE, not grounded |
 | `t3_5_constant_magnitude` | **T3-5**: `-12` and `-1` grounded by `constant_magnitude`; a sign-inverted source field for contrast |
 | `t3_38_unknown_tool` | **T3-38**: an unoffered tool trips the FATAL consistency check; no report |
 | `t3_39_crash` | **T3-39**: a non-string calculator expression; since the fix its operands are unreadable and the run completes |

@@ -11,7 +11,7 @@ import json
 from decimal import Decimal, InvalidOperation
 
 from ap1_run.scoring.provenance.trace import (
-    extract_operands, resolve_operand, _collect_constants,
+    extract_operands, resolve_operand, unknown_names, _collect_constants,
 )
 
 
@@ -32,6 +32,11 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
     string, a boolean or string constant, or only named constants) is
     OPERANDS-UNOBSERVABLE, never vacuously grounded (T3-2; AP-1 v1.3
     D7.2(a): the unobservable case is declared, never silently skipped).
+    So is one that holds a name the calculator does not know
+    ('2400 * rate / 12'): the value meant by 'rate' can't be traced, so
+    the operands it can read are not enough to call the call grounded.
+    An originated operand beside such a name is still OPERAND-ORIGINATED:
+    the origination is observed.
 
     Returns: dict with:
         outcome: 'OPERANDS-GROUNDED' | 'OPERAND-ORIGINATED' |
@@ -41,6 +46,7 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
         quantisation_findings: list of quantisation findings
     """
     operands = extract_operands(expression_str)
+    hidden = unknown_names(expression_str)
 
     intermediates = ground_truth.get('intermediates', [])
     permitted_transforms = config.get('permitted_transformations', [])
@@ -83,6 +89,8 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
         outcome = 'OPERANDS-UNOBSERVABLE'
     elif originated:
         outcome = 'OPERAND-ORIGINATED'
+    elif hidden:
+        outcome = 'OPERANDS-UNOBSERVABLE'
     else:
         outcome = 'OPERANDS-GROUNDED'
 
@@ -95,6 +103,11 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
     if not operands:
         result['reason'] = (f'no operand could be read from the expression '
                             f'{expression_str!r}')
+    elif outcome == 'OPERANDS-UNOBSERVABLE':
+        result['reason'] = (f'the expression {expression_str!r} holds a name '
+                            f'the calculator does not know '
+                            f'({", ".join(hidden)}): the value it stands '
+                            f"for can't be traced")
     return result
 
 

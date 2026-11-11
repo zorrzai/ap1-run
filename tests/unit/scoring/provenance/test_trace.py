@@ -10,6 +10,7 @@ from ap1_run.scoring.provenance.trace import (
     STRUCTURAL_CONSTANTS, TRANSFORMATIONS, _collect_constants,
     extract_operands, is_number, parse_expression, resolve_operand,
 )
+from ap1_run.scoring.provenance import trace
 
 D = Decimal
 QUANT = {'places': 2, 'rounding': 'ROUND_HALF_UP'}
@@ -95,6 +96,25 @@ def test_extract_operands_unary_plus_keeps_literal_unsigned():
 
 def test_extract_operands_skips_names():
     assert extract_operands('pi * 2 + e') == [(D('2'), '2')]
+
+
+@pytest.mark.finding('T3-2')
+@pytest.mark.parametrize('expression, names', [
+    ('2400 * rate / 12', ['rate']),
+    ('balance * rate / months', ['balance', 'months', 'rate']),
+    ('math.pi * 2', ['math']),
+    ('round(x, 2)', ['x']),
+    ('pi * 2 + e', []),
+    ('round(2400 / 12, 2) + abs(-3)', []),
+    ('2400 * ', []),
+    (None, []),
+], ids=['rate', 'three-names', 'attribute', 'function-argument',
+        'known-constants', 'function-names', 'unparseable', 'not-a-string'])
+def test_unknown_names_are_the_value_names_the_calculator_lacks(
+        expression, names):
+    # The value names the calculator does not know; its constants and the
+    # names of functions are not listed.
+    assert trace.unknown_names(expression) == names
 
 
 @pytest.mark.finding('T3-39')

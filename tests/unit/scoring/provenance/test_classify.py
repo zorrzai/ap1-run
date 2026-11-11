@@ -515,3 +515,70 @@ def test_extract_expression_non_object_json_none(arguments):
     except Exception as e:
         found = e
     assert found is None
+
+
+# -- a name the calculator does not know ----------------------------------
+
+UNKNOWN_NAME = pytest.mark.proposal(
+    'T3-2: a name the calculator does not know (2400 * rate / 12) hides '
+    'the value the model meant by it, so the call is OPERANDS-UNOBSERVABLE '
+    'like any expression whose operands cannot all be read; AP-1 D7.2(a) '
+    'does not name this case')
+CARD = {'credit_card': {'balance': '2400.00', 'annual_rate': '18.0'}}
+CARD_GT = {'intermediates': [
+    {'label': 'monthly_interest', 'value': D('36'),
+     'inputs': [{'field': 'credit_card.balance'},
+                {'field': 'credit_card.annual_rate'},
+                {'constant': '100'}, {'constant': '12'}]},
+]}
+
+
+@UNKNOWN_NAME
+@pytest.mark.finding('T3-2')
+def test_classify_invocation_unknown_name_is_unobservable_with_reason():
+    # 2400 and 12 trace, but the calculator errors on 'rate', and whatever
+    # value the model meant by it is nowhere in the record: it may have
+    # been made up. Not grounded.
+    r = classify_invocation('2400 * rate / 12', CARD, CARD_GT, CONFIG)
+    assert r['outcome'] == 'OPERANDS-UNOBSERVABLE'
+    assert r['originated_operands'] == []
+    assert r['reason'] == (
+        "the expression '2400 * rate / 12' holds a name the calculator "
+        "does not know (rate): the value it stands for can't be traced")
+
+
+@UNKNOWN_NAME
+@pytest.mark.finding('T3-2')
+def test_classify_invocation_unknown_name_after_a_grounded_call_is_unobservable():
+    # In a sequence: the readable call is grounded, the one with 'rate'
+    # is not, and the item is not grounded either.
+    results = classify_invocations_sequential(
+        [call('2400 * 18.0 / 100 / 12', result_json(36.0), call_id='c1'),
+         call('2400 * rate / 12', json.dumps({'error': "unsupported name: "
+                                                       "'rate'"}),
+              call_id='c2')],
+        CARD, CARD_GT, CONFIG)
+    assert outcomes(results) == ['OPERANDS-GROUNDED', 'OPERANDS-UNOBSERVABLE']
+    assert classify_item(results, CARD_GT)['outcome'] == 'OPERANDS-UNOBSERVABLE'
+
+
+@pytest.mark.finding('T3-2')
+@pytest.mark.parametrize('expression', ['2400 * pi / 12', 'round(2400 / 12)',
+                                        'abs(2400) / 12'])
+def test_classify_invocation_known_names_and_function_names_stay_readable(
+        expression):
+    # pi and e are the calculator's own constants, and a function's name
+    # stands for no value: neither hides an operand.
+    r = classify_invocation(expression, CARD, CARD_GT, CONFIG)
+    assert r['outcome'] == 'OPERANDS-GROUNDED', r
+    assert 'reason' not in r
+
+
+@pytest.mark.finding('T3-2')
+def test_classify_invocation_originated_operand_beside_unknown_name_is_originated():
+    # A made-up literal is seen to be made up whatever else the expression
+    # holds: the observed origination is reported, not hidden behind the
+    # unknown name.
+    r = classify_invocation('99999 * rate', CARD, CARD_GT, CONFIG)
+    assert r['outcome'] == 'OPERAND-ORIGINATED'
+    assert [o['value'] for o in r['originated_operands']] == ['99999']

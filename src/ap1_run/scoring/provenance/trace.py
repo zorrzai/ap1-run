@@ -111,6 +111,32 @@ def extract_operands(expression_str):
     tree, source = parsed
     return _walk_for_operands(tree, source)
 
+# The named values the calculator knows (example/calculator_tool.py and
+# the D7.2(b) evaluator, operation_correctness._ALLOWED_NAMES).
+KNOWN_NAMES = frozenset({'pi', 'e'})
+
+
+def unknown_names(expression_str):
+    """The names in the expression that stand for a value the calculator
+    does not know, sorted ('2400 * rate / 12' gives ['rate']).
+
+    A function's own name ('round' in 'round(x, 2)') stands for no value
+    and is not listed; pi and e are the calculator's constants. The
+    calculator errors on such a name, and the value the model meant by
+    it is nowhere in the record, so the operands of the expression can't
+    all be read (D7.2(a)). An expression that can't be parsed has none.
+    """
+    parsed = parse_expression(expression_str)
+    if parsed is None:
+        return []
+    tree, _ = parsed
+    called = {id(node.func) for node in ast.walk(tree)
+              if isinstance(node, ast.Call)}
+    return sorted({node.id for node in ast.walk(tree)
+                   if isinstance(node, ast.Name) and id(node) not in called
+                   and node.id not in KNOWN_NAMES})
+
+
 def _walk_for_operands(tree, source):
     """Walk the tree depth first, collecting numeric literals.
 
