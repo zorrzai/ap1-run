@@ -198,7 +198,7 @@ Of the 30 `TRANSCRIBED-EXACT`, 13 were rounded under the declared quantisation p
 
 > AP-1 v1.3 D7.5: any invocation figure, including 100%, shall be reported with the exact one-sided 95% upper confidence bound.
 
-> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
+> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED; beside k, each failing question with its NOT-INVOKED repeats out of its observed repeats (EV-0 repeats are in neither). UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
 
 | Metric | k (failures) | n | Rate | 95% Upper Bound | Evidence Class |
 |---|---|---|---|---|---|

@@ -165,7 +165,7 @@
       ],
       "provenance_results": [
         {
-          "outcome": "OPERANDS-GROUNDED",
+          "outcome": "OPERANDS-UNOBSERVABLE",
           "operand_resolutions": [
             {
               "step": 1,
@@ -193,13 +193,14 @@
             }
           ],
           "originated_operands": [],
-          "quantisation_findings": []
+          "quantisation_findings": [],
+          "reason": "the expression '2400 * rate / 12' holds a name the calculator does not know (rate): the value it stands for can't be traced"
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "operands not shown grounded (D7.2(a))"
     },
     {
       "item_id": "Q03",
@@ -224,7 +225,7 @@
       ],
       "provenance_results": [
         {
-          "outcome": "OPERANDS-GROUNDED",
+          "outcome": "OPERANDS-UNOBSERVABLE",
           "operand_resolutions": [
             {
               "step": 1,
@@ -252,13 +253,14 @@
             }
           ],
           "originated_operands": [],
-          "quantisation_findings": []
+          "quantisation_findings": [],
+          "reason": "the expression '2400 * rate / 12' holds a name the calculator does not know (rate): the value it stands for can't be traced"
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "operands not shown grounded (D7.2(a))"
     },
     {
       "item_id": "Q04",
@@ -1755,7 +1757,7 @@
       ],
       "provenance_results": [
         {
-          "outcome": "OPERANDS-GROUNDED",
+          "outcome": "OPERANDS-UNOBSERVABLE",
           "operand_resolutions": [
             {
               "step": 1,
@@ -1783,13 +1785,14 @@
             }
           ],
           "originated_operands": [],
-          "quantisation_findings": []
+          "quantisation_findings": [],
+          "reason": "the expression '2400 * rate / 12' holds a name the calculator does not know (rate): the value it stands for can't be traced"
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "operands not shown grounded (D7.2(a))"
     },
     {
       "item_id": "Q03",
@@ -1814,7 +1817,7 @@
       ],
       "provenance_results": [
         {
-          "outcome": "OPERANDS-GROUNDED",
+          "outcome": "OPERANDS-UNOBSERVABLE",
           "operand_resolutions": [
             {
               "step": 1,
@@ -1842,13 +1845,14 @@
             }
           ],
           "originated_operands": [],
-          "quantisation_findings": []
+          "quantisation_findings": [],
+          "reason": "the expression '2400 * rate / 12' holds a name the calculator does not know (rate): the value it stands for can't be traced"
         }
       ],
       "transcription_outcome": "UNOBSERVABLE",
       "release_coverage_outcome": "COVERAGE-UNOBSERVABLE",
-      "answer_outcome": "COMPUTED",
-      "answer_outcome_reason": "correct figure; computation invoked; operands grounded"
+      "answer_outcome": null,
+      "answer_outcome_reason": "operands not shown grounded (D7.2(a))"
     },
     {
       "item_id": "Q04",
