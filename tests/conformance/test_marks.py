@@ -123,6 +123,8 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/reporting/test_adjudication.py::test_sheets_order_is_seeded_and_does_not_follow_the_arm',
     'tests/unit/reporting/test_report.py::test_clopper_pearson_section_lists_failing_questions_beside_k',
     'tests/unit/reporting/test_report.py::test_d73_reports_count_of_exact_rounded_under_declared_policy',
+    'tests/unit/reporting/test_report.py::test_dimension_results_d1_lists_questions_not_in_any_category_alone',
+    'tests/unit/reporting/test_report.py::test_dimension_results_d1_lists_the_question_not_in_any_category',
     'tests/unit/reporting/test_report.py::test_dimension_results_d1_per_category_with_n_and_interval',
     'tests/unit/runner/test_console.py::test_run_report_3h_lists_failing_questions_with_counts',
     'tests/unit/runner/test_console.py::test_run_report_3h_rate_counts_questions_not_repeats',

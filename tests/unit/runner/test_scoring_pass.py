@@ -278,10 +278,12 @@ def test_score_run_calls(p, capsys):
     assert p.named('d2') == [(d2_responses, 2, 'CAP')]
     (results, evidence, kw), = p.named('summary')
     assert results == expected_results and evidence == []
-    # T3-32: D1 per category, from questions.json's categories
+    # T3-32: D1 per category, from questions.json's categories; Q3 has
+    # none, so it is listed as in no category
     assert p.named('by_category') == [(
         [{'acc': 2}, {'acc': 1}, {'acc': 2}], {'Q1': 'interest', 'Q2': 'fees'})]
-    d1 = {'d1': True, 'n': 3, 'by_category': {'by': 'category'}}
+    d1 = {'d1': True, 'n': 3, 'by_category': {'by': 'category'},
+          'uncategorised': ['Q3']}
     assert kw == {'d1_summary': d1,
                   'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
                   'transcription_results': [],

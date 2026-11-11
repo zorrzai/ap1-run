@@ -287,18 +287,21 @@ def _section_dimension_results(summary, config):
         else:
             lines.append(f'| {dim} | **NOT MEASURED** | — | — |')
 
-    by_category = summary.get('d1_results', {}).get('by_category')
-    if 'D1' in dims_claimed and by_category:
-        lines.extend(_d1_category_rows(by_category))
+    d1 = summary.get('d1_results', {})
+    by_category = d1.get('by_category')
+    uncategorised = d1.get('uncategorised') or []
+    if 'D1' in dims_claimed and (by_category or uncategorised):
+        lines.extend(_d1_category_rows(by_category or {}, uncategorised))
 
     lines.append('')
     return '\n'.join(lines)
 
 
-def _d1_category_rows(by_category):
+def _d1_category_rows(by_category, uncategorised=()):
     """D1 per category with n and a 95% interval (AP-1 v1.3 D1; T3-32).
     Base condition only; n counts questions; a question is correct if all
-    its base executions are."""
+    its base executions are. The questions with no category are listed
+    under the table, with their count, so none is dropped silently."""
     lines = ['\n### D1 per Category\n',
              '> AP-1 v1.3 D1: results per category, with 95% confidence '
              'intervals and n stated; no category claim where n < 10. '
@@ -324,6 +327,14 @@ def _d1_category_rows(by_category):
         lines.append(f'| {category} | {c["n"]} | {c["executions"]} '
                      f'| {c["correct"]} | {c["incorrect"]} '
                      f'| {c["no_figure"]} | {c["pending"]} | {result} |')
+    if uncategorised:
+        count = len(uncategorised)
+        lines.append(
+            f'\nNot in any category: {count} '
+            f'question{"" if count == 1 else "s"} '
+            f'({", ".join(f"`{q}`" for q in uncategorised)}). '
+            f'{"It is" if count == 1 else "They are"} in no row above and '
+            f'in no category\'s n.')
     return lines
 
 

@@ -311,11 +311,15 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
     # -- D1 aggregation --
     d1_summary = summarise_accuracy(findings.all_accuracy_results)
     d1_summary['n'] = len(findings.all_accuracy_results)
-    # AP-1 D1: per category, with n and a 95% interval (T3-32)
+    # AP-1 D1: per category, with n and a 95% interval (T3-32). A
+    # question with no category is in no row; the report lists it under
+    # the table instead, so none is dropped silently.
     d1_summary['by_category'] = summarise_accuracy_by_category(
         findings.all_accuracy_results,
         {q['id']: q['category'] for q in questions['items']
          if q.get('category')})
+    d1_summary['uncategorised'] = [q['id'] for q in questions['items']
+                                   if not q.get('category')]
 
     # -- D2 classification per (item, condition) per surface --
     d2_cap_reason = find_d2_cap(config['sampling'])

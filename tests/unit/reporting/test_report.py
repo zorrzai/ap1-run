@@ -1534,6 +1534,51 @@ def test_dimension_results_d1_per_category_with_interval():
         ''))
 
 
+@pytest.mark.proposal(
+    'T3-32: a question with no category is listed under the D1 table as '
+    'not in any category, with the count, and the run goes ahead; AP-1 D1 '
+    'asks for results per category and says nothing of a question with '
+    'none')
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_dimension_results_d1_lists_the_question_not_in_any_category():
+    c = {'n': 10, 'executions': 10, 'correct': 10, 'incorrect': 0,
+         'no_figure': 0, 'pending': 0, 'correct_questions': 10,
+         'rate': Decimal(1), 'interval': (Decimal('0.69150'), Decimal(1))}
+    d1 = {'n': 11, 'by_category': {'interest': c}, 'uncategorised': ['Q11']}
+    text = report._section_dimension_results(
+        {'d1_results': d1}, {'dimensions_claimed': ['D1']})
+    assert text.endswith(md(
+        *D1_CATEGORY_HEAD,
+        '| interest | 10 | 10 | 10 | 0 | 0 | 0 | 10/10 (100.0%; 95% CI '
+        '69.1%-100.0%) |',
+        '\nNot in any category: 1 question (`Q11`). It is in no row above '
+        "and in no category's n.",
+        ''))
+
+
+@pytest.mark.proposal(
+    'T3-32: a question with no category is listed under the D1 table as '
+    'not in any category, with the count, and the run goes ahead; AP-1 D1 '
+    'asks for results per category and says nothing of a question with '
+    'none')
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_dimension_results_d1_lists_questions_not_in_any_category_alone():
+    # No question has a category: no row, but the questions are listed,
+    # not dropped with the table.
+    d1 = {'n': 2, 'by_category': {}, 'uncategorised': ['Q1', 'Q2']}
+    text = report._section_dimension_results(
+        {'d1_results': d1}, {'dimensions_claimed': ['D1']})
+    assert text.endswith(md(
+        *D1_CATEGORY_HEAD,
+        '\nNot in any category: 2 questions (`Q1`, `Q2`). They are in no '
+        "row above and in no category's n.",
+        ''))
+    assert 'Not in any category' not in report._section_dimension_results(
+        {'d1_results': d1}, {'dimensions_claimed': ['D7']})
+
+
 def test_dimension_results_d1_categories_only_when_d1_claimed():
     summary = {'d1_results': {'n': 1, 'by_category': {'x': {}}}}
     assert 'D1 per Category' not in report._section_dimension_results(
