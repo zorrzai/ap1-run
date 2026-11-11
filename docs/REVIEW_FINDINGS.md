@@ -317,6 +317,10 @@ Grouped by severity, in ID order.
   (`validate_minimum_n`)
 - Breaks: SPEC R0.1 and the SPEC §9 threat "Under-powered claim reported as a result"; AP-1 D1, D5, D6
   minimums; README ("enforces the minimum-item counts for D5 and D6 at load")
+- Addressed by: fixed; commits 09cfed11; test
+  `tests/conformance/test_ap1_clauses.py::test_minimum_n_d1_is_forty_in_total`; note: minimum n is
+  enforced at load, per AP-1 version; D5/D6 labels: fixed kinds, defined kinds, refusal (proposal),
+  and report §3 counts D5 and D6 items per kind
 
 **T3-13 · high · AP-1 v1.3 §6.8 outcomes are marked IMPLEMENTED, but no code assigns them, and the sheets omit the D7.2(a) result**
 - What's wrong: auto-scored responses get CORRECT / INCORRECT / NO-FIGURE, never an AP-1 §6.8
@@ -497,6 +501,8 @@ Grouped by severity, in ID order.
 - After the reorg: `tests/legacy/verify_r41.py`; `src/ap1_run/execution/evidence.py:146-153`
   (`classify_attestation`)
 - Breaks: SPEC R4.1 ("Every planted defect is detected with the specified outcome, offline")
+- Addressed by: fixed; commits 09cfed11, b075b50a, d8d2be3c, 60ac7b79; test
+  `tests/unit/execution/test_evidence_r41.py::test_r41_ev3_rows_are_declared_exceptions_while_ev3_is_not_built`
 
 **T3-23 · medium · Inter-rater agreement is specified and claimed, but nothing implements it**
 - What the report must say is settled by DEC-3 (see "Maintainer decisions" at the end).
@@ -591,6 +597,9 @@ Grouped by severity, in ID order.
   library or platform (AP-1 §1.5.1).
 - Where: SPEC §1.1, R2.1, R2.2, R3.3, SPEC §10
 - Breaks: AP-1 v1.3 D7.4, §6.2, §6.4, §2.5, §3.2.1, D1 Method, D2 Method, D2.2, §1.5.1
+- Addressed by: partly fixed; commits d8d2be3c, 5f086be7; strict xfail
+  `tests/functional/test_step4_g5_seal_verifier.py::test_run_seal_record_carries_environment_fields`
+  and 1 more marked T3-30
 
 **T3-31 · medium · The executable conformance device checks constants and two table rows, not the IMPLEMENTED claims**
 - What's wrong: `verify_conformance.py` asserts `MINIMUM_N` constants, its AP-1 §6.8 test is
@@ -717,6 +726,8 @@ Grouped by severity, in ID order.
   `ap1_inspect/scorer.py:126-128` (`ap1_scorer.score`); `src/ap1_run/foundation/config.py:26`
   (`REQUIRED_FIELDS`)
 - Breaks: SPEC R0.4.2
+- Addressed by: fixed; commits 54b69604; test
+  `tests/unit/runner/test_executions.py::test_score_execution_passes_configured_separators_everywhere`
 
 **T3-42 · medium · SPEC R2.4 "absent intermediates yield UNMEASURABLE" is a no-op**
 - What's wrong: `is_chained` is computed and unused (`pass  # handled by caller`, and no caller
@@ -831,6 +842,8 @@ Grouped by severity, in ID order.
   `src/ap1_run/run.py:190`, `:195` (`main`); `src/ap1_run/foundation/config.py:23-28`
   (`REQUIRED_FIELDS`), `:78-81` (`load_config`)
 - Breaks: SPEC R0.1; AP-1 v1.3 §6.9 ("Every evaluation shall declare its rounding policy")
+- Addressed by: fixed; commits 1cce3b4b; test
+  `tests/unit/foundation/test_config.py::test_load_config_quantisation_any_decimal_mode_kept`
 
 **T3-53 · medium · The zero-field, exception and skip paths of `seal.perturbation_check` are untested**
 - What's wrong: mutants `numeric_val == 0` → `!= 0`, an additive perturbation broken into
@@ -902,6 +915,11 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/scoring/provenance/trace.py:248-249`, `:274-298`
   (`resolve_operand`); `src/ap1_run/scoring/release_coverage.py:123-132` (`check_release_coverage`)
 - Breaks: AP-1 v1.3 D7.2(a)(iv)
+- Addressed by: fixed; commits 4aa935e2, 547f3007, 94ecc624, f3f5f9bb, eafef796; test
+  `tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[fifty-digits]`;
+  note: the calculator computes in exact decimal arithmetic, so a faithful copy of a result grounds;
+  SPEC R0.4.1 says so, and the replays answer each tool call with the published run's recorded
+  return
 
 **T3-60 · low · `invocation.py` sets global Decimal precision to 50 on import, so arithmetic depends on import order**
 - What's wrong: precision depends on whether `invocation` has been imported: the live path and the
@@ -911,6 +929,8 @@ Grouped by severity, in ID order.
 - Where: `invocation.py:26`
 - After the reorg: `src/ap1_run/scoring/invocation.py:26` (module level, `getcontext().prec = 50`)
 - Breaks: SPEC R0.4 (DETERMINISTIC)
+- Addressed by: fixed; commits 6c0a3f87, b8faa7b4; test
+  `tests/unit/foundation/test_numeric.py::test_quantise_overflow_does_not_depend_on_context_precision`
 
 **T3-61 · low · The D7.5 bound is computed in float in `report.py`, duplicating `invocation.py`, and the one-decimal bound is rounded to nearest, not up**
 - What's wrong: there are two implementations of one normative figure and the reported one is float.
@@ -977,6 +997,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/execution/engine.py:172-236` (`_drive_tool_loop`);
   `src/ap1_run/runner/settings.py:130-137` (`apply_sampling_overrides`)
 - Breaks: SPEC R0.1
+- Addressed by: partly fixed; commits 037bd39e; strict xfail
+  `tests/unit/execution/test_engine.py::test_execute_item_tool_loop_exhausted_flagged_in_transcript`
 
 **T3-68 · low · `seal()` accepts an empty or `"placeholder"` AP-1 text hash, or no text path at all**
 - What's wrong: refusal depends on the caller; the live path passes the real file and hash, but
@@ -1020,6 +1042,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/foundation/numeric.py:255-292` (`_check_no_float`, `canonical_json`,
   `canonical_hash`)
 - Breaks: SPEC R0.4.1 (R0.4.3 is met to the letter)
+- Addressed by: fixed; commits 54a048e1; test
+  `tests/unit/foundation/test_numeric.py::test_check_no_float_float_key_refused_with_path`
 
 **T3-72 · low · Sealed inputs are read separately from the inputs actually executed**
 - What's wrong: inputs are loaded and imported, then re-read from disk for the seal, leaving a narrow
@@ -1077,6 +1101,8 @@ Grouped by severity, in ID order.
   `src/ap1_run/scoring/operation_correctness.py:41-44` (`_ALLOWED_NAMES`), `:48` (`_ALLOWED_FUNCS`);
   `src/ap1_run/foundation/numeric.py:108-110` (`parse_decimal`)
 - Breaks: SPEC R0.4
+- Addressed by: fixed; commits 6c0a3f87, 23a466ce; test
+  `tests/functional/test_example_calculator.py::test_calculator_round_half_up_cases[round(-2.5)--3]`
 
 **T3-78 · low · The shipped tolerance cannot detect the Q07 round-each defect**
 - What's wrong: 777.42 vs 777.41 is within the inclusive tolerance of 0.01.
@@ -1094,6 +1120,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/run.py:114` (`main`; the path is now the `--config` option, default
   at `settings.py:41-43`); `src/ap1_run/runner/settings.py:99-142` (`apply_sampling_overrides`);
   `src/ap1_run/foundation/config.py:179-182` (`_validate_sampling`)
+- Addressed by: fixed; commits 037bd39e; test
+  `tests/unit/tools/test_verify_run_seal.py::test_verify_run_ignores_config_files_on_disk`
 
 **T3-80 · low · Cosmetic and stale items on the live path**
 - What's wrong: a literal `\n` is printed in console section 3h2 (`print(f'\\n3h2. ...')`); the
@@ -1102,6 +1130,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/runner/console.py:93` (`print_run_report`); `src/ap1_run/run.py:7`
   (module docstring; the move rewrote it, and it now names `output/`);
   `src/ap1_run/runner/settings.py:19` (`DEFAULT_MODEL`, read at `:92` in `endpoint_and_model`)
+- Addressed by: fixed; commits e81a3cdb, 73b65f94, 739298d0; test
+  `tests/unit/runner/test_settings.py::test_no_endpoint_or_model_from_the_environment`
 
 ### Info
 
@@ -1165,6 +1195,9 @@ Grouped by severity, in ID order.
   without naming the conflict, and SPEC §10 marks AP-1 §13.1 IMPLEMENTED (`SPEC.md:899`). A reading
   of the standard, not a code defect.
 - Where: SPEC R2.0, R2.1, SPEC §10
+- Addressed by: fixed in docs; commits 7c86bc85, eafef796; note: SPEC §1.2 and §10 name the AP-1
+  v1.3 §13.1 / §6.6 tension, quote §6.6 on D7, and say SPEC follows §6.6; a reading of the standard,
+  so no test
 
 **T3-88 · info · Large untested surfaces outside the core**
 - What's wrong: at `77514b4`, `smoke_test.py` had 7 % coverage (`main` 0 %); `ap1_inspect/*`,
@@ -1198,6 +1231,8 @@ Grouped by severity, in ID order.
   `src/ap1_run/execution/seal.py:124` (`perturbation_check`), `:228` (`source_fields_check`);
   `src/ap1_run/execution/seal_constants.py:16` (`declared_constants_check`); `perturbation.py` was
   removed in the move
+- Addressed by: fixed; commits d8d2be3c; test
+  `tests/unit/runner/test_executions.py::test_echo_check_ignored_temperature_is_a_finding`
 
 **T3-91 · info · Not an instrument finding: a note on a document outside this repository**
 - What's wrong: nothing in this repository. The ID was used in the review for a note on a document
@@ -1329,6 +1364,8 @@ does not arise under v1.3. V12-9 to V12-12 were candidates that passed and are n
 - After the reorg: `src/ap1_run/foundation/config.py:40-45` (`MINIMUM_N`), `:224-257`
   (`validate_minimum_n`)
 - Breaks: AP-1 v1.2 D5 ("minimum 5 adversarial inputs"), AP-1 v1.2 §11.6 (D6 "At least one item")
+- Addressed by: fixed; commits 09cfed11; test
+  `tests/unit/foundation/test_config.py::test_minimum_n_d1_same_under_v12`
 
 **V12-8 · low · No AP-1 §5.2 freeze confirmation, and the served model snapshot is not recorded in the seal or report**
 - What's wrong: the report header and seal give the configured `gpt-4.1-mini`, while the raw
@@ -1368,22 +1405,30 @@ also hold there; the G7 Inspect and G8 tool files do not.
   through `figure_id`'s structured-answer path, where a NaN figure then breaks Decimal comparisons.
 - Where: `numeric.py:101-118`
 - After the reorg: `src/ap1_run/foundation/numeric.py:101-118` (`parse_decimal`)
+- Addressed by: fixed; commits 6c0a3f87; test
+  `tests/unit/foundation/test_numeric.py::test_parse_decimal_value_outside_grammar_is_refused[1_000]`
 
 **S3-G1-2 · low · Doubled signs are accepted**
 - What's wrong: `--5` → 5, `+-5` → -5, `(-5)` → 5; they should be refused.
 - Where: `numeric.py:63-78`
 - After the reorg: `src/ap1_run/foundation/numeric.py:63-78` (`parse_decimal`)
+- Addressed by: fixed; commits 6c0a3f87; test
+  `tests/unit/foundation/test_numeric.py::test_parse_decimal_doubled_sign_is_refused[(-5)]`
 
 **S3-G1-3 · low · Grouping positions are not checked when parsing**
 - What's wrong: `1,23` → 123 and `1,2,3` → 123 (extraction's regex does check positions).
 - Where: `numeric.py:108-110`
 - After the reorg: `src/ap1_run/foundation/numeric.py:108-110` (`parse_decimal`)
+- Addressed by: fixed; commits 6c0a3f87, 23a466ce; test
+  `tests/unit/foundation/test_numeric.py::test_parse_decimal_grammar_refusal_names_digits_and_text`
 
 **S3-G1-4 · low · Percent before a trailing currency fails**
 - What's wrong: the percent step runs before the trailing-currency step, so `5%$` fails to parse and
   `10%USD` is dropped from extraction without notice.
 - Where: `numeric.py:88-99`
 - After the reorg: `src/ap1_run/foundation/numeric.py:88-99` (`parse_decimal`)
+- Addressed by: fixed; commits 6c0a3f87; test
+  `tests/unit/foundation/test_numeric.py::test_extract_percent_then_currency_token_kept`
 
 **S3-G1-5 · medium · The minus of a subtraction is extracted as a negative number**
 - What's wrong: `1437.00 - 1006.25 = 430.75` extracts **-1006.25**, and `5-3` gives `5` and `-3`. It
@@ -1395,76 +1440,106 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - Where: `numeric.py:179` (sign-led pattern)
 - After the reorg: `src/ap1_run/foundation/numeric.py:179` (`_build_extraction_re`)
 - Breaks: SPEC R2.0 (the expected value twice routes to adjudication), on the operator reading
+- Addressed by: fixed; commits 836c1b0f, b50d61cf; test
+  `tests/unit/foundation/test_numeric.py::test_extract_sign_after_number_is_an_operator_positions`
 
 **S3-G1-6 · low · Digits inside identifiers produce numeric tokens**
 - What's wrong: `Q04` → 4, `v2.0.1` → 2.0 and 1, `1e5` → 1 and 5; there is no word boundary.
 - Where: `numeric.py:143-184`
 - After the reorg: `src/ap1_run/foundation/numeric.py:143-184` (`_build_extraction_re`)
+- Addressed by: fixed; commits 836c1b0f, b50d61cf; test
+  `tests/unit/foundation/test_numeric.py::test_extract_word_characters_are_ascii_letters_and_digits[5_000-expected6]`
 
 **S3-G1-7 · low · Arabic-Indic and full-width digits parse and extract**
 - What's wrong: undeclared behaviour that R0.4.2 should decide.
 - Where: `numeric.py`
 - After the reorg: `src/ap1_run/foundation/numeric.py`
 - Breaks: SPEC R0.4.2 (undeclared)
+- Addressed by: fixed; commits 856a8fb7, 547f3007, 67a15172; test
+  `tests/unit/foundation/test_numeric.py::test_arabic_indic_and_full_width_three_neither_parse_nor_extract`;
+  note: SPEC R0.4.2 decides it: its digits are ASCII 0-9 only, so neither Arabic-Indic nor
+  full-width digits parse or extract
 
 **S3-G1-8 · low · `(12.5%)` extracts as +12.5 %**
 - What's wrong: the parenthesised-negative pattern has no `%`.
 - Where: `numeric.py:172`
 - After the reorg: `src/ap1_run/foundation/numeric.py:172` (`_build_extraction_re`)
+- Addressed by: fixed; commits 836c1b0f; test
+  `tests/unit/foundation/test_numeric.py::test_extract_parenthesised_percent_is_negative`
 
 **S3-G1-9 · low (very low) · `quantise(x, -2)` rounds to units, not hundreds**
 - What's wrong: `Decimal(10)**2` has exponent 0.
 - Where: `numeric.py:251`
 - After the reorg: `src/ap1_run/foundation/numeric.py:251` (`quantise`)
+- Addressed by: fixed; commits 6c0a3f87; test
+  `tests/unit/foundation/test_numeric.py::test_quantise_places_not_a_non_negative_int_refused[-1]`
 
 **S3-G1-10 · low · `quantisation.places` is badly validated**
 - What's wrong: `"abc"` raises `ValueError`, not `ConfigError`; `true` loads as 1; `"-2"` loads
   (see S3-G1-9). Booleans get past the bare-numeric check.
 - Where: `config.py:101-104`
 - After the reorg: `src/ap1_run/foundation/config.py:101-104` (`load_config`)
+- Addressed by: fixed; commits f6903814, 7cde5b29; test
+  `tests/unit/foundation/test_config.py::test_load_config_quantisation_places_zero_loads`
 
 **S3-G1-11 · low (medium-low) · `answer_tolerance` `"NaN"` and `"-1"` load**
 - What's wrong: a tolerance must be finite and at least 0.
 - Where: `config.py:212-221`
 - After the reorg: `src/ap1_run/foundation/config.py:212-221` (`_parse_decimal_field`)
+- Addressed by: fixed; commits f6903814; test
+  `tests/unit/foundation/test_config.py::test_load_config_tolerance_refusal_message[-0.01]`
 
 **S3-G1-12 · low · `repeat_count` `"0"` and `"-3"` load**
 - What's wrong: it should be at least 1.
 - Where: `config.py:107-114`
 - After the reorg: `src/ap1_run/foundation/config.py:107-114` (`load_config`)
+- Addressed by: fixed; commits f6903814, 7cde5b29; test
+  `tests/unit/foundation/test_config.py::test_load_config_repeat_count_refusal_message_and_one_loads`
 
 **S3-G1-13 · low · Any `{value: omitted, reason: …}` object skips the bare-numeric check**
 - What's wrong: the skip applies anywhere and with any reason (`detail: 5` is accepted), not only to
   validated sampling omissions.
 - Where: `config.py:202-204`
 - After the reorg: `src/ap1_run/foundation/config.py:202-204` (`_refuse_bare_numerics`)
+- Addressed by: fixed; commits f6903814; test
+  `tests/unit/foundation/test_config.py::test_load_config_valid_sampling_omission_still_loads`
 
 **S3-G1-14 · low · A non-object `sampling` loads**
 - What's wrong: inconsistent with `quantisation`, which is refused.
 - Where: `config.py:169-170`
 - After the reorg: `src/ap1_run/foundation/config.py:169-170` (`_validate_sampling`)
+- Addressed by: fixed; commits f6903814; test
+  `tests/unit/foundation/test_config.py::test_load_config_sampling_refusal_message`
 
 **S3-G1-15 · low (very low) · The unknown-field message lists only the required fields**
 - What's wrong: the optional fields are accepted but not listed.
 - Where: `config.py:148-153`
 - After the reorg: `src/ap1_run/foundation/config.py:148-153` (`_refuse_unknown_fields`)
+- Addressed by: fixed; commits f6903814; test
+  `tests/unit/foundation/test_config.py::test_load_config_top_level_sampling_param_suggests_sampling`
 
 **S3-G1-16 · low · An extra `timestamp=` overrides the transcript store's clock**
 - What's wrong: the store should own the timestamp.
 - Where: `transcript.py:40`
 - After the reorg: `src/ap1_run/foundation/transcript.py:40` (`append`)
+- Addressed by: fixed; commits 73603d6d; test
+  `tests/unit/foundation/test_transcript.py::test_append_timestamp_extra_refused_and_nothing_written`
 
 **S3-G1-17 · low · A torn last line makes `read_all` refuse the whole transcript**
 - What's wrong: contradicts the docstring ("an interrupted run leaves a valid partial transcript").
 - Where: `transcript.py:62-72`
 - After the reorg: `src/ap1_run/foundation/transcript.py:62-72` (`read_all`)
 - Breaks: the module's own docstring
+- Addressed by: fixed; commits 73603d6d, c28fc841; test
+  `tests/unit/foundation/test_transcript.py::test_read_all_bad_utf8_in_a_complete_line_raises`
 
 **S3-G1-18 · low · The attempt log is lost when all transport attempts fail**
 - What's wrong: the docstring says "every attempt logged", but the record is neither returned nor
   attached to the exception.
 - Where: `adapter.py:149-155`
 - After the reorg: `src/ap1_run/foundation/adapter.py:149-155` (`send`)
+- Addressed by: fixed; commits d7d47a40; test
+  `tests/unit/foundation/test_adapter.py::test_adapter_error_without_transport_failure_has_no_record`
 
 **S3-G1-19 · low · Sampling `"NaN"` loads and becomes `float('nan')` in the request body**
 - What's wrong: non-finite values should be refused at load. Instead the adapter builds a body
@@ -1473,17 +1548,23 @@ also hold there; the G7 Inspect and G8 tool files do not.
   invalid JSON.
 - Where: `adapter.py:107-114`
 - After the reorg: `src/ap1_run/foundation/adapter.py:107-114` (`send`)
+- Addressed by: fixed; commits d7d47a40, 9a7c50ca; test
+  `tests/unit/foundation/test_adapter.py::test_send_non_finite_sampling_value_refused_before_sending[-inf]`
 
 **S3-G1-20 · low · The transport exception text goes into the AdapterError message unmasked**
 - What's wrong: HTTP bodies are masked but this text is not, so a URL carrying a key would leak.
 - Where: `adapter.py:153-155`
 - After the reorg: `src/ap1_run/foundation/adapter.py:153-155` (`send`)
+- Addressed by: fixed; commits d7d47a40, 95826c35; test
+  `tests/unit/foundation/test_adapter.py::test_send_formatted_traceback_carries_no_credential[not-json]`
 
 **S3-G1-21 · low · A sampling key such as `model` overwrites the request body field**
 - What's wrong: the request record still shows the configured model, so it no longer matches what
   was sent.
 - Where: `adapter.py:94-115`
 - After the reorg: `src/ap1_run/foundation/adapter.py:94-115` (`send`)
+- Addressed by: fixed; commits d7d47a40, a8416bdd; test
+  `tests/unit/foundation/test_adapter.py::test_send_sampling_body_field_refused_before_sending[messages]`
 
 ### G2: execution core
 
@@ -1602,6 +1683,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - Where: `operation_correctness.py:30-31` (applied at `:66-72`)
 - After the reorg: `src/ap1_run/scoring/operation_correctness.py:30-31` (`_ALLOWED_BINOPS`),
   `:66-72` (`_eval_decimal`)
+- Addressed by: partly fixed; commits 135aa1fc; strict xfail
+  `tests/unit/scoring/test_operation_correctness.py::test_evaluate_expression_floor_division_and_mod_floor_like_calculator`
 
 **S3-G4-4 · low · `evaluate_expression` raises instead of returning None on overflow or deep nesting**
 - What's wrong: `'10 ** 10 ** 10'` raises `decimal.Overflow` and `'-' * 5000 + '1'` raises
@@ -1660,6 +1743,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
   caller (T3-90).
 - Where: `reproducibility.py:133`
 - After the reorg: `src/ap1_run/scoring/reproducibility.py:133` (`check_parameter_echo`)
+- Addressed by: fixed; commits 9a7c50ca; test
+  `tests/unit/scoring/test_reproducibility.py::test_parameter_echo_compares_numbers_as_numbers[0-0.0-VERIFIED0]`
 
 ### G6: reporting
 
@@ -1693,6 +1778,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - After the reorg: `src/ap1_run/execution/perturbation_guard.py:20-100`
   (`check_single_variable_perturbation`)
 - Breaks: AP-1 v1.3 D7.8 ("all other request content" held constant)
+- Addressed by: fixed; commits 747d5acc, 2c2f7149; test
+  `tests/conformance/test_ap1_clauses.py::test_perturbation_guard_refuses_a_change_of_model`
 
 **S3-G7-3 · info (low/info) · The Inspect scorer is declared with `metrics=[]`**
 - What's wrong: the custom `clopper_pearson_zero_bound` and `invocation_rate` metrics are never
@@ -1792,6 +1879,8 @@ are the test author's estimate.
   say `''` instead.
 - Where: `smoke_test.py:640`, `:795`
 - After the reorg: `src/ap1_run/runner/executions.py:97`, `:252` (`score_execution`)
+- Addressed by: fixed; commits b17edd4b; test
+  `tests/unit/runner/test_executions.py::test_score_execution_no_released_figure_recorded_as_null`
 
 ---
 
