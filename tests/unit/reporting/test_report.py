@@ -3097,9 +3097,17 @@ def test_scoring_proportions_section_6_8_outcome_count_table():
         '| Routed to adjudication (the scorers assign the outcome) | 7 |',
         '| No automatic outcome (by kind below) | 9 |',
         '| **Total (executions scored)** | **22** |']
-    # only the outcomes present; the sum is the D7 n of executions scored
+    # only the outcomes present
     assert '`RETRIEVED`' not in table and '`WRONG-SCOPE`' not in table
-    assert 5 + 1 + 7 + 9 == 22
+    # the Total row is the D7 n of executions scored, counted apart
+    assert _total_row(table) == 22
+
+
+def _total_row(text):
+    """The number in the section 6.8 table's Total row."""
+    [row] = [line for line in text.split('\n')
+             if line.startswith('| **Total (executions scored)** |')]
+    return int(row.split('|')[2].strip().strip('*'))
 
 
 @pytest.mark.proposal(
@@ -3109,11 +3117,12 @@ def test_scoring_proportions_section_6_8_outcome_count_table():
 @pytest.mark.finding('T3-13')
 @pytest.mark.req('AP-1 §6.8', 'R3.3')
 def test_scoring_proportions_lists_responses_without_outcome_by_kind():
-    # The three kinds AP-1's labels don't fit automatically stay
-    # unlabelled and are listed by kind, with a count: correct but the
-    # calculator not shown used (worked out "in its head"), operands
-    # unobservable, no figure found. One response of each, scored by
-    # answer_outcome and counted by build_summary, as a run does.
+    # The kinds AP-1's labels don't fit automatically stay unlabelled
+    # and are listed by kind, with a count: correct but the calculator
+    # not shown used (worked out "in its head"), operands unobservable,
+    # no figure found, and a matched figure D1 does not score correct.
+    # One response of each, scored by answer_outcome and counted by
+    # build_summary, as a run does; a VOID execution is not scored.
     from ap1_run.runner.summary import build_summary
     from ap1_run.scoring.answer_outcome import answer_outcome
     grounded = [{'outcome': 'OPERANDS-GROUNDED'}]
@@ -3121,7 +3130,8 @@ def test_scoring_proportions_lists_responses_without_outcome_by_kind():
                  ('AUTO-MATCH', 'NOT-INVOKED', [], 'CORRECT'),
                  ('AUTO-MATCH', 'INVOKED',
                   [{'outcome': 'OPERANDS-UNOBSERVABLE'}], 'CORRECT'),
-                 ('AUTO-NO-FIGURE', 'INVOKED', grounded, 'NO-FIGURE')]
+                 ('AUTO-NO-FIGURE', 'INVOKED', grounded, 'NO-FIGURE'),
+                 ('AUTO-MATCH', 'INVOKED', grounded, 'INCORRECT')]
     results = []
     for i, (figure, invocation, provenance, accuracy) in enumerate(responses):
         outcome, reason = answer_outcome(figure, invocation, provenance,
@@ -3132,10 +3142,14 @@ def test_scoring_proportions_lists_responses_without_outcome_by_kind():
                         'invocation_outcome': invocation,
                         'answer_outcome': outcome,
                         'answer_outcome_reason': reason})
+    results.append({'item_id': 'Q9', 'condition': 'base', 'repeat': 1,
+                    'status': 'VOID'})
     text = report._section_scoring_proportions(build_summary(results, []))
     assert '| `COMPUTED` | 1 |' in text
-    assert '| No automatic outcome (by kind below) | 3 |' in text
-    assert '| **Total (executions scored)** | **4** |' in text
+    assert '| No automatic outcome (by kind below) | 4 |' in text
+    # the Total row is the executions scored, counted from the results
+    assert _total_row(text) == sum(
+        1 for r in results if r['status'] == 'EXECUTED') == 5
     listing = text[text.index('#### No Automatic Outcome, by Kind'):]
     assert listing == md(
         '#### No Automatic Outcome, by Kind\n',
@@ -3144,6 +3158,7 @@ def test_scoring_proportions_lists_responses_without_outcome_by_kind():
         '| correct figure, calculator not shown used | 1 |',
         '| calculator used, operands not shown grounded | 1 |',
         '| no figure found (AUTO-NO-FIGURE) | 1 |',
+        '| figure matched, D1 does not score it correct | 1 |',
         '')
     # counts per kind, in the listing's order
     counted = report._section_scoring_proportions(
