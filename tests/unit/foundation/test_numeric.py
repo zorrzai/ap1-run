@@ -684,12 +684,37 @@ def test_extract_non_ascii_digits_are_not_tokens():
 @pytest.mark.finding('S3-G1-7')
 @pytest.mark.req('R0.4.2')
 def test_arabic_indic_and_full_width_three_neither_parse_nor_extract():
+    # Every reader of number tokens in a reply: numeric.py's two public
+    # readers (parse_decimal, extract_numeric_tokens), and figure_id's
+    # identify_figure, by text and by structured answer field (the
+    # runner's score_execution and release_coverage read replies through
+    # extract_numeric_tokens).
+    from ap1_run.scoring.figure_id import AUTO_MATCH, identify_figure
+
+    def identify(content, **kwargs):
+        response = {'choices': [{'message': {'role': 'assistant',
+                                             'content': content}}]}
+        response.update(kwargs.pop('extra', {}))
+        return identify_figure(
+            response, expected_value=Decimal('3'), delivered_context={},
+            lookup_collision=False, answer_tolerance=Decimal('0'),
+            **kwargs)
+
     for three in ('\u0663', '\uff13'):          # '٣', '３'
         with pytest.raises(NumericParseError):
             parsed(three)
         assert extract_numeric_tokens(f'The answer is {three}.') == []
+        for r in (identify(f'The answer is {three}.'),
+                  identify(f'The answer is {three}.',
+                           structured_answer_field='answer',
+                           extra={'answer': three})):
+            assert r['released_figure'] is None, r
+            assert r['outcome'] != AUTO_MATCH, r
     # ASCII digits beside them still read.
     assert values('\u0663 or 3, \uff13 or 3.5') == ['3', '3.5']
+    assert identify('The answer is 3.')['outcome'] == AUTO_MATCH
+    assert identify('', structured_answer_field='answer',
+                    extra={'answer': '3'})['released_figure'] == Decimal('3')
 
 
 def test_extract_run1_literal_mortgage_prose():
