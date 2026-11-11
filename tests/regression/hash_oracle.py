@@ -16,10 +16,11 @@ writing):
   canonical JSON   json.dumps(sort_keys=True, separators=(',', ':'),
                    ensure_ascii=False), Decimal as its exact string,
                    no float anywhere, string keys only; UTF-8; SHA-256 hex
-  text inputs      fixture, questions and ground-truth module: SHA-256 of
-                   the bytes with a leading UTF-8 byte-order mark dropped
-                   and CRLF and CR made LF (T3-50); the bytes the run
-                   passes to the seal as `loaded` must be the files' bytes
+  text inputs      fixture, questions, ground-truth module and calculator:
+                   SHA-256 of the bytes with a leading UTF-8 byte-order
+                   mark dropped and CRLF and CR made LF (T3-50); the bytes
+                   the run passes to the seal as `loaded` must be the
+                   files' bytes
   AP-1 text        SHA-256 of the raw bytes, required, and equal to the
                    config's declared ap1_text_hash (T3-68)
   config_hash      canonical hash of the resolved config, as passed to the

@@ -1,5 +1,5 @@
 {
-  "description": "The clean run with the three sealed text inputs in CRLF bytes: the fixture, the question set and the ground-truth module. The seal hashes each of them with its line endings made LF (T3-50, DEC-6), so CRLF copies seal as their LF form: fixture_hash, questions_hash and ground_truth_hash equal clean's. A runner that hashed these files as they are on disk would seal other hashes and fail the hash oracle. The AP-1 text stays LF here, and the config declares clean's AP-1 text hash: a CRLF AP-1 text is refused (crlf_ap1_text_refused).",
+  "description": "The clean run with the four sealed text inputs in CRLF bytes: the fixture, the question set, the ground-truth module and the calculator. The seal hashes each of them with its line endings made LF (T3-50, DEC-6), so CRLF copies seal as their LF form: fixture_hash, questions_hash, ground_truth_hash and calculator_hash equal clean's. A runner that hashed these files as they are on disk would seal other hashes and fail the hash oracle. The AP-1 text stays LF here, and the config declares clean's AP-1 text hash: a CRLF AP-1 text is refused (crlf_ap1_text_refused).",
   "seal_attempts": 1,
   "seal_records": 1,
   "exercises": ["text input hashes with line endings made LF (T3-50)", "sealed inputs with CRLF line endings seal as their LF form"],
@@ -11,6 +11,7 @@
   "crlf_paths": [
     "example/fixture.json",
     "example/questions.json",
-    "example/ground_truth_example.py"
+    "example/ground_truth_example.py",
+    "example/calculator_tool.py"
   ]
 }

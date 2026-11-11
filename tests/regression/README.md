@@ -209,7 +209,7 @@ each of their checks went.
 | `t3_38_unknown_tool` | **T3-38**: an unoffered tool trips the FATAL consistency check; no report |
 | `t3_39_crash` | **T3-39**: a non-string calculator expression; since the fix its operands are unreadable and the run completes |
 | `non_ascii_config` | a decline marker with U+2019 in the resolved config: the config hash's UTF-8 rule through the real seal |
-| `crlf_sealed_inputs` | `clean` with the fixture, questions and ground-truth module in CRLF bytes: they seal as their LF form (T3-50), so `fixture_hash`, `questions_hash` and `ground_truth_hash` equal `clean`'s; a runner that hashed them as they are on disk fails the hash oracle |
+| `crlf_sealed_inputs` | `clean` with the fixture, questions, ground-truth module and calculator in CRLF bytes: they seal as their LF form (T3-50), so `fixture_hash`, `questions_hash`, `ground_truth_hash` and `calculator_hash` equal `clean`'s; a runner that hashed them as they are on disk fails the hash oracle |
 | `crlf_ap1_text_refused` | `clean` with the AP-1 text in CRLF bytes: the AP-1 text is hashed as it is on disk, so the seal is refused before any request (SealError naming the declared and the file's hash) |
 | `decimal_trailing_zero` | `answer_tolerance` `"0.010"` in the resolved config: the config hash keeps a Decimal's exact string (a runner that normalised it to `0.01` fails the hash oracle) |
 | `decimal_two_trailing_zeros` | the same with `"0.0100"` (exponent -4), so a normaliser limited to some exponents fails one of the two |

@@ -610,8 +610,8 @@ reference and exits non-zero. For the September seals the cause is line
 endings only (FINDINGS_ERRATA N2), and the verifier says so. Any other
 ground-truth mismatch is reported without a note.
 
-**Line endings.** Since October 2026 the fixture, the questions and the
-ground-truth module are hashed with LF line endings and without a UTF-8
+**Line endings.** Since October 2026 the fixture, the questions, the
+ground-truth module and the calculator are hashed with LF line endings and without a UTF-8
 byte-order mark, so the same text gives the same hash on every platform and
 in every editor (an LF file without a BOM hashes as its raw bytes). The AP-1
 text is hashed as raw bytes: it must equal the publisher's deposit byte for
