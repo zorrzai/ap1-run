@@ -139,8 +139,8 @@ result, by us or by anyone, in any document.
   step 1 (source match):       112
   step 1 (declared constant):  60
   step 2 (transformed source): 8
-  step 3 (reference intermediate): 8
-  step 4 (computed in session): 24
+  step 3 (reference intermediate): 12
+  step 4 (computed in session): 20
   step 5 (originated, sign-inverted from source):          0
   step 5 (originated, computed from ungrounded invocation): 0
   step 5 (originated, no traceable basis):                  0

@@ -43,7 +43,7 @@ The monthly interest earned on the savings account is $15.25.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -139,7 +139,7 @@ The monthly interest earned on the savings account is $15.25.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -235,7 +235,7 @@ The monthly interest earned on the savings account is $15.25.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -331,7 +331,7 @@ The monthly interest earned on the savings account is $15.25.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -841,7 +841,7 @@ The monthly interest charge on the credit card is $162.00.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -943,7 +943,7 @@ The monthly interest charge on the credit card is $162.00.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -1045,7 +1045,7 @@ The monthly interest charge on the credit card is $162.00.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -1147,7 +1147,7 @@ The monthly interest charge on the credit card is $162.00.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -1983,7 +1983,7 @@ The monthly interest earned on the savings account is $15.25.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -2079,7 +2079,7 @@ The monthly interest earned on the savings account is $15.25.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -2175,7 +2175,7 @@ The monthly interest earned on the savings account is $15.25.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -2271,7 +2271,7 @@ The monthly interest earned on the savings account is $15.25.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -2781,7 +2781,7 @@ The monthly interest charge on the credit card is $162.00.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -2883,7 +2883,7 @@ The monthly interest charge on the credit card is $162.00.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -2985,7 +2985,7 @@ The monthly interest charge on the credit card is $162.00.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -3087,7 +3087,7 @@ The monthly interest charge on the credit card is $162.00.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`

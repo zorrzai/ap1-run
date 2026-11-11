@@ -187,7 +187,7 @@ Model: mock-model
 | `UNOBSERVABLE` | 0 | 0.0% |
 | **Total** | **40** | |
 
-Of the 40 `TRANSCRIBED-EXACT`, 12 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3). Of these: roundings of the tool's return to the declared places, 4; float artefacts of the tool (the return differs from the release only past a binary float's 15 significant digits, such as 15.200000000000001 for 15.20), 8. A strict v1.2 "match" count subtracts the roundings, or all 12 for the strictest reading.
+Of the 40 `TRANSCRIBED-EXACT`, 4 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3). Of these: roundings of the tool's return to the declared places, 4; float artefacts of the tool (the return differs from the release only past a binary float's 15 significant digits, such as 15.200000000000001 for 15.20), 0. A strict v1.2 "match" count subtracts the roundings, or all 4 for the strictest reading.
 
 ### B. Release Coverage
 
@@ -255,8 +255,8 @@ Total operands resolved: 212
 | 1 | Source match | 112 | 52.8% |
 | 1 | Declared constant | 60 | 28.3% |
 | 2 | Transformed source | 8 | 3.8% |
-| 3 | Reference intermediate | 8 | 3.8% |
-| 4 | Computed in session | 24 | 11.3% |
+| 3 | Reference intermediate | 12 | 5.7% |
+| 4 | Computed in session | 20 | 9.4% |
 | 5 | Originated, sign-inverted from source | 0 | 0.0% |
 | 5 | Originated, computed from ungrounded invocation | 0 | 0.0% |
 | 5 | Originated, no traceable basis | 0 | 0.0% |

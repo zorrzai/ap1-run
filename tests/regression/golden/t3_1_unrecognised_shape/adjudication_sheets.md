@@ -43,7 +43,7 @@ Category: interest
 **Evidence class:** `EV-0 UNOBSERVABLE`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `None`
@@ -139,7 +139,7 @@ Category: interest
 **Evidence class:** `EV-0 UNOBSERVABLE`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `None`
@@ -235,7 +235,7 @@ Category: interest
 **Evidence class:** `EV-0 UNOBSERVABLE`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `None`
@@ -331,7 +331,7 @@ Category: interest
 **Evidence class:** `EV-0 UNOBSERVABLE`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `None`
@@ -841,7 +841,7 @@ Category: interest
 **Evidence class:** `EV-0 UNOBSERVABLE`
 
 - **calculator**(`{"expression": "2400 * (18.0 / 100) / 12"}`)
-  → `{"result": "36.0"}`
+  → `{"result": "36"}`
 
 
 **Invocation outcome:** `None`
@@ -943,7 +943,7 @@ Category: interest
 **Evidence class:** `EV-0 UNOBSERVABLE`
 
 - **calculator**(`{"expression": "2400 * (18.0 / 100) / 12"}`)
-  → `{"result": "36.0"}`
+  → `{"result": "36"}`
 
 
 **Invocation outcome:** `None`
@@ -1045,7 +1045,7 @@ Category: interest
 **Evidence class:** `EV-0 UNOBSERVABLE`
 
 - **calculator**(`{"expression": "2400 * (18.0 / 100) / 12"}`)
-  → `{"result": "36.0"}`
+  → `{"result": "36"}`
 
 
 **Invocation outcome:** `None`
@@ -1147,7 +1147,7 @@ Category: interest
 **Evidence class:** `EV-0 UNOBSERVABLE`
 
 - **calculator**(`{"expression": "2400 * (18.0 / 100) / 12"}`)
-  → `{"result": "36.0"}`
+  → `{"result": "36"}`
 
 
 **Invocation outcome:** `None`

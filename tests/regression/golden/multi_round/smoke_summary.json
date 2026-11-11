@@ -1685,8 +1685,8 @@
           "outcome": "OPERATION-CORRECT"
         },
         {
-          "detail": "result 3.200000000000001 matches expected value 3.200 (tolerance 0.01)",
-          "evaluated_result": "3.200000000000001",
+          "detail": "result 3.2 matches expected value 3.200 (tolerance 0.01)",
+          "evaluated_result": "3.2",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -1770,17 +1770,16 @@
           "outcome": "OPERANDS-GROUNDED",
           "operand_resolutions": [
             {
-              "step": 4,
-              "resolution": "computed_in_session",
+              "step": 3,
+              "resolution": "intermediate",
               "matched_field": null,
-              "matched_intermediate": null,
+              "matched_intermediate": "monthly_interest",
               "quantisation_finding": false,
               "transform_used": null,
-              "near_miss_finding": null,
               "sign_inversion_finding": null,
-              "operand_value": "15.200000000000001",
-              "operand_literal": "15.200000000000001",
-              "expression": "15.200000000000001 - 12.0"
+              "operand_value": "15.2",
+              "operand_literal": "15.2",
+              "expression": "15.2 - 12"
             },
             {
               "step": 1,
@@ -1790,9 +1789,9 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "12.0",
-              "operand_literal": "12.0",
-              "expression": "15.200000000000001 - 12.0"
+              "operand_value": "12",
+              "operand_literal": "12",
+              "expression": "15.2 - 12"
             }
           ],
           "originated_operands": [],
@@ -1831,8 +1830,8 @@
           "outcome": "OPERATION-CORRECT"
         },
         {
-          "detail": "result 3.200000000000001 matches expected value 3.200 (tolerance 0.01)",
-          "evaluated_result": "3.200000000000001",
+          "detail": "result 3.2 matches expected value 3.200 (tolerance 0.01)",
+          "evaluated_result": "3.2",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -1916,17 +1915,16 @@
           "outcome": "OPERANDS-GROUNDED",
           "operand_resolutions": [
             {
-              "step": 4,
-              "resolution": "computed_in_session",
+              "step": 3,
+              "resolution": "intermediate",
               "matched_field": null,
-              "matched_intermediate": null,
+              "matched_intermediate": "monthly_interest",
               "quantisation_finding": false,
               "transform_used": null,
-              "near_miss_finding": null,
               "sign_inversion_finding": null,
-              "operand_value": "15.200000000000001",
-              "operand_literal": "15.200000000000001",
-              "expression": "15.200000000000001 - 12.0"
+              "operand_value": "15.2",
+              "operand_literal": "15.2",
+              "expression": "15.2 - 12"
             },
             {
               "step": 1,
@@ -1936,9 +1934,9 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "12.0",
-              "operand_literal": "12.0",
-              "expression": "15.200000000000001 - 12.0"
+              "operand_value": "12",
+              "operand_literal": "12",
+              "expression": "15.2 - 12"
             }
           ],
           "originated_operands": [],
@@ -3903,8 +3901,8 @@
           "outcome": "OPERATION-CORRECT"
         },
         {
-          "detail": "result 3.200000000000001 matches expected value 3.200 (tolerance 0.01)",
-          "evaluated_result": "3.200000000000001",
+          "detail": "result 3.2 matches expected value 3.200 (tolerance 0.01)",
+          "evaluated_result": "3.2",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -3988,17 +3986,16 @@
           "outcome": "OPERANDS-GROUNDED",
           "operand_resolutions": [
             {
-              "step": 4,
-              "resolution": "computed_in_session",
+              "step": 3,
+              "resolution": "intermediate",
               "matched_field": null,
-              "matched_intermediate": null,
+              "matched_intermediate": "monthly_interest",
               "quantisation_finding": false,
               "transform_used": null,
-              "near_miss_finding": null,
               "sign_inversion_finding": null,
-              "operand_value": "15.200000000000001",
-              "operand_literal": "15.200000000000001",
-              "expression": "15.200000000000001 - 12.0"
+              "operand_value": "15.2",
+              "operand_literal": "15.2",
+              "expression": "15.2 - 12"
             },
             {
               "step": 1,
@@ -4008,9 +4005,9 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "12.0",
-              "operand_literal": "12.0",
-              "expression": "15.200000000000001 - 12.0"
+              "operand_value": "12",
+              "operand_literal": "12",
+              "expression": "15.2 - 12"
             }
           ],
           "originated_operands": [],
@@ -4049,8 +4046,8 @@
           "outcome": "OPERATION-CORRECT"
         },
         {
-          "detail": "result 3.200000000000001 matches expected value 3.200 (tolerance 0.01)",
-          "evaluated_result": "3.200000000000001",
+          "detail": "result 3.2 matches expected value 3.200 (tolerance 0.01)",
+          "evaluated_result": "3.2",
           "matched_against": "expected_value",
           "outcome": "OPERATION-CORRECT"
         }
@@ -4134,17 +4131,16 @@
           "outcome": "OPERANDS-GROUNDED",
           "operand_resolutions": [
             {
-              "step": 4,
-              "resolution": "computed_in_session",
+              "step": 3,
+              "resolution": "intermediate",
               "matched_field": null,
-              "matched_intermediate": null,
+              "matched_intermediate": "monthly_interest",
               "quantisation_finding": false,
               "transform_used": null,
-              "near_miss_finding": null,
               "sign_inversion_finding": null,
-              "operand_value": "15.200000000000001",
-              "operand_literal": "15.200000000000001",
-              "expression": "15.200000000000001 - 12.0"
+              "operand_value": "15.2",
+              "operand_literal": "15.2",
+              "expression": "15.2 - 12"
             },
             {
               "step": 1,
@@ -4154,9 +4150,9 @@
               "quantisation_finding": false,
               "transform_used": null,
               "sign_inversion_finding": null,
-              "operand_value": "12.0",
-              "operand_literal": "12.0",
-              "expression": "15.200000000000001 - 12.0"
+              "operand_value": "12",
+              "operand_literal": "12",
+              "expression": "15.2 - 12"
             }
           ],
           "originated_operands": [],
@@ -4614,7 +4610,7 @@
       "item_id": "Q09",
       "condition": "base",
       "repeat": 1,
-      "raw_arguments": "{\"expression\": \"15.200000000000001 - 12.0\"}"
+      "raw_arguments": "{\"expression\": \"15.2 - 12\"}"
     },
     {
       "item_id": "Q09",
@@ -4632,7 +4628,7 @@
       "item_id": "Q09",
       "condition": "base",
       "repeat": 2,
-      "raw_arguments": "{\"expression\": \"15.200000000000001 - 12.0\"}"
+      "raw_arguments": "{\"expression\": \"15.2 - 12\"}"
     },
     {
       "item_id": "Q10",
@@ -4842,7 +4838,7 @@
       "item_id": "Q09",
       "condition": "instruction_removed",
       "repeat": 1,
-      "raw_arguments": "{\"expression\": \"15.200000000000001 - 12.0\"}"
+      "raw_arguments": "{\"expression\": \"15.2 - 12\"}"
     },
     {
       "item_id": "Q09",
@@ -4860,7 +4856,7 @@
       "item_id": "Q09",
       "condition": "instruction_removed",
       "repeat": 2,
-      "raw_arguments": "{\"expression\": \"15.200000000000001 - 12.0\"}"
+      "raw_arguments": "{\"expression\": \"15.2 - 12\"}"
     },
     {
       "item_id": "Q10",
