@@ -375,7 +375,7 @@ Grouped by severity, in ID order.
 - Breaks: AP-1 v1.3 D7.2(a) ("never silently skipped, and its proportion reported"), D7.2(b)
   OPERATION-UNOBSERVABLE; AP-1 v1.2 7.1; SPEC R2.4
 - Addressed by: fixed; commits ed1e3ce2, cfe3329b, bce0ffc2, b6dcdbff; test
-  `tests/unit/execution/test_engine.py::test_execute_item_malformed_arguments_invoked_and_scored`
+  `tests/functional/test_step4_g2_provenance.py::test_run_report_states_operands_unobservable_count`
 
 **T3-52 · high · Intermediate rounds of the tool loop are overwritten, and the SPEC R0.2/R0.3 transport and transcript contracts have no tests**
 - What's wrong: intermediate rounds are overwritten (KNOWN_ISSUES #7), which is the lost-response
@@ -387,6 +387,9 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/foundation/adapter.py:11` (module docstring);
   `src/ap1_run/execution/engine.py:172-236` (`_drive_tool_loop`)
 - Breaks: SPEC R0.2, R0.3 verification contracts; AP-1 v1.3 §5.6
+- Addressed by: fixed; commits f9aa9c1e, 5b211756, e8e8d043, c13d14b8, f58a595a, a6de71b0, ad548166,
+  31102e4e, 7c683977, 1178ef61; test
+  `tests/functional/test_step4_g4_transcript.py::test_run_every_mock_reply_recorded_as_the_bytes_it_sent`
 
 ### Disputed (high or medium)
 
@@ -495,6 +498,8 @@ Grouped by severity, in ID order.
   `src/ap1_run/runner/executions.py:72-99` (`score_execution`)
 - Breaks: SPEC §2 ("The separation is a conformance requirement"), SPEC §5, R0.2, R0.3 ("opens the
   transcript read-only"); SPEC §10 rows for AP-1 v1.3 §13.1, §13.10
+- Addressed by: fixed; commits e8e8d043, 89019b91, 6077919f, 0e46f5e0; test
+  `tests/unit/execution/test_engine.py::test_execute_item_scores_no_d72`
 
 **T3-22 · medium · The R4.1 "mock endpoint with planted defects" is a unit-test catalogue that bypasses the live path**
 - What's wrong: `verify_r41.py` B01–B30 call units directly (its docstring says 33 checks; it runs
@@ -509,8 +514,8 @@ Grouped by severity, in ID order.
 - After the reorg: `tests/legacy/verify_r41.py`; `src/ap1_run/execution/evidence.py:146-153`
   (`classify_attestation`)
 - Breaks: SPEC R4.1 ("Every planted defect is detected with the specified outcome, offline")
-- Addressed by: fixed; commits 09cfed11, b075b50a, d8d2be3c, 60ac7b79; test
-  `tests/unit/execution/test_evidence_r41.py::test_r41_ev3_rows_are_declared_exceptions_while_ev3_is_not_built`
+- Addressed by: fixed; commits 09cfed11, b075b50a, d8d2be3c, 60ac7b79, 7bdb2336; test
+  `tests/unit/runner/test_executions.py::test_result_from_record_carries_every_round_s_response`
 
 **T3-23 · medium · Inter-rater agreement is specified and claimed, but nothing implements it**
 - What the report must say is settled by DEC-3 (see "Maintainer decisions" at the end).
@@ -658,6 +663,9 @@ Grouped by severity, in ID order.
   `src/ap1_run/execution/engine.py:228-234` (`_drive_tool_loop`), `:141-157` (`execute_item`)
 - Breaks: SPEC R3.3 ("every UNMEASURED, UNOBSERVABLE, UNMEASURABLE and VOID cell with its reason");
   SPEC R1.3; AP-1 v1.3 D7.9 ("with the round identified")
+- Addressed by: partly fixed; commits 83b92a40, dbf6367e, 086230fe; strict xfail
+  `tests/functional/test_step4_g7_report.py::test_run_report_lists_every_non_outcome_kind` and 5
+  more marked T3-35
 
 **T3-36 · medium · Adjudication sheets print arm identity in every header**
 - What's wrong: headers read `## Item n: Q02 (Condition: base) — Scorer 1`, so scorers see whether a
@@ -693,6 +701,8 @@ Grouped by severity, in ID order.
   `src/ap1_run/runner/summary.py:12-43` (`verify_invocation_consistency`); `src/ap1_run/run.py:286`
   (`main`)
 - Breaks: SPEC R2.3 (NOT-INVOKED is a legitimate outcome)
+- Addressed by: fixed; commits aaad1c84, 8169f69f; test
+  `tests/unit/runner/test_executions.py::test_score_execution_counts_calls_to_other_tools[calculator]`
 
 **T3-39 · medium · Model-controlled input can abort the run through unhandled exceptions in provenance and coverage**
 - What's wrong: `{"expression": 15.2}` raises `TypeError`; a boolean literal (`"True * 15.2"`,
@@ -708,9 +718,8 @@ Grouped by severity, in ID order.
   (`score_execution`)
 - Same family (model or endpoint input ends the run with no report): S3-G2-1, S3-G2-2, S3-G2-4,
   S3-G4-4, S3-G4-5.
-- Addressed by: partly fixed; commits ed1e3ce2, cfe3329b, 6edf0117; strict xfail
-  `tests/functional/test_step4_g1_invocation.py::test_run_model_controlled_calculator_input_run_completes[overflow]`
-  and 5 more marked T3-39
+- Addressed by: fixed; commits ed1e3ce2, cfe3329b, 6edf0117, d5d982e2; test
+  `tests/unit/scoring/test_release_coverage.py::test_release_coverage_unquantisable_candidate_ungoverned`
 
 **T3-40 · medium · The D7.2(b) evaluator accepts far less than the calculator executes**
 - What's wrong: `max`, `sqrt`, `log` and similar score OPERATION-UNOBSERVABLE, so correctness is
@@ -993,6 +1002,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/run.py:242-264` (`main`); `src/ap1_run/runner/executions.py:45-55`
   (`record_transport_failure`); `src/ap1_run/execution/engine.py:72-93` (`execute_item`)
 - Breaks: AP-1 v1.3 §13.2
+- Addressed by: fixed; commits 46583c4d, e8e8d043; test
+  `tests/unit/execution/test_engine.py::test_execute_item_first_send_fails_unmeasured[adapter]`
 
 **T3-66 · low · D1 n disagrees between report §3 and §8, and UNMEASURABLE drops out of D1**
 - What's wrong: `run_e_mini` gives report §3 n=1000 and report §8 818+181=999; the UNMEASURABLE
@@ -1012,8 +1023,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/execution/engine.py:172-236` (`_drive_tool_loop`);
   `src/ap1_run/runner/settings.py:130-137` (`apply_sampling_overrides`)
 - Breaks: SPEC R0.1
-- Addressed by: partly fixed; commits 037bd39e; strict xfail
-  `tests/unit/execution/test_engine.py::test_execute_item_tool_loop_exhausted_flagged_in_transcript`
+- Addressed by: fixed; commits 037bd39e, e71e70a4; test
+  `tests/functional/test_step4_g1_invocation.py::test_run_tool_loop_exhausted_flagged_run_completes`
 
 **T3-68 · low · `seal()` accepts an empty or `"placeholder"` AP-1 text hash, or no text path at all**
 - What's wrong: refusal depends on the caller; the live path passes the real file and hash, but
@@ -1074,8 +1085,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/run.py:122-130`, `:175-183` (`main`);
   `src/ap1_run/runner/settings.py:151-152` (`check_condition_guard`)
 - Breaks: SPEC R1.1 (seal what is executed)
-- Addressed by: fixed; commits c7c4b421, e45ee895; test
-  `tests/functional/test_step4_g5_seal_verifier.py::test_run_executes_the_calculator_it_read_not_a_shadowing_package`
+- Addressed by: fixed; commits c7c4b421, e45ee895, 6077919f; test
+  `tests/unit/execution/test_seal.py::test_verify_seal_checks_the_bytes_read_not_the_file_again[calculator]`
 
 **T3-73 · low · SPEC lags the code**
 - The D7.2(b), release-coverage and sign-inversion items are settled for now by DEC-5 (see
@@ -1254,8 +1265,8 @@ Grouped by severity, in ID order.
   `src/ap1_run/execution/seal.py:124` (`perturbation_check`), `:228` (`source_fields_check`);
   `src/ap1_run/execution/seal_constants.py:16` (`declared_constants_check`); `perturbation.py` was
   removed in the move
-- Addressed by: fixed; commits d8d2be3c; test
-  `tests/unit/runner/test_executions.py::test_echo_check_ignored_temperature_is_a_finding`
+- Addressed by: fixed; commits d8d2be3c, 7bdb2336; test
+  `tests/unit/runner/test_executions.py::test_result_from_record_carries_every_round_s_response`
 
 **T3-91 · info · Not an instrument finding: a note on a document outside this repository**
 - What's wrong: nothing in this repository. The ID was used in the review for a note on a document
@@ -1339,6 +1350,8 @@ does not arise under v1.3. V12-9 to V12-12 were candidates that passed and are n
   (`execute_item`)
 - Breaks: AP-1 v1.2 §5.6 ("All raw responses, preserved and published") with the AP-1 §5 preamble;
   same in AP-1 v1.3 §5.6; SPEC R0.2 ("Every request and response is written to the transcript"), R0.3
+- Addressed by: fixed; commits f9aa9c1e, c13d14b8, f58a595a; test
+  `tests/unit/execution/test_engine.py::test_execute_item_rounds_recorded_in_order_failed_round_with_error`
 
 **V12-4 · medium · v1.2 only · The live runner can seal only against the v1.3 draft text**
 - What's wrong: the AP-1 text path is hard-coded to the v1.3 draft. With `ap1_version: "v1.2"` and
@@ -1602,6 +1615,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - Where: `engine.py:300`; `evidence.py:292-295`
 - After the reorg: `src/ap1_run/execution/engine.py:300` (`_extract_tool_calls`);
   `src/ap1_run/execution/evidence.py:292-295` (`extract_attestation`)
+- Addressed by: fixed; commits af6553db; test
+  `tests/unit/execution/test_engine.py::test_execute_item_unreadable_message_part_ev0_no_tool_run[dict-tool-calls]`
 
 **S3-G2-2 · medium · A tool call without an `id` aborts the run**
 - What's wrong: the engine gives the record a default id `call_{turn}` but looks up the return value
@@ -1609,6 +1624,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
   requests have been spent, with no report. Not all OpenAI-compatible servers send an id.
 - Where: `engine.py:194`, `:208-216`
 - After the reorg: `src/ap1_run/execution/engine.py:194`, `:208-216` (`_drive_tool_loop`)
+- Addressed by: fixed; commits af6553db, b62fb377; test
+  `tests/unit/execution/test_engine.py::test_execute_item_call_without_id_beside_one_with_an_id`
 
 **S3-G2-3 · low · A repeated tool-call id attaches the return value to the wrong record**
 - What's wrong: the return is attached to the first record with that id, so a reused id overwrites
@@ -1617,6 +1634,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - Where: `engine.py:212-216`
 - After the reorg: `src/ap1_run/execution/engine.py:212-216` (`_drive_tool_loop`)
 - Breaks: AP-1 v1.3 D7.2(a)(iv)
+- Addressed by: fixed; commits af6553db; test
+  `tests/unit/execution/test_engine.py::test_execute_item_repeated_call_id_return_on_own_record`
 
 **S3-G2-4 · low (medium-low) · Valid-JSON but non-object arguments raise `AttributeError`**
 - What's wrong: `_extract_calc_expression` catches only `JSONDecodeError` and `TypeError`, so
@@ -1625,8 +1644,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - Where: `engine.py:263-277`; `provenance_classify.py:159-172`
 - After the reorg: `src/ap1_run/execution/engine.py:263-277` (`_extract_calc_expression`);
   `src/ap1_run/scoring/provenance/classify.py:159-172` (`_extract_expression`)
-- Addressed by: partly fixed; commits ed1e3ce2, cfe3329b; strict xfail
-  `tests/functional/test_step4_g1_invocation.py::test_run_model_controlled_calculator_input_run_completes[overflow]`
+- Addressed by: fixed; commits ed1e3ce2, cfe3329b, d5d982e2; test
+  `tests/functional/test_step4_g1_invocation.py::test_run_model_controlled_calculator_input_run_completes[json-list]`
 
 **S3-G2-5 · medium · `reclassify_session` gets a result list and an expression list that are out of step**
 - What's wrong: `execute_item` builds `op_correctness_results` only for calculator calls with an
@@ -1645,7 +1664,7 @@ also hold there; the G7 Inspect and G8 tool files do not.
   `src/ap1_run/scoring/operation_correctness.py:235-284`, `:273` (`reclassify_session`)
 - Breaks: AP-1 v1.3 D7.2(b) (a result is resolved against another call's operands)
 - Addressed by: fixed; commits b0d7e895; test
-  `tests/unit/execution/test_engine.py::test_execute_item_scoring_wired`
+  `tests/unit/runner/test_executions.py::test_score_d72_skipped_call_value_fed_forward_is_operation_correct`
 
 ### G3: seal
 
@@ -1733,8 +1752,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - Where: `operation_correctness.py:245-252` (`:250`); `engine.py:138`
 - After the reorg: `src/ap1_run/scoring/operation_correctness.py:245-252`, `:250`
   (`reclassify_session`); `src/ap1_run/execution/engine.py:138` (`execute_item`)
-- Addressed by: partly fixed; commits ed1e3ce2, cfe3329b; strict xfail
-  `tests/functional/test_step4_g1_invocation.py::test_run_model_controlled_calculator_input_run_completes[overflow]`
+- Addressed by: fixed; commits ed1e3ce2, cfe3329b, d5d982e2; test
+  `tests/functional/test_step4_g1_invocation.py::test_run_model_controlled_calculator_input_run_completes[json-list]`
 
 ### G5: scoring B
 
@@ -1780,6 +1799,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
   `AttributeError` is raised and no report is written. Engine error states are strings today.
 - Where: `report.py:519`
 - After the reorg: `src/ap1_run/reporting/report.py:519` (`_section_unmeasured_cells`)
+- Addressed by: fixed; commits dbf6367e; test
+  `tests/unit/reporting/test_report.py::test_cells_non_string_error_state_with_colon_is_listed`
 
 **S3-G6-2 · low · Report §12 says every unclaimed dimension "require[s] human adjudication", including D1, D2 and D7**
 - What's wrong: those three are measured automatically by the runner (their own reasons say
@@ -1914,6 +1935,8 @@ are the test author's estimate.
 - After the reorg: `src/ap1_run/foundation/adapter.py:121-127` (`send`);
   `src/ap1_run/execution/engine.py:199-216` (`_drive_tool_loop`)
 - Breaks: SPEC R0.2 ("The request as sent — not as constructed — is recorded")
+- Addressed by: fixed; commits f9aa9c1e; test
+  `tests/unit/foundation/test_adapter.py::test_send_request_record_unchanged_when_caller_extends_messages`
 
 **S4-G9-1 · low · A missing released figure is written as the string `"None"`**
 - What's wrong: for every outcome that releases no figure, `identify_figure` returns
