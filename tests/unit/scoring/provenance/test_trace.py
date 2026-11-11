@@ -149,7 +149,13 @@ def test_extract_operands_deep_nesting_does_not_raise():
     assert extract_operands('-' * 900 + '7') == [(D('-7'), '-7')]
 
 
-@pytest.mark.parametrize('expression', [None, 15.2, ['1'], '-' * 5000 + '1',
+# Nested deeper than the parser's own stack limit, so every supported
+# Python refuses it (3.11 and 3.12 raise MemoryError). 5000 minus signs,
+# the depth used before, is refused by 3.11 only: 3.12 parses it.
+TOO_DEEP_TO_PARSE = pytest.param('-' * 100000 + '1', id='too-deep-to-parse')
+
+
+@pytest.mark.parametrize('expression', [None, 15.2, ['1'], TOO_DEEP_TO_PARSE,
                                         'a\x00 1'])
 def test_extract_operands_unreadable_input_gives_no_operands(expression):
     assert extract_operands(expression) == []
