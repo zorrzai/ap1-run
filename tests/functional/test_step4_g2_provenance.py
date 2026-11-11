@@ -53,7 +53,10 @@ def full_run(tmp_path, monkeypatch):
         if ground_truth is not None:
             fixture_dir = tmp_path / 'inputs'
             fixture_dir.mkdir()
-            for name in ('fixture.json', 'questions.json'):
+            # The runner imports calculator_tool from the fixture
+            # directory too, so the copy needs it as well.
+            for name in ('fixture.json', 'questions.json',
+                         'calculator_tool.py'):
                 (fixture_dir / name).write_bytes((EXAMPLE / name).read_bytes())
             (fixture_dir / 'ground_truth_example.py').write_text(
                 ground_truth, 'utf-8')
@@ -79,10 +82,14 @@ def full_run(tmp_path, monkeypatch):
         # The runner sleeps between executions and retries; skip it.
         monkeypatch.setattr(time, 'sleep', lambda seconds: None)
         # The runner puts the fixture directory on sys.path and imports
-        # ground_truth_example from it: undo both, write no bytecode.
+        # ground_truth_example and calculator_tool from it: undo all of
+        # it, and write no bytecode. Neither module may come from an
+        # earlier test's sys.modules, or a run would use another fixture
+        # directory's copy and the result would depend on test order.
         monkeypatch.setattr(sys, 'path', list(sys.path))
         monkeypatch.setattr(sys, 'dont_write_bytecode', True)
-        saved = sys.modules.pop('ground_truth_example', None)
+        modules = ('ground_truth_example', 'calculator_tool')
+        saved = {name: sys.modules.pop(name, None) for name in modules}
         output_dir = tmp_path / 'output'
         try:
             code = runner.main(['--config', str(config_path),
@@ -90,9 +97,10 @@ def full_run(tmp_path, monkeypatch):
                                 '--output-dir', str(output_dir)])
         finally:
             mock.stop()
-            sys.modules.pop('ground_truth_example', None)
-            if saved is not None:
-                sys.modules['ground_truth_example'] = saved
+            for name in modules:
+                sys.modules.pop(name, None)
+                if saved[name] is not None:
+                    sys.modules[name] = saved[name]
         summary = json.loads(
             (output_dir / 'smoke_summary.json').read_text('utf-8'))
         report = (output_dir / 'report.md').read_text('utf-8')
