@@ -17,6 +17,7 @@ from ap1_run.foundation.numeric import extract_numeric_tokens
 from ap1_run.scoring.accuracy import score_accuracy
 from ap1_run.scoring.answer_outcome import answer_outcome, refusal_outcome
 from ap1_run.scoring.figure_id import ADJUDICATE_REFUSAL, identify_figure
+from ap1_run.scoring.provenance.classify import mark_unmeasurable_questions
 from ap1_run.scoring.release_coverage import check_release_coverage
 from ap1_run.scoring.transcription import check_transcription
 
@@ -300,3 +301,26 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'answer_outcome_reason': section_6_8_reason,
         **refusal_entry,
     })
+
+
+def apply_question_measurability(findings):
+    """After the last execution: D7.2 measurability per question (T3-42).
+
+    Where any execution of a question chains and its ground truth declares
+    no intermediates, every execution of the question is UNMEASURABLE for
+    D7.2(a) (mark_unmeasurable_questions). The section 6.8 outcome of each
+    execution that changed is assigned again from its new results. Returns
+    the number of executions changed.
+    """
+    executed = [r for r in findings.all_results
+                if r.get('status') == 'EXECUTED']
+    changed = mark_unmeasurable_questions(executed)
+    for r in changed:
+        if r.get('refusal'):
+            continue  # its outcome is the provisional one
+        # An UNMEASURABLE invocation is not grounded, so answer_outcome
+        # decides before it reads the D1 outcome: None is passed for it.
+        r['answer_outcome'], r['answer_outcome_reason'] = answer_outcome(
+            r.get('figure_outcome'), r.get('invocation_outcome'),
+            r['provenance_results'], accuracy_outcome=None)
+    return len(changed)

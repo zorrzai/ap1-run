@@ -11,6 +11,7 @@ import os
 
 from ap1_run.foundation import transcript
 from ap1_run.reporting import adjudication, report
+from ap1_run.scoring.provenance.classify import mark_unmeasurable_questions
 
 
 def attach_figure_outcomes(tr_records):
@@ -64,6 +65,8 @@ def write_outputs(output_dir, transcript_path, *, summary, config,
     tr_records = transcript.read_all(transcript_path)
 
     engine_records = attach_figure_outcomes(tr_records)
+    # The sheets show D7.2(a) as the summary has it: per question (T3-42)
+    mark_unmeasurable_questions(engine_records)
 
     report_text = report.generate_report(
         summary=summary,

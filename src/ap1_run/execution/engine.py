@@ -151,7 +151,9 @@ def execute_item(item, *, condition, config, fixture,
             attestation, {'ev3_implemented': False})
 
     # D7.2(a): sequential operand provenance (D22 transitivity guard);
-    # a chained item without declared intermediates is UNMEASURABLE (T3-42)
+    # a chained item without declared intermediates is UNMEASURABLE (T3-42);
+    # the runner then extends it to every execution of the question
+    # (runner/executions.py apply_question_measurability)
     provenance_results = mark_unmeasurable_item(
         classify_invocations_sequential(tool_calls_record, ctx, gt, config),
         gt)

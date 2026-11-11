@@ -344,3 +344,42 @@ def test_run_unknown_name_in_expression_is_operands_unobservable(full_run):
     assert [[p['outcome'] for p in r['provenance_results']] for r in runs] \
         == [['OPERANDS-UNOBSERVABLE']] * 2
     assert [r['answer_outcome'] for r in runs] == [None, None]
+
+
+@pytest.mark.proposal(
+    'T3-42: until a question can declare that it is chained, it is chained '
+    'if any execution of it chains, and then every execution is '
+    'UNMEASURABLE; an interim rule, proposed, not decided')
+@pytest.mark.finding('T3-42')
+@pytest.mark.req('R2.4')
+def test_run_question_with_mixed_executions_is_unmeasurable_in_every_one(
+        full_run, monkeypatch):
+    # As above, Q01's module declares no intermediates, and 2 repeats run.
+    # Only base repeat 1 splits the work into two chained calls; Q01's
+    # other three executions use one call whose operands all resolve
+    # (source fields and the structural constant 1), so each on its own
+    # is grounded. Correct (SPEC R2.4; the interim rule until a question
+    # can declare that it is chained): the question is chained, so all
+    # four executions are UNMEASURABLE for D7.2(a), and the outcome does
+    # not depend on how the model split the work. The other 9 items
+    # answer as in `clean`: 9 x 2 conditions x 2 repeats = 36 grounded.
+    import ap1_run.run as runner
+    monkeypatch.setattr(runner, 'declared_constants_check',
+                        lambda *args: [])
+    say = {'say': 'The monthly interest earned on the savings account is '
+                  '${result}.'}
+    code, summary, report = full_run(
+        {'Q01/base/r1': [{'call': '15200.00 * 1.2'}, {'call': '18240.0 * 1'},
+                         say],
+         'Q01/*/*': [{'call': '15200.00 * 1.2 * 1'}, say]},
+        repeat_count=2, ground_truth=GT_Q01_WITHOUT_INTERMEDIATES)
+    assert code == 0
+    q01 = executions(summary, 'Q01')
+    assert [(r['condition'], r['repeat']) for r in q01] == [
+        ('base', 1), ('base', 2), ('instruction_removed', 1),
+        ('instruction_removed', 2)]
+    assert [[p['outcome'] for p in r['provenance_results']]
+            for r in q01] == [['UNMEASURABLE'] * 2] + [['UNMEASURABLE']] * 3
+    provenance = section(report, '7b. D7.2(a)')
+    assert table_count(provenance, 'OPERANDS-GROUNDED') == 36
+    assert table_count(provenance, 'UNMEASURABLE') == 5

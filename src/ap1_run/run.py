@@ -56,8 +56,8 @@ from ap1_run.foundation.config import load_config
 from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.credentials import get_api_key
 from ap1_run.runner.executions import (
-    Findings, record_not_scored, record_transport_failure, record_underivable,
-    score_execution,
+    Findings, apply_question_measurability, record_not_scored,
+    record_transport_failure, record_underivable, score_execution,
 )
 from ap1_run.runner.outputs import write_outputs
 from ap1_run.runner.settings import (
@@ -299,6 +299,9 @@ def main(argv=None):
 
                 # Brief delay to avoid rate limiting
                 time.sleep(0.5)
+
+    # -- D7.2 measurability per question, from all its executions --
+    apply_question_measurability(findings)
 
     # -- Consistency check (FATAL on mismatch) --
     verify_invocation_consistency(findings.all_results)

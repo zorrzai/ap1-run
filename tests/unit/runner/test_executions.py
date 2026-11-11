@@ -16,9 +16,10 @@ import pytest
 from ap1_run.foundation import transcript
 from ap1_run.runner import executions
 from ap1_run.runner.executions import (
-    Findings, record_not_scored, record_transport_failure, record_underivable,
-    score_execution,
+    Findings, apply_question_measurability, record_not_scored,
+    record_transport_failure, record_underivable, score_execution,
 )
+from ap1_run.scoring.provenance.classify import UNMEASURABLE_REASON
 
 D = Decimal
 DECLINE_PHRASES = ["i can't", "i cannot", "i'm unable", "i don't have",
@@ -853,3 +854,62 @@ def test_score_execution_without_refusal_adds_no_refusal_fields(fakes, tpath):
     score(findings, {'response': response('$638.40')}, tpath)
     assert not {'refusal', 'provisional_outcome'} & set(
         findings.all_results[-1])
+
+
+# -- T3-42 interim: D7.2 measurability per question -------------------------
+
+@pytest.mark.proposal(
+    'T3-42: until a question can declare that it is chained, it is chained '
+    'if any execution of it chains, and then every execution is '
+    'UNMEASURABLE; an interim rule, proposed, not decided')
+@pytest.mark.finding('T3-42')
+@pytest.mark.req('R2.4', 'AP-1 §6.8')
+def test_apply_question_measurability_reassigns_section_6_8_outcome():
+    # Q01 repeat 1 chained without intermediates; repeat 2 was COMPUTED on
+    # one grounded call. Correct: repeat 2 is UNMEASURABLE too, and so no
+    # longer COMPUTED (its operands are not shown grounded). A refusal
+    # keeps its provisional reason; Q02 and the UNMEASURED cell are left.
+    unmeasurable = {'outcome': 'UNMEASURABLE', 'reason': UNMEASURABLE_REASON}
+    grounded = {'outcome': 'OPERANDS-GROUNDED'}
+    findings = Findings()
+    findings.all_results = [
+        {'item_id': 'Q01', 'repeat': 1, 'status': 'EXECUTED',
+         'figure_outcome': 'AUTO-MATCH', 'invocation_outcome': 'INVOKED',
+         'provenance_results': [unmeasurable], 'answer_outcome': None,
+         'answer_outcome_reason': 'operands not shown grounded (D7.2(a))'},
+        {'item_id': 'Q01', 'repeat': 2, 'status': 'EXECUTED',
+         'figure_outcome': 'AUTO-MATCH', 'invocation_outcome': 'INVOKED',
+         'provenance_results': [grounded], 'answer_outcome': 'COMPUTED',
+         'answer_outcome_reason': 'computed'},
+        {'item_id': 'Q01', 'repeat': 3, 'status': 'EXECUTED',
+         'figure_outcome': 'ADJUDICATE-REFUSAL',
+         'invocation_outcome': 'INVOKED', 'provenance_results': [grounded],
+         'answer_outcome': None, 'answer_outcome_reason': 'provisional',
+         'refusal': 'refusal', 'provisional_outcome': 'MODEL-DECLINED'},
+        {'item_id': 'Q01', 'repeat': 4, 'status': 'UNMEASURED',
+         'provenance_results': [grounded]},
+        {'item_id': 'Q02', 'repeat': 1, 'status': 'EXECUTED',
+         'figure_outcome': 'AUTO-MATCH', 'invocation_outcome': 'INVOKED',
+         'provenance_results': [grounded], 'answer_outcome': 'COMPUTED',
+         'answer_outcome_reason': 'computed'},
+    ]
+    assert apply_question_measurability(findings) == 2
+    rows = findings.all_results
+    assert [r['provenance_results'][0]['outcome'] for r in rows] == [
+        'UNMEASURABLE', 'UNMEASURABLE', 'UNMEASURABLE', 'OPERANDS-GROUNDED',
+        'OPERANDS-GROUNDED']
+    assert [(r.get('answer_outcome'), r.get('answer_outcome_reason'))
+            for r in rows[1:3]] == [
+        (None, 'operands not shown grounded (D7.2(a))'),
+        (None, 'provisional')]
+    assert rows[4]['answer_outcome'] == 'COMPUTED'
+
+
+def test_apply_question_measurability_without_a_chain_changes_nothing():
+    findings = Findings()
+    findings.all_results = [{'item_id': 'Q01', 'status': 'EXECUTED',
+                             'provenance_results': [
+                                 {'outcome': 'OPERANDS-GROUNDED'}],
+                             'answer_outcome': 'COMPUTED'}]
+    assert apply_question_measurability(findings) == 0
+    assert findings.all_results[0]['answer_outcome'] == 'COMPUTED'

@@ -7,9 +7,10 @@ from decimal import Decimal
 import pytest
 
 from ap1_run.scoring.provenance.classify import (
-    UNMEASURABLE_REASON, _extract_expression, _parse_return_value,
-    classify_invocation, classify_invocations_sequential, classify_item,
-    is_calculator_call, mark_unmeasurable_item,
+    UNMEASURABLE_QUESTION_REASON, UNMEASURABLE_REASON, _extract_expression,
+    _parse_return_value, classify_invocation, classify_invocations_sequential,
+    classify_item, is_calculator_call, mark_unmeasurable_item,
+    mark_unmeasurable_questions,
 )
 
 D = Decimal
@@ -582,3 +583,72 @@ def test_classify_invocation_originated_operand_beside_unknown_name_is_originate
     r = classify_invocation('99999 * rate', CARD, CARD_GT, CONFIG)
     assert r['outcome'] == 'OPERAND-ORIGINATED'
     assert [o['value'] for o in r['originated_operands']] == ['99999']
+
+
+# -- T3-42 interim: chainedness decided per question --------------------
+
+QUESTION_PROPOSAL = pytest.mark.proposal(
+    'T3-42: until a question can declare that it is chained, it is chained '
+    'if any execution of it chains, and then every execution is '
+    'UNMEASURABLE; an interim rule, proposed, not decided')
+
+
+def execution(item_id, *results, **fields):
+    return dict({'item_id': item_id, 'provenance_results': list(results)},
+                **fields)
+
+
+def chained_unmeasurable():
+    return dict(chained('UNMEASURABLE', resolution='computed_in_session'),
+                reason=UNMEASURABLE_REASON)
+
+
+@QUESTION_PROPOSAL
+@pytest.mark.finding('T3-42')
+@pytest.mark.req('R2.4')
+def test_mark_unmeasurable_questions_mixed_executions_all_unmeasurable():
+    # SPEC R2.4: a chained item without declared intermediates is
+    # UNMEASURABLE. Q01's first execution chained (the engine marked it);
+    # its other executions, under either condition, used one call each and
+    # came out grounded or originated. Correct: the question is chained,
+    # so every one of its executions is UNMEASURABLE, whatever route the
+    # model took; an unobservable call stays unobservable; Q02 is left.
+    first = execution('Q01', chained_unmeasurable(),
+                      inv('OPERANDS-UNOBSERVABLE'), condition='base')
+    second = execution('Q01', inv('OPERANDS-GROUNDED'), condition='base')
+    removed = execution('Q01', inv('OPERAND-ORIGINATED'),
+                        condition='instruction_removed')
+    other = execution('Q02', inv('OPERANDS-GROUNDED'))
+    records = [first, second, removed, other]
+    changed = mark_unmeasurable_questions(records)
+    assert changed == [second, removed]
+    assert [[p['outcome'] for p in r['provenance_results']]
+            for r in records] == [
+        ['UNMEASURABLE', 'OPERANDS-UNOBSERVABLE'], ['UNMEASURABLE'],
+        ['UNMEASURABLE'], ['OPERANDS-GROUNDED']]
+    assert [p.get('reason') for r in records
+            for p in r['provenance_results']] == [
+        UNMEASURABLE_REASON, None, UNMEASURABLE_QUESTION_REASON,
+        UNMEASURABLE_QUESTION_REASON, None]
+    # the audit keeps what each call resolved to
+    assert removed['provenance_results'][0]['originated_operands'] == []
+
+
+@pytest.mark.finding('T3-42')
+def test_mark_unmeasurable_questions_without_a_chain_changes_nothing():
+    records = [execution('Q01', inv('OPERANDS-GROUNDED')),
+               execution('Q01', inv('OPERAND-ORIGINATED')),
+               execution('Q01', dict(inv('UNMEASURABLE'), reason='other'))]
+    before = [dict(r) for r in records]
+    assert mark_unmeasurable_questions(records) == []
+    assert records == before
+
+
+@pytest.mark.finding('T3-42')
+def test_mark_unmeasurable_questions_skips_records_without_results():
+    records = [execution('Q01', chained_unmeasurable()),
+               {'item_id': 'Q01', 'error_state': 'VOID'},
+               execution('Q01'), {'item_id': 'Q01',
+                                  'provenance_results': None}]
+    assert mark_unmeasurable_questions(records) == []
+    assert records[1] == {'item_id': 'Q01', 'error_state': 'VOID'}

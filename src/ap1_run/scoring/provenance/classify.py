@@ -115,6 +115,9 @@ def classify_invocation(expression_str, delivered_context, ground_truth,
 
 UNMEASURABLE_REASON = ('chained item whose ground truth declares no '
                        'intermediates (SPEC R2.4)')
+UNMEASURABLE_QUESTION_REASON = (
+    'another execution of this question is chained, and its ground truth '
+    'declares no intermediates (SPEC R2.4)')
 
 # Resolutions that mean an operand matched an earlier call's return.
 _SESSION_RESOLUTIONS = ('computed_in_session', 'computed_in_session_ungrounded')
@@ -204,9 +207,50 @@ def mark_unmeasurable_item(invocation_results, ground_truth):
     item = classify_item(invocation_results, ground_truth)
     if item['outcome'] != 'UNMEASURABLE':
         return invocation_results
-    return [r if r.get('outcome') == 'OPERANDS-UNOBSERVABLE'
-            else dict(r, outcome='UNMEASURABLE', reason=item['reason'])
+    return _marked_unmeasurable(invocation_results, item['reason'])
+
+
+def _marked_unmeasurable(invocation_results, reason):
+    """The results, each grounded or originated one marked UNMEASURABLE
+    with the reason; unobservable and UNMEASURABLE ones are kept."""
+    return [r if r.get('outcome') in ('OPERANDS-UNOBSERVABLE', 'UNMEASURABLE')
+            else dict(r, outcome='UNMEASURABLE', reason=reason)
             for r in invocation_results]
+
+
+def mark_unmeasurable_questions(records):
+    """Apply D7.2 measurability per question, across all its executions.
+
+    Whether a question is chained is decided from every execution of it
+    (both conditions, every repeat), not from each alone: where any
+    execution is UNMEASURABLE because it chains and the ground truth
+    declares no intermediates (mark_unmeasurable_item), every execution
+    of that question is UNMEASURABLE too, so the outcome does not depend
+    on how the model split the work into calls. An interim rule until a
+    question can declare that it is chained (T3-42).
+
+    Args:
+        records: execution records, each with 'item_id' and
+            'provenance_results' (the runner's per-execution rows or the
+            transcript's engine records); others are left alone.
+
+    Changes the records in place (each changed one gets a new
+    provenance_results list) and returns the records that changed.
+    """
+    chained = {r.get('item_id') for r in records
+               for p in r.get('provenance_results') or []
+               if p.get('outcome') == 'UNMEASURABLE'
+               and p.get('reason') == UNMEASURABLE_REASON}
+    changed = []
+    for r in records:
+        results = r.get('provenance_results')
+        if r.get('item_id') not in chained or not results:
+            continue
+        marked = _marked_unmeasurable(results, UNMEASURABLE_QUESTION_REASON)
+        if marked != results:
+            r['provenance_results'] = marked
+            changed.append(r)
+    return changed
 
 
 # -- Sequential classification (D7.2(a)(iv)) --------------------------
