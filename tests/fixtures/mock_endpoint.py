@@ -39,6 +39,10 @@ Two kinds of script:
   in a standard envelope. That envelope names the model the recorded
   final response names, so every round of a replay is served by the
   model the run recorded, not by the mock.
+  A replay re-scores the published session, so each tool call is
+  answered with the return the published run recorded for it
+  (recorded_tool_return), never by running today's tool: the
+  system's later messages copy the returns it actually received.
 
 Every request is logged (self.log) for the golden output.
 
@@ -62,6 +66,10 @@ PATH = '/v1/chat/completions'
 MOCK_MODEL = 'mock-model'   # the model a scripted (not replayed) turn names
 
 
+class ReplayToolReturnError(Exception):
+    """A replayed tool call whose recorded return can't be found."""
+
+
 class MockEndpoint:
     """A scripted chat-completions server on 127.0.0.1, in a thread."""
 
@@ -83,6 +91,10 @@ class MockEndpoint:
                 self._replay.setdefault(key, []).append(rec)
         self._repeat = {}
         self._seq = 0
+        # Replay: the recorded tool calls, with their returns, of the
+        # response last served, in the order it asks for them.
+        self._pending_returns = []
+        self._served_from = None
         self.log = []
         self._server = None
         self._thread = None
@@ -223,6 +235,7 @@ class MockEndpoint:
 
         if self._replay is not None:
             action, source = self._replay_turn(key, repeat, rnd)
+            self._expect_tool_calls(key, repeat, action, source)
         else:
             action, source = self._scripted_turn(
                 item_id, condition, repeat, rnd, body)
@@ -284,6 +297,62 @@ class MockEndpoint:
                     'replayed mid-loop failure: the recorded loop ended '
                     'here without a response'), source
         return ('reply', 500, 'mock script exhausted'), source
+
+    def _expect_tool_calls(self, key, repeat, action, source):
+        """After serving a replayed response, line up the recorded return
+        of each tool call it asks for, matched by the call's id within
+        the same execution's record."""
+        self._pending_returns = []
+        self._served_from = source
+        if action[0] != 'reply' or action[1] != 200:
+            return
+        calls = self._tool_calls_of(action[2]) or []
+        if not calls:
+            return
+        rec = self._replay[key][repeat - 1]
+        recorded = {tc.get('id'): tc for tc in rec.get('tool_calls') or []}
+        for call in calls:
+            self._pending_returns.append(
+                (call.get('id'), call.get('function') or {},
+                 recorded.get(call.get('id'))))
+
+    def recorded_tool_return(self, name, arguments_json):
+        """The return value the published run recorded for the next tool
+        call of the replayed response last served: the tool executor of
+        a replay (the driver installs it in place of the engine's).
+
+        The call must be the one the record holds (same name and
+        arguments), and the record must hold its return; anything else
+        raises ReplayToolReturnError. There is no fallback to running
+        the tool, which would score the session against a return the
+        system never received.
+        """
+        where = self._served_from or 'no replayed response'
+        if not self._pending_returns:
+            raise ReplayToolReturnError(
+                f'{where}: tool call {name!r} {arguments_json!r} after a '
+                f'response that asked for no (more) tool calls')
+        call_id, function, recorded = self._pending_returns.pop(0)
+        if recorded is None:
+            raise ReplayToolReturnError(
+                f'{where}: the record has no tool call with id {call_id!r}')
+        if (name != function.get('name')
+                or arguments_json != function.get('arguments', '{}')):
+            raise ReplayToolReturnError(
+                f'{where}: tool call {call_id!r} executed as {name!r} '
+                f'{arguments_json!r}, served as {function!r}')
+        rec_function = recorded.get('function') or {}
+        if (rec_function.get('name') != function.get('name')
+                or rec_function.get('arguments')
+                != function.get('arguments')):
+            raise ReplayToolReturnError(
+                f'{where}: tool call {call_id!r} is served as {function!r} '
+                f'but recorded as {rec_function!r}')
+        if 'return_value' not in recorded:
+            raise ReplayToolReturnError(
+                f'{where}: tool call {call_id!r} has no recorded '
+                f'return_value')
+        return recorded['return_value']
 
     @staticmethod
     def _model_of(response):

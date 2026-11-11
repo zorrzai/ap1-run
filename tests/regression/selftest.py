@@ -34,7 +34,7 @@ import driver  # noqa: E402  (snapshot() only; main() is not run)
 import hard_checks  # noqa: E402
 import hash_oracle  # noqa: E402
 import run_regression  # noqa: E402
-from mock_endpoint import MockEndpoint  # noqa: E402
+from mock_endpoint import MockEndpoint, ReplayToolReturnError  # noqa: E402
 
 
 class CanonicalHash(unittest.TestCase):
@@ -860,6 +860,180 @@ class ReplayServesTheRecordedModel(unittest.TestCase):
         self.assertIsNone(driver.recorded_model([]))
         self.assertEqual(driver.recorded_model(
             [rec('a'), {'record_type': 'figure_identification'}]), 'a')
+
+
+class ReplayAnswersWithTheRecordedReturn(unittest.TestCase):
+    """A replay answers each tool call with the return its published run
+    recorded, never by running today's calculator: the session being
+    re-scored is the published one, whose later calls copy the returns
+    it received (AP-1 D7.2(a)(iv), D7.3; SPEC section 2, re-scoring
+    without re-running)."""
+
+    QUESTIONS = {'items': [{'id': 'Q09', 'text': 'What?'}]}
+    PROMPTS = {'S': 'base'}
+    # Run E's Q09 chain: the float calculator returned 15.200000000000001,
+    # and the system copied it into its next call. Today's calculator
+    # returns 15.2 for the first call.
+    FIRST = '{"expression": "15200.00 * 1.2 / 100 / 12"}'
+    SECOND = '{"expression": "15.200000000000001 - 12.0"}'
+    RETURNS = ['{"result": "15.200000000000001"}',
+               '{"result": "3.200000000000001"}']
+
+    @classmethod
+    def record(cls):
+        def call(n, arguments):
+            return {'id': f'call_{n}', 'type': 'function',
+                    'function': {'name': 'calculator',
+                                 'arguments': arguments}}
+        assistant = [
+            {'role': 'assistant', 'content': None,
+             'tool_calls': [call(1, cls.FIRST)]},
+            {'role': 'assistant', 'content': None,
+             'tool_calls': [call(2, cls.SECOND)]}]
+        return {
+            'item_id': 'Q09', 'condition': 'base',
+            'request_sent': {'request_record': {
+                'model': 'gpt-test',
+                'messages': [
+                    {'role': 'system', 'content': 'S'},
+                    {'role': 'user', 'content': 'Question: What?'},
+                    assistant[0],
+                    {'role': 'tool', 'tool_call_id': 'call_1',
+                     'content': cls.RETURNS[0]},
+                    assistant[1],
+                    {'role': 'tool', 'tool_call_id': 'call_2',
+                     'content': cls.RETURNS[1]}]}},
+            'response_received': {
+                'id': 'chatcmpl-recorded', 'object': 'chat.completion',
+                'model': 'gpt-test',
+                'choices': [{'index': 0, 'finish_reason': 'stop',
+                             'message': {'role': 'assistant',
+                                         'content': 'It is $3.20.'}}]},
+            'tool_calls': [
+                dict(call(1, cls.FIRST), turn=1,
+                     return_value=cls.RETURNS[0]),
+                dict(call(2, cls.SECOND), turn=2,
+                     return_value=cls.RETURNS[1])],
+        }
+
+    def mock(self, records):
+        return MockEndpoint(questions=self.QUESTIONS,
+                            system_prompts=self.PROMPTS, api_key='k',
+                            replay_records=records)
+
+    def serve_first_round(self, mock):
+        action = mock.handle({'messages': [
+            {'role': 'system', 'content': 'S'},
+            {'role': 'user', 'content': 'Question: What?'}]})
+        self.assertEqual(action[1], 200, action)
+        return action
+
+    # The tool loop itself runs in a child process: this process must
+    # not import a runner module (Independence).
+    LOOP = r"""
+import json, sys
+src, regression, fixtures, example, records, install = sys.argv[1:7]
+sys.path[:0] = [src, regression, fixtures, example]
+import driver
+from mock_endpoint import MockEndpoint
+import ap1_run.execution.engine as engine
+mock = MockEndpoint(questions={'items': [{'id': 'Q09', 'text': 'What?'}]},
+                    system_prompts={'S': 'base'}, api_key='k',
+                    replay_records=json.loads(records))
+if install == '1':
+    driver.use_recorded_tool_returns(mock, engine)
+messages = [{'role': 'system', 'content': 'S'},
+            {'role': 'user', 'content': 'Question: What?'}]
+def send(url, *, messages, tools, sampling, model):
+    action = mock.handle({'messages': messages})
+    return action[2], {}
+first, _ = send('', messages=messages, tools=None, sampling={}, model=None)
+calls, final, _ = engine._drive_tool_loop(
+    response=first, messages=messages, config={'endpoint_url': ''},
+    tools=[], adapter_send=send, sampling={})
+print(json.dumps({
+    'returns': [c.get('return_value') for c in calls],
+    'sent': [m['content'] for m in messages if m.get('role') == 'tool'],
+    'final': final['choices'][0]['message']['content']}))
+"""
+
+    def run_loop(self, install):
+        repo = os.path.dirname(os.path.dirname(HERE))
+        proc = subprocess.run(
+            [sys.executable, '-B', '-c', self.LOOP,
+             os.path.join(repo, 'src'), HERE,
+             os.path.join(repo, 'tests', 'fixtures'),
+             os.path.join(repo, 'example'),
+             json.dumps([self.record()]), install],
+            capture_output=True, text=True, encoding='utf-8')
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        return json.loads(proc.stdout)
+
+    def test_the_engine_gets_the_recorded_returns_in_a_replay(self):
+        # Through the driver's hook and the runner's own tool loop: the
+        # transcript's return values and the tool messages sent back are
+        # the recorded ones, not today's calculator's 15.2.
+        got = self.run_loop('1')
+        self.assertEqual(got['returns'], self.RETURNS)
+        self.assertEqual(got['sent'], self.RETURNS)
+        self.assertEqual(got['final'], 'It is $3.20.')
+
+    def test_without_the_hook_the_engine_runs_todays_calculator(self):
+        # The control: what the replays scored against before the hook.
+        got = self.run_loop('0')
+        self.assertEqual(got['returns'][0], '{"result": "15.2"}')
+
+    def test_the_recorded_return_of_each_call_in_order(self):
+        mock = self.mock([self.record()])
+        self.serve_first_round(mock)
+        self.assertEqual(
+            mock.recorded_tool_return('calculator', self.FIRST),
+            self.RETURNS[0])
+        with self.assertRaises(ReplayToolReturnError):
+            mock.recorded_tool_return('calculator', self.FIRST)
+
+    def test_a_call_that_differs_from_the_served_one_is_an_error(self):
+        mock = self.mock([self.record()])
+        self.serve_first_round(mock)
+        with self.assertRaises(ReplayToolReturnError) as cm:
+            mock.recorded_tool_return('calculator', self.SECOND)
+        self.assertIn('call_1', str(cm.exception))
+
+    def test_a_call_with_no_recorded_return_is_an_error(self):
+        rec = self.record()
+        del rec['tool_calls'][0]['return_value']
+        mock = self.mock([rec])
+        self.serve_first_round(mock)
+        with self.assertRaises(ReplayToolReturnError) as cm:
+            mock.recorded_tool_return('calculator', self.FIRST)
+        self.assertIn('no recorded return_value', str(cm.exception))
+
+    def test_a_call_the_record_does_not_hold_is_an_error(self):
+        rec = self.record()
+        rec['tool_calls'] = rec['tool_calls'][1:]
+        mock = self.mock([rec])
+        self.serve_first_round(mock)
+        with self.assertRaises(ReplayToolReturnError) as cm:
+            mock.recorded_tool_return('calculator', self.FIRST)
+        self.assertIn("no tool call with id 'call_1'", str(cm.exception))
+
+    def test_every_published_call_has_its_return_recorded(self):
+        # So the replays of the published runs never need the tool.
+        repo = os.path.dirname(os.path.dirname(HERE))
+        for run in ('run_e_mini', 'run_f_sol'):
+            with self.subTest(run=run):
+                with open(os.path.join(repo, 'output', run,
+                                       'smoke_run.jsonl'),
+                          encoding='utf-8') as f:
+                    records = [json.loads(line) for line in f
+                               if line.strip()]
+                calls = [tc for r in records
+                         if r.get('record_type') != 'figure_identification'
+                         for tc in r.get('tool_calls') or []]
+                self.assertTrue(calls)
+                self.assertEqual(
+                    [tc['id'] for tc in calls if 'return_value' not in tc],
+                    [])
 
 
 class Independence(unittest.TestCase):

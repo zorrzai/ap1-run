@@ -224,12 +224,17 @@ each of their checks went.
 **About the replays:** the recorded final responses are served as they were.
 The intermediate rounds survive only as assistant messages (V12-3), so each
 one is wrapped in a standard envelope. The envelope names the model the
-execution's recorded final response names (the published runs did not keep
-the intermediate rounds' own model field), and a replay is configured with
-the model the published run's requests name. So a replay's served and
-configured models are the run's, not the mock's `mock-model`, which only
-scripted turns name. A recorded loop that ended mid-way (EV-0) is replayed
-as a failure of the next request.
+execution's recorded final response names (the published runs did not keep the
+intermediate rounds' own model field), and a replay is configured with the
+model the published run's requests name. So a replay's served and configured
+models are the run's, not the mock's `mock-model`, which only scripted turns
+name. A recorded loop that ended mid-way (EV-0) is replayed as a failure of
+the next request. Every tool call is answered with the return the published
+run recorded for it (`tool_calls[].return_value`), not by running today's
+calculator: the system's later calls copy the returns it received, and a
+replay re-scores that session without re-running it (SPEC §2). The driver
+installs the mock's `recorded_tool_return` as the engine's tool executor; a
+call the record does not hold, or holds without a return, stops the run.
 
 The replayed `smoke_summary.json` files equal the published ones except the
 top-level `seal_hash`, the moves listed in `replay_expected.json`, and its two

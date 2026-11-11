@@ -24,6 +24,10 @@ config alone). The result directory receives:
                     requests the mock refused as outside its transport
                     contract (wrong path or credential); must be empty
     requests.jsonl  every request the mock endpoint received
+
+In a replay, the engine's tool executor is replaced by the mock's
+recorded_tool_return: every tool call is answered with the return the
+published run recorded for it.
 """
 
 import argparse
@@ -116,6 +120,14 @@ def with_config(args, config_path):
     return ['--config', config_path] + out
 
 
+def use_recorded_tool_returns(mock, engine):
+    """Make the engine's tool executor the replaying mock's
+    recorded_tool_return, so a replay answers every tool call with the
+    return its published run recorded (D7.2(a)(iv): a return of a prior
+    invocation within the same session)."""
+    engine._execute_tool = mock.recorded_tool_return
+
+
 def main():
     code_dir, scenario_path, result_dir, repo_dir = sys.argv[1:5]
     with open(scenario_path, encoding='utf-8') as f:
@@ -204,6 +216,14 @@ def main():
             seal_inputs[-1]['returned'] = True
             return record
         runner.create_seal = observed_seal
+
+        # A replay re-scores the published session: each tool call gets
+        # the return the run recorded for it, not today's tool's (the
+        # system's later calls copy what it received). A call with no
+        # recorded return stops the run (ReplayToolReturnError).
+        if replay_records is not None:
+            import ap1_run.execution.engine as engine
+            use_recorded_tool_returns(mock, engine)
 
         # The runner reads its options from sys.argv; give it the
         # scenario's, not this driver's.
