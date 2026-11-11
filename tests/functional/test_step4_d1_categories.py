@@ -164,34 +164,35 @@ def _shown(value):
     return out
 
 
-@pytest.mark.proposal(
-    'T3-32: D1 n per category is the scored responses (both conditions) or '
-    'the items; the unit is not decided (as T3-11 for D7.1), and the 95 % '
-    'interval is Clopper-Pearson; both are the author\'s proposal')
 @pytest.mark.finding('T3-32')
 @pytest.mark.req('AP-1 D1', 'R3.3', 'R0.1')
 def test_run_report_d1_per_category_with_n_result_and_interval(d1_run):
     # AP-1 v1.3 D1: "Results reported per category, with 95% confidence
-    # intervals, and with n stated." Every item here is answered
-    # correctly in both conditions, so each category's result is 100 %;
-    # its n is 20 items or 40 responses, and its interval is the one for
-    # n of n. Section 3 gives, per category, a row stating n, the result
-    # and both bounds.
+    # intervals, and with n stated." n counts questions, the unit D7.1
+    # counts (T3-11). Every item here is answered correctly in both
+    # conditions, so each category's result is 100 %; its n is its 20
+    # questions, not the 40 responses of both conditions, and its
+    # interval is the one for 20 of 20. Section 3 gives, per category, a
+    # row stating n, the result and both bounds, and none states a result
+    # or n over 40.
     s3 = d1_run[d1_run.index('## 3.'):]
     s3 = s3[:s3.index('\n## ', 1)]
     bad = []
     for category, ns in CATEGORIES.items():
         rows = [line for line in s3.splitlines()
                 if re.search(rf'\b{category}\b', line)]
-        ok = []
-        for n in (len(ns), 2 * len(ns)):
-            lo, hi = _two_sided_clopper_pearson_all_correct(n)
-            ok += [line for line in rows
-                   if re.search(rf'(\bn\s*=\s*|\|\s*){n}\b', line)
-                   and re.search(r'\b100(\.0+)?\s*%|\b1\.000\b|\b'
-                                 rf'{n}\s*/\s*{n}\b', line)
-                   and any(s in line for s in _shown(lo))
-                   and any(s in line for s in _shown(hi))]
-        if not ok:
+        n = len(ns)
+        lo, hi = _two_sided_clopper_pearson_all_correct(n)
+        ok = [line for line in rows
+              if re.search(rf'(\bn\s*=\s*|\|\s*){n}\b', line)
+              and re.search(r'\b100(\.0+)?\s*%|\b1\.000\b|\b'
+                            rf'{n}\s*/\s*{n}\b', line)
+              and any(s in line for s in _shown(lo))
+              and any(s in line for s in _shown(hi))]
+        responses = 2 * n
+        wrong = [line for line in rows
+                 if re.search(rf'\bn\s*=\s*{responses}\b|\b'
+                              rf'{responses}\s*/\s*{responses}\b', line)]
+        if not ok or wrong:
             bad.append((category, rows))
     assert bad == [], s3

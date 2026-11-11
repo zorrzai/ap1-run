@@ -47,7 +47,6 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[tenths]',
     'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[zero-power-zero]',
     'tests/functional/test_example_calculator.py::test_faithful_copy_of_a_calculator_result_grounds_at_step_4',
-    'tests/functional/test_step4_d1_categories.py::test_run_report_d1_per_category_with_n_result_and_interval',
     'tests/functional/test_step4_g1_invocation.py::test_run_d71_bound_counts_questions_not_repeats',
     'tests/functional/test_step4_g1_invocation.py::test_run_refusal_executed_adjudicated_outside_d71_and_d1[content-filter]',
     'tests/functional/test_step4_g1_invocation.py::test_run_refusal_executed_adjudicated_outside_d71_and_d1[refusal]',
