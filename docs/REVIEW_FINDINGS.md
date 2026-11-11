@@ -674,10 +674,13 @@ Grouped by severity, in ID order.
 - Where: `adjudication.py:167-168`
 - After the reorg: `src/ap1_run/reporting/adjudication.py:167-168` (`_generate_one_sheet`)
 - Breaks: AP-1 v1.3 §13.8 ("blind to arm identity where the response text permits")
-- Addressed by: partly fixed; commits b45f7f9e, 75d03222; strict xfail
-  `tests/unit/reporting/test_adjudication.py::test_sheet_key_joins_every_sheet_back_to_its_arm` and
-  1 more marked T3-36; note: the sheet headers no longer name the arm, and each sheet carries an
-  opaque execution id; the sheets' order and a key joining each sheet to its execution remain
+- Addressed by: fixed; commits 94dcfcf7, 5090342e; note: the sheet headers no longer name the arm
+  (`test_sheets_do_not_name_the_arm`), and each sheet carries an opaque execution id. The sheets
+  stay in run order, so their order can still show the arm, and report.md says so in its declared
+  limitations (`test_report_states_adjudication_sheets_are_in_run_order`). Shuffling or blinding
+  the sheets, with a key file joining each sheet back to its execution, is decided as a later
+  post-process on `adjudication_sheets.md`, outside the runner; the two strict-xfail tests that
+  asked the runner for a seeded order and a key are removed.
 
 **T3-37 · medium · A sheet's Release Coverage Finding lists every repeat of that item and condition**
 - What's wrong: coverage results are keyed on `(item_id, condition)` and records carry no repeat

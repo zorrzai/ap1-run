@@ -1645,6 +1645,18 @@ def _section_declared_limitations():
                  '("18.5pct") is not read, so the response is auto-scored as '
                  'having no figure.\n')
 
+    lines.append('### Adjudication Sheet Order\n')
+    lines.append('adjudication_sheets.md gives the sheets in run order '
+                 '(the order of the transcript), two for each execution '
+                 'routed to adjudication. A sheet does not name its '
+                 'condition, but the order can show it, so the judging is '
+                 'not blind to the condition (AP-1 v1.3 \u00a713.8 asks for '
+                 'scorers blind to arm identity where the response text '
+                 'permits). Shuffling or blinding the sheets, with a key '
+                 'joining each sheet back to its execution, is left to a '
+                 'later step that works on that file; the runner does '
+                 'neither.\n')
+
     return '\n'.join(lines)
 
 

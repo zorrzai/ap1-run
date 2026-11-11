@@ -2162,7 +2162,8 @@ def test_unmeasured_reason_unknown_dimension():
 def test_declared_limitations_text():
     # T3-81 (fixed): the k > 0 bound is computed; the section declares
     # which form it is and where that form comes from. And that an answer
-    # that is a percentage is never auto-scored (S3-G4-2's fix).
+    # that is a percentage is never auto-scored (S3-G4-2's fix), and the
+    # order the adjudication sheets are in (T3-36).
     assert report._section_declared_limitations() == md(
         '## 13. Declared Limitations\n',
         '### Clopper-Pearson Bound (k > 0)\n',
@@ -2187,7 +2188,39 @@ def test_declared_limitations_text():
         'percent") is compared as a plain figure and can be auto-scored; '
         'a configured structured answer is compared whatever its unit; and '
         'a figure glued to letters ("18.5pct") is not read, so the response '
-        'is auto-scored as having no figure.\n')
+        'is auto-scored as having no figure.\n',
+        '### Adjudication Sheet Order\n',
+        SHEET_ORDER_TEXT)
+
+
+# Decided for T3-36: the sheets stay in run order and report.md says so; a
+# shuffle, blinding and key file are a later post-process on the sheets.
+SHEET_ORDER_TEXT = (
+    'adjudication_sheets.md gives the sheets in run order (the order of '
+    'the transcript), two for each execution routed to adjudication. A '
+    'sheet does not name its condition, but the order can show it, so the '
+    'judging is not blind to the condition (AP-1 v1.3 \u00a713.8 asks for '
+    'scorers blind to arm identity where the response text permits). '
+    'Shuffling or blinding the sheets, with a key joining each sheet back '
+    'to its execution, is left to a later step that works on that file; '
+    'the runner does neither.\n')
+
+
+@pytest.mark.proposal('T3-36: the sheets stay in run order and the report '
+                      'says the judging is not blind to the condition; a '
+                      'shuffle, blinding and key file are left to a later '
+                      'post-process (the author\'s decision, not SPEC\'s)')
+@pytest.mark.finding('T3-36')
+@pytest.mark.req('AP-1 §13.8', 'R3.2')
+def test_report_states_adjudication_sheets_are_in_run_order():
+    # report.md, in its declared limitations, says the sheets are in run
+    # order and that the judging is therefore not blind to the condition.
+    text = generate_report(summary={}, config=CONFIG, seal_record={})
+    limitations = text[text.index('## 13. Declared Limitations\n'):]
+    assert '\n### Adjudication Sheet Order\n\n' + SHEET_ORDER_TEXT \
+        in limitations
+    assert 'in run order' in SHEET_ORDER_TEXT
+    assert 'not blind to the condition' in SHEET_ORDER_TEXT
 
 
 # -- _format_dim_result ---------------------------------------------------

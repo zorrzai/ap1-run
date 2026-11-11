@@ -124,11 +124,9 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/foundation/test_numeric.py::test_parse_decimal_refuses_non_ascii_digits[full-width-3]',
     'tests/unit/foundation/test_numeric.py::test_parse_decimal_refuses_non_ascii_digits[full-width-grouped]',
     'tests/unit/foundation/test_transcript.py::test_round_entry_carries_the_raw_body_when_the_record_has_it',
-    'tests/unit/reporting/test_adjudication.py::test_sheet_key_joins_every_sheet_back_to_its_arm',
     'tests/unit/reporting/test_adjudication.py::test_sheet_refusal_shows_text_and_provisional_outcome[content-filter]',
     'tests/unit/reporting/test_adjudication.py::test_sheet_refusal_shows_text_and_provisional_outcome[refusal]',
     'tests/unit/reporting/test_adjudication.py::test_sheet_rubric_notes_the_wrong_formula_case',
-    'tests/unit/reporting/test_adjudication.py::test_sheets_order_is_seeded_and_does_not_follow_the_arm',
     'tests/unit/reporting/test_report.py::test_clopper_pearson_section_lists_failing_questions_beside_k',
     'tests/unit/reporting/test_report.py::test_d2_run_of_10_by_50_prints_no_below_minimum_line',
     'tests/unit/reporting/test_report.py::test_d2_run_of_3_repeats_is_classified_and_says_below_10_by_50',
@@ -137,6 +135,7 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/reporting/test_report.py::test_dimension_results_d1_lists_questions_not_in_any_category_alone',
     'tests/unit/reporting/test_report.py::test_dimension_results_d1_lists_the_question_not_in_any_category',
     'tests/unit/reporting/test_report.py::test_dimension_results_d1_per_category_with_n_and_interval',
+    'tests/unit/reporting/test_report.py::test_report_states_adjudication_sheets_are_in_run_order',
     'tests/unit/reporting/test_report.py::test_scoring_proportions_lists_responses_without_outcome_by_kind',
     'tests/unit/runner/test_console.py::test_run_report_3h_lists_failing_questions_with_counts',
     'tests/unit/runner/test_console.py::test_run_report_3h_rate_counts_questions_not_repeats',
@@ -214,7 +213,7 @@ EXPECTED_PROVISIONAL_CASES = {
     'tests/unit/scoring/test_operation_correctness.py': 109,
     'tests/unit/scoring/test_release_coverage.py': 31,
 }
-MIN_STRICT_XFAIL_CASES = 58
+MIN_STRICT_XFAIL_CASES = 56
 
 
 @pytest.fixture(scope='module')
