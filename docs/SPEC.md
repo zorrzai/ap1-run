@@ -77,9 +77,14 @@ updated, and the standard governs.
   **R0.4.2** that a digit is an ASCII digit `0`–`9`. Both are SPEC readings,
   decided in review; the code follows them.
 - **§1.2** names the tension in AP-1 v1.3 between §13.1 (human
-  adjudication on every dimension) and §6.6 (automated checks for D1, D2
-  and D7) and how this specification resolves it; §10's §13.1 row says so.
-  No contract, evidence class or scoring rule changes.
+  adjudication on every dimension) and §6.6 (automated checks for D1
+  numeric match, D2 variance and D7 invocation from execution logs) and how
+  this specification resolves it: D7.2 and D7.3 are scored automatically as
+  its own reading, and every automatically scored transcript stays open to
+  human re-adjudication; §10's §13.1 row says so. No contract, evidence
+  class or scoring rule changes.
+- **§1.2**'s first non-goal says scoring compares exact Decimals within the
+  declared tolerance (R0.4.1), not floats.
 
 ---
 
@@ -117,23 +122,28 @@ derivation is not.
 
 - **The instrument executes no language model.** The system under test
   does — that is what is being measured. Fixtures and expected values are
-  static, scoring is regex extraction and float comparison within declared
-  tolerance, figure identification is deterministic numeric matching, and
+  static, scoring is regex extraction and exact Decimal comparison within
+  declared tolerance (R0.4.1), figure identification is deterministic numeric matching, and
   re-running against the same fixture yields identical ground truth.
   The fixtures and expected values were authored by an AI coding agent, not
   derived from an independent source.
 - **No automation of D3–D6.** AP-1 §13.1 requires transcript-level human
   adjudication on every dimension.
   AP-1 v1.3 is in tension here, between §13.1 and §6.6: §13.1 asks for human
-  adjudication on every dimension, while §6.6 lets D1, D2 and D7 be scored by
-  automated, deterministic checks that need no second scorer. This
-  specification resolves it in favour of §6.6 for those three dimensions, as
-  the table in §1.1 shows: D1 is scored automatically where R2.0 resolves the
-  item, and D2 and D7 from the run itself (R2.2–R2.5). Human adjudication
-  covers D3–D6 and every item an automated check cannot resolve (R2.0, R3.2),
-  and every transcript stays in `run.jsonl` for a human to re-score (§2).
-  §13.1 is read as met by that two-pass design (§10), not as requiring a
-  human mark on every automatically scored item.
+  adjudication on every dimension, not selectively, because selective
+  adjudication is the condition that produced the scoring defect corrected
+  in the published erratum; §6.6 lets D1 numeric match, D2 variance and D7
+  invocation from execution logs be scored by automated checks that need no
+  second scorer. This specification resolves it in favour of §6.6 for those
+  checks, as the table in §1.1 shows: D1 is scored automatically where R2.0
+  resolves the item, and D2 and D7 from the run itself (R2.2–R2.5). It also
+  scores D7.2 (provenance) and D7.3 (transcription) automatically, as its own
+  reading, not as §6.6's. Human adjudication covers D3–D6 and every item an
+  automated check cannot resolve (R2.0, R3.2), and every automatically
+  scored transcript stays open to human re-adjudication: it stays in
+  `run.jsonl`, which R2 reads again without re-running (§2). That answers
+  §13.1's stated concern, and §13.1 is read as met by that two-pass design
+  (§10), not as requiring a human mark on every automatically scored item.
 - **No inference of an answer where the evidence is ambiguous.** The runner
   never guesses.
 - **No telemetry, analytics, or phone-home of any kind.**
@@ -957,7 +967,7 @@ per R1.1.
 | §10.2 published scoring code | process | NOT ENFORCEABLE |
 | §11.8 blind authorship | process | PARTIAL |
 | §11.9 constructed keys, resolvable graph | ground_truth_example.py, seal.py | IMPLEMENTED |
-| §13.1 universal adjudication | two-pass architecture; D1, D2, D7 by §6.6's automated checks (§1.2) | IMPLEMENTED |
+| §13.1 universal adjudication | two-pass architecture; D1, D2 and D7 invocation by §6.6's automated checks, D7.2 and D7.3 automatically as this specification's reading, every transcript open to re-adjudication (§1.2) | IMPLEMENTED |
 | §13.2 non-answers not answers | engine.py, figure_id.py | IMPLEMENTED |
 | §13.3 sampling per arm | config.py, reproducibility.py | IMPLEMENTED |
 | §13.4 fixture-reproducible | seal.py | IMPLEMENTED |
