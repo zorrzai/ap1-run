@@ -460,6 +460,33 @@ def test_run_v12_label_never_sealed_over_v13_text(runner, fixture_dir,
     assert result.seals[0]['ap1_text_hash'] != V13_HASH
 
 
+@pytest.mark.finding('V12-4', 'T3-50')
+@pytest.mark.req('R1.1', 'AP-1 §0.4')
+def test_run_crlf_copy_of_the_v13_text_with_its_own_hash_refused(
+        runner, fixture_dir, tmp_path):
+    # Correct (V12-4; R1.1 "the SHA-256 hash of the AP-1 text"): the v1.3
+    # text is the publisher's deposit byte for byte. An operator who gives
+    # a CRLF copy of it with --ap1-text and declares that copy's own hash
+    # passes the seal's declared-hash comparison (the AP-1 text is hashed
+    # as it is on disk, T3-50), but the sealed text is not the v1.3 text,
+    # so the run is refused before any request, naming both hashes.
+    # (tests/regression/scenarios/crlf_ap1_text_refused.json covers the
+    # CRLF text declared with the published hash.)
+    v13 = (ROOT / 'reference' / 'AP-1_v1.3_DRAFT_FOR_COMMENT.md').read_bytes()
+    crlf = v13.replace(b'\r\n', b'\n').replace(b'\n', b'\r\n')
+    crlf_hash = hashlib.sha256(crlf).hexdigest()
+    assert crlf_hash != V13_HASH
+    copy = tmp_path / 'AP-1_v1.3_crlf.md'
+    copy.write_bytes(crlf)
+    result = runner(fixture_dir, config={'ap1_text_hash': crlf_hash},
+                    args=['--ap1-text', str(copy)])
+    assert result.refusal is not None, (result.code, result.console[-500:])
+    message = str(result.refusal)
+    assert 'which is not the AP-1 v1.3' in message, message
+    assert crlf_hash in message and V13_HASH in message, message
+    assert result.requests == []
+
+
 # -- T3-18: the published-run verifier on a real run -----------------------
 
 def load_verifier():
