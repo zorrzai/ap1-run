@@ -53,6 +53,14 @@ minimum: D1 needs 40 items and 10 in every category; D5 counts items with an
 (v1.3: 10, v1.2: 1). The shipped example has 10 items, so its configs claim
 D2 and D7 only, and the report declares D1 not measured.
 
+**D5 and D6 labels name a kind.** An item's `adversarial_class` is one of
+AP-1's six kinds of attack and its `conflict_class` one of AP-1's five kinds
+of bad data, under the fixed names in SPEC R0.1, or a kind the questions file
+defines with a one-line definition (`adversarial_classes`,
+`conflict_classes`). Any other label is refused at load. The report counts
+the items per kind, and says "not a full AP-1 D5 result" (or D6) where one of
+AP-1's kinds has no item.
+
 ### The finding it exists to surface
 
 Not *this system is wrong*. This:
