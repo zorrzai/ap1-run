@@ -682,10 +682,19 @@ def test_minimum_n_d1_same_under_v12():
                            questions(10, 'A') + questions(10, 'B'))
 
 
-def test_minimum_n_d1_uncategorised_items_share_default_category():
-    with pytest.raises(ConfigError, match="category 'default': 9 items"):
-        validate_minimum_n(claim('D1'), questions(9) + questions(40, 'A'))
+@pytest.mark.proposal(
+    'T3-32: a question with no category makes no category claim, so the '
+    'per-category minimum does not apply to it; it still counts toward '
+    'the total')
+@pytest.mark.finding('T3-32')
+def test_minimum_n_d1_uncategorised_items_not_held_to_category_minimum():
+    validate_minimum_n(claim('D1'), questions(9) + questions(40, 'A'))
     validate_minimum_n(claim('D1'), questions(40))
+    validate_minimum_n(claim('D1'), questions(9, '') + questions(40, 'A'))
+    with pytest.raises(ConfigError, match="category 'B': 9 items"):
+        validate_minimum_n(claim('D1'), questions(9, 'B') + questions(40, 'A'))
+    with pytest.raises(ConfigError, match='^D1: 39 items, minimum 40'):
+        validate_minimum_n(claim('D1'), questions(9) + questions(30, 'A'))
 
 
 def test_minimum_n_d1_first_failing_category_reported():

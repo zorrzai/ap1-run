@@ -104,6 +104,7 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/foundation/test_adapter.py::test_send_scalar_body_is_returned_parsed_without_its_text[number]',
     'tests/unit/foundation/test_adapter.py::test_send_scalar_body_is_returned_parsed_without_its_text[string]',
     'tests/unit/foundation/test_config.py::test_load_config_example_config_mini_is_the_mini_runs_config',
+    'tests/unit/foundation/test_config.py::test_minimum_n_d1_uncategorised_items_not_held_to_category_minimum',
     'tests/unit/foundation/test_config.py::test_minimum_n_minimum_named_is_the_declared_versions[D5-5-20]',
     'tests/unit/foundation/test_config.py::test_minimum_n_minimum_named_is_the_declared_versions[D6-1-10]',
     'tests/unit/foundation/test_numeric.py::test_arabic_indic_and_full_width_three_neither_parse_nor_extract',

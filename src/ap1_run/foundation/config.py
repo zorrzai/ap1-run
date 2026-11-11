@@ -347,10 +347,15 @@ def validate_minimum_n(config, question_set):
             continue
 
         if 'per_category' in rule:
-            # D1: each category must meet the minimum
+            # D1: each category must meet the minimum. A question with
+            # no category makes no category claim (the report lists it
+            # under the D1 table), so this minimum does not apply to it;
+            # it still counts toward the total below (T3-32).
             categories = {}
             for q in question_set:
-                cat = q.get('category', 'default')
+                cat = q.get('category')
+                if not cat:
+                    continue
                 categories.setdefault(cat, 0)
                 categories[cat] += 1
             for cat, count in categories.items():
