@@ -144,6 +144,8 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/scoring/provenance/test_classify.py::test_sequential_unreadable_expression_operands_unobservable[true-plus]',
     'tests/unit/scoring/provenance/test_classify.py::test_sequential_unreadable_expression_operands_unobservable[true-times]',
     'tests/unit/scoring/provenance/test_trace.py::test_extract_operands_boolean_literal_not_an_operand_no_raise',
+    'tests/unit/scoring/test_accuracy.py::test_by_category_counts_the_base_condition_only',
+    'tests/unit/scoring/test_accuracy.py::test_by_category_rate_unaffected_by_instruction_removed_failures',
     'tests/unit/scoring/test_answer_outcome.py::test_match_with_any_originated_call_is_originated[grounded-then-originated]',
     'tests/unit/scoring/test_answer_outcome.py::test_match_with_any_originated_call_is_originated[originated-then-grounded]',
     'tests/unit/scoring/test_answer_outcome.py::test_match_with_any_originated_call_is_originated[originated-then-unobservable]',

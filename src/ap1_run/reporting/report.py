@@ -297,13 +297,15 @@ def _section_dimension_results(summary, config):
 
 def _d1_category_rows(by_category):
     """D1 per category with n and a 95% interval (AP-1 v1.3 D1; T3-32).
-    n counts questions; a question is correct if all its executions are."""
+    Base condition only; n counts questions; a question is correct if all
+    its base executions are."""
     lines = ['\n### D1 per Category\n',
              '> AP-1 v1.3 D1: results per category, with 95% confidence '
-             'intervals and n stated; no category claim where n < 10. n '
-             'counts questions; a question is correct only if every '
-             'execution of it is. Interval: exact two-sided 95% '
-             'Clopper-Pearson.\n',
+             'intervals and n stated; no category claim where n < 10. '
+             'Base condition only; the instruction-removed repeats '
+             'measure D7. n counts questions; a question is correct only '
+             'if every base execution of it is. Interval: exact two-sided '
+             '95% Clopper-Pearson.\n',
              '| Category | n (questions) | Executions | Correct | Incorrect '
              '| No Figure | Awaiting Adjudication | Accuracy (95% CI) |',
              '|---|---|---|---|---|---|---|---|']

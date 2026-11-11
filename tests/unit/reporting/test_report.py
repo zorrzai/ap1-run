@@ -1496,8 +1496,9 @@ def test_dimension_results_d2_row_counts_questions_and_classes():
 D1_CATEGORY_HEAD = (
     '\n### D1 per Category\n',
     '> AP-1 v1.3 D1: results per category, with 95% confidence intervals '
-    'and n stated; no category claim where n < 10. n counts questions; a '
-    'question is correct only if every execution of it is. Interval: '
+    'and n stated; no category claim where n < 10. Base condition only; '
+    'the instruction-removed repeats measure D7. n counts questions; a '
+    'question is correct only if every base execution of it is. Interval: '
     'exact two-sided 95% Clopper-Pearson.\n',
     '| Category | n (questions) | Executions | Correct | Incorrect '
     '| No Figure | Awaiting Adjudication | Accuracy (95% CI) |',
@@ -2675,8 +2676,10 @@ def test_dimension_results_d1_per_category_with_n_and_interval():
             item_id = f'{category}-{i:02d}'
             categories[item_id] = category
             second = CORRECT if i < k else INCORRECT
-            results += [{'item_id': item_id, 'outcome': CORRECT},
-                        {'item_id': item_id, 'outcome': second}]
+            results += [{'item_id': item_id, 'condition': 'base',
+                         'outcome': CORRECT},
+                        {'item_id': item_id, 'condition': 'base',
+                         'outcome': second}]
     d1 = {'n': 22, 'auto_scored_n': 22, 'adjudicated_n': 0,
           'unmeasurable_n': 0, 'correct': 41, 'incorrect': 3,
           'no_figure': 0, 'accuracy_rate': Decimal(19) / Decimal(22),

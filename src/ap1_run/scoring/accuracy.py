@@ -15,6 +15,7 @@ never merged without both being stated.
 
 from decimal import MAX_PREC, Decimal, localcontext
 
+from ap1_run.execution.engine import CONDITION_BASE
 from ap1_run.foundation.numeric import quantise
 from ap1_run.scoring.figure_id import AUTO_MATCH, AUTO_NO_FIGURE, UNMEASURABLE
 from ap1_run.scoring.invocation import clopper_pearson_upper
@@ -166,14 +167,21 @@ def summarise_accuracy_by_category(results, categories):
     and with n stated. No category claim may be made where n < 10.").
 
     Args:
-        results: score_accuracy results, each with an 'item_id'
+        results: score_accuracy results, each with an 'item_id' and a
+            'condition'
         categories: dict of item_id -> category (questions.json)
 
+    D1 counts the base condition only: AP-1 does not say which condition
+    D1 uses, and the instruction-removed repeats exist to measure D7 (the
+    calculator called when not told to), so an answer under them neither
+    adds to nor vetoes a question's accuracy. Results from any other
+    condition are left out of every count here.
+
     The unit is the question, as for D7.1 (T3-11): n counts a category's
-    questions, and a question is correct only if every one of its
+    questions, and a question is correct only if every one of its base
     executions is CORRECT. A rate is given only where n >= 10 and no
-    execution awaits adjudication (adjudicated or UNMEASURABLE: every
-    wrong figure is among them, SPEC R2.0; T3-3), with the exact
+    base execution awaits adjudication (adjudicated or UNMEASURABLE:
+    every wrong figure is among them, SPEC R2.0; T3-3), with the exact
     two-sided 95% Clopper-Pearson interval.
 
     Returns:
@@ -190,6 +198,8 @@ def summarise_accuracy_by_category(results, categories):
             'no_figure': 0, 'pending': 0, 'correct_questions': 0,
             'rate': None, 'interval': None})
     for r in results:
+        if r.get('condition') != CONDITION_BASE:
+            continue
         category = categories.get(r.get('item_id'))
         if category is None:
             continue

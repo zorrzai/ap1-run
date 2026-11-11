@@ -342,8 +342,8 @@ from ap1_run.scoring.accuracy import (  # noqa: E402
 )
 
 
-def scored(item_id, outcome):
-    return {'item_id': item_id, 'condition': 'base', 'outcome': outcome}
+def scored(item_id, outcome, condition='base'):
+    return {'item_id': item_id, 'condition': condition, 'outcome': outcome}
 
 
 def test_category_minimum_n_is_ap1s_ten():
@@ -373,6 +373,55 @@ def test_by_category_counts_questions_and_executions():
                        'correct_questions': 0, 'rate': None,
                        'interval': None}
     assert by['c']['n'] == by['c']['executions'] == 0
+
+
+@pytest.mark.proposal(
+    'T3-32: D1 per category counts the base condition only; AP-1 D1 does '
+    'not say which condition it uses, and the instruction-removed repeats '
+    'exist to measure D7')
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_by_category_counts_the_base_condition_only():
+    # Q1 is correct in base and wrong in instruction-removed: correct in
+    # D1. Q2 is wrong in base and correct in instruction-removed: wrong.
+    # Q3 has only instruction-removed results: not in D1 at all. Nothing
+    # from instruction-removed is counted, not even as an execution or as
+    # awaiting adjudication.
+    ir = 'instruction_removed'
+    results = [scored('Q1', 'CORRECT'), scored('Q1', 'CORRECT'),
+               scored('Q1', 'INCORRECT', ir), scored('Q1', 'NO-FIGURE', ir),
+               scored('Q2', 'INCORRECT'), scored('Q2', 'CORRECT', ir),
+               scored('Q3', 'CORRECT', ir), scored('Q3', 'ADJUDICATED', ir)]
+    by = summarise_accuracy_by_category(
+        results, {'Q1': 'a', 'Q2': 'a', 'Q3': 'a'})
+    assert by['a'] == {'n': 2, 'executions': 3, 'correct': 2,
+                       'incorrect': 1, 'no_figure': 0, 'pending': 0,
+                       'correct_questions': 1, 'rate': None,
+                       'interval': None}
+
+
+@pytest.mark.proposal(
+    'T3-32: D1 per category counts the base condition only; AP-1 D1 does '
+    'not say which condition it uses, and the instruction-removed repeats '
+    'exist to measure D7')
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_by_category_rate_unaffected_by_instruction_removed_failures():
+    # Ten questions, every base execution correct, every
+    # instruction-removed one wrong or awaiting adjudication: 10/10, with
+    # the interval for 10 of 10.
+    ir = 'instruction_removed'
+    results = []
+    for i in range(10):
+        results += [scored(f'Q{i}', 'CORRECT'),
+                    scored(f'Q{i}', 'INCORRECT' if i % 2 else 'ADJUDICATED',
+                           ir)]
+    by = summarise_accuracy_by_category(
+        results, {f'Q{i}': 'x' for i in range(10)})['x']
+    assert (by['n'], by['executions'], by['pending'],
+            by['correct_questions']) == (10, 10, 0, 10)
+    assert by['rate'] == D(1)
+    assert by['interval'] == clopper_pearson_interval(10, 10)
 
 
 @pytest.mark.finding('T3-32')
