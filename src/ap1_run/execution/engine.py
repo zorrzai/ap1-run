@@ -125,8 +125,7 @@ def execute_item(item, *, condition, config, fixture,
             'cause': cause, 'ground_truth': gt,
         }
 
-    record_round({'round': 0, 'request': request_record,
-                  'response': response})
+    record_round(_answered_round(0, request_record, response))
 
     # Drive tool loop
     tool_calls_record, final_response, round_shapes = _drive_tool_loop(
@@ -341,8 +340,7 @@ def _drive_tool_loop(*, response, messages, config, tools,
             round_shapes.append(
                 (False, f'adapter_send failed on turn {turn}: {exc}'))
             break
-        record_round({'round': turn, 'request': request_record,
-                      'response': current})
+        record_round(_answered_round(turn, request_record, current))
         # Check shape of this round's response
         _record_shape(current, round_shapes)
 
@@ -394,8 +392,9 @@ def _unobservable_cause(round_shapes, rounds, tools_offered):
 def _write_round(transcript_path, entry, *, item_id, condition, repeat,
                  seal_hash):
     """Append one round (an entry of rounds) to the transcript as a round
-    record: the fields of SPEC R0.3, the round's number, and its error if
-    its request failed. Its evidence class is None: an execution is
+    record: the fields of SPEC R0.3, the round's number, its error if its
+    request failed, and the response body as received (response_raw) if
+    the round has it. Its evidence class is None: an execution is
     classified once, on its own record."""
     transcript.append(
         transcript_path,
@@ -405,7 +404,20 @@ def _write_round(transcript_path, entry, *, item_id, condition, repeat,
         evidence_class=None, error_state=entry.get('error'),
         seal_hash=seal_hash, repeat=repeat, kind=transcript.ROUND_RECORD,
         round=entry['round'], error=entry.get('error'),
+        **({'response_raw': entry['response_raw']}
+           if 'response_raw' in entry else {}),
     )
+
+
+def _answered_round(number, request, response):
+    """The transcript entry of a round that was answered: its request as
+    sent, the parsed response, and the response body as received
+    (response_raw, SPEC R0.2: byte for byte) where the adapter kept it."""
+    entry = {'round': number, 'request': request, 'response': response}
+    text = adapter.raw_text(response)
+    if text is not None:
+        entry['response_raw'] = text
+    return entry
 
 
 def _failed_round(number, messages, error):

@@ -24,12 +24,16 @@ OK = {'choices': [{'message': {'role': 'assistant', 'content': '42'}}]}
 
 
 class FakeResponse:
-    def __init__(self, status_code=200, payload=None, text=None):
+    def __init__(self, status_code=200, payload=None, text=None,
+                 content=None):
         self.status_code = status_code
         self._payload = payload
         if text is None:
-            text = json.dumps(payload) if payload is not None else ''
+            text = (content.decode('latin-1') if content is not None
+                    else json.dumps(payload) if payload is not None else '')
         self.text = text
+        # The body's bytes, as requests.Response.content has them
+        self.content = text.encode('utf-8') if content is None else content
 
     def json(self):
         if self._payload is None:
@@ -92,7 +96,62 @@ def test_error_hierarchy():
 @pytest.mark.req('R0.2')
 def test_send_returns_raw_response_unmodified(transport):
     _, raw, _ = ok_send(transport)
-    assert raw is OK
+    assert raw == OK and isinstance(raw, dict)
+
+
+# A body whose spelling a parse and re-serialisation would change: keys
+# not in sorted order, a number with trailing zeros, a non-ASCII
+# character, and spacing of its own.
+RAW_BODY = ('{"model":"m","x": 15.200, "choices":[{"message":{"role":'
+            '"assistant","content":"15.20 \\u2212 0.00 = 15.20 −"}}],'
+            '"id": "r1"}')
+
+RAW_BYTES = ("R0.2 'unmodified' read as byte for byte: each answered round "
+             "keeps the response body as received, as text (response_raw), "
+             "beside the parsed response every reader uses; the reading and "
+             "the field are this test's proposal, for review")
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2')
+def test_send_keeps_the_body_text_byte_for_byte(transport):
+    # The parsed response is the body's JSON; its raw_text is the body as
+    # received, so 15.200, the key order and the spacing survive.
+    transport(FakeResponse(200, content=RAW_BODY.encode('utf-8')))
+    raw, _ = send(URL, messages=MESSAGES)
+    assert raw == json.loads(RAW_BODY)
+    assert raw['x'] == 15.2
+    assert adapter.raw_text(raw).encode('utf-8') == RAW_BODY.encode('utf-8')
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2')
+def test_send_keeps_the_text_of_a_list_body(transport):
+    # A body that is not a chat completion (here a list) keeps its text
+    # too; the engine reads it as an unrecognised shape.
+    transport(FakeResponse(200, content=b'[1.50, {"b": 1, "a": 2}]'))
+    raw, _ = send(URL, messages=MESSAGES)
+    assert raw == [1.5, {'b': 1, 'a': 2}]
+    assert adapter.raw_text(raw) == '[1.50, {"b": 1, "a": 2}]'
+
+
+def test_raw_text_of_a_response_not_from_send_is_none():
+    assert adapter.raw_text({'choices': []}) is None
+    assert adapter.raw_text(None) is None
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2')
+def test_send_200_body_not_utf8_raises_adapter_error(transport):
+    # JSON between systems is UTF-8 (RFC 8259 8.1); a body that is not
+    # cannot be kept as text, and is refused as a body that is not JSON
+    # is: an AdapterError, so the round is recorded as failed.
+    transport(FakeResponse(200, content=b'{"x": "caf\xe9"}'))
+    with pytest.raises(AdapterError, match='response is not UTF-8'):
+        send(URL, messages=MESSAGES)
 
 
 @pytest.mark.finding('T3-52')
@@ -246,7 +305,7 @@ def test_send_retries_transport_failure_then_succeeds(transport):
     t = transport(requests.ConnectionError('refused'),
                   requests.Timeout('slow'), FakeResponse(200, OK))
     raw, record = send(URL, messages=MESSAGES)
-    assert raw is OK
+    assert raw == OK
     assert len(t.calls) == 3
     assert t.sleeps == [1.0, 1.0]
     assert record['attempts'] == [

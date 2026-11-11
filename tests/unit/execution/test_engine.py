@@ -1281,6 +1281,8 @@ def round_entry(record):
         entry['error'] = record['error']
     else:
         entry['response'] = record['response_received']
+        if 'response_raw' in record:
+            entry['response_raw'] = record['response_raw']
     return entry
 
 
@@ -1365,6 +1367,54 @@ def test_execute_item_rounds_written_as_they_arrive_then_the_execution(
     failed = [r for r in rounds if r.get('error') is not None]
     assert [r['response_received'] for r in failed] == [None] * len(failed)
     assert all(r['error_state'] == r['error'] for r in failed)
+
+
+RAW_BYTES = ("R0.2 'unmodified' read as byte for byte: each answered round "
+             "keeps the response body as received, as text (response_raw), "
+             "beside the parsed response every reader uses; the reading and "
+             "the field are this test's proposal, for review")
+
+
+def as_received(text):
+    """A response as the adapter returns it: parsed, with its body text."""
+    response = adapter.RawResponse(json.loads(text))
+    response.raw_text = text
+    return response
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2', 'R0.3')
+def test_execute_item_records_each_round_body_as_received(tmp_path,
+                                                         calculator):
+    # Each answered round's record keeps the body text the adapter
+    # received (response_raw) beside the parsed response, and the
+    # execution record's rounds carry it too; a failed round has none.
+    first = ('{"x": 15.200, "choices": [{"message": {"tool_calls": ['
+             + json.dumps(tool_call()) + '], "content": null, '
+             '"role": "assistant"}}]}')
+    second = ('{"choices":[{"message":{"content":"The monthly interest is '
+              '$15.20.","role":"assistant"}}],"x":1.50}')
+    execute(tmp_path, FakeAdapter(as_received(first), as_received(second)))
+    *rounds, execution = transcript.read_all(tmp_path / 'run.jsonl')
+    assert [r['response_raw'] for r in rounds] == [first, second]
+    assert [r['response_received']['x'] for r in rounds] == [15.2, 1.5]
+    assert [e['response_raw'] for e in execution['rounds']] == [first, second]
+    assert 'response_raw' not in execution
+    execute(tmp_path, FakeAdapter(as_received(first),
+                                  adapter.AdapterError('HTTP 502')))
+    *rounds, _ = transcript.read_all(tmp_path / 'run.jsonl')[3:]
+    assert ['response_raw' in r for r in rounds] == [True, False]
+
+
+def test_execute_item_response_without_body_text_records_no_raw_field(
+        tmp_path):
+    # A response that did not come through the adapter (a plain dict) has
+    # no body text, and its round has no response_raw.
+    execute(tmp_path, FakeAdapter(answer()))
+    records = transcript.read_all(tmp_path / 'run.jsonl')
+    assert ['response_raw' in r for r in records] == [False, False]
+    assert ['response_raw' in e for e in records[-1]['rounds']] == [False]
 
 
 def test_execute_item_underivable_writes_no_round(tmp_path):

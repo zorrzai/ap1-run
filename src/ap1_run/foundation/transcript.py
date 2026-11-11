@@ -7,7 +7,9 @@ Owns run.jsonl: append-only, one line per interaction, never rewritten.
 An execution writes each round of its tool loop as a round record (kind
 ROUND_RECORD) the moment the round's response arrives, and then one record
 of the whole execution, which carries every round again (SPEC R0.2: every
-request and response is written before any other processing).
+request and response is written before any other processing). A round's
+response is kept twice: parsed (response_received, which every reader
+uses) and as the body text received, byte for byte (response_raw).
 """
 
 import json
@@ -116,12 +118,16 @@ def parse(data, path='transcript'):
 def round_entry(record):
     """A round record as the entry for its round in the execution
     record's rounds: {'round', 'request', 'response'}, or 'error' in place
-    of 'response' for a round whose request failed."""
+    of 'response' for a round whose request failed; with 'response_raw',
+    the response body as received (SPEC R0.2), if the record has it (a
+    transcript written before it was kept has not)."""
     entry = {'round': record['round'], 'request': record['request_sent']}
     if record.get('error') is not None:
         entry['error'] = record['error']
     else:
         entry['response'] = record['response_received']
+        if 'response_raw' in record:
+            entry['response_raw'] = record['response_raw']
     return entry
 
 

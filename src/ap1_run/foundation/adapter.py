@@ -15,6 +15,7 @@ credentials), so no request reaches another host.
 """
 
 import copy
+import json
 import math
 import re
 import time
@@ -96,6 +97,30 @@ def wire_value(name, value):
     return f
 
 
+class RawResponse(dict):
+    """A response as received: the parsed JSON (the dict itself, which
+    every reader uses) and its body text, exactly as it arrived
+    (raw_text: the body's bytes decoded as UTF-8, so that
+    raw_text.encode('utf-8') is those bytes). SPEC R0.2: "unmodified"
+    means byte for byte, so key order and number spelling (15.200, not
+    15.2) are kept in the text the transcript stores."""
+
+    raw_text = None
+
+
+class RawList(list):
+    """A response whose JSON is a list (not a chat completion, so read as
+    an unrecognised shape), with its body text as RawResponse has it."""
+
+    raw_text = None
+
+
+def raw_text(response):
+    """The body text a response arrived as (RawResponse.raw_text), or None
+    for a response that did not come from send."""
+    return getattr(response, 'raw_text', None)
+
+
 MAX_RETRIES = 3     # on transport failure only, per R0.2
 RETRY_DELAY = 1.0   # seconds between transport-failure retries
 
@@ -123,15 +148,17 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
 
     Returns:
         (raw_response_dict, request_record)
-        raw_response_dict: The response JSON, unmodified.
+        raw_response_dict: The response JSON, unmodified: a RawResponse,
+            the parsed body, whose raw_text is the body byte for byte.
         request_record: The request AS SENT, including every
             sampling parameter with its value or explicit omission.
 
     Raises:
         AdapterError: Unrecoverable transport failure after all retries
-            (carrying request_record); or, before anything is sent, a
-            sampling parameter that names a body field or whose value is
-            a non-finite number.
+            (carrying request_record); a 200 response whose body is not
+            UTF-8 or not JSON; or, before anything is sent, a sampling
+            parameter that names a body field or whose value is a
+            non-finite number.
         RateLimitError: HTTP 429.
         HTTPError: Non-200, non-429 status.
     """
@@ -224,12 +251,31 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
                 status_code=resp.status_code,
                 body=masked_body)
 
+        # The body as received, kept as text beside its parse (SPEC R0.2:
+        # byte for byte). JSON between systems is UTF-8 (RFC 8259 8.1);
+        # a body that is not cannot be kept as text, and is refused as a
+        # body that is not JSON is.
         try:
-            raw = resp.json()
-        except ValueError as e:
+            text = resp.content.decode('utf-8')
+        except UnicodeDecodeError:
+            raise AdapterError(
+                f"response is not UTF-8: {_mask_credentials(resp.text[:200])}"
+            ) from None
+        try:
+            parsed = json.loads(text)
+        except ValueError:
             raise AdapterError(
                 f"response is not valid JSON: {_mask_credentials(resp.text[:200])}"
             ) from None
+        # A body that is neither an object nor a list (a bare string,
+        # number or null) is returned as parsed, without its text.
+        raw = parsed
+        if isinstance(parsed, dict):
+            raw = RawResponse(parsed)
+        elif isinstance(parsed, list):
+            raw = RawList(parsed)
+        if raw is not parsed:
+            raw.raw_text = text
 
         return raw, request_record
 

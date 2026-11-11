@@ -84,7 +84,9 @@ def _mock_endpoint_class():
 
 class MockEndpoint(_mock_endpoint_class()):
     """The regression mock, also keeping each reply's body: log entries
-    get 'body', the JSON sent back (the log's own 'reply' is the status).
+    get 'body', the JSON sent back (the log's own 'reply' is the status),
+    and 'sent', its bytes as the mock's handler writes them (a text body
+    as given, any other as json.dumps of it, in UTF-8).
     close_once: (item_id, condition, round) whose first request is
     answered by closing the connection, so the adapter retries it."""
 
@@ -106,6 +108,9 @@ class MockEndpoint(_mock_endpoint_class()):
             payload = action[2]
             self.log[-1]['body'] = (json.loads(payload)
                                     if isinstance(payload, str) else payload)
+            self.log[-1]['sent'] = (
+                payload if isinstance(payload, str)
+                else json.dumps(payload)).encode('utf-8')
         return action
 
 
@@ -658,3 +663,97 @@ def test_run_round0_request_record_is_the_request_as_sent(cli):
     # sent in round 0.
     recorded, sent = _round0_request_messages(cli)
     assert recorded == sent[0]
+
+
+# -- T3-52: each response kept byte for byte (SPEC R0.2 "unmodified") -------
+
+RAW_BYTES = ("R0.2 'unmodified' read as byte for byte: each answered round "
+             "keeps the response body as received, as text (response_raw), "
+             "beside the parsed response every reader uses; the reading and "
+             "the field are this test's proposal, for review")
+
+# Two bodies a parse and re-serialisation would respell: keys not in
+# sorted order, 15.200 with its trailing zeros, a JSON escape (\u2212)
+# beside the character itself, spacing of their own.
+RAW_CALL = (
+    '{"model": "mock-model", "x": 15.200, "choices": [{"index": 0, '
+    '"message": {"role": "assistant", "content": null, "tool_calls": '
+    '[{"id": "call_r0_1", "type": "function", "function": {"name": '
+    '"calculator", "arguments": "{\\"expression\\": '
+    '\\"15200.00 * 1.2 / 100 / 12\\"}"}}]}, "finish_reason": '
+    '"tool_calls"}], "id": "raw-0", "object": "chat.completion"}')
+RAW_ANSWER = (
+    '{"x":15.200,"id":"raw-1","choices":[{"finish_reason":"stop",'
+    '"message":{"content":"The monthly interest is $15.20 (\\u2212 '
+    '0.00 − fee).","role":"assistant"},"index":0}],'
+    '"model":"mock-model","object":"chat.completion"}')
+
+
+def _round_records(transcript):
+    return {(rec['item_id'], rec['condition'], rec['repeat'], rec['round']):
+            rec for rec in _read_jsonl(transcript) if rec.get('kind') == 'round'}
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2', 'R0.3')
+def test_run_round_records_keep_each_response_byte_for_byte(cli):
+    # Correct (SPEC R0.2 "return the raw response unmodified", read as
+    # byte for byte): each round record's response_raw is the body the
+    # endpoint sent, byte for byte; the parsed response beside it is what
+    # the runner reads (15.200 parses as 15.2).
+    r = cli({'Q01/*/*': [{'raw': RAW_CALL}, {'raw': RAW_ANSWER}]},
+            items=('Q01',))
+    assert (r.code, r.error) == (0, None)
+    assert b'15.200' in RAW_CALL.encode('utf-8')
+    rounds = _round_records(r.transcript)
+    sent = {(e['item_id'], e['condition'], e['repeat'], e['round']):
+            e['sent'] for e in r.mock.log}
+    assert sorted(rounds) == sorted(sent) and len(sent) == 4
+    assert {k: rec['response_raw'].encode('utf-8')
+            for k, rec in rounds.items()} == sent
+    assert {k: v for k, v in sent.items() if k[3] == 0} == {
+        ('Q01', c, 1, 0): RAW_CALL.encode('utf-8')
+        for c in ('base', 'instruction_removed')}
+    assert all(rec['response_received']['x'] == 15.2
+               for rec in rounds.values())
+    executions = [rec for rec in _read_jsonl(r.transcript)
+                  if rec.get('kind') != 'round'
+                  and rec.get('record_type') != 'figure_identification']
+    assert [[e['response_raw'] for e in rec['rounds']]
+            for rec in executions] == [[RAW_CALL, RAW_ANSWER]] * 2
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2', 'R0.3')
+def test_run_every_mock_reply_recorded_as_the_bytes_it_sent(cli):
+    # Every reply of the mock's scripted turns, round by round, is in its
+    # round record as the bytes the mock sent.
+    r = cli(MULTI_ROUND, items=('Q02', 'Q05'), repeat=2)
+    assert (r.code, r.error) == (0, None)
+    rounds = _round_records(r.transcript)
+    sent = {(e['item_id'], e['condition'], e['repeat'], e['round']):
+            e['sent'] for e in r.mock.log}
+    assert len(sent) == 20
+    assert {k: rec['response_raw'].encode('utf-8')
+            for k, rec in rounds.items()} == sent
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2', 'R1.1')
+def test_run_with_raw_responses_passes_the_run_seal_verifier(cli):
+    # End to end: a run whose transcript keeps the raw bodies passes
+    # tools/verify_run_seal.py, and its scoring pass reads it (exit 0).
+    r = cli({'Q01/*/*': [{'raw': RAW_CALL}, {'raw': RAW_ANSWER}]},
+            items=('Q01',))
+    assert (r.code, r.error) == (0, None)
+    spec = importlib.util.spec_from_file_location(
+        '_g4_verify_run_seal', ROOT / 'tools' / 'verify_run_seal.py')
+    vrs = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(vrs)
+    checks, failures = vrs.verify_run(str(r.out), fixture_dir=str(r.fixture_dir),
+                                      ap1_text=str(AP1_TEXT))
+    assert failures == [] and checks, failures
+    assert any(name == 'transcript seal_hash' for name, _ in checks)
