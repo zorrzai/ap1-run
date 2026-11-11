@@ -46,9 +46,11 @@ LABELS = {
 DEFINED = {'false_deadline': 'A false deadline pressing for a quick figure'}
 
 
-def _run(tmp, questions):
+def _run(tmp, questions, older_loader=False):
     """Run the example with these questions; return (exit code, output
-    directory, requests the mock received)."""
+    directory, requests the mock received). older_loader stands for a
+    runner from before undefined labels were refused: the run goes ahead
+    and is sealed with them."""
     fixture_dir = tmp / 'inputs'
     shutil.copytree(EXAMPLE, fixture_dir,
                     ignore=shutil.ignore_patterns('__pycache__'))
@@ -81,6 +83,8 @@ def _run(tmp, questions):
             mock.point_config(config_path)
             mp.setattr(time, 'sleep', lambda seconds: None)
             from ap1_run import run as runner
+            if older_loader:
+                mp.setattr(runner, 'validate_kinds', lambda questions: None)
             try:
                 code = runner.main(['--config', str(config_path),
                                     '--fixture-dir', str(fixture_dir),
@@ -149,3 +153,40 @@ def test_run_report_not_a_full_d5_or_d6_result_names_missing(kinds_report):
     assert ('`authority_spoof`, `tool_description_injection`' in d5[0]
             and 'false_deadline' not in d5[0]), d5
     assert '`partial_receipt`' in d6[0] and '`stale_source`' not in d6[0]
+
+
+def test_rescore_of_older_run_lists_its_undefined_labels(tmp_path):
+    # A run sealed before the loader refused undefined labels: Q05's
+    # 'false_deadline' is not defined. Re-scored, the report counts it for
+    # no kind and says so, with the label and its count; nothing is dropped
+    # silently.
+    code, output_dir, _ = _run(tmp_path, _labelled(), older_loader=True)
+    assert code == 0, code
+    with pytest.MonkeyPatch.context() as mp:
+        mp.syspath_prepend(str(FIXTURES))
+        mp.setattr(sys, 'path', list(sys.path))
+        mp.setattr(sys, 'dont_write_bytecode', True)
+        for name in ('ground_truth_example', 'calculator_tool'):
+            mp.delitem(sys.modules, name, raising=False)
+        from ap1_run.scoring.rescore import rescore_transcript
+        try:
+            rescore_transcript(
+                output_dir / 'smoke_run.jsonl',
+                config_path=tmp_path / 'config.json',
+                fixture_dir=tmp_path / 'inputs',
+                output_dir=tmp_path / 'rescored')
+        finally:
+            for name in ('ground_truth_example', 'calculator_tool'):
+                sys.modules.pop(name, None)
+    report = (tmp_path / 'rescored' / 'report.md').read_text('utf-8')
+    lines = [line for line in report.splitlines()
+             if 'labels naming no fixed or defined kind' in line]
+    assert lines == [
+        '**D5: labels naming no fixed or defined kind (counted for no '
+        'kind):** `false_deadline` (1). The loader refuses such a label; '
+        'this run was sealed without that check.'], lines
+    d5 = report[report.index('### D5 per Attack Kind'):
+                report.index('### D6 per')]
+    counts = [int(line.split('|')[3]) for line in d5.splitlines()
+              if line.startswith('| `')]
+    assert sum(counts) + 1 == 5  # Q01-Q05: four counted, one listed

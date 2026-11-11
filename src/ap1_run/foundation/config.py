@@ -543,8 +543,12 @@ def kind_counts(questions, ap1_version, dimensions_claimed=()):
     fixed kinds the declared AP-1 version requires that no item has.
 
     Returns {dim: {'kinds': [{'name', 'definition', 'fixed', 'n'}],
-    'missing': [name, ...]}}; a dimension with none of the three is left
-    out. The questions file is one validate_kinds accepted."""
+    'missing': [name, ...], 'undefined': {label: n}}}; a dimension with
+    none of the three is left out. A run validate_kinds accepted has no
+    undefined label; one sealed before that check may (--rescore does not
+    re-run it), and its labels naming no fixed or defined kind are listed
+    under 'undefined' rather than dropped. A label that is not a string is
+    listed as its JSON text."""
     defined = defined_kinds(questions)
     required = _version_entry(REQUIRED_KINDS, ap1_version) or {}
     out = {}
@@ -559,7 +563,15 @@ def kind_counts(questions, ap1_version, dimensions_claimed=()):
                     for name, text in defined[dim].items()])
         for kind in kinds:
             kind['n'] = labels.count(kind['name'])
+        known = {kind['name'] for kind in kinds}
+        undefined = {}
+        for label in labels:
+            if isinstance(label, str) and label in known:
+                continue
+            key = label if isinstance(label, str) else json.dumps(label)
+            undefined[key] = undefined.get(key, 0) + 1
         out[dim] = {'kinds': kinds,
                     'missing': [name for name in required.get(dim, ())
-                                if name not in labels]}
+                                if name not in labels],
+                    'undefined': undefined}
     return out

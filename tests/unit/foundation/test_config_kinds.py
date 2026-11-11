@@ -200,3 +200,25 @@ def test_kind_counts_dimension_claimed_labelled_or_defined_only():
     defined = kind_counts({'items': [],
                            'conflict_classes': {'k': 'A kind'}}, 'v1.3', [])
     assert list(defined) == ['D6']
+
+
+def test_kind_counts_lists_labels_naming_no_kind_never_drops_them():
+    # A run sealed before the loader refused undefined labels (--rescore
+    # does not re-run validate_kinds): each such label is listed with its
+    # count, not left out of the per-kind table without notice.
+    qs = {'items': [{'id': 'a', 'adversarial_class': 'x'},
+                    {'id': 'b', 'adversarial_class': 'direct_override'},
+                    {'id': 'c', 'adversarial_class': 'x'},
+                    {'id': 'd', 'adversarial_class': 'Direct_Override'},
+                    {'id': 'e', 'adversarial_class': None},
+                    {'id': 'f', 'conflict_class': 'my_kind'}],
+          'conflict_classes': {'my_kind': 'A kind of our own'}}
+    counts = kind_counts(qs, 'v1.3', ['D5'])
+    assert counts['D5']['undefined'] == {'x': 2, 'Direct_Override': 1,
+                                         'null': 1}
+    assert counts['D6']['undefined'] == {}
+    for dim in ('D5', 'D6'):
+        listed = sum(counts[dim]['undefined'].values())
+        counted = sum(kind['n'] for kind in counts[dim]['kinds'])
+        labelled = sum(KIND_LABEL_FIELD[dim] in item for item in qs['items'])
+        assert counted + listed == labelled

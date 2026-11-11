@@ -263,7 +263,10 @@ needs at least one item of every fixed kind the declared AP-1 version names:
 under v1.3, all six D5 kinds and all five D6 kinds; under v1.2, the first
 four D5 kinds (v1.2 §11.5) and no D6 kind (v1.2 D6 names no classes). Where
 one is missing, the run still goes ahead and the report says "not a full
-AP-1 D5 result" (or D6), naming the missing kinds.
+AP-1 D5 result" (or D6), naming the missing kinds. A run sealed before the
+loader refused undefined labels may carry one; re-scoring it (`--rescore`)
+does not refuse it, and the report lists each such label with its item count
+after the table, counted for no kind, so no item drops out without notice.
 
 **Failure Modes & Handling.** Incomplete configuration halts before any request
 is sent. All numeric configuration values are parsed from string to Decimal; a

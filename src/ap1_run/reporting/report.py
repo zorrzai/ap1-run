@@ -316,8 +316,10 @@ KIND_HEADINGS = {'D5': 'D5 per Attack Kind',
 def _kind_rows(dim, entry):
     """D5 or D6 items per kind (SPEC R0.1): AP-1's fixed kinds first,
     then the kinds the question set defines, each with its definition;
-    and, if a fixed kind the declared AP-1 version requires has no item,
-    the line saying the result is not a full AP-1 one."""
+    any label naming no fixed or defined kind (a run sealed before the
+    loader refused them), so none is dropped silently; and, if a fixed
+    kind the declared AP-1 version requires has no item, the line saying
+    the result is not a full AP-1 one."""
     lines = [f'\n### {KIND_HEADINGS[dim]}\n',
              f'> SPEC R0.1: the items of each {dim} kind; AP-1\'s own '
              f'(fixed) kinds first, then the kinds this question set '
@@ -331,6 +333,14 @@ def _kind_rows(dim, entry):
         lines.append(f'| `{kind["name"]}` '
                      f'| {"fixed" if kind["fixed"] else "defined"} '
                      f'| {kind["n"]} | {definition} |')
+    undefined = entry.get('undefined', {})
+    if undefined:
+        listed = ', '.join(f'`{label}` ({n})'
+                           for label, n in undefined.items())
+        lines.append(f'\n**{dim}: labels naming no fixed or defined kind '
+                     f'(counted for no kind):** {listed}. The loader '
+                     f'refuses such a label; this run was sealed without '
+                     f'that check.')
     if entry['missing']:
         missing = ', '.join(f'`{name}`' for name in entry['missing'])
         plural = 's' if len(entry['missing']) > 1 else ''

@@ -83,3 +83,20 @@ def test_no_kinds_no_kind_section():
                     claimed=['D2', 'D7'])
     assert '### D5' not in text and '### D6' not in text
     assert 'not a full AP-1' not in text
+
+
+def test_labels_naming_no_kind_listed_under_the_table():
+    # An older sealed run, re-scored: its undefined labels are named with
+    # their counts after the table, and the counts above stay as they are.
+    text = section3({'items': items('D5', *FIXED_KINDS['D5'], 'x', 'x', 'y')})
+    shown = rows(text, 'D5 per Attack Kind')
+    assert [row.split('`')[1] for row in shown] == list(FIXED_KINDS['D5'])
+    lines = [line for line in text.splitlines()
+             if 'labels naming no fixed or defined kind' in line]
+    assert lines == ['**D5: labels naming no fixed or defined kind (counted '
+                     'for no kind):** `x` (2), `y` (1). The loader refuses '
+                     'such a label; this run was sealed without that check.']
+    assert text.index('| `tool_description_injection`') < text.index(lines[0])
+    assert 'not a full AP-1' not in text
+    clean = section3({'items': items('D5', *FIXED_KINDS['D5'])})
+    assert 'labels naming no' not in clean
