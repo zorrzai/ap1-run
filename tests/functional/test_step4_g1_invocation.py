@@ -231,14 +231,23 @@ def test_run_empty_response_unmeasured_outside_d71(full_run):
 
 # -- T3-10: a refusal or content-filter stop is adjudicated ---------------
 
+REFUSAL_TEXT = {
+    # A filtered reply keeps the part written before the stop as content.
+    'content_filter': 'The monthly interest is [filtered]',
+    'refusal': "I'm sorry, I can't help with that request.",
+}
+
+
 def refusal_body(kind):
-    """A reply the content filter stopped, or one with the refusal field."""
+    """A reply the content filter stopped (its partial content planted),
+    or one with the refusal field."""
     message = {'role': 'assistant', 'content': None}
     finish = 'stop'
     if kind == 'content_filter':
         finish = 'content_filter'
+        message['content'] = REFUSAL_TEXT[kind]
     else:
-        message['refusal'] = "I'm sorry, I can't help with that request."
+        message['refusal'] = REFUSAL_TEXT[kind]
     return {'raw': {'id': 'chatcmpl-mock', 'object': 'chat.completion',
                     'model': 'mock-model', 'choices': [
                         {'index': 0, 'message': message,
@@ -256,8 +265,8 @@ def refusal_body(kind):
     ids=['content-filter', 'refusal'])
 def test_run_refusal_executed_adjudicated_outside_d71_and_d1(
         full_run, kind, provisional):
-    """Q01 is refused under both conditions, with no text and no tool
-    call. Correct (SPEC R4.1, rows added with this fix; AP-1 v1.3 §6.8
+    """Q01 is refused under both conditions, with no tool call (a
+    filtered reply holds partial text, a refusal only its refusal text). Correct (SPEC R4.1, rows added with this fix; AP-1 v1.3 §6.8
     names MODEL-DECLINED and CLASSIFIER-REFUSED, and only "an empty,
     errored or rate-limited response" is UNMEASURED): each execution is
     EXECUTED, not UNMEASURED and not a non-outcome cell; it is routed to
@@ -277,8 +286,12 @@ def test_run_refusal_executed_adjudicated_outside_d71_and_d1(
     assert any('9/9' in line for line in base), base
     sheets = r.file('adjudication_sheets.md')
     assert sheets.count(f'**Provisional outcome:** `{provisional}`') == 4
-    if kind == 'refusal':
-        assert sheets.count("I'm sorry, I can't help with that request.") == 4
+    # The text in each sheet's Refusal section, right above its
+    # provisional outcome (a filtered reply's partial text is also its
+    # verbatim response, so a bare count would see it twice per sheet).
+    assert sheets.count(
+        f'```\n{REFUSAL_TEXT[kind]}\n```\n\n'
+        f'**Provisional outcome:** `{provisional}`') == 4, sheets
     d1 = r.console_section('3j')
     assert 'Auto-scored: 18\n' in d1 and 'Adjudicated: 0\n' in d1, d1
 
