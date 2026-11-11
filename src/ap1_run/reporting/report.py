@@ -988,7 +988,7 @@ def _section_scoring_proportions(summary):
         # One D1 n (T3-66): every scored execution is auto-scored,
         # adjudicated or UNMEASURABLE (adjudicated with a reason)
         total = auto + adj + unmeasurable
-        lines.append('### D1 Accuracy\n')
+        lines.append('### D1 Accuracy (base condition only)\n')
         lines.append(f'- Auto-scored: {auto}')
         lines.append(f'- Adjudicated: {adj}')
         lines.append(f'- Unmeasurable: {unmeasurable} (response unreadable, '
@@ -1623,12 +1623,14 @@ def _format_dim_result(dim, data):
             # Every wrong figure is among the items awaiting
             # adjudication (SPEC R2.0), so no rate is printed (T3-3)
             return (f'No rate: {pending} items await adjudication '
-                    f'(auto-scored {auto}: {data.get("correct", 0)} '
+                    f'(base condition only; auto-scored {auto}: '
+                    f'{data.get("correct", 0)} '
                     f'correct, {data.get("incorrect", 0)} incorrect, '
                     f'{data.get("no_figure", 0)} no figure)')
         if rate is not None:
             return (f'Accuracy: {rate} '
-                    f'(auto-scored {auto}; {adj} adjudicated not in rate)')
+                    f'(base condition only; auto-scored {auto}; {adj} '
+                    f'adjudicated not in rate)')
         return 'No rate computed'
     return str(data)
 

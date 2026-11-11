@@ -177,7 +177,7 @@ def print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary):
     """Sections 3j-3l: D1 accuracy, D2 reproducibility, D7.2(a) operand
     provenance."""
     # 3j. D1 Accuracy
-    print(f'\n3j. D1 ACCURACY:')
+    print(f'\n3j. D1 ACCURACY (base condition only):')
     if d1_summary:
         print(f'  Auto-scored: {d1_summary.get("auto_scored_n", 0)}')
         print(f'  Adjudicated: {d1_summary.get("adjudicated_n", 0)}')

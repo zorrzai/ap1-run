@@ -258,7 +258,7 @@ def test_scoring_report_full(capsys):
                        'prose': {'mechanism': 'OBSERVED-ONLY'}}}
     print_scoring_report(d1, d2, 'D2.2 cap: why', SUMMARY)
     assert capsys.readouterr().out == (
-        '\n3j. D1 ACCURACY:\n'
+        '\n3j. D1 ACCURACY (base condition only):\n'
         '  Auto-scored: 50\n'
         '  Adjudicated: 10\n'
         '  Correct: 40\n'
@@ -277,7 +277,7 @@ def test_scoring_report_full(capsys):
 def test_scoring_report_defaults_when_values_are_missing(capsys):
     print_scoring_report({'n': 0}, {}, None, {})
     assert capsys.readouterr().out == (
-        '\n3j. D1 ACCURACY:\n'
+        '\n3j. D1 ACCURACY (base condition only):\n'
         '  Auto-scored: 0\n'
         '  Adjudicated: 0\n'
         '  Correct: 0\n'
@@ -328,7 +328,7 @@ def test_scoring_report_no_rate_while_any_item_awaits_adjudication(
 def test_scoring_report_without_d1_summary(capsys):
     print_scoring_report({}, {}, None, SUMMARY)
     assert capsys.readouterr().out == (
-        '\n3j. D1 ACCURACY:\n'
+        '\n3j. D1 ACCURACY (base condition only):\n'
         '\n3k. D2 REPRODUCIBILITY:\n' + PROVENANCE)
 
 

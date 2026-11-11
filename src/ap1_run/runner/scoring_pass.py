@@ -28,6 +28,7 @@ import hashlib
 from ap1_run.execution.context import (
     build_delivered_context, check_lookup_collision,
 )
+from ap1_run.execution.engine import CONDITION_BASE
 from ap1_run.execution.perturbation_guard import HELD_CONSTANT
 from ap1_run.execution.seal import SealError, check_collisions
 from ap1_run.foundation import transcript
@@ -309,8 +310,14 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
         release_coverage_results=findings.release_coverage_results)
 
     # -- D1 aggregation --
-    d1_summary = summarise_accuracy(findings.all_accuracy_results)
-    d1_summary['n'] = len(findings.all_accuracy_results)
+    # D1 counts the base condition only: the instruction-removed repeats
+    # exist for D7, and counting them in D1 would mix D7's signal into
+    # D1's (T3-32). One D1 n (T3-66), so §3's row, §8 and the console
+    # agree with each other and with the per-category table.
+    base_results = [r for r in findings.all_accuracy_results
+                    if r.get('condition') == CONDITION_BASE]
+    d1_summary = summarise_accuracy(base_results)
+    d1_summary['n'] = len(base_results)
     # AP-1 D1: per category, with n and a 95% interval (T3-32). A
     # question with no category is in no row; the report lists it under
     # the table instead, so none is dropped silently.

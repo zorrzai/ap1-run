@@ -134,6 +134,7 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/runner/test_executions.py::test_score_execution_refusal_routed_provisional_out_of_d1[refusal]',
     'tests/unit/runner/test_executions.py::test_score_execution_transcription_result_carries_rounded_flag',
     'tests/unit/runner/test_outputs.py::test_write_outputs_sheets_show_measurability_per_question',
+    'tests/unit/runner/test_scoring_pass.py::test_score_run_d1_instruction_removed_incorrect_leaves_rate_and_n',
     'tests/unit/runner/test_summary.py::test_summary_d71_figure_lists_failing_questions_with_counts',
     'tests/unit/runner/test_summary.py::test_summary_d71_n_counts_questions_not_repeats',
     'tests/unit/runner/test_summary.py::test_summary_refusal_after_calculator_calls_is_out_of_d71[content-filter]',

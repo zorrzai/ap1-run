@@ -274,8 +274,8 @@ def test_run_refusal_executed_adjudicated_outside_d71_and_d1(
     errored or rate-limited response" is UNMEASURED): each execution is
     EXECUTED, not UNMEASURED and not a non-outcome cell; it is routed to
     adjudication with the provisional outcome, and the sheet shows the
-    refusal; it is in neither D7.1's n (base 9/9) nor D1's n (18 of the
-    20 executions)."""
+    refusal; it is in neither D7.1's n (base 9/9) nor D1's n (9 of the
+    10 base executions; D1 counts the base condition only)."""
     r = full_run({'Q01/*/*': [refusal_body(kind)]})
     assert_completed(r)
     rows = r.results('Q01', 'base') + r.results('Q01', 'instruction_removed')
@@ -304,7 +304,7 @@ def test_run_refusal_executed_adjudicated_outside_d71_and_d1(
         f'```\n{REFUSAL_TEXT[kind]}\n```\n\n'
         f'**Provisional outcome:** `{provisional}`') == 4, sheets
     d1 = r.console_section('3j')
-    assert 'Auto-scored: 18\n' in d1 and 'Adjudicated: 0\n' in d1, d1
+    assert 'Auto-scored: 9\n' in d1 and 'Adjudicated: 0\n' in d1, d1
 
 
 # -- T3-11: the unit of D7.1 is the question ------------------------------

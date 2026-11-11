@@ -25,6 +25,7 @@ from ap1_run.runner import scoring_pass
 from ap1_run.runner.scoring_pass import (
     CONDITIONS, DISCLAIMER, index_records, score_run,
 )
+from ap1_run.scoring.accuracy import summarise_accuracy
 
 D = Decimal
 RULE = '=' * 60
@@ -113,7 +114,8 @@ class Pass:
     def score_execution(self, findings, result, **kwargs):
         self.calls.append(('score', result, kwargs))
         findings.all_results.append({'status': 'EXECUTED'})
-        findings.all_accuracy_results.append({'acc': result['n']})
+        findings.all_accuracy_results.append(
+            {'acc': result['n'], 'condition': kwargs['condition']})
         findings.d2_responses.setdefault('d2', []).append(result)
 
     def verify_invocation_consistency(self, results):
@@ -272,7 +274,9 @@ def test_score_run_calls(p, capsys):
                   'transcription_results': [],
                   'release_coverage_results': []}
 
-    assert p.named('summarise') == [([{'acc': 2}, {'acc': 1}, {'acc': 2}],)]
+    # D1 counts the base condition only (T3-32)
+    base = [{'acc': 2, 'condition': 'base'}, {'acc': 1, 'condition': 'base'}]
+    assert p.named('summarise') == [(base,)]
     assert p.named('d2_cap') == [({'temperature': '0'},)]
     d2_responses = {'d2': [res for res, _ in scores]}
     assert p.named('d2') == [(d2_responses, 2, 'CAP')]
@@ -281,8 +285,9 @@ def test_score_run_calls(p, capsys):
     # T3-32: D1 per category, from questions.json's categories; Q3 has
     # none, so it is listed as in no category
     assert p.named('by_category') == [(
-        [{'acc': 2}, {'acc': 1}, {'acc': 2}], {'Q1': 'interest', 'Q2': 'fees'})]
-    d1 = {'d1': True, 'n': 3, 'by_category': {'by': 'category'},
+        base + [{'acc': 2, 'condition': 'instruction_removed'}],
+        {'Q1': 'interest', 'Q2': 'fees'})]
+    d1 = {'d1': True, 'n': 2, 'by_category': {'by': 'category'},
           'uncategorised': ['Q3']}
     assert kw == {'d1_summary': d1,
                   'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
@@ -318,6 +323,34 @@ def test_score_run_calls(p, capsys):
         'scoring_report', 'attach', 'outputs')]
     assert stages == ['consistency', 'run_report', 'summarise', 'd2_cap',
                       'd2', 'summary', 'scoring_report', 'attach', 'outputs']
+
+
+@pytest.mark.proposal(
+    'T3-32: D1 counts the base condition only; AP-1 v1.3 D1 does not say '
+    'which condition it uses, and the instruction-removed repeats exist '
+    'for D7')
+@pytest.mark.finding('T3-32')
+def test_score_run_d1_instruction_removed_incorrect_leaves_rate_and_n(
+        p, monkeypatch):
+    """The script scores Q1/base/r2, Q2/base/r1 and Q1/removed/r2. Every
+    base answer is correct and the instruction-removed one is wrong: D1
+    reads 2 of 2, and its n and auto-scored n are the two base
+    executions."""
+    def score(findings, result, *, item_id, condition, **kwargs):
+        findings.all_results.append({'status': 'EXECUTED'})
+        findings.all_accuracy_results.append({
+            'outcome': 'CORRECT' if condition == 'base' else 'INCORRECT',
+            'auto_scored': True, 'item_id': item_id,
+            'condition': condition})
+    monkeypatch.setattr(scoring_pass, 'score_execution', score)
+    monkeypatch.setattr(scoring_pass, 'summarise_accuracy',
+                        summarise_accuracy)
+    script(p)
+    p.run()
+    (_, _, kw), = p.named('summary')
+    d1 = kw['d1_summary']
+    assert (d1['accuracy_rate'], d1['auto_scored_n'], d1['n'],
+            d1['correct'], d1['incorrect']) == (1, 2, 2, 2, 0)
 
 
 @pytest.mark.finding('T3-51')

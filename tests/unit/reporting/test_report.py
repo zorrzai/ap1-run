@@ -336,8 +336,8 @@ def test_dimension_results_d1_pending_adjudication_states_counts_not_rate():
     rows = dim_rows(report._section_dimension_results(
         {'d1_results': d1}, {'dimensions_claimed': ['D1']}))
     assert rows[0] == ('| D1 | Measured | 10 | No rate: 3 items await '
-                       'adjudication (auto-scored 7: 5 correct, 1 '
-                       'incorrect, 1 no figure) |')
+                       'adjudication (base condition only; auto-scored 7: '
+                       '5 correct, 1 incorrect, 1 no figure) |')
 
 
 def test_dimension_results_d1_pending_counts_default_to_zero():
@@ -345,8 +345,8 @@ def test_dimension_results_d1_pending_counts_default_to_zero():
         {'d1_results': {'n': 1, 'adjudicated_n': 1, 'accuracy_rate': 1}},
         {'dimensions_claimed': ['D1']}))
     assert rows[0] == ('| D1 | Measured | 1 | No rate: 1 items await '
-                       'adjudication (auto-scored 0: 0 correct, 0 '
-                       'incorrect, 0 no figure) |')
+                       'adjudication (base condition only; auto-scored 0: '
+                       '0 correct, 0 incorrect, 0 no figure) |')
 
 
 def test_dimension_results_d1_n_falls_back_to_auto_scored_n():
@@ -354,7 +354,8 @@ def test_dimension_results_d1_n_falls_back_to_auto_scored_n():
         {'d1_results': {'auto_scored_n': 7, 'accuracy_rate': '0.9'}},
         {'dimensions_claimed': ['D1']}))
     assert rows[0] == ('| D1 | Measured | 7 | Accuracy: 0.9 '
-                       '(auto-scored 7; 0 adjudicated not in rate) |')
+                       '(base condition only; auto-scored 7; '
+                       '0 adjudicated not in rate) |')
 
 
 def test_dimension_results_d1_without_rate_says_so():
@@ -369,7 +370,8 @@ def test_dimension_results_d1_rate_zero_is_printed():
         {'d1_results': {'n': 4, 'accuracy_rate': 0}},
         {'dimensions_claimed': ['D1']}))
     assert rows[0] == ('| D1 | Measured | 4 | Accuracy: 0 '
-                       '(auto-scored 0; 0 adjudicated not in rate) |')
+                       '(base condition only; auto-scored 0; '
+                       '0 adjudicated not in rate) |')
 
 
 EV0 = 'EV-0 UNOBSERVABLE'
@@ -1310,7 +1312,7 @@ def test_scoring_proportions_d1_split_and_no_rate_while_pending():
         'accuracy_rate': Decimal('1')}})
     assert text == md(
         '## 8. Scoring Proportions\n',
-        '### D1 Accuracy\n',
+        '### D1 Accuracy (base condition only)\n',
         '- Auto-scored: 22',
         '- Adjudicated: 17',
         '- Unmeasurable: 1 (response unreadable, routed to adjudication)',
@@ -1342,7 +1344,7 @@ def test_scoring_proportions_d1_without_counts_or_rate():
     text = report._section_scoring_proportions({'d1_results': {'n': 5}})
     assert text == md(
         '## 8. Scoring Proportions\n',
-        '### D1 Accuracy\n',
+        '### D1 Accuracy (base condition only)\n',
         '- Auto-scored: 0',
         '- Adjudicated: 0',
         '- Unmeasurable: 0 (response unreadable, routed to adjudication)',
@@ -2060,8 +2062,9 @@ def test_declared_limitations_text():
 # -- _format_dim_result ---------------------------------------------------
 
 def test_format_dim_result_d1_defaults_counts_to_zero():
-    assert report._format_dim_result('D1', {'accuracy_rate': '0.5'}) == \
-        'Accuracy: 0.5 (auto-scored 0; 0 adjudicated not in rate)'
+    assert report._format_dim_result('D1', {'accuracy_rate': '0.5'}) == (
+        'Accuracy: 0.5 (base condition only; auto-scored 0; 0 adjudicated '
+        'not in rate)')
 
 
 # -- Boundaries: one observation, twenty-one rows -------------------------
