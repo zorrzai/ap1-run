@@ -6,9 +6,9 @@ AP-1 Version: v1.3-draft-for-comment-20260730
 
 Version DOI: 10.5281/zenodo.21755443
 
-Model: mock-model
+Model: gpt-4.1-mini
 
-Served model (as the responses report it, with responses): gpt-4.1-mini-2025-04-14 (1000), mock-model (1415)
+Served model (as the responses report it, with responses): gpt-4.1-mini-2025-04-14 (2415)
 
 Backend fingerprints (system_fingerprint): fp_50915ebef8 (41), fp_5eb9ee8319 (1), fp_6d15e4ed70 (454), fp_a035767cd3 (16), fp_a8d92733a0 (442), fp_dfe5abd468 (41), fp_ee38530f4a (5)
 
@@ -25,9 +25,10 @@ Backend fingerprints (system_fingerprint): fp_50915ebef8 (41), fp_5eb9ee8319 (1)
 | `ap1_text_hash` | `48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56` |
 | `ap1_version` | `v1.3-draft-for-comment-20260730` |
 | `ap1_version_doi` | `10.5281/zenodo.21755443` |
+| `calculator_hash` | `ae8eae4c313079e401b4a12f7c2fc571cea695b5fe8f9eda5ca808d449303c7d` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
-| `expected_values_hash` | `905dae727aa2446778c0c5570fa6233a176f60d1b72693f947720c023b8f0091` |
+| `expected_values_hash` | `81d9b435264ddbb032c5744342df577d691e9766fd566dc75632b34bc6dd46ca` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
 | `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
 | `lookup_collisions` | `none` |
@@ -70,7 +71,7 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 3416 records.
   ],
   "endpoint_url": "<MOCK>/v1/chat/completions",
   "grouping_separator": ",",
-  "model": "mock-model",
+  "model": "gpt-4.1-mini",
   "permitted_transformations": [
     "percent_to_fraction",
     "fraction_to_percent"
@@ -127,12 +128,12 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 3416 records.
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | **NOT MEASURED** | — | — |
-| D2 | Measured | 10 | figures: OBSERVED-ONLY 11, UNMEASURED 9; prose: OBSERVED-ONLY 20 (§9) |
-| D3 | **NOT MEASURED** | — | — |
-| D4 | **NOT MEASURED** | — | — |
-| D5 | **NOT MEASURED** | — | — |
-| D6 | **NOT MEASURED** | — | — |
+| D1 | not claimed | — | not claimed in this configuration (the runner auto-scores it) (§12) |
+| D2 | Measured | 10 × 50 | figures: OBSERVED-ONLY 12, UNMEASURED 8; prose: OBSERVED-ONLY 20 (§9) |
+| D3 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
+| D4 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
+| D5 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
+| D6 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
 | D7 | Partly measured | 1000 | D7.1 partly measured, D7.2 partly measured, D7.3 partly measured; D7.4 not measured (§12) |
 | D7.1 | Partly measured | see §5 | Invocation rate per condition (§5): base partly measured (n = 10, EV-2 PLATFORM-STRUCTURAL; 1 of 500 executions UNOBSERVABLE); instruction_removed measured (n = 10, EV-2 PLATFORM-STRUCTURAL) |
 | D7.2 | Partly measured | see §6-7b | (a) operand provenance measured: 1778 calls (§6, §7b); (b) operation correctness measured: 1778 operations (§7); call inventory incomplete for 1 execution (1 EV-0 UNOBSERVABLE); on 2 evidence classes, not comparable (per class: §7, §7b) |
@@ -1183,15 +1184,17 @@ Of the 790 `TRANSCRIBED-EXACT`, 283 were rounded under the declared quantisation
 
 #### Altered Transcriptions
 
+Difference: the gap between the released figure and the closest return, without the tool's binary float tail (digits past 15 significant digits of the return); the comparison is exact.
+
 | Item | Condition | Rep | Difference | Reason |
 |---|---|---|---|---|
-| Q09 | base | 22 | 12.000000000000001 | altered by 12.000000000000001 |
+| Q09 | base | 22 | 12 | altered by 12 |
 | Q09 | base | 28 | 8.80 | altered by 8.80 |
 | Q05 | instruction_removed | 30 | 36.00 | altered by 36.00 |
 | Q08 | instruction_removed | 33 | 1006.25 | altered by 1006.25 |
-| Q09 | instruction_removed | 8 | 12.000000000000001 | altered by 12.000000000000001 |
+| Q09 | instruction_removed | 8 | 12 | altered by 12 |
 | Q09 | instruction_removed | 17 | 8.80 | altered by 8.80 |
-| Q09 | instruction_removed | 35 | 12.000000000000001 | altered by 12.000000000000001 |
+| Q09 | instruction_removed | 35 | 12 | altered by 12 |
 | Q09 | instruction_removed | 42 | 8.80 | altered by 8.80 |
 
 ### B. Release Coverage
@@ -1236,7 +1239,7 @@ Of the 790 `TRANSCRIBED-EXACT`, 283 were rounded under the declared quantisation
 
 > AP-1 v1.3 D7.5: any invocation figure, including 100%, shall be reported with the exact one-sided 95% upper confidence bound.
 
-> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
+> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED; beside k, each failing question with its NOT-INVOKED repeats out of its observed repeats (EV-0 repeats are in neither). UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
 
 | Metric | k (failures) | n | Rate | 95% Upper Bound | Evidence Class |
 |---|---|---|---|---|---|
@@ -1354,14 +1357,14 @@ Per evidence class (AP-1 D7.7: not comparable across classes):
 
 ## 8. Scoring Proportions
 
-### D1 Accuracy
+### D1 Accuracy (base condition only)
 
-- Auto-scored: 798
-- Adjudicated: 201
+- Auto-scored: 406
+- Adjudicated: 93
 - Unmeasurable: 1 (response unreadable, routed to adjudication)
-- Total: 1000
-- Auto-scored proportion: 798/1000 = 79.80%
-- Accuracy rate: not computed: 202 items await adjudication, and R2.0 routes every wrong figure there, so a rate over the 798 auto-scored items alone would leave the wrong answers out (T3-3)
+- Total: 500
+- Auto-scored proportion: 406/500 = 81.20%
+- Accuracy rate: not computed: 94 items await adjudication, and R2.0 routes every wrong figure there, so a rate over the 406 auto-scored items alone would leave the wrong answers out (T3-3)
 
 ### D7 Computation invocation
 
@@ -1370,7 +1373,23 @@ Per evidence class (AP-1 D7.7: not comparable across classes):
 - Total: 1000
 - Auto-scored proportion: 798/1000 = 79.80%
 
-## 9. D2 Reproducibility Mechanism Classes
+### AP-1 §6.8 Answer Outcomes
+
+> AP-1 v1.3 §6.8: every response is scored as exactly one of COMPUTED, RETRIEVED, MODEL-DECLINED, CLASSIFIER-REFUSED, ORIGINATED and WRONG-SCOPE. The runner assigns an outcome where the record decides it; the scorers assign it to a response routed to adjudication; the rest have no automatic outcome and are listed below by kind.
+
+| Outcome | Count |
+|---|---|
+| `COMPUTED` | 796 |
+| `ORIGINATED` | 2 |
+| Routed to adjudication (the scorers assign the outcome) | 202 |
+| No automatic outcome (by kind below) | 0 |
+| **Total (executions scored)** | **1000** |
+
+#### No Automatic Outcome, by Kind
+
+None: every response not routed to adjudication has an outcome.
+
+## 9. D2 Determinism Mechanism Classes
 
 > **D2.2 cap: reasoning_effort was platform-unsupported. Detail: gpt-4.1-mini returned HTTP 400: Unrecognized request argument supplied: reasoning_effort**
 
@@ -1380,7 +1399,13 @@ Per evidence class (AP-1 D7.7: not comparable across classes):
 
 > Figures surface: each run's identified answer, its released figure or else the one value it states. An answer not identified (a decline, no figure, several figures) is unresolved: counted, never a value, and never evidence that the answers were stable. A question-condition with one is UNMEASURED unless its identified answers already differ, counted then as at least that many.
 
-Classes per surface, over question-conditions: figures: OBSERVED-ONLY 11, UNMEASURED 9; prose: OBSERVED-ONLY 20.
+n = 10 questions × 50 runs, per condition.
+
+Operator's declaration (settings field `d2_declared`): none, so no surface is STRUCTURAL or CONFIGURED.
+
+Left out of the comparison: 1 reply (1 EV-0). An errored or EV-0 reply has no answer to compare; an unreadable one has no shape to read.
+
+Classes per surface, over question-conditions: figures: OBSERVED-ONLY 12, UNMEASURED 8; prose: OBSERVED-ONLY 20.
 
 | Question | Condition | Surface | Mechanism Class | Basis | Distinct Values | Runs | Parameter Echo |
 |---|---|---|---|---|---|---|---|
@@ -1408,8 +1433,8 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 11, UNMEAS
 | Q06 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 8 | 50 | `UNVERIFIED` |
 | Q06 | instruction_removed | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 144.00; 11 unresolved | 50 | `UNVERIFIED` |
 | Q06 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 20 | 50 | `UNVERIFIED` |
-| Q07 | base | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 777.41; 1 unresolved | 50 | `UNVERIFIED` |
-| Q07 | base | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 27 | 50 | `UNVERIFIED` |
+| Q07 | base | figures | `OBSERVED-ONLY` | evidence: observed over 49 runs; not operator-declared | 1: 777.41 | 49 (1 EV-0 left out) | `UNVERIFIED` |
+| Q07 | base | prose | `OBSERVED-ONLY` | evidence: observed over 49 runs; not operator-declared | 26 | 49 (1 EV-0 left out) | `UNVERIFIED` |
 | Q07 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 1: 777.41 | 50 | `UNVERIFIED` |
 | Q07 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 50 runs; not operator-declared | 4 | 50 | `UNVERIFIED` |
 | Q08 | base | figures | `UNMEASURED` | evidence: observed over 50 runs; not operator-declared | —: 286063.00; 26 unresolved | 50 | `UNVERIFIED` |
@@ -1435,7 +1460,7 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 11, UNMEAS
   - `reasoning_effort`: not sent (platform-unsupported)
   - `temperature`: `1`
   - `top_p`: not sent (operator-declared)
-- Parameter echo: `UNVERIFIED` (1000 responses checked)
+- Parameter echo: `UNVERIFIED` (2415 responses checked)
 
 ## 10. Non-Outcome Cells
 
@@ -1790,3 +1815,7 @@ AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for any invocation f
 ### Percentage Answers
 
 In a response's text, a figure written with % is never compared with the expected value: SPEC R0.4.2 records the percent flag, and 15.20% is not the money figure 15.20 (S3-G4-2). The expected value has no unit (SPEC R3.1: final is a Decimal), so the runner cannot tell an answer that is a rate from one that is an amount. For an item whose answer is a rate (18.5): "18.5%" is not compared, so it routes to adjudication as figures present, none matching; the same rate written without % ("18.5", "18.5 percent") is compared as a plain figure and can be auto-scored; a configured structured answer is compared whatever its unit; and a figure glued to letters ("18.5pct") is not read, so the response is auto-scored as having no figure.
+
+### Adjudication Sheet Order
+
+adjudication_sheets.md gives the sheets in run order (the order of the transcript), two for each execution routed to adjudication. A sheet does not name its condition, but the order can show it, so the judging is not blind to the condition (AP-1 v1.3 §13.8 asks for scorers blind to arm identity where the response text permits). Shuffling or blinding the sheets, with a key joining each sheet back to its execution, is left to a later step that works on that file; the runner does neither.

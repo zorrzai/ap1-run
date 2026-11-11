@@ -167,16 +167,16 @@ result, by us or by anyone, in any document.
   WRONG-OPERATION: 0
   OPERATION-UNOBSERVABLE: 16
 
-3j. D1 ACCURACY:
-  Auto-scored: 40
+3j. D1 ACCURACY (base condition only):
+  Auto-scored: 20
   Adjudicated: 0
-  Correct: 40
+  Correct: 20
   Incorrect: 0
   No figure: 0
   Unmeasurable: 0
   Accuracy rate: 1
 
-3k. D2 REPRODUCIBILITY:
+3k. D2 DETERMINISM:
   CAP: D2.2 cap: temperature was platform-rejected. Detail: OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported.
   OBSERVED-ONLY: 40
 

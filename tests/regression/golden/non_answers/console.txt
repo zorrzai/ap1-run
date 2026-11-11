@@ -157,9 +157,9 @@ result, by us or by anyone, in any document.
   Q05/instruction_removed/r2: empty response
 
 3h. D7.1 INVOCATION (n = questions; a question fails if any repeat is NOT-INVOKED; UNOBSERVABLE not in n):
-  base: invoked=6 not_invoked=2 n=8
+  base: invoked=6 not_invoked=2 (Q02 2/2, Q03 2/2) n=8
     failure rate: 2/8 (25.0%); one-sided 95% upper bound on the failure rate 60.0%
-  instruction_removed: invoked=6 not_invoked=2 n=8
+  instruction_removed: invoked=6 not_invoked=2 (Q02 2/2, Q03 2/2) n=8
     failure rate: 2/8 (25.0%); one-sided 95% upper bound on the failure rate 60.0%
 
 3h2. D7.3 TRANSCRIPTION:
@@ -177,19 +177,19 @@ result, by us or by anyone, in any document.
   WRONG-OPERATION: 0
   OPERATION-UNOBSERVABLE: 0
 
-3j. D1 ACCURACY:
-  Auto-scored: 16
-  Adjudicated: 16
-  Correct: 12
+3j. D1 ACCURACY (base condition only):
+  Auto-scored: 8
+  Adjudicated: 8
+  Correct: 6
   Incorrect: 0
-  No figure: 4
+  No figure: 2
   Unmeasurable: 0
-  Accuracy rate: not computed (16 items await adjudication)
+  Accuracy rate: not computed (8 items await adjudication)
 
-3k. D2 REPRODUCIBILITY:
+3k. D2 DETERMINISM:
   CAP: D2.2 cap: temperature was platform-rejected. Detail: OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported.
   OBSERVED-ONLY: 24
-  UNMEASURED: 8
+  UNMEASURED: 16
 
 3l. D7.2(a) OPERAND PROVENANCE:
   step 1 (source match):       68

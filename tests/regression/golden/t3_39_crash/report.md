@@ -25,9 +25,10 @@ Backend fingerprints (system_fingerprint): not reported
 | `ap1_text_hash` | `48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56` |
 | `ap1_version` | `v1.3-draft-for-comment-20260730` |
 | `ap1_version_doi` | `10.5281/zenodo.21755443` |
+| `calculator_hash` | `ae8eae4c313079e401b4a12f7c2fc571cea695b5fe8f9eda5ca808d449303c7d` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
-| `expected_values_hash` | `905dae727aa2446778c0c5570fa6233a176f60d1b72693f947720c023b8f0091` |
+| `expected_values_hash` | `81d9b435264ddbb032c5744342df577d691e9766fd566dc75632b34bc6dd46ca` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
 | `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
 | `lookup_collisions` | `none` |
@@ -127,12 +128,12 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 60 records.
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | **NOT MEASURED** | — | — |
-| D2 | Measured | 10 | figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20 (§9) |
-| D3 | **NOT MEASURED** | — | — |
-| D4 | **NOT MEASURED** | — | — |
-| D5 | **NOT MEASURED** | — | — |
-| D6 | **NOT MEASURED** | — | — |
+| D1 | not claimed | — | not claimed in this configuration (the runner auto-scores it) (§12) |
+| D2 | Measured | 10 × 1 | figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20; below AP-1 D2's 10 × 50 (§9) |
+| D3 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
+| D4 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
+| D5 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
+| D6 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
 | D7 | Partly measured | 20 | D7.1 measured, D7.2 partly measured, D7.3 partly measured; D7.4 not measured (§12) |
 | D7.1 | Measured | see §5 | Invocation rate per condition (§5): base measured (n = 10, EV-2 PLATFORM-STRUCTURAL); instruction_removed measured (n = 10, EV-2 PLATFORM-STRUCTURAL) |
 | D7.2 | Partly measured | see §6-7b | (a) operand provenance partly measured: 1 of 20 calls OPERANDS-UNOBSERVABLE or UNMEASURABLE (§6, §7b); (b) operation correctness partly measured: 1 of 20 operations OPERATION-UNOBSERVABLE (§7) |
@@ -189,7 +190,7 @@ Evidence class (AP-1 D7.7), executions: `EV-2 PLATFORM-STRUCTURAL` (20).
 | `UNOBSERVABLE` | 1 | 5.0% |
 | **Total** | **20** | |
 
-Of the 19 `TRANSCRIBED-EXACT`, 7 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3). Of these: roundings of the tool's return to the declared places, 2; float artefacts of the tool (the return differs from the release only past a binary float's 15 significant digits, such as 15.200000000000001 for 15.20), 5. A strict v1.2 "match" count subtracts the roundings, or all 7 for the strictest reading.
+Of the 19 `TRANSCRIBED-EXACT`, 2 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3). Of these: roundings of the tool's return to the declared places, 2; float artefacts of the tool (the return differs from the release only past a binary float's 15 significant digits, such as 15.200000000000001 for 15.20), 0. A strict v1.2 "match" count subtracts the roundings, or all 2 for the strictest reading.
 
 ### B. Release Coverage
 
@@ -207,7 +208,7 @@ Of the 19 `TRANSCRIBED-EXACT`, 7 were rounded under the declared quantisation po
 
 > AP-1 v1.3 D7.5: any invocation figure, including 100%, shall be reported with the exact one-sided 95% upper confidence bound.
 
-> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
+> D7.1 n counts the computable questions that have an observed outcome, not the executions: the repeats of a question are not independent trials. A question counts as a failure if any of its repeats is NOT-INVOKED; beside k, each failing question with its NOT-INVOKED repeats out of its observed repeats (EV-0 repeats are in neither). UNOBSERVABLE executions (EV-0) are neither successes nor failures and are in no n (SPEC R2.3, R1.3.1).
 
 | Metric | k (failures) | n | Rate | 95% Upper Bound | Evidence Class |
 |---|---|---|---|---|---|
@@ -278,14 +279,14 @@ Total operands resolved: 84
 
 ## 8. Scoring Proportions
 
-### D1 Accuracy
+### D1 Accuracy (base condition only)
 
-- Auto-scored: 20
+- Auto-scored: 10
 - Adjudicated: 0
 - Unmeasurable: 0 (response unreadable, routed to adjudication)
-- Total: 20
-- Auto-scored proportion: 20/20 = 100.00%
-- Accuracy rate: 1 (computed from 20 auto-scored items only; 0 adjudicated items are not represented in this rate)
+- Total: 10
+- Auto-scored proportion: 10/10 = 100.00%
+- Accuracy rate: 1 (computed from 10 auto-scored items only; 0 adjudicated items are not represented in this rate)
 
 ### D7 Computation invocation
 
@@ -294,7 +295,24 @@ Total operands resolved: 84
 - Total: 20
 - Auto-scored proportion: 20/20 = 100.00%
 
-## 9. D2 Reproducibility Mechanism Classes
+### AP-1 §6.8 Answer Outcomes
+
+> AP-1 v1.3 §6.8: every response is scored as exactly one of COMPUTED, RETRIEVED, MODEL-DECLINED, CLASSIFIER-REFUSED, ORIGINATED and WRONG-SCOPE. The runner assigns an outcome where the record decides it; the scorers assign it to a response routed to adjudication; the rest have no automatic outcome and are listed below by kind.
+
+| Outcome | Count |
+|---|---|
+| `COMPUTED` | 19 |
+| Routed to adjudication (the scorers assign the outcome) | 0 |
+| No automatic outcome (by kind below) | 1 |
+| **Total (executions scored)** | **20** |
+
+#### No Automatic Outcome, by Kind
+
+| Kind | Count |
+|---|---|
+| calculator used, operands not shown grounded | 1 |
+
+## 9. D2 Determinism Mechanism Classes
 
 > **D2.2 cap: temperature was platform-rejected. Detail: OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported.**
 
@@ -303,6 +321,14 @@ Total operands resolved: 84
 > D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
 
 > Figures surface: each run's identified answer, its released figure or else the one value it states. An answer not identified (a decline, no figure, several figures) is unresolved: counted, never a value, and never evidence that the answers were stable. A question-condition with one is UNMEASURED unless its identified answers already differ, counted then as at least that many.
+
+n = 10 questions × 1 runs, per condition.
+
+> **Below AP-1 D2's 10 × 50: n = 10 × 1** (AP-1 D2: minimum 10 questions × minimum 50 runs). The runner accepts any run count and classifies on what was run.
+
+Operator's declaration (settings field `d2_declared`): none, so no surface is STRUCTURAL or CONFIGURED.
+
+Left out of the comparison: none.
 
 Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20.
 
@@ -359,7 +385,7 @@ Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose:
   - `reasoning_effort`: `none`
   - `temperature`: not sent (platform-rejected)
   - `top_p`: not sent (operator-declared)
-- Parameter echo: `UNVERIFIED` (20 responses checked)
+- Parameter echo: `UNVERIFIED` (40 responses checked)
 
 ## 10. Non-Outcome Cells
 
@@ -405,3 +431,7 @@ AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for any invocation f
 ### Percentage Answers
 
 In a response's text, a figure written with % is never compared with the expected value: SPEC R0.4.2 records the percent flag, and 15.20% is not the money figure 15.20 (S3-G4-2). The expected value has no unit (SPEC R3.1: final is a Decimal), so the runner cannot tell an answer that is a rate from one that is an amount. For an item whose answer is a rate (18.5): "18.5%" is not compared, so it routes to adjudication as figures present, none matching; the same rate written without % ("18.5", "18.5 percent") is compared as a plain figure and can be auto-scored; a configured structured answer is compared whatever its unit; and a figure glued to letters ("18.5pct") is not read, so the response is auto-scored as having no figure.
+
+### Adjudication Sheet Order
+
+adjudication_sheets.md gives the sheets in run order (the order of the transcript), two for each execution routed to adjudication. A sheet does not name its condition, but the order can show it, so the judging is not blind to the condition (AP-1 v1.3 §13.8 asks for scorers blind to arm identity where the response text permits). Shuffling or blinding the sheets, with a key joining each sheet back to its execution, is left to a later step that works on that file; the runner does neither.

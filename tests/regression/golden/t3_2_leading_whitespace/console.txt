@@ -173,16 +173,16 @@ result, by us or by anyone, in any document.
       item answer undetermined (adjudicated):      16
       no figure released (no item answer):         0
 
-3j. D1 ACCURACY:
-  Auto-scored: 32
-  Adjudicated: 8
-  Correct: 32
+3j. D1 ACCURACY (base condition only):
+  Auto-scored: 16
+  Adjudicated: 4
+  Correct: 16
   Incorrect: 0
   No figure: 0
   Unmeasurable: 0
-  Accuracy rate: not computed (8 items await adjudication)
+  Accuracy rate: not computed (4 items await adjudication)
 
-3k. D2 REPRODUCIBILITY:
+3k. D2 DETERMINISM:
   CAP: D2.2 cap: temperature was platform-rejected. Detail: OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported.
   OBSERVED-ONLY: 40
 

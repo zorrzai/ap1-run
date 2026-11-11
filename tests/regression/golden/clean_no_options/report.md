@@ -128,12 +128,12 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 180 records.
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | **NOT MEASURED** | — | — |
-| D2 | Measured | 10 | figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20 (§9) |
-| D3 | **NOT MEASURED** | — | — |
-| D4 | **NOT MEASURED** | — | — |
-| D5 | **NOT MEASURED** | — | — |
-| D6 | **NOT MEASURED** | — | — |
+| D1 | not claimed | — | not claimed in this configuration (the runner auto-scores it) (§12) |
+| D2 | Measured | 10 × 3 | figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20; below AP-1 D2's 10 × 50 (§9) |
+| D3 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
+| D4 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
+| D5 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
+| D6 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
 | D7 | Partly measured | 60 | D7.1 measured, D7.2 measured, D7.3 measured; D7.4 not measured (§12) |
 | D7.1 | Measured | see §5 | Invocation rate per condition (§5): base measured (n = 10, EV-2 PLATFORM-STRUCTURAL); instruction_removed measured (n = 10, EV-2 PLATFORM-STRUCTURAL) |
 | D7.2 | Measured | see §6-7b | (a) operand provenance measured: 60 calls (§6, §7b); (b) operation correctness measured: 60 operations (§7) |
@@ -319,14 +319,14 @@ Total operands resolved: 264
 
 ## 8. Scoring Proportions
 
-### D1 Accuracy
+### D1 Accuracy (base condition only)
 
-- Auto-scored: 60
+- Auto-scored: 30
 - Adjudicated: 0
 - Unmeasurable: 0 (response unreadable, routed to adjudication)
-- Total: 60
-- Auto-scored proportion: 60/60 = 100.00%
-- Accuracy rate: 1 (computed from 60 auto-scored items only; 0 adjudicated items are not represented in this rate)
+- Total: 30
+- Auto-scored proportion: 30/30 = 100.00%
+- Accuracy rate: 1 (computed from 30 auto-scored items only; 0 adjudicated items are not represented in this rate)
 
 ### D7 Computation invocation
 
@@ -335,7 +335,22 @@ Total operands resolved: 264
 - Total: 60
 - Auto-scored proportion: 60/60 = 100.00%
 
-## 9. D2 Reproducibility Mechanism Classes
+### AP-1 §6.8 Answer Outcomes
+
+> AP-1 v1.3 §6.8: every response is scored as exactly one of COMPUTED, RETRIEVED, MODEL-DECLINED, CLASSIFIER-REFUSED, ORIGINATED and WRONG-SCOPE. The runner assigns an outcome where the record decides it; the scorers assign it to a response routed to adjudication; the rest have no automatic outcome and are listed below by kind.
+
+| Outcome | Count |
+|---|---|
+| `COMPUTED` | 60 |
+| Routed to adjudication (the scorers assign the outcome) | 0 |
+| No automatic outcome (by kind below) | 0 |
+| **Total (executions scored)** | **60** |
+
+#### No Automatic Outcome, by Kind
+
+None: every response not routed to adjudication has an outcome.
+
+## 9. D2 Determinism Mechanism Classes
 
 > **D2.2 cap: temperature was platform-rejected. Detail: OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported.**
 
@@ -344,6 +359,14 @@ Total operands resolved: 264
 > D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
 
 > Figures surface: each run's identified answer, its released figure or else the one value it states. An answer not identified (a decline, no figure, several figures) is unresolved: counted, never a value, and never evidence that the answers were stable. A question-condition with one is UNMEASURED unless its identified answers already differ, counted then as at least that many.
+
+n = 10 questions × 3 runs, per condition.
+
+> **Below AP-1 D2's 10 × 50: n = 10 × 3** (AP-1 D2: minimum 10 questions × minimum 50 runs). The runner accepts any run count and classifies on what was run.
+
+Operator's declaration (settings field `d2_declared`): none, so no surface is STRUCTURAL or CONFIGURED.
+
+Left out of the comparison: none.
 
 Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20.
 
@@ -438,3 +461,7 @@ AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for any invocation f
 ### Percentage Answers
 
 In a response's text, a figure written with % is never compared with the expected value: SPEC R0.4.2 records the percent flag, and 15.20% is not the money figure 15.20 (S3-G4-2). The expected value has no unit (SPEC R3.1: final is a Decimal), so the runner cannot tell an answer that is a rate from one that is an amount. For an item whose answer is a rate (18.5): "18.5%" is not compared, so it routes to adjudication as figures present, none matching; the same rate written without % ("18.5", "18.5 percent") is compared as a plain figure and can be auto-scored; a configured structured answer is compared whatever its unit; and a figure glued to letters ("18.5pct") is not read, so the response is auto-scored as having no figure.
+
+### Adjudication Sheet Order
+
+adjudication_sheets.md gives the sheets in run order (the order of the transcript), two for each execution routed to adjudication. A sheet does not name its condition, but the order can show it, so the judging is not blind to the condition (AP-1 v1.3 §13.8 asks for scorers blind to arm identity where the response text permits). Shuffling or blinding the sheets, with a key joining each sheet back to its execution, is left to a later step that works on that file; the runner does neither.
