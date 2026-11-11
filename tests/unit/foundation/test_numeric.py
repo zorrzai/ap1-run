@@ -399,11 +399,29 @@ def test_parse_decimal_grammar_refuses_malformed(text, decimal_sep,
                       grouping_sep=grouping_sep)
 
 
+# S3-G1-7: what R0.4.2's "digits" are is a SPEC reading, decided in review.
+ASCII_DIGITS_READING = (
+    'S3-G1-7: SPEC reading, decided in review: the digits of the R0.4.2 '
+    'grammar are ASCII 0-9 only, so other scripts\' digits neither parse '
+    'nor extract')
+
+
+@pytest.mark.proposal(ASCII_DIGITS_READING)
 @pytest.mark.finding('S3-G1-7')
-def test_parse_decimal_accepts_non_ascii_digits():
-    # Current behaviour: Arabic-Indic digits parse (Decimal accepts any
-    # Unicode decimal digit). Correct per R0.4.2: decide and declare.
-    assert parsed('١٢')[0] == D('12')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.parametrize('text', [
+    pytest.param('\u0661\u0662', id='arabic-indic-12'),
+    pytest.param('\u0663', id='arabic-indic-3'),
+    pytest.param('\uff13', id='full-width-3'),
+    pytest.param('\uff11,\uff12\uff13\uff14', id='full-width-grouped'),
+    pytest.param('1\u0662', id='ascii-then-arabic-indic'),
+    pytest.param('\u0966.5', id='devanagari-point-5'),
+    pytest.param('$\u0663%', id='currency-percent-around'),
+])
+def test_parse_decimal_refuses_non_ascii_digits(text):
+    # Decimal() reads any Unicode decimal digit; the grammar check does not.
+    with pytest.raises(NumericParseError):
+        parsed(text, currency_symbols=['$'])
 
 
 # -- extract_numeric_tokens -----------------------------------------------
@@ -654,10 +672,24 @@ def test_extract_same_separators_unambiguous_token_passes():
     assert values('1780', decimal_sep='.', grouping_sep='.') == ['1780']
 
 
+@pytest.mark.proposal(ASCII_DIGITS_READING)
 @pytest.mark.finding('S3-G1-7')
-def test_extract_non_ascii_digits_are_tokens():
-    # Current behaviour: '\d' matches any Unicode digit. See S3-G1-7.
-    assert values('٣٤ and ５') == ['34', '5']
+@pytest.mark.req('R0.4.2')
+def test_extract_non_ascii_digits_are_not_tokens():
+    assert values('\u0663\u0664 and \uff15') == []
+    assert values('\u0663') == []
+
+
+@pytest.mark.proposal(ASCII_DIGITS_READING)
+@pytest.mark.finding('S3-G1-7')
+@pytest.mark.req('R0.4.2')
+def test_arabic_indic_and_full_width_three_neither_parse_nor_extract():
+    for three in ('\u0663', '\uff13'):          # '٣', '３'
+        with pytest.raises(NumericParseError):
+            parsed(three)
+        assert extract_numeric_tokens(f'The answer is {three}.') == []
+    # ASCII digits beside them still read.
+    assert values('\u0663 or 3, \uff13 or 3.5') == ['3', '3.5']
 
 
 def test_extract_run1_literal_mortgage_prose():

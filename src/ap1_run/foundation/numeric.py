@@ -153,15 +153,19 @@ def _digit_grammar(decimal_sep, grouping_sep):
     Integer part: digits, or groups of three after a leading group of
     one to three when a grouping separator is configured. Then an
     optional decimal separator and digits. At least one digit.
+
+    A digit is ASCII 0-9 only (S3-G1-7): Arabic-Indic, full-width and
+    other Unicode decimal digits are not digits here, although Decimal()
+    and a regular expression's \\d accept them.
     """
     d = re.escape(decimal_sep)
     if grouping_sep and grouping_sep != decimal_sep:
         g = re.escape(grouping_sep)
-        integer = r'(?:\d{1,3}(?:' + g + r'\d{3})+|\d+)'
+        integer = r'(?:[0-9]{1,3}(?:' + g + r'[0-9]{3})+|[0-9]+)'
     else:
-        integer = r'\d+'
+        integer = r'[0-9]+'
     return re.compile(
-        '(?:' + integer + '(?:' + d + r'\d*)?' + '|' + d + r'\d+)')
+        '(?:' + integer + '(?:' + d + r'[0-9]*)?' + '|' + d + r'[0-9]+)')
 
 
 def _check_ambiguity(digit_str, decimal_sep, grouping_sep):
@@ -185,13 +189,13 @@ def _build_extraction_re(decimal_sep, grouping_sep, currency_symbols):
 
     # Integer with optional grouping
     if g:
-        num_int = r'\d{1,3}(?:' + g + r'\d{3})+'
-        num_any = '(?:' + num_int + r'|\d+)'
+        num_int = r'[0-9]{1,3}(?:' + g + r'[0-9]{3})+'
+        num_any = '(?:' + num_int + r'|[0-9]+)'
     else:
-        num_any = r'\d+'
+        num_any = r'[0-9]+'
 
     # Optional fractional part
-    num_frac = '(?:' + d + r'\d+)?'
+    num_frac = '(?:' + d + r'[0-9]+)?'
     num = num_any + num_frac
 
     # Currency alternation (optional)
@@ -223,6 +227,9 @@ def _build_extraction_re(decimal_sep, grouping_sep, currency_symbols):
 
 
 _SIGNS = '+-\u2212'
+# R0.4.2's digits: ASCII 0-9 only (S3-G1-7). Python's isdigit test and
+# a regular expression's \d also accept other scripts' digits ('٣', '３').
+_ASCII_DIGITS = frozenset('0123456789')
 # A word character: an ASCII letter or digit, or '_' between two of them
 # ('5_000', 'Q4_5'). '_' at the edge of a run (Markdown emphasis,
 # '__430.75__') and non-Latin script are boundaries (S3-G1-6).
@@ -293,7 +300,7 @@ def extract_numeric_tokens(text, *, decimal_sep='.', grouping_sep=',',
             rest = stripped[1:].lstrip()
             start = core_end - len(rest)
             stripped = rest
-        if not stripped or not any(c.isdigit() for c in stripped):
+        if not stripped or not any(c in _ASCII_DIGITS for c in stripped):
             continue
         try:
             value, is_pct, cur = parse_decimal(
