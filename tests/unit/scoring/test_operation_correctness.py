@@ -914,12 +914,14 @@ def test_classify_operation_round_uses_declared_half_up():
     pytest.param('True + 1', marks=pytest.mark.proposal(
         'T3-39/S3-G4-5: a boolean literal is not an operand; proposed, not '
         'decided')),
-    '-' * 5000 + '1'], ids=['bool-literal', 'deep-nesting'])
+    '-' * 100_000 + '1'], ids=['bool-literal', 'deep-nesting'])
 def test_reclassify_session_unreadable_expression_kept_no_raise(expression):
     # Correct (S3-G4-5; as for T3-39, a boolean is not an
     # operand): an expression whose operands cannot be
     # read gives no operands and no exception; the lone wrong call stays
-    # WRONG-OPERATION.
+    # WRONG-OPERATION. The nesting is 100_000 deep, as in
+    # test_reclassify_session_deep_nesting_raises: 5000 raises on 3.11 but
+    # parses on 3.12, where this case would XPASS.
     try:
         out = reclassify_session([wo('45')], [expression])
     except BaseException as e:   # RecursionError included
