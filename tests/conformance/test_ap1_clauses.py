@@ -633,7 +633,7 @@ def test_figure_identification_outcomes_are_not_the_six_outcome_vocabulary():
     # (COMPUTED, or ORIGINATED by the composition rule); the scorers
     # assign it to a routed response on the sheets; the rest get none and
     # the report counts them by kind. So the SPEC §10 row reads PARTIAL,
-    # with that reason.
+    # with that reason and the four kinds.
     from ap1_run.scoring import figure_id
     routing = {v for k, v in vars(figure_id).items()
                if k.isupper() and isinstance(v, str)}
@@ -648,6 +648,12 @@ def test_figure_identification_outcomes_are_not_the_six_outcome_vocabulary():
     assert len(rows) == 1
     assert rows[0].rstrip().endswith('| PARTIAL |')
     assert 'no automatic outcome' in rows[0]
+    # the four kinds answer_outcome leaves without one, as the report
+    # lists them (routed responses get theirs on the sheets)
+    assert 'four kinds' in rows[0]
+    for words in ('not shown invoked', 'not shown grounded',
+                  'no figure found', 'D1 does not score'):
+        assert words in rows[0], words
 
 
 # =====================================================================
