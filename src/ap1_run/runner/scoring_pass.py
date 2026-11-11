@@ -32,7 +32,7 @@ from ap1_run.execution.engine import CONDITION_BASE
 from ap1_run.execution.perturbation_guard import HELD_CONSTANT
 from ap1_run.execution.seal import SealError, check_collisions
 from ap1_run.foundation import transcript
-from ap1_run.foundation.config import d2_declared_classes
+from ap1_run.foundation.config import d2_declared_classes, kind_counts
 from ap1_run.foundation.transcript import (
     ROUND_RECORD, TranscriptError, round_entry,
 )
@@ -345,6 +345,12 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
         release_coverage_results=findings.release_coverage_results,
         parameter_echo=findings.parameter_echo,
         held_constant=HELD_CONSTANT, served=findings.served)
+    # D5/D6: the items per kind, for a dimension claimed or labelled
+    # (SPEC R0.1); a run with neither has no entry
+    kinds = kind_counts(questions, config.get('ap1_version'),
+                        config.get('dimensions_claimed', []))
+    if kinds:
+        summary['kinds'] = kinds
 
     # 3j-3l. D1, D2, operand provenance
     print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary)

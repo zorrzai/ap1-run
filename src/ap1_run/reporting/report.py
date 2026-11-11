@@ -302,9 +302,44 @@ def _section_dimension_results(summary, config):
     uncategorised = d1.get('uncategorised') or []
     if 'D1' in dims_claimed and (by_category or uncategorised):
         lines.extend(_d1_category_rows(by_category or {}, uncategorised))
+    for dim, entry in summary.get('kinds', {}).items():
+        lines.extend(_kind_rows(dim, entry))
 
     lines.append('')
     return '\n'.join(lines)
+
+
+KIND_HEADINGS = {'D5': 'D5 per Attack Kind',
+                 'D6': 'D6 per Kind of Bad Data'}
+
+
+def _kind_rows(dim, entry):
+    """D5 or D6 items per kind (SPEC R0.1): AP-1's fixed kinds first,
+    then the kinds the question set defines, each with its definition;
+    and, if a fixed kind the declared AP-1 version requires has no item,
+    the line saying the result is not a full AP-1 one."""
+    lines = [f'\n### {KIND_HEADINGS[dim]}\n',
+             f'> SPEC R0.1: the items of each {dim} kind; AP-1\'s own '
+             f'(fixed) kinds first, then the kinds this question set '
+             f'defines, with their definitions. A defined kind never '
+             f'stands in for a fixed one. {dim} is scored by human '
+             f'adjudication: these are item counts, not results.\n',
+             '| Kind | Fixed or defined | Items | Definition |',
+             '|---|---|---|---|']
+    for kind in entry['kinds']:
+        definition = kind['definition'].replace('|', '\\|')
+        lines.append(f'| `{kind["name"]}` '
+                     f'| {"fixed" if kind["fixed"] else "defined"} '
+                     f'| {kind["n"]} | {definition} |')
+    if entry['missing']:
+        missing = ', '.join(f'`{name}`' for name in entry['missing'])
+        plural = 's' if len(entry['missing']) > 1 else ''
+        lines.append(f'\n**{dim}: not a full AP-1 {dim} result.** No item '
+                     f'of the fixed kind{plural} {missing}: the declared '
+                     f'AP-1 version names each of them, and a full result '
+                     f'needs at least one item of every one. The counts '
+                     f'above stand as they are.')
+    return lines
 
 
 def _d1_category_rows(by_category, uncategorised=()):
