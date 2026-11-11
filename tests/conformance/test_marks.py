@@ -32,6 +32,21 @@ ROOT = Path(__file__).resolve().parents[2]
 # removing a proposal or provisional mark means updating it here, in the
 # same commit, so the change is visible.
 EXPECTED_PROPOSAL_CASES = (
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[fifty-digits]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[float-is-the-value]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[floor]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[floordiv-as-python]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[int-truncates]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[interest]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[log-base]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[mod-as-python]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[mod-negative-divisor]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[mortgage]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[no-negative-zero]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[scientific-past-100-digits]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[tenths]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[zero-power-zero]',
+    'tests/functional/test_example_calculator.py::test_faithful_copy_of_a_calculator_result_grounds_at_step_4',
     'tests/functional/test_step4_d1_categories.py::test_run_report_d1_per_category_with_n_result_and_interval',
     'tests/functional/test_step4_g1_invocation.py::test_run_d71_bound_counts_questions_not_repeats',
     'tests/functional/test_step4_g1_invocation.py::test_run_refusal_executed_adjudicated_outside_d71_and_d1[content-filter]',

@@ -24,8 +24,12 @@ without warning.
 **Status: partly fixed (T3-77).** An arithmetic error (`1/0`, `1 % 0`,
 `log(-1)`, `sqrt(-1)`, an overflow converting to float) is now refused with
 `CalculatorError`, keeping the exception's message, and a complex result is
-refused as "not a real number". The magnitude guard is still missing:
-`9**9**9**9` still runs until memory or time runs out.
+refused as "not a real number". There is no magnitude guard of its own,
+but since T3-59 the calculator computes in exact decimal (Decimal in the
+runner's context, precision 50, never through float; `0.1 + 0.2` returns
+`0.3`), and a result past that context's exponent limit is refused as
+"numeric overflow": `9**9**9**9` is refused at once rather than running
+until memory or time runs out.
 
 ---
 
