@@ -221,8 +221,13 @@ each of their checks went.
 
 **About the replays:** the recorded final responses are served as they were.
 The intermediate rounds survive only as assistant messages (V12-3), so each
-one is wrapped in a standard envelope. A recorded loop that ended mid-way
-(EV-0) is replayed as a failure of the next request.
+one is wrapped in a standard envelope. The envelope names the model the
+execution's recorded final response names (the published runs did not keep
+the intermediate rounds' own model field), and a replay is configured with
+the model the published run's requests name. So a replay's served and
+configured models are the run's, not the mock's `mock-model`, which only
+scripted turns name. A recorded loop that ended mid-way (EV-0) is replayed
+as a failure of the next request.
 
 The replayed `smoke_summary.json` files equal the published ones except the
 top-level `seal_hash`, the moves listed in `replay_expected.json`, and its two

@@ -732,6 +732,136 @@ class MockTransportContract(unittest.TestCase):
             shutil.rmtree(result_dir)
 
 
+class ReplayServesTheRecordedModel(unittest.TestCase):
+    """In a replay, every round names the model the recorded response
+    names, and the run is configured with the model its requests named,
+    so a served-model warning in a replay comes from the run, not from
+    the mock."""
+
+    QUESTIONS = {'items': [{'id': 'Q01', 'text': 'What?'}]}
+    PROMPTS = {'S': 'base'}
+
+    @staticmethod
+    def record(model, n_intermediate, configured='gpt-test'):
+        calls = [{'id': f'c{n}', 'type': 'function',
+                  'function': {'name': 'calculator',
+                               'arguments': '{"expression": "1 + 1"}'}}
+                 for n in range(n_intermediate)]
+        assistant = [{'role': 'assistant', 'content': None,
+                      'tool_calls': [c]} for c in calls]
+        return {
+            'item_id': 'Q01', 'condition': 'base',
+            'request_sent': {'request_record': {
+                'model': configured,
+                'messages': [{'role': 'system', 'content': 'S'},
+                             {'role': 'user', 'content': 'Question: What?'}]
+                + assistant}},
+            'response_received': {
+                'id': 'chatcmpl-recorded', 'object': 'chat.completion',
+                'model': model,
+                'choices': [{'index': 0, 'finish_reason': 'stop',
+                             'message': {'role': 'assistant',
+                                         'content': 'It is $2.00.'}}]},
+        }
+
+    def served_models(self, records):
+        """The model each replayed round names, record by record."""
+        mock = MockEndpoint(questions=self.QUESTIONS,
+                            system_prompts=self.PROMPTS, api_key='k',
+                            replay_records=records)
+        served = []
+        for rec in records:
+            messages = [m for m in rec['request_sent']['request_record']
+                        ['messages'] if m['role'] != 'assistant']
+            rounds = []
+            for m in [None] + [m for m in rec['request_sent']
+                               ['request_record']['messages']
+                               if m['role'] == 'assistant']:
+                if m is not None:
+                    messages = messages + [m]
+                action = mock.handle({'messages': messages})
+                self.assertEqual(action[1], 200, action)
+                rounds.append(action[2].get('model'))
+            served.append(rounds)
+        return served
+
+    def test_every_round_names_the_recorded_model(self):
+        records = [self.record('gpt-test-2025-01-01', 2),
+                   self.record('gpt-test-2025-02-01', 0)]
+        self.assertEqual(self.served_models(records), [
+            ['gpt-test-2025-01-01'] * 3, ['gpt-test-2025-02-01']])
+
+    def test_a_record_that_names_no_model_gets_the_mocks(self):
+        # The final round is the recorded response as it was; only the
+        # rounds the mock wraps fall back to its own name.
+        rec = self.record('x', 1)
+        del rec['response_received']['model']
+        self.assertEqual(self.served_models([rec]), [['mock-model', None]])
+
+    def test_scripted_turns_still_name_the_mock(self):
+        mock = MockEndpoint(questions=self.QUESTIONS,
+                            system_prompts=self.PROMPTS, api_key='k',
+                            responses={'Q01/*/*': [{'say': 'It is $1.00.'}]})
+        action = mock.handle({'messages': [
+            {'role': 'system', 'content': 'S'},
+            {'role': 'user', 'content': 'Question: What?'}]})
+        self.assertEqual(action[2]['model'], 'mock-model')
+
+    def test_the_published_runs_replay_with_their_recorded_models(self):
+        repo = os.path.dirname(os.path.dirname(HERE))
+        with open(os.path.join(repo, 'example', 'config.json'),
+                  encoding='utf-8') as f:
+            config = json.load(f)
+        with open(os.path.join(repo, 'example', 'questions.json'),
+                  encoding='utf-8') as f:
+            questions = json.load(f)
+        prompts = {config['system_prompt_base']: 'base',
+                   config['system_prompt_instruction_removed']:
+                   'instruction_removed'}
+        for run, configured in (('run_e_mini', 'gpt-4.1-mini'),
+                                ('run_f_sol', 'gpt-5.6-sol')):
+            with self.subTest(run=run):
+                with open(os.path.join(repo, 'output', run,
+                                       'smoke_run.jsonl'),
+                          encoding='utf-8') as f:
+                    records = [json.loads(line) for line in f
+                               if line.strip()]
+                self.assertEqual(driver.recorded_model(records), configured)
+                engine = [r for r in records
+                          if r.get('record_type') != 'figure_identification']
+                mock = MockEndpoint(questions=questions,
+                                    system_prompts=prompts, api_key='k',
+                                    replay_records=records)
+                rounds = 0
+                for rec in engine:
+                    rr = rec['request_sent']['request_record']
+                    recorded = rec['response_received']['model']
+                    first = [m for m in rr['messages']
+                             if m['role'] in ('system', 'user')][:2]
+                    assistant = [m for m in rr['messages']
+                                 if m['role'] == 'assistant']
+                    for n in range(len(assistant) + 1):
+                        body = {'messages': first + assistant[:n]}
+                        action = mock.handle(body)
+                        if action[1] != 200:   # a recorded mid-loop end
+                            break
+                        self.assertEqual(action[2]['model'], recorded,
+                                         (run, rec['item_id'],
+                                          rec['condition'], n))
+                        rounds += 1
+                self.assertGreater(rounds, len(engine))
+
+    def test_recorded_model_needs_one_name(self):
+        def rec(model):
+            return {'request_sent': {'request_record': {'model': model}}}
+        self.assertEqual(driver.recorded_model([rec('a'), rec('a')]), 'a')
+        self.assertIsNone(driver.recorded_model([rec('a'), rec('b')]))
+        self.assertIsNone(driver.recorded_model([rec(None)]))
+        self.assertIsNone(driver.recorded_model([]))
+        self.assertEqual(driver.recorded_model(
+            [rec('a'), {'record_type': 'figure_identification'}]), 'a')
+
+
 class Independence(unittest.TestCase):
 
     def test_a_runner_module_in_the_process_fails(self):
