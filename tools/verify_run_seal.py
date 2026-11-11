@@ -188,10 +188,18 @@ def rebuild_record(seal_record):
 
 def read_transcript(path):
     """The transcript's records, and a list of problems (line number and
-    what is wrong): a blank line, a line that is not a JSON object."""
+    what is wrong): a blank line, a line that is not UTF-8 text, a line
+    that is not a JSON object."""
     records, problems = [], []
-    with open(path, encoding='utf-8') as f:
+    # surrogateescape: a byte that is not UTF-8 is kept as a lone surrogate,
+    # so the line is reported, not raised as UnicodeDecodeError.
+    with open(path, encoding='utf-8', errors='surrogateescape') as f:
         for n, line in enumerate(f, 1):
+            try:
+                line.encode('utf-8')
+            except UnicodeEncodeError:
+                problems.append('line %d is not UTF-8 text' % n)
+                continue
             if not line.strip():
                 problems.append('line %d is blank' % n)
                 continue
@@ -332,8 +340,13 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
     if not os.path.exists(report_path):
         failures.append(('report exists', 'report.md not found'))
         return checks, failures
-    with open(report_path, encoding='utf-8') as f:
-        report_text = f.read()
+    try:
+        with open(report_path, encoding='utf-8') as f:
+            report_text = f.read()
+    except UnicodeDecodeError as e:
+        failures.append(('report read',
+                         'report.md is not UTF-8 text (%s)' % e))
+        return checks, failures
 
     # 2. Parse seal record and resolved config: preconditions, not checks
     seal_record = parse_seal_record(report_text)

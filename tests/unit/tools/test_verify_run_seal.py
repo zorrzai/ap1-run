@@ -922,6 +922,46 @@ def test_verify_run_transcript_problems_in_line_order(vrs, tmp_path, base):
         "not a JSON object; line 4 is not JSON (" % record['seal_hash'])
 
 
+def test_verify_run_transcript_line_not_utf8_is_a_named_failure(
+        vrs, tmp_path, base):
+    # A transcript line that is not UTF-8 text is one of the lines listed,
+    # not a UnicodeDecodeError out of verify_run.
+    config = resolved_config()
+    record = make_record(base, config)
+    run_dir = write_run(tmp_path / 'run', record, config)
+    good = json.dumps({'seal_hash': record['seal_hash'],
+                       'timestamp': record['timestamp']}).encode('utf-8')
+    (run_dir / 'smoke_run.jsonl').write_bytes(
+        good + b'\n' + b'{"seal_hash": "\xff\xfe"}\n' + good + b'\n')
+    checks, failures = vrs.verify_run(str(run_dir))
+    assert failures == [('transcript seal_hash',
+                         'report=%s; line 2 is not UTF-8 text'
+                         % record['seal_hash'])]
+    # The lines that are records are still checked, the first for its time.
+    assert 'seal timestamp' in names(checks)
+
+
+def test_verify_run_report_not_utf8_is_a_named_failure(vrs, run):
+    run_dir, _, _ = run
+    report = run_dir / 'report.md'
+    report.write_bytes(report.read_bytes() + b'\n\xff\xfe\n')
+    checks, failures = vrs.verify_run(str(run_dir))
+    assert checks == []
+    assert names(failures) == ['report read']
+    assert failures[0][1].startswith('report.md is not UTF-8 text (')
+
+
+def test_main_report_not_utf8_fails_without_traceback(vrs, run, monkeypatch,
+                                                      capsys):
+    run_dir, _, _ = run
+    report = run_dir / 'report.md'
+    report.write_bytes(b'\xff' + report.read_bytes())
+    code, out = run_main(vrs, [str(run_dir)], monkeypatch, capsys)
+    assert code == 1
+    assert '  FAIL  report read: report.md is not UTF-8 text (' in out
+    assert out.endswith('RESULT: FAIL (1 failures)\n')
+
+
 def test_verify_run_transcript_failure_lists_five_lines(vrs, tmp_path, base):
     record, failures = transcript_failure(
         vrs, tmp_path, base, lambda r: stamped(r, ['x'] * 7))
