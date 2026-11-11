@@ -44,6 +44,12 @@ Normalisation (in the comparison, never in the runner):
   - each adjudication sheet's execution id (derived from the seal hash),
     as <EXECUTION_ID_k> numbered in order of first appearance, so the
     golden still shows which sheets share an id
+  - the seal's environment fields (python_version, platform,
+    package_versions) as <ENVIRONMENT>, in report.md section 1, and in
+    pre_registration.json where each equals this interpreter's own value
+    (hash_oracle.environment()): they name the machine that ran, so a
+    golden that kept them would fail on any other machine. A value that
+    is not this machine's is left as it is, and fails the comparison.
 
 Before normalisation, hard_checks.check() recomputes every value in that
 seal independently (hash_oracle.py), against expectations frozen before
@@ -63,6 +69,7 @@ import sys
 import tempfile
 
 import hard_checks
+import hash_oracle
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
@@ -428,6 +435,17 @@ _ENVIRONMENT_ROW = re.compile(
     r'(\| `(?:python_version|platform|package_versions)` \| `)[^`]*(` \|)')
 
 
+def _environment_keys(text):
+    """Each environment field written as a JSON key with this
+    interpreter's own value (pre_registration.json repeats the seal) as
+    <ENVIRONMENT>. Only that exact value: any other one stays."""
+    for key, value in hash_oracle.environment().items():
+        text = text.replace(
+            f'"{key}": {json.dumps(value, ensure_ascii=False)}',
+            f'"{key}": "<ENVIRONMENT>"')
+    return text
+
+
 _EXECUTION_ID = re.compile(r'(Execution id: `)([0-9a-f]{12})(`)')
 # The digest of the transcript scored (report.md, smoke_summary.json)
 _TRANSCRIPT_DIGEST = re.compile(
@@ -450,6 +468,7 @@ def normalise(text, roots, seals):
             m.group(2), f'<EXECUTION_ID_{len(ids) + 1}>') + m.group(3),
         text)
     text = _ENVIRONMENT_ROW.sub(r'\1<ENVIRONMENT>\2', text)
+    text = _environment_keys(text)
     text = _TRANSCRIPT_DIGEST.sub(r'\1<TRANSCRIPT_SHA256>', text)
     for seal in seals:
         for field, label in (('seal_hash', '<SEAL_HASH>'),
