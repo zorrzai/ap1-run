@@ -88,9 +88,12 @@ class MockEndpoint(_mock_endpoint_class()):
     and 'sent', its bytes as the mock's handler writes them (a text body
     as given, any other as json.dumps of it, in UTF-8).
     close_once: (item_id, condition, round) whose first request is
-    answered by closing the connection, so the adapter retries it."""
+    answered by closing the connection, so the adapter retries it.
+    respell: if set, a function that turns each dict reply into the text
+    the mock sends instead (its own spelling of the same JSON)."""
 
     close_once = frozenset()
+    respell = None
 
     def handle(self, body):
         item_id, condition, rnd = self._identify(body)
@@ -105,6 +108,8 @@ class MockEndpoint(_mock_endpoint_class()):
             return ('close',)
         action = super().handle(body)
         if action[0] == 'reply':
+            if self.respell is not None and isinstance(action[2], dict):
+                action = (action[0], action[1], self.respell(action[2]))
             payload = action[2]
             self.log[-1]['body'] = (json.loads(payload)
                                     if isinstance(payload, str) else payload)
@@ -689,6 +694,21 @@ RAW_ANSWER = (
     '"model":"mock-model","object":"chat.completion"}')
 
 
+def _reversed_keys(tree):
+    if isinstance(tree, dict):
+        return {k: _reversed_keys(tree[k]) for k in reversed(list(tree))}
+    if isinstance(tree, list):
+        return [_reversed_keys(v) for v in tree]
+    return tree
+
+
+def _respelled(payload):
+    """The same JSON as payload, spelt as neither json.dumps of it nor of
+    its parse would spell it: keys in reverse order, no spaces, and a
+    trailing newline."""
+    return json.dumps(_reversed_keys(payload), separators=(',', ':')) + '\n'
+
+
 def _round_records(transcript):
     return {(rec['item_id'], rec['condition'], rec['repeat'], rec['round']):
             rec for rec in _read_jsonl(transcript) if rec.get('kind') == 'round'}
@@ -727,15 +747,26 @@ def test_run_round_records_keep_each_response_byte_for_byte(cli):
 @pytest.mark.proposal(RAW_BYTES)
 @pytest.mark.finding('T3-52')
 @pytest.mark.req('R0.2', 'R0.3')
-def test_run_every_mock_reply_recorded_as_the_bytes_it_sent(cli):
+def test_run_every_mock_reply_recorded_as_the_bytes_it_sent(
+        cli, monkeypatch):
     # Every reply of the mock's scripted turns, round by round, is in its
-    # round record as the bytes the mock sent.
+    # round record as the bytes the mock sent. The mock spells each reply
+    # its own way (keys in reverse order, no spaces, a trailing newline),
+    # so a record that re-serialised the parse (json.dumps, sorted or
+    # not) would differ from the bytes sent.
+    monkeypatch.setattr(MockEndpoint, 'respell',
+                        staticmethod(_respelled))
     r = cli(MULTI_ROUND, items=('Q02', 'Q05'), repeat=2)
     assert (r.code, r.error) == (0, None)
     rounds = _round_records(r.transcript)
     sent = {(e['item_id'], e['condition'], e['repeat'], e['round']):
             e['sent'] for e in r.mock.log}
     assert len(sent) == 20
+    for k, rec in rounds.items():
+        parsed = rec['response_received']
+        assert sent[k] not in (json.dumps(parsed).encode('utf-8'),
+                               json.dumps(parsed, sort_keys=True)
+                               .encode('utf-8'))
     assert {k: rec['response_raw'].encode('utf-8')
             for k, rec in rounds.items()} == sent
 
