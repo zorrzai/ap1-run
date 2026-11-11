@@ -60,7 +60,8 @@ def test_measure_invocation_one_class_counts_invoked_and_not_invoked():
                             item(False, item_id='Q03')])
     assert r['per_class'] == {EV_2: {
         'evidence_class': EV_2, 'n': 3, 'invoked': 2, 'not_invoked': 1,
-        'unobservable': 0, 'failure_rate': '1/3 (33.3%)'}}
+        'unobservable': 0, 'failure_rate': '1/3 (33.3%)',
+        'failing_questions': [('Q03', 1, 1)]}}
     assert r['total_n'] == 3
     assert r['unobservable_n'] == 0
     assert r['cross_class_warning'] is None
@@ -120,7 +121,8 @@ def test_measure_invocation_question_with_any_failed_repeat_fails(first):
                             item(True, item_id='Q02')])
     assert r['per_class'][EV_2] == {
         'evidence_class': EV_2, 'n': 2, 'invoked': 1, 'not_invoked': 1,
-        'unobservable': 0, 'failure_rate': '1/2 (50.0%)'}
+        'unobservable': 0, 'failure_rate': '1/2 (50.0%)',
+        'failing_questions': [('Q01', 1, 2)]}
 
 
 @pytest.mark.finding('T3-1', 'T3-11')
@@ -151,7 +153,8 @@ def test_summarise_class_all_not_invoked_reports_full_failure_rate():
     s = _summarise_class([{'invoked': False}] * 4, EV_1)
     assert s == {'evidence_class': EV_1, 'n': 4, 'invoked': 0,
                  'not_invoked': 4, 'unobservable': 0,
-                 'failure_rate': '4/4 (100.0%)'}
+                 'failure_rate': '4/4 (100.0%)',
+                 'failing_questions': [(None, 1, 1)] * 4}
 
 
 # -- format_rate -------------------------------------------------------------
@@ -473,3 +476,39 @@ def test_measure_invocation_question_with_a_repeat_not_invoked_is_a_failure():
     assert r['per_class'][EV_2]['n'] == 2
     # k/n first; the wording after it is the fix's ('1/2 (50.0%); ...').
     assert r['per_class'][EV_2]['failure_rate'].startswith('1/2 ')
+
+
+# A question fails D7.1 if any of its repeats is NOT-INVOKED; how badly
+# it failed is shown beside k: its NOT-INVOKED repeats out of its
+# observed repeats ("Q02 48/50, Q06 21/50", published run F, instruction
+# removed).
+FAILING_COUNTS = pytest.mark.proposal(
+    'T3-11: a question fails if any repeat did not invoke (no decision '
+    'covers the rule); each failing question is listed with its '
+    'NOT-INVOKED repeats out of its observed repeats')
+
+
+@FAILING_COUNTS
+@pytest.mark.finding('T3-11')
+def test_measure_invocation_lists_each_failing_question_with_its_counts():
+    # Q06 skipped in 1 of its 3 observed repeats (one more is EV-0, in no
+    # count), Q02 in all 3, Q01 in none: k = 2, listed in item_id order.
+    records = ([item(False, item_id='Q06'), item(True, item_id='Q06'),
+                item(None, item_id='Q06'), item(True, item_id='Q06')]
+               + [item(False, item_id='Q02')] * 3
+               + [item(True, item_id='Q01')] * 3)
+    c = measure_invocation(records)['per_class'][EV_2]
+    assert (c['n'], c['not_invoked']) == (3, 2)
+    assert c['failing_questions'] == [('Q02', 3, 3), ('Q06', 1, 3)]
+    assert invocation.format_failing_questions(c['failing_questions']) == \
+        'Q02 3/3, Q06 1/3'
+
+
+@FAILING_COUNTS
+@pytest.mark.finding('T3-11')
+def test_format_failing_questions_two_question_failure_case():
+    assert invocation.format_failing_questions(
+        [('Q02', 48, 50), ('Q06', 21, 50)]) == 'Q02 48/50, Q06 21/50'
+    assert invocation.format_failing_questions([(None, 1, 1)]) == \
+        '(no item id) 1/1'
+    assert invocation.format_failing_questions([]) == ''

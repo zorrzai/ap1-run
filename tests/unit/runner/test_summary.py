@@ -182,11 +182,12 @@ def test_summary_invocation_figures_per_condition():
     assert s['invocation_figures'] == {
         'd7_invocation_base': {
             'failures': 1, 'n': 3, 'rate': '2/3', 'condition': 'base',
-            'evidence_class': EV2, 'unobservable': 0},
+            'evidence_class': EV2, 'unobservable': 0,
+            'failing_questions': [('Q02', 1, 1)]},
         'd7_invocation_instruction_removed': {
             'failures': 1, 'n': 1, 'rate': '0/1',
             'condition': 'instruction_removed', 'evidence_class': EV2,
-            'unobservable': 0},
+            'unobservable': 0, 'failing_questions': [('Q01', 1, 1)]},
     }
     assert s['invocation_evidence'] == {
         'base': {'classes': {EV2: {
@@ -267,7 +268,7 @@ def test_summary_invocation_figures_without_condition():
     assert s['invocation_figures'] == {
         'd7_invocation_': {'failures': 0, 'n': 0, 'rate': None,
                            'condition': '', 'evidence_class': None,
-                           'unobservable': 1}}
+                           'unobservable': 1, 'failing_questions': []}}
 
 
 @pytest.mark.finding('T3-1')
@@ -287,7 +288,7 @@ def test_summary_mixed_classes_listed_per_class_with_warning():
     ], [])
     assert s['invocation_figures']['d7_invocation_base'] == {
         'failures': 0, 'n': 1, 'rate': '1/1', 'condition': 'base',
-        'evidence_class': EV2, 'unobservable': 4}
+        'evidence_class': EV2, 'unobservable': 4, 'failing_questions': []}
     evidence = s['invocation_evidence']['base']
     assert evidence['classes'] == {
         EV0: {'executions': 4, 'questions': 3, 'observed_questions': 0,
@@ -312,10 +313,12 @@ def test_summary_two_observed_classes_give_one_figure_each():
     assert s['invocation_figures'] == {
         f'd7_invocation_base ({ev1})': {
             'failures': 1, 'n': 1, 'rate': '0/1', 'condition': 'base',
-            'evidence_class': ev1, 'unobservable': 0},
+            'evidence_class': ev1, 'unobservable': 0,
+            'failing_questions': [('Q02', 1, 1)]},
         f'd7_invocation_base ({EV2})': {
             'failures': 0, 'n': 1, 'rate': '1/1', 'condition': 'base',
-            'evidence_class': EV2, 'unobservable': 0}}
+            'evidence_class': EV2, 'unobservable': 0,
+            'failing_questions': []}}
 
 
 @pytest.mark.finding('T3-11')
@@ -525,7 +528,8 @@ def test_summary_counts_accumulate_after_non_executed_rows():
     # with no outcome (unobservable): one question, failed (T3-1, T3-11).
     assert s['invocation_figures']['d7_invocation_base'] == {
         'failures': 1, 'n': 1, 'rate': '0/1', 'condition': 'base',
-        'evidence_class': '', 'unobservable': 9}
+        'evidence_class': '', 'unobservable': 9,
+        'failing_questions': [('Q01', 2, 2)]}
     assert s['wrong_operation_split'] == {
         'route_divergence': 2, 'item_wrong': 2, 'undetermined': 2,
         'no_figure': 2}
@@ -769,3 +773,24 @@ def test_summary_d71_n_counts_questions_not_repeats():
         for q in ('Q01', 'Q02') for rep in (1, 2, 3)], [])
     base = s['invocation_figures']['d7_invocation_base']
     assert (base['failures'], base['n']) == (0, 2)
+
+
+@pytest.mark.proposal(
+    'T3-11: a question fails if any repeat did not invoke (no decision '
+    'covers the rule); each failing question is listed with its '
+    'NOT-INVOKED repeats out of its observed repeats')
+@pytest.mark.finding('T3-11')
+def test_summary_d71_figure_lists_failing_questions_with_counts():
+    # The two-question failure case: Q02 NOT-INVOKED in 2 of 3 repeats,
+    # Q06 in 1 of 3, Q01 never. k = 2, and the figure carries both
+    # questions with their counts, for report §5 and console 3h.
+    outcomes = {'Q01': ['INVOKED'] * 3,
+                'Q02': ['NOT-INVOKED', 'NOT-INVOKED', 'INVOKED'],
+                'Q06': ['INVOKED', 'INVOKED', 'NOT-INVOKED']}
+    s = build_summary([
+        executed(q, 'instruction_removed', repeat=r, evidence_class=EV2,
+                 invocation_outcome=o)
+        for q, os in outcomes.items() for r, o in enumerate(os, 1)], [])
+    fig = s['invocation_figures']['d7_invocation_instruction_removed']
+    assert (fig['failures'], fig['n']) == (2, 3)
+    assert fig['failing_questions'] == [('Q02', 2, 3), ('Q06', 1, 3)]

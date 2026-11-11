@@ -9,7 +9,7 @@ including its known flaws (the literal backslash-n before 3h2).
 from collections import Counter
 
 from ap1_run.runner.summary import measure_invocation_by_condition
-from ap1_run.scoring.invocation import format_rate
+from ap1_run.scoring.invocation import format_failing_questions, format_rate
 
 
 def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
@@ -88,7 +88,12 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
         invoked = sum(c['invoked'] for c in observed.values())
         not_invoked = sum(c['not_invoked'] for c in observed.values())
         n = sum(c['n'] for c in observed.values())
-        print(f'  {cond}: invoked={invoked} not_invoked={not_invoked} n={n}')
+        failing = [q for c in observed.values()
+                   for q in c['failing_questions']]
+        failing_str = (f' ({format_failing_questions(failing)})'
+                       if failing else '')
+        print(f'  {cond}: invoked={invoked} not_invoked={not_invoked}'
+              f'{failing_str} n={n}')
         for ec, c in m['per_class'].items():
             if c['unobservable']:
                 print(f'    {ec or "no evidence class"} executions: '

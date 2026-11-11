@@ -357,6 +357,9 @@ a value above 1, which is not a rate.
 **For D7.1, n counts computable questions, not executions.** Repeats of a
 question are not independent trials, so ten questions run fifty times each are
 n = 10. A question counts as a failure if any of its repeats is NOT-INVOKED.
+Beside k, the report and the console list each failing question with its
+NOT-INVOKED repeats out of its observed repeats (*"2 (Q02 48/50, Q06 21/50)"*),
+so a question that skipped once reads apart from one that nearly always did.
 An execution whose invocation is unobservable (EV-0) is neither a success nor
 a failure: it is in no n, and the report lists it under its evidence class.
 

@@ -170,7 +170,8 @@ def build_summary(all_results, evidence_findings, *,
             'cross_class_warning': m['cross_class_warning'],
         }
         if not classes:
-            classes = {None: {'n': 0, 'not_invoked': 0}}
+            classes = {None: {'n': 0, 'not_invoked': 0,
+                              'failing_questions': []}}
         for ec, c in classes.items():
             key = f'd7_invocation_{cond}'
             if len(classes) > 1:
@@ -181,6 +182,7 @@ def build_summary(all_results, evidence_findings, *,
                 'rate': f'{n - k}/{n}' if n > 0 else None,
                 'condition': cond, 'evidence_class': ec,
                 'unobservable': m['unobservable_n'],
+                'failing_questions': c['failing_questions'],
             }
     summary['invocation_figures'] = inv_figures
     summary['invocation_evidence'] = inv_evidence

@@ -98,16 +98,27 @@ def _summarise_class(items, evidence_class):
     n, invoked and not_invoked count questions with at least one observed
     repeat; a question is not_invoked if any observed repeat is.
     unobservable counts executions with no observed outcome.
+    failing_questions lists each not_invoked question as (item_id, its
+    NOT-INVOKED repeats, its observed repeats), in item_id order, so a
+    question that skipped once reads apart from one that skipped in
+    every repeat (item_id None for a record without one).
     """
     questions = {}
+    repeats = {}
     for i, r in enumerate(items):
         if not _observed(r):
             continue
         key = r['item_id'] if r.get('item_id') is not None else ('#', i)
         questions[key] = questions.get(key, True) and r['invoked']
+        skipped, observed = repeats.get(key, (0, 0))
+        repeats[key] = (skipped + (not r['invoked']), observed + 1)
     n = len(questions)
     not_invoked = sum(1 for ok in questions.values() if not ok)
     unobservable = sum(1 for r in items if not _observed(r))
+    failing = sorted(
+        ((None if isinstance(key, tuple) else key, *repeats[key])
+         for key, ok in questions.items() if not ok),
+        key=lambda q: (q[0] is None, str(q[0])))
 
     return {
         'evidence_class': evidence_class,
@@ -116,7 +127,15 @@ def _summarise_class(items, evidence_class):
         'not_invoked': not_invoked,
         'unobservable': unobservable,
         'failure_rate': format_rate(not_invoked, n),
+        'failing_questions': failing,
     }
+
+
+def format_failing_questions(failing):
+    """'Q02 48/50, Q06 21/50': each failing question with its NOT-INVOKED
+    repeats out of its observed repeats, as _summarise_class lists them."""
+    return ', '.join(f'{item_id or "(no item id)"} {skipped}/{observed}'
+                     for item_id, skipped, observed in failing)
 
 
 def format_rate(failures, n):

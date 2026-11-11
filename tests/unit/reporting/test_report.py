@@ -599,7 +599,9 @@ CP_UNIT = (
     '> D7.1 n counts the computable questions that have an observed '
     'outcome, not the executions: the repeats of a question are not '
     'independent trials. A question counts as a failure if any of its '
-    'repeats is NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither '
+    'repeats is NOT-INVOKED; beside k, each failing question with the '
+    'number of its observed repeats that are NOT-INVOKED. '
+    'UNOBSERVABLE executions (EV-0) are neither '
     'successes nor failures and are in no n (SPEC R2.3, R1.3.1).\n')
 CP_TABLE = ('| Metric | k (failures) | n | Rate | 95% Upper Bound '
             '| Evidence Class |',
@@ -2064,3 +2066,26 @@ def test_per_invocation_and_d73_tables_use_the_decimal_share():
          'repeat': 1, 'difference': '1', 'reason': 'x'}]
     text = report._section_d73({'transcription_results': tr})
     assert '| `TRANSCRIBED-ALTERED` | 1 | 0.3% |' in text
+
+
+@pytest.mark.proposal(
+    'T3-11: a question fails if any repeat did not invoke (no decision '
+    'covers the rule); each failing question is listed with its '
+    'NOT-INVOKED repeats out of its observed repeats')
+@pytest.mark.finding('T3-11')
+def test_clopper_pearson_section_lists_failing_questions_beside_k():
+    # Published run F, instruction removed: k = 2 of n = 10, Q02 skipping
+    # the calculator in 48 of its 50 repeats and Q06 in 21 of 50. The k
+    # cell shows both, so the two failures don't read alike.
+    text = report._section_clopper_pearson({'invocation_figures': {
+        'd7_invocation_instruction_removed': {
+            'failures': 2, 'n': 10, 'condition': 'instruction_removed',
+            'evidence_class': EV2,
+            'failing_questions': [('Q02', 48, 50), ('Q06', 21, 50)]},
+        'd7_invocation_base': {
+            'failures': 0, 'n': 10, 'condition': 'base',
+            'evidence_class': EV2, 'failing_questions': []}}})
+    assert (f'| d7_invocation_instruction_removed | 2 (Q02 48/50, Q06 21/50) '
+            f'| 10 | 8/10 (80.0%) | *not computed (see §Declared '
+            f'Limitations)* | `{EV2}` |') in text
+    assert f'| d7_invocation_base | 0 | 10 | 10/10 (100.0%) |' in text

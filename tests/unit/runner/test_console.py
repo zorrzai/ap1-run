@@ -150,10 +150,12 @@ def test_run_report_with_results(capsys):
         'repeat is NOT-INVOKED; UNOBSERVABLE not in n):\n'
         # T3-1, T3-11: n counts questions (Q01 twice is one); Q06 and Q09
         # have no outcome and are not in n.
-        '  base: invoked=1 not_invoked=2 n=3\n'
+        # Each failing question with its NOT-INVOKED repeats out of
+        # its observed repeats, beside k.
+        '  base: invoked=1 not_invoked=2 (Q02 1/1, Q03 1/1) n=3\n'
         '    no evidence class executions: 2 UNOBSERVABLE, not in n\n'
         '    failure rate: 2/3 (66.7%)\n'
-        '  instruction_removed: invoked=1 not_invoked=1 n=2\n'
+        '  instruction_removed: invoked=1 not_invoked=1 (Q05 1/1) n=2\n'
         '    failure rate: 1/2 (50.0%)\n'
         '\\n3h2. D7.3 TRANSCRIPTION:\n'
         '  TRANSCRIBED-EXACT: 2\n'
@@ -291,7 +293,7 @@ def test_run_report_single_execution(capsys):
                         operation_correctness=wrong_op())]
     out = run_report(capsys, results)
     assert '  Auto-scored: 0/1 (0%)\n  Adjudicated: 1/1 (100%)\n' in out
-    assert ('  base: invoked=0 not_invoked=1 n=1\n'
+    assert ('  base: invoked=0 not_invoked=1 (Q01 1/1) n=1\n'
             '    failure rate: 1/1 (100.0%)\n') in out
     assert out.endswith(
         '  WRONG-OPERATION: 1\n'
@@ -433,10 +435,29 @@ def test_run_report_3h_two_observed_classes_rate_per_class(capsys):
                  invocation_outcome='NOT-INVOKED',
                  evidence_class='EV-1 SELF-REPORTED')])
     assert (
-        '  base: invoked=1 not_invoked=1 n=2\n'
+        '  base: invoked=1 not_invoked=1 (Q02 1/1) n=2\n'
         '    aggregate spans 2 evidence classes (EV-1 SELF-REPORTED, '
         'EV-2 PLATFORM-STRUCTURAL); figures are not comparable across '
         'classes\n'
         '    failure rate (EV-1 SELF-REPORTED): 1/1 (100.0%)\n'
         '    failure rate (EV-2 PLATFORM-STRUCTURAL): 0/1 failures; '
         'one-sided 95% upper bound on the failure rate 95.0%\n') in out
+
+
+@pytest.mark.proposal(
+    'T3-11: a question fails if any repeat did not invoke (no decision '
+    'covers the rule); each failing question is listed with its '
+    'NOT-INVOKED repeats out of its observed repeats')
+@pytest.mark.finding('T3-11')
+def test_run_report_3h_lists_failing_questions_with_counts(capsys):
+    # Q02 NOT-INVOKED in 2 of 3 repeats, Q06 in 1 of 3, Q01 never: 3h
+    # prints both failing questions with their counts beside k.
+    outcomes = {'Q01': ['INVOKED'] * 3,
+                'Q02': ['NOT-INVOKED', 'NOT-INVOKED', 'INVOKED'],
+                'Q06': ['INVOKED', 'INVOKED', 'NOT-INVOKED']}
+    out = run_report(capsys, [
+        executed(q, 'base', r, 'AUTO-MATCH', invocation_outcome=o)
+        for q, os in outcomes.items() for r, o in enumerate(os, 1)])
+    text = section(out, '3h')
+    assert ('  base: invoked=1 not_invoked=2 (Q02 2/3, Q06 1/3) n=3\n'
+            '    failure rate: 2/3 (66.7%)') in text, text

@@ -41,6 +41,8 @@ import math
 from datetime import datetime, timezone
 from decimal import ROUND_DOWN, ROUND_HALF_UP, Decimal
 
+from ap1_run.scoring.invocation import format_failing_questions
+
 
 # -- All seven dimensions per AP-1 v1.3 --------------------------------
 
@@ -324,7 +326,9 @@ def _section_clopper_pearson(summary):
     n is the number of computable questions with an observed outcome
     (AP-1 v1.3 D7.1; a question fails if any repeat is NOT-INVOKED).
     k=0: p_upper = 1 - 0.05^(1/n). k>0: point estimate, no bound, with
-    declared limitation. The rate is printed as a percentage with k/n
+    declared limitation. Beside k, each failing question with its
+    NOT-INVOKED repeats out of its observed repeats ("2 (Q02 48/50, Q06
+    21/50)"). The rate is printed as a percentage with k/n
     and the bound, never "100%" alone (SPEC R2.3), and each condition
     gets the AP-1 \u00a76.2 headline. EV-0 (UNOBSERVABLE) executions are
     listed per evidence class and are in no n (SPEC R1.3.1, R2.3).
@@ -343,7 +347,9 @@ def _section_clopper_pearson(summary):
                  'observed outcome, not the executions: the '
                  'repeats of a question are not independent trials. A '
                  'question counts as a failure if any of its repeats is '
-                 'NOT-INVOKED. UNOBSERVABLE executions (EV-0) are neither '
+                 'NOT-INVOKED; beside k, each failing question with the '
+                 'number of its observed repeats that are NOT-INVOKED. '
+                 'UNOBSERVABLE executions (EV-0) are neither '
                  'successes nor failures and are in no n (SPEC R2.3, '
                  'R1.3.1).\n')
 
@@ -382,7 +388,9 @@ def _section_clopper_pearson(summary):
             bound_str = '*not computed (see \u00a7Declared Limitations)*'
             bound_text = ('upper bound on the failure rate not computed, '
                           'see \u00a7Declared Limitations')
-        lines.append(f'| {metric} | {k} | {n} | {rate_str} | {bound_str} '
+        failing = data.get('failing_questions')
+        k_str = f'{k} ({format_failing_questions(failing)})' if failing else k
+        lines.append(f'| {metric} | {k_str} | {n} | {rate_str} | {bound_str} '
                      f'| {ec_str} |')
         headlines.append(
             f'- Deterministic computation was invoked on {pct}% of '

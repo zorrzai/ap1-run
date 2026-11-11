@@ -174,7 +174,8 @@ def test_measure_invocation_reports_n_and_rate_per_evidence_class():
         'per_class': {EV_2: {
             'evidence_class': EV_2, 'n': 3, 'invoked': 2,
             'not_invoked': 1, 'unobservable': 0,
-            'failure_rate': '1/3 (33.3%)'}},
+            'failure_rate': '1/3 (33.3%)',
+            'failing_questions': [(None, 1, 1)]}},
         'total_n': 3, 'unobservable_n': 0, 'cross_class_warning': None,
     }
 
