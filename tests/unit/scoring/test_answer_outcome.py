@@ -26,10 +26,28 @@ def test_match_invoked_grounded_is_computed():
         'COMPUTED', 'correct figure; computation invoked; operands grounded')
 
 
+def test_match_resting_on_an_originated_operand_is_originated():
+    # §6.8 Composition: D7.2(a) = OPERAND-ORIGINATED -> ORIGINATED. The
+    # one call is the one the answer rests on.
+    assert answer_outcome(AUTO_MATCH, 'INVOKED', [ORIGINATED_OP],
+                          accuracy_outcome='CORRECT') == (
+        'ORIGINATED', 'correct figure computed from an originated operand '
+                      '(D7.2(a) OPERAND-ORIGINATED)')
+
+
+@pytest.mark.proposal(
+    'T3-13: ORIGINATED if any calculator call of the execution had an '
+    'originated operand; this instrument\'s reading of AP-1 §6.8 "rests '
+    'on", which may mean only the calls the answer rests on')
 @pytest.mark.parametrize('provenance', [
-    [ORIGINATED_OP], [GROUNDED, ORIGINATED_OP], [ORIGINATED_OP, UNOBSERVABLE]])
-def test_match_resting_on_an_originated_operand_is_originated(provenance):
-    # §6.8 Composition: D7.2(a) = OPERAND-ORIGINATED -> ORIGINATED
+    [GROUNDED, ORIGINATED_OP], [ORIGINATED_OP, GROUNDED],
+    [ORIGINATED_OP, UNOBSERVABLE]],
+    ids=['grounded-then-originated', 'originated-then-grounded',
+         'originated-then-unobservable'])
+def test_match_with_any_originated_call_is_originated(provenance):
+    # Any call counts, whether or not the released figure rests on it:
+    # a made-up 99999 * 7, then a grounded 15200 * 1.2 / 100 / 12, then
+    # the right answer 15.20 is ORIGINATED (originated-then-grounded).
     assert answer_outcome(AUTO_MATCH, 'INVOKED', provenance,
                           accuracy_outcome='CORRECT') == (
         'ORIGINATED', 'correct figure computed from an originated operand '

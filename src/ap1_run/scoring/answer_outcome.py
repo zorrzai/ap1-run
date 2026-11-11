@@ -14,7 +14,9 @@ record decides it:
               is OPERAND-ORIGINATED (whatever D1 scores it).
               Composition: "Where a computed answer rests on an
               originated operand (D7.2(a) = OPERAND-ORIGINATED), the
-              answer-level outcome is ORIGINATED".
+              answer-level outcome is ORIGINATED". Any invocation of
+              the execution counts, not only those the released figure
+              rests on: this instrument's reading (see answer_outcome).
 
 Anything else is left without an outcome (None), with the reason: the
 record does not decide it (a figure without the required computation is
@@ -52,6 +54,15 @@ def answer_outcome(figure_outcome, invocation_outcome, provenance_results,
         return None, ('correct figure, required computation not shown '
                       'invoked: a RETRIEVED candidate (SPEC R4.1)')
     outcomes = [p.get('outcome') for p in provenance_results]
+    # The composition rule, as this instrument reads AP-1 §6.8 "rests
+    # on": the answer is ORIGINATED if ANY calculator call of the
+    # execution had an originated operand, whether or not the released
+    # figure rests on that call (a made-up 99999 * 7, then a grounded
+    # 15200 * 1.2 / 100 / 12, then 15.20 is ORIGINATED). Strict, so it
+    # never under-reports an origination. The narrower rule, only the
+    # calls the answer rests on, needs a design (which calls an answer
+    # uses, and adjudication where that can't be told) and is follow-up
+    # work.
     if 'OPERAND-ORIGINATED' in outcomes:
         figure = 'correct' if accuracy_outcome == 'CORRECT' else 'matched'
         return ORIGINATED, (f'{figure} figure computed from an originated '
