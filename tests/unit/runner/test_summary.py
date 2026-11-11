@@ -669,7 +669,7 @@ def fake_mechanism(monkeypatch):
     calls = []
 
     def classify(responses, *, surface, minimum_runs, operator_declared=None,
-                 figures=None):
+                 figures=None, evidence=None, errored=0):
         calls.append((list(responses), surface, minimum_runs,
                       operator_declared))
         mechanism = responses[0] if responses else 'UNMEASURED'

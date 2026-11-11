@@ -370,6 +370,23 @@ def test_score_run_passes_d2_the_operators_declaration(p):
                                           'prose': 'STRUCTURAL'}
 
 
+@pytest.mark.proposal(
+    'T3-4: D2 compares only replies that carry an answer: errored and EV-0 '
+    'replies are left out of the comparison and counted; requested in '
+    'review')
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('R2.2')
+def test_score_run_passes_d2_the_evidence_and_the_errored_count(p):
+    # Each executed reply's evidence class, and the number of errored
+    # (UNMEASURED) executions per question and condition, reach the
+    # classification.
+    script(p)
+    p.run()
+    assert p.d2_kwargs['d2_errored'] == {('Q1', 'base'): 1,
+                                         ('Q2', 'base'): 1}
+    assert p.d2_kwargs['d2_evidence'] == {}   # the fake scorer adds none
+
+
 @pytest.mark.finding('T3-51')
 @pytest.mark.parametrize('key', ['answer_tolerance', 'decline_markers',
                                  'currency_symbols', 'sampling',

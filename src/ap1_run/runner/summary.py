@@ -118,7 +118,8 @@ def find_d2_cap(sampling):
 
 
 def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason,
-                             d2_figures=None, *, d2_declared=None):
+                             d2_figures=None, *, d2_evidence=None,
+                             d2_errored=None, d2_declared=None):
     """D2 mechanism class per (item, condition) and per surface.
 
     d2_responses maps (item_id, condition) to the responses of its
@@ -128,15 +129,25 @@ def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason,
     repeat's released figure (or None): the figures surface is then the
     released figure.
 
+    Only replies that carry an answer are compared: d2_evidence maps the
+    same keys to each repeat's evidence class, and a reply at EV-0 is
+    left out; d2_errored maps (item_id, condition) to the number of its
+    executions that errored, left out and counted (a question-condition
+    whose every execution errored is UNMEASURED, with that count).
     d2_declared is the operator's declaration, {surface: STRUCTURAL or
     CONFIGURED} (config.d2_declared_classes; SPEC R2.2).
     """
+    d2_errored = d2_errored or {}
     d2_declared = d2_declared or {}
     d2_results = {}
-    for (item_id, cond), responses in d2_responses.items():
+    keys = list(d2_responses) + [k for k in d2_errored
+                                 if k not in d2_responses]
+    for item_id, cond in keys:
+        responses = d2_responses.get((item_id, cond), [])
         key = f'{item_id}/{cond}'
         d2_results[key] = {}
         figures = (d2_figures or {}).get((item_id, cond))
+        evidence = (d2_evidence or {}).get((item_id, cond))
         for surface in ('figures', 'prose'):
             mech = classify_mechanism(
                 responses,
@@ -144,12 +155,15 @@ def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason,
                 minimum_runs=repeat_count,
                 operator_declared=d2_declared.get(surface),
                 figures=figures,
+                evidence=evidence,
+                errored=d2_errored.get((item_id, cond), 0),
             )
             if surface == 'figures' and (
                     mech.get('distinct_values') is not None
                     or mech.get('unresolved')):
                 # the values themselves, for report section 9 (T3-4)
-                mech['values'] = distinct_figures_shown(responses, figures)
+                mech['values'] = distinct_figures_shown(responses, figures,
+                                                        evidence)
             # D2.2 cap: platform-rejected -> cap at OBSERVED-ONLY
             if d2_cap_reason and mech['mechanism'] not in ('UNMEASURED',):
                 mech['mechanism'] = 'OBSERVED-ONLY'

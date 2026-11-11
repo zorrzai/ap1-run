@@ -51,6 +51,12 @@ class Findings:
     d2_responses: dict = field(default_factory=dict)  # (item, cond) -> [response]
     # (item, cond) -> [released figure or None], beside d2_responses (T3-4)
     d2_figures: dict = field(default_factory=dict)
+    # (item, cond) -> [evidence class], beside d2_responses: D2 compares
+    # only replies that carry an answer, so EV-0 replies are left out
+    d2_evidence: dict = field(default_factory=dict)
+    # (item, cond) -> executions that errored (UNMEASURED), left out of
+    # D2 and counted
+    d2_errored: dict = field(default_factory=dict)
     grammar_issues: list = field(default_factory=list)
     decline_findings: list = field(default_factory=list)
     tool_call_structures: list = field(default_factory=list)
@@ -170,6 +176,9 @@ def record_not_scored(findings, item_id, condition, rep, status, result):
             'item_id': item_id, 'condition': condition,
             'repeat': rep, 'cause': cause,
         })
+        # errored: no answer to compare, left out of D2 and counted
+        d2_key = (item_id, condition)
+        findings.d2_errored[d2_key] = findings.d2_errored.get(d2_key, 0) + 1
 
 
 def echo_check(sampling, response):
@@ -423,6 +432,8 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
     d2_key = (item_id, condition)
     findings.d2_responses.setdefault(d2_key, []).append(
         result.get('response'))
+    findings.d2_evidence.setdefault(d2_key, []).append(
+        result.get('evidence_class'))
     findings.d2_figures.setdefault(d2_key, []).append(
         d2_answer_figure(
             fig_result, _rc_content, currency_symbols=currency_symbols,

@@ -61,7 +61,10 @@ def test_classify_mechanism_rate_limited_runs_do_not_count():
     r = classify_mechanism(responses, surface='prose', minimum_runs=3)
     assert r['mechanism'] == UNMEASURED
     assert r['successful_runs'] == 1
-    assert r['reason'] == '1 successful runs below minimum 3 — UNMEASURED'
+    # the errored responses are left out and counted (T3-4)
+    assert r['left_out'] == {'errored': 49}
+    assert r['reason'] == ('1 successful runs below minimum 3 '
+                           '(49 errored left out) — UNMEASURED')
 
 
 def test_classify_mechanism_exactly_minimum_is_measured():

@@ -599,6 +599,11 @@ or the configuration is refused at load. It is part of the configuration, so
 it is sealed with it before any result exists. A surface not declared is
 classified from evidence. The report lists the declaration per surface.
 
+**What D2 compares.** Only replies that carry an answer: a reply that errored
+(rate limited, a transport error, an empty response, or interrupted), one at
+evidence class EV-0, or one whose shape cannot be read is left out of the
+comparison, and the report gives how many were left out, by kind.
+
 **Parameter-echo verification — normative.** Where the endpoint echoes applied
 parameters, the runner diffs requested against applied. A parameter requested
 and silently ignored is a **platform finding**. Where nothing is echoed,
@@ -613,6 +618,8 @@ parameter application is `UNVERIFIED`.
   both, each marked operator-declared.
 - A `d2_declared` naming an unknown surface, or a class other than
   structural or configured, is refused at load.
+- An errored reply and an EV-0 reply among 50 enter neither surface's
+  comparison, and the report counts both.
 
 ### R2.3 — D7.1 Invocation
 

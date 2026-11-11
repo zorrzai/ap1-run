@@ -1039,8 +1039,9 @@ def _section_d2_mechanisms(summary, config=None):
       - the mechanism class
       - whether determined from evidence or operator-declared
       - parameter-echo verification result, or UNVERIFIED
-    and the operator's declaration per surface (config d2_declared,
-    SPEC R2.2).
+    and the operator's declaration per
+    surface (config d2_declared, SPEC R2.2), and how many replies were
+    left out of the comparison, by kind.
     """
     config = config or {}
     lines = ['## 9. D2 Reproducibility Mechanism Classes\n']
@@ -1073,6 +1074,7 @@ def _section_d2_mechanisms(summary, config=None):
     # The live shape (T3-4): {'<item>/<condition>': {surface: class}},
     # one class per surface per question and condition (SPEC R2.2)
     lines.extend(_d2_declared_lines(config))
+    lines.append(_d2_left_out_line(d2))
     lines.append(f'Classes per surface, over question-conditions: '
                  f'{_d2_class_counts(d2)}.\n')
     lines.append('| Question | Condition | Surface | Mechanism Class | Basis '
@@ -1085,7 +1087,7 @@ def _section_d2_mechanisms(summary, config=None):
                 f'| {item} | {_cell(condition)} | {surface_name} '
                 f'| `{data.get("mechanism", "unknown")}` | {_d2_basis(data)} '
                 f'| {_d2_distinct(data)} '
-                f'| {_cell(data.get("successful_runs"))} '
+                f'| {_d2_runs(data)} '
                 f'| `{data.get("parameter_echo_status", "UNVERIFIED")}` |')
 
     lines.append('')
@@ -1105,6 +1107,40 @@ def _d2_declared_lines(config):
         lines.append(f'- {surface}: `{str(cls).upper()}` (operator-declared)')
     lines.append('')
     return lines
+
+
+def _d2_left_out(data):
+    """The left-out counts of a surface's cell, as text ('' if none)."""
+    from ap1_run.scoring.reproducibility import LEFT_OUT_KINDS
+    left_out = data.get('left_out') or {}
+    return ', '.join(f'{left_out[k]} {k}' for k in LEFT_OUT_KINDS
+                     if left_out.get(k))
+
+
+def _d2_runs(data):
+    """A cell's runs, with the replies left out of its comparison."""
+    runs = _cell(data.get('successful_runs'))
+    left_out = _d2_left_out(data)
+    return f'{runs} ({left_out} left out)' if left_out else runs
+
+
+def _d2_left_out_line(d2):
+    """How many replies were left out of D2's comparison, by kind, over
+    the question-conditions (each reply once: the surfaces share them)."""
+    from ap1_run.scoring.reproducibility import LEFT_OUT_KINDS
+    totals = {k: 0 for k in LEFT_OUT_KINDS}
+    for surfaces in d2.values():
+        data = next(iter(surfaces.values()), {})
+        for k, v in (data.get('left_out') or {}).items():
+            totals[k] = totals.get(k, 0) + v
+    total = sum(totals.values())
+    if not total:
+        return 'Left out of the comparison: none.\n'
+    shown = ', '.join(f'{v} {k}' for k, v in totals.items() if v)
+    return (f'Left out of the comparison: {total} '
+            f'repl{"y" if total == 1 else "ies"} ({shown}). An errored or '
+            f'EV-0 reply has no answer to compare; an unreadable one has '
+            f'no shape to read.\n')
 
 
 def _d2_basis(data):

@@ -35,13 +35,18 @@ VALID_CLASSES = frozenset({STRUCTURAL, CONFIGURED, OBSERVED_ONLY, UNMEASURED})
 # The surfaces a mechanism is classified on.
 SURFACES = ('figures', 'prose')
 
+# What is left out of the D2 comparison, by kind: replies that carry no
+# answer to compare (errors, EV-0) and replies that cannot be read.
+LEFT_OUT_KINDS = ('errored', 'EV-0', 'unreadable')
+
 
 class ReproducibilityError(Exception):
     """Reproducibility classification failure."""
 
 
 def classify_mechanism(responses, *, surface, minimum_runs,
-                       operator_declared=None, figures=None):
+                       operator_declared=None, figures=None,
+                       evidence=None, errored=0):
     """Classify the reproducibility mechanism for a surface.
 
     Args:
@@ -61,10 +66,18 @@ def classify_mechanism(responses, *, surface, minimum_runs,
             more identified values are variation, reported as at least
             that many; otherwise the cell is UNMEASURED, stability not
             established. When not given, the figures the text states.
+        evidence: list or None -- each response's evidence class
+            (execution/evidence.py), beside responses.
+        errored: int -- executions of this item+condition that errored
+            and are not among responses (a failed request: rate limited,
+            a transport error, an empty response, or interrupted).
 
-    A response that is an error, rate limited or of a shape that cannot
-    be read (SPEC R2.0 step 0) is not a run on either surface; how many
-    were left out, other than errors, is in the reason.
+    Only replies that carry an answer are compared. A response that is
+    an error or rate limited, one at evidence class EV-0 (no record of
+    what happened, for example a tool loop whose rounds cannot be read),
+    or one of a shape that cannot be read (SPEC R2.0 step 0) is not a
+    run on either surface. How many were left out, by kind, is in
+    'left_out' and in the reason.
 
     Returns:
         dict with keys:
@@ -72,6 +85,9 @@ def classify_mechanism(responses, *, surface, minimum_runs,
             operator_declared: bool -- True if class came from operator
             distinct_values: int or None
             successful_runs: int
+            left_out: dict -- {kind: count} of the responses left out
+                ('errored', 'EV-0', 'unreadable'), only kinds with any;
+                absent if none was
             reason: str
 
     Raises:
@@ -81,11 +97,27 @@ def classify_mechanism(responses, *, surface, minimum_runs,
         raise ReproducibilityError(
             f'unknown surface {surface!r}; expected one of {SURFACES}')
 
-    runs, left_out = _runs(responses, surface, figures)
+    runs, left_out = _runs(responses, surface, figures, evidence, errored)
     successful = [responses[i] for i in runs]
     n_successful = len(successful)
-    note = f' ({left_out} left out)' if left_out else ''
+    note = f' ({_left_out_text(left_out)} left out)' if left_out else ''
+    result = _classify(successful, runs, n_successful, note, surface=surface,
+                       minimum_runs=minimum_runs,
+                       operator_declared=operator_declared, figures=figures)
+    if left_out:
+        result['left_out'] = left_out
+    return result
 
+
+def _left_out_text(left_out):
+    """'1 errored, 2 EV-0': the left-out counts, in LEFT_OUT_KINDS order."""
+    return ', '.join(f'{left_out[k]} {k}' for k in LEFT_OUT_KINDS
+                     if left_out.get(k))
+
+
+def _classify(successful, runs, n_successful, note, *, surface,
+              minimum_runs, operator_declared, figures):
+    """classify_mechanism's class of the runs left after _runs."""
     # Below minimum: UNMEASURED, never "stable" or "1 distinct answer"
     if n_successful < minimum_runs:
         return {
@@ -282,23 +314,31 @@ def _answer_key(figure):
     return Fraction(figure)
 
 
-def _runs(responses, surface, figures):
+def _runs(responses, surface, figures, evidence=None, errored=0):
     """The indices of the responses that are runs on this surface, and
-    a note of those left out other than errors ('' if none): a response
-    whose shape cannot be read is not a run (SPEC R2.0 step 0)."""
-    from ap1_run.execution.evidence import _read_message
-    runs, unreadable = [], 0
+    {kind: count} of those left out (only kinds with any): an error or
+    rate-limited response and the errored executions not among the
+    responses ('errored'), a response at evidence class EV-0 ('EV-0'),
+    and one whose shape cannot be read (SPEC R2.0 step 0; 'unreadable').
+    """
+    from ap1_run.execution.evidence import EV_0, _read_message
+    runs = []
+    left_out = {'errored': errored, 'EV-0': 0, 'unreadable': 0}
     for i, r in enumerate(responses):
         if _is_error_or_limited(r):
+            left_out['errored'] += 1
+            continue
+        if evidence is not None and evidence[i] == EV_0:
+            left_out['EV-0'] += 1
             continue
         if _read_message(r)[0] is None:
-            unreadable += 1
+            left_out['unreadable'] += 1
             continue
         runs.append(i)
-    return runs, f'{unreadable} unreadable' if unreadable else ''
+    return runs, {k: v for k, v in left_out.items() if v}
 
 
-def distinct_figures_shown(responses, figures=None):
+def distinct_figures_shown(responses, figures=None, evidence=None):
     """Each distinct figures value of the successful responses (told
     apart as classify_mechanism tells them), as the first response to
     give it states it: the figures in text order, each value as written
@@ -307,18 +347,21 @@ def distinct_figures_shown(responses, figures=None):
     refuses. First seen first (AP-1 D2 "distinct numeric answers per
     question"; T3-4). With figures (classify_mechanism), each distinct
     identified answer of the runs, as written; unresolved answers are
-    not values (classify_mechanism counts them)."""
-    from ap1_run.execution.evidence import _read_message
+    not values (classify_mechanism counts them). With evidence, a
+    response at EV-0 is left out, as classify_mechanism leaves it out."""
+    from ap1_run.execution.evidence import EV_0, _read_message
     if figures is not None:
-        runs, _ = _runs(responses, 'figures', figures)
+        runs, _ = _runs(responses, 'figures', figures, evidence)
         shown = {}
         for i in runs:
             if figures[i] is not None:
                 shown.setdefault(_answer_key(figures[i]), str(figures[i]))
         return list(shown.values())
     shown = {}
-    for r in responses:
+    for i, r in enumerate(responses):
         if _is_error_or_limited(r):
+            continue
+        if evidence is not None and evidence[i] == EV_0:
             continue
         text = (_read_message(r)[0] or {}).get('content', '') or ''
         key = _figures(text)

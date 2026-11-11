@@ -514,7 +514,7 @@ def test_findings_start_empty_and_separate():
     assert b == Findings()
     assert vars(b) == {
         'all_results': [], 'all_accuracy_results': [], 'd2_responses': {},
-        'd2_figures': {},
+        'd2_figures': {}, 'd2_evidence': {}, 'd2_errored': {},
         'grammar_issues': [], 'decline_findings': [],
         'tool_call_structures': [], 'evidence_findings': [],
         'transcription_results': [], 'release_coverage_results': [],

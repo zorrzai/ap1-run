@@ -132,10 +132,14 @@ def test_too_few_runs_stays_unmeasured_before_anything_else():
 import json  # noqa: E402
 from pathlib import Path  # noqa: E402
 
+from ap1_run.execution.evidence import EV_0, EV_2  # noqa: E402
 from ap1_run.foundation.config import (  # noqa: E402
     d2_declared_classes, load_config,
 )
 from ap1_run.reporting import report  # noqa: E402
+from ap1_run.runner.executions import (  # noqa: E402
+    Findings, record_not_scored, score_execution,
+)
 from ap1_run.runner.summary import classify_reproducibility  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[3]
@@ -144,6 +148,10 @@ DECLARED_REASON = (
     'the settings field d2_declared, {surface: class}, sealed with the '
     'config; the field name and its shape are the author\'s design, '
     'requested in review')
+LEFT_OUT_REASON = (
+    'T3-4: D2 compares only replies that carry an answer: errored and EV-0 '
+    'replies are left out of the comparison and counted in report section '
+    '9; requested in review')
 
 
 def config_with(tmp_path, **fields):
@@ -230,3 +238,71 @@ def test_declared_class_the_d22_cap_lowers_is_not_marked_declared():
         OBSERVED_ONLY, False)
     assert '| `OBSERVED-ONLY` | evidence: observed over 3 runs' in row(
         section_9(d2, {'d2_declared': {'figures': 'configured'}}), 'figures')
+
+
+@pytest.mark.proposal(LEFT_OUT_REASON)
+@pytest.mark.req('AP-1 D2', 'R2.2')
+@pytest.mark.finding('T3-4')
+def test_errored_and_ev0_replies_among_50_left_out_and_counted():
+    # 50 executions of Q01/base: one errored (recorded, not scored), one
+    # executed at EV-0 whose reply states another figure, 48 the same
+    # answer at EV-2. Neither the errored nor the EV-0 one is compared:
+    # without the EV-0 reply's 700.00 the figures agree. Report section 9
+    # prints how many were left out, by kind.
+    findings = Findings()
+    record_not_scored(findings, 'Q01', 'base', 1, 'UNMEASURED',
+                      {'error': 'HTTP 500: boom', 'cause': 'transport_error'})
+    for rep in range(2, 51):
+        ev0 = rep == 2
+        content = 'The interest is $700.00.' if ev0 else \
+            'The interest is $638.40.'
+        score_execution(
+            findings, {'response': response(content), 'tool_calls': [],
+                       'evidence_class': EV_0 if ev0 else EV_2,
+                       'invocation_outcome': None if ev0 else 'NOT-INVOKED'},
+            item_id='Q01', condition='base', rep=rep, expected=D('638.40'),
+            ctx={}, collision=False,
+            config={'quantisation': {'places': 2,
+                                     'rounding': 'ROUND_HALF_UP'}},
+            answer_tolerance=D('0.01'), decline_markers=['cannot'],
+            currency_symbols=['$'])
+    assert findings.d2_errored == {('Q01', 'base'): 1}
+    assert len(findings.d2_responses[('Q01', 'base')]) == 49
+
+    def classify(repeat_count):
+        return classify_reproducibility(
+            findings.d2_responses, repeat_count, None, findings.d2_figures,
+            d2_evidence=findings.d2_evidence,
+            d2_errored=findings.d2_errored)['Q01/base']
+
+    # The comparison: 48 runs, one value, the EV-0 reply's 700.00 not in it
+    cell = classify(48)
+    for surface in ('figures', 'prose'):
+        assert cell[surface]['successful_runs'] == 48
+        assert cell[surface]['left_out'] == {'errored': 1, 'EV-0': 1}
+        assert cell[surface]['distinct_values'] == 1
+    assert cell['figures']['values'] == ['638.40']
+    # At the configured 50 repeats, the 48 left are below the minimum
+    cell = classify(50)
+    assert cell['figures']['mechanism'] == UNMEASURED
+    assert cell['figures']['reason'] == (
+        '48 successful runs below minimum 50 (1 errored, 1 EV-0 left out) '
+        '— UNMEASURED')
+    text = section_9({'Q01/base': cell}, {'repeat_count': 50})
+    assert ('Left out of the comparison: 2 replies (1 errored, 1 EV-0). '
+            'An errored or EV-0 reply has no answer to compare; an '
+            'unreadable one has no shape to read.') in text.splitlines()
+    assert '| 48 (1 errored, 1 EV-0 left out) |' in row(text, 'figures')
+
+
+@pytest.mark.proposal(LEFT_OUT_REASON)
+@pytest.mark.req('AP-1 D2', 'R2.2')
+@pytest.mark.finding('T3-4')
+def test_question_condition_whose_every_execution_errored_is_unmeasured():
+    # No reply to compare at all: the question-condition is still
+    # reported, UNMEASURED, with what was left out.
+    d2 = classify_reproducibility({}, 3, None, None,
+                                  d2_errored={('Q01', 'base'): 3})
+    for surface in ('figures', 'prose'):
+        assert d2['Q01/base'][surface]['mechanism'] == UNMEASURED
+        assert d2['Q01/base'][surface]['left_out'] == {'errored': 3}

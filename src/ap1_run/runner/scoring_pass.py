@@ -333,7 +333,9 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
     d2_cap_reason = find_d2_cap(config['sampling'])
     d2_results = classify_reproducibility(
         findings.d2_responses, repeat_count, d2_cap_reason,
-        findings.d2_figures, d2_declared=d2_declared_classes(config))
+        findings.d2_figures, d2_evidence=findings.d2_evidence,
+        d2_errored=findings.d2_errored,
+        d2_declared=d2_declared_classes(config))
 
     summary = build_summary(
         findings.all_results, findings.evidence_findings,
