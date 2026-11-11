@@ -266,7 +266,8 @@ def refusal_body(kind):
 def test_run_refusal_executed_adjudicated_outside_d71_and_d1(
         full_run, kind, provisional):
     """Q01 is refused under both conditions, with no tool call (a
-    filtered reply holds partial text, a refusal only its refusal text). Correct (SPEC R4.1, rows added with this fix; AP-1 v1.3 §6.8
+    filtered reply holds partial text, a refusal only its refusal
+    text). Correct (SPEC R4.1, rows added with this fix; AP-1 v1.3 §6.8
     names MODEL-DECLINED and CLASSIFIER-REFUSED, and only "an empty,
     errored or rate-limited response" is UNMEASURED): each execution is
     EXECUTED, not UNMEASURED and not a non-outcome cell; it is routed to

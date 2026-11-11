@@ -54,9 +54,10 @@ def measure_invocation_by_condition(all_results):
     denominator), and of those not a provider refusal or content-filter
     stop: it is adjudicated, and is in neither count whatever came before
     the refusal (AP-1 v1.3 section 6.8; T3-10). An execution that called
-    the calculator and was then refused leaves D7.1's n too. Each row becomes a measure_invocation record: INVOKED
-    and NOT-INVOKED are observations, any other outcome (None for EV-0)
-    is UNOBSERVABLE. Returns {condition: measure_invocation(...)} in the
+    the calculator and was then refused leaves D7.1's n too. Each row
+    becomes a measure_invocation record: INVOKED and NOT-INVOKED are
+    observations, any other outcome (None for EV-0) is UNOBSERVABLE.
+    Returns {condition: measure_invocation(...)} in the
     order the conditions first appear, each with an extra 'executions'
     entry: {evidence_class: (executions, distinct questions)}.
     """
