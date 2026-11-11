@@ -92,7 +92,8 @@ updated, and the standard governs.
   so the same inputs give the same `seal_hash` only at the same timestamp;
   the hash of each sealed input does not depend on the time.
   Was: "Sealing the same inputs twice yields identical hashes." R1.1 now
-  also says what the timestamp proves and what it does not.
+  also says what the timestamp proves and what it does not (when the seal
+  was made, or a rewrite of the record and every transcript line together).
 
 ---
 
@@ -376,8 +377,11 @@ supplied after the fact proves nothing (R1.3).
 
 **What the timestamp proves.** The seal timestamp is inside `seal_hash`, and
 `seal_hash` appears on every transcript line, so a timestamp edited after the
-run is evident. It does not prove *when* the seal was made: that needs an
-anchor outside the run, such as publishing `seal_hash` before the run starts.
+run is evident unless `seal_hash` is recomputed and every transcript line
+rewritten to match. Such a consistent rewrite is not caught: `seal_hash` is a
+hash anyone can recompute, not a signature. Nor does the timestamp prove
+*when* the seal was made. Both need an anchor outside the run, such as
+publishing `seal_hash` before the run starts.
 
 ### R1.2 — Execution Engine
 

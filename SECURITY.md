@@ -146,12 +146,16 @@ sha256sum reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md
 ```
 
 **Every input is sealed before execution.** Fixture, question set, ground-truth
-module, expected values and resolved configuration are hashed and timestamped,
-and the record’s hash appears on every transcript line. A transcript cannot be
-silently paired with a different fixture. Each input is read once, and the
-bytes sealed are the bytes the run executes; the run verifies its seal again
-before its first request and before it reports, and refuses if an input has
-changed.
+module, calculator, expected values and resolved configuration are hashed and
+timestamped, and the record’s hash appears on every transcript line. A
+transcript cannot be silently paired with a different fixture without the
+record and every transcript line being rewritten to match, which only an
+outside anchor (such as `seal_hash` published before the run) would catch.
+The run reads its text inputs once and seals and executes those bytes; the
+seal checks before its first request and before it reports read the files
+again to compare them, and the run refuses if an input has changed. (The
+condition guard, R1.2, also hashes `fixture.json` from disk for its own
+comparison of the two conditions.)
 
 ---
 
