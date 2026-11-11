@@ -97,6 +97,8 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/runner/test_outputs.py::test_write_outputs_sheets_show_measurability_per_question',
     'tests/unit/runner/test_summary.py::test_summary_d71_figure_lists_failing_questions_with_counts',
     'tests/unit/runner/test_summary.py::test_summary_d71_n_counts_questions_not_repeats',
+    'tests/unit/runner/test_summary.py::test_summary_refusal_after_calculator_calls_is_out_of_d71[content-filter]',
+    'tests/unit/runner/test_summary.py::test_summary_refusal_after_calculator_calls_is_out_of_d71[refusal]',
     'tests/unit/runner/test_summary.py::test_summary_refusal_is_out_of_d71_and_counted_adjudicated[content-filter]',
     'tests/unit/runner/test_summary.py::test_summary_refusal_is_out_of_d71_and_counted_adjudicated[refusal]',
     'tests/unit/scoring/provenance/test_classify.py::test_classify_invocation_unknown_name_after_a_grounded_call_is_unobservable',

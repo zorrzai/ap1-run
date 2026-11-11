@@ -799,8 +799,8 @@ def test_summary_d71_figure_lists_failing_questions_with_counts():
 # -- T3-10: a refusal is in no D7.1 count ----------------------------------
 
 @pytest.mark.proposal(
-    'T3-10: a refusal or content-filter stop is out of D7.1\'s n (no '
-    'opportunity to invoke); a reading of section 6.8, proposed, not '
+    'T3-10: a refusal or content-filter stop is out of D7.1\'s n, '
+    'whatever came before it; a reading of section 6.8, proposed, not '
     'decided')
 @pytest.mark.finding('T3-10')
 @pytest.mark.req('R2.3', 'AP-1 §6.8')
@@ -816,6 +816,38 @@ def test_summary_refusal_is_out_of_d71_and_counted_adjudicated(kind):
         executed('Q02', invocation_outcome='NOT-INVOKED', evidence_class=EV2,
                  figure_outcome='ADJUDICATE-REFUSAL', refusal=kind,
                  provisional_outcome='x'),
+        executed('Q03', invocation_outcome='INVOKED', evidence_class=EV2,
+                 figure_outcome='AUTO-MATCH'),
+    ]
+    s = build_summary(results, [])
+    assert s['invocation_figures'] == {'d7_invocation_base': {
+        'failures': 0, 'n': 2, 'rate': '2/2', 'condition': 'base',
+        'evidence_class': EV2, 'unobservable': 0, 'failing_questions': []}}
+    assert s['invocation_evidence']['base']['classes'] == {EV2: {
+        'executions': 2, 'questions': 2, 'observed_questions': 2,
+        'unobservable_executions': 0}}
+    assert s['d7_results'] == {'n': 3, 'auto_scored_n': 2,
+                               'adjudicated_n': 1}
+
+
+@pytest.mark.proposal(
+    'T3-10: a refusal or content-filter stop is out of D7.1\'s n, '
+    'whatever came before it; a reading of section 6.8, proposed, not '
+    'decided')
+@pytest.mark.finding('T3-10')
+@pytest.mark.req('R2.3', 'AP-1 §6.8')
+@pytest.mark.parametrize('kind', ['content_filter', 'refusal'],
+                         ids=['content-filter', 'refusal'])
+def test_summary_refusal_after_calculator_calls_is_out_of_d71(kind):
+    # Q02 called the calculator (INVOKED, an observation on its own) and
+    # its final reply was then refused. It still leaves D7.1's n: base is
+    # 2/2 on Q01 and Q03, not 3/3. It is routed to adjudication.
+    results = [
+        executed('Q01', invocation_outcome='INVOKED', evidence_class=EV2,
+                 figure_outcome='AUTO-MATCH'),
+        executed('Q02', invocation_outcome='INVOKED', evidence_class=EV2,
+                 tool_calls_count=2, figure_outcome='ADJUDICATE-REFUSAL',
+                 refusal=kind, provisional_outcome='x'),
         executed('Q03', invocation_outcome='INVOKED', evidence_class=EV2,
                  figure_outcome='AUTO-MATCH'),
     ]
