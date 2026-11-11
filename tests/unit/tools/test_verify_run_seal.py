@@ -176,8 +176,8 @@ def all_checks(record, lines=2):
         ('runner_source_hash', 'MATCH'),
         ('seal_hash', 'MATCH'),
         ('transcript seal_hash', 'all %d lines match report' % lines),
-        ('seal timestamp', 'before the first transcript record (%s)'
-         % record['timestamp']),
+        ('seal timestamp', 'no later than the first transcript record '
+         '(%s)' % record['timestamp']),
     ]
 
 
@@ -1010,8 +1010,8 @@ def test_verify_run_seal_no_later_than_first_record_passes(
     checks, failures = timestamp_failures(vrs, tmp_path, base, sealed_at,
                                           first_at)
     assert failures == []
-    assert checks == [('seal timestamp', 'before the first transcript '
-                       'record (%s)' % first_at)]
+    assert checks == [('seal timestamp', 'no later than the first '
+                       'transcript record (%s)' % first_at)]
 
 
 def test_verify_run_seal_after_first_record_fails(vrs, tmp_path, base):

@@ -319,7 +319,7 @@ def _check_transcript(output_dir, seal_record, checks, failures):
                          'before execution' % (seal_record['timestamp'],
                                                first['timestamp'])))
     else:
-        checks.append(('seal timestamp', 'before the first transcript '
+        checks.append(('seal timestamp', 'no later than the first transcript '
                        'record (%s)' % first['timestamp']))
 
 
