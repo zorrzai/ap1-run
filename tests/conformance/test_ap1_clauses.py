@@ -840,3 +840,20 @@ def test_spec_section_10_does_not_understate_d72_rows():
         'IMPLEMENTED |' in spec
     assert '| D7.2(b) operation correctness | operation_correctness.py, ' \
         'engine.py | IMPLEMENTED |' in spec
+
+
+@pytest.mark.req('AP-1 §6.8')
+def test_spec_section_10_declares_the_composition_rule_a_reading():
+    # answer_outcome gives ORIGINATED when any calculator call of the
+    # execution had an originated operand (the proposal-marked
+    # test_match_with_any_originated_call_is_originated cases). That is
+    # this instrument's reading of AP-1 §6.8 "rests on", and SPEC §10's
+    # row must say so rather than claim the clause plainly.
+    rows = [line for line in SPEC.read_text(encoding='utf-8').splitlines()
+            if line.startswith('| §6.8 composition |')]
+    assert rows == [
+        '| §6.8 composition | answer_outcome.py, provenance/trace.py | '
+        'IMPLEMENTED (this instrument\'s reading of "rests on": ORIGINATED '
+        'if any calculator call of the execution had an originated '
+        'operand; the narrower rule, only the calls the answer rests on, '
+        'is follow-up work) |']

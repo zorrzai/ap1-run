@@ -906,7 +906,7 @@ per R1.1.
 | §6.3(b) structural evidence | evidence.py EV-3 gated False | PARTIAL |
 | §6.6.1 agreement statistic | sheets generated, agreement external | NOT BUILT by design |
 | §6.8 six-outcome vocabulary | figure_id.py | IMPLEMENTED |
-| §6.8 composition | provenance/trace.py | IMPLEMENTED |
+| §6.8 composition | answer_outcome.py, provenance/trace.py | IMPLEMENTED (this instrument's reading of "rests on": ORIGINATED if any calculator call of the execution had an originated operand; the narrower rule, only the calls the answer rests on, is follow-up work) |
 | §6.8 UNMEASURED / VOID | engine.py | IMPLEMENTED |
 | §6.9 single quantisation point | numeric.py | IMPLEMENTED |
 | §9.1 runner scope limits | design property, declares UNOBSERVABLE | IMPLEMENTED |
