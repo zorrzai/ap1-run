@@ -304,14 +304,42 @@ def test_dimension_results_table_layout():
         '## 3. Per-Dimension Results\n',
         '| Dimension | Status | n | Result |',
         '|---|---|---|---|',
-        '| D1 | **NOT MEASURED** | \u2014 | \u2014 |',
-        '| D2 | **NOT MEASURED** | \u2014 | \u2014 |',
-        '| D3 | **NOT MEASURED** | \u2014 | \u2014 |',
-        '| D4 | **NOT MEASURED** | \u2014 | \u2014 |',
-        '| D5 | **NOT MEASURED** | \u2014 | \u2014 |',
-        '| D6 | **NOT MEASURED** | \u2014 | \u2014 |',
-        '| D7 | **NOT MEASURED** | \u2014 | \u2014 |',
+        '| D1 | not claimed | \u2014 | not claimed in this configuration '
+        '(the runner auto-scores it) (\u00a712) |',
+        '| D2 | not claimed | \u2014 | not claimed in this configuration '
+        '(the runner measures it from repeated runs) (\u00a712) |',
+        '| D3 | not claimed | \u2014 | requires human adjudication; the '
+        'runner does not measure it (\u00a712) |',
+        '| D4 | not claimed | \u2014 | requires human adjudication; the '
+        'runner does not measure it (\u00a712) |',
+        '| D5 | not claimed | \u2014 | requires human adjudication; the '
+        'runner does not measure it (\u00a712) |',
+        '| D6 | not claimed | \u2014 | requires human adjudication; the '
+        'runner does not measure it (\u00a712) |',
+        '| D7 | not claimed | \u2014 | not claimed in this configuration '
+        '(the runner measures D7.1-D7.3 from tool-call evidence) '
+        '(\u00a712) |',
         '')
+
+
+@pytest.mark.req('R3.3')
+def test_dimension_results_unclaimed_d1_reads_not_claimed():
+    # A dimension the configuration doesn't claim is a choice, not a
+    # gap: section 3 says "not claimed", in section 12's words, and
+    # keeps "NOT MEASURED" for a claimed dimension that wasn't measured
+    config = {'dimensions_claimed': ['D2', 'D7']}
+    text = report._section_dimension_results({}, config)
+    d1 = [row for row in dim_rows(text) if row.startswith('| D1 |')]
+    assert d1 == ['| D1 | not claimed | \u2014 | not claimed in this '
+                  'configuration (the runner auto-scores it) (\u00a712) |']
+    assert '**NOT MEASURED**' not in d1[0]
+    twelve = report._section_unmeasured_dimensions(config)
+    assert ('- **D1**: Accuracy \u2014 not claimed in this configuration '
+            '(the runner auto-scores it)') in twelve
+    # Claimed, with no results: not "not claimed"
+    claimed = report._section_dimension_results(
+        {}, {'dimensions_claimed': ['D1']})
+    assert '| D1 | Claimed but no results |' in claimed
 
 
 def test_dimension_results_without_claim_list_none_measured():

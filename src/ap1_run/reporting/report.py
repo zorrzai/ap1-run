@@ -288,7 +288,11 @@ def _section_dimension_results(summary, config):
             else:
                 lines.append(f'| {dim} | Claimed but no results | — | — |')
         else:
-            lines.append(f'| {dim} | **NOT MEASURED** | — | — |')
+            # Not claimed is a choice, not a gap: the words of section 12
+            # ("NOT MEASURED" is for a claimed dimension; requested in
+            # review)
+            lines.append(f'| {dim} | not claimed | — | '
+                         f'{_unclaimed_reason(dim)} (§12) |')
 
     d1 = summary.get('d1_results', {})
     by_category = d1.get('by_category')
@@ -1733,28 +1737,42 @@ def _format_dim_result(dim, data):
     return str(data)
 
 
-def _unmeasured_reason(dim):
-    """Return the reason a dimension is not measured.
+# Each dimension's AP-1 v1.3 section 4 name (T3-33), except D2, which
+# SPEC and this runner call Reproducibility (AP-1 v1.3: Determinism)
+_DIMENSION_NAMES = {
+    'D1': 'Accuracy', 'D2': 'Reproducibility', 'D3': 'Provenance',
+    'D4': 'Refusal integrity', 'D5': 'Adversarial resistance',
+    'D6': 'Conflicting input', 'D7': 'Computation invocation',
+}
 
-    Names are AP-1 v1.3 §4's (T3-33), except D2, which SPEC and this
-    runner call Reproducibility (AP-1 v1.3: Determinism). D1, D2 and D7
-    are measured by the runner when claimed; only D3-D6 need human
-    adjudication (SPEC §1.1, §1.2; S3-G6-2).
+
+def _unclaimed_reason(dim):
+    """Why a dimension the configuration does not claim is not measured,
+    in the words section 12 uses (and section 3 repeats).
+
+    D1, D2 and D7 are measured by the runner when claimed; only D3-D6
+    need human adjudication (SPEC §1.1, §1.2; S3-G6-2).
     """
     not_claimed = 'not claimed in this configuration'
     adjudicated = 'requires human adjudication; the runner does not measure it'
     reasons = {
-        'D1': f'Accuracy — {not_claimed} (the runner auto-scores it)',
-        'D2': f'Reproducibility — {not_claimed} (the runner measures it '
-              f'from repeated runs)',
-        'D3': f'Provenance — {adjudicated}',
-        'D4': f'Refusal integrity — {adjudicated}',
-        'D5': f'Adversarial resistance — {adjudicated}',
-        'D6': f'Conflicting input — {adjudicated}',
-        'D7': f'Computation invocation — {not_claimed} (the runner '
-              f'measures D7.1-D7.3 from tool-call evidence)',
+        'D1': f'{not_claimed} (the runner auto-scores it)',
+        'D2': f'{not_claimed} (the runner measures it from repeated runs)',
+        'D3': adjudicated,
+        'D4': adjudicated,
+        'D5': adjudicated,
+        'D6': adjudicated,
+        'D7': f'{not_claimed} (the runner measures D7.1-D7.3 from '
+              f'tool-call evidence)',
     }
-    return reasons.get(dim, 'Reason not specified')
+    return reasons.get(dim, 'reason not specified')
+
+
+def _unmeasured_reason(dim):
+    """Return the reason a dimension is not measured, with its name."""
+    if dim not in _DIMENSION_NAMES:
+        return 'Reason not specified'
+    return f'{_DIMENSION_NAMES[dim]} — {_unclaimed_reason(dim)}'
 
 
 def _make_json_safe(obj):

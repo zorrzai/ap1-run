@@ -266,14 +266,15 @@ def test_run_shipped_config_claims_only_what_ten_items_support(ap1_run,
                                                                config_file):
     # The shipped example configs claim D2 and D7 (no minimum the loader
     # can check), so the example still runs; report.md then declares D1
-    # not measured.
+    # not claimed (in section 3, as in section 12).
     shipped = json.loads((EXAMPLE / config_file).read_text('utf-8'))
     assert shipped['dimensions_claimed'] == ['D2', 'D7']
     result = ap1_run(config={'dimensions_claimed':
                              shipped['dimensions_claimed']})
     assert result.exception is None, repr(result.exception)
     assert result.requests
-    assert '| D1 | **NOT MEASURED** |' in report_text(result)
+    assert '| D1 | not claimed |' in report_text(result)
+    assert '| D1 | **NOT MEASURED** |' not in report_text(result)
 
 
 @pytest.mark.finding('T3-12', 'T3-22')
