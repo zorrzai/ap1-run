@@ -118,7 +118,7 @@ def find_d2_cap(sampling):
 
 
 def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason,
-                             d2_figures=None):
+                             d2_figures=None, *, d2_declared=None):
     """D2 mechanism class per (item, condition) and per surface.
 
     d2_responses maps (item_id, condition) to the responses of its
@@ -127,7 +127,11 @@ def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason,
     values as stated (T3-4). d2_figures maps the same keys to each
     repeat's released figure (or None): the figures surface is then the
     released figure.
+
+    d2_declared is the operator's declaration, {surface: STRUCTURAL or
+    CONFIGURED} (config.d2_declared_classes; SPEC R2.2).
     """
+    d2_declared = d2_declared or {}
     d2_results = {}
     for (item_id, cond), responses in d2_responses.items():
         key = f'{item_id}/{cond}'
@@ -138,7 +142,7 @@ def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason,
                 responses,
                 surface=surface,
                 minimum_runs=repeat_count,
-                operator_declared=None,
+                operator_declared=d2_declared.get(surface),
                 figures=figures,
             )
             if surface == 'figures' and (
@@ -150,6 +154,10 @@ def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason,
             if d2_cap_reason and mech['mechanism'] not in ('UNMEASURED',):
                 mech['mechanism'] = 'OBSERVED-ONLY'
                 mech['d2_cap'] = d2_cap_reason
+                # a declared class the cap lowers is no longer the
+                # operator's: the class shown is the cap's
+                if mech.get('operator_declared'):
+                    mech['operator_declared'] = False
             d2_results[key][surface] = mech
     return d2_results
 

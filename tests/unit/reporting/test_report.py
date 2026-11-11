@@ -1456,10 +1456,12 @@ def test_d2_live_shape_table_per_question_condition_and_surface():
             'figures': {'mechanism': 'OBSERVED-ONLY',
                         'distinct_values': 2, 'values': ['15.20', '15.21'],
                         'successful_runs': 3}},
-        'Q03': {'figures': {}}}})
+        'Q03': {'figures': {}}}}, {'repeat_count': 3})
     assert text == md(
         '## 9. D2 Reproducibility Mechanism Classes\n',
         D2_NOTE,
+        'Operator\'s declaration (settings field `d2_declared`): none, so '
+        'no surface is STRUCTURAL or CONFIGURED.\n',
         'Classes per surface, over question-conditions: figures: '
         'OBSERVED-ONLY 1, UNMEASURED 1, unknown 1; prose: STRUCTURAL 1.\n',
         '| Question | Condition | Surface | Mechanism Class | Basis '

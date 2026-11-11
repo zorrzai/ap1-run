@@ -38,8 +38,18 @@ OPTIONAL_FIELDS = [
     'system_prompt_base', 'system_prompt_instruction_removed',
     'fixture_hash', 'message_template',
     'runner_version_tag', 'runner_version_commit',
-    'runner_modified',
+    'runner_modified', 'd2_declared',
 ]
+
+# D2 (SPEC R2.2): the operator may declare a surface's mechanism class
+# STRUCTURAL or CONFIGURED, which the runner cannot establish from
+# outside the system. The declaration is the settings field
+# d2_declared, {surface: class}, e.g. {"figures": "configured"}; it is
+# part of the config, so it is sealed before any result exists. The
+# surfaces are scoring/reproducibility.py's SURFACES; a class is written
+# in any case and read in upper case.
+D2_DECLARED_SURFACES = ('figures', 'prose')
+D2_DECLARED_CLASSES = ('STRUCTURAL', 'CONFIGURED')
 
 # The dimensions AP-1 defines (v1.2 and v1.3 alike).
 DIMENSIONS = ('D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7')
@@ -109,6 +119,10 @@ def load_config(path):
 
     # 1c. Every claimed dimension is one AP-1 defines
     _validate_dimensions(raw['dimensions_claimed'])
+
+    # 1d. The D2 declaration, if any, names known surfaces and classes
+    if 'd2_declared' in raw:
+        _validate_d2_declared(raw['d2_declared'])
 
     # 2. Validate sampling omission reasons (before bare-numeric check)
     _validate_sampling(raw.get('sampling', {}))
@@ -311,6 +325,35 @@ def _validate_dimensions(dims):
             raise ConfigError(
                 f'dimensions_claimed: {dim!r} is not an AP-1 dimension. '
                 f'Defined: {", ".join(DIMENSIONS)}')
+
+
+def _validate_d2_declared(declared):
+    """Refuse a d2_declared that is not {surface: class} with each
+    surface one of D2_DECLARED_SURFACES and each class STRUCTURAL or
+    CONFIGURED (SPEC R2.2: only those two are the operator's to declare;
+    OBSERVED-ONLY and UNMEASURED are determined from evidence)."""
+    if not isinstance(declared, dict):
+        raise ConfigError(
+            f'd2_declared: expected an object {{surface: class}}, got '
+            f'{type(declared).__name__}')
+    for surface, cls in declared.items():
+        if surface not in D2_DECLARED_SURFACES:
+            raise ConfigError(
+                f'd2_declared: unknown surface {surface!r}. '
+                f'Defined: {", ".join(D2_DECLARED_SURFACES)}')
+        if not isinstance(cls, str) or \
+                cls.upper() not in D2_DECLARED_CLASSES:
+            raise ConfigError(
+                f'd2_declared.{surface}: {cls!r} is not a class the '
+                f'operator declares. Permitted: '
+                f'{", ".join(c.lower() for c in D2_DECLARED_CLASSES)}')
+
+
+def d2_declared_classes(config):
+    """The operator's D2 declaration as {surface: STRUCTURAL or
+    CONFIGURED} (validated at load), {} if the config declares none."""
+    return {surface: cls.upper()
+            for surface, cls in (config.get('d2_declared') or {}).items()}
 
 
 def minimum_n_table(ap1_version):

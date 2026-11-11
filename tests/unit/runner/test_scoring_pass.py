@@ -137,8 +137,9 @@ class Pass:
         return 'CAP'
 
     def classify_reproducibility(self, responses, repeat_count, cap,
-                                 figures):
+                                 figures, **kwargs):
         self.calls.append(('d2', responses, repeat_count, cap))
+        self.d2_kwargs = kwargs
         return {'d2': 'results'}
 
     def build_summary(self, results, evidence, **kwargs):
@@ -351,6 +352,22 @@ def test_score_run_d1_instruction_removed_incorrect_leaves_rate_and_n(
     d1 = kw['d1_summary']
     assert (d1['accuracy_rate'], d1['auto_scored_n'], d1['n'],
             d1['correct'], d1['incorrect']) == (1, 2, 2, 2, 0)
+
+
+@pytest.mark.proposal(
+    'T3-4: the operator declares STRUCTURAL or CONFIGURED per surface in '
+    'the settings field d2_declared, sealed with the config; the field '
+    'is the author\'s design, requested in review')
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('R2.2')
+def test_score_run_passes_d2_the_operators_declaration(p):
+    # The config's d2_declared reaches the classification, read in upper
+    # case.
+    script(p)
+    p.config['d2_declared'] = {'figures': 'configured', 'prose': 'STRUCTURAL'}
+    p.run()
+    assert p.d2_kwargs['d2_declared'] == {'figures': 'CONFIGURED',
+                                          'prose': 'STRUCTURAL'}
 
 
 @pytest.mark.finding('T3-51')

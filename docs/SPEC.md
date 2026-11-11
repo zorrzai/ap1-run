@@ -592,7 +592,12 @@ two.*
 The runner can distinguish `OBSERVED-ONLY` from `UNMEASURED` from evidence;
 **it cannot establish `STRUCTURAL` or `CONFIGURED` from outside the system.**
 Those are declared by the operator and **marked operator-declared** in the
-report.
+report. The declaration is the optional settings field `d2_declared`, one
+class per surface, for example `{"figures": "configured"}`: a surface must
+be `figures` or `prose` and a class `structural` or `configured` (any case),
+or the configuration is refused at load. It is part of the configuration, so
+it is sealed with it before any result exists. A surface not declared is
+classified from evidence. The report lists the declaration per surface.
 
 **Parameter-echo verification — normative.** Where the endpoint echoes applied
 parameters, the runner diffs requested against applied. A parameter requested
@@ -606,6 +611,8 @@ parameter application is `UNVERIFIED`.
   finding.
 - A system declared STRUCTURAL for figures and CONFIGURED for prose reports
   both, each marked operator-declared.
+- A `d2_declared` naming an unknown surface, or a class other than
+  structural or configured, is refused at load.
 
 ### R2.3 — D7.1 Invocation
 

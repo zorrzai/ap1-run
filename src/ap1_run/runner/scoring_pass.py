@@ -32,6 +32,7 @@ from ap1_run.execution.engine import CONDITION_BASE
 from ap1_run.execution.perturbation_guard import HELD_CONSTANT
 from ap1_run.execution.seal import SealError, check_collisions
 from ap1_run.foundation import transcript
+from ap1_run.foundation.config import d2_declared_classes
 from ap1_run.foundation.transcript import (
     ROUND_RECORD, TranscriptError, round_entry,
 )
@@ -330,8 +331,9 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
 
     # -- D2 classification per (item, condition) per surface --
     d2_cap_reason = find_d2_cap(config['sampling'])
-    d2_results = classify_reproducibility(findings.d2_responses, repeat_count,
-                                          d2_cap_reason, findings.d2_figures)
+    d2_results = classify_reproducibility(
+        findings.d2_responses, repeat_count, d2_cap_reason,
+        findings.d2_figures, d2_declared=d2_declared_classes(config))
 
     summary = build_summary(
         findings.all_results, findings.evidence_findings,

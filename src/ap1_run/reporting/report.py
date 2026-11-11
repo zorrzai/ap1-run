@@ -141,7 +141,7 @@ def generate_report(*, summary, config, seal_record, transcript_records=None,
     sections.append(_section_scoring_proportions(summary))
 
     # 9. D2 mechanism classes per surface
-    sections.append(_section_d2_mechanisms(summary))
+    sections.append(_section_d2_mechanisms(summary, config))
 
     # 9b. D2.2 execution conditions and parameter echo
     sections.append(_section_d2_conditions(summary, config,
@@ -1032,14 +1032,17 @@ def _section_scoring_proportions(summary):
     return '\n'.join(lines)
 
 
-def _section_d2_mechanisms(summary):
+def _section_d2_mechanisms(summary, config=None):
     """Section 9: D2 mechanism classes per surface.
 
     D2 is auto-measured. Per surface, report:
       - the mechanism class
       - whether determined from evidence or operator-declared
       - parameter-echo verification result, or UNVERIFIED
+    and the operator's declaration per surface (config d2_declared,
+    SPEC R2.2).
     """
+    config = config or {}
     lines = ['## 9. D2 Reproducibility Mechanism Classes\n']
     # D2.2 cap display
     d2_cap = summary.get('d2_cap_reason')
@@ -1069,6 +1072,7 @@ def _section_d2_mechanisms(summary):
 
     # The live shape (T3-4): {'<item>/<condition>': {surface: class}},
     # one class per surface per question and condition (SPEC R2.2)
+    lines.extend(_d2_declared_lines(config))
     lines.append(f'Classes per surface, over question-conditions: '
                  f'{_d2_class_counts(d2)}.\n')
     lines.append('| Question | Condition | Surface | Mechanism Class | Basis '
@@ -1086,6 +1090,21 @@ def _section_d2_mechanisms(summary):
 
     lines.append('')
     return '\n'.join(lines)
+
+
+def _d2_declared_lines(config):
+    """The operator's D2 declaration, one line per declared surface
+    (SPEC R2.2; AP-1 asks per surface), or a line saying there is none."""
+    declared = config.get('d2_declared') or {}
+    if not declared:
+        return ['Operator\'s declaration (settings field `d2_declared`): '
+                'none, so no surface is STRUCTURAL or CONFIGURED.\n']
+    lines = ['Operator\'s declaration (settings field `d2_declared`, '
+             'sealed with the configuration):']
+    for surface, cls in sorted(declared.items()):
+        lines.append(f'- {surface}: `{str(cls).upper()}` (operator-declared)')
+    lines.append('')
+    return lines
 
 
 def _d2_basis(data):

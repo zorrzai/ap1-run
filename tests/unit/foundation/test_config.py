@@ -25,7 +25,8 @@ REPO = Path(__file__).resolve().parents[3]
 # listed too).
 PERMITTED_LIST = (
     "['answer_tolerance', 'ap1_text_hash', 'ap1_version', "
-    "'ap1_version_doi', 'currency_symbols', 'decimal_separator', "
+    "'ap1_version_doi', 'currency_symbols', 'd2_declared', "
+    "'decimal_separator', "
     "'decline_markers', 'dimensions_claimed', 'endpoint_url', "
     "'fixture_hash', 'grouping_separator', 'message_template', 'model', "
     "'permitted_transformations', 'quantisation', 'repeat_count', "
@@ -108,7 +109,7 @@ def test_optional_fields():
         'tools', 'tool_choice', 'system_prompt', 'system_prompt_base',
         'system_prompt_instruction_removed', 'fixture_hash',
         'message_template', 'runner_version_tag', 'runner_version_commit',
-        'runner_modified']
+        'runner_modified', 'd2_declared']
 
 
 def test_decimal_fields_and_known_sampling_params():
@@ -974,3 +975,70 @@ def test_load_config_example_config_mini_is_the_mini_runs_config():
     assert effort['reason'] == 'platform-unsupported'
     assert effort.get('detail')
     assert cfg['sampling']['temperature'] == '1'
+
+
+# -- the operator's D2 declaration (SPEC R2.2) ------------------------------
+
+D2_DECLARED_REASON = (
+    'T3-4: the operator declares STRUCTURAL or CONFIGURED per surface in '
+    'the settings field d2_declared, {surface: class}, sealed with the '
+    'config; the field name and its shape are the author\'s design, '
+    'requested in review')
+
+
+@pytest.mark.proposal(D2_DECLARED_REASON)
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('R2.2', 'R0.1')
+def test_load_config_d2_declared_loads_and_reads_per_surface(load):
+    # SPEC R2.2: STRUCTURAL and CONFIGURED cannot be established from
+    # outside the system, so the operator declares them. The settings
+    # field holds that declaration; a class is read in any case.
+    from ap1_run.foundation.config import d2_declared_classes
+    cfg = load(d2_declared={'figures': 'configured'})
+    assert cfg['d2_declared'] == {'figures': 'configured'}
+    assert d2_declared_classes(cfg) == {'figures': 'CONFIGURED'}
+    cfg = load(d2_declared={'figures': 'STRUCTURAL', 'prose': 'Configured'})
+    assert d2_declared_classes(cfg) == {'figures': 'STRUCTURAL',
+                                        'prose': 'CONFIGURED'}
+    # No declaration: nothing is declared
+    assert d2_declared_classes(load()) == {}
+    assert d2_declared_classes(load(d2_declared={})) == {}
+
+
+@pytest.mark.proposal(D2_DECLARED_REASON)
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('R2.2', 'R0.1')
+@pytest.mark.parametrize('declared, refusal', [
+    ({'tables': 'configured'},
+     "refused: d2_declared: unknown surface 'tables'. "
+     'Defined: figures, prose'),
+    ({'figures': 'observed-only'},
+     "refused: d2_declared.figures: 'observed-only' is not a class the "
+     'operator declares. Permitted: structural, configured'),
+    ({'prose': 'UNMEASURED'},
+     "refused: d2_declared.prose: 'UNMEASURED' is not a class the "
+     'operator declares. Permitted: structural, configured'),
+    ({'figures': 'stable'},
+     "refused: d2_declared.figures: 'stable' is not a class the "
+     'operator declares. Permitted: structural, configured'),
+    ({'figures': ['configured']},
+     "refused: d2_declared.figures: ['configured'] is not a class the "
+     'operator declares. Permitted: structural, configured'),
+    ('configured',
+     'refused: d2_declared: expected an object {surface: class}, got str'),
+], ids=['unknown-surface', 'observed-only', 'unmeasured', 'unknown-class',
+        'class-not-text', 'not-an-object'])
+def test_load_config_d2_declared_unknown_surface_or_class_refused(
+        load, declared, refusal):
+    # OBSERVED-ONLY and UNMEASURED are determined from evidence (SPEC
+    # R2.2), never declared; a surface D2 does not classify is a mistake.
+    assert load_outcome(load, d2_declared=declared) == refusal
+
+
+def test_d2_declared_surfaces_and_classes_are_reproducibility_s():
+    from ap1_run.foundation.config import (
+        D2_DECLARED_CLASSES, D2_DECLARED_SURFACES)
+    from ap1_run.scoring import reproducibility
+    assert D2_DECLARED_SURFACES == reproducibility.SURFACES
+    assert D2_DECLARED_CLASSES == (reproducibility.STRUCTURAL,
+                                   reproducibility.CONFIGURED)
