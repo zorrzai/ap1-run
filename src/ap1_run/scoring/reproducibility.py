@@ -328,11 +328,13 @@ def _runs(responses, surface, figures, evidence=None, errored=0):
         if _is_error_or_limited(r):
             left_out['errored'] += 1
             continue
-        if evidence is not None and evidence[i] == EV_0:
-            left_out['EV-0'] += 1
-            continue
+        # the cause before its consequence: an unreadable reply is also
+        # at EV-0 (no shape, no evidence), and is counted as unreadable
         if _read_message(r)[0] is None:
             left_out['unreadable'] += 1
+            continue
+        if evidence is not None and evidence[i] == EV_0:
+            left_out['EV-0'] += 1
             continue
         runs.append(i)
     return runs, {k: v for k, v in left_out.items() if v}

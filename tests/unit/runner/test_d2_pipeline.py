@@ -286,6 +286,12 @@ def test_errored_and_ev0_replies_among_50_left_out_and_counted():
             'An errored or EV-0 reply has no answer to compare; an '
             'unreadable one has no shape to read.') in text.splitlines()
     assert '| 48 (1 errored, 1 EV-0 left out) |' in row(text, 'figures')
+    # A reply whose shape cannot be read is also at EV-0: it is counted by
+    # its cause, unreadable
+    assert classify_mechanism(
+        [{'output': 'x'}] + [response('$638.40')] * 2, surface='prose',
+        minimum_runs=2, evidence=[EV_0, EV_2, EV_2])['left_out'] == {
+            'unreadable': 1}
 
 
 @pytest.mark.proposal(LEFT_OUT_REASON)
