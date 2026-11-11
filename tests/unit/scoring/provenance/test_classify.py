@@ -652,3 +652,23 @@ def test_mark_unmeasurable_questions_skips_records_without_results():
                                   'provenance_results': None}]
     assert mark_unmeasurable_questions(records) == []
     assert records[1] == {'item_id': 'Q01', 'error_state': 'VOID'}
+
+
+@pytest.mark.finding('T3-42')
+@pytest.mark.req('R2.4')
+@pytest.mark.xfail(strict=True, raises=AssertionError, reason=(
+    'T3-42: no per-question chained declaration; chaining is detected only '
+    'from the executions'))
+def test_classify_item_declared_chained_without_intermediates_unmeasurable():
+    # SPEC R2.4: "Where the ground-truth module declares no intermediates
+    # for a chained item, D7.2 is UNMEASURABLE for that item." Being
+    # chained is a property of the item: here its ground truth declares
+    # it (chained: True) and no intermediates, and the model computes it
+    # in one grounded call (15200 * 1.2 / 100 / 12), so no execution
+    # chains. Correct: UNMEASURABLE. Today chaining is read only from the
+    # executions, and the item is OPERANDS-GROUNDED.
+    ground_truth = {'final': D('15.2'), 'derivable': True,
+                    'required_operation': 'calculator', 'intermediates': [],
+                    'chained': True}
+    r = classify_item([inv('OPERANDS-GROUNDED')], ground_truth)
+    assert r['outcome'] == 'UNMEASURABLE'

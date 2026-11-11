@@ -391,3 +391,29 @@ def test_run_question_with_mixed_executions_is_unmeasurable_in_every_one(
     provenance = section(report, '7b. D7.2(a)')
     assert table_count(provenance, 'OPERANDS-GROUNDED') == 36
     assert table_count(provenance, 'UNMEASURABLE') == 5
+
+
+# -- T3-13: ORIGINATED from the calls the released figure rests on ---------
+
+@pytest.mark.finding('T3-13')
+@pytest.mark.req('AP-1 §6.8')
+@pytest.mark.xfail(strict=True, raises=AssertionError, reason=(
+    'T3-13: ORIGINATED from any originated call; the rule from the calls '
+    'the released figure rests on is not built'))
+def test_run_figure_resting_on_grounded_call_is_computed(full_run):
+    # Q01's model first makes a call with made-up operands (99999 * 7),
+    # then the grounded 15200.00 * 1.2 / 100 / 12, and its reply's only
+    # figure is that call's 15.20. AP-1 v1.3 §6.8: ORIGINATED is a figure
+    # that "rests on" an originated operand; this one rests on the
+    # grounded call alone, so the outcome is COMPUTED. Today any
+    # originated call of the execution makes it ORIGINATED (the proposal
+    # tests/unit/scoring/test_answer_outcome.py::
+    # test_match_with_any_originated_call_is_originated).
+    code, summary, _ = full_run({'Q01/*/*': [
+        {'call': '99999 * 7'}, {'call': '15200.00 * 1.2 / 100 / 12'},
+        {'say': 'The monthly interest earned on the savings account is '
+                '${result}.'}]})
+    assert code == 0
+    runs = executions(summary, 'Q01')
+    assert len(runs) == 2
+    assert [r['answer_outcome'] for r in runs] == ['COMPUTED', 'COMPUTED']
