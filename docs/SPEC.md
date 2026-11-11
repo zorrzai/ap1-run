@@ -67,6 +67,10 @@ updated, and the standard governs.
   refused at load; and the report counts per kind and says "not a full AP-1
   D5 result" (or D6) where a fixed kind has no item. **R3.3** lists the
   per-kind counts.
+- **§1.1, R2.2**: D2 is named "Determinism", AP-1 v1.3's name for it
+  (was "Reproducibility"); the report and the console use the same name.
+  The module keeps its file name, `scoring/reproducibility.py`. No
+  contract, evidence class or scoring rule changes.
 - **§12.10** drops the rows of the retired legacy test suites
   (`tests/legacy/`) and `run_all_tests.py`. No contract, evidence class or
   scoring rule changes.
@@ -122,7 +126,7 @@ instrument is therefore small, legible, and boring by design.
 | Dimension | Automated | Mechanism |
 |---|---|---|
 | D1 accuracy | Partially — R2.0 | Comparison to a computed expected value; ambiguous cases adjudicated |
-| D2 reproducibility | Yes | Repeat execution; per-surface mechanism classification; parameter-echo verification |
+| D2 determinism | Yes | Repeat execution; per-surface mechanism classification; parameter-echo verification |
 | D7.1 invocation | Yes | Structural record, graded by evidence class |
 | **D7.2 operand provenance** | **Yes** | **Tool arguments resolved against source fields and reference intermediates** |
 | D7.3 transcription | Yes | Tool return value compared to released figure |
@@ -628,7 +632,7 @@ values never rounded before combination.
 **Verification Contract.** D1 reports auto-scored n and adjudicated n
 separately; the two are never merged without both being stated.
 
-### R2.2 — D2 Reproducibility
+### R2.2 — D2 Determinism
 
 **Responsibility.** Classify the mechanism per surface, not merely count
 distinct answers.

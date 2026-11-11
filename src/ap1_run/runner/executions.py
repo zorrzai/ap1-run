@@ -436,7 +436,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         findings.all_accuracy_results.append(
             dict(acc_result, item_id=item_id, condition=condition))
 
-    # -- D2: Collect response for reproducibility --
+    # -- D2: Collect response for determinism --
     d2_key = (item_id, condition)
     findings.d2_responses.setdefault(d2_key, []).append(
         result.get('response'))

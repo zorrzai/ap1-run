@@ -1,4 +1,5 @@
-"""R2.2 -- D2 Reproducibility.
+"""R2.2 -- D2 Determinism (AP-1 v1.3's name; the module keeps its earlier
+name).
 
 Spec: AP-1 Runner Build Spec v0.3, section 5 R2.2.
 
@@ -41,13 +42,13 @@ LEFT_OUT_KINDS = ('errored', 'EV-0', 'unreadable')
 
 
 class ReproducibilityError(Exception):
-    """Reproducibility classification failure."""
+    """D2 (Determinism) classification failure."""
 
 
 def classify_mechanism(responses, *, surface, minimum_runs,
                        operator_declared=None, figures=None,
                        evidence=None, errored=0):
-    """Classify the reproducibility mechanism for a surface.
+    """Classify the D2 (Determinism) mechanism for a surface.
 
     Args:
         responses: list of dicts -- successful (non-error, non-rate-limited)

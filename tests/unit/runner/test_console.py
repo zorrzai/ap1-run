@@ -266,7 +266,7 @@ def test_scoring_report_full(capsys):
         '  No figure: 2\n'
         '  Unmeasurable: 1\n'
         '  Accuracy rate: not computed (11 items await adjudication)\n'
-        '\n3k. D2 REPRODUCIBILITY:\n'
+        '\n3k. D2 DETERMINISM:\n'
         '  CAP: D2.2 cap: why\n'
         '  OBSERVED-ONLY: 3\n'
         '  UNMEASURED: 1\n' + PROVENANCE)
@@ -284,7 +284,7 @@ def test_scoring_report_defaults_when_values_are_missing(capsys):
         '  Incorrect: 0\n'
         '  No figure: 0\n'
         '  Unmeasurable: 0\n'
-        '\n3k. D2 REPRODUCIBILITY:\n'
+        '\n3k. D2 DETERMINISM:\n'
         '\n3l. D7.2(a) OPERAND PROVENANCE:\n'
         '  step 1 (source match):       0\n'
         '  step 1 (declared constant):  0\n'
@@ -329,7 +329,7 @@ def test_scoring_report_without_d1_summary(capsys):
     print_scoring_report({}, {}, None, SUMMARY)
     assert capsys.readouterr().out == (
         '\n3j. D1 ACCURACY (base condition only):\n'
-        '\n3k. D2 REPRODUCIBILITY:\n' + PROVENANCE)
+        '\n3k. D2 DETERMINISM:\n' + PROVENANCE)
 
 
 @PROVISIONAL

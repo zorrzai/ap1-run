@@ -1168,7 +1168,7 @@ def _section_d2_mechanisms(summary, config=None):
     left out of the comparison, by kind.
     """
     config = config or {}
-    lines = ['## 9. D2 Reproducibility Mechanism Classes\n']
+    lines = ['## 9. D2 Determinism Mechanism Classes\n']
     # D2.2 cap display
     d2_cap = summary.get('d2_cap_reason')
     if d2_cap:
@@ -1865,10 +1865,9 @@ def _format_dim_result(dim, data):
     return str(data)
 
 
-# Each dimension's AP-1 v1.3 section 4 name (T3-33), except D2, which
-# SPEC and this runner call Reproducibility (AP-1 v1.3: Determinism)
+# Each dimension's AP-1 v1.3 section 4 name (T3-33)
 _DIMENSION_NAMES = {
-    'D1': 'Accuracy', 'D2': 'Reproducibility', 'D3': 'Provenance',
+    'D1': 'Accuracy', 'D2': 'Determinism', 'D3': 'Provenance',
     'D4': 'Refusal integrity', 'D5': 'Adversarial resistance',
     'D6': 'Conflicting input', 'D7': 'Computation invocation',
 }

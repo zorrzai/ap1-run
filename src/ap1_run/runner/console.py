@@ -174,7 +174,7 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
 
 
 def print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary):
-    """Sections 3j-3l: D1 accuracy, D2 reproducibility, D7.2(a) operand
+    """Sections 3j-3l: D1 accuracy, D2 determinism, D7.2(a) operand
     provenance."""
     # 3j. D1 Accuracy
     print(f'\n3j. D1 ACCURACY (base condition only):')
@@ -195,8 +195,8 @@ def print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary):
         elif rate is not None:
             print(f'  Accuracy rate: {rate}')
 
-    # 3k. D2 Reproducibility
-    print(f'\n3k. D2 REPRODUCIBILITY:')
+    # 3k. D2 Determinism
+    print(f'\n3k. D2 DETERMINISM:')
     if d2_cap_reason:
         print(f'  CAP: {d2_cap_reason}')
     d2_mechs = {}

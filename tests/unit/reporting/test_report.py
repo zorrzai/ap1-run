@@ -122,7 +122,7 @@ def test_report_sections_in_order():
         '7. D7.2(b) Operation Correctness',
         '7b. D7.2(a) Operand Provenance Step Counts',
         '8. Scoring Proportions',
-        '9. D2 Reproducibility Mechanism Classes',
+        '9. D2 Determinism Mechanism Classes',
         '9b. D2.2 Execution Conditions',
         '10. Non-Outcome Cells',
         '11. Quantisation and Near-Miss Findings',
@@ -1467,7 +1467,7 @@ def test_d2_distinct_counts_unresolved_answers_apart(data, cell):
 
 def test_d2_without_results_says_so():
     assert report._section_d2_mechanisms({}) == md(
-        '## 9. D2 Reproducibility Mechanism Classes\n',
+        '## 9. D2 Determinism Mechanism Classes\n',
         D2_NOTE,
         '*No D2 results available.*\n')
 
@@ -1476,7 +1476,7 @@ def test_d2_cap_reason_shown_before_note():
     text = report._section_d2_mechanisms({
         'd2_cap_reason': 'D2.2 cap: temperature was platform-rejected.'})
     assert text == md(
-        '## 9. D2 Reproducibility Mechanism Classes\n',
+        '## 9. D2 Determinism Mechanism Classes\n',
         '> **D2.2 cap: temperature was platform-rejected.**\n',
         '> *The platform-rejection detail above is the verbatim error '
         'recorded during config setup. The rejection is model-independent: '
@@ -1503,7 +1503,7 @@ def test_d2_live_shape_table_per_question_condition_and_surface():
                         'successful_runs': 3}},
         'Q03': {'figures': {}}}}, {'repeat_count': 3})
     assert text == md(
-        '## 9. D2 Reproducibility Mechanism Classes\n',
+        '## 9. D2 Determinism Mechanism Classes\n',
         D2_NOTE,
         'n = 3 questions \u00d7 3 runs, per condition.\n',
         '> **Below AP-1 D2\'s 10 \u00d7 50: n = 3 \u00d7 3** (AP-1 D2: '
@@ -2131,7 +2131,7 @@ def test_unmeasured_dimensions_all_unclaimed():
     assert text.endswith(md(
         f'- **D1**: Accuracy \u2014 {NOT_CLAIMED} (the runner auto-scores '
         'it)',
-        f'- **D2**: Reproducibility \u2014 {NOT_CLAIMED} (the runner '
+        f'- **D2**: Determinism \u2014 {NOT_CLAIMED} (the runner '
         'measures it from repeated runs)',
         f'- **D3**: Provenance \u2014 {ADJ}',
         f'- **D4**: Refusal integrity \u2014 {ADJ}',
@@ -2600,16 +2600,16 @@ def test_d7_outcome_counts_per_evidence_class_when_classes_differ():
         assert 'Per evidence class' not in section(single)
 
 
-AP1_NAMES = {'D3': 'Provenance', 'D4': 'Refusal integrity', 'D5': 'Adversarial resistance',
+AP1_NAMES = {'D2': 'Determinism', 'D3': 'Provenance',
+             'D4': 'Refusal integrity', 'D5': 'Adversarial resistance',
              'D6': 'Conflicting input', 'D7': 'Computation invocation'}
 
 
 @pytest.mark.finding('T3-33')
 def test_unmeasured_dimensions_use_ap1_names():
-    # AP-1 v1.3 §4: D3 Provenance, D4 Refusal integrity, D5 Adversarial
-    # resistance, D6 Conflicting input, D7 Computation invocation. Correct:
-    # §12 uses these names. (D2 is "Determinism" in AP-1 v1.3 but
-    # "Reproducibility" in SPEC and the code alike; not asserted here.)
+    # AP-1 v1.3 §4: D2 Determinism, D3 Provenance, D4 Refusal integrity,
+    # D5 Adversarial resistance, D6 Conflicting input, D7 Computation
+    # invocation. Correct: §12 uses these names.
     text = report._section_unmeasured_dimensions({})
     for dim, name in AP1_NAMES.items():
         assert re.search(rf'\*\*{dim}\*\*: {name}\b', text), (dim, text)
