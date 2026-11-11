@@ -2219,8 +2219,12 @@ def test_report_states_adjudication_sheets_are_in_run_order():
     limitations = text[text.index('## 13. Declared Limitations\n'):]
     assert '\n### Adjudication Sheet Order\n\n' + SHEET_ORDER_TEXT \
         in limitations
-    assert 'in run order' in SHEET_ORDER_TEXT
-    assert 'not blind to the condition' in SHEET_ORDER_TEXT
+    # The two statements themselves, read from the generated subsection
+    # (not from the constant above), so a rewording that drops either fails.
+    section = limitations.split('\n### Adjudication Sheet Order\n', 1)[1]
+    section = section.split('\n#', 1)[0]
+    assert 'in run order' in section
+    assert 'not blind to the condition' in section
 
 
 # -- _format_dim_result ---------------------------------------------------
