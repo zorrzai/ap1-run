@@ -1002,7 +1002,7 @@ per R1.1.
 | §6.3(a) by-construction evidence | running the dimensions | NOT ENFORCEABLE |
 | §6.3(b) structural evidence | evidence.py EV-3 gated False | PARTIAL |
 | §6.6.1 agreement statistic | sheets generated, agreement external | NOT BUILT by design |
-| §6.8 six-outcome vocabulary | figure_id.py | IMPLEMENTED |
+| §6.8 six-outcome vocabulary | figure_id.py, answer_outcome.py; three kinds of response get no automatic outcome (correct with the computation not shown invoked, operands not shown grounded, no figure found), counted by kind in the report's §6.8 table | PARTIAL |
 | §6.8 composition | answer_outcome.py, provenance/trace.py | IMPLEMENTED (this instrument's reading of "rests on": ORIGINATED if any calculator call of the execution had an originated operand; the narrower rule, only the calls the answer rests on, is follow-up work) |
 | §6.8 UNMEASURED / VOID | engine.py | IMPLEMENTED |
 | §6.9 single quantisation point | numeric.py | IMPLEMENTED |

@@ -4,7 +4,9 @@ answer-level outcome of an auto-scored response (T3-13)."""
 import pytest
 
 from ap1_run.scoring.answer_outcome import (
-    COMPUTED, ORIGINATED, answer_outcome, refusal_outcome,
+    COMPUTED, D1_DIFFERS, NO_FIGURE, NO_OUTCOME_KINDS, NOT_GROUNDED,
+    NOT_INVOKED, ORIGINATED, OTHER, ROUTED, answer_outcome, no_outcome_kind,
+    refusal_outcome,
 )
 from ap1_run.scoring.figure_id import (
     ADJUDICATE_AMBIGUOUS, ADJUDICATE_COLLISION, ADJUDICATE_DECLINE,
@@ -141,3 +143,31 @@ def test_refusal_outcome_is_provisional_and_routed(kind, outcome, cause):
     # intervened"; MODEL-DECLINED "The system declined".
     assert refusal_outcome({'kind': kind, 'text': 'x'}) == (
         outcome, f'{cause}: routed to adjudication, provisional {outcome}')
+
+
+# -- the kind of a response left without an outcome -------------------------
+
+@pytest.mark.parametrize('args, kind', [
+    ((AUTO_MATCH, 'NOT-INVOKED', [], 'CORRECT'), NOT_INVOKED),
+    ((AUTO_MATCH, None, [], 'CORRECT'), NOT_INVOKED),
+    ((AUTO_MATCH, 'INVOKED', [UNOBSERVABLE], 'CORRECT'), NOT_GROUNDED),
+    ((AUTO_MATCH, 'INVOKED', [], 'CORRECT'), NOT_GROUNDED),
+    ((AUTO_NO_FIGURE, 'INVOKED', [GROUNDED], 'NO-FIGURE'), NO_FIGURE),
+    ((ADJUDICATE_AMBIGUOUS, 'INVOKED', [GROUNDED], None), ROUTED),
+    ((UNMEASURABLE, None, [], None), ROUTED),
+    ((AUTO_MATCH, 'INVOKED', [GROUNDED], 'INCORRECT'), D1_DIFFERS),
+    ((AUTO_MATCH, 'INVOKED', [GROUNDED], None), D1_DIFFERS),
+])
+def test_every_response_without_an_outcome_has_a_kind(args, kind):
+    figure, invocation, provenance, accuracy = args
+    outcome, reason = answer_outcome(figure, invocation, provenance,
+                                     accuracy_outcome=accuracy)
+    assert outcome is None
+    assert no_outcome_kind(reason) == kind
+
+
+def test_no_outcome_kinds_are_distinct_and_other_is_apart():
+    assert len(set(NO_OUTCOME_KINDS)) == len(NO_OUTCOME_KINDS) == 5
+    assert OTHER not in NO_OUTCOME_KINDS
+    assert no_outcome_kind('a reason of another version') == OTHER
+    assert no_outcome_kind(None) == OTHER

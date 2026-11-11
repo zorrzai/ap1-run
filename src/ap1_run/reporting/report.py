@@ -49,6 +49,9 @@ from ap1_run.runner.executions import LOOP_EXHAUSTED
 from ap1_run.scoring.accuracy import (
     CATEGORY_MINIMUM_N, clopper_pearson_interval,
 )
+from ap1_run.scoring.answer_outcome import (
+    NO_OUTCOME_KINDS, OTHER, ROUTED,
+)
 from ap1_run.scoring.invocation import (
     _exact_upper_bound, clopper_pearson_upper, format_failing_questions,
     round_up,
@@ -1046,7 +1049,65 @@ def _section_scoring_proportions(summary):
     if not d1 and not d7:
         lines.append('*No scoring proportion data available.*\n')
 
+    if 'answer_outcomes' in summary:
+        lines.extend(_answer_outcome_rows(summary['answer_outcomes']))
+
     return '\n'.join(lines)
+
+
+# AP-1 v1.3 section 6.8's six outcomes, in its order
+SECTION_6_8_OUTCOMES = ('COMPUTED', 'RETRIEVED', 'MODEL-DECLINED',
+                        'CLASSIFIER-REFUSED', 'ORIGINATED', 'WRONG-SCOPE')
+
+
+def _answer_outcome_rows(counts):
+    """Section 8's section 6.8 table: each outcome present with its
+    count, the responses routed to adjudication, and those with no
+    automatic outcome, listed by kind with a count, so that the counts
+    sum to the executions scored and none is silently missing (T3-13)."""
+    outcomes = counts.get('outcomes', {})
+    no_outcome = dict(counts.get('no_outcome', {}))
+    routed = no_outcome.pop(ROUTED, 0)
+    unlabelled = sum(no_outcome.values())
+    provisional = counts.get('provisional', {})
+    total = (sum(outcomes.values()) + sum(provisional.values()) + routed
+             + unlabelled)
+    lines = ['### AP-1 \u00a76.8 Answer Outcomes\n',
+             '> AP-1 v1.3 \u00a76.8: every response is scored as exactly one '
+             'of COMPUTED, RETRIEVED, MODEL-DECLINED, CLASSIFIER-REFUSED, '
+             'ORIGINATED and WRONG-SCOPE. The runner assigns an outcome '
+             'where the record decides it; the scorers assign it to a '
+             'response routed to adjudication; the rest have no automatic '
+             'outcome and are listed below by kind.\n',
+             '| Outcome | Count |', '|---|---|']
+    present = [o for o in SECTION_6_8_OUTCOMES if outcomes.get(o)] + sorted(
+        o for o in outcomes if o not in SECTION_6_8_OUTCOMES)
+    for outcome in present:
+        lines.append(f'| `{outcome}` | {outcomes[outcome]} |')
+    # A refusal or content-filter stop (T3-10): its provisional outcome,
+    # which the scorers confirm or replace on its sheet
+    for outcome in [o for o in SECTION_6_8_OUTCOMES if provisional.get(o)] \
+            + sorted(o for o in provisional if o not in SECTION_6_8_OUTCOMES):
+        lines.append(f'| `{outcome}` (provisional: routed to adjudication, '
+                     f'the scorers confirm or replace it) | '
+                     f'{provisional[outcome]} |')
+    lines.append(f'| Routed to adjudication (the scorers assign the '
+                 f'outcome) | {routed} |')
+    lines.append(f'| No automatic outcome (by kind below) | {unlabelled} |')
+    lines.append(f'| **Total (executions scored)** | **{total}** |')
+    lines.append('\n#### No Automatic Outcome, by Kind\n')
+    if not unlabelled:
+        lines.append('None: every response not routed to adjudication has '
+                     'an outcome.\n')
+        return lines
+    lines.extend(['| Kind | Count |', '|---|---|'])
+    for kind in NO_OUTCOME_KINDS:
+        if kind != ROUTED and no_outcome.get(kind):
+            lines.append(f'| {kind} | {no_outcome[kind]} |')
+    for reason, n in sorted(counts.get('other_reasons', {}).items()):
+        lines.append(f'| {OTHER}: {reason} | {n} |')
+    lines.append('')
+    return lines
 
 
 def _section_d2_mechanisms(summary, config=None):

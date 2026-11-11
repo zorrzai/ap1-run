@@ -6,6 +6,7 @@ give D2 per item and condition; build_summary assembles the summary that
 report.generate_report() reads.
 """
 
+from ap1_run.scoring.answer_outcome import OTHER, no_outcome_kind
 from ap1_run.scoring.invocation import compute_dpr, measure_invocation
 
 from ap1_run.scoring.reproducibility import (
@@ -203,6 +204,39 @@ def summarise_parameter_echo(checks):
             'findings': findings}
 
 
+def count_answer_outcomes(all_results):
+    """AP-1 v1.3 section 6.8 over the executed responses: how many got
+    each answer-level outcome, and how many of each kind got none
+    (answer_outcome.no_outcome_kind; T3-13), so that every executed
+    response is counted once. A reason of no known kind is counted by
+    its text under other_reasons. A refusal or content-filter stop
+    (T3-10) is counted under its provisional outcome, in provisional
+    (present only if there is one)."""
+    outcomes, no_outcome, other_reasons, provisional = {}, {}, {}, {}
+    for r in all_results:
+        if r.get('status') != 'EXECUTED':
+            continue
+        outcome = r.get('answer_outcome')
+        if outcome:
+            outcomes[outcome] = outcomes.get(outcome, 0) + 1
+            continue
+        if r.get('provisional_outcome'):
+            p = r['provisional_outcome']
+            provisional[p] = provisional.get(p, 0) + 1
+            continue
+        reason = r.get('answer_outcome_reason')
+        kind = no_outcome_kind(reason)
+        no_outcome[kind] = no_outcome.get(kind, 0) + 1
+        if kind == OTHER:
+            key = reason or 'no reason recorded'
+            other_reasons[key] = other_reasons.get(key, 0) + 1
+    counts = {'outcomes': outcomes, 'no_outcome': no_outcome,
+              'other_reasons': other_reasons}
+    if provisional:
+        counts['provisional'] = provisional
+    return counts
+
+
 def build_summary(all_results, evidence_findings, *,
                   d1_summary=None, d2_results=None,
                   d2_cap_reason=None,
@@ -340,6 +374,10 @@ def build_summary(all_results, evidence_findings, *,
         'auto_scored_n': auto_n,
         'adjudicated_n': adj_n,
     }
+
+    # AP-1 v1.3 section 6.8: each executed response's answer outcome,
+    # or the kind of response left without one (T3-13)
+    summary['answer_outcomes'] = count_answer_outcomes(all_results)
 
     # The evidence classes each D7 figure rests on (AP-1 D7.7; T3-29):
     # D7.2(b) on the executions with an evaluated operation, D7.3 on

@@ -136,6 +136,7 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/reporting/test_report.py::test_dimension_results_d1_lists_questions_not_in_any_category_alone',
     'tests/unit/reporting/test_report.py::test_dimension_results_d1_lists_the_question_not_in_any_category',
     'tests/unit/reporting/test_report.py::test_dimension_results_d1_per_category_with_n_and_interval',
+    'tests/unit/reporting/test_report.py::test_scoring_proportions_lists_responses_without_outcome_by_kind',
     'tests/unit/runner/test_console.py::test_run_report_3h_lists_failing_questions_with_counts',
     'tests/unit/runner/test_console.py::test_run_report_3h_rate_counts_questions_not_repeats',
     'tests/unit/runner/test_console.py::test_run_report_section_3h2_heading_starts_after_a_blank_line',

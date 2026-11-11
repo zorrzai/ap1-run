@@ -3066,3 +3066,108 @@ def test_d2_conditions_names_a_seed_sent():
     assert ('- Deterministic or batch-invariant mode: none requested by the '
             'runner beyond the `seed` sent (`7`); whether the endpoint honours '
             'it, or enables such a mode, is not disclosed.\n') in text
+
+
+# -- section 8: AP-1 v1.3 section 6.8 answer outcomes ----------------------
+
+ANSWER_OUTCOMES = {
+    'outcomes': {'ORIGINATED': 1, 'COMPUTED': 5},
+    'no_outcome': {'correct figure, calculator not shown used': 2,
+                   'calculator used, operands not shown grounded': 3,
+                   'no figure found (AUTO-NO-FIGURE)': 4,
+                   'routed to adjudication': 7},
+    'other_reasons': {}}
+
+
+@pytest.mark.finding('T3-13')
+@pytest.mark.req('AP-1 §6.8', 'R3.3')
+def test_scoring_proportions_section_6_8_outcome_count_table():
+    # One row per outcome present, with its count, a row for the
+    # responses routed to adjudication and one for those with no
+    # automatic outcome; the counts sum to the executions scored
+    text = report._section_scoring_proportions(
+        {'d7_results': {'n': 22, 'auto_scored_n': 15, 'adjudicated_n': 7},
+         'answer_outcomes': ANSWER_OUTCOMES})
+    table = text[text.index('### AP-1 \u00a76.8 Answer Outcomes'):]
+    rows = [line for line in table.split('\n') if line.startswith('| ')]
+    assert rows[:6] == [
+        '| Outcome | Count |',
+        '| `COMPUTED` | 5 |',
+        '| `ORIGINATED` | 1 |',
+        '| Routed to adjudication (the scorers assign the outcome) | 7 |',
+        '| No automatic outcome (by kind below) | 9 |',
+        '| **Total (executions scored)** | **22** |']
+    # only the outcomes present; the sum is the D7 n of executions scored
+    assert '`RETRIEVED`' not in table and '`WRONG-SCOPE`' not in table
+    assert 5 + 1 + 7 + 9 == 22
+
+
+@pytest.mark.proposal(
+    "the listing of responses with no automatic \u00a76.8 outcome, by kind "
+    "with a count, is the fix's format; AP-1 v1.3 gives every response one "
+    "outcome and names no such kinds")
+@pytest.mark.finding('T3-13')
+@pytest.mark.req('AP-1 §6.8', 'R3.3')
+def test_scoring_proportions_lists_responses_without_outcome_by_kind():
+    # The three kinds AP-1's labels don't fit automatically stay
+    # unlabelled and are listed by kind, with a count: correct but the
+    # calculator not shown used (worked out "in its head"), operands
+    # unobservable, no figure found. One response of each, scored by
+    # answer_outcome and counted by build_summary, as a run does.
+    from ap1_run.runner.summary import build_summary
+    from ap1_run.scoring.answer_outcome import answer_outcome
+    grounded = [{'outcome': 'OPERANDS-GROUNDED'}]
+    responses = [('AUTO-MATCH', 'INVOKED', grounded, 'CORRECT'),
+                 ('AUTO-MATCH', 'NOT-INVOKED', [], 'CORRECT'),
+                 ('AUTO-MATCH', 'INVOKED',
+                  [{'outcome': 'OPERANDS-UNOBSERVABLE'}], 'CORRECT'),
+                 ('AUTO-NO-FIGURE', 'INVOKED', grounded, 'NO-FIGURE')]
+    results = []
+    for i, (figure, invocation, provenance, accuracy) in enumerate(responses):
+        outcome, reason = answer_outcome(figure, invocation, provenance,
+                                         accuracy_outcome=accuracy)
+        results.append({'item_id': f'Q{i}', 'condition': 'base',
+                        'repeat': 1, 'status': 'EXECUTED',
+                        'figure_outcome': figure,
+                        'invocation_outcome': invocation,
+                        'answer_outcome': outcome,
+                        'answer_outcome_reason': reason})
+    text = report._section_scoring_proportions(build_summary(results, []))
+    assert '| `COMPUTED` | 1 |' in text
+    assert '| No automatic outcome (by kind below) | 3 |' in text
+    assert '| **Total (executions scored)** | **4** |' in text
+    listing = text[text.index('#### No Automatic Outcome, by Kind'):]
+    assert listing == md(
+        '#### No Automatic Outcome, by Kind\n',
+        '| Kind | Count |',
+        '|---|---|',
+        '| correct figure, calculator not shown used | 1 |',
+        '| calculator used, operands not shown grounded | 1 |',
+        '| no figure found (AUTO-NO-FIGURE) | 1 |',
+        '')
+    # counts per kind, in the listing's order
+    counted = report._section_scoring_proportions(
+        {'answer_outcomes': ANSWER_OUTCOMES})
+    assert counted.endswith(md(
+        '| correct figure, calculator not shown used | 2 |',
+        '| calculator used, operands not shown grounded | 3 |',
+        '| no figure found (AUTO-NO-FIGURE) | 4 |', ''))
+    # a reason of no known kind is listed by its text
+    other = dict(ANSWER_OUTCOMES, no_outcome={'other': 2},
+                 other_reasons={'some reason': 2})
+    assert '| other: some reason | 2 |' in \
+        report._section_scoring_proportions({'answer_outcomes': other})
+
+
+@pytest.mark.finding('T3-13')
+def test_scoring_proportions_every_response_with_an_outcome():
+    text = report._section_scoring_proportions({'answer_outcomes': {
+        'outcomes': {'COMPUTED': 3}, 'no_outcome': {}, 'other_reasons': {}}})
+    assert '| **Total (executions scored)** | **3** |' in text
+    assert text.endswith(
+        '#### No Automatic Outcome, by Kind\n\nNone: every response not '
+        'routed to adjudication has an outcome.\n')
+
+
+def test_scoring_proportions_without_answer_outcomes_has_no_table():
+    assert '6.8' not in report._section_scoring_proportions({})

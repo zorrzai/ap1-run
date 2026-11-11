@@ -5,7 +5,7 @@ import pytest
 
 from ap1_run.runner import summary as summary_module
 from ap1_run.runner.summary import (
-    summarise_parameter_echo,
+    summarise_parameter_echo, count_answer_outcomes,
     build_summary, classify_reproducibility, find_d2_cap,
     verify_invocation_consistency,
 )
@@ -167,6 +167,8 @@ EMPTY = {
     'non_outcome_cells': [],
     'parameter_echo': {'status': 'UNVERIFIED', 'responses': 0,
                        'findings': []},
+    'answer_outcomes': {'outcomes': {}, 'no_outcome': {},
+                        'other_reasons': {}},
 }
 
 
@@ -1098,3 +1100,43 @@ def test_build_summary_passes_parameter_echo():
     s = build_summary([], [], parameter_echo=[echo('VERIFIED')])
     assert s['parameter_echo'] == {'status': 'VERIFIED', 'responses': 1,
                                    'findings': []}
+
+
+# -- AP-1 v1.3 section 6.8 answer outcomes ----------------------------------
+
+@pytest.mark.finding('T3-13')
+@pytest.mark.req('AP-1 §6.8')
+def test_answer_outcomes_count_every_executed_response_once():
+    from ap1_run.scoring.answer_outcome import answer_outcome
+    from ap1_run.scoring.figure_id import AUTO_MATCH, AUTO_NO_FIGURE
+    grounded = [{'outcome': 'OPERANDS-GROUNDED'}]
+
+    def scored(*args, accuracy='CORRECT', **fields):
+        outcome, reason = answer_outcome(*args, accuracy_outcome=accuracy)
+        return executed(answer_outcome=outcome,
+                        answer_outcome_reason=reason, **fields)
+
+    results = [
+        scored(AUTO_MATCH, 'INVOKED', grounded),
+        scored(AUTO_MATCH, 'INVOKED', grounded),
+        scored(AUTO_MATCH, 'INVOKED', [{'outcome': 'OPERAND-ORIGINATED'}]),
+        scored(AUTO_MATCH, 'NOT-INVOKED', []),
+        scored(AUTO_MATCH, 'INVOKED', [{'outcome': 'OPERANDS-UNOBSERVABLE'}]),
+        scored(AUTO_NO_FIGURE, 'INVOKED', grounded, accuracy='NO-FIGURE'),
+        scored('ADJUDICATE-AMBIGUOUS', 'INVOKED', grounded),
+        executed(answer_outcome=None, answer_outcome_reason='elsewhere'),
+        executed(),
+        {'status': 'VOID', 'answer_outcome': None},
+    ]
+    counts = count_answer_outcomes(results)
+    assert counts == {
+        'outcomes': {'COMPUTED': 2, 'ORIGINATED': 1},
+        'no_outcome': {
+            'correct figure, calculator not shown used': 1,
+            'calculator used, operands not shown grounded': 1,
+            'no figure found (AUTO-NO-FIGURE)': 1,
+            'routed to adjudication': 1, 'other': 2},
+        'other_reasons': {'elsewhere': 1, 'no reason recorded': 1}}
+    assert (sum(counts['outcomes'].values())
+            + sum(counts['no_outcome'].values())) == 9
+    assert build_summary(results, [])['answer_outcomes'] == counts

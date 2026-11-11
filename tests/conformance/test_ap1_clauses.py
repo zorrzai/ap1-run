@@ -631,7 +631,9 @@ def test_figure_identification_outcomes_are_not_the_six_outcome_vocabulary():
     # outcome. Since the T3-13 fix, scoring/answer_outcome.py assigns the
     # §6.8 outcome of an auto-scored response where the record decides it
     # (COMPUTED, or ORIGINATED by the composition rule); the scorers
-    # assign the rest on the sheets. The SPEC §10 row is still to fix.
+    # assign it to a routed response on the sheets; the rest get none and
+    # the report counts them by kind. So the SPEC §10 row reads PARTIAL,
+    # with that reason.
     from ap1_run.scoring import figure_id
     routing = {v for k, v in vars(figure_id).items()
                if k.isupper() and isinstance(v, str)}
@@ -641,6 +643,11 @@ def test_figure_identification_outcomes_are_not_the_six_outcome_vocabulary():
         'ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', 'UNMEASURABLE',
         'ADJUDICATE-REFUSAL'}
     assert routing.isdisjoint(SIX_OUTCOMES)
+    rows = [line for line in SPEC.read_text(encoding='utf-8').splitlines()
+            if line.startswith('| §6.8 six-outcome vocabulary |')]
+    assert len(rows) == 1
+    assert rows[0].rstrip().endswith('| PARTIAL |')
+    assert 'no automatic outcome' in rows[0]
 
 
 # =====================================================================
