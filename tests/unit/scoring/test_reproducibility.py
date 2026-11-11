@@ -326,3 +326,73 @@ def test_parameter_echo_numerically_equal_values_can_mismatch():
     assert r['status'] == 'MISMATCH'
     assert r['findings'] == [
         "parameter 'temperature': requested=0, applied=0.0 — silently ignored"]
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# xfail(strict=True) until the fix.
+
+def _answer(text):
+    return {'choices': [{'message': {'role': 'assistant', 'content': text}}]}
+
+
+@pytest.mark.finding('T3-4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-4: the "figures" surface is the whole prose, '
+                          'so one figure in two wordings is two values')
+def test_classify_mechanism_figures_surface_counts_numeric_answers():
+    # SPEC R2.2: classes per surface, "separately for computed figures and
+    # for surrounding prose"; AP-1 D2 Method: "the number of distinct
+    # numeric answers per question". Correct: the same figure worded twice
+    # is one distinct value on the figures surface, two on prose.
+    responses = [_answer('The monthly interest is $15.20.'),
+                 _answer('Interest per month: $15.20')]
+    figures = classify_mechanism(responses, surface='figures',
+                                 minimum_runs=2)
+    prose = classify_mechanism(responses, surface='prose', minimum_runs=2)
+    assert prose['distinct_values'] == 2
+    assert figures['distinct_values'] == 1, figures
+
+
+@pytest.mark.finding('S3-G5-4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G5-4: echo compared as strings; 0 requested, '
+                          '0.0 applied is reported silently ignored')
+def test_parameter_echo_numerically_equal_values_verified():
+    # SPEC R2.2: "a parameter requested and silently ignored is a platform
+    # finding". 0 and 0.0 are the same temperature. Correct: numbers are
+    # compared as numbers (exactly, as Decimal of their text).
+    r = check_parameter_echo({'temperature': 0}, {'temperature': 0.0})
+    assert r['status'] == 'VERIFIED', r['findings']
+    assert r['findings'] == []
+
+
+@pytest.mark.finding('S3-G5-3')
+@pytest.mark.req('R2.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G5-3: an unknown surface is classified '
+                          'OBSERVED-ONLY from no values')
+def test_classify_mechanism_unknown_surface_is_refused():
+    # The surfaces are 'figures' and 'prose' (docstring). Any other name
+    # is a caller error: refuse it with ReproducibilityError (defined for
+    # this, never raised), rather than classify zero values.
+    try:
+        r = classify_mechanism([response('a')] * 3, surface='Figures',
+                               minimum_runs=3)
+        outcome = r['mechanism']
+    except ReproducibilityError:
+        outcome = 'refused'
+    assert outcome == 'refused'
+
+
+@pytest.mark.finding('S3-G5-3')
+@pytest.mark.req('R2.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G5-3: no observations with minimum_runs=0 are '
+                          'OBSERVED-ONLY')
+def test_classify_mechanism_no_observations_is_unmeasured():
+    # Zero successful runs say nothing about the mechanism: UNMEASURED,
+    # whatever the minimum. SPEC R2.2: the runner tells OBSERVED-ONLY from
+    # UNMEASURED "from evidence"; its contract case (49 rate-limited runs
+    # and one success is UNMEASURED) is the same rule with one run.
+    r = classify_mechanism([], surface='prose', minimum_runs=0)
+    assert r['mechanism'] == UNMEASURED

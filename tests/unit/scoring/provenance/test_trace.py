@@ -18,6 +18,14 @@ CTX = {
 }
 
 
+# DEC-5: tests of today's behaviour in a module SPEC does not define are
+# provisional (the code is the definition for now); the step-4 xfails
+# in this file are not, they state the correct behaviour of known defects.
+PROVISIONAL = pytest.mark.provisional(
+    'DEC-5: sign inversion has no SPEC section; the code is the '
+    'provisional definition')
+
+
 def resolved(step, resolution, *, field=None, intermediate=None,
              quantisation=False, transform=None, sign=None, **extra):
     """The dict resolve_operand returns, built in full so that every key and
@@ -172,6 +180,7 @@ def test_resolve_step1_source_match_wins_over_constant():
         'source_match'
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-5')
 def test_resolve_step1_negated_constant_matches_by_magnitude():
     # Current behaviour (T3-5): -12 is grounded by a declared 12.
@@ -386,6 +395,7 @@ def test_resolve_step5_untraceable():
                                         near_miss_finding=None)
 
 
+@PROVISIONAL
 def test_resolve_step5_sign_inverted_source_is_a_finding():
     assert resolve('-15200') == resolved(
         5, 'originated', near_miss_finding=None,
@@ -393,12 +403,14 @@ def test_resolve_step5_sign_inverted_source_is_a_finding():
               'source_value': '15200.00', 'operand_value': '-15200'})
 
 
+@PROVISIONAL
 def test_resolve_step5_sign_inversion_takes_first_match():
     ctx = {'a': {'x': 'n/a', 'y': '9'}, 'b': {'z': '9'}}
     r = resolve('-9', ctx=ctx)
     assert r['sign_inversion_finding']['matched_field'] == 'a.y'
 
 
+@PROVISIONAL
 def test_resolve_step5_zero_source_is_not_a_sign_inversion():
     r = resolve('-0', ctx={'a': {'fee': '0.00', 'x': '5'}}, constants=[])
     assert r['step'] == 1  # -0 == 0.00: a source match
@@ -443,3 +455,139 @@ def test_collect_constants_returns_a_new_mutable_set():
     constants.add(D('99'))
     assert STRUCTURAL_CONSTANTS == frozenset({D('1')})
     assert isinstance(constants, set)
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-2: leading whitespace makes the expression '
+                          'unparseable, so no operands are extracted')
+@pytest.mark.parametrize('expression', [' 1520 * 0.01', '\t1520*0.01'])
+def test_extract_operands_leading_whitespace_is_stripped(expression):
+    # Correct: the expression is normalised (stripped) before parsing, as
+    # the calculator and D7.2(b) already do, so its operands are found and
+    # resolved. AP-1 v1.3 D7.2(a): every numeric operand shall be traceable;
+    # the chain "fails closed at the first unresolved link".
+    assert extract_operands(expression) == [
+        (D('1520'), '1520'), (D('0.01'), '0.01')]
+
+
+@pytest.mark.finding('T3-58')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-58: operand literals are read through float')
+@pytest.mark.parametrize('literal', [
+    '53.20',                    # trailing zero kept in the literal text
+    '-53.20',
+    '15200.0000000000000001',   # 17+ significant digits, not rounded
+    '0.12345678901234567890',
+])
+def test_extract_operands_reads_literal_text_exactly_as_decimal(literal):
+    # Correct (DEC-6, T3-58; SPEC R0.4.1 and
+    # R0.4.2 "parsed to Decimal from its literal text, never through
+    # float"; the function's own docstring): the operand is the Decimal of
+    # the text the model wrote, and the recorded literal is that text.
+    [(value, text)] = extract_operands(literal)
+    assert text == literal
+    assert str(value) == literal
+
+
+@pytest.mark.finding('T3-57')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-57: step 4 takes the first matching prior '
+                          'return, so the outcome depends on call order')
+def test_resolve_step4_grounded_matching_prior_return_grounds_in_any_order():
+    # SPEC R2.4 step 4: an operand is computed in session when it "exactly
+    # equals the return value of a prior invocation ... and that prior
+    # invocation was itself OPERANDS-GROUNDED" (AP-1 v1.3 D7.2(a)(iv)).
+    # With two prior returns of the same value, one grounded and one not,
+    # a grounded prior invocation returning that value exists, so the
+    # condition holds whatever the order of the calls: computed_in_session
+    # (step 4). The "if not grounded, originated" clause applies when no
+    # grounded prior invocation returned the value. Nothing is laundered:
+    # the value has a grounded derivation in the session.
+    ungrounded = {'value': D('7'), 'grounded': False}
+    grounded = {'value': D('7'), 'grounded': True}
+    outcomes = {}
+    for order, prior in [('ungrounded_first', [ungrounded, grounded]),
+                         ('grounded_first', [grounded, ungrounded])]:
+        r = resolve('7', ctx={}, prior=prior)
+        outcomes[order] = (r['step'], r['resolution'])
+    assert outcomes == {'ungrounded_first': (4, 'computed_in_session'),
+                        'grounded_first': (4, 'computed_in_session')}
+
+
+def extract_without_raising(expression):
+    try:
+        return extract_operands(expression), None
+    except Exception as e:
+        return None, e
+
+
+@pytest.mark.proposal(
+    'T3-39/S3-G4-5: a boolean literal is not an operand (the boolean '
+    'cases); proposed, not decided')
+@pytest.mark.finding('T3-39')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-39: a boolean literal in the expression raises')
+def test_extract_operands_boolean_literal_not_an_operand_no_raise():
+    # Correct (T3-39): "True + 1"
+    # in a model's expression never raises; a boolean is not a numeric
+    # operand, so it is never returned as one.
+    operands, error = extract_without_raising('True + 1')
+    assert error is None, f'{type(error).__name__}: {error}'
+    assert 'True' not in [literal for _, literal in operands]
+
+
+@pytest.mark.finding('T3-39')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-39: a non-string expression raises TypeError')
+def test_extract_operands_non_string_expression_no_raise():
+    # Correct (T3-39): {"expression": 15.2} is model-controlled;
+    # extracting operands from a value that is not a string never raises.
+    _, error = extract_without_raising(15.2)
+    assert error is None, f'{type(error).__name__}: {error}'
+
+
+# T3-5, settled by the maintainer's decision DEC-4: "a negated source value
+# grounds only through a declared negation transformation, and a negated
+# constant does not." Only step 1b's magnitude match goes; a negative
+# operand can still ground by any other step (an exact declared constant,
+# test_resolve_step1_exact_constant_wins_over_magnitude).
+
+@pytest.mark.finding('T3-5')
+@pytest.mark.req('R2.4', 'AP-1 D7.2(a)')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-5: -12 is grounded at step 1b by a declared 12')
+def test_resolve_negated_declared_constant_is_originated():
+    # Nothing else matches -12, so it is originated (step 5).
+    r = resolve('-12', ctx={}, constants=[D('12')])
+    assert (r['step'], r['resolution']) == (5, 'originated'), r
+
+
+@pytest.mark.finding('T3-5')
+@pytest.mark.req('R2.4', 'AP-1 D7.2(a)')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-5: -1 is grounded at step 1b by the '
+                          'structural constant 1')
+def test_resolve_negated_structural_one_is_originated():
+    r = resolve('-1', ctx={}, constants=[D('1')])
+    assert (r['step'], r['resolution']) == (5, 'originated'), r
+
+
+@pytest.mark.finding('T3-5')
+@pytest.mark.req('R2.4', 'AP-1 D7.2(a)')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-5: step 1b grounds -12 before step 5 can '
+                          'report the sign inversion of a source field')
+def test_resolve_negated_constant_equal_to_negated_source_is_sign_inversion():
+    # The Q09 case: the checking fee 12 is in the context and 12 is also a
+    # declared constant (the months). -12 is originated with the
+    # SIGN-INVERSION finding against the source field, as it would be with
+    # no such constant.
+    ctx = {'checking': {'monthly_fee': '12'}}
+    r = resolve('-12', ctx=ctx, constants=[D('12')])
+    assert (r['step'], r['resolution']) == (5, 'originated'), r
+    assert r['sign_inversion_finding'] == {
+        'type': 'SIGN-INVERSION', 'matched_field': 'checking.monthly_fee',
+        'source_value': '12', 'operand_value': '-12'}

@@ -255,3 +255,92 @@ def test_transcription_infinite_return_without_policy_is_altered():
     r = check_transcription(D('Infinity'), D('430.75'), figure_outcome=AUTO_MATCH)
     assert r['outcome'] == TRANSCRIBED_ALTERED
     assert r['difference'] == D('Infinity')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-27')
+@pytest.mark.req('R2.5', 'R0.4.1')
+@pytest.mark.xfail(strict=True, raises=(TypeError, AssertionError),
+                   reason='T3-27: check_transcription quantises with the '
+                          'Decimal default HALF_EVEN; the fix must add a '
+                          'quantisation_rounding= keyword and use it')
+@pytest.mark.parametrize('tool, released, mode, expected_outcome', [
+    ('430.745', '430.75', 'ROUND_HALF_UP', TRANSCRIBED_EXACT),
+    ('430.745', '430.74', 'ROUND_HALF_UP', TRANSCRIBED_ALTERED),
+    ('430.745', '430.74', 'ROUND_HALF_EVEN', TRANSCRIBED_EXACT),
+    ('430.745', '430.75', 'ROUND_HALF_EVEN', TRANSCRIBED_ALTERED),
+    ('-430.745', '-430.75', 'ROUND_HALF_UP', TRANSCRIBED_EXACT),
+    ('430.741', '430.74', 'ROUND_HALF_UP', TRANSCRIBED_EXACT),
+], ids=['half-up-licensed', 'half-up-unlicensed', 'half-even-licensed',
+        'half-even-unlicensed', 'half-up-negative-tie', 'half-up-not-a-tie'])
+def test_transcription_declared_rounding_mode_decides_the_tie(
+        tool, released, mode, expected_outcome):
+    # SPEC R0.4.1: quantisation uses "the declared rounding mode"; R2.5:
+    # "an alteration permitted by the declared quantisation policy is
+    # EXACT"; AP-1 v1.3 D7.3 (l.388): rounding not licensed by the
+    # declared policy is ALTERED. The tie 430.745 is 430.75 under
+    # ROUND_HALF_UP and 430.74 under ROUND_HALF_EVEN (the two modes the
+    # config accepts), so a fix that ignores the declared mode fails one
+    # of the pairs; -430.745 is -430.75 under HALF_UP (away from zero),
+    # which a fix rounding toward +infinity gets wrong; 430.741 is not a
+    # tie, so HALF_UP gives 430.74 where ROUND_UP would give 430.75.
+    r = check_transcription(D(tool), D(released),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2,
+                            quantisation_rounding=mode)
+    assert r['outcome'] == expected_outcome
+
+
+@pytest.mark.proposal(
+    "V12-n: v1.2 behaviour alongside v1.3 is the author's proposal; field "
+    "and key names are the fix's")
+@pytest.mark.finding('V12-6')
+@pytest.mark.req('R2.5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='V12-6: a D7.3 result has no "rounded under '
+                          'declared policy" sub-flag')
+def test_transcription_licensed_rounding_is_exact_and_flagged_rounded():
+    # V12-6: keep v1.3's
+    # TRANSCRIBED-EXACT for rounding the declared policy licenses (Q07:
+    # the tool returned 777.4125, the model released 777.41), and add a
+    # sub-flag so a v1.2 reader can count the strict "match" cases. The
+    # key name is this test's proposal: 'rounded_under_declared_policy'.
+    r = check_transcription(D('777.4125'), D('777.41'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert r['outcome'] == TRANSCRIBED_EXACT
+    assert r.get('rounded_under_declared_policy') is True
+
+
+@pytest.mark.proposal(
+    "V12-n: v1.2 behaviour alongside v1.3 is the author's proposal; field "
+    "and key names are the fix's")
+@pytest.mark.finding('V12-6')
+@pytest.mark.req('R2.5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='V12-6: a D7.3 result has no "rounded under '
+                          'declared policy" sub-flag')
+def test_transcription_exact_match_is_flagged_not_rounded():
+    # The sub-flag is False when the released figure equals the return
+    # with no rounding (V12-6).
+    r = check_transcription(D('430.75'), D('430.75'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert r['outcome'] == TRANSCRIBED_EXACT
+    assert r.get('rounded_under_declared_policy') is False
+
+
+@pytest.mark.finding('T3-39')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-39: quantising an infinite or huge return '
+                          'raises InvalidOperation')
+@pytest.mark.parametrize('value', ['Infinity', '1e+60'])
+def test_transcription_unquantisable_return_altered_or_unobservable(value):
+    # Correct (T3-39, the step-3 pin's own comment): a tool
+    # return that cannot be quantised is UNOBSERVABLE (or ALTERED), never
+    # an exception.
+    try:
+        r = check_transcription(D(value), D('430.75'),
+                                figure_outcome=AUTO_MATCH,
+                                quantisation_digits=2)
+    except Exception as e:
+        r = {'outcome': e}
+    assert r['outcome'] in (UNOBSERVABLE_TRANSCRIPTION, TRANSCRIBED_ALTERED), r

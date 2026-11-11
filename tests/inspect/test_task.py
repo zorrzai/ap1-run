@@ -1,7 +1,7 @@
 """ap1_inspect/task.py: the seal and the dataset of the two Inspect tasks
 (from legacy verify_inspect.py test_seal_refusal_on_wrong_hash).
 
-T3-44 / F7: the task seals docs/SPEC.md as "the AP-1 text", so it refuses
+T3-44: the task seals docs/SPEC.md as "the AP-1 text", so it refuses
 with every shipped config; with SPEC.md's hash it seals the wrong document;
 without SPEC.md it seals no text; the record is discarded either way.
 """
@@ -35,7 +35,7 @@ def test_wrong_ap1_text_hash_is_refused(loaded):
                           fp, qp, gp)
 
 
-@pytest.mark.finding('T3-44', 'F7')
+@pytest.mark.finding('T3-44')
 def test_shipped_config_with_the_real_ap1_hash_is_refused(loaded):
     # The example config declares the hash of the AP-1 v1.3 text, which
     # is what a run should seal; the task hashes SPEC.md instead and
@@ -50,7 +50,7 @@ def test_shipped_config_with_the_real_ap1_hash_is_refused(loaded):
         f"file hashes to '{SPEC_HASH}'")
 
 
-@pytest.mark.finding('T3-44', 'F7')
+@pytest.mark.finding('T3-44')
 def test_seal_with_spec_hash_records_spec_as_the_ap1_text(loaded):
     config, fixture, questions, fp, qp, gp = loaded
     record = task._create_seal(dict(config, ap1_text_hash=SPEC_HASH),
@@ -58,7 +58,7 @@ def test_seal_with_spec_hash_records_spec_as_the_ap1_text(loaded):
     assert record['ap1_text_hash'] == SPEC_HASH != AP1_HASH
 
 
-@pytest.mark.finding('F7', 'T3-68')
+@pytest.mark.finding('T3-44', 'T3-68')
 def test_seal_without_spec_md_seals_no_text(loaded, tmp_path, monkeypatch):
     # With no docs/SPEC.md the task seals with ap1_text_path=None: the
     # declared hash is recorded unverified. Correct: refuse without the

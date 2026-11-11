@@ -137,7 +137,10 @@ def test_r41_b07_two_invocations_one_originated_makes_item_originated(
     assert [o['value'] for o in item['all_originated']] == ['99999']
 
 
+@pytest.mark.finding('T3-58')
 def test_r41_b25_operand_equal_to_grounded_prior_return_is_grounded(savings):
+    # T3-58: the operand written 182.40 is recorded as 182.4 (read through
+    # float). The fix records the literal text.
     result = classify_invocation(
         '182.40 / 12', savings, SAVINGS_GT, CONFIG,
         prior_returns=[{'value': Decimal('182.40'), 'grounded': True}])
@@ -188,7 +191,9 @@ def test_r41_b29_all_invocations_grounded_makes_item_grounded(savings):
         'all_originated': [], 'all_quantisation_findings': []}
 
 
+@pytest.mark.finding('T3-58')
 def test_r41_b30_sequential_classification_carries_grounded_returns(savings):
+    # T3-58: as in B25, the recorded operand is 182.4, not 182.40.
     def call(call_id, expression, result):
         return {'id': call_id, 'function': {
             'name': 'calculator',

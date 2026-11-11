@@ -346,3 +346,66 @@ def test_identify_figure_default_extractor_receives_currency_symbols():
 def test_identify_figure_extractor_returning_nothing_is_auto_no_figure():
     r = identify(response('15.20'), extract_tokens_fn=lambda t, **k: [])
     assert r['outcome'] == AUTO_NO_FIGURE
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# xfail(strict=True) until the fix.
+
+@pytest.mark.proposal(
+    'T3-3: R2.0 step 4 changed (one matching token that is not the final '
+    'answer is not AUTO-MATCH); needs a SPEC change the maintainer has '
+    'not decided')
+@pytest.mark.finding('T3-3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-3: a matching non-final token is taken as the '
+                          'released figure (AUTO-MATCH 15.20; the response '
+                          'concludes 182.40)')
+def test_identify_figure_matching_non_final_token_is_not_auto_matched():
+    # The response mentions 15.20 on the way and concludes $182.40. SPEC
+    # R2.0: the module identifies "which numeric value ... is the released
+    # answer", never guesses, and "does not guess which of several figures
+    # was the answer". Correct: not AUTO-MATCH on 15.20 (with two figures
+    # and one matching, route to adjudication, or release 182.40).
+    r = identify(response('Rate 1.2% on 15200 gives 15.20 a year? '
+                          'No: answer is $182.40.'))
+    assert r['outcome'] != AUTO_MATCH, r['reason']
+    assert r['released_figure'] != D('15.20')
+
+
+@pytest.mark.finding('S3-G4-2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G4-2: "15.20%" AUTO-MATCHes an expected money '
+                          'value of 15.20')
+def test_identify_figure_percentage_token_does_not_match_money_value():
+    # SPEC R0.4.2: percentages are recorded with a percent flag; 15.20%
+    # is not the money figure 15.20. Correct: compare like with like, so a
+    # percent-flagged token is not AUTO-MATCH for a non-percent expected
+    # value (step-3 report g4, item 2).
+    r = identify(response('The rate is 15.20%.'))
+    assert r['outcome'] != AUTO_MATCH, r['reason']
+
+
+@pytest.mark.finding('T3-41')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-41: a locale-ambiguous token raises out of '
+                          'identify_figure instead of routing to '
+                          'adjudication')
+def test_identify_figure_locale_ambiguous_token_routes_to_adjudication():
+    # SPEC R0.4.2 "Locale ambiguity": where a token admits more than one
+    # reading under the configured separators, "the item routes to
+    # adjudication. The runner does not choose a locale." The extractor
+    # signals it with AmbiguousLocaleError; identify_figure must turn it
+    # into an ADJUDICATE-* outcome, not let it escape (which aborts the
+    # run once the callers pass the configured separators).
+    from ap1_run.foundation.numeric import AmbiguousLocaleError
+
+    def ambiguous(content, **kwargs):
+        raise AmbiguousLocaleError("'1.780': separator '.' is configured "
+                                   "as both decimal and grouping")
+    try:
+        outcome = identify(response('The answer is 1.780.'), '1.78',
+                           extract_tokens_fn=ambiguous)['outcome']
+    except AmbiguousLocaleError as e:
+        outcome = f'raised AmbiguousLocaleError: {e}'
+    assert outcome.startswith('ADJUDICATE')

@@ -462,8 +462,11 @@ def test_zero_failure_bound_is_one_minus_alpha_to_the_one_over_n():
     assert str(bound)[:8] == '0.139108'
 
 
+@pytest.mark.finding('T3-61')
 @pytest.mark.req('AP-1 D7.5', 'R2.3')
 def test_zero_failure_rate_is_reported_with_n_and_bound():
+    # T3-61: the exact bound is 13.91 %; it is shown rounded to nearest,
+    # not up. The fix changes the expected text.
     from ap1_run.scoring.invocation import format_rate
     assert format_rate(0, 20) == (
         '0/20 failures; one-sided 95% upper bound on the failure rate 13.9%')
@@ -823,6 +826,24 @@ def test_operator_omitted_parameter_gives_no_d2_cap():
 # =====================================================================
 # SPEC §10 table consistency
 # =====================================================================
+
+@pytest.mark.req('AP-1 §2.5')
+def test_spec_section_10_declares_the_partial_result_not_built():
+    """
+    > Clearing a subset is a partial result and shall be reported as such,
+    > naming which links were cleared and which were not.
+    (AP-1 v1.3 §2.5, L146)
+    """
+    # T3-30: §10 marked §2.5 IMPLEMENTED with no report section. The row
+    # now says PARTIAL and names what is missing; the strict xfail
+    # test_report_states_which_defeat_condition_links_were_cleared pins
+    # the report side.
+    rows = [line for line in SPEC.read_text(encoding='utf-8').splitlines()
+            if line.startswith('| §2.5 defeat condition per link |')]
+    assert len(rows) == 1
+    assert 'partial result' in rows[0] and 'is not built' in rows[0]
+    assert rows[0].rstrip().endswith('| PARTIAL |')
+
 
 @pytest.mark.req('AP-1 D7.2(a)(iv)', 'AP-1 D7.2(b)')
 def test_spec_section_10_does_not_understate_d72_rows():

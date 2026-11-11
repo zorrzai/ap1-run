@@ -682,3 +682,390 @@ def test_perturbation_check_passes_example_module(example):
 
 def test_source_fields_check_passes_example_module(example):
     assert source_fields_check(*example) == []
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+# Each test asserts the correct behaviour and is xfail(strict) until the fix.
+
+def refusal_of(check, *args, **kwargs):
+    """The SealError message of a guard, or None if the guard passed.
+    (Not pytest.raises: its DID NOT RAISE is not an AssertionError, and
+    these tests must fail at their assertion.)"""
+    try:
+        check(*args, **kwargs)
+    except SealError as exc:
+        return str(exc)
+    return None
+
+
+@pytest.mark.finding('T3-7')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-7: perturbation_check passes a constant module '
+                          'whose declaration perturbs nothing')
+@pytest.mark.parametrize('declared', [
+    None, [], ['nope.balance'], ['acct.nope'], ['balance'], ['acct.kind']],
+    ids=['missing-key', 'none', 'unknown-account', 'unknown-field', 'no-dot',
+         'non-numeric'])
+def test_perturbation_check_vacuous_declaration_refused(declared):
+    # Correct (SPEC R3.1, l.686-694: "A constant-returning module is
+    # refused, perturbation named"): a derivable item whose declaration
+    # gives the check nothing to perturb (no fields, an account or field
+    # not in the delivered context, a spec with no dot, a non-numeric
+    # field) cannot be shown to compute its answer, so it is refused, and
+    # the refusal names the declaration it could not perturb. Today every
+    # one of these is skipped with a silent `continue` and the module
+    # returning Decimal('42') passes.
+    def compute(item_id, ctx):
+        out = {'final': Decimal('42'), 'derivable': True}
+        if declared is not None:
+            out['source_fields_consumed'] = list(declared)
+        return out
+    msg = refusal_of(perturbation_check, module(compute), FIXTURE,
+                     questions('Q01'))
+    assert msg is not None, 'constant module passed perturbation_check'
+    for spec in declared or []:
+        assert spec in msg
+
+
+@pytest.mark.finding('T3-7')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-7: an item whose final is None is skipped '
+                          'although it is declared derivable')
+def test_perturbation_check_final_none_on_derivable_item_refused():
+    # Correct: only an item declared non-derivable may be exempt (SPEC
+    # R1.2 "item selection"; R3.1). A derivable item with no final value
+    # has no expected value to score against, so the module is refused,
+    # naming the item. Today `if baseline_final is None: continue`.
+    def compute(item_id, ctx):
+        return {'final': None, 'derivable': True,
+                'source_fields_consumed': ['acct.balance']}
+    msg = refusal_of(perturbation_check, module(compute), FIXTURE,
+                     questions('Q01'))
+    assert msg is not None, 'final None on a derivable item passed'
+    assert 'Q01' in msg
+
+
+@pytest.mark.finding('T3-8')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-8: source_fields_check tracks subscript reads '
+                          'only')
+@pytest.mark.parametrize('read', [
+    lambda acct: acct.get('rate'),
+    lambda acct: [v for k, v in acct.items() if k == 'rate'],
+    lambda acct: list(acct.values()),
+    lambda acct: acct.copy()['rate'],
+    lambda acct: dict(acct)['rate'],
+    lambda acct: {**acct}['rate'],
+], ids=['get', 'items', 'values', 'copy', 'dict', 'unpack'])
+def test_source_fields_check_undeclared_read_by_any_path_refused_naming_field(
+        read):
+    # Correct (source_fields_check's own contract, R3.1: "A module reading
+    # a field NOT in source_fields_consumed is refused, with the field
+    # named"): every path that hands the module a field's value counts as
+    # a read. The module declares acct.balance and also reads acct.rate,
+    # through a path other than a subscript. Today only __getitem__ is
+    # tracked and the check returns [].
+    def compute(item_id, ctx):
+        acct = ctx['acct']
+        acct['balance']
+        read(acct)
+        return {'final': Decimal('1'),
+                'source_fields_consumed': ['acct.balance']}
+    msg = refusal_of(source_fields_check, module(compute), FIXTURE,
+                     questions('Q01'))
+    assert msg is not None, 'undeclared read of acct.rate passed'
+    assert 'acct.rate' in msg
+
+
+@pytest.mark.finding('S3-G3-3')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G3-3: source_fields_check drops the exception '
+                          'and reports "accessed []"')
+def test_source_fields_check_compute_raising_refused_naming_the_error():
+    # Correct: the refusal says what went wrong. A compute that raises is
+    # refused (fail closed, as today) with the exception named, not as a
+    # module that "reads undeclared fields ... accessed []". The reason is
+    # built in the failure dict today and then dropped.
+    def compute(item_id, ctx):
+        raise ZeroDivisionError('boom')
+    msg = refusal_of(source_fields_check, module(compute), FIXTURE,
+                     questions('Q01'))
+    assert msg is not None
+    assert 'ZeroDivisionError' in msg and 'boom' in msg
+    assert 'reads undeclared fields' not in msg
+
+
+@pytest.mark.finding('S3-G3-3')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G3-3: perturbation_check drops the exception '
+                          'and calls the module constant-returning')
+@pytest.mark.parametrize('when', ['baseline', 'perturbed'])
+def test_perturbation_check_compute_raising_refused_naming_the_error(when):
+    # Correct: a compute that raises (on the baseline or on the perturbed
+    # context) is refused with the exception named. Today the refusal says
+    # "constant-returning module detected. Fields that had no effect:
+    # (baseline)" or names the field, and the exception text is dropped.
+    def compute(item_id, ctx):
+        if when == 'baseline' or ctx['acct']['balance'] != '100':
+            raise KeyError('missing-input')
+        return {'final': Decimal(ctx['acct']['balance']),
+                'source_fields_consumed': ['acct.balance']}
+    msg = refusal_of(perturbation_check, module(compute), FIXTURE,
+                     questions('Q01'))
+    assert msg is not None
+    assert 'KeyError' in msg and 'missing-input' in msg
+
+
+@pytest.mark.finding('S3-G3-3')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G3-3: the refusal names the field but not the '
+                          'perturbation applied or the item')
+def test_perturbation_check_constant_module_refusal_names_the_perturbation():
+    # Correct (SPEC R3.1, l.688-694: refused "with the perturbation
+    # named"): the refusal says which item, which field and what was done
+    # to it (the factor). Today the failure dict's reason ("output
+    # unchanged when acct.balance perturbed by factor 1.1") is dropped and
+    # the message names the field only.
+    msg = refusal_of(perturbation_check, module(constant(['acct.balance'])),
+                     FIXTURE, questions('Q01'))
+    assert msg is not None
+    assert 'Q01' in msg and 'acct.balance' in msg and '1.1' in msg
+
+
+def full_seal(files, config=CONFIG, **kwargs):
+    """A seal that is valid after every fix: the AP-1 text is passed and
+    its hash declared (T3-68 makes both required)."""
+    config = {**config, 'ap1_text_hash': files.hashes['ap1_text']}
+    return seal(config=config, **files.kwargs,
+                ap1_text_path=files.paths['ap1_text'], **kwargs)
+
+
+def full_verify(record, files, config=CONFIG, **kwargs):
+    config = {**config, 'ap1_text_hash': files.hashes['ap1_text']}
+    return verify_seal(record, config=config, **files.kwargs, **kwargs)
+
+
+def _refused(fn):
+    """Call fn; return the SealError it raises, or None if it returned."""
+    try:
+        fn()
+    except SealError as e:
+        return e
+    return None
+
+
+@pytest.mark.req('R1.1')
+def test_seal_same_inputs_sealed_twice_give_identical_input_hashes(
+        files, monkeypatch):
+    # SPEC R1.1's verification contract: "Sealing the same inputs twice
+    # yields identical hashes." Whatever T3-47's fix does with the
+    # timestamp (inside seal_hash, or a separate hash beside it), every
+    # hash of an input stays the same at two times. The input hashes are
+    # named, so a new hash that binds the timestamp is not mistaken for an
+    # input hash. Passes today.
+    stamps = iter(['2020-01-01T00:00:00+00:00', '2026-10-15T00:00:00+00:00'])
+
+    class Clock:
+        @staticmethod
+        def now(tz=None):
+            return SimpleNamespace(isoformat=lambda s=next(stamps): s)
+    monkeypatch.setattr(seal_mod, 'datetime', Clock)
+    first, second = full_seal(files), full_seal(files)
+    assert first['timestamp'] != second['timestamp']
+    inputs = ('fixture_hash', 'questions_hash', 'ground_truth_hash',
+              'config_hash', 'ap1_text_hash', 'runner_source_hash')
+    assert {k: first[k] for k in inputs} == {k: second[k] for k in inputs}
+
+
+@pytest.mark.finding('T3-47')
+@pytest.mark.req('R1.1', 'AP-1 §5.3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-47: verify_seal accepts a record whose '
+                          'timestamp was moved by one second')
+def test_verify_seal_timestamp_moved_one_second_refused(files):
+    # AP-1 v1.3 §5.3 "hashed and timestamped before execution": the
+    # timestamp is bound by a hash verify_seal checks. Design-neutral
+    # (T3-47 leaves the design to the fix): seal_hash may include the
+    # timestamp, or a separate hash may bind it; either way the genuine
+    # record verifies and one moved by a single second is refused, naming
+    # the timestamp or a hash.
+    record = full_seal(files)
+    assert _refused(lambda: full_verify(dict(record), files)) is None
+    from datetime import datetime, timedelta
+    moved = dict(record, timestamp=(
+        datetime.fromisoformat(record['timestamp'])
+        + timedelta(seconds=1)).isoformat())
+    error = _refused(lambda: full_verify(moved, files))
+    assert error is not None, 'timestamp moved 1 s, verify_seal returned True'
+    assert 'timestamp' in str(error) or 'hash' in str(error), error
+
+
+@pytest.mark.proposal(
+    'T3-47: the timestamp inside seal_hash; SPEC R1.1 says sealing the '
+    'same inputs twice gives identical hashes, and the register leaves '
+    'the choice to the fix')
+@pytest.mark.finding('T3-47')
+@pytest.mark.req('R1.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-47: seal_hash excludes the timestamp')
+def test_seal_hash_two_timestamps_give_two_hashes(files, monkeypatch):
+    # Correct (AP-1 v1.3 §5.3 "hashed and timestamped before execution";
+    # SPEC R1.1 "hash and timestamp"): the timestamp is bound by seal_hash,
+    # so a backdated timestamp no longer matches the hash.
+    stamps = iter(['2020-01-01T00:00:00+00:00', '2026-10-15T00:00:00+00:00'])
+
+    class Clock:
+        @staticmethod
+        def now(tz=None):
+            return SimpleNamespace(isoformat=lambda s=next(stamps): s)
+    monkeypatch.setattr(seal_mod, 'datetime', Clock)
+    first, second = full_seal(files), full_seal(files)
+    assert first['seal_hash'] != second['seal_hash']
+
+
+@pytest.mark.finding('T3-68')
+@pytest.mark.req('R1.1')
+@pytest.mark.parametrize('declared', ['placeholder', '', None])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason="T3-68: seal() accepts a 'placeholder', empty or "
+                          "missing declared AP-1 text hash")
+def test_seal_placeholder_or_blank_declared_ap1_hash_refused(
+        files, frozen, declared):
+    # Correct (SPEC R1.1 verification item 3: "A run claiming conformance
+    # to an AP-1 text whose hash is absent from the record is refused"):
+    # without a real declared hash there is nothing to check the text
+    # against, so the seal is refused.
+    config = dict(CONFIG)
+    if declared is not None:
+        config['ap1_text_hash'] = declared
+    error = _refused(lambda: make_seal(
+        files, config=config, ap1_text_path=files.paths['ap1_text']))
+    assert error is not None, 'sealed with declared hash %r' % declared
+    assert 'AP-1 text' in str(error)
+
+
+@pytest.mark.finding('T3-68')
+@pytest.mark.req('R1.1')
+@pytest.mark.parametrize('path', [None, ''])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-68: seal() without an AP-1 text path records '
+                          'the declared hash unverified')
+def test_seal_without_ap1_text_path_refused(files, frozen, path):
+    # Correct (SPEC R1.1 verification item 3): the AP-1 text is a required
+    # sealed input; a declared hash that no file was hashed against is
+    # refused.
+    config = {**CONFIG, 'ap1_text_hash': files.hashes['ap1_text']}
+    error = _refused(lambda: make_seal(files, config=config,
+                                       ap1_text_path=path))
+    assert error is not None, 'sealed without an AP-1 text file'
+
+
+SEALED_FIELDS = [
+    ('seal_hash', '0' * 64), ('timestamp', '1970-01-01T00:00:00+00:00'),
+    ('runner_source_hash', 'f' * 64), ('verification_keys', ['k']),
+    ('ev3_implemented', True), ('ap1_version', '9.9'),
+    ('runner_version_tag', 'v9'), ('runner_version_commit', 'fff'),
+    ('ap1_text_hash', 'a' * 64)]
+# A rewritten ap1_version_doi is refused today (both sides set), so it is
+# only in the deletion test.
+
+
+@pytest.mark.finding('T3-17', 'T3-19', 'T3-47')
+@pytest.mark.req('R1.1')
+@pytest.mark.parametrize('field, value', SEALED_FIELDS)
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-17: verify_seal ignores seal_hash and the '
+                          'fields outside its four file/config checks')
+def test_verify_seal_any_rewritten_field_refused_naming_it(
+        files, frozen, field, value):
+    # Correct (SPEC R1.1: "Modifying any sealed input causes the scorer to
+    # refuse, naming the mismatch"): verify_seal recomputes seal_hash over
+    # the record and refuses a record any field of which was rewritten,
+    # naming the field or the seal_hash mismatch. Here the inputs are
+    # unchanged and no AP-1 text path is passed.
+    record = full_seal(files)
+    record[field] = value
+    error = _refused(lambda: full_verify(record, files))
+    assert error is not None, '%s rewritten, verify_seal returned True' % field
+    assert field in str(error) or 'seal_hash' in str(error)
+
+
+@pytest.mark.finding('T3-17')
+@pytest.mark.req('R1.1')
+@pytest.mark.parametrize('field', [k for k, _ in SEALED_FIELDS
+                                   if k != 'seal_hash'] + ['ap1_version_doi'])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-17: verify_seal accepts a record with a sealed '
+                          'field deleted')
+def test_verify_seal_deleted_field_refused(files, frozen, field):
+    # Correct: a record missing a field the seal always writes is not a
+    # valid record (SPEC R1.1 "A run that starts without a valid record is
+    # refused"); seal_hash no longer matches.
+    record = full_seal(files)
+    del record[field]
+    assert _refused(lambda: full_verify(record, files)) is not None, \
+        '%s deleted, verify_seal returned True' % field
+
+
+@pytest.mark.finding('T3-17')
+@pytest.mark.req('R1.1')
+@pytest.mark.parametrize('sealed, current', [('', 'doi'), ('doi', '')])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-17: the DOI is compared only when both sides '
+                          'have one')
+def test_verify_seal_doi_on_one_side_only_named_as_mismatch(
+        files, frozen, sealed, current):
+    # Correct: a DOI present on one side only is a DOI mismatch, named as
+    # such (today only the config hash line appears).
+    config = {**CONFIG, 'ap1_version_doi': sealed}
+    record = full_seal(files, config=config)
+    error = _refused(lambda: full_verify(
+        record, files, config={**config, 'ap1_version_doi': current}))
+    assert error is not None
+    assert 'ap1_version_doi' in str(error)
+
+
+# T3-50: sealed file hashes and line endings. Decision (step 4, g5): the
+# sealed text inputs (fixture, questions, ground-truth module) are hashed
+# after normalising line endings to LF and dropping a UTF-8 byte-order
+# mark, so the same content gives the same digest on every platform and in
+# every editor (SPEC R0.4.3 verification item 1: "on two platforms, yields
+# identical digests"; README "LF on all sealed files"). An LF file without
+# a BOM hashes exactly as today. The AP-1 text is the exception: it is
+# byte-significant, its hash must equal the publisher's deposit
+# (.gitattributes: "reference/** -text"), so it stays raw bytes.
+
+# Only the BOM cases rest on a proposal; CRLF is T3-50's own case (DEC-6
+# lists T3-50, line endings).
+BOM_PROPOSAL = pytest.mark.proposal(
+    'T3-50: a BOM, like CRLF, does not change the text input hash; a '
+    'proposed normalisation')
+
+LF_TEXT = b'{"accounts": [\n  "a"\n]}\n'
+VARIANTS = {'crlf': LF_TEXT.replace(b'\n', b'\r\n'),
+            'cr': LF_TEXT.replace(b'\n', b'\r'),
+            'bom': b'\xef\xbb\xbf' + LF_TEXT,
+            'bom_crlf': b'\xef\xbb\xbf' + LF_TEXT.replace(b'\n', b'\r\n')}
+
+
+@pytest.mark.finding('T3-50')
+@pytest.mark.req('R0.4.3')
+@pytest.mark.parametrize('name', ['fixture', 'questions', 'ground_truth'])
+@pytest.mark.parametrize('variant', [
+    pytest.param(v, marks=BOM_PROPOSAL) if 'bom' in v else v
+    for v in sorted(VARIANTS)])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-50: sealed file hashes depend on line endings '
+                          'and a BOM')
+def test_seal_text_input_hash_independent_of_line_endings_and_bom(
+        files, frozen, name, variant):
+    files.paths[name].write_bytes(LF_TEXT)
+    lf = full_seal(files)['%s_hash' % name]
+    files.paths[name].write_bytes(VARIANTS[variant])
+    assert full_seal(files)['%s_hash' % name] == lf == sha(LF_TEXT)
