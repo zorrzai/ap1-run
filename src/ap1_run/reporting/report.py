@@ -347,9 +347,9 @@ def _section_clopper_pearson(summary):
                  'observed outcome, not the executions: the '
                  'repeats of a question are not independent trials. A '
                  'question counts as a failure if any of its repeats is '
-                 'NOT-INVOKED; beside k, each failing question with the '
-                 'number of its observed repeats that are NOT-INVOKED. '
-                 'UNOBSERVABLE executions (EV-0) are neither '
+                 'NOT-INVOKED; beside k, each failing question with its '
+                 'NOT-INVOKED repeats out of its observed repeats (EV-0 '
+                 'repeats are in neither). UNOBSERVABLE executions (EV-0) are neither '
                  'successes nor failures and are in no n (SPEC R2.3, '
                  'R1.3.1).\n')
 

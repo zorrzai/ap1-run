@@ -599,9 +599,9 @@ CP_UNIT = (
     '> D7.1 n counts the computable questions that have an observed '
     'outcome, not the executions: the repeats of a question are not '
     'independent trials. A question counts as a failure if any of its '
-    'repeats is NOT-INVOKED; beside k, each failing question with the '
-    'number of its observed repeats that are NOT-INVOKED. '
-    'UNOBSERVABLE executions (EV-0) are neither '
+    'repeats is NOT-INVOKED; beside k, each failing question with its '
+    'NOT-INVOKED repeats out of its observed repeats (EV-0 repeats are '
+    'in neither). UNOBSERVABLE executions (EV-0) are neither '
     'successes nor failures and are in no n (SPEC R2.3, R1.3.1).\n')
 CP_TABLE = ('| Metric | k (failures) | n | Rate | 95% Upper Bound '
             '| Evidence Class |',
