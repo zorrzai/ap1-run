@@ -64,6 +64,11 @@ updated, and the standard governs.
 - **§12.10** drops the rows of the retired legacy test suites
   (`tests/legacy/`) and `run_all_tests.py`. No contract, evidence class or
   scoring rule changes.
+- **R4.1** adds two planted behaviours: a reply the provider's content
+  filter stopped, and a reply carrying the provider's `refusal` field. Each
+  is executed, not an empty response, and goes to adjudication with a
+  provisional AP-1 v1.3 §6.8 outcome (CLASSIFIER-REFUSED, MODEL-DECLINED);
+  neither is in D7.1's or D1's n. Proposed, for the maintainer to confirm.
 
 ---
 
@@ -777,6 +782,8 @@ secondary.
 | `1,780.00` / `1.780,00` / `($1,780.00)` / `12.5%` | Parse per R0.4.2 |
 | Locale-ambiguous token | Adjudication |
 | Empty response | `UNMEASURED` |
+| Reply stopped by the provider's filter (`finish_reason: content_filter`) | Executed; adjudication with provisional `CLASSIFIER-REFUSED`; in neither D7.1's nor D1's n |
+| Reply carrying the provider's `refusal` field | Executed; adjudication with provisional `MODEL-DECLINED`; in neither D7.1's nor D1's n |
 | Rate-limit error | `UNMEASURED` |
 | Claims tool use in text, no structural record | `NOT-INVOKED` |
 | Exposes no tool structure | `EV-0 UNOBSERVABLE` |

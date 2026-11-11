@@ -804,3 +804,52 @@ def test_record_not_scored_unmeasured_listed_with_cause(error, word):
             for c in findings.unmeasured_cells] == [('Q03', 'base', 1)]
     assert word in findings.unmeasured_cells[0]['cause'].lower()
     assert [r['status'] for r in findings.all_results] == ['UNMEASURED']
+
+
+# -- T3-10: a refusal is routed with a provisional outcome ------------------
+
+@pytest.mark.proposal(
+    'T3-10: a refusal or content-filter stop is adjudicated with a '
+    'provisional section 6.8 outcome and is in no D1 count; a reading of '
+    'section 6.8, proposed, not decided')
+@pytest.mark.finding('T3-10')
+@pytest.mark.req('R4.1', 'AP-1 §6.8')
+@pytest.mark.parametrize('kind, provisional', [
+    ('content_filter', 'CLASSIFIER-REFUSED'), ('refusal', 'MODEL-DECLINED')],
+    ids=['content-filter', 'refusal'])
+def test_score_execution_refusal_routed_provisional_out_of_d1(
+        fakes, tpath, capsys, kind, provisional):
+    # No figure is identified and D1 does not score it: the execution is
+    # in neither D1's auto-scored nor its adjudicated n. Its figure
+    # outcome routes it to adjudication, where the scorers see the
+    # refusal and confirm or replace the provisional outcome.
+    final = response(None)
+    final['choices'][0]['message']['refusal'] = 'I cannot help with that.'
+    result = {'response': final, 'tool_calls': [],
+              'evidence_class': 'EV-2', 'invocation_outcome': 'NOT-INVOKED',
+              'provenance_results': [],
+              'refusal': {'kind': kind, 'text': 'I cannot help with that.'}}
+    findings = Findings()
+    score(findings, result, tpath)
+    assert capsys.readouterr().out == \
+        'ADJUDICATE-REFUSAL | EV-2 | NOT-INVOKED\n'
+    assert 'identify_figure' not in fakes.calls
+    assert 'score_accuracy' not in fakes.calls
+    assert findings.all_accuracy_results == []
+    assert findings.decline_findings == []
+    assert transcript.read_all(tpath)[-1]['figure_outcome'] == \
+        'ADJUDICATE-REFUSAL'
+    row = findings.all_results[-1]
+    assert (row['status'], row['figure_outcome'], row['refusal'],
+            row['provisional_outcome'], row['answer_outcome']) == (
+        'EXECUTED', 'ADJUDICATE-REFUSAL', kind, provisional, None)
+    assert row['answer_outcome_reason'].endswith(
+        f'routed to adjudication, provisional {provisional}')
+
+
+@pytest.mark.finding('T3-10')
+def test_score_execution_without_refusal_adds_no_refusal_fields(fakes, tpath):
+    findings = Findings()
+    score(findings, {'response': response('$638.40')}, tpath)
+    assert not {'refusal', 'provisional_outcome'} & set(
+        findings.all_results[-1])

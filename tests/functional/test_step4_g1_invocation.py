@@ -229,6 +229,60 @@ def test_run_empty_response_unmeasured_outside_d71(full_run):
     assert any('9/9' in line for line in base), base
 
 
+# -- T3-10: a refusal or content-filter stop is adjudicated ---------------
+
+def refusal_body(kind):
+    """A reply the content filter stopped, or one with the refusal field."""
+    message = {'role': 'assistant', 'content': None}
+    finish = 'stop'
+    if kind == 'content_filter':
+        finish = 'content_filter'
+    else:
+        message['refusal'] = "I'm sorry, I can't help with that request."
+    return {'raw': {'id': 'chatcmpl-mock', 'object': 'chat.completion',
+                    'model': 'mock-model', 'choices': [
+                        {'index': 0, 'message': message,
+                         'finish_reason': finish}]}}
+
+
+@pytest.mark.proposal(
+    'T3-10: a refusal or content-filter stop is executed and adjudicated '
+    'with a provisional section 6.8 outcome, in neither D7.1 nor D1; a '
+    'reading of section 6.8, proposed, not decided')
+@pytest.mark.finding('T3-10')
+@pytest.mark.req('R4.1', 'AP-1 §6.8')
+@pytest.mark.parametrize('kind, provisional', [
+    ('content_filter', 'CLASSIFIER-REFUSED'), ('refusal', 'MODEL-DECLINED')],
+    ids=['content-filter', 'refusal'])
+def test_run_refusal_executed_adjudicated_outside_d71_and_d1(
+        full_run, kind, provisional):
+    """Q01 is refused under both conditions, with no text and no tool
+    call. Correct (SPEC R4.1, rows added with this fix; AP-1 v1.3 §6.8
+    names MODEL-DECLINED and CLASSIFIER-REFUSED, and only "an empty,
+    errored or rate-limited response" is UNMEASURED): each execution is
+    EXECUTED, not UNMEASURED and not a non-outcome cell; it is routed to
+    adjudication with the provisional outcome, and the sheet shows the
+    refusal; it is in neither D7.1's n (base 9/9) nor D1's n (18 of the
+    20 executions)."""
+    r = full_run({'Q01/*/*': [refusal_body(kind)]})
+    assert_completed(r)
+    rows = r.results('Q01', 'base') + r.results('Q01', 'instruction_removed')
+    assert [(x['status'], x['figure_outcome'], x['refusal'],
+             x['provisional_outcome']) for x in rows] == [
+        ('EXECUTED', 'ADJUDICATE-REFUSAL', kind, provisional)] * 2
+    assert not [c for c in r.summary.get('unmeasured_cells', [])
+                if c['item_id'] == 'Q01']
+    assert lines_with(r.report_section(10), 'Q01') == []
+    base = lines_with(r.report_section(5), 'base')
+    assert any('9/9' in line for line in base), base
+    sheets = r.file('adjudication_sheets.md')
+    assert sheets.count(f'**Provisional outcome:** `{provisional}`') == 4
+    if kind == 'refusal':
+        assert sheets.count("I'm sorry, I can't help with that request.") == 4
+    d1 = r.console_section('3j')
+    assert 'Auto-scored: 18\n' in d1 and 'Adjudicated: 0\n' in d1, d1
+
+
 # -- T3-11: the unit of D7.1 is the question ------------------------------
 
 @pytest.mark.proposal(

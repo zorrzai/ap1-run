@@ -15,8 +15,8 @@ from decimal import Decimal
 from ap1_run.foundation import transcript
 from ap1_run.foundation.numeric import extract_numeric_tokens
 from ap1_run.scoring.accuracy import score_accuracy
-from ap1_run.scoring.answer_outcome import answer_outcome
-from ap1_run.scoring.figure_id import identify_figure
+from ap1_run.scoring.answer_outcome import answer_outcome, refusal_outcome
+from ap1_run.scoring.figure_id import ADJUDICATE_REFUSAL, identify_figure
 from ap1_run.scoring.release_coverage import check_release_coverage
 from ap1_run.scoring.transcription import check_transcription
 
@@ -96,16 +96,25 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
                     seal_hash):
     """Score one executed response and print its outcome line."""
     # -- Figure identification (after execute_item) --
+    # A refusal or content-filter stop is routed to adjudication with a
+    # provisional section 6.8 outcome; no figure is identified (T3-10).
     final_response = result.get('response')
-    fig_result = identify_figure(
-        final_response,
-        expected_value=expected,
-        delivered_context=ctx,
-        lookup_collision=collision,
-        answer_tolerance=answer_tolerance,
-        decline_markers=decline_markers,
-        currency_symbols=currency_symbols,
-    )
+    refusal = result.get('refusal')
+    if refusal is not None:
+        fig_result = {'outcome': ADJUDICATE_REFUSAL,
+                      'released_figure': None,
+                      'reason': f'provider {refusal["kind"]}: '
+                                f'routed to adjudication'}
+    else:
+        fig_result = identify_figure(
+            final_response,
+            expected_value=expected,
+            delivered_context=ctx,
+            lookup_collision=collision,
+            answer_tolerance=answer_tolerance,
+            decline_markers=decline_markers,
+            currency_symbols=currency_symbols,
+        )
 
     # Append figure_outcome to the transcript record
     transcript.append(
@@ -182,14 +191,17 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
     })
 
     # -- D1: Accuracy scoring --
-    acc_result = score_accuracy(
-        fig_result,
-        expected_value=expected,
-        answer_tolerance=answer_tolerance,
-        quantisation_digits=int(_quant.get('places', 2)),
-        quantisation_rounding=_quant.get('rounding', 'ROUND_HALF_UP'),
-    )
-    findings.all_accuracy_results.append(acc_result)
+    # A refusal is in no D1 count, auto-scored or adjudicated (T3-10)
+    acc_result = {}
+    if refusal is None:
+        acc_result = score_accuracy(
+            fig_result,
+            expected_value=expected,
+            answer_tolerance=answer_tolerance,
+            quantisation_digits=int(_quant.get('places', 2)),
+            quantisation_rounding=_quant.get('rounding', 'ROUND_HALF_UP'),
+        )
+        findings.all_accuracy_results.append(acc_result)
 
     # -- D2: Collect response for reproducibility --
     d2_key = (item_id, condition)
@@ -230,7 +242,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
 
     # -- Check for unrecognised decline patterns --
     if content and fig_result['outcome'] not in (
-            'ADJUDICATE-DECLINE',) and any(
+            'ADJUDICATE-DECLINE', ADJUDICATE_REFUSAL) and any(
             phrase in content.lower() for phrase in [
                 "i can't", "i cannot", "i'm unable",
                 "i don't have", "i am unable",
@@ -259,9 +271,15 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
             break
 
     # AP-1 v1.3 section 6.8: the answer-level outcome, where it is decided
+    # A refusal has a provisional outcome only, which the scorers decide
     section_6_8, section_6_8_reason = answer_outcome(
         outcome, inv_outcome, result.get('provenance_results', []),
         accuracy_outcome=acc_result.get('outcome'))
+    refusal_entry = {}
+    if refusal is not None:
+        provisional, section_6_8_reason = refusal_outcome(refusal)
+        refusal_entry = {'refusal': refusal['kind'],
+                         'provisional_outcome': provisional}
 
     findings.all_results.append({
         'item_id': item_id, 'condition': condition,
@@ -280,4 +298,5 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'release_coverage_outcome': coverage_result['outcome'],
         'answer_outcome': section_6_8,
         'answer_outcome_reason': section_6_8_reason,
+        **refusal_entry,
     })

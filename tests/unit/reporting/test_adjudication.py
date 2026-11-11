@@ -475,6 +475,11 @@ def test_adjudication_reasons_text():
                                 'released figure is ambiguous.',
         'UNMEASURABLE': 'Response shape unrecognised. Cannot extract a '
                         'figure for comparison.',
+        'ADJUDICATE-REFUSAL': 'The provider refused the request or its '
+                              'content filter stopped the reply. Refusals '
+                              'are never auto-scored and are in neither the '
+                              'D7.1 nor the D1 counts (section 6.8: '
+                              'MODEL-DECLINED or CLASSIFIER-REFUSED).',
     }
 
 
@@ -874,3 +879,48 @@ def test_sheet_rubric_is_ap1_section_6_8_in_full():
     if _plain(composition.group(1)) not in sheet:
         missing.append('Composition')
     assert missing == []
+
+
+# -- T3-10: a refusal's sheet shows the refusal ---------------------------
+
+@pytest.mark.proposal(
+    'T3-10: a refusal is adjudicated with a provisional section 6.8 '
+    'outcome; a reading of section 6.8, proposed, not decided')
+@pytest.mark.finding('T3-10')
+@pytest.mark.req('R3.2', 'AP-1 §6.8')
+@pytest.mark.parametrize('kind, signal, provisional', [
+    ('content_filter', '`finish_reason: content_filter`',
+     'CLASSIFIER-REFUSED'),
+    ('refusal', "the message's `refusal` field", 'MODEL-DECLINED'),
+], ids=['content-filter', 'refusal'])
+def test_sheet_refusal_shows_text_and_provisional_outcome(kind, signal,
+                                                          provisional):
+    text = one_sheet(figure_outcome='ADJUDICATE-REFUSAL',
+                     response_received={'choices': [{'message': {
+                         'content': None, 'refusal': 'I must decline.'}}]},
+                     refusal={'kind': kind, 'text': 'I must decline.'})
+    assert section(text, 'Refusal') == (
+        f'\n**Provider signal:** {signal}\n\n```\nI must decline.\n```\n\n'
+        f'**Provisional outcome:** `{provisional}` (confirm or replace it '
+        f'below)\n')
+    assert section(text, 'Reason for Adjudication').startswith(
+        '\nThe provider refused the request')
+    assert '- [ ] MODEL-DECLINED' in text and '- [ ] CLASSIFIER-REFUSED' in text
+
+
+@pytest.mark.finding('T3-10')
+def test_sheet_refusal_without_text_says_so():
+    text = one_sheet(figure_outcome='ADJUDICATE-REFUSAL',
+                     refusal={'kind': 'content_filter', 'text': ''})
+    assert '```\n[no refusal text]\n```' in section(text, 'Refusal')
+
+
+def test_sheet_without_refusal_has_no_refusal_section():
+    assert '### Refusal' not in one_sheet()
+
+
+@pytest.mark.finding('T3-10')
+def test_sheets_route_a_refusal():
+    text = sheets_for([record(figure_outcome='ADJUDICATE-REFUSAL',
+                              refusal={'kind': 'refusal', 'text': 'No.'})])
+    assert 'Total items requiring adjudication: 1' in text

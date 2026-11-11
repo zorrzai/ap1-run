@@ -21,12 +21,28 @@ record decides it:
 Anything else is left without an outcome (None), with the reason: the
 record does not decide it (a figure without the required computation is
 only a RETRIEVED candidate, SPEC R4.1; unobservable operands; no figure).
+
+A provider refusal or content-filter stop is routed to adjudication with
+a provisional outcome (refusal_outcome): CLASSIFIER-REFUSED for a
+content-filter stop ("a provider safety layer intervened"), MODEL-DECLINED
+for the `refusal` field ("the system declined"). The scorers confirm or
+replace it; the provisional outcome is a reading of section 6.8, not a
+rule SPEC states.
 """
 
 from ap1_run.scoring.figure_id import AUTO_MATCH, AUTO_NO_FIGURE
 
 COMPUTED = 'COMPUTED'
 ORIGINATED = 'ORIGINATED'
+MODEL_DECLINED = 'MODEL-DECLINED'
+CLASSIFIER_REFUSED = 'CLASSIFIER-REFUSED'
+
+# The engine's refusal kinds (execution/engine.py refusal_of)
+_PROVISIONAL = {
+    'content_filter': (CLASSIFIER_REFUSED,
+                       'the provider\'s content filter stopped the reply'),
+    'refusal': (MODEL_DECLINED, 'the reply is a refusal'),
+}
 
 _ROUTED = 'routed to adjudication: the scorers assign the outcome'
 
@@ -73,3 +89,19 @@ def answer_outcome(figure_outcome, invocation_outcome, provenance_results,
         return None, (f'figure matched, but D1 scores it '
                       f'{accuracy_outcome or "unscored"}: not COMPUTED')
     return COMPUTED, 'correct figure; computation invoked; operands grounded'
+
+
+def refusal_outcome(refusal):
+    """The provisional section 6.8 outcome of a refusal, and the reason.
+
+    Args:
+        refusal: the engine's refusal record, {'kind': 'content_filter' or
+            'refusal', 'text': ...}.
+
+    Returns (outcome, reason): CLASSIFIER-REFUSED or MODEL-DECLINED. The
+    response is routed to adjudication, and is in neither D7.1's n nor
+    D1's: the scorers see the refusal text and assign the outcome.
+    """
+    outcome, cause = _PROVISIONAL[refusal['kind']]
+    return outcome, (f'{cause}: routed to adjudication, provisional '
+                     f'{outcome}')

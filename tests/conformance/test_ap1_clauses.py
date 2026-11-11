@@ -624,7 +624,8 @@ def test_figure_identification_outcomes_are_not_the_six_outcome_vocabulary():
     assert routing == {
         'AUTO-MATCH', 'AUTO-NO-FIGURE', 'ADJUDICATE-DECLINE',
         'ADJUDICATE-COLLISION', 'ADJUDICATE-AMBIGUOUS',
-        'ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', 'UNMEASURABLE'}
+        'ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', 'UNMEASURABLE',
+        'ADJUDICATE-REFUSAL'}
     assert routing.isdisjoint(SIX_OUTCOMES)
 
 

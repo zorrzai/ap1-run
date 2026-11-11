@@ -1129,3 +1129,83 @@ def test_execute_item_skipped_call_value_feeding_nothing_stays_wrong(
     _, records = run(tmp_path, send)
     assert outcome_of(records, '15') == 'WRONG-OPERATION'
 
+
+
+# -- T3-10: a refusal or content-filter stop is executed --------------------
+
+# The provisional outcome and the counts rest on a reading of AP-1 v1.3
+# section 6.8 that SPEC does not state.
+REFUSAL_PROPOSAL = pytest.mark.proposal(
+    'T3-10: a refusal or content-filter stop is executed and adjudicated '
+    'with a provisional section 6.8 outcome, in neither D7.1 nor D1; a '
+    'reading of section 6.8, proposed, not decided')
+
+
+def filtered(content=None, **message):
+    """A reply the provider's content filter stopped."""
+    return {'choices': [{'message': {'role': 'assistant', 'content': content,
+                                     **message},
+                         'finish_reason': 'content_filter'}]}
+
+
+@pytest.mark.finding('T3-10')
+@pytest.mark.parametrize('response, expected', [
+    (filtered(), {'kind': 'content_filter', 'text': ''}),
+    (filtered('The interest is'),
+     {'kind': 'content_filter', 'text': 'The interest is'}),
+    (filtered(refusal='Blocked.'), {'kind': 'content_filter',
+                                    'text': 'Blocked.'}),
+    (answer(None, refusal="I'm sorry, I can't help with that."),
+     {'kind': 'refusal', 'text': "I'm sorry, I can't help with that."}),
+    (answer('Interest is $15.20.', refusal='No.'),
+     {'kind': 'refusal', 'text': 'No.'}),
+], ids=['filter-empty', 'filter-partial', 'filter-and-refusal', 'refusal',
+        'refusal-with-content'])
+def test_refusal_of_names_the_kind_and_text(response, expected):
+    assert engine.refusal_of(response) == expected
+
+
+@pytest.mark.finding('T3-10')
+@pytest.mark.parametrize('response', [
+    answer(), answer(None), answer('x', refusal=None), answer('x', refusal=''),
+    answer('x', refusal='   '), answer('x', refusal=7),
+    {'choices': [{'message': {'content': 'x'}, 'finish_reason': 'stop'}]},
+    {'choices': [{'message': None, 'finish_reason': 'length'}]},
+    {'choices': []}, {'choices': ['x']}, {}, None, 'text',
+], ids=['answer', 'null-content', 'refusal-null', 'refusal-empty',
+        'refusal-blank', 'refusal-not-text', 'stop', 'length-no-message',
+        'no-choices', 'str-choice', 'no-choices-key', 'none', 'str'])
+def test_refusal_of_is_none_without_a_refusal(response):
+    assert engine.refusal_of(response) is None
+
+
+@REFUSAL_PROPOSAL
+@pytest.mark.finding('T3-10')
+@pytest.mark.req('R4.1', 'AP-1 §6.8')
+@pytest.mark.parametrize('final, kind, text', [
+    (filtered(), 'content_filter', ''),
+    (answer(None, refusal="I'm sorry, I can't help with that."), 'refusal',
+     "I'm sorry, I can't help with that."),
+], ids=['content-filter', 'refusal'])
+def test_execute_item_refusal_is_executed_not_unmeasured(tmp_path, final,
+                                                         kind, text):
+    # SPEC R4.1 (rows added with this fix), AP-1 v1.3 section 6.8: the
+    # outcomes MODEL-DECLINED and CLASSIFIER-REFUSED exist, and only "an
+    # empty, errored or rate-limited response" is UNMEASURED. A reply
+    # with no text and no tool call that is a refusal is EXECUTED, and
+    # the refusal is recorded on the result and the transcript record.
+    result, records = run(tmp_path, FakeAdapter(final))
+    assert result['status'] == 'EXECUTED'
+    assert result['refusal'] == {'kind': kind, 'text': text}
+    assert len(records) == 1
+    assert records[0]['error_state'] is None
+    assert records[0]['refusal'] == {'kind': kind, 'text': text}
+    assert records[0]['response_received'] == final
+
+
+@pytest.mark.finding('T3-10')
+def test_execute_item_without_refusal_records_no_refusal_field(tmp_path):
+    # Only a refusal's record carries the field: every other result and
+    # record is as before, so published runs replay unchanged.
+    result, records = run(tmp_path, FakeAdapter(answer()))
+    assert 'refusal' not in result and 'refusal' not in records[0]

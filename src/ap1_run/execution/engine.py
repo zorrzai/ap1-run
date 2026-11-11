@@ -107,11 +107,18 @@ def execute_item(item, *, condition, config, fixture,
         sampling=sampling,
     )
 
+    # A provider refusal or content-filter stop is EXECUTED, never an
+    # empty response: AP-1 v1.3 §6.8 names its outcomes (MODEL-DECLINED,
+    # CLASSIFIER-REFUSED). It is recorded here; the runner routes it to
+    # adjudication (SPEC R4.1, T3-10).
+    refusal = refusal_of(final_response)
+
     # Empty response -> UNMEASURED, excluded from every denominator
     # (SPEC R4.1 "Empty response", R0.2; AP-1 v1.3 §13.2): a readable
     # response with no text and no tool call in any round is not an
     # answer and not a NOT-INVOKED.
-    if not tool_calls_record and _is_empty_response(final_response):
+    if not tool_calls_record and refusal is None and \
+            _is_empty_response(final_response):
         transcript.append(
             transcript_path,
             item_id=item_id, arm_id=condition,
@@ -170,6 +177,9 @@ def execute_item(item, *, condition, config, fixture,
     # Session-level reclassification (forward-dependency rule)
     op_correctness_results = reclassify_session(op_correctness_results, exprs)
 
+    # Only a refusal's record carries the field, so others are unchanged
+    refusal_record = {} if refusal is None else {'refusal': refusal}
+
     # Write transcript
     transcript.append(
         transcript_path,
@@ -188,6 +198,7 @@ def execute_item(item, *, condition, config, fixture,
         required_operation=gt['required_operation'],
         operation_correctness=op_correctness_results,
         provenance_results=provenance_results,
+        **refusal_record,
     )
 
     return {
@@ -198,7 +209,45 @@ def execute_item(item, *, condition, config, fixture,
         'tool_calls': tool_calls_record,
         'response': final_response, 'ground_truth': gt,
         'provenance_results': provenance_results,
+        **refusal_record,
     }
+
+
+# -- Refusals --------------------------------------------------------
+
+REFUSAL_CONTENT_FILTER = 'content_filter'
+REFUSAL_FIELD = 'refusal'
+
+
+def refusal_of(response):
+    """The provider refusal in a chat-completion response, or None.
+
+    Returns {'kind': ..., 'text': ...}: kind 'content_filter' where the
+    first choice's finish_reason is content_filter (a provider safety
+    layer stopped the reply), else 'refusal' where its message has a
+    non-empty `refusal` text (the model declined). text is the refusal
+    text, else the message content (a filtered reply may hold part of
+    one), else ''. A `refusal` of null or '' is no refusal.
+    """
+    if not isinstance(response, dict):
+        return None
+    choices = response.get('choices')
+    if not isinstance(choices, list) or not choices or \
+            not isinstance(choices[0], dict):
+        return None
+    message = choices[0].get('message')
+    if not isinstance(message, dict):
+        message = {}
+    refusal_text = message.get('refusal')
+    if not isinstance(refusal_text, str) or not refusal_text.strip():
+        refusal_text = None
+    content = message.get('content')
+    text = refusal_text or (content if isinstance(content, str) else '')
+    if choices[0].get('finish_reason') == REFUSAL_CONTENT_FILTER:
+        return {'kind': REFUSAL_CONTENT_FILTER, 'text': text}
+    if refusal_text is not None:
+        return {'kind': REFUSAL_FIELD, 'text': refusal_text}
+    return None
 
 
 # -- Tool loop -------------------------------------------------------

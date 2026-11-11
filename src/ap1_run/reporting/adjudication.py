@@ -24,6 +24,8 @@ import hashlib
 import json
 from datetime import datetime, timezone
 
+from ap1_run.scoring.answer_outcome import refusal_outcome
+
 
 # -- Six-outcome rubric from AP-1 v1.3 section 6.8 --------------------
 # Verified against reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md lines 528-535
@@ -56,6 +58,17 @@ ADJUDICATION_REASONS = {
                             'figure is ambiguous.',
     'UNMEASURABLE': 'Response shape unrecognised. Cannot extract a figure '
                     'for comparison.',
+    'ADJUDICATE-REFUSAL': 'The provider refused the request or its content '
+                          'filter stopped the reply. Refusals are never '
+                          'auto-scored and are in neither the D7.1 nor the '
+                          'D1 counts (section 6.8: MODEL-DECLINED or '
+                          'CLASSIFIER-REFUSED).',
+}
+
+# What the provider sent, per refusal kind (execution/engine.py refusal_of)
+_REFUSAL_SIGNALS = {
+    'content_filter': '`finish_reason: content_filter`',
+    'refusal': 'the message\'s `refusal` field',
 }
 
 
@@ -197,6 +210,18 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
     response = record.get('response_received')
     content = _extract_response_content(response)
     lines.append(f'```\n{content}\n```\n')
+
+    # A provider refusal: its text verbatim and the provisional outcome
+    refusal = record.get('refusal')
+    if refusal:
+        provisional, _ = refusal_outcome(refusal)
+        lines.append('### Refusal\n')
+        lines.append(f'**Provider signal:** '
+                     f'{_REFUSAL_SIGNALS[refusal["kind"]]}\n')
+        lines.append(f'```\n{refusal.get("text") or "[no refusal text]"}'
+                     f'\n```\n')
+        lines.append(f'**Provisional outcome:** `{provisional}` (confirm or '
+                     f'replace it below)\n')
 
     # 3. Relevant fixture excerpt
     lines.append('### Fixture Excerpt\n')

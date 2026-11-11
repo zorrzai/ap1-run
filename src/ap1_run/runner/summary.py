@@ -51,7 +51,9 @@ def measure_invocation_by_condition(all_results):
     """D7.1 per condition, from the runner's per-execution rows.
 
     Only EXECUTED rows count (UNMEASURED and VOID cells are in no
-    denominator). Each row becomes a measure_invocation record: INVOKED
+    denominator), and of those not a provider refusal or content-filter
+    stop: it gave no opportunity to invoke, and is adjudicated (AP-1 v1.3
+    section 6.8; T3-10). Each row becomes a measure_invocation record: INVOKED
     and NOT-INVOKED are observations, any other outcome (None for EV-0)
     is UNOBSERVABLE. Returns {condition: measure_invocation(...)} in the
     order the conditions first appear, each with an extra 'executions'
@@ -59,7 +61,7 @@ def measure_invocation_by_condition(all_results):
     """
     by_condition = {}
     for r in all_results:
-        if r.get('status') != 'EXECUTED':
+        if r.get('status') != 'EXECUTED' or r.get('refusal'):
             continue
         by_condition.setdefault(r.get('condition', ''), []).append({
             'item_id': r.get('item_id'),

@@ -3,7 +3,9 @@ answer-level outcome of an auto-scored response (T3-13)."""
 
 import pytest
 
-from ap1_run.scoring.answer_outcome import COMPUTED, ORIGINATED, answer_outcome
+from ap1_run.scoring.answer_outcome import (
+    COMPUTED, ORIGINATED, answer_outcome, refusal_outcome,
+)
 from ap1_run.scoring.figure_id import (
     ADJUDICATE_AMBIGUOUS, ADJUDICATE_COLLISION, ADJUDICATE_DECLINE,
     ADJUDICATE_NO_MATCH, AUTO_MATCH, AUTO_NO_FIGURE, UNMEASURABLE,
@@ -120,3 +122,22 @@ def test_originated_does_not_depend_on_d1():
     # ORIGINATED whether or not its figure is within tolerance.
     assert answer_outcome(AUTO_MATCH, 'INVOKED', [ORIGINATED_OP],
                           accuracy_outcome='INCORRECT')[0] == ORIGINATED
+
+
+# -- T3-10: refusals get a provisional outcome --------------------------
+
+@pytest.mark.proposal(
+    'T3-10: a content-filter stop is provisionally CLASSIFIER-REFUSED and a '
+    'refusal MODEL-DECLINED; a reading of section 6.8, proposed, not '
+    'decided')
+@pytest.mark.finding('T3-10')
+@pytest.mark.parametrize('kind, outcome, cause', [
+    ('content_filter', 'CLASSIFIER-REFUSED',
+     "the provider's content filter stopped the reply"),
+    ('refusal', 'MODEL-DECLINED', 'the reply is a refusal'),
+], ids=['content-filter', 'refusal'])
+def test_refusal_outcome_is_provisional_and_routed(kind, outcome, cause):
+    # AP-1 v1.3 section 6.8: CLASSIFIER-REFUSED "A provider safety layer
+    # intervened"; MODEL-DECLINED "The system declined".
+    assert refusal_outcome({'kind': kind, 'text': 'x'}) == (
+        outcome, f'{cause}: routed to adjudication, provisional {outcome}')
