@@ -137,6 +137,24 @@ def test_send_keeps_the_text_of_a_list_body(transport):
     assert adapter.raw_text(raw) == '[1.50, {"b": 1, "a": 2}]'
 
 
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2')
+@pytest.mark.parametrize('body, parsed', [
+    (b'15.200', 15.2), (b'null', None), (b'"x"', 'x')],
+    ids=['number', 'null', 'string'])
+def test_send_scalar_body_is_returned_parsed_without_its_text(
+        transport, body, parsed):
+    # The stated limit of "byte for byte" (SPEC R0.2: a body that is a
+    # JSON object or array): a bare scalar body, never a chat completion
+    # and read as an unrecognised shape, is returned as parsed, without
+    # its text, so 15.200 keeps no spelling of its own.
+    transport(FakeResponse(200, content=body))
+    raw, _ = send(URL, messages=MESSAGES)
+    assert raw == parsed and type(raw) is type(parsed)
+    assert adapter.raw_text(raw) is None
+
+
 def test_raw_text_of_a_response_not_from_send_is_none():
     assert adapter.raw_text({'choices': []}) is None
     assert adapter.raw_text(None) is None

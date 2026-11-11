@@ -251,7 +251,7 @@ transport failure, bounded, every attempt logged.
 **Verification Contract.**
 - A rate-limited item appears as UNMEASURED and is excluded from every
   denominator.
-- No code path modifies a response before it is written to the transcript. "Unmodified" means byte for byte: each answered round's record keeps the response body exactly as received, as text in `response_raw` (its UTF-8 bytes are the body's), beside the parsed `response_received` that every reader uses.
+- No code path modifies a response before it is written to the transcript. "Unmodified" means byte for byte: each answered round whose body is a JSON object or array (every chat completion) keeps the body exactly as received in its record, as text in `response_raw` (its UTF-8 bytes are the body's), beside the parsed `response_received` that every reader uses.
 - The adapter makes no network call to any host other than the configured
   endpoint, demonstrated under a deny-all egress policy.
 

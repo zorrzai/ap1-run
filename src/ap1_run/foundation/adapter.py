@@ -103,7 +103,10 @@ class RawResponse(dict):
     (raw_text: the body's bytes decoded as UTF-8, so that
     raw_text.encode('utf-8') is those bytes). SPEC R0.2: "unmodified"
     means byte for byte, so key order and number spelling (15.200, not
-    15.2) are kept in the text the transcript stores."""
+    15.2) are kept in the text the transcript stores. Only a body whose
+    JSON is an object or an array (every chat completion) keeps its text
+    this way: a bare scalar (a string, number or null) is returned as
+    parsed, with no raw_text."""
 
     raw_text = None
 
@@ -148,8 +151,11 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
 
     Returns:
         (raw_response_dict, request_record)
-        raw_response_dict: The response JSON, unmodified: a RawResponse,
-            the parsed body, whose raw_text is the body byte for byte.
+        raw_response_dict: The response JSON, unmodified: for a body
+            that is a JSON object or array (every chat completion), a
+            RawResponse (or RawList), the parsed body, whose raw_text is
+            the body byte for byte; a bare scalar body (a string, number
+            or null) is returned as parsed, with no raw_text.
         request_record: The request AS SENT, including every
             sampling parameter with its value or explicit omission.
 
