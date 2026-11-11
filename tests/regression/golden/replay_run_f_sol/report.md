@@ -17,7 +17,7 @@ Model: gpt-5.6-sol
 | `ap1_text_hash` | `48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56` |
 | `ap1_version` | `v1.3-draft-for-comment-20260730` |
 | `ap1_version_doi` | `10.5281/zenodo.21755443` |
-| `calculator_hash` | `43c836b56e0ccf93dad7f6e7eba7b7e74cdf5c90a78ffcc2942ba11bc4dfb0bc` |
+| `calculator_hash` | `ae8eae4c313079e401b4a12f7c2fc571cea695b5fe8f9eda5ca808d449303c7d` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
 | `expected_values_hash` | `81d9b435264ddbb032c5744342df577d691e9766fd566dc75632b34bc6dd46ca` |
