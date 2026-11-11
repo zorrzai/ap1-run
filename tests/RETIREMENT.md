@@ -24,9 +24,9 @@ A legacy suite is retired (deleted, removed from `run_all_tests.py`, noted in th
 1. **Every check is mapped** to a new test, or dropped on purpose with a reason. *Status:* 410 of
    410 checks accounted for: 347 mapped and 63 dropped, each with its reason; none pending
    (summary below). 62 of the 63 are `verify_spec.py`'s SPEC line-count checks, dropped because
-   line counts are not behaviour. This drop is a proposal, put to the maintainer on 5 November
-   2026, not one of the maintainer's recorded decisions; SPEC's §12.9 limit and §12.10 counts are
-   removed in the same change.
+   line counts are not behaviour; SPEC's §12.9 limit and §12.10 counts are removed in the same
+   change. The drop was put to the maintainer on 5 November 2026; it is not one of the
+   maintainer's recorded decisions (DEC-n in `docs/REVIEW_FINDINGS.md`).
 2. **No coverage is lost**: the new tests execute every line and branch the suite did. *Status:* met
    for every suite, with no exception (section "Coverage" at the end).
 3. **Strength is not lost**: on the modules the suite covers, the new tests' mutation score is at
