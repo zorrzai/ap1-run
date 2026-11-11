@@ -76,6 +76,7 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/execution/test_engine.py::test_execute_item_refusal_is_executed_not_unmeasured[content-filter]',
     'tests/unit/execution/test_engine.py::test_execute_item_refusal_is_executed_not_unmeasured[refusal]',
     'tests/unit/execution/test_engine.py::test_execute_item_unrecognised_later_response_error_state_names_round',
+    'tests/unit/execution/test_evidence_r41.py::test_r41_ev3_rows_are_declared_exceptions_while_ev3_is_not_built',
     'tests/unit/execution/test_seal.py::test_seal_hash_two_timestamps_give_two_hashes',
     'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom-fixture]',
     'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom-ground_truth]',

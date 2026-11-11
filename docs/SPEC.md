@@ -69,6 +69,10 @@ updated, and the standard governs.
   is executed, not an empty response, and goes to adjudication with a
   provisional AP-1 v1.3 §6.8 outcome (CLASSIFIER-REFUSED, MODEL-DECLINED);
   neither is in D7.1's or D1's n. Proposed, for the maintainer to confirm.
+- **R4.1** marks its three signed-attestation rows as declared exceptions:
+  they test EV-3, which §10 declares not built, and where the two disagree
+  §10 governs. The Verification Contract no longer covers them. A SPEC
+  reading, decided in review.
 
 ---
 
@@ -787,15 +791,24 @@ secondary.
 | Rate-limit error | `UNMEASURED` |
 | Claims tool use in text, no structural record | `NOT-INVOKED` |
 | Exposes no tool structure | `EV-0 UNOBSERVABLE` |
-| **Signed attestation, no sealed key** | **`EV-1 SELF-REPORTED`, not `EV-3`** |
-| **Signed attestation, valid signature, hash absent from ledger** | **`EV-1`** |
-| **Signed attestation, verified signature and ledger membership** | **`EV-3`** |
+| **Signed attestation, no sealed key** | **`EV-1 SELF-REPORTED`, not `EV-3`** (declared exception: EV-3 not built) |
+| **Signed attestation, valid signature, hash absent from ledger** | **`EV-1`** (declared exception: EV-3 not built) |
+| **Signed attestation, verified signature and ledger membership** | **`EV-3`** (declared exception: EV-3 not built) |
 | Requested temperature ignored | D2 platform finding |
 | Ground-truth module returning constants | Refused at seal, perturbation named |
 | D6 claimed with nine items | Refused at load |
 
+**Declared exceptions: the three signed-attestation rows.** They test EV-3
+verification, which §10 declares not built (§6.3(b), "evidence.py EV-3 gated
+False", PARTIAL). Where this table and §10 disagree, §10 governs: until EV-3
+is built, these three rows are declared exceptions, not planted defects the
+instrument is verified against. The runner classifies every attestation `EV-1`
+and never emits `EV-3` (R1.3.1), so the first two rows' outcomes hold without
+any verification taking place, and the third cannot be reached.
+
 **Verification Contract.** Every planted defect is detected with the specified
-outcome, offline, with no network access.
+outcome, offline, with no network access. The declared exceptions above are
+not planted defects.
 
 ### R4.2 — Third-Party Runnability Demonstration
 

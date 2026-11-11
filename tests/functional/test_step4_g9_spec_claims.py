@@ -365,7 +365,8 @@ def test_run_sampling_environment_variable_changes_nothing(ap1_run, tmp_path,
 # structure / EV-0 (T3-1), expected value appearing twice (T3-83),
 # locale-ambiguous token and European separators (T3-41), ground-truth
 # module returning constants (T3-7), quantisation finding in the report
-# (T3-34). The EV-3 row is blocked: SPEC §10 declares EV-3 not implemented.
+# (T3-34). The EV-3 rows are declared exceptions in R4.1: SPEC §10 declares
+# EV-3 not implemented.
 
 @pytest.mark.finding('T3-22')
 @pytest.mark.req('R4.1', 'R2.3')
