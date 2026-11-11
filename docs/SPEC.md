@@ -73,6 +73,9 @@ updated, and the standard governs.
   they test EV-3, which §10 declares not built, and where the two disagree
   §10 governs. The Verification Contract no longer covers them. A SPEC
   reading, decided in review.
+- **R0.4.1** says the reference calculator computes in exact decimal, and
+  **R0.4.2** that a digit is an ASCII digit `0`–`9`. Both are SPEC readings,
+  decided in review; the code follows them.
 
 ---
 
@@ -251,6 +254,11 @@ behaviour, on serialisation order, or on an unstated parsing convention.
   is compared, quantised, or reported.
 - **Quantisation is applied once**, at the declared point, using the declared
   rounding mode. Intermediates are carried at full precision.
+- **The reference calculator computes in exact decimal.** Its results are
+  compared at R2.4 step 4 (computed in session), so the shipped
+  `example/calculator_tool.py` reads each number from its text and computes in
+  Decimal: `0.1 + 0.2` returns `0.3`, and a system that copies a result into
+  its next call copies a value step 4 matches exactly.
 
 #### R0.4.2 Numeric token grammar — normative
 
@@ -264,7 +272,9 @@ A numeric token is recognised as, in order:
 2. an optional sign — a leading `+`/`-`, **or** an enclosing pair of
    parentheses denoting negative;
 3. one or more digits, optionally grouped by the configured
-   `grouping_separator`;
+   `grouping_separator`. A digit is one of the ASCII digits `0`–`9`; the
+   digits of other scripts (Arabic-Indic `٣`, full-width `３`) are not digits
+   here, so text written in them holds no numeric token;
 4. an optional `decimal_separator` followed by fractional digits;
 5. an optional trailing `%`.
 
