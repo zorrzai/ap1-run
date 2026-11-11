@@ -148,10 +148,12 @@ python tests/regression/check_imports.py               # every module imports
 python tests/regression/check_source_files.py          # source-hash file list
 python tests/regression/selftest.py                    # the harness's own checks
 python tests/regression/check_own_src.py               # entry points use their own src/
-python tests/regression/coverage_report.py OUTDIR      # legacy suites + scenarios
+python tests/regression/verify_hashes.py               # pinned canonical-hash digest (hashes.yml)
+python tests/regression/coverage_report.py OUTDIR      # pytest suite + scenarios
 ```
 
-It needs `requests`, and `coverage` for the coverage report. CI pins
+It needs `requests`; the coverage report also needs pytest and `coverage`
+(`pip install -e '.[dev]'`), and fails if its pytest or scenario run fails. CI pins
 `requests` and `urllib3` with `constraints.txt`, because the
 `transport_errors` golden output contains urllib3's own error text. The
 golden files were made on macOS with Python 3.11; CI runs this harness on
@@ -159,12 +161,10 @@ Ubuntu with Python 3.11 and 3.12 (`regression.yml`). A full comparison of
 all scenarios takes about 1.5 to 2 minutes on a laptop and about 2.5 minutes
 in CI; the two replays take most of it, about 40 seconds each.
 
-The harness is deliberately **not** registered in `run_all_tests.py`, so the
-legacy suite counts stay the same across the restructure: 226 test functions
-and 406 checks in step 1. In step 2 only `verify_spec.py`'s check count moves,
-because it checks each file listed in SPEC §12.10 (one check per file, and
-one more per instrument module): files deleted, renamed or split change it,
-and `run_all_tests.py` records the new count in the same commit.
+The harness runs separately from pytest (`python -m pytest` does not collect
+it). The original verify_*.py suites it was built beside (`tests/legacy/`,
+run by `run_all_tests.py`) are retired; `tests/RETIREMENT.md` records where
+each of their checks went.
 
 ## Scenarios
 

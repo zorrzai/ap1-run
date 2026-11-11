@@ -23,6 +23,15 @@ not tracked in it, so the function name is the better guide once lines shift. Th
 `c8df9ca` stays the anchor. Once a finding is fixed, its "Addressed by" field takes over, and its
 "After the reorg" location may be left blank.
 
+**After the retirement.** The legacy suites in `tests/legacy/` were retired after the
+reorganisation: `tests/RETIREMENT.md` maps each of their checks to the test that replaces it.
+Their "After the reorg" locations still hold in git history, in the parent of the commit that
+deletes them. `git log --diff-filter=D -- tests/legacy/verify.py` prints that commit; add `^` to
+its hash for the parent, e.g.
+`git show "$(git log -1 --format=%H --diff-filter=D -- tests/legacy/verify.py)^:tests/legacy/verify.py"`.
+The one script kept, `verify_hashes.py`, had moved to `tests/regression/verify_hashes.py` one
+commit earlier, so in that parent it is already there; T3-20 and T3-85 give its location.
+
 ## ID schemes
 
 | prefix | meaning |
@@ -427,7 +436,8 @@ Grouped by severity, in ID order.
   `canonical_json`.
 - Where: `.github/workflows/hashes.yml` (three platforms); `verify_hashes.py:3-5`, `:43-48`;
   `numeric.py:286-287`; `operation_correctness.py:40-41`, `:61`
-- After the reorg: `tests/legacy/verify_hashes.py:1-7` (module docstring), `:52-57` (`main`);
+- After the reorg: `tests/regression/verify_hashes.py:1-14` (module docstring), `:57-62` (`main`)
+  (moved from `tests/legacy/` at the retirement);
   `src/ap1_run/foundation/numeric.py:286-287` (`canonical_json`);
   `src/ap1_run/scoring/operation_correctness.py:40-41` (`_ALLOWED_NAMES`), `:61` (`_eval_decimal`)
 - Breaks: SPEC R0.4.3 verification items 1 and 2; SPEC Phase A exit criterion (`SPEC.md:794`)
@@ -1080,7 +1090,8 @@ Grouped by severity, in ID order.
 - Where: `verify.py:387-393`, `:544`; `verify_hashes.py:44-48`; `test_findings_mutation.py:78-88`,
   `:136-153`
 - After the reorg: `tests/legacy/verify.py:386-392` (`test_r11_ap1_hash`), `:543`
-  (`_test_config_error`); `tests/legacy/verify_hashes.py:53-57` (`main`);
+  (`_test_config_error`); `tests/regression/verify_hashes.py:57-62` (`main`; moved from
+  `tests/legacy/` at the retirement);
   `tests/legacy/test_findings_mutation.py:78-88` (`test_doc_mutation`), `:136-153`
   (`test_artifact_mutation`)
 
@@ -1147,6 +1158,20 @@ Grouped by severity, in ID order.
 - After the reorg: `example/ground_truth_example.py:289-293` (`derive_q07`);
   `tests/legacy/verify_e7_coverage.py:298` (`test_e3_q07_constant_4_resolves`), `:339-341`
   (`test_e3b_ast_check_allows_unused_constants`)
+
+**T3-93 · info · The findings template still says the retired `verify_findings.py` verifies the figures**
+- What's wrong: the "Source artifacts" note says figures "are verified against these artifacts by
+  `verify_findings.py`, which is part of the test suite" and that it "guarantees that every figure
+  in this document was generated from the source artifacts". That suite was retired with the
+  other legacy suites; `tests/functional/test_findings.py` now does the check
+  (`test_committed_findings_equal_generation_from_artifacts`). The template is what
+  `tools/generate_findings.py` renders, so every findings document generated from it repeats
+  the stale name. It cannot be changed alone: the published `findings/FINDINGS.md` must equal the
+  generation byte for byte (that test), and the regression golden of the generator pins the same
+  text, so the fix changes the template, the published document (with an erratum) and the golden
+  together.
+- Where: `findings/FINDINGS.template.md:49-54`; `findings/FINDINGS.md:49-54`;
+  `tests/regression/golden/tool_generate_findings/findings__FINDINGS.md:49-54`
 
 ---
 
