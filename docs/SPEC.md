@@ -862,7 +862,7 @@ per R1.1.
 | §1.5.1 declared execution environment | numeric.py, config.py, seal.py | IMPLEMENTED |
 | §1.5.2 excluded by construction | see §6.3(b) | NOT ENFORCEABLE |
 | §1.5.3 model under test | definitional | IMPLEMENTED |
-| §2.5 defeat condition per link | invocation.py, provenance/trace.py, transcription.py | IMPLEMENTED |
+| §2.5 defeat condition per link | each link measured (invocation.py, provenance/trace.py, transcription.py); the partial result, naming the links (a)–(e) cleared and not cleared, is not built: AP-1 sets no pass criterion per link | PARTIAL |
 | §3.2.1 link-to-measurement mapping | all four links covered | IMPLEMENTED |
 | D1 accuracy, n>=10 per category | config.py MINIMUM_N, accuracy.py | IMPLEMENTED |
 | D2.1 mechanism classes per surface | reproducibility.py | IMPLEMENTED |

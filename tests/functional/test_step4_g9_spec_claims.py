@@ -629,7 +629,7 @@ def test_report_states_which_defeat_condition_links_were_cleared(ap1_run):
     # AP-1 v1.3 §2.5 (l.146): "A refutation must clear (a) through (e).
     # Clearing a subset is a partial result and shall be reported as such,
     # naming which links were cleared and which were not." SPEC §10
-    # (l.865) marks "§2.5 defeat condition per link" IMPLEMENTED.
+    # (l.865) marks §2.5 PARTIAL: links measured, partial result not built.
     import re
     text = report_text(ap1_run())
     heading = re.search(r'(?im)^#+ .*(§\s*2\.5|defeat condition).*$', text)
