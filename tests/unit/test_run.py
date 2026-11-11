@@ -636,7 +636,7 @@ def test_main_minimum_n_counts_the_question_items(r, monkeypatch):
         ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH,
                           'lookup_collisions': 'none'})
     questions = json.loads(json.dumps(QUESTIONS))
-    questions['items'][2]['conflict_class'] = 'stated twice'
+    questions['items'][2]['conflict_class'] = 'internal_contradiction'
     (r.fixture_dir / 'questions.json').write_text(json.dumps(questions))
     assert r.main() == 0
     assert r.named('seal')

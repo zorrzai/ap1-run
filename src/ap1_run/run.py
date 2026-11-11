@@ -64,7 +64,9 @@ from ap1_run.execution.version import (
     compute_runner_source_hash, resolve_runner_version,
 )
 from ap1_run.foundation import adapter
-from ap1_run.foundation.config import load_config, validate_minimum_n
+from ap1_run.foundation.config import (
+    load_config, validate_kinds, validate_minimum_n,
+)
 from ap1_run.foundation.numeric import in_decimal_context
 from ap1_run.runner.credentials import get_api_key
 from ap1_run.runner.outputs import OUTPUT_FILES
@@ -131,7 +133,9 @@ def main(argv=None):
     # the seal and the engine alike (T3-60; SPEC R0.4.1).
     gt_module.compute = in_decimal_context(gt_module.compute)
 
-    # -- Minimum-n (R0.1): refuse an under-powered claim before any request --
+    # -- D5/D6 kinds (R0.1): refuse a label that names no fixed or defined
+    # kind, then minimum-n: refuse an under-powered claim before any request --
+    validate_kinds(questions)
     validate_minimum_n(config, questions['items'])
 
     # -- Output directory --
