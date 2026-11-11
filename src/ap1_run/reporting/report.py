@@ -275,9 +275,12 @@ def _section_dimension_results(summary, config):
             if dim_data and dim == 'D7':
                 lines.extend(_d7_rows(summary, dim_data))
             elif dim_data and dim == 'D2':
-                questions = {key.split('/')[0] for key in dim_data}
-                lines.append(f'| D2 | Measured | {len(questions)} | '
-                             f'{_d2_class_counts(dim_data)} (§9) |')
+                questions, runs = _d2_n(dim_data, config)
+                n = questions if runs is None else f'{questions} × {runs}'
+                below = ('; below AP-1 D2\'s 10 × 50'
+                         if _d2_below_minimum(questions, runs) else '')
+                lines.append(f'| D2 | Measured | {n} | '
+                             f'{_d2_class_counts(dim_data)}{below} (§9) |')
             elif dim_data:
                 n = dim_data.get('n', dim_data.get('auto_scored_n', 'N/A'))
                 result = _format_dim_result(dim, dim_data)
@@ -1039,7 +1042,8 @@ def _section_d2_mechanisms(summary, config=None):
       - the mechanism class
       - whether determined from evidence or operator-declared
       - parameter-echo verification result, or UNVERIFIED
-    and the operator's declaration per
+    and n (questions x runs; a line if it is below AP-1 D2's 10 x 50,
+    which is reported, not enforced), the operator's declaration per
     surface (config d2_declared, SPEC R2.2), and how many replies were
     left out of the comparison, by kind.
     """
@@ -1073,6 +1077,7 @@ def _section_d2_mechanisms(summary, config=None):
 
     # The live shape (T3-4): {'<item>/<condition>': {surface: class}},
     # one class per surface per question and condition (SPEC R2.2)
+    lines.extend(_d2_n_lines(d2, config))
     lines.extend(_d2_declared_lines(config))
     lines.append(_d2_left_out_line(d2))
     lines.append(f'Classes per surface, over question-conditions: '
@@ -1092,6 +1097,44 @@ def _section_d2_mechanisms(summary, config=None):
 
     lines.append('')
     return '\n'.join(lines)
+
+
+# AP-1 D2 Method (v1.2 l.117, v1.3 l.210): minimum 10 questions x
+# minimum 50 runs. The runner accepts any run count and says when a run
+# is below it.
+D2_MINIMUM_QUESTIONS = 10
+D2_MINIMUM_RUNS = 50
+
+
+def _d2_n(d2, config):
+    """D2's n: (questions, runs per question and condition), runs the
+    configured repeat count (None if the config gives none)."""
+    questions = len({key.split('/')[0] for key in d2})
+    runs = config.get('repeat_count')
+    return questions, (int(runs) if runs is not None else None)
+
+
+def _d2_below_minimum(questions, runs):
+    """True if a run is below AP-1 D2's 10 questions x 50 runs."""
+    return questions < D2_MINIMUM_QUESTIONS or (
+        runs is not None and runs < D2_MINIMUM_RUNS)
+
+
+def _d2_n_lines(d2, config):
+    """n for D2, and one line if it is below AP-1 D2's minimum."""
+    questions, runs = _d2_n(d2, config)
+    if runs is None:
+        lines = [f'n = {questions} questions.\n']
+    else:
+        lines = [f'n = {questions} questions × {runs} runs, per '
+                 f'condition.\n']
+    if _d2_below_minimum(questions, runs):
+        n = questions if runs is None else f'{questions} × {runs}'
+        lines.append(f'> **Below AP-1 D2\'s 10 × 50: n = {n}** (AP-1 D2: '
+                     f'minimum {D2_MINIMUM_QUESTIONS} questions × minimum '
+                     f'{D2_MINIMUM_RUNS} runs). The runner accepts any run '
+                     f'count and classifies on what was run.\n')
+    return lines
 
 
 def _d2_declared_lines(config):

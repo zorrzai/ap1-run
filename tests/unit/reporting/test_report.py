@@ -1460,6 +1460,10 @@ def test_d2_live_shape_table_per_question_condition_and_surface():
     assert text == md(
         '## 9. D2 Reproducibility Mechanism Classes\n',
         D2_NOTE,
+        'n = 3 questions \u00d7 3 runs, per condition.\n',
+        '> **Below AP-1 D2\'s 10 \u00d7 50: n = 3 \u00d7 3** (AP-1 D2: '
+        'minimum 10 questions \u00d7 minimum 50 runs). The runner accepts '
+        'any run count and classifies on what was run.\n',
         'Operator\'s declaration (settings field `d2_declared`): none, so '
         'no surface is STRUCTURAL or CONFIGURED.\n',
         'Left out of the comparison: none.\n',
@@ -1493,9 +1497,88 @@ def test_dimension_results_d2_row_counts_questions_and_classes():
     rows = dim_rows(report._section_dimension_results(
         {'d2_results': d2}, {'dimensions_claimed': ['D2']}))
     # n is the number of questions (3), not of question-conditions (4)
+    # (with no repeat count in the config, n is questions only; 3 is
+    # below AP-1 D2's 10 questions, which the row says)
     assert rows[1] == ('| D2 | Measured | 3 | figures: OBSERVED-ONLY 3, '
-                       'UNMEASURED 1; prose: OBSERVED-ONLY 2, UNMEASURED 1 '
-                       '(\u00a79) |')
+                       'UNMEASURED 1; prose: OBSERVED-ONLY 2, UNMEASURED 1; '
+                       'below AP-1 D2\'s 10 \u00d7 50 (\u00a79) |')
+
+
+RUN_COUNT_REASON = (
+    'T3-4: any run count is accepted; report sections 3 and 9 give D2\'s n '
+    '(questions x runs) and say in one line when a run is below AP-1 D2\'s '
+    '10 questions x 50 runs; the minimum is reported, not enforced, as '
+    'requested in review; the line\'s words are the author\'s')
+
+
+def d2_run(questions, runs):
+    """The D2 results of a run of these many questions, each repeated
+    runs times with the same answer, classified as the scoring pass
+    classifies them (minimum runs: the repeat count)."""
+    from ap1_run.runner.summary import classify_reproducibility
+    reply = {'choices': [{'message': {'role': 'assistant',
+                                      'content': 'The interest is $15.20.'}}]}
+    keys = [(f'Q{i:02d}', 'base') for i in range(1, questions + 1)]
+    return classify_reproducibility(
+        {k: [reply] * runs for k in keys}, runs, None,
+        {k: [Decimal('15.20')] * runs for k in keys})
+
+
+def d2_report(questions, runs):
+    """Sections 3 and 9 of that run, with its repeat count configured."""
+    d2 = d2_run(questions, runs)
+    config = {'dimensions_claimed': ['D2'], 'repeat_count': runs}
+    return (dim_rows(report._section_dimension_results(
+                {'d2_results': d2}, config))[1],
+            report._section_d2_mechanisms({'d2_results': d2}, config), d2)
+
+
+@pytest.mark.proposal(RUN_COUNT_REASON)
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('AP-1 D2', 'R2.2')
+def test_d2_run_of_3_repeats_is_classified_and_says_below_10_by_50():
+    # AP-1 D2 Method: minimum 10 questions x minimum 50 runs. A run of 10
+    # questions x 3 repeats is accepted and classified; its n is given,
+    # and one line says it is below that minimum.
+    row, text, d2 = d2_report(10, 3)
+    assert {cell['mechanism'] for surfaces in d2.values()
+            for cell in surfaces.values()} == {'OBSERVED-ONLY'}
+    assert row == ('| D2 | Measured | 10 \u00d7 3 | figures: OBSERVED-ONLY '
+                   '10; prose: OBSERVED-ONLY 10; below AP-1 D2\'s 10 \u00d7 '
+                   '50 (\u00a79) |')
+    lines = text.splitlines()
+    assert 'n = 10 questions \u00d7 3 runs, per condition.' in lines
+    below = [line for line in lines if '10 \u00d7 50' in line]
+    assert below == [
+        '> **Below AP-1 D2\'s 10 \u00d7 50: n = 10 \u00d7 3** (AP-1 D2: '
+        'minimum 10 questions \u00d7 minimum 50 runs). The runner accepts '
+        'any run count and classifies on what was run.']
+
+
+@pytest.mark.proposal(RUN_COUNT_REASON)
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('AP-1 D2', 'R2.2')
+def test_d2_run_of_10_by_50_prints_no_below_minimum_line():
+    row, text, _ = d2_report(10, 50)
+    assert row == ('| D2 | Measured | 10 \u00d7 50 | figures: OBSERVED-ONLY '
+                   '10; prose: OBSERVED-ONLY 10 (\u00a79) |')
+    assert 'n = 10 questions \u00d7 50 runs, per condition.' in \
+        text.splitlines()
+    assert 'Below' not in text and 'below' not in row
+
+
+@pytest.mark.proposal(RUN_COUNT_REASON)
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('AP-1 D2', 'R2.2')
+def test_d2_run_of_5_questions_by_50_says_below_on_questions():
+    # Under on questions only: 50 repeats of 5 questions is still below.
+    row, text, _ = d2_report(5, 50)
+    assert row.endswith('; below AP-1 D2\'s 10 \u00d7 50 (\u00a79) |')
+    assert '| 5 \u00d7 50 |' in row
+    assert ('> **Below AP-1 D2\'s 10 \u00d7 50: n = 5 \u00d7 50** (AP-1 '
+            'D2: minimum 10 questions \u00d7 minimum 50 runs). The runner '
+            'accepts any run count and classifies on what was run.'
+            ) in text.splitlines()
 
 
 D1_CATEGORY_HEAD = (

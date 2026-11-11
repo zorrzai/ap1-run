@@ -604,6 +604,12 @@ classified from evidence. The report lists the declaration per surface.
 evidence class EV-0, or one whose shape cannot be read is left out of the
 comparison, and the report gives how many were left out, by kind.
 
+**Run count.** The runner accepts any number of questions and runs; the
+minimum number of runs for a class is the configured `repeat_count`. The
+report gives D2's n (questions × runs) and, when a run is below AP-1 D2's
+minimum of 10 questions × 50 runs, says so in one line. It does not enforce
+that minimum.
+
 **Parameter-echo verification — normative.** Where the endpoint echoes applied
 parameters, the runner diffs requested against applied. A parameter requested
 and silently ignored is a **platform finding**. Where nothing is echoed,
@@ -620,6 +626,8 @@ parameter application is `UNVERIFIED`.
   structural or configured, is refused at load.
 - An errored reply and an EV-0 reply among 50 enter neither surface's
   comparison, and the report counts both.
+- A run of 3 repeats is classified, and the report says it is below
+  10 questions × 50 runs; a run of 10 × 50 says nothing of the kind.
 
 ### R2.3 — D7.1 Invocation
 
