@@ -269,25 +269,18 @@ def test_errored_and_ev0_replies_among_50_left_out_and_counted():
     assert findings.d2_errored == {('Q01', 'base'): 1}
     assert len(findings.d2_responses[('Q01', 'base')]) == 49
 
-    def classify(repeat_count):
-        return classify_reproducibility(
-            findings.d2_responses, repeat_count, None, findings.d2_figures,
-            d2_evidence=findings.d2_evidence,
-            d2_errored=findings.d2_errored)['Q01/base']
-
-    # The comparison: 48 runs, one value, the EV-0 reply's 700.00 not in it
-    cell = classify(48)
+    # At the configured 50 repeats the class is given on the 48 compared:
+    # one value, the EV-0 reply's 700.00 not in it
+    cell = classify_reproducibility(
+        findings.d2_responses, 50, None, findings.d2_figures,
+        d2_evidence=findings.d2_evidence,
+        d2_errored=findings.d2_errored)['Q01/base']
     for surface in ('figures', 'prose'):
         assert cell[surface]['successful_runs'] == 48
         assert cell[surface]['left_out'] == {'errored': 1, 'EV-0': 1}
         assert cell[surface]['distinct_values'] == 1
+    assert cell['figures']['mechanism'] == OBSERVED_ONLY
     assert cell['figures']['values'] == ['638.40']
-    # At the configured 50 repeats, the 48 left are below the minimum
-    cell = classify(50)
-    assert cell['figures']['mechanism'] == UNMEASURED
-    assert cell['figures']['reason'] == (
-        '48 successful runs below minimum 50 (1 errored, 1 EV-0 left out) '
-        '— UNMEASURED')
     text = section_9({'Q01/base': cell}, {'repeat_count': 50})
     assert ('Left out of the comparison: 2 replies (1 errored, 1 EV-0). '
             'An errored or EV-0 reply has no answer to compare; an '
@@ -306,3 +299,32 @@ def test_question_condition_whose_every_execution_errored_is_unmeasured():
     for surface in ('figures', 'prose'):
         assert d2['Q01/base'][surface]['mechanism'] == UNMEASURED
         assert d2['Q01/base'][surface]['left_out'] == {'errored': 3}
+
+
+FLOOR_REASON = (
+    'T3-4: a D2 class is given on the replies compared, at least two (the '
+    'fewest that can show repetition); the floor of two is our reading, '
+    'not a number AP-1 gives; requested in review')
+
+
+@pytest.mark.proposal(FLOOR_REASON)
+@pytest.mark.req('AP-1 D2', 'R2.2')
+@pytest.mark.finding('T3-4')
+def test_one_compared_reply_of_three_is_below_the_floor_of_two():
+    # A configured 3 repeats: two errored leave one reply, too few to
+    # compare; one errored leaves two, and the class is given on those two.
+    one = classify_reproducibility(
+        {('Q01', 'base'): [response('The interest is $638.40.')]}, 3, None,
+        d2_errored={('Q01', 'base'): 2})['Q01/base']
+    for surface in ('figures', 'prose'):
+        assert one[surface]['mechanism'] == UNMEASURED
+        assert one[surface]['reason'] == (
+            '1 successful runs below minimum 2 (2 errored left out) '
+            '— UNMEASURED')
+    two = classify_reproducibility(
+        {('Q01', 'base'): [response('The interest is $638.40.')] * 2}, 3,
+        None, d2_errored={('Q01', 'base'): 1})['Q01/base']
+    for surface in ('figures', 'prose'):
+        assert two[surface]['mechanism'] == OBSERVED_ONLY
+        assert two[surface]['successful_runs'] == 2
+        assert two[surface]['left_out'] == {'errored': 1}

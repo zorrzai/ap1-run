@@ -136,6 +136,12 @@ def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason,
     whose every execution errored is UNMEASURED, with that count).
     d2_declared is the operator's declaration, {surface: STRUCTURAL or
     CONFIGURED} (config.d2_declared_classes; SPEC R2.2).
+
+    A class is given on the replies compared: replies left out shrink
+    the comparison and are counted, and do not void it. The least
+    comparison is two replies (min(2, repeat_count)), the fewest that can
+    show repetition; a 1-repeat run keeps a minimum of one. The floor of
+    two is the runner's reading, not a number AP-1 gives (SPEC R2.2).
     """
     d2_errored = d2_errored or {}
     d2_declared = d2_declared or {}
@@ -152,7 +158,7 @@ def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason,
             mech = classify_mechanism(
                 responses,
                 surface=surface,
-                minimum_runs=repeat_count,
+                minimum_runs=min(2, int(repeat_count)),
                 operator_declared=d2_declared.get(surface),
                 figures=figures,
                 evidence=evidence,

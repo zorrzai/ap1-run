@@ -690,11 +690,12 @@ def test_reproducibility_per_item_condition_and_surface(fake_mechanism):
             'figures': {'mechanism': 'UNMEASURED', 'surface': 'figures'},
             'prose': {'mechanism': 'UNMEASURED', 'surface': 'prose'}},
     }
+    # the minimum is the replies compared, at least two: min(2, 3)
     assert fake_mechanism == [
-        (['STRUCTURAL', 'r2'], 'figures', 3, None),
-        (['STRUCTURAL', 'r2'], 'prose', 3, None),
-        ([], 'figures', 3, None),
-        ([], 'prose', 3, None),
+        (['STRUCTURAL', 'r2'], 'figures', 2, None),
+        (['STRUCTURAL', 'r2'], 'prose', 2, None),
+        ([], 'figures', 2, None),
+        ([], 'prose', 2, None),
     ]
 
 

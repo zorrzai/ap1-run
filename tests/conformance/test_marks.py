@@ -142,6 +142,7 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/runner/test_d2_pipeline.py::test_declared_class_the_d22_cap_lowers_is_not_marked_declared',
     'tests/unit/runner/test_d2_pipeline.py::test_declared_configured_figures_reported_operator_declared',
     'tests/unit/runner/test_d2_pipeline.py::test_errored_and_ev0_replies_among_50_left_out_and_counted',
+    'tests/unit/runner/test_d2_pipeline.py::test_one_compared_reply_of_three_is_below_the_floor_of_two',
     'tests/unit/runner/test_d2_pipeline.py::test_question_condition_whose_every_execution_errored_is_unmeasured',
     'tests/unit/runner/test_d2_pipeline.py::test_two_surfaces_declared_differently_each_shown_on_its_own_line',
     'tests/unit/runner/test_executions.py::test_apply_question_measurability_reassigns_section_6_8_outcome',
