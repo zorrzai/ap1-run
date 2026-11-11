@@ -872,12 +872,29 @@ def test_d73_altered_transcriptions_listed():
         '15.200000000000001 for 15.20), 0. A strict v1.2 "match" count '
         'subtracts the roundings, or all 0 for the strictest reading.',
         '\n#### Altered Transcriptions\n',
+        'Difference: the gap between the released figure and the closest '
+        'return, without the tool\'s binary float tail (digits past 15 '
+        'significant digits of the return); the comparison is exact.\n',
         '| Item | Condition | Rep | Difference | Reason |',
         '|---|---|---|---|---|',
         '| Q03 | base | 3 | 0.01 | rounded |',
         '| ? | ? | ? | ? | ? |',
         '',
         '### B.') in text
+
+
+@pytest.mark.req('R2.5')
+def test_d73_altered_difference_printed_without_float_tail():
+    # The Difference column prints the gap the run recorded without the
+    # tool's float tail (12.000000000000001 as 12; 0.005 stays 0.005)
+    text = report._section_d73({'transcription_results': [
+        tr('TRANSCRIBED-ALTERED', 22, difference='12.000000000000001',
+           difference_shown='12', reason='altered by 12'),
+        tr('TRANSCRIBED-ALTERED', 23, difference='0.005',
+           difference_shown='0.005', reason='altered by 0.005')]})
+    assert '| Q22 | base | 22 | 12 | altered by 12 |' in text
+    assert '| Q23 | base | 23 | 0.005 | altered by 0.005 |' in text
+    assert '000000000000001' not in text
 
 
 def test_d73_altered_transcriptions_capped_at_twenty():

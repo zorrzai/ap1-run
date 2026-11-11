@@ -540,6 +540,27 @@ def test_score_execution_with_real_scorers(capsys):
         'AUTO-MATCH', '638.40', 'TRANSCRIBED-EXACT', 'GOVERNED-RELEASE')
 
 
+@pytest.mark.req('R2.5')
+@pytest.mark.parametrize('returned, difference, shown', [
+    ('27.200000000000001', '12.000000000000001', '12'),
+    ('15.205', '0.005', '0.005'),
+])
+def test_score_execution_altered_transcription_shown_without_float_tail(
+        capsys, returned, difference, shown):
+    # The altered list prints the gap without the calculator's binary
+    # float tail; the exact difference is kept beside it
+    result = {'response': response('The payment is $15.20.'),
+              'tool_calls': [calc('x', '{"result": "%s"}' % returned)],
+              'evidence_class': 'EV-2', 'invocation_outcome': 'INVOKED'}
+    findings = Findings()
+    score(findings, result, expected=D('15.20'),
+          config={'quantisation': {'places': 2, 'rounding': 'ROUND_HALF_UP'}})
+    (record,) = findings.transcription_results
+    assert record['outcome'] == 'TRANSCRIBED-ALTERED'
+    assert (record['difference'], record['difference_shown'],
+            record['reason']) == (difference, shown, f'altered by {shown}')
+
+
 # -- D7.2 of one execution: score_d72 (moved from the engine, T3-21) -------
 
 GT_D72 = {'final': D('15.20'), 'derivable': True,

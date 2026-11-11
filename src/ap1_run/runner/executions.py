@@ -32,7 +32,8 @@ from ap1_run.scoring.provenance.classify import (
 )
 from ap1_run.scoring.release_coverage import check_release_coverage
 from ap1_run.scoring.reproducibility import check_parameter_echo
-from ap1_run.scoring.transcription import check_transcription
+from ap1_run.scoring.transcription import (
+    TRANSCRIBED_ALTERED, check_transcription, without_float_tail)
 
 # The status of an execution the run planned but never reached (SPEC R0.3:
 # an interrupted run's unreached items are reported not-run, never as
@@ -374,6 +375,13 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'repeat': rep,
         'outcome': transcription_result['outcome'],
         'difference': str(transcription_result.get('difference', '')),
+        # D7.3's altered list prints the gap without the tool's float
+        # tail; the exact difference stays beside it
+        **({'difference_shown': str(without_float_tail(
+            transcription_result['difference'],
+            transcription_result.get('tool_return')))}
+           if transcription_result['outcome'] == TRANSCRIBED_ALTERED
+           else {}),
         'reason': transcription_result.get('reason', ''),
         'rounded_under_declared_policy': transcription_result.get(
             'rounded_under_declared_policy', False),

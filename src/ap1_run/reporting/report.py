@@ -712,6 +712,10 @@ def _section_d73(summary):
         altered = [r for r in tr_results if r['outcome'] == 'TRANSCRIBED-ALTERED']
         if altered:
             lines.append('\n#### Altered Transcriptions\n')
+            lines.append('Difference: the gap between the released figure '
+                         'and the closest return, without the tool\'s '
+                         'binary float tail (digits past 15 significant '
+                         'digits of the return); the comparison is exact.\n')
             lines.append('| Item | Condition | Rep | Difference | Reason |')
             lines.append('|---|---|---|---|---|')
             for r in altered[:20]:
@@ -719,7 +723,7 @@ def _section_d73(summary):
                     f'| {r.get("item_id", "?")} '
                     f'| {r.get("condition", "?")} '
                     f'| {r.get("repeat", "?")} '
-                    f'| {r.get("difference", "?")} '
+                    f'| {_difference_shown(r)} '
                     f'| {r.get("reason", "?")} |')
             if len(altered) > 20:
                 lines.append(f'| ... | ... | ... | ... | ({len(altered)-20} more) |')
@@ -763,6 +767,12 @@ def _section_d73(summary):
         lines.append('')
 
     return '\n'.join(lines)
+
+def _difference_shown(record):
+    """An altered transcription's gap as the list prints it: without the
+    tool's float tail where the run recorded that (without_float_tail)."""
+    return record.get('difference_shown', record.get('difference', '?'))
+
 
 def _section_clopper_pearson(summary):
     """Section 5: D7.1 invocation figures with their bounds.
