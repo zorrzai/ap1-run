@@ -30,7 +30,8 @@ EXAMPLE = ROOT / 'example'
 FIXTURES = ROOT / 'tests' / 'fixtures'
 
 EXAMPLE_FILES = ('fixture.json', 'questions.json', 'ground_truth_example.py',
-                 'calculator_tool.py', 'config.json', 'config_mini.json')
+                 'calculator_tool.py', 'config.json', 'config_mini.json',
+                 'config_sol.json')
 
 # Every question answered correctly with a grounded call (regression
 # scenario "clean").
@@ -108,8 +109,7 @@ def ap1_run(tmp_path, monkeypatch, capsys):
         for name in ('AP1_SMOKE_TEMPERATURE', 'AP1_SMOKE_REASONING_EFFORT'):
             monkeypatch.delenv(name, raising=False)
         monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-test-not-a-real-key-0000')
-        monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-        monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+        mock.point_config(config_path)  # T3-80: config only
         for key, value in (env or {}).items():
             monkeypatch.setenv(key, value)
 
@@ -234,30 +234,41 @@ def sheet_sections(result):
 # --- T3-12 / R0.1 minimum-n, end to end ------------------------------------
 
 @pytest.mark.finding('T3-12')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-12: minimum-n is never enforced live; the '
-                          'shipped D1 claim on 10 items runs')
 @pytest.mark.req('R0.1')
-def test_run_shipped_config_d1_claim_on_ten_items_refused_before_any_request(
-        ap1_run):
+def test_run_d1_claim_on_ten_items_refused_before_any_request(ap1_run):
     # SPEC R0.1 (l.148-152): for each claimed dimension "the loader counts
     # eligible items and refuses the run" below the minimum (D1: >= 10 per
     # category; AP-1 v1.3 D1: minimum 40 items), naming the dimension, the
     # count and the minimum; "Incomplete configuration halts before any
-    # request is sent." The shipped example claims D1, D2, D7 over 10
-    # items in 6 categories (2, 2, 2, 2, 1, 1).
-    shipped = json.loads((EXAMPLE / 'config.json').read_text('utf-8'))
-    result = ap1_run(config={'dimensions_claimed':
-                             shipped['dimensions_claimed']})
+    # request is sent." The example claimed D1, D2, D7 over its 10 items
+    # in 6 categories (2, 2, 2, 2, 1, 1) until minimum-n was enforced.
+    result = ap1_run(config={'dimensions_claimed': ['D1', 'D2', 'D7']})
     refused, why = refused_before_any_request(result)
     assert refused, why
     # The refusal may be printed to stdout or stderr.
     assert 'D1' in f'{result.exception} {result.out[-500:]} {result.err}'
+    assert not result.seals
+
+
+@pytest.mark.finding('T3-12')
+@pytest.mark.req('R0.1')
+@pytest.mark.parametrize('config_file', ['config.json', 'config_mini.json',
+                                         'config_sol.json'])
+def test_run_shipped_config_claims_only_what_ten_items_support(ap1_run,
+                                                               config_file):
+    # The shipped example configs claim D2 and D7 (no minimum the loader
+    # can check), so the example still runs; report.md then declares D1
+    # not measured.
+    shipped = json.loads((EXAMPLE / config_file).read_text('utf-8'))
+    assert shipped['dimensions_claimed'] == ['D2', 'D7']
+    result = ap1_run(config={'dimensions_claimed':
+                             shipped['dimensions_claimed']})
+    assert result.exception is None, repr(result.exception)
+    assert result.requests
+    assert '| D1 | **NOT MEASURED** |' in report_text(result)
 
 
 @pytest.mark.finding('T3-12', 'T3-22')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-12: a D6 claim on nine items runs')
 @pytest.mark.req('R4.1', 'R0.1')
 def test_r41_d6_claimed_with_nine_items_refused_at_load(ap1_run):
     # SPEC R4.1 row "D6 claimed with nine items | Refused at load"; R0.1
@@ -313,9 +324,6 @@ def assert_run_used_the_file(result, config_path):
     'T3-79/T3-67: one config file per run (config_mini.json valid, the '
     'AP1_SMOKE_* sampling overrides removed); proposed, not decided')
 @pytest.mark.finding('T3-79')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-79: config_mini.json is refused at load "
-                          "(reason 'model-unsupported')")
 def test_run_with_config_mini_seals_exactly_that_files_settings(ap1_run,
                                                                 tmp_path):
     # Correct (T3-67, T3-79): a run with --config seals exactly that
@@ -329,10 +337,6 @@ def test_run_with_config_mini_seals_exactly_that_files_settings(ap1_run,
     'T3-79/T3-67: one config file per run (config_mini.json valid, the '
     'AP1_SMOKE_* sampling overrides removed); proposed, not decided')
 @pytest.mark.finding('T3-67', 'T3-79')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-67/T3-79: AP1_SMOKE_TEMPERATURE and '
-                          'AP1_SMOKE_REASONING_EFFORT rewrite the sampling '
-                          'block after validation')
 @pytest.mark.req('R0.1')
 @pytest.mark.parametrize('env', [
     {'AP1_SMOKE_TEMPERATURE': '1'},
@@ -341,9 +345,9 @@ def test_run_with_config_mini_seals_exactly_that_files_settings(ap1_run,
 ])
 def test_run_sampling_environment_variable_changes_nothing(ap1_run, tmp_path,
                                                            env):
-    # Correct (T3-79): the two overrides are removed, so no environment
-    # variable can change a sampling setting after validation. Today
-    # AP1_SMOKE_REASONING_EFFORT=omit writes the
+    # T3-79 (the author's proposal): the two overrides are
+    # removed, so "no environment variable can change a sampling setting
+    # after validation". AP1_SMOKE_REASONING_EFFORT=omit used to write the
     # reason 'not-supported', which load_config refuses, into the sealed
     # config (T3-67). A run that refuses to start while such a variable
     # is set would also be correct.
@@ -361,13 +365,10 @@ def test_run_sampling_environment_variable_changes_nothing(ap1_run, tmp_path,
 # structure / EV-0 (T3-1), expected value appearing twice (T3-83),
 # locale-ambiguous token and European separators (T3-41), ground-truth
 # module returning constants (T3-7), quantisation finding in the report
-# (T3-34). The EV-3 row is blocked: SPEC §10 declares EV-3 not implemented.
+# (T3-34). The EV-3 rows are declared exceptions in R4.1: SPEC §10 declares
+# EV-3 not implemented.
 
 @pytest.mark.finding('T3-22')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-22: a correct answer with no tool call is '
-                          'auto-scored AUTO-MATCH, with no sheet offering '
-                          'RETRIEVED')
 @pytest.mark.req('R4.1', 'R2.3')
 def test_r41_correct_answer_without_tool_call_is_not_invoked_retrieved_candidate(
         ap1_run):
@@ -595,9 +596,6 @@ def test_r41_signed_attestation_is_ev1_never_ev3(ap1_run, attestation):
 
 
 @pytest.mark.finding('T3-22', 'T3-30', 'T3-90')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-22/T3-90: check_parameter_echo is never '
-                          'called; an ignored temperature is not reported')
 @pytest.mark.req('R4.1', 'R2.2', 'AP-1 D2.2')
 def test_r41_requested_temperature_ignored_is_a_d2_platform_finding(ap1_run):
     # Row "Requested temperature ignored | D2 platform finding"; AP-1 v1.3
@@ -625,7 +623,9 @@ def test_r41_requested_temperature_ignored_is_a_d2_platform_finding(ap1_run):
 @pytest.mark.finding('T3-30')
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-30: report.md has no §2.5 statement of the '
-                          'links cleared and not cleared')
+                          'links cleared and not cleared; blocked: what '
+                          'clears each link (a)-(e) needs a maintainer '
+                          'decision (no DEC covers it yet)')
 @pytest.mark.req('AP-1 §2.5')
 def test_report_states_which_defeat_condition_links_were_cleared(ap1_run):
     # AP-1 v1.3 §2.5 (l.146): "A refutation must clear (a) through (e).
@@ -645,9 +645,6 @@ def test_report_states_which_defeat_condition_links_were_cleared(ap1_run):
 
 
 @pytest.mark.finding('T3-30')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-30: the D2 result does not disclose the '
-                          'serving stack or concurrency (D2.2)')
 @pytest.mark.req('AP-1 D2.2', 'R2.2')
 def test_report_d2_result_discloses_execution_conditions(ap1_run):
     # AP-1 v1.3 D2.2 (l.237): "Every D2 result shall report: the serving

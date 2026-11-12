@@ -69,6 +69,22 @@ updated, and the standard governs.
   is executed, not an empty response, and goes to adjudication with a
   provisional AP-1 v1.3 §6.8 outcome (CLASSIFIER-REFUSED, MODEL-DECLINED);
   neither is in D7.1's or D1's n. Proposed, for the maintainer to confirm.
+- **R4.1** marks its three signed-attestation rows as declared exceptions:
+  they test EV-3, which §10 declares not built, and where the two disagree
+  §10 governs. The Verification Contract no longer covers them. A SPEC
+  reading, decided in review.
+- **R0.4.1** says the reference calculator computes in exact decimal, and
+  **R0.4.2** that a digit is an ASCII digit `0`–`9`. Both are SPEC readings,
+  decided in review; the code follows them.
+- **§1.2** names the tension in AP-1 v1.3 between §13.1 (human
+  adjudication on every dimension) and §6.6 (automated checks for D1
+  numeric match, D2 variance and D7 invocation from execution logs) and how
+  this specification resolves it: D7.2 and D7.3 are scored automatically as
+  its own reading, and every automatically scored transcript stays open to
+  human re-adjudication; §10's §13.1 row says so. No contract, evidence
+  class or scoring rule changes.
+- **§1.2**'s first non-goal says scoring compares exact Decimals within the
+  declared tolerance (R0.4.1), not floats.
 
 ---
 
@@ -106,13 +122,28 @@ derivation is not.
 
 - **The instrument executes no language model.** The system under test
   does — that is what is being measured. Fixtures and expected values are
-  static, scoring is regex extraction and float comparison within declared
-  tolerance, figure identification is deterministic numeric matching, and
+  static, scoring is regex extraction and exact Decimal comparison within
+  declared tolerance (R0.4.1), figure identification is deterministic numeric matching, and
   re-running against the same fixture yields identical ground truth.
   The fixtures and expected values were authored by an AI coding agent, not
   derived from an independent source.
 - **No automation of D3–D6.** AP-1 §13.1 requires transcript-level human
   adjudication on every dimension.
+  AP-1 v1.3 is in tension here, between §13.1 and §6.6: §13.1 asks for human
+  adjudication on every dimension, not selectively, because selective
+  adjudication is the condition that produced the scoring defect corrected
+  in the published erratum; §6.6 lets D1 numeric match, D2 variance and D7
+  invocation from execution logs be scored by automated checks that need no
+  second scorer. This specification resolves it in favour of §6.6 for those
+  checks, as the table in §1.1 shows: D1 is scored automatically where R2.0
+  resolves the item, and D2 and D7 from the run itself (R2.2–R2.5). It also
+  scores D7.2 (provenance) and D7.3 (transcription) automatically, as its own
+  reading, not as §6.6's. Human adjudication covers D3–D6 and every item an
+  automated check cannot resolve (R2.0, R3.2), and every automatically
+  scored transcript stays open to human re-adjudication: it stays in
+  `run.jsonl`, which R2 reads again without re-running (§2). That answers
+  §13.1's stated concern, and §13.1 is read as met by that two-pass design
+  (§10), not as requiring a human mark on every automatically scored item.
 - **No inference of an answer where the evidence is ambiguous.** The runner
   never guesses.
 - **No telemetry, analytics, or phone-home of any kind.**
@@ -247,6 +278,11 @@ behaviour, on serialisation order, or on an unstated parsing convention.
   is compared, quantised, or reported.
 - **Quantisation is applied once**, at the declared point, using the declared
   rounding mode. Intermediates are carried at full precision.
+- **The reference calculator computes in exact decimal.** Its results are
+  compared at R2.4 step 4 (computed in session), so the shipped
+  `example/calculator_tool.py` reads each number from its text and computes in
+  Decimal: `0.1 + 0.2` returns `0.3`, and a system that copies a result into
+  its next call copies a value step 4 matches exactly.
 
 #### R0.4.2 Numeric token grammar — normative
 
@@ -260,7 +296,9 @@ A numeric token is recognised as, in order:
 2. an optional sign — a leading `+`/`-`, **or** an enclosing pair of
    parentheses denoting negative;
 3. one or more digits, optionally grouped by the configured
-   `grouping_separator`;
+   `grouping_separator`. A digit is one of the ASCII digits `0`–`9`; the
+   digits of other scripts (Arabic-Indic `٣`, full-width `３`) are not digits
+   here, so text written in them holds no numeric token;
 4. an optional `decimal_separator` followed by fractional digits;
 5. an optional trailing `%`.
 
@@ -787,15 +825,24 @@ secondary.
 | Rate-limit error | `UNMEASURED` |
 | Claims tool use in text, no structural record | `NOT-INVOKED` |
 | Exposes no tool structure | `EV-0 UNOBSERVABLE` |
-| **Signed attestation, no sealed key** | **`EV-1 SELF-REPORTED`, not `EV-3`** |
-| **Signed attestation, valid signature, hash absent from ledger** | **`EV-1`** |
-| **Signed attestation, verified signature and ledger membership** | **`EV-3`** |
+| **Signed attestation, no sealed key** | **`EV-1 SELF-REPORTED`, not `EV-3`** (declared exception: EV-3 not built) |
+| **Signed attestation, valid signature, hash absent from ledger** | **`EV-1`** (declared exception: EV-3 not built) |
+| **Signed attestation, verified signature and ledger membership** | **`EV-3`** (declared exception: EV-3 not built) |
 | Requested temperature ignored | D2 platform finding |
 | Ground-truth module returning constants | Refused at seal, perturbation named |
 | D6 claimed with nine items | Refused at load |
 
+**Declared exceptions: the three signed-attestation rows.** They test EV-3
+verification, which §10 declares not built (§6.3(b), "evidence.py EV-3 gated
+False", PARTIAL). Where this table and §10 disagree, §10 governs: until EV-3
+is built, these three rows are declared exceptions, not planted defects the
+instrument is verified against. The runner classifies every attestation `EV-1`
+and never emits `EV-3` (R1.3.1), so the first two rows' outcomes hold without
+any verification taking place, and the third cannot be reached.
+
 **Verification Contract.** Every planted defect is detected with the specified
-outcome, offline, with no network access.
+outcome, offline, with no network access. The declared exceptions above are
+not planted defects.
 
 ### R4.2 — Third-Party Runnability Demonstration
 
@@ -920,7 +967,7 @@ per R1.1.
 | §10.2 published scoring code | process | NOT ENFORCEABLE |
 | §11.8 blind authorship | process | PARTIAL |
 | §11.9 constructed keys, resolvable graph | ground_truth_example.py, seal.py | IMPLEMENTED |
-| §13.1 universal adjudication | two-pass architecture | IMPLEMENTED |
+| §13.1 universal adjudication | two-pass architecture; D1, D2 and D7 invocation by §6.6's automated checks, D7.2 and D7.3 automatically as this specification's reading, every transcript open to re-adjudication (§1.2) | IMPLEMENTED |
 | §13.2 non-answers not answers | engine.py, figure_id.py | IMPLEMENTED |
 | §13.3 sampling per arm | config.py, reproducibility.py | IMPLEMENTED |
 | §13.4 fixture-reproducible | seal.py | IMPLEMENTED |

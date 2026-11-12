@@ -282,52 +282,77 @@ def test_is_error_or_limited_plain_response_is_not():
 @pytest.mark.req('R2.2')
 def test_parameter_echo_no_echo_is_unverified():
     assert check_parameter_echo({'temperature': '0.0'}, None) == {
-        'verified': False, 'findings': [], 'status': 'UNVERIFIED'}
+        'verified': False, 'findings': [], 'status': 'UNVERIFIED',
+        'not_echoed': ['temperature']}
 
 
 def test_parameter_echo_all_applied_is_verified():
     assert check_parameter_echo(
         {'temperature': '0.0', 'top_p': 1},
         {'temperature': '0.0', 'top_p': '1', 'seed': 7}) == {
-        'verified': True, 'findings': [], 'status': 'VERIFIED'}
+        'verified': True, 'findings': [], 'status': 'VERIFIED',
+        'not_echoed': []}
 
 
 def test_parameter_echo_nothing_requested_is_verified():
     assert check_parameter_echo({}, {})['status'] == 'VERIFIED'
 
 
-@pytest.mark.req('R2.2')
-def test_parameter_echo_changed_and_missing_parameters_are_findings():
+@pytest.mark.req('R2.2', 'AP-1 D2.2')
+def test_parameter_echo_changed_parameter_is_a_finding_unechoed_is_not():
+    # AP-1 v1.3 D2.2: "a parameter requested and silently ignored is a
+    # platform finding". One not echoed was not shown ignored: it is
+    # unverified, not a finding.
     assert check_parameter_echo(
         {'temperature': '0.0', 'top_p': '1.0'}, {'temperature': '0.7'}) == {
         'verified': False,
         'findings': [
             "parameter 'temperature': requested='0.0', applied='0.7' "
             '— silently ignored',
-            "parameter 'top_p' requested but not echoed",
         ],
         'status': 'MISMATCH',
+        'not_echoed': ['top_p'],
     }
+
+
+@pytest.mark.req('R2.2', 'AP-1 D2.2')
+def test_parameter_echo_some_echoed_and_matching_is_unverified_not_mismatch():
+    # The sampling of example/config_mini.json, with
+    # only temperature echoed (a token limit named otherwise by the API).
+    r = check_parameter_echo({'temperature': '1', 'max_completion_tokens':
+                              '4096'}, {'temperature': 1})
+    assert r == {'verified': False, 'findings': [], 'status': 'UNVERIFIED',
+                 'not_echoed': ['max_completion_tokens']}
 
 
 def test_parameter_echo_echoed_none_counts_as_not_echoed():
     r = check_parameter_echo({'seed': 7}, {'seed': None})
-    assert r['findings'] == ["parameter 'seed' requested but not echoed"]
+    assert (r['findings'], r['not_echoed'], r['status']) == (
+        [], ['seed'], 'UNVERIFIED')
+
+
+@pytest.mark.finding('S3-G5-4')
+@pytest.mark.parametrize('requested, echoed, status', [
+    ('1', 1.0, 'VERIFIED'), ('0', 0.0, 'VERIFIED'), ('0.10', 0.1, 'VERIFIED'),
+    (0, 0.0, 'VERIFIED'), ('1', 0.7, 'MISMATCH'), ('0.1', 0.10000001,
+                                                   'MISMATCH'),
+    # compared with what was sent: this request goes out as the float 0.1
+    ('0.10000000000000001', 0.1, 'VERIFIED')])
+def test_parameter_echo_compares_numbers_as_numbers(requested, echoed,
+                                                   status):
+    assert check_parameter_echo({'temperature': requested},
+                                {'temperature': echoed})['status'] == status
+
+
+def test_parameter_echo_non_numbers_compare_as_text():
+    assert check_parameter_echo({'effort': 'low'}, {'effort': 'low'})[
+        'status'] == 'VERIFIED'
+    assert check_parameter_echo({'effort': 'low'}, {'effort': 'high'})[
+        'status'] == 'MISMATCH'
 
 
 def test_parameter_echo_compares_as_strings():
     assert check_parameter_echo({'t': 0.0}, {'t': '0.0'})['status'] == 'VERIFIED'
-
-
-@pytest.mark.finding('S3-G5-4')
-def test_parameter_echo_numerically_equal_values_can_mismatch():
-    # Today: values are compared as strings, so temperature 0 requested
-    # and 0.0 echoed is reported as "silently ignored". Correct: compare
-    # numbers as numbers. (No live caller today; see T3-90.)
-    r = check_parameter_echo({'temperature': 0}, {'temperature': 0.0})
-    assert r['status'] == 'MISMATCH'
-    assert r['findings'] == [
-        "parameter 'temperature': requested=0, applied=0.0 — silently ignored"]
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
@@ -356,9 +381,6 @@ def test_classify_mechanism_figures_surface_counts_numeric_answers():
 
 
 @pytest.mark.finding('S3-G5-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G5-4: echo compared as strings; 0 requested, '
-                          '0.0 applied is reported silently ignored')
 def test_parameter_echo_numerically_equal_values_verified():
     # SPEC R2.2: "a parameter requested and silently ignored is a platform
     # finding". 0 and 0.0 are the same temperature. Correct: numbers are

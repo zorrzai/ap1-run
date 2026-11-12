@@ -1,8 +1,11 @@
 """SPEC R4.1 planted behaviours for execution/evidence.py (from legacy
 verify_r41.py B01, B17-B21). Module tests proper are in test_evidence.py."""
 
+from pathlib import Path
+
 import pytest
 
+from ap1_run.execution import evidence
 from ap1_run.execution.evidence import (
     EV_0, EV_1, EV_2, EV_3, EvidenceError, check_ev3_guard,
     classify_attestation, classify_invocation,
@@ -64,8 +67,9 @@ def test_r41_verified_attestation_in_ledger_is_still_ev1():
     # The R4.1 row "verified signature and ledger membership -> EV-3" has
     # no legacy test (B21 tests the EV-3 guard instead). classify_attestation
     # ignores its inputs and returns EV-1. EV-3 is declared unimplemented
-    # (README, SPEC §10 §6.3(b) PARTIAL), but R4.1 lists the row as
-    # required. Correct: either verify and return EV-3, or drop the row.
+    # (README, SPEC §10 §6.3(b) PARTIAL), and R4.1 now marks the row a
+    # declared exception (see the test below); building EV-3 would turn
+    # this into a test of EV-3.
     assert classify_attestation(
         {'signature': 'valid_sig', 'payload_hash': 'abc123',
          'ledger': ['abc123']},
@@ -75,5 +79,37 @@ def test_r41_verified_attestation_in_ledger_is_still_ev1():
 
 @pytest.mark.req('R4.1')
 def test_r41_b21_ev3_is_blocked_in_v1():
+    with pytest.raises(EvidenceError):
+        check_ev3_guard(EV_3)
+
+
+SPEC = Path(__file__).resolve().parents[3] / 'docs' / 'SPEC.md'
+
+
+def spec_section(text, heading, next_heading):
+    start = text.index(heading)
+    return text[start:text.index(next_heading, start)]
+
+
+@pytest.mark.proposal(
+    'T3-22: SPEC reading, decided in review: R4.1 lists three EV-3 rows '
+    'as required while SPEC §10 declares EV-3 not built; §10 governs, so '
+    'the three rows are declared exceptions')
+@pytest.mark.finding('T3-22')
+@pytest.mark.req('R4.1', 'R1.3.1')
+def test_r41_ev3_rows_are_declared_exceptions_while_ev3_is_not_built():
+    spec = SPEC.read_text(encoding='utf-8')
+    r41 = spec_section(spec, '### R4.1', '### R4.2')
+    rows = [line for line in r41.splitlines()
+            if line.startswith('| **Signed attestation')]
+    assert len(rows) == 3, rows
+    assert all('declared exception' in row for row in rows), rows
+    assert '**Declared exceptions: the three signed-attestation rows.**' \
+        in r41
+    # §10, the side that governs, still says EV-3 is not built ...
+    assert '| §6.3(b) structural evidence | evidence.py EV-3 gated False ' \
+        '| PARTIAL |' in spec_section(spec, '## 10.', '## 11.')
+    # ... and so does the code: no attestation reaches EV-3.
+    assert evidence._EV3_FORBIDDEN is True
     with pytest.raises(EvidenceError):
         check_ev3_guard(EV_3)

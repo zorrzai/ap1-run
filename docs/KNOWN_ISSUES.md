@@ -21,6 +21,16 @@ without warning.
 
 **File:** `example/calculator_tool.py`, expression evaluation block.
 
+**Status: partly fixed (T3-77).** An arithmetic error (`1/0`, `1 % 0`,
+`log(-1)`, `sqrt(-1)`, an overflow converting to float) is now refused with
+`CalculatorError`, keeping the exception's message, and a complex result is
+refused as "not a real number". There is no magnitude guard of its own,
+but since T3-59 the calculator computes in exact decimal (Decimal in the
+runner's context, precision 50, never through float; `0.1 + 0.2` returns
+`0.3`), and a result past that context's exponent limit is refused as
+"numeric overflow": `9**9**9**9` is refused at once rather than running
+until memory or time runs out.
+
 ---
 
 ## 2. Perturbation check: fail-open exception handling
@@ -70,6 +80,10 @@ The instrument's "never through float" design principle (stated in
 
 **File:** `src/ap1_run/scoring/operation_correctness.py`, π/e constant construction.
 
+**Status: fixed (T3-77).** π comes from a 100-digit decimal string and e from
+`Decimal(1).exp()`, both rounded to the Decimal context's precision when the
+expression is evaluated.
+
 ---
 
 ## 5. Numeric parser: grouping separator produces silent misparse
@@ -81,6 +95,15 @@ intended value is `1.23`. The parser does not validate grouping-separator
 position (e.g., requiring groups of three digits).
 
 **File:** `src/ap1_run/foundation/numeric.py`, `parse_decimal`, grouping-separator stripping.
+
+**Fixed** in step 5 of the 2026-10 reorganization (S3-G1-3, T3-77):
+`parse_decimal` checks the digit string against the R0.4.2 grammar, so a
+grouping separator must sit between groups of three digits. `'1,23'` is refused (not a number), not read
+as 123. The same check refuses NaN, Infinity, exponents, underscores and a
+doubled sign. The runner also passes the configured `decimal_separator` and
+`grouping_separator` to every extraction (T3-41), so under a `,` decimal
+separator `'1,23'` is 1.23; a token the configured separators leave ambiguous
+routes the item to adjudication (R0.4.2).
 
 ---
 
@@ -100,6 +123,18 @@ to `2` under HALF_EVEN but `3` under HALF_UP.
 **Files:** `example/calculator_tool.py` (`round()`);
 `src/ap1_run/scoring/operation_correctness.py` (`quantize` calls); example configs
 (`rounding_mode` field).
+
+**Status: fixed (T3-77).** Both the example calculator's `round()` and
+D7.2(b)'s `round()` round half away from zero (ROUND_HALF_UP), as the example
+configs' `quantisation.rounding` declares: `round(2.5)` is 3.
+
+**Still true, by choice:** `round()` inside an expression is always half up,
+whatever `quantisation.rounding` a config declares (the loader accepts every
+mode the decimal module has). SPEC R0.4.1's declared rounding mode governs the
+runner's own quantisation, applied once at the declared point; `round()` is part
+of the calculator the model calls, and D7.2(b) judges an expression by the
+value that calculator returns. Under a `ROUND_HALF_EVEN` config, `round(2.5)`
+is still 3 in both, so tool and checker agree.
 
 ---
 

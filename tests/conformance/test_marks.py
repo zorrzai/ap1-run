@@ -32,6 +32,21 @@ ROOT = Path(__file__).resolve().parents[2]
 # removing a proposal or provisional mark means updating it here, in the
 # same commit, so the change is visible.
 EXPECTED_PROPOSAL_CASES = (
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[fifty-digits]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[float-is-the-value]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[floor]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[floordiv-as-python]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[int-truncates]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[interest]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[log-base]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[mod-as-python]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[mod-negative-divisor]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[mortgage]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[no-negative-zero]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[scientific-past-100-digits]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[tenths]',
+    'tests/functional/test_example_calculator.py::test_calculator_computes_in_exact_decimal[zero-power-zero]',
+    'tests/functional/test_example_calculator.py::test_faithful_copy_of_a_calculator_result_grounds_at_step_4',
     'tests/functional/test_step4_d1_categories.py::test_run_report_d1_per_category_with_n_result_and_interval',
     'tests/functional/test_step4_g1_invocation.py::test_run_d71_bound_counts_questions_not_repeats',
     'tests/functional/test_step4_g1_invocation.py::test_run_refusal_executed_adjudicated_outside_d71_and_d1[content-filter]',
@@ -61,6 +76,7 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/execution/test_engine.py::test_execute_item_refusal_is_executed_not_unmeasured[content-filter]',
     'tests/unit/execution/test_engine.py::test_execute_item_refusal_is_executed_not_unmeasured[refusal]',
     'tests/unit/execution/test_engine.py::test_execute_item_unrecognised_later_response_error_state_names_round',
+    'tests/unit/execution/test_evidence_r41.py::test_r41_ev3_rows_are_declared_exceptions_while_ev3_is_not_built',
     'tests/unit/execution/test_seal.py::test_seal_hash_two_timestamps_give_two_hashes',
     'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom-fixture]',
     'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom-ground_truth]',
@@ -80,6 +96,15 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/foundation/test_config.py::test_load_config_example_config_mini_is_the_mini_runs_config',
     'tests/unit/foundation/test_config.py::test_minimum_n_minimum_named_is_the_declared_versions[D5-5-20]',
     'tests/unit/foundation/test_config.py::test_minimum_n_minimum_named_is_the_declared_versions[D6-1-10]',
+    'tests/unit/foundation/test_numeric.py::test_arabic_indic_and_full_width_three_neither_parse_nor_extract',
+    'tests/unit/foundation/test_numeric.py::test_extract_non_ascii_digits_are_not_tokens',
+    'tests/unit/foundation/test_numeric.py::test_parse_decimal_refuses_non_ascii_digits[arabic-indic-12]',
+    'tests/unit/foundation/test_numeric.py::test_parse_decimal_refuses_non_ascii_digits[arabic-indic-3]',
+    'tests/unit/foundation/test_numeric.py::test_parse_decimal_refuses_non_ascii_digits[ascii-then-arabic-indic]',
+    'tests/unit/foundation/test_numeric.py::test_parse_decimal_refuses_non_ascii_digits[currency-percent-around]',
+    'tests/unit/foundation/test_numeric.py::test_parse_decimal_refuses_non_ascii_digits[devanagari-point-5]',
+    'tests/unit/foundation/test_numeric.py::test_parse_decimal_refuses_non_ascii_digits[full-width-3]',
+    'tests/unit/foundation/test_numeric.py::test_parse_decimal_refuses_non_ascii_digits[full-width-grouped]',
     'tests/unit/reporting/test_adjudication.py::test_sheet_key_joins_every_sheet_back_to_its_arm',
     'tests/unit/reporting/test_adjudication.py::test_sheet_refusal_shows_text_and_provisional_outcome[content-filter]',
     'tests/unit/reporting/test_adjudication.py::test_sheet_refusal_shows_text_and_provisional_outcome[refusal]',
@@ -131,10 +156,10 @@ EXPECTED_PROVISIONAL_CASES = {
     'tests/unit/runner/test_summary.py': 4,
     'tests/unit/scoring/provenance/test_classify.py': 2,
     'tests/unit/scoring/provenance/test_trace.py': 4,
-    'tests/unit/scoring/test_operation_correctness.py': 115,
+    'tests/unit/scoring/test_operation_correctness.py': 112,
     'tests/unit/scoring/test_release_coverage.py': 34,
 }
-MIN_STRICT_XFAIL_CASES = 323
+MIN_STRICT_XFAIL_CASES = 234
 
 
 @pytest.fixture(scope='module')

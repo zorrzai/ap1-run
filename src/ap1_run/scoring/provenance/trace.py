@@ -31,14 +31,16 @@ import ast
 import json
 from decimal import Decimal, InvalidOperation
 
-from ap1_run.foundation.numeric import quantise
+from ap1_run.foundation.numeric import in_decimal_context, quantise
 
 # -- Permitted transformations -----------------------------------------
 
+# Each runs in the shared DECIMAL_CONTEXT (T3-60), so a transformed source
+# is exact to its precision whatever the caller's context.
 TRANSFORMATIONS = {
-    'percent_to_fraction': lambda v: v / Decimal('100'),
-    'fraction_to_percent': lambda v: v * Decimal('100'),
-    'abs_value': lambda v: abs(v),
+    'percent_to_fraction': in_decimal_context(lambda v: v / Decimal('100')),
+    'fraction_to_percent': in_decimal_context(lambda v: v * Decimal('100')),
+    'abs_value': in_decimal_context(lambda v: abs(v)),
 }
 
 

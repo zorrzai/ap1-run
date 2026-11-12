@@ -13,4 +13,4 @@ def test_r41_b22_ignored_temperature_is_a_mismatch_finding():
         echoed_params={'temperature': 1},
     ) == {'verified': False, 'status': 'MISMATCH', 'findings': [
         "parameter 'temperature': requested=0, applied=1 — "
-        'silently ignored']}
+        'silently ignored'], 'not_echoed': []}

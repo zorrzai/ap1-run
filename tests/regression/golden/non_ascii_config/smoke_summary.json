@@ -12,7 +12,7 @@
       "figure_outcome": "ADJUDICATE-DECLINE",
       "figure_reason": "decline marker matched: 'I’m unable to say'",
       "tool_calls_count": 0,
-      "released_figure": "None",
+      "released_figure": null,
       "expected": "15.200",
       "shape_ok": true,
       "operation_correctness": [],

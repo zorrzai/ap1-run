@@ -49,7 +49,6 @@ Model: mock-model
     "I'm sorry, I cannot"
   ],
   "dimensions_claimed": [
-    "D1",
     "D2",
     "D7"
   ],
@@ -112,7 +111,7 @@ Model: mock-model
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | Measured | 60 | Accuracy: 1 (auto-scored 60; 0 adjudicated not in rate) |
+| D1 | **NOT MEASURED** | — | — |
 | D2 | Measured | N/A | See §9 D2 Mechanism Classes |
 | D3 | **NOT MEASURED** | — | — |
 | D4 | **NOT MEASURED** | — | — |
@@ -208,7 +207,7 @@ Model: mock-model
 | `UNOBSERVABLE` | 0 | 0.0% |
 | **Total** | **60** | |
 
-Of the 60 `TRANSCRIBED-EXACT`, 24 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3). Of these: roundings of the tool's return to the declared places, 6; float artefacts of the tool (the return differs from the release only past a binary float's 15 significant digits, such as 15.200000000000001 for 15.20), 18. A strict v1.2 "match" count subtracts the roundings, or all 24 for the strictest reading.
+Of the 60 `TRANSCRIBED-EXACT`, 6 were rounded under the declared quantisation policy (licensed rounding, EXACT under AP-1 v1.3). Of these: roundings of the tool's return to the declared places, 6; float artefacts of the tool (the return differs from the release only past a binary float's 15 significant digits, such as 15.200000000000001 for 15.20), 0. A strict v1.2 "match" count subtracts the roundings, or all 6 for the strictest reading.
 
 ### B. Release Coverage
 
@@ -321,6 +320,18 @@ Total operands resolved: 264
 *No per-surface D2 data available.*
 
 
+## 9b. D2.2 Execution Conditions
+
+- Serving stack and version: as the responses report it, model mock-model (60); backend fingerprints (system_fingerprint) not reported; the runner observes nothing more.
+- Deterministic or batch-invariant mode: none requested by the runner; whether the endpoint enables one is not disclosed.
+- Concurrency: one request at a time, sequentially, from a single process.
+- Sampling parameters sent:
+  - `max_completion_tokens`: `4096`
+  - `reasoning_effort`: `none`
+  - `temperature`: not sent (platform-rejected)
+  - `top_p`: not sent (operator-declared)
+- Parameter echo: `UNVERIFIED` (60 responses checked)
+
 ## 10. Non-Outcome Cells
 
 > Every cell that is not a scoreable outcome is listed with its reason.
@@ -338,6 +349,7 @@ Total operands resolved: 264
 
 The following dimensions were **not measured** in this evaluation and require human adjudication:
 
+- **D1**: Accuracy — requires item-level scoring
 - **D3**: Completeness of explanation — requires human adjudication
 - **D4**: Appropriate caveats — requires human adjudication
 - **D5**: Source attribution — requires human adjudication
