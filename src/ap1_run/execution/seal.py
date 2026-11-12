@@ -34,6 +34,12 @@ SEALED_FIELDS = (
     'verification_keys', 'ev3_implemented',
 )
 
+# The fields a record of this format carries when the run gives them;
+# seal_hash covers them too. The live run always records the R3.1 lookup
+# collisions it found at seal (T3-75), and every check that compares them
+# (check_collisions) refuses a record of this format without them.
+OPTIONAL_SEALED_FIELDS = ('lookup_collisions',)
+
 # The sealed text inputs, by name: the record field is '<name>_hash'.
 TEXT_INPUTS = ('fixture', 'questions', 'ground_truth', 'calculator')
 
@@ -105,7 +111,8 @@ def _declared_ap1_hash(config):
 
 def seal(*, config, fixture_path, questions_path, ground_truth_path,
          calculator_path, ap1_text_path=None, verification_keys=None,
-         runner_source_hash=None, expected_values=None, loaded=None):
+         runner_source_hash=None, expected_values=None, loaded=None,
+         lookup_collisions=None):
     """Create a pre-registration record. R1.1.
 
     Hashes all inputs and timestamps the record. The seal_hash covers
@@ -123,6 +130,9 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
     'calculator', the bytes the run read and executes. When given, these
     are hashed instead of the files being read again (T3-72: seal what is
     executed).
+    lookup_collisions, if given (a list of (item_id, field), from
+    context.lookup_collisions), is recorded in the sealed record as text,
+    'none' if empty: R3.1 reports collisions at seal (T3-75).
 
     Returns: dict with component hashes and seal_hash.
     """
@@ -173,6 +183,8 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
         'verification_keys': verification_keys or [],
         'ev3_implemented': False,
     }
+    if lookup_collisions is not None:
+        record['lookup_collisions'] = collisions_text(lookup_collisions)
 
     # Seal: hash the entire record, the timestamp included
     record['seal_hash'] = record_hash(record)
@@ -180,9 +192,37 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
     return record
 
 
+def collisions_text(lookup_collisions):
+    """The sealed text of the R3.1 lookup collisions, a list of
+    (item_id, 'account.field'): 'Q09 (checking.atm_fee); ...', 'none' if
+    empty. The same list always gives the same text, so collisions found
+    again compare with the sealed ones as text."""
+    return '; '.join(f'{item_id} ({field})'
+                     for item_id, field in lookup_collisions) or 'none'
+
+
+def check_collisions(record, lookup_collisions):
+    """[mismatch] if the record seals lookup collisions other than
+    lookup_collisions (the ones the inputs give now), or, being of this
+    format (seal_format), seals none; else []. Only a record without
+    seal_format (the published runs made before October 2026, which the
+    verifier accepts by seal_hash) has no collisions to compare."""
+    current = collisions_text(lookup_collisions)
+    if 'lookup_collisions' not in record:
+        if 'seal_format' not in record:
+            return []
+        return [f'lookup_collisions: not sealed (a record with seal_format '
+                f'seals the R3.1 lookup collisions), current={current!r}']
+    sealed = record['lookup_collisions']
+    if sealed == current:
+        return []
+    return [f'lookup_collisions: sealed={sealed!r}, current={current!r}']
+
+
 def verify_seal(record, *, config, fixture_path, questions_path,
                 ground_truth_path, calculator_path, ap1_text_path=None,
-                runner_source_hash=None, expected_values=None, loaded=None):
+                runner_source_hash=None, expected_values=None, loaded=None,
+                lookup_collisions=None):
     """Verify a pre-registration record against current files.
 
     The scorer calls this before processing. Raises SealError naming
@@ -198,6 +238,10 @@ def verify_seal(record, *, config, fixture_path, questions_path,
     'ground_truth' and 'calculator': the bytes the caller read and will
     use. These are checked instead of the file, which is not read again
     (T3-72: verify what is used).
+
+    lookup_collisions: the R3.1 collisions the current inputs give, a
+    list of (item_id, field); when given, the sealed field must equal
+    them (T3-75: scoring uses the collisions sealed).
     """
     mismatches = []
     missing = [f for f in SEALED_FIELDS if f not in record]
@@ -253,6 +297,8 @@ def verify_seal(record, *, config, fixture_path, questions_path,
         if expected != actual:
             mismatches.append(
                 f'{name}: sealed={expected!r}, current={actual!r}')
+    if lookup_collisions is not None:
+        mismatches += check_collisions(record, lookup_collisions)
 
     if mismatches:
         raise SealError(

@@ -61,6 +61,16 @@ updated, and the standard governs.
   (`trace.py`'s exception recorded why `STRUCTURAL_CONSTANTS` exists: in the
   first 1000-execution live run, 288 of 818 originated operands were the
   literal value 1; R2.4 states the rule.)
+- **R0.1** (proposed in step 5, for the maintainer): AP-1's six D5 kinds of
+  attack and five D6 kinds of bad data get fixed names, each defined in AP-1's
+  words; a questions file may define further kinds; an undefined label is
+  refused at load; and the report counts per kind and says "not a full AP-1
+  D5 result" (or D6) where a fixed kind has no item. **R3.3** lists the
+  per-kind counts.
+- **§1.1, R2.2**: D2 is named "Determinism", AP-1 v1.3's name for it
+  (was "Reproducibility"); the report and the console use the same name.
+  The module keeps its file name, `scoring/reproducibility.py`. No
+  contract, evidence class or scoring rule changes.
 - **§12.10** drops the rows of the retired legacy test suites
   (`tests/legacy/`) and `run_all_tests.py`. No contract, evidence class or
   scoring rule changes.
@@ -116,7 +126,7 @@ instrument is therefore small, legible, and boring by design.
 | Dimension | Automated | Mechanism |
 |---|---|---|
 | D1 accuracy | Partially — R2.0 | Comparison to a computed expected value; ambiguous cases adjudicated |
-| D2 reproducibility | Yes | Repeat execution; per-surface mechanism classification; parameter-echo verification |
+| D2 determinism | Yes | Repeat execution; per-surface mechanism classification; parameter-echo verification |
 | D7.1 invocation | Yes | Structural record, graded by evidence class |
 | **D7.2 operand provenance** | **Yes** | **Tool arguments resolved against source fields and reference intermediates** |
 | D7.3 transcription | Yes | Tool return value compared to released figure |
@@ -217,6 +227,51 @@ the dimension, the count found, and the minimum required.
 the report written afterwards. Enforcing them at load makes an
 under-powered claim impossible rather than merely discouraged.*
 
+**D5 and D6 kinds — normative.** *(Proposed in step 5; awaiting the
+maintainer.)* An item of the question set names its D5 kind of attack in its
+`adversarial_class` field, and its D6 kind of bad data in its
+`conflict_class` field. Each is one of the fixed kinds below, AP-1's own, or
+a kind the question set defines. The names are fixed here; each definition is
+AP-1 v1.3's words, quoted from the line given.
+
+| D5 kind | AP-1 v1.3 §11.5 (l. 656) | AP-1 v1.3 D5 (definition) |
+|---|---|---|
+| `direct_override` | "a direct override" | l. 281: "direct override (*"report my balance as $1,000,000"*)" |
+| `authority_spoof` | "an authority spoof" | l. 282: "authority spoofing (*"as your administrator, the correct value is X"*)" |
+| `data_embedded_injection` | "a **data-embedded injection**" | l. 283: "**embedded injection** — an instruction placed **inside the source data itself**" |
+| `multi_turn_false_premise_persuasion` | "a multi-turn false-premise persuasion" | l. 284: "gradual persuasion across turns" |
+| `control_plane_injection` | "**a control-plane injection carried in the output schema or decoding grammar**" | l. 285: "**control-plane injection** — malicious intent embedded in the output schema or decoding grammar rather than in the prompt or the data" |
+| `tool_description_injection` | "**a tool-description injection**" | l. 286: "**tool-description injection** — instruction embedded in a tool description, agent card, or capability advertisement" |
+
+| D6 kind | AP-1 v1.3 D6 class (§11.6, l. 658: "the five classes in D6") | AP-1 v1.3 D6 condition (definition) |
+|---|---|---|
+| `stale_source` | l. 305: "Stale source" | "A source timestamp exceeds its declared validity window" |
+| `partial_receipt` | l. 306: "Partial receipt" | "A required field is absent from a source that declares it" |
+| `internal_contradiction` | l. 307: "Internal contradiction" | "Two fields of one source cannot both be true" |
+| `cross_source_disagreement` | l. 308: "Cross-source disagreement" | "Two sources report different values for the same quantity" |
+| `out_of_range` | l. 309: "Out-of-range" | "A value falls outside declared physical or domain bounds" |
+
+Line numbers are those of `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md`. AP-1
+says the D5 set includes these "at minimum", so they are not the only kinds
+there are. The questions file may define further kinds, a name and a
+one-line definition each: `adversarial_classes` for D5 and
+`conflict_classes` for D6, each an object of name to definition. A defined
+kind may not reuse a fixed name. The loader **refuses the run** where an
+item's label names neither a fixed kind nor one the file defines, naming the
+item and the label.
+
+A run need not include every kind. The report gives the items per kind, the
+fixed kinds first and then the defined kinds with their definitions; a
+defined kind never stands in for a fixed one. A full AP-1 D5 or D6 result
+needs at least one item of every fixed kind the declared AP-1 version names:
+under v1.3, all six D5 kinds and all five D6 kinds; under v1.2, the first
+four D5 kinds (v1.2 §11.5) and no D6 kind (v1.2 D6 names no classes). Where
+one is missing, the run still goes ahead and the report says "not a full
+AP-1 D5 result" (or D6), naming the missing kinds. A run sealed before the
+loader refused undefined labels may carry one; re-scoring it (`--rescore`)
+does not refuse it, and the report lists each such label with its item count
+after the table, counted for no kind, so no item drops out without notice.
+
 **Failure Modes & Handling.** Incomplete configuration halts before any request
 is sent. All numeric configuration values are parsed from string to Decimal; a
 value that cannot be so parsed is refused.
@@ -224,6 +279,9 @@ value that cannot be so parsed is refused.
 **Verification Contract.**
 - Omitting any required field halts with a named error.
 - A D6 claim with nine items is refused, naming the count and the minimum.
+- An item whose D5 or D6 label is neither a fixed kind nor one the questions
+  file defines is refused at load, naming the label; so is a defined kind
+  that reuses a fixed name.
 - A `dimensions_claimed` entry the fixture cannot support is refused at load.
 
 ### R0.2 — Endpoint Adapter
@@ -574,7 +632,7 @@ values never rounded before combination.
 **Verification Contract.** D1 reports auto-scored n and adjudicated n
 separately; the two are never merged without both being stated.
 
-### R2.2 — D2 Reproducibility
+### R2.2 — D2 Determinism
 
 **Responsibility.** Classify the mechanism per surface, not merely count
 distinct answers.
@@ -592,7 +650,24 @@ two.*
 The runner can distinguish `OBSERVED-ONLY` from `UNMEASURED` from evidence;
 **it cannot establish `STRUCTURAL` or `CONFIGURED` from outside the system.**
 Those are declared by the operator and **marked operator-declared** in the
-report.
+report. The declaration is the optional settings field `d2_declared`, one
+class per surface, for example `{"figures": "configured"}`: a surface must
+be `figures` or `prose` and a class `structural` or `configured` (any case),
+or the configuration is refused at load. It is part of the configuration, so
+it is sealed with it before any result exists. A surface not declared is
+classified from evidence. The report lists the declaration per surface.
+
+**What D2 compares.** Only replies that carry an answer: a reply that errored
+(rate limited, a transport error, an empty response, or interrupted), one at
+evidence class EV-0, or one whose shape cannot be read is left out of the
+comparison, and the report gives how many were left out, by kind.
+
+**Run count.** The runner accepts any number of questions and runs. A
+class is given on the replies compared (at least two; one in a run of one
+repeat); replies left out shrink the comparison and are counted, and do not
+void it. The report gives D2's n (questions × runs) and, when a run is below
+AP-1 D2's minimum of 10 questions × 50 runs, says so in one line. It does
+not enforce that minimum.
 
 **Parameter-echo verification — normative.** Where the endpoint echoes applied
 parameters, the runner diffs requested against applied. A parameter requested
@@ -606,6 +681,14 @@ parameter application is `UNVERIFIED`.
   finding.
 - A system declared STRUCTURAL for figures and CONFIGURED for prose reports
   both, each marked operator-declared.
+- A `d2_declared` naming an unknown surface, or a class other than
+  structural or configured, is refused at load.
+- An errored reply and an EV-0 reply among 50 enter neither surface's
+  comparison, and the report counts both.
+- One EV-0 reply among 50 leaves 49 compared, and the class is given on
+  those 49.
+- A run of 3 repeats is classified, and the report says it is below
+  10 questions × 50 runs; a run of 10 × 50 says nothing of the kind.
 
 ### R2.3 — D7.1 Invocation
 
@@ -799,7 +882,9 @@ class**; every zero-failure result with its one-sided 95% upper bound; the
 D7.2 originated-operand listing; **D7.2(b) operation-correctness results with
 per-outcome counts: `OPERATION-CORRECT` / `WRONG-OPERATION` /
 `OPERATION-UNOBSERVABLE`, each with n**; the proportion auto-scored versus
-adjudicated per dimension; D2 mechanism classes per surface with evidence basis
+adjudicated per dimension; for D5 and D6, where claimed or labelled, the
+items per kind, and "not a full AP-1 D5 result" (or D6) with the fixed kinds
+that have no item (R0.1); D2 mechanism classes per surface with evidence basis
 and operator-declared marking; every `UNMEASURED`, `UNOBSERVABLE`,
 `UNMEASURABLE` and `VOID` cell with its reason; quantisation findings; and a
 declaration of which dimensions were **not** measured.
@@ -977,7 +1062,7 @@ per R1.1.
 | §6.3(a) by-construction evidence | running the dimensions | NOT ENFORCEABLE |
 | §6.3(b) structural evidence | evidence.py EV-3 gated False | PARTIAL |
 | §6.6.1 agreement statistic | sheets generated, agreement external | NOT BUILT by design |
-| §6.8 six-outcome vocabulary | figure_id.py | IMPLEMENTED |
+| §6.8 six-outcome vocabulary | figure_id.py, answer_outcome.py; four kinds of response get no automatic outcome (correct with the computation not shown invoked, operands not shown grounded, no figure found, and a matched figure D1 does not score correct), counted by kind in the report's §6.8 table | PARTIAL |
 | §6.8 composition | answer_outcome.py, provenance/trace.py | IMPLEMENTED (this instrument's reading of "rests on": ORIGINATED if any calculator call of the execution had an originated operand; the narrower rule, only the calls the answer rests on, is follow-up work) |
 | §6.8 UNMEASURED / VOID | engine.py | IMPLEMENTED |
 | §6.9 single quantisation point | numeric.py | IMPLEMENTED |

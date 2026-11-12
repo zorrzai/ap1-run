@@ -6,9 +6,12 @@ give D2 per item and condition; build_summary assembles the summary that
 report.generate_report() reads.
 """
 
+from ap1_run.scoring.answer_outcome import OTHER, no_outcome_kind
 from ap1_run.scoring.invocation import compute_dpr, measure_invocation
 
-from ap1_run.scoring.reproducibility import classify_mechanism
+from ap1_run.scoring.reproducibility import (
+    classify_mechanism, distinct_figures_shown,
+)
 
 _OUTCOME_OBSERVED = {'INVOKED': True, 'NOT-INVOKED': False}
 
@@ -115,27 +118,67 @@ def find_d2_cap(sampling):
     return d2_cap_reason
 
 
-def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason):
+def classify_reproducibility(d2_responses, repeat_count, d2_cap_reason,
+                             d2_figures=None, *, d2_evidence=None,
+                             d2_errored=None, d2_declared=None):
     """D2 mechanism class per (item, condition) and per surface.
 
     d2_responses maps (item_id, condition) to the responses of its
-    repeats. Returns {'<item_id>/<condition>': {surface: mechanism}}.
+    repeats. Returns {'<item_id>/<condition>': {surface: mechanism}};
+    a measured figures surface also carries 'values', its distinct
+    values as stated (T3-4). d2_figures maps the same keys to each
+    repeat's released figure (or None): the figures surface is then the
+    released figure.
+
+    Only replies that carry an answer are compared: d2_evidence maps the
+    same keys to each repeat's evidence class, and a reply at EV-0 is
+    left out; d2_errored maps (item_id, condition) to the number of its
+    executions that errored, left out and counted (a question-condition
+    whose every execution errored is UNMEASURED, with that count).
+    d2_declared is the operator's declaration, {surface: STRUCTURAL or
+    CONFIGURED} (config.d2_declared_classes; SPEC R2.2).
+
+    A class is given on the replies compared: replies left out shrink
+    the comparison and are counted, and do not void it. The least
+    comparison is two replies (min(2, repeat_count)), the fewest that can
+    show repetition; a 1-repeat run keeps a minimum of one. The floor of
+    two is the runner's reading, not a number AP-1 gives (SPEC R2.2).
     """
+    d2_errored = d2_errored or {}
+    d2_declared = d2_declared or {}
     d2_results = {}
-    for (item_id, cond), responses in d2_responses.items():
+    keys = list(d2_responses) + [k for k in d2_errored
+                                 if k not in d2_responses]
+    for item_id, cond in keys:
+        responses = d2_responses.get((item_id, cond), [])
         key = f'{item_id}/{cond}'
         d2_results[key] = {}
+        figures = (d2_figures or {}).get((item_id, cond))
+        evidence = (d2_evidence or {}).get((item_id, cond))
         for surface in ('figures', 'prose'):
             mech = classify_mechanism(
                 responses,
                 surface=surface,
-                minimum_runs=repeat_count,
-                operator_declared=None,
+                minimum_runs=min(2, int(repeat_count)),
+                operator_declared=d2_declared.get(surface),
+                figures=figures,
+                evidence=evidence,
+                errored=d2_errored.get((item_id, cond), 0),
             )
+            if surface == 'figures' and (
+                    mech.get('distinct_values') is not None
+                    or mech.get('unresolved')):
+                # the values themselves, for report section 9 (T3-4)
+                mech['values'] = distinct_figures_shown(responses, figures,
+                                                        evidence)
             # D2.2 cap: platform-rejected -> cap at OBSERVED-ONLY
             if d2_cap_reason and mech['mechanism'] not in ('UNMEASURED',):
                 mech['mechanism'] = 'OBSERVED-ONLY'
                 mech['d2_cap'] = d2_cap_reason
+                # a declared class the cap lowers is no longer the
+                # operator's: the class shown is the cap's
+                if mech.get('operator_declared'):
+                    mech['operator_declared'] = False
             d2_results[key][surface] = mech
     return d2_results
 
@@ -161,20 +204,56 @@ def summarise_parameter_echo(checks):
             'findings': findings}
 
 
+def count_answer_outcomes(all_results):
+    """AP-1 v1.3 section 6.8 over the executed responses: how many got
+    each answer-level outcome, and how many of each kind got none
+    (answer_outcome.no_outcome_kind; T3-13), so that every executed
+    response is counted once. A reason of no known kind is counted by
+    its text under other_reasons. A refusal or content-filter stop
+    (T3-10) is counted under its provisional outcome, in provisional
+    (present only if there is one)."""
+    outcomes, no_outcome, other_reasons, provisional = {}, {}, {}, {}
+    for r in all_results:
+        if r.get('status') != 'EXECUTED':
+            continue
+        outcome = r.get('answer_outcome')
+        if outcome:
+            outcomes[outcome] = outcomes.get(outcome, 0) + 1
+            continue
+        if r.get('provisional_outcome'):
+            p = r['provisional_outcome']
+            provisional[p] = provisional.get(p, 0) + 1
+            continue
+        reason = r.get('answer_outcome_reason')
+        kind = no_outcome_kind(reason)
+        no_outcome[kind] = no_outcome.get(kind, 0) + 1
+        if kind == OTHER:
+            key = reason or 'no reason recorded'
+            other_reasons[key] = other_reasons.get(key, 0) + 1
+    counts = {'outcomes': outcomes, 'no_outcome': no_outcome,
+              'other_reasons': other_reasons}
+    if provisional:
+        counts['provisional'] = provisional
+    return counts
+
+
 def build_summary(all_results, evidence_findings, *,
                   d1_summary=None, d2_results=None,
                   d2_cap_reason=None,
                   transcription_results=None,
                   release_coverage_results=None,
                   parameter_echo=None,
-                  held_constant=None):
+                  held_constant=None, served=None):
     """Build the summary dict that report.generate_report() expects.
 
     Aggregates per-item results into the structure report.py reads.
     held_constant names what the R1.2 guard held constant between the
-    conditions (AP-1 D7.8), for the report.
+    conditions (AP-1 D7.8), for the report. served counts the models and
+    backend fingerprints the responses report (V12-8).
     """
     summary = {}
+    if served is not None:
+        summary['served'] = served
     summary['transcription_results'] = transcription_results or []
     summary['release_coverage_results'] = release_coverage_results or []
 
@@ -250,6 +329,7 @@ def build_summary(all_results, evidence_findings, *,
                  'OPERATION-UNOBSERVABLE': 0}
     wrong_op_split = {'route_divergence': 0, 'item_wrong': 0, 'undetermined': 0,
                       'no_figure': 0}
+    op_unobservable = []
     for r in all_results:
         if r.get('status') != 'EXECUTED':
             continue
@@ -258,6 +338,10 @@ def build_summary(all_results, evidence_findings, *,
             outcome = oc.get('outcome', 'OPERATION-UNOBSERVABLE')
             if outcome in op_counts:
                 op_counts[outcome] += 1
+            if outcome == 'OPERATION-UNOBSERVABLE':
+                # a non-outcome cell, listed in report §10 (T3-35)
+                op_unobservable.append(_cell(r, oc.get('detail')
+                                             or oc.get('reason')))
             if outcome == 'WRONG-OPERATION':
                 if fig == 'AUTO-MATCH':
                     wrong_op_split['route_divergence'] += 1
@@ -272,6 +356,7 @@ def build_summary(all_results, evidence_findings, *,
                 else:
                     wrong_op_split['item_wrong'] += 1
     summary['operation_correctness_counts'] = op_counts
+    summary['operation_unobservable'] = op_unobservable
     summary['wrong_operation_split'] = wrong_op_split
 
     # Scoring proportions (D1 and D7)
@@ -289,6 +374,46 @@ def build_summary(all_results, evidence_findings, *,
         'auto_scored_n': auto_n,
         'adjudicated_n': adj_n,
     }
+
+    # AP-1 v1.3 section 6.8: each executed response's answer outcome,
+    # or the kind of response left without one (T3-13)
+    summary['answer_outcomes'] = count_answer_outcomes(all_results)
+
+    # The evidence classes each D7 figure rests on (AP-1 D7.7; T3-29):
+    # D7.2(b) on the executions with an evaluated operation, D7.3 on
+    # every executed response
+    d7_evidence = {'D7.2(b)': {}, 'D7.3': {}}
+    for r in all_results:
+        if r.get('status') != 'EXECUTED':
+            continue
+        ec = r.get('evidence_class') or ''
+        figures = ['D7.2(b)', 'D7.3'] if r.get('operation_correctness') \
+            else ['D7.3']
+        for figure in figures:
+            d7_evidence[figure][ec] = d7_evidence[figure].get(ec, 0) + 1
+    summary['d7_evidence'] = d7_evidence
+
+    # The D7.2 and D7.3 outcome counts per evidence class (AP-1 D7.7:
+    # figures resting on different classes are not comparable), so the
+    # report can show the class each count rests on
+    by_class = {'D7.2(a)': {}, 'D7.2(b)': {}, 'D7.3': {}}
+    for r in all_results:
+        if r.get('status') != 'EXECUTED':
+            continue
+        ec = r.get('evidence_class') or ''
+        outcomes = {
+            'D7.2(a)': [p.get('outcome', '')
+                        for p in r.get('provenance_results', [])],
+            'D7.2(b)': [oc.get('outcome', 'OPERATION-UNOBSERVABLE')
+                        for oc in r.get('operation_correctness', [])],
+            'D7.3': ([r['transcription_outcome']]
+                     if r.get('transcription_outcome') else []),
+        }
+        for figure, found in outcomes.items():
+            for outcome in found:
+                counts = by_class[figure].setdefault(ec, {})
+                counts[outcome] = counts.get(outcome, 0) + 1
+    summary['d7_outcomes_by_class'] = by_class
 
     # D1 results
     if d1_summary:
@@ -312,6 +437,9 @@ def build_summary(all_results, evidence_findings, *,
                      'OPERANDS-UNOBSERVABLE': 0, 'UNMEASURABLE': 0}
     originated_audit = []
     unmeasurable = []
+    operands_unobservable = []
+    quantisation_findings = []
+    near_miss_findings = []
     for r in all_results:
         if r.get('status') != 'EXECUTED':
             continue
@@ -320,6 +448,9 @@ def build_summary(all_results, evidence_findings, *,
             outcome = prov.get('outcome', '')
             if outcome in prov_outcomes:
                 prov_outcomes[outcome] += 1
+            if outcome == 'OPERANDS-UNOBSERVABLE':
+                # a non-outcome cell, listed in report §10 (T3-35)
+                operands_unobservable.append(_cell(r, prov.get('reason')))
             if outcome == 'UNMEASURABLE':
                 # D7.2 is unmeasurable for the item (T3-42): its operands
                 # are neither grounded nor originated findings.
@@ -341,10 +472,23 @@ def build_summary(all_results, evidence_findings, *,
                         step_5_ungrounded_chain += 1
                     else:
                         step_5_untraceable += 1
+            # D7.2(a)(iii) quantisation findings and near misses, for
+            # report §11 (T3-34)
+            for qf in prov.get('quantisation_findings', []):
+                quantisation_findings.append(dict(
+                    _where(r), operand=qf.get('operand'),
+                    finding=f'grounded via intermediate '
+                            f'{qf.get("matched_intermediate")} only after '
+                            f'quantisation, in `{qf.get("expression")}`'))
+            for res in prov.get('operand_resolutions', []):
+                if res.get('near_miss_finding'):
+                    near_miss_findings.append(dict(
+                        _where(r), **res['near_miss_finding']))
             for orig in prov.get('originated_operands', []):
                 originated_audit.append({
                     'item_id': r.get('item_id'),
                     'condition': r.get('condition'),
+                    'repeat': r.get('repeat'),
                     **orig,
                 })
         if reasons:
@@ -361,6 +505,9 @@ def build_summary(all_results, evidence_findings, *,
     summary['provenance_outcomes'] = prov_outcomes
     summary['originated_operand_audit'] = originated_audit
     summary['provenance_unmeasurable'] = unmeasurable
+    summary['operands_unobservable'] = operands_unobservable
+    summary['quantisation_findings'] = quantisation_findings
+    summary['near_miss_findings'] = near_miss_findings
 
     # Non-outcome cells (NOT-RUN: a partial transcript's unreached
     # executions, R0.3)
@@ -370,9 +517,22 @@ def build_summary(all_results, evidence_findings, *,
             non_outcome.append({
                 'item_id': r.get('item_id'),
                 'condition': r.get('condition'),
+                'repeat': r.get('repeat'),
                 'status': r['status'],
                 'reason': r.get('cause', r.get('reason', '')),
             })
     summary['non_outcome_cells'] = non_outcome
 
     return summary
+
+
+def _where(result):
+    """The execution a result belongs to."""
+    return {'item_id': result.get('item_id'),
+            'condition': result.get('condition'),
+            'repeat': result.get('repeat')}
+
+
+def _cell(result, reason):
+    """A non-outcome cell of one execution: where it is, and why."""
+    return dict(_where(result), reason=reason)

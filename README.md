@@ -53,6 +53,14 @@ minimum: D1 needs 40 items and 10 in every category; D5 counts items with an
 (v1.3: 10, v1.2: 1). The shipped example has 10 items, so its configs claim
 D2 and D7 only, and the report declares D1 not measured.
 
+**D5 and D6 labels name a kind.** An item's `adversarial_class` is one of
+AP-1's six kinds of attack and its `conflict_class` one of AP-1's five kinds
+of bad data, under the fixed names in SPEC R0.1, or a kind the questions file
+defines with a one-line definition (`adversarial_classes`,
+`conflict_classes`). Any other label is refused at load. The report counts
+the items per kind, and says "not a full AP-1 D5 result" (or D6) where one of
+AP-1's kinds has no item.
+
 ### The finding it exists to surface
 
 Not *this system is wrong*. This:
@@ -437,9 +445,10 @@ declared alongside its reason.
 result on a sample is still a sample, so the runner prints the exact one-sided
 95% upper bound on the failure rate — `1 − 0.05^(1/n)`, the Clopper–Pearson
 bound at zero failures. Forty-nine items with no failures reads *"0/49; upper
-bound 5.9%"*, not *"100%"*. The familiar 3/n rule is its large-n approximation
-and is shown only for n ≥ 30; below that it overstates, and at n < 3 it returns
-a value above 1, which is not a rate.
+bound 6.0%"*, not *"100%"*: the exact bound is 5.93%, and an upper bound is
+rounded up, so the figure shown is never below it. The familiar 3/n rule is its
+large-n approximation and is shown only for n ≥ 30; below that it overstates,
+and at n < 3 it returns a value above 1, which is not a rate.
 
 **For D7.1, n counts computable questions, not executions.** Repeats of a
 question are not independent trials, so ten questions run fifty times each are
@@ -698,6 +707,7 @@ input, if any has changed.
 | `ground_truth_hash` | `example/ground_truth_example.py` | Ground-truth module unchanged (see E3) |
 | `calculator_hash` | `example/calculator_tool.py` | Calculator tool unchanged (records with `seal_format` only) |
 | `expected_values_hash` | the ground-truth module's results | Expected values as scored (records with `seal_format` only) |
+| `lookup_collisions` | the expected values and each item's delivered context | The R3.1 lookup collisions scoring uses, found at seal (required in records with `seal_format`; the published legacy records have none, and the verifier warns so) |
 | `ap1_text_hash` | `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` | AP-1 standard text unchanged |
 | `seal_hash` | All of the above | Composite integrity |
 

@@ -13,13 +13,16 @@ those the run never reached. Nothing here writes to the transcript.
 import json
 from dataclasses import dataclass, field
 from decimal import Decimal
+from fractions import Fraction
 
 from ap1_run.execution.engine import _extract_calc_expression
 from ap1_run.foundation.numeric import extract_numeric_tokens
 from ap1_run.foundation.transcript import error_state_text
 from ap1_run.scoring.accuracy import score_accuracy
 from ap1_run.scoring.answer_outcome import answer_outcome, refusal_outcome
-from ap1_run.scoring.figure_id import ADJUDICATE_REFUSAL, identify_figure
+from ap1_run.scoring.figure_id import (
+    ADJUDICATE_DECLINE, ADJUDICATE_REFUSAL, identify_figure,
+)
 from ap1_run.scoring.operation_correctness import (
     classify_operation, reclassify_session,
 )
@@ -29,7 +32,8 @@ from ap1_run.scoring.provenance.classify import (
 )
 from ap1_run.scoring.release_coverage import check_release_coverage
 from ap1_run.scoring.reproducibility import check_parameter_echo
-from ap1_run.scoring.transcription import check_transcription
+from ap1_run.scoring.transcription import (
+    TRANSCRIBED_ALTERED, check_transcription, without_float_tail)
 
 # The status of an execution the run planned but never reached (SPEC R0.3:
 # an interrupted run's unreached items are reported not-run, never as
@@ -46,6 +50,14 @@ class Findings:
     all_results: list = field(default_factory=list)
     all_accuracy_results: list = field(default_factory=list)  # D1
     d2_responses: dict = field(default_factory=dict)  # (item, cond) -> [response]
+    # (item, cond) -> [released figure or None], beside d2_responses (T3-4)
+    d2_figures: dict = field(default_factory=dict)
+    # (item, cond) -> [evidence class], beside d2_responses: D2 compares
+    # only replies that carry an answer, so EV-0 replies are left out
+    d2_evidence: dict = field(default_factory=dict)
+    # (item, cond) -> executions that errored (UNMEASURED), left out of
+    # D2 and counted
+    d2_errored: dict = field(default_factory=dict)
     grammar_issues: list = field(default_factory=list)
     decline_findings: list = field(default_factory=list)
     tool_call_structures: list = field(default_factory=list)
@@ -54,6 +66,31 @@ class Findings:
     release_coverage_results: list = field(default_factory=list)  # D7.3
     unmeasured_cells: list = field(default_factory=list)
     parameter_echo: list = field(default_factory=list)  # D2.2
+    # model -> responses, fingerprint -> responses, and the responses
+    # counted (V12-8)
+    served: dict = field(default_factory=lambda: {'models': {},
+                                                  'fingerprints': {},
+                                                  'responses': 0})
+
+
+def record_served(findings, response):
+    """Count the model and backend fingerprint a response says served
+    it (V12-8; AP-1 §5.2: the system under test frozen for the run).
+    The scoring pass counts every response the transcript records, tool-
+    call rounds included; a value the response does not carry is not
+    counted. 'responses' counts every response (not None), so the report
+    can say how many reported no model or fingerprint."""
+    if response is None:
+        return
+    findings.served['responses'] += 1
+    if not isinstance(response, dict):
+        return
+    for key, name in (('models', 'model'),
+                      ('fingerprints', 'system_fingerprint')):
+        value = response.get(name)
+        if value:
+            counts = findings.served[key]
+            counts[str(value)] = counts.get(str(value), 0) + 1
 
 
 def record_underivable(findings, item_id, condition):
@@ -72,6 +109,41 @@ def record_not_run(findings, item_id, condition, rep):
         'repeat': rep, 'status': NOT_RUN,
         'cause': 'not reached: the transcript has no record of it',
     })
+
+
+def d2_answer_figure(fig_result, content=None, *, currency_symbols=(),
+                     decimal_separator='.', grouping_separator=','):
+    """The figure that is a response's answer for D2 (AP-1 D2 "distinct
+    numeric answers"; T3-4), or None if it is unresolved.
+
+    Its R2.0 released figure; else the one value it states, if it states
+    exactly one (other than percentages, S3-G4-2): a wrong answer is never
+    released, but it is the answer. Where R2.0 stopped before extraction
+    (a lookup collision) the content is read under the configured grammar.
+    Anything else is unresolved: a decline (its numbers recite, they do
+    not answer), no figure, several different figures, or a text the
+    grammar cannot read. An unresolved answer is not a value
+    (reproducibility.classify_mechanism counts it apart)."""
+    if fig_result.get('released_figure') is not None:
+        return fig_result['released_figure']
+    if fig_result.get('outcome') == ADJUDICATE_DECLINE:
+        return None
+    tokens = fig_result.get('extracted_tokens')
+    if tokens is None:
+        if not content:
+            return None
+        try:
+            tokens = extract_numeric_tokens(
+                content, currency_symbols=currency_symbols,
+                decimal_sep=decimal_separator,
+                grouping_sep=grouping_separator)
+        except Exception:   # the grammar cannot read it: unresolved
+            return None
+    values = {}
+    for t in tokens:
+        if not t.percent:
+            values.setdefault(Fraction(t.value), t.value)
+    return next(iter(values.values())) if len(values) == 1 else None
 
 
 def record_interrupted(findings, item_id, condition, rep, last_round):
@@ -105,6 +177,9 @@ def record_not_scored(findings, item_id, condition, rep, status, result):
             'item_id': item_id, 'condition': condition,
             'repeat': rep, 'cause': cause,
         })
+        # errored: no answer to compare, left out of D2 and counted
+        d2_key = (item_id, condition)
+        findings.d2_errored[d2_key] = findings.d2_errored.get(d2_key, 0) + 1
 
 
 def echo_check(sampling, response):
@@ -277,6 +352,7 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
             lookup_collision=collision,
             answer_tolerance=answer_tolerance,
             decline_markers=decline_markers,
+            structured_answer_field=config.get('structured_answer_field'),
             currency_symbols=currency_symbols,
             decimal_separator=separators['decimal_sep'],
             grouping_separator=separators['grouping_sep'],
@@ -299,6 +375,13 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
         'repeat': rep,
         'outcome': transcription_result['outcome'],
         'difference': str(transcription_result.get('difference', '')),
+        # D7.3's altered list prints the gap without the tool's float
+        # tail; the exact difference stays beside it
+        **({'difference_shown': str(without_float_tail(
+            transcription_result['difference'],
+            transcription_result.get('tool_return')))}
+           if transcription_result['outcome'] == TRANSCRIBED_ALTERED
+           else {}),
         'reason': transcription_result.get('reason', ''),
         'rounded_under_declared_policy': transcription_result.get(
             'rounded_under_declared_policy', False),
@@ -349,12 +432,21 @@ def score_execution(findings, result, *, item_id, condition, rep, expected,
             quantisation_digits=int(_quant.get('places', 2)),
             quantisation_rounding=_quant.get('rounding', 'ROUND_HALF_UP'),
         )
-        findings.all_accuracy_results.append(acc_result)
+        # The question it belongs to, for D1 per category (T3-32)
+        findings.all_accuracy_results.append(
+            dict(acc_result, item_id=item_id, condition=condition))
 
-    # -- D2: Collect response for reproducibility --
+    # -- D2: Collect response for determinism --
     d2_key = (item_id, condition)
     findings.d2_responses.setdefault(d2_key, []).append(
         result.get('response'))
+    findings.d2_evidence.setdefault(d2_key, []).append(
+        result.get('evidence_class'))
+    findings.d2_figures.setdefault(d2_key, []).append(
+        d2_answer_figure(
+            fig_result, _rc_content, currency_symbols=currency_symbols,
+            decimal_separator=separators['decimal_sep'],
+            grouping_separator=separators['grouping_sep']))
 
     # -- D2.2: were the requested sampling parameters applied? In every
     # round's response, tool-call rounds included; a result without its

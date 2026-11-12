@@ -274,8 +274,8 @@ def test_run_refusal_executed_adjudicated_outside_d71_and_d1(
     errored or rate-limited response" is UNMEASURED): each execution is
     EXECUTED, not UNMEASURED and not a non-outcome cell; it is routed to
     adjudication with the provisional outcome, and the sheet shows the
-    refusal; it is in neither D7.1's n (base 9/9) nor D1's n (18 of the
-    20 executions)."""
+    refusal; it is in neither D7.1's n (base 9/9) nor D1's n (9 of the
+    10 base executions; D1 counts the base condition only)."""
     r = full_run({'Q01/*/*': [refusal_body(kind)]})
     assert_completed(r)
     rows = r.results('Q01', 'base') + r.results('Q01', 'instruction_removed')
@@ -284,7 +284,15 @@ def test_run_refusal_executed_adjudicated_outside_d71_and_d1(
         ('EXECUTED', 'ADJUDICATE-REFUSAL', kind, provisional)] * 2
     assert not [c for c in r.summary.get('unmeasured_cells', [])
                 if c['item_id'] == 'Q01']
-    assert lines_with(r.report_section(10), 'Q01') == []
+    # §10 lists every UNOBSERVABLE measurement cell (SPEC R3.3): a
+    # refusal has no released figure, so only its D7.3 and release-
+    # coverage cells, never an UNMEASURED or VOID execution
+    q01_cells = lines_with(r.report_section(10), 'Q01')
+    assert q01_cells and all(
+        line.split(' | ')[2].endswith('UNOBSERVABLE')
+        and line.endswith(('| D7.3 transcription |',
+                           '| D7.3 release coverage |'))
+        for line in q01_cells), q01_cells
     base = lines_with(r.report_section(5), 'base')
     assert any('9/9' in line for line in base), base
     sheets = r.file('adjudication_sheets.md')
@@ -296,7 +304,7 @@ def test_run_refusal_executed_adjudicated_outside_d71_and_d1(
         f'```\n{REFUSAL_TEXT[kind]}\n```\n\n'
         f'**Provisional outcome:** `{provisional}`') == 4, sheets
     d1 = r.console_section('3j')
-    assert 'Auto-scored: 18\n' in d1 and 'Adjudicated: 0\n' in d1, d1
+    assert 'Auto-scored: 9\n' in d1 and 'Adjudicated: 0\n' in d1, d1
 
 
 # -- T3-11: the unit of D7.1 is the question ------------------------------
@@ -499,3 +507,128 @@ def test_run_tool_loop_exhausted_flagged_run_completes(full_run):
     assert record['error_state'] == q01['error_state']
     assert len(record['tool_calls']) == 10
     assert f"Q01/base/r1: {q01['error_state']}" in r.console_section('3a')
+    # report section 10: only R3.3's statuses; the flag is a reason
+    section = r.report_section(10)
+    statuses = {row.split(' | ')[2] for row in section.splitlines()
+                if row.startswith('| Q')}
+    assert statuses <= {'UNMEASURED', 'UNOBSERVABLE', 'UNMEASURABLE',
+                        'VOID', 'OPERANDS-UNOBSERVABLE',
+                        'OPERATION-UNOBSERVABLE', 'COVERAGE-UNOBSERVABLE'}, \
+        statuses
+
+
+# -- Step 5, across the five fix branches ---------------------------------
+# One run whose replies include a refusal and a content-filter stop (T3-10,
+# scoring branch), a calculator call with a name the calculator does not
+# know (T3-2, scoring branch) and a reply whose only figure is an
+# Arabic-Indic or a full-width digit (S3-G1-7, inputs branch), checked
+# where the report branch shows them: report section 6.8's outcome table
+# and its listing by kind, D1, D7.1 and the adjudication sheets.
+
+CROSS_PROVISIONAL = ('(provisional: routed to adjudication, the scorers '
+                     'confirm or replace it)')
+CROSS_RATE_CALL = '2400 * rate / 12'
+
+
+@pytest.mark.proposal(
+    'T3-10, T3-2: a refusal or content-filter stop is adjudicated with a '
+    'provisional section 6.8 outcome and is in neither D7.1 nor D1, and a '
+    'name the calculator does not know makes its call\'s operands '
+    'unobservable; readings of AP-1 v1.3 section 6.8 and D7.2(a), '
+    'proposed, not decided')
+@pytest.mark.finding('T3-10', 'T3-2', 'S3-G1-7', 'T3-13')
+@pytest.mark.req('R4.1', 'R0.4.2', 'AP-1 §6.8')
+@pytest.mark.parametrize('digit', ['٣', '３'],
+                         ids=['arabic-indic', 'full-width'])
+def test_run_refusal_rate_and_non_ascii_digit_reach_the_report(
+        full_run, monkeypatch, digit):
+    """Two repeats of each question under both conditions. Q01 is
+    refused (the `refusal` field), Q02 stopped by the content filter
+    after one calculator call (an observation of invocation on its own), Q03
+    calls the calculator with `2400 * rate / 12` and then states a
+    figure, and Q04's only figure is the digit 3 written as `digit`. The
+    other six answer as in the `clean` scenario.
+
+    Correct: in report §8's section 6.8 table the refusals are counted as
+    MODEL-DECLINED and CLASSIFIER-REFUSED, provisional (4 each); Q03's
+    executions are listed under "calculator used, operands not shown
+    grounded" and Q04's under "no figure found (AUTO-NO-FIGURE)"; the
+    table's total is the 40 executions. The refusals are in neither D1's
+    auto-scored executions nor D7.1's n (8 questions per condition, not
+    10); D1's n counts questions (the 8 base questions not refused), not
+    executions; and each refusal's sheet carries its text."""
+    # D1 is not claimed here (10 questions are below its minimum), so
+    # its per-category figure is not printed: keep what the scoring pass
+    # computed for it.
+    from ap1_run.runner import scoring_pass
+    by_category = []
+    summarise = scoring_pass.summarise_accuracy_by_category
+
+    def keep(results, categories):
+        by_category.append(summarise(results, categories))
+        return by_category[-1]
+    monkeypatch.setattr(scoring_pass, 'summarise_accuracy_by_category', keep)
+
+    r = full_run({
+        'Q01/*/*': [refusal_body('refusal')],
+        'Q02/*/*': [{'call': '15200.00 * 1.2 / 100 / 12'},
+                    refusal_body('content_filter')],
+        'Q03/*/*': [{'call': CROSS_RATE_CALL},
+                    {'say': 'The calculator returned an error, but the '
+                            'monthly interest charge is $36.00.'}],
+        'Q04/*/*': [{'say': f'The answer is {digit}.'}],
+    }, repeat_count='2')
+    assert_completed(r)
+
+    # Each piece reached the scored results as its own branch decided.
+    for item_id, refusal, provisional in (
+            ('Q01', 'refusal', 'MODEL-DECLINED'),
+            ('Q02', 'content_filter', 'CLASSIFIER-REFUSED')):
+        rows = (r.results(item_id, 'base')
+                + r.results(item_id, 'instruction_removed'))
+        assert [(x['status'], x['figure_outcome'], x['refusal'],
+                 x['provisional_outcome']) for x in rows] == [
+            ('EXECUTED', 'ADJUDICATE-REFUSAL', refusal, provisional)] * 4
+    q03 = r.results('Q03', 'base') + r.results('Q03', 'instruction_removed')
+    assert [[p['outcome'] for p in x['provenance_results']] for x in q03] \
+        == [['OPERANDS-UNOBSERVABLE']] * 4
+    q04 = r.results('Q04', 'base') + r.results('Q04', 'instruction_removed')
+    assert [x['figure_outcome'] for x in q04] == ['AUTO-NO-FIGURE'] * 4
+
+    # Report §8: the section 6.8 table and the listing by kind.
+    table = r.report_section(8)
+    assert lines_with(table, '`MODEL-DECLINED`', CROSS_PROVISIONAL) == [
+        f'| `MODEL-DECLINED` {CROSS_PROVISIONAL} | 4 |']
+    assert lines_with(table, '`CLASSIFIER-REFUSED`', CROSS_PROVISIONAL) == [
+        f'| `CLASSIFIER-REFUSED` {CROSS_PROVISIONAL} | 4 |']
+    assert lines_with(table, '| other:') == []
+    assert lines_with(table, 'calculator used, operands not shown '
+                             'grounded') == [
+        '| calculator used, operands not shown grounded | 4 |']
+    assert lines_with(table, 'no figure found (AUTO-NO-FIGURE)') == [
+        '| no figure found (AUTO-NO-FIGURE) | 4 |']
+    assert lines_with(table, '**Total (executions scored)**') == [
+        '| **Total (executions scored)** | **40** |']
+
+    # D7.1: the refused questions are in no n (8 of 10 per condition).
+    for condition in ('base', 'instruction_removed'):
+        [row] = lines_with(r.report_section(5),
+                           f'| d7_invocation_{condition} |')
+        assert row.split('|')[3] == ' 8 ', row
+
+    # D1: base condition only; the refusals are neither auto-scored nor
+    # awaiting adjudication, and n counts questions (8), not executions.
+    d1 = r.console_section('3j')
+    assert 'Auto-scored: 16\n' in d1 and 'Adjudicated: 0\n' in d1, d1
+    [categories] = by_category
+    assert sum(c['n'] for c in categories.values()) == 8, categories
+    assert sum(c['executions'] for c in categories.values()) == 16
+
+    # The sheets: each refusal's two sheets (one per scorer) carry its
+    # text above the provisional outcome.
+    sheets = r.file('adjudication_sheets.md')
+    for kind, provisional in (('refusal', 'MODEL-DECLINED'),
+                              ('content_filter', 'CLASSIFIER-REFUSED')):
+        assert sheets.count(
+            f'```\n{REFUSAL_TEXT[kind]}\n```\n\n'
+            f'**Provisional outcome:** `{provisional}`') == 8, kind

@@ -53,6 +53,30 @@ def _float_artefact(value, released):
     return value.quantize(quantum, rounding=ROUND_HALF_EVEN) == released
 
 
+def without_float_tail(difference, tool_return):
+    """The gap as shown: difference with only the tool's binary float
+    tail removed, so 12.000000000000001 shows as 12 and a real 0.005 gap
+    stays 0.005. The tail is what lies past a binary float's 15
+    significant digits of the return (the _float_artefact rule); nothing
+    is rounded to the declared places, and the comparison that decided
+    the outcome stays exact Decimal. A gap with no digits past that
+    point is shown as it is (8.80 stays 8.80)."""
+    if not (isinstance(difference, Decimal) and difference.is_finite()
+            and isinstance(tool_return, Decimal) and tool_return.is_finite()):
+        return difference
+    quantum = Decimal(1).scaleb(tool_return.adjusted() - 14)
+    if difference.as_tuple().exponent >= quantum.as_tuple().exponent:
+        return difference
+    try:
+        shown = difference.quantize(quantum, rounding=ROUND_HALF_EVEN)
+    except InvalidOperation:  # more digits than the context holds
+        return difference
+    shown = shown.normalize()
+    if shown.as_tuple().exponent > 0:  # 1.2E+3 is shown as 1200
+        shown = Decimal(format(shown, 'f'))  # exact, at any precision
+    return shown
+
+
 def check_transcription(tool_return_value, released_figure,
                         *, figure_outcome, quantisation_digits=None,
                         quantisation_rounding='ROUND_HALF_UP'):
@@ -80,8 +104,9 @@ def check_transcription(tool_return_value, released_figure,
             tool_return: Decimal or None -- the return compared: the one
                 matched, else the closest; the last one when UNOBSERVABLE
             released_figure: Decimal or None
-            difference: Decimal or None
-            reason: str
+            difference: Decimal or None -- exact
+            reason: str -- an ALTERED reason shows the difference
+                without the tool's float tail (without_float_tail)
             rounded_under_declared_policy: bool -- True only for an EXACT
                 result that needed the declared quantisation (a rounding
                 AP-1 v1.3 licenses; v1.2 would not call it a match, V12-6)
@@ -144,4 +169,4 @@ def check_transcription(tool_return_value, released_figure,
         if ordered else returns[0]
     difference = abs(closest - released_figure)
     return _result(TRANSCRIBED_ALTERED, closest, released_figure, difference,
-                   f'altered by {difference}')
+                   f'altered by {without_float_tail(difference, closest)}')

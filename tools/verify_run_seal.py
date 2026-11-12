@@ -22,7 +22,9 @@ directory.
 A record with a seal_format field (runs since October 2026) is checked
 under the current rules: the record holds every sealed field, seal_hash
 covers the timestamp, the text inputs are hashed with LF line endings and
-no BOM, and the expected values and the runner source hash are recomputed.
+no BOM, and the expected values, the runner source hash and the sealed
+lookup collisions are recomputed (a record without them fails). A legacy
+record sealed no collisions: the verifier says so, as a warning.
 A record without one (the published runs) is checked under the rules it
 was made with: raw bytes, and a seal_hash without the timestamp.
 
@@ -55,9 +57,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'src'))
 
 from ap1_run.execution.ap1_texts import ap1_text_entry  # noqa: E402
+from ap1_run.execution.context import lookup_collisions  # noqa: E402
 from ap1_run.execution.seal import (  # noqa: E402
-    SEAL_FORMAT, SEALED_FIELDS, SealError, expected_values_hash,
-    text_file_hash,
+    OPTIONAL_SEALED_FIELDS, SEAL_FORMAT, SEALED_FIELDS, SealError,
+    check_collisions, expected_values_hash, text_file_hash,
 )
 from ap1_run.execution.sealed_inputs import (  # noqa: E402
     INPUT_FILES, compute_expected_values, load_ground_truth, parse_json_input,
@@ -244,7 +247,9 @@ def _ap1_text_path(resolved_config, ap1_text):
 
 def _check_expected_values(seal_record, paths, checks, failures):
     """Recompute the expected values from the inputs (T3-48): load the
-    ground-truth module from its file and run it on every item."""
+    ground-truth module from its file and run it on every item. Then,
+    if the record seals them, the R3.1 lookup collisions those values
+    give (T3-75)."""
     sealed = seal_record.get('expected_values_hash', '')
     if not sealed:
         failures.append(('expected_values_hash',
@@ -259,9 +264,9 @@ def _check_expected_values(seal_record, paths, checks, failures):
                 data[name] = f.read()
         module = load_ground_truth(paths['ground_truth'],
                                    data['ground_truth'])
-        values = compute_expected_values(
-            module, parse_json_input(data['fixture']),
-            parse_json_input(data['questions']))
+        fixture = parse_json_input(data['fixture'])
+        questions = parse_json_input(data['questions'])
+        values = compute_expected_values(module, fixture, questions)
         computed = expected_values_hash(values)
     except Exception as e:  # any failure of the module is a failed check
         failures.append(('expected_values_hash', 'cannot recompute: %s: %s'
@@ -274,6 +279,23 @@ def _check_expected_values(seal_record, paths, checks, failures):
     else:
         failures.append(('expected_values_hash', 'sealed=%s, recomputed=%s'
                          % (sealed, computed)))
+    if 'lookup_collisions' not in seal_record:
+        failures.append(('lookup_collisions', 'not sealed: a record with '
+                         'seal_format seals the R3.1 lookup collisions'))
+    else:
+        try:
+            collisions = lookup_collisions(
+                lambda item_id, ctx: values[item_id], fixture, questions)
+        except Exception as e:  # as for the expected values
+            failures.append(('lookup_collisions', 'cannot recompute: %s: %s'
+                             % (type(e).__name__, e)))
+            return
+        mismatch = check_collisions(seal_record, collisions)
+        if mismatch:
+            failures.append(('lookup_collisions',
+                             mismatch[0].split(': ', 1)[1]))
+        else:
+            checks.append(('lookup_collisions', 'MATCH'))
 
 
 def _check_transcript(output_dir, seal_record, checks, failures):
@@ -379,10 +401,11 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
                          'reads %r)' % (record_format, SEAL_FORMAT)))
         return checks, failures
     if current_format:
-        # T3-15: the record holds exactly the fields a seal binds
+        # T3-15: the record holds exactly the fields a seal binds (the
+        # optional ones only if the run gave them)
         missing = [f for f in SEALED_FIELDS if f not in seal_record]
         extra = sorted(set(seal_record) - set(SEALED_FIELDS)
-                       - {'seal_hash'})
+                       - set(OPTIONAL_SEALED_FIELDS) - {'seal_hash'})
         if missing or extra:
             failures.append(('seal record fields', '; '.join(
                 part for part in (
@@ -404,6 +427,9 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
         warnings.append(('seal_format', 'none: a record made before '
                          'October 2026, checked under the rules it was made '
                          'with (raw bytes, seal_hash without the timestamp)'))
+        warnings.append(('lookup_collisions', 'not sealed (legacy record): '
+                         'a runner before October 2026 did not seal the '
+                         'R3.1 lookup collisions; not verified'))
     text_hash_of = text_file_hash if current_format else file_hash
 
     # 3. Recompute config_hash from resolved config

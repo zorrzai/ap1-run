@@ -5,7 +5,7 @@ import pytest
 
 from ap1_run.runner import summary as summary_module
 from ap1_run.runner.summary import (
-    summarise_parameter_echo,
+    summarise_parameter_echo, count_answer_outcomes,
     build_summary, classify_reproducibility, find_d2_cap,
     verify_invocation_consistency,
 )
@@ -148,6 +148,8 @@ EMPTY = {
     'wrong_operation_split': {'route_divergence': 0, 'item_wrong': 0,
                               'undetermined': 0, 'no_figure': 0},
     'd7_results': {'n': 0, 'auto_scored_n': 0, 'adjudicated_n': 0},
+    'd7_evidence': {'D7.2(b)': {}, 'D7.3': {}},
+    'd7_outcomes_by_class': {'D7.2(a)': {}, 'D7.2(b)': {}, 'D7.3': {}},
     'operand_step_counts': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
     'step_1_source': 0,
     'step_1_constant': 0,
@@ -158,9 +160,15 @@ EMPTY = {
                             'OPERANDS-UNOBSERVABLE': 0, 'UNMEASURABLE': 0},
     'originated_operand_audit': [],
     'provenance_unmeasurable': [],
+    'operands_unobservable': [],
+    'operation_unobservable': [],
+    'quantisation_findings': [],
+    'near_miss_findings': [],
     'non_outcome_cells': [],
     'parameter_echo': {'status': 'UNVERIFIED', 'responses': 0,
                        'findings': []},
+    'answer_outcomes': {'outcomes': {}, 'no_outcome': {},
+                        'other_reasons': {}},
 }
 
 
@@ -426,7 +434,7 @@ def test_summary_operand_provenance_counts():
                  {'step': 1, 'resolution': 'constant_magnitude'},
                  {'step': 2}, {'step': 3}, {'step': 4}),
         ]),
-        executed('Q02', 'instruction_removed', provenance_results=[
+        executed('Q02', 'instruction_removed', repeat=3, provenance_results=[
             prov('OPERAND-ORIGINATED',
                  {'step': 5, 'resolution': 'originated',
                   'sign_inversion_finding': {'type': 'SIGN-INVERSION'}},
@@ -450,9 +458,11 @@ def test_summary_operand_provenance_counts():
                                         'OPERAND-ORIGINATED': 1,
                                         'OPERANDS-UNOBSERVABLE': 1,
                                         'UNMEASURABLE': 0}
+    # T3-64: each entry names its execution's repeat.
     assert s['originated_operand_audit'] == [
         {'item_id': 'Q02', 'condition': 'instruction_removed',
-         'value': '7', 'expression': '7*2'}]
+         'repeat': 3, 'value': '7',
+         'expression': '7*2'}]
 
 
 @pytest.mark.finding('T3-42')
@@ -498,17 +508,51 @@ def test_summary_non_outcome_cells():
         {'item_id': 'Q06', 'condition': 'base', 'status': 'NOT-RUN',
          'cause': 'not reached'},
     ]
+    # T3-35: each cell names its repeat.
+    results[1]['repeat'] = 7
     assert build_summary(results, [])['non_outcome_cells'] == [
-        {'item_id': 'Q03', 'condition': 'base', 'status': 'UNMEASURED',
-         'reason': 'rate_limited'},
-        {'item_id': 'Q04', 'condition': 'base', 'status': 'VOID',
-         'reason': 'underivable'},
-        {'item_id': 'Q05', 'condition': 'base', 'status': 'VOID',
-         'reason': ''},
+        {'item_id': 'Q03', 'condition': 'base', 'repeat': 7,
+         'status': 'UNMEASURED', 'reason': 'rate_limited'},
+        {'item_id': 'Q04', 'condition': 'base', 'repeat': None,
+         'status': 'VOID', 'reason': 'underivable'},
+        {'item_id': 'Q05', 'condition': 'base', 'repeat': None,
+         'status': 'VOID', 'reason': ''},
         # T3-52 / R0.3: an interrupted run's unreached execution
-        {'item_id': 'Q06', 'condition': 'base', 'status': 'NOT-RUN',
-         'reason': 'not reached'},
+        {'item_id': 'Q06', 'condition': 'base', 'repeat': None,
+         'status': 'NOT-RUN', 'reason': 'not reached'},
     ]
+
+
+@pytest.mark.finding('T3-35')
+def test_summary_lists_unobservable_operation_and_operand_cells():
+    # The non-outcome cells of D7.2(b) and D7.2(a), one per call, with
+    # the execution and the reason, for report §10.
+    results = [
+        {'item_id': 'Q00', 'status': 'VOID', 'operation_correctness': [
+            {'outcome': 'OPERATION-UNOBSERVABLE'}]},
+        executed('Q01', repeat=2, operation_correctness=[
+            {'outcome': 'OPERATION-CORRECT'},
+            {'outcome': 'OPERATION-UNOBSERVABLE', 'detail': 'unparseable'},
+            {'outcome': 'OPERATION-UNOBSERVABLE', 'reason': 'raised'},
+            {'outcome': 'WRONG-OPERATION'}],
+            provenance_results=[
+                {'outcome': 'OPERANDS-GROUNDED'},
+                {'outcome': 'OPERANDS-UNOBSERVABLE', 'reason': 'no operand'}]),
+        executed('Q02', operation_correctness=[
+            {'outcome': 'OPERATION-UNOBSERVABLE'}],
+            provenance_results=[{'outcome': 'OPERANDS-UNOBSERVABLE'}]),
+    ]
+    s = build_summary(results, [])
+    assert s['operation_unobservable'] == [
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+         'reason': 'unparseable'},
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+         'reason': 'raised'},
+        {'item_id': 'Q02', 'condition': 'base', 'repeat': 1, 'reason': None}]
+    assert s['operands_unobservable'] == [
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+         'reason': 'no operand'},
+        {'item_id': 'Q02', 'condition': 'base', 'repeat': 1, 'reason': None}]
 
 
 # -- counting: rows that were not executed come first, and every counter
@@ -626,7 +670,8 @@ def test_d2_cap_first_capping_parameter_wins():
 def fake_mechanism(monkeypatch):
     calls = []
 
-    def classify(responses, *, surface, minimum_runs, operator_declared=None):
+    def classify(responses, *, surface, minimum_runs, operator_declared=None,
+                 figures=None, evidence=None, errored=0):
         calls.append((list(responses), surface, minimum_runs,
                       operator_declared))
         mechanism = responses[0] if responses else 'UNMEASURED'
@@ -647,11 +692,12 @@ def test_reproducibility_per_item_condition_and_surface(fake_mechanism):
             'figures': {'mechanism': 'UNMEASURED', 'surface': 'figures'},
             'prose': {'mechanism': 'UNMEASURED', 'surface': 'prose'}},
     }
+    # the minimum is the replies compared, at least two: min(2, 3)
     assert fake_mechanism == [
-        (['STRUCTURAL', 'r2'], 'figures', 3, None),
-        (['STRUCTURAL', 'r2'], 'prose', 3, None),
-        ([], 'figures', 3, None),
-        ([], 'prose', 3, None),
+        (['STRUCTURAL', 'r2'], 'figures', 2, None),
+        (['STRUCTURAL', 'r2'], 'prose', 2, None),
+        ([], 'figures', 2, None),
+        ([], 'prose', 2, None),
     ]
 
 
@@ -676,13 +722,27 @@ def test_reproducibility_of_nothing():
     assert classify_reproducibility({}, 3, None) == {}
 
 
+@pytest.mark.finding('T3-4')
+def test_reproducibility_figures_carry_their_distinct_values():
+    # Report section 9 shows the distinct values on the figures surface
+    # (AP-1 D2 "distinct numeric answers per question"); prose and an
+    # unmeasured surface carry none.
+    def reply(text):
+        return {'choices': [{'message': {'role': 'assistant',
+                                         'content': text}}]}
+    result = classify_reproducibility(
+        {('Q02', 'base'): [reply('2600.00'), reply('2500.00')],
+         ('Q03', 'base'): [reply('7')]}, 2, None)
+    assert result['Q02/base']['figures']['values'] == ['2600.00', '2500.00']
+    assert result['Q02/base']['figures']['distinct_values'] == 2
+    assert 'values' not in result['Q02/base']['prose']
+    assert 'values' not in result['Q03/base']['figures']
+
+
 # --- Step 4: correct behaviour (failing until fixed) ---
 
 @pytest.mark.finding('T3-34')
 @pytest.mark.req('R2.4', 'R3.3', 'AP-1 D7.2(a)(iii)')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-34: quantisation findings from provenance are '
-                          'dropped from the summary')
 def test_summary_collects_quantisation_findings():
     # AP-1 v1.3 D7.2(a)(iii): "The quantised case is grounded and records a
     # quantisation finding"; SPEC R3.3: the report contains "quantisation
@@ -704,9 +764,6 @@ def test_summary_collects_quantisation_findings():
 
 @pytest.mark.finding('T3-34')
 @pytest.mark.req('R2.4', 'R3.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-34: near-miss findings from provenance are '
-                          'dropped from the summary')
 def test_summary_collects_near_miss_findings():
     # trace.py records a near_miss_finding on an operand equal to a prior
     # return only after quantisation (ORIGINATED with a finding). report.py
@@ -911,6 +968,108 @@ def test_summary_only_refusals_in_an_arm_leave_no_d71_figure():
     assert s['dpr'] == 'UNDEFINED (no instruction_removed observations)'
 
 
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7.7', 'R3.3')
+def test_summary_d7_evidence_per_figure():
+    # D7.2(b) rests on the executions with an evaluated operation, D7.3
+    # on every executed response; non-executed cells are in neither.
+    results = [
+        executed('Q01', evidence_class=EV2,
+                 operation_correctness=[{'outcome': 'OPERATION-CORRECT'}]),
+        {'item_id': 'Q00', 'status': 'VOID', 'evidence_class': EV2},
+        executed('Q02', evidence_class=EV2, operation_correctness=[]),
+        executed('Q03', evidence_class=EV0),
+        executed('Q04', evidence_class=EV2,
+                 operation_correctness=[{'outcome': 'WRONG-OPERATION'}]),
+        executed('Q05'),
+        {'item_id': 'Q06', 'status': 'UNMEASURED', 'evidence_class': EV0},
+    ]
+    assert build_summary(results, [])['d7_evidence'] == {
+        'D7.2(b)': {EV2: 2}, 'D7.3': {EV2: 3, EV0: 1, '': 1}}
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7.7', 'R3.3')
+def test_summary_d7_outcome_counts_per_evidence_class():
+    # One EV-1 wrong operation and one EV-2 correct one give the same
+    # pooled counts as the reverse; per class they differ, so the report
+    # can show which class each figure rests on.
+    EV1 = 'EV-1 SELF-REPORTED'
+
+    def by_class(wrong, right):
+        return build_summary([
+            executed('Q01', evidence_class=wrong,
+                     operation_correctness=[{'outcome': 'WRONG-OPERATION'}],
+                     provenance_results=[{'outcome': 'OPERAND-ORIGINATED'}],
+                     transcription_outcome='TRANSCRIBED-ALTERED'),
+            executed('Q02', evidence_class=right,
+                     operation_correctness=[
+                         {'outcome': 'OPERATION-CORRECT'}],
+                     provenance_results=[{'outcome': 'OPERANDS-GROUNDED'}],
+                     transcription_outcome='TRANSCRIBED-EXACT'),
+            executed('Q03', evidence_class=EV0,
+                     transcription_outcome='UNOBSERVABLE'),
+            {'item_id': 'Q04', 'status': 'UNMEASURED', 'evidence_class': EV0,
+             'transcription_outcome': 'UNOBSERVABLE'},
+        ], [])['d7_outcomes_by_class']
+
+    assert by_class(EV1, EV2) == {
+        'D7.2(a)': {EV1: {'OPERAND-ORIGINATED': 1},
+                    EV2: {'OPERANDS-GROUNDED': 1}},
+        'D7.2(b)': {EV1: {'WRONG-OPERATION': 1},
+                    EV2: {'OPERATION-CORRECT': 1}},
+        'D7.3': {EV1: {'TRANSCRIBED-ALTERED': 1},
+                 EV2: {'TRANSCRIBED-EXACT': 1},
+                 EV0: {'UNOBSERVABLE': 1}}}
+    assert by_class(EV2, EV1) != by_class(EV1, EV2)
+    # An operation with no outcome is OPERATION-UNOBSERVABLE, as in the
+    # pooled counts.
+    assert build_summary([executed(evidence_class=EV2,
+                                   operation_correctness=[{}])], [])[
+        'd7_outcomes_by_class']['D7.2(b)'] == {
+            EV2: {'OPERATION-UNOBSERVABLE': 1}}
+
+
+@pytest.mark.finding('T3-34')
+def test_summary_findings_carry_the_execution_and_skip_unmeasurable():
+    near = {'prior_return': '2.17142', 'quantised_to': '2.17',
+            'operand': '2.17', 'grounded': False}
+    results = [
+        {'item_id': 'Q00', 'status': 'VOID', 'provenance_results': [
+            {'outcome': 'OPERANDS-GROUNDED', 'quantisation_findings': [
+                {'operand': '1'}]}]},
+        executed('Q07', 'instruction_removed', repeat=4, provenance_results=[
+            {'outcome': 'UNMEASURABLE', 'reason': 'chained',
+             'quantisation_findings': [{'operand': '9'}],
+             'operand_resolutions': [{'step': 5, 'near_miss_finding': near}]},
+            {'outcome': 'OPERANDS-GROUNDED', 'quantisation_findings': [
+                {'operand': '274.14', 'matched_intermediate': 'm',
+                 'expression': '274.14 - 15'},
+                {'operand': '259.14', 'matched_intermediate': 'n',
+                 'expression': '259.14 * 3'}],
+             'operand_resolutions': [{'step': 3}]},
+            {'outcome': 'OPERAND-ORIGINATED', 'operand_resolutions': [
+                {'step': 5, 'near_miss_finding': near},
+                {'step': 5, 'near_miss_finding': None}]}]),
+    ]
+    s = build_summary(results, [])
+    where = {'item_id': 'Q07', 'condition': 'instruction_removed',
+             'repeat': 4}
+    assert s['quantisation_findings'] == [
+        dict(where, operand='274.14', finding='grounded via intermediate m '
+             'only after quantisation, in `274.14 - 15`'),
+        dict(where, operand='259.14', finding='grounded via intermediate n '
+             'only after quantisation, in `259.14 * 3`')]
+    assert s['near_miss_findings'] == [dict(where, **near)]
+
+
+@pytest.mark.finding('V12-8')
+def test_summary_carries_served_only_when_given():
+    served = {'models': {'m': 1}, 'fingerprints': {}}
+    assert build_summary([], [], served=served)['served'] is served
+    assert 'served' not in build_summary([], [])
+
+
 # -- summarise_parameter_echo (D2.2) ----------------------------------------
 
 def echo(status, *findings):
@@ -941,3 +1100,43 @@ def test_build_summary_passes_parameter_echo():
     s = build_summary([], [], parameter_echo=[echo('VERIFIED')])
     assert s['parameter_echo'] == {'status': 'VERIFIED', 'responses': 1,
                                    'findings': []}
+
+
+# -- AP-1 v1.3 section 6.8 answer outcomes ----------------------------------
+
+@pytest.mark.finding('T3-13')
+@pytest.mark.req('AP-1 §6.8')
+def test_answer_outcomes_count_every_executed_response_once():
+    from ap1_run.scoring.answer_outcome import answer_outcome
+    from ap1_run.scoring.figure_id import AUTO_MATCH, AUTO_NO_FIGURE
+    grounded = [{'outcome': 'OPERANDS-GROUNDED'}]
+
+    def scored(*args, accuracy='CORRECT', **fields):
+        outcome, reason = answer_outcome(*args, accuracy_outcome=accuracy)
+        return executed(answer_outcome=outcome,
+                        answer_outcome_reason=reason, **fields)
+
+    results = [
+        scored(AUTO_MATCH, 'INVOKED', grounded),
+        scored(AUTO_MATCH, 'INVOKED', grounded),
+        scored(AUTO_MATCH, 'INVOKED', [{'outcome': 'OPERAND-ORIGINATED'}]),
+        scored(AUTO_MATCH, 'NOT-INVOKED', []),
+        scored(AUTO_MATCH, 'INVOKED', [{'outcome': 'OPERANDS-UNOBSERVABLE'}]),
+        scored(AUTO_NO_FIGURE, 'INVOKED', grounded, accuracy='NO-FIGURE'),
+        scored('ADJUDICATE-AMBIGUOUS', 'INVOKED', grounded),
+        executed(answer_outcome=None, answer_outcome_reason='elsewhere'),
+        executed(),
+        {'status': 'VOID', 'answer_outcome': None},
+    ]
+    counts = count_answer_outcomes(results)
+    assert counts == {
+        'outcomes': {'COMPUTED': 2, 'ORIGINATED': 1},
+        'no_outcome': {
+            'correct figure, calculator not shown used': 1,
+            'calculator used, operands not shown grounded': 1,
+            'no figure found (AUTO-NO-FIGURE)': 1,
+            'routed to adjudication': 1, 'other': 2},
+        'other_reasons': {'elsewhere': 1, 'no reason recorded': 1}}
+    assert (sum(counts['outcomes'].values())
+            + sum(counts['no_outcome'].values())) == 9
+    assert build_summary(results, [])['answer_outcomes'] == counts

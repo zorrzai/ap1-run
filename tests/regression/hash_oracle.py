@@ -34,6 +34,11 @@ writing):
   environment      python_version, platform and package_versions of this
                    interpreter (the driver runs on the same one), outside
                    runner_source_hash (T3-30, T3-70)
+  lookup_collisions
+                   when the run passes them, the (item, field) pairs as
+                   text, '<item> (<field>)' joined by '; ', or 'none'
+                   (T3-75); the pairs themselves are pinned by the goldens,
+                   which print them in report §1
   seal_hash        canonical hash of every field but 'seal_hash' itself,
                    the timestamp included (seal_format 2; T3-47)
   runner_source_hash
@@ -465,6 +470,10 @@ def expected_outcome(inputs, tree):
         'verification_keys': kw.get('verification_keys') or [],
         'ev3_implemented': False,
     }
+    collisions = kw.get('lookup_collisions')
+    if collisions is not None:
+        record['lookup_collisions'] = '; '.join(
+            f'{item} ({field})' for item, field in collisions) or 'none'
     return record, None, None
 
 
@@ -508,10 +517,12 @@ def _check_timestamp(value, window):
 
 def _check_record(got, want, config, window):
     problems = []
-    if set(got) != SEAL_KEYS:
+    keys = SEAL_KEYS | ({'lookup_collisions'} if 'lookup_collisions' in want
+                        else set())
+    if set(got) != keys:
         problems.append(
-            f'seal record keys: missing {sorted(SEAL_KEYS - set(got))}, '
-            f'unexpected {sorted(set(got) - SEAL_KEYS)}')
+            f'seal record keys: missing {sorted(keys - set(got))}, '
+            f'unexpected {sorted(set(got) - keys)}')
     for key in ('runner_version_tag', 'runner_version_commit'):
         if config.get(key) != want[key]:
             problems.append(f'{key}: the config says {config.get(key)!r}, '

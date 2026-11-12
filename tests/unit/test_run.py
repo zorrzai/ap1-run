@@ -56,10 +56,13 @@ CONFIG = {
     'currency_symbols': ['$'],
 }
 # Q3, the underivable item, is in the middle: the items after it still run.
-QUESTIONS = {'items': [{'id': 'Q1', 'source_accounts': ['a']},
+QUESTIONS = {'items': [{'id': 'Q1', 'source_accounts': ['a'],
+                        'category': 'interest'},
                        {'id': 'Q3', 'source_accounts': []},
-                       {'id': 'Q2', 'source_accounts': ['b']}]}
-FIXTURE = {'accounts': [{'id': 'a'}, {'id': 'b'}]}
+                       {'id': 'Q2', 'source_accounts': ['b'],
+                        'category': 'fees'}]}
+# b.fee equals Q2's expected 10.00: a lookup collision found at seal
+FIXTURE = {'accounts': [{'id': 'a'}, {'id': 'b', 'fee': '10.00'}]}
 
 
 class Run:
@@ -153,7 +156,8 @@ class Run:
 
     def create_seal(self, **kwargs):
         self.calls.append(('seal', kwargs))
-        return {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}
+        return {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH',
+                'lookup_collisions': 'COLLISIONS'}
 
     def verify_seal(self, record, **kwargs):
         self.calls.append(('verify_seal', record, kwargs))
@@ -238,6 +242,7 @@ def test_main_full_run_console(r, capsys):
         'Ground-truth guards (R3.1): PASSED (perturbation, source fields, '
         'declared constants)\n'
         '\n'
+        'Lookup collisions (R3.1): COLLISIONS\n'
         'Seal hash: SEAL\n'
         'AP-1 text hash: TEXTHASH\n'
         '\n'
@@ -294,13 +299,15 @@ def test_main_full_run_calls(r, capsys):
         'calculator_path': os.path.join(fx, 'calculator_tool.py'),
         'ap1_text_path': str(r.tmp / 'ap1.md'),
         'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
+        'lookup_collisions': [('Q2', 'b.fee')],
         'expected_values': expected_values,
         'loaded': {'fixture': json.dumps(FIXTURE).encode(),
                    'questions': json.dumps(QUESTIONS).encode(),
                    'ground_truth': GROUND_TRUTH.encode(),
                    'calculator': CALCULATOR.encode()}}
     # T3-17: the seal is verified, the whole record and every input,
-    # before the first request and again before anything is reported.
+    # before the first request and again before anything is reported;
+    # T3-75: with the lookup collisions the current values give.
     verified = {
         'config': config,
         'fixture_path': os.path.join(fx, 'fixture.json'),
@@ -309,9 +316,11 @@ def test_main_full_run_calls(r, capsys):
         'calculator_path': os.path.join(fx, 'calculator_tool.py'),
         'ap1_text_path': str(r.tmp / 'ap1.md'),
         'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
-        'expected_values': expected_values}
+        'expected_values': expected_values,
+        'lookup_collisions': [('Q2', 'b.fee')]}
     assert r.named('verify_seal') == [
-        ({'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}, verified)] * 2
+        ({'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH',
+          'lookup_collisions': 'COLLISIONS'}, verified)] * 2
     assert config['endpoint_url'] == 'http://mock/v1'
     assert config['model'] == 'mock-model'
     assert (config['runner_version_tag'], config['runner_version_commit'],
@@ -323,7 +332,8 @@ def test_main_full_run_calls(r, capsys):
         'REMOVED PROMPT', CONFIG['tools'], {'temperature': 0})]
 
     # the pre-registration record, beside the transcript
-    seal_record = {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}
+    seal_record = {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH',
+                   'lookup_collisions': 'COLLISIONS'}
     assert r.named('pre_registration') == [(
         out, {'seal_record': seal_record, 'config': config})]
 
@@ -459,7 +469,8 @@ def test_main_ap1_text_of_the_declared_version(r, monkeypatch):
     # Without --ap1-text the seal takes the text of the config's version.
     r.config['ap1_version'] = 'v1.2'
     monkeypatch.setattr(r, 'create_seal', lambda **kw: r.calls.append(
-        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH})
+        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH,
+                          'lookup_collisions': 'none'})
     monkeypatch.setattr(run, 'create_seal', r.create_seal)
     assert run.main(r.argv()[:-2]) == 0
     assert r.named('seal')[0][0]['ap1_text_path'] == os.path.join(
@@ -622,9 +633,10 @@ def test_main_minimum_n_counts_the_question_items(r, monkeypatch):
     r.config.update(dimensions_claimed=['D6'], ap1_version='v1.2')
     # V12-4: a v1.2 run must seal the v1.2 text.
     monkeypatch.setattr(run, 'create_seal', lambda **kw: r.calls.append(
-        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH})
+        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH,
+                          'lookup_collisions': 'none'})
     questions = json.loads(json.dumps(QUESTIONS))
-    questions['items'][2]['conflict_class'] = 'stated twice'
+    questions['items'][2]['conflict_class'] = 'internal_contradiction'
     (r.fixture_dir / 'questions.json').write_text(json.dumps(questions))
     assert r.main() == 0
     assert r.named('seal')

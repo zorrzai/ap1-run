@@ -63,10 +63,14 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -156,10 +160,14 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -249,10 +257,14 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -342,10 +354,14 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -435,10 +451,14 @@ Numeric figures were found in the response but none matched the expected value w
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -528,10 +548,14 @@ Numeric figures were found in the response but none matched the expected value w
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -621,10 +645,14 @@ Numeric figures were found in the response but none matched the expected value w
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -714,10 +742,14 @@ Numeric figures were found in the response but none matched the expected value w
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -753,41 +785,43 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 5: Q07, repeat 1 — Scorer 1
+## Item 5: Q04, repeat 1 — Scorer 1
 
 Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
-> What is the quarterly net growth of the investment account after fees?
+> What is the principal portion of the first mortgage payment?
 
-Category: growth
+Category: amortisation
 
 ### Response (verbatim)
 
 ```
-Quarterly growth: 777.4125 (that is, $777.41).
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
 ```
 
 ### Fixture Excerpt
 
-**Investment Account** (`investment`):
+**Mortgage** (`mortgage`):
 
-- balance: `42175.00`
+- balance: `287500.00`
 
-- direction: `asset`
+- direction: `liability`
 
-- annual_rate: `7.8`
+- annual_rate: `4.20`
 
-- monthly_fee: `15.00`
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
-  → `{"result": "777.4125"}`
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -802,7 +836,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -810,10 +844,14 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -841,7 +879,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ### Reference Values
 
-- Expected value: `777.4125`
+- Expected value: `430.7500`
 
 - Required operation: `calculator`
 
@@ -849,41 +887,43 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 5: Q07, repeat 1 — Scorer 2
+## Item 5: Q04, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
-> What is the quarterly net growth of the investment account after fees?
+> What is the principal portion of the first mortgage payment?
 
-Category: growth
+Category: amortisation
 
 ### Response (verbatim)
 
 ```
-Quarterly growth: 777.4125 (that is, $777.41).
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
 ```
 
 ### Fixture Excerpt
 
-**Investment Account** (`investment`):
+**Mortgage** (`mortgage`):
 
-- balance: `42175.00`
+- balance: `287500.00`
 
-- direction: `asset`
+- direction: `liability`
 
-- annual_rate: `7.8`
+- annual_rate: `4.20`
 
-- monthly_fee: `15.00`
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
-  → `{"result": "777.4125"}`
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -898,7 +938,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -906,10 +946,14 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -937,7 +981,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ### Reference Values
 
-- Expected value: `777.4125`
+- Expected value: `430.7500`
 
 - Required operation: `calculator`
 
@@ -945,41 +989,43 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 6: Q07, repeat 2 — Scorer 1
+## Item 6: Q04, repeat 2 — Scorer 1
 
 Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
-> What is the quarterly net growth of the investment account after fees?
+> What is the principal portion of the first mortgage payment?
 
-Category: growth
+Category: amortisation
 
 ### Response (verbatim)
 
 ```
-Quarterly growth: 777.4125 (that is, $777.41).
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
 ```
 
 ### Fixture Excerpt
 
-**Investment Account** (`investment`):
+**Mortgage** (`mortgage`):
 
-- balance: `42175.00`
+- balance: `287500.00`
 
-- direction: `asset`
+- direction: `liability`
 
-- annual_rate: `7.8`
+- annual_rate: `4.20`
 
-- monthly_fee: `15.00`
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
-  → `{"result": "777.4125"}`
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -994,7 +1040,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1002,10 +1048,14 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -1033,7 +1083,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ### Reference Values
 
-- Expected value: `777.4125`
+- Expected value: `430.7500`
 
 - Required operation: `calculator`
 
@@ -1041,41 +1091,43 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 6: Q07, repeat 2 — Scorer 2
+## Item 6: Q04, repeat 2 — Scorer 2
 
 Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
-> What is the quarterly net growth of the investment account after fees?
+> What is the principal portion of the first mortgage payment?
 
-Category: growth
+Category: amortisation
 
 ### Response (verbatim)
 
 ```
-Quarterly growth: 777.4125 (that is, $777.41).
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
 ```
 
 ### Fixture Excerpt
 
-**Investment Account** (`investment`):
+**Mortgage** (`mortgage`):
 
-- balance: `42175.00`
+- balance: `287500.00`
 
-- direction: `asset`
+- direction: `liability`
 
-- annual_rate: `7.8`
+- annual_rate: `4.20`
 
-- monthly_fee: `15.00`
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
-  → `{"result": "777.4125"}`
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -1090,7 +1142,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1098,10 +1150,14 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -1129,7 +1185,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ### Reference Values
 
-- Expected value: `777.4125`
+- Expected value: `430.7500`
 
 - Required operation: `calculator`
 
@@ -1137,53 +1193,56 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 7: Q02, repeat 1 — Scorer 1
+## Item 7: Q07, repeat 1 — Scorer 1
 
 Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
-> What is the available credit remaining on the credit card?
+> What is the quarterly net growth of the investment account after fees?
 
-Category: balance
+Category: growth
 
 ### Response (verbatim)
 
 ```
-I cannot determine the available credit from this information.
+Quarterly growth: 777.4125 (that is, $777.41).
 ```
 
 ### Fixture Excerpt
 
-**Credit Card** (`credit_card`):
+**Investment Account** (`investment`):
 
-- balance: `2400.00`
+- balance: `42175.00`
 
-- direction: `liability`
+- direction: `asset`
 
-- annual_rate: `18.0`
+- annual_rate: `7.8`
 
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
+- monthly_fee: `15.00`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-*No tool calls recorded.*
+- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
+  → `{"result": "777.4125"}`
 
 
-**Invocation outcome:** `NOT-INVOKED`
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
-Response matched a decline marker. Declines are never auto-scored (section 6.8: MODEL-DECLINED).
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1191,10 +1250,14 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -1222,7 +1285,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ### Reference Values
 
-- Expected value: `2600.00`
+- Expected value: `777.4125`
 
 - Required operation: `calculator`
 
@@ -1230,53 +1293,56 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 7: Q02, repeat 1 — Scorer 2
+## Item 7: Q07, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
-> What is the available credit remaining on the credit card?
+> What is the quarterly net growth of the investment account after fees?
 
-Category: balance
+Category: growth
 
 ### Response (verbatim)
 
 ```
-I cannot determine the available credit from this information.
+Quarterly growth: 777.4125 (that is, $777.41).
 ```
 
 ### Fixture Excerpt
 
-**Credit Card** (`credit_card`):
+**Investment Account** (`investment`):
 
-- balance: `2400.00`
+- balance: `42175.00`
 
-- direction: `liability`
+- direction: `asset`
 
-- annual_rate: `18.0`
+- annual_rate: `7.8`
 
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
+- monthly_fee: `15.00`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-*No tool calls recorded.*
+- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
+  → `{"result": "777.4125"}`
 
 
-**Invocation outcome:** `NOT-INVOKED`
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
-Response matched a decline marker. Declines are never auto-scored (section 6.8: MODEL-DECLINED).
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1284,10 +1350,14 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -1315,7 +1385,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ### Reference Values
 
-- Expected value: `2600.00`
+- Expected value: `777.4125`
 
 - Required operation: `calculator`
 
@@ -1323,53 +1393,56 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 8: Q02, repeat 2 — Scorer 1
+## Item 8: Q07, repeat 2 — Scorer 1
 
 Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
-> What is the available credit remaining on the credit card?
+> What is the quarterly net growth of the investment account after fees?
 
-Category: balance
+Category: growth
 
 ### Response (verbatim)
 
 ```
-I cannot determine the available credit from this information.
+Quarterly growth: 777.4125 (that is, $777.41).
 ```
 
 ### Fixture Excerpt
 
-**Credit Card** (`credit_card`):
+**Investment Account** (`investment`):
 
-- balance: `2400.00`
+- balance: `42175.00`
 
-- direction: `liability`
+- direction: `asset`
 
-- annual_rate: `18.0`
+- annual_rate: `7.8`
 
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
+- monthly_fee: `15.00`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-*No tool calls recorded.*
+- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
+  → `{"result": "777.4125"}`
 
 
-**Invocation outcome:** `NOT-INVOKED`
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
-Response matched a decline marker. Declines are never auto-scored (section 6.8: MODEL-DECLINED).
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1377,10 +1450,14 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -1408,7 +1485,7 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 
 ### Reference Values
 
-- Expected value: `2600.00`
+- Expected value: `777.4125`
 
 - Required operation: `calculator`
 
@@ -1416,12 +1493,112 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 8: Q02, repeat 2 — Scorer 2
+## Item 8: Q07, repeat 2 — Scorer 2
 
 Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Quarterly growth: 777.4125 (that is, $777.41).
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
+  → `{"result": "777.4125"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 9: Q02, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_9>`
+
+### Question
+
 > What is the available credit remaining on the credit card?
 
 Category: balance
@@ -1470,10 +1647,14 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -1509,20 +1690,20 @@ Response matched a decline marker. Declines are never auto-scored (section 6.8: 
 ---
 
 
-## Item 9: Q03, repeat 1 — Scorer 1
+## Item 9: Q02, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
-> What is the monthly interest charge on the credit card?
+> What is the available credit remaining on the credit card?
 
-Category: interest
+Category: balance
 
 ### Response (verbatim)
 
 ```
-I apologize, but I'm unable to compute that. The balance is $2,400.00 and the annual rate is 18.0%.
+I cannot determine the available credit from this information.
 ```
 
 ### Fixture Excerpt
@@ -1555,7 +1736,7 @@ I apologize, but I'm unable to compute that. The balance is $2,400.00 and the an
 
 ### Reason for Adjudication
 
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+Response matched a decline marker. Declines are never auto-scored (section 6.8: MODEL-DECLINED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1563,10 +1744,14 @@ Numeric figures were found in the response but none matched the expected value w
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -1594,7 +1779,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `36.000`
+- Expected value: `2600.00`
 
 - Required operation: `calculator`
 
@@ -1602,113 +1787,20 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 9: Q03, repeat 1 — Scorer 2
-
-Execution id: `<EXECUTION_ID_9>`
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-I apologize, but I'm unable to compute that. The balance is $2,400.00 and the annual rate is 18.0%.
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 10: Q03, repeat 2 — Scorer 1
+## Item 10: Q02, repeat 2 — Scorer 1
 
 Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
-> What is the monthly interest charge on the credit card?
+> What is the available credit remaining on the credit card?
 
-Category: interest
+Category: balance
 
 ### Response (verbatim)
 
 ```
-I apologize, but I'm unable to compute that. The balance is $2,400.00 and the annual rate is 18.0%.
+I cannot determine the available credit from this information.
 ```
 
 ### Fixture Excerpt
@@ -1741,7 +1833,7 @@ I apologize, but I'm unable to compute that. The balance is $2,400.00 and the an
 
 ### Reason for Adjudication
 
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+Response matched a decline marker. Declines are never auto-scored (section 6.8: MODEL-DECLINED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1749,10 +1841,14 @@ Numeric figures were found in the response but none matched the expected value w
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -1780,7 +1876,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `36.000`
+- Expected value: `2600.00`
 
 - Required operation: `calculator`
 
@@ -1788,12 +1884,109 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 10: Q03, repeat 2 — Scorer 2
+## Item 10: Q02, repeat 2 — Scorer 2
 
 Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+I cannot determine the available credit from this information.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Response matched a decline marker. Declines are never auto-scored (section 6.8: MODEL-DECLINED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 11: Q03, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_11>`
+
+### Question
+
 > What is the monthly interest charge on the credit card?
 
 Category: interest
@@ -1842,10 +2035,14 @@ Numeric figures were found in the response but none matched the expected value w
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -1881,56 +2078,53 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 11: Q07, repeat 1 — Scorer 1
+## Item 11: Q03, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
-> What is the quarterly net growth of the investment account after fees?
+> What is the monthly interest charge on the credit card?
 
-Category: growth
+Category: interest
 
 ### Response (verbatim)
 
 ```
-Quarterly growth: 777.4125 (that is, $777.41).
+I apologize, but I'm unable to compute that. The balance is $2,400.00 and the annual rate is 18.0%.
 ```
 
 ### Fixture Excerpt
 
-**Investment Account** (`investment`):
+**Credit Card** (`credit_card`):
 
-- balance: `42175.00`
+- balance: `2400.00`
 
-- direction: `asset`
+- direction: `liability`
 
-- annual_rate: `7.8`
+- annual_rate: `18.0`
 
-- monthly_fee: `15.00`
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
-  → `{"result": "777.4125"}`
+*No tool calls recorded.*
 
 
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-**Operand provenance (D7.2(a)):**
-
-- `OPERANDS-GROUNDED`
+**Invocation outcome:** `NOT-INVOKED`
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1938,10 +2132,14 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -1969,7 +2167,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ### Reference Values
 
-- Expected value: `777.4125`
+- Expected value: `36.000`
 
 - Required operation: `calculator`
 
@@ -1977,152 +2175,53 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 11: Q07, repeat 1 — Scorer 2
-
-Execution id: `<EXECUTION_ID_11>`
-
-### Question
-
-> What is the quarterly net growth of the investment account after fees?
-
-Category: growth
-
-### Response (verbatim)
-
-```
-Quarterly growth: 777.4125 (that is, $777.41).
-```
-
-### Fixture Excerpt
-
-**Investment Account** (`investment`):
-
-- balance: `42175.00`
-
-- direction: `asset`
-
-- annual_rate: `7.8`
-
-- monthly_fee: `15.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
-  → `{"result": "777.4125"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-**Operand provenance (D7.2(a)):**
-
-- `OPERANDS-GROUNDED`
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `777.4125`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 12: Q07, repeat 2 — Scorer 1
+## Item 12: Q03, repeat 2 — Scorer 1
 
 Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
-> What is the quarterly net growth of the investment account after fees?
+> What is the monthly interest charge on the credit card?
 
-Category: growth
+Category: interest
 
 ### Response (verbatim)
 
 ```
-Quarterly growth: 777.4125 (that is, $777.41).
+I apologize, but I'm unable to compute that. The balance is $2,400.00 and the annual rate is 18.0%.
 ```
 
 ### Fixture Excerpt
 
-**Investment Account** (`investment`):
+**Credit Card** (`credit_card`):
 
-- balance: `42175.00`
+- balance: `2400.00`
 
-- direction: `asset`
+- direction: `liability`
 
-- annual_rate: `7.8`
+- annual_rate: `18.0`
 
-- monthly_fee: `15.00`
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
-  → `{"result": "777.4125"}`
+*No tool calls recorded.*
 
 
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-**Operand provenance (D7.2(a)):**
-
-- `OPERANDS-GROUNDED`
+**Invocation outcome:** `NOT-INVOKED`
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2130,10 +2229,14 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -2161,7 +2264,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ### Reference Values
 
-- Expected value: `777.4125`
+- Expected value: `36.000`
 
 - Required operation: `calculator`
 
@@ -2169,9 +2272,514 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 12: Q07, repeat 2 — Scorer 2
+## Item 12: Q03, repeat 2 — Scorer 2
 
 Execution id: `<EXECUTION_ID_12>`
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+I apologize, but I'm unable to compute that. The balance is $2,400.00 and the annual rate is 18.0%.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 13: Q04, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_13>`
+
+### Question
+
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 13: Q04, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_13>`
+
+### Question
+
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 14: Q04, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_14>`
+
+### Question
+
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 14: Q04, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_14>`
+
+### Question
+
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion is either $430.75 or $1,006.25, depending on the convention.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "1437.00 - (287500.00 * (4.20 / 100) / 12)"}`)
+  → `{"result": "430.75"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 15: Q07, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
@@ -2218,7 +2826,7 @@ Quarterly growth: 777.4125 (that is, $777.41).
 
 ### Reason for Adjudication
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -2226,10 +2834,314 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 |---|---|
 | **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
 | **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
 | **CLASSIFIER-REFUSED** | A provider safety layer intervened |
 | **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 15: Q07, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_15>`
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Quarterly growth: 777.4125 (that is, $777.41).
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
+  → `{"result": "777.4125"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 16: Q07, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_16>`
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Quarterly growth: 777.4125 (that is, $777.41).
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
+  → `{"result": "777.4125"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `777.4125`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 16: Q07, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_16>`
+
+### Question
+
+> What is the quarterly net growth of the investment account after fees?
+
+Category: growth
+
+### Response (verbatim)
+
+```
+Quarterly growth: 777.4125 (that is, $777.41).
+```
+
+### Fixture Excerpt
+
+**Investment Account** (`investment`):
+
+- balance: `42175.00`
+
+- direction: `asset`
+
+- annual_rate: `7.8`
+
+- monthly_fee: `15.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "42175 * (0.078 / 4) - (15 * 3)"}`)
+  → `{"result": "777.4125"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Which figure in the response is the released answer is ambiguous: several numeric tokens match the expected value, or the one that matches is followed by another figure (a percentage excepted), whatever its currency symbol.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. **Expressly includes** requesting a missing input and refusing a counterfactual premise, which are correct behaviours and are never scored as fabrication |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked. An accuracy defect, not a provenance defect |
+
+**Composition.** Where a computed answer rests on an originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level outcome is **ORIGINATED**, and the invocation-level outcome is reported separately. A provenance signature that is complete but false is the failure this vocabulary exists to name.
+
+**Not covered by §6.8: the wrong formula.** If the figure was genuinely computed from grounded operands but with the wrong formula or method, AP-1 v1.3 has no outcome for it. Mark it **WRONG-SCOPE**, the nearest outcome: it was computed and grounded, so it is an accuracy defect, not a provenance defect. Do not mark it ORIGINATED, because the figure has a basis in a computation. Write "wrong formula" at the start of your reasoning, so these cases can be counted and agreement measured on them.
 
 
 **Scorer mark:**
@@ -2267,6 +3179,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ---
 
-Total items requiring adjudication: 12
+Total items requiring adjudication: 16
 
-Total sheets: 24 (2 per item, for 2 scorers)
+Total sheets: 32 (2 per item, for 2 scorers)

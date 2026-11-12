@@ -6,8 +6,8 @@
     "score": 1.0
   },
   "execution/context": {
-    "killed": 93,
-    "mutants": 93,
+    "killed": 129,
+    "mutants": 129,
     "score": 1.0
   },
   "execution/engine": {
@@ -29,10 +29,10 @@
     "score": 0.8367
   },
   "execution/seal": {
-    "killed": 485,
-    "mutants": 486,
-    "notes": "The 1 survivor is equivalent: it sets perturbed_any = None instead of False in perturbation_check: both are falsy, and the flag is only ever tested for truth. (The R3.1 guard fixes, T3-7: the failure dicts no longer carry a 'field' key, which nothing read; every failure's item and reason are in the SealError message, S3-G3-3.) (The seal fixes: seal() and verify_seal() rewritten for the format-2 record (T3-15, T3-17, T3-47, T3-48, T3-50, T3-68, T3-72, T3-30); the 4 old DOI-default survivors are killed by test_verify_seal_record_without_doi_named_once.)",
-    "score": 0.9979
+    "killed": 494,
+    "mutants": 495,
+    "notes": "The 1 survivor is equivalent: it sets perturbed_any = None instead of False in perturbation_check: both are falsy, and the flag is only ever tested for truth. (The R3.1 guard fix: the failure dicts no longer carry a 'field' key, which nothing read; every failure's item and reason are in the SealError message, S3-G3-3.) (The seal fix: seal() and verify_seal() rewritten for the format-2 record (T3-15, T3-17, T3-47, T3-48, T3-50, T3-68, T3-72, T3-70); the 4 old DOI-default survivors are killed by test_verify_seal_record_without_doi_named_once.) [Re-recorded with the report fixes combined with the others; the notes above are each side's.]",
+    "score": 0.998
   },
   "execution/seal_constants": {
     "killed": 173,
@@ -83,22 +83,22 @@
     "score": 0.9738
   },
   "reporting/report": {
-    "killed": 1845,
-    "mutants": 1891,
-    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Re-recorded after combining the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after combining.] [Re-recorded on the combination of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after combining.] [Combined with the T3-30/T3-22 report fixes: 46 survivors, none in the new section 9b (_section_d2_conditions).]",
-    "score": 0.9757
+    "killed": 2375,
+    "mutants": 2412,
+    "notes": "All 51 survivors are equivalent. 34 replace a .get() default ({}, [], '' or False) by None or no default, falsy alike and only tested for truth: the summary's evidence_class_counts, item_evidence, transcription_results, release_coverage_results, invocation_figures, originated_operand_audit (twice), operation_correctness_counts, d1_results, d7_results, d2_results, surfaces, quantisation_findings, near_miss_findings, the dimension's results, operator_declared and a transcript record's evidence_class; one more changes that evidence_class default to 'XXXX', which does not contain UNOBSERVABLE either. Six are in the D7.3 percentage's else branch ('total > 0' to '>= 0', 'or True', the dash text), unreachable because the table is only built for a non-empty list. Seven change 'point = k / n ...' in the Clopper-Pearson section, a variable that is never read. One passes config=None to _section_preregistration, which never reads it; one passes ensure_ascii=None, falsy like False; one returns float('NAN'), the same value as float('nan'). [Re-recorded after combining the D7.1 and D7.3 fixes, 46 survivors; the notes above were written for one branch's 51 and were not re-audited after combining.] [Re-recorded on the combination of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after combining.] [Combined with the conformance-claims fix: 46 survivors, none in the new section 9b (_section_d2_conditions).] [Re-recorded with the report fixes combined with the others; the notes above are each side's.]",
+    "score": 0.9847
   },
   "run": {
-    "killed": 429,
-    "mutants": 431,
-    "notes": "Both survivors are equivalent. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. One passes ctx=None to the sealed ground-truth compute, which returns the sealed value of the item and ignores the context. (The two-pass fix, T3-21: the scoring half of main() moved to runner/scoring_pass.py, with the four 'UNKNOWN' status-default survivors; re-recorded on its combination with the other fixes.)",
-    "score": 0.9954
+    "killed": 441,
+    "mutants": 443,
+    "notes": "Both survivors are equivalent. One passes argv=None straight to parse_args, which then reads sys.argv[1:] itself. One passes ctx=None to the sealed ground-truth compute, which returns the sealed value of the item and ignores the context. (The two-pass fix, T3-21: the scoring half of main() moved to runner/scoring_pass.py, with the four 'UNKNOWN' status-default survivors; re-recorded on its combination with the other fixes.) [Re-recorded with the report fixes combined with the others; the notes above are each side's.]",
+    "score": 0.9955
   },
   "runner/console": {
-    "killed": 557,
-    "mutants": 558,
-    "notes": "The one survivor is equivalent: it changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect).",
-    "score": 0.9982
+    "killed": 584,
+    "mutants": 585,
+    "notes": "The one survivor is equivalent: it changes the figure_outcome default from '' to 'XXXX', which takes the same branch (item answer incorrect). [Re-recorded with the report fixes combined with the others; the notes above are each side's.]",
+    "score": 0.9983
   },
   "runner/credentials": {
     "killed": 116,
@@ -107,10 +107,10 @@
     "score": 0.9915
   },
   "runner/executions": {
-    "killed": 794,
-    "mutants": 796,
-    "notes": "Both survivors are equivalent. 'and' to 'or' in _operation_returns' result check only lets values through that then raise inside the try (a dict without 'result' raises KeyError), which the except turns into the same skipped call. In result_from_record, the '' default of a missing error_state changed to 'XXXX' does not start with TOOL_LOOP_EXHAUSTED either. (The two-pass fix, T3-21: the figure record is gone; score_d72, result_from_record, record_not_run and as_recorded added. Re-recorded on its combination with the other fixes.)",
-    "score": 0.9975
+    "killed": 827,
+    "mutants": 829,
+    "notes": "Both survivors are equivalent. 'and' to 'or' in _operation_returns' result check only lets values through that then raise inside the try (a dict without 'result' raises KeyError), which the except turns into the same skipped call. In result_from_record, the '' default of a missing error_state changed to 'XXXX' does not start with TOOL_LOOP_EXHAUSTED either. (The two-pass fix, T3-21: the figure record is gone; score_d72, result_from_record, record_not_run and as_recorded added. Re-recorded on its combination with the other fixes.) [Re-recorded with the report fixes combined with the others; the notes above are each side's.]",
+    "score": 0.9976
   },
   "runner/outputs": {
     "killed": 182,
@@ -119,9 +119,9 @@
     "score": 0.9333
   },
   "runner/scoring_pass": {
-    "killed": 293,
-    "mutants": 293,
-    "notes": "No survivors. (New with the two-pass fix, T3-21: the scoring pass, moved out of run.py main().)",
+    "killed": 322,
+    "mutants": 322,
+    "notes": "No survivors. (New with the two-pass fix, T3-21: the scoring pass, moved out of run.py main().) [Re-recorded with the report fixes combined with the others; the notes above are each side's.]",
     "score": 1.0
   },
   "runner/settings": {
@@ -131,15 +131,16 @@
     "score": 1.0
   },
   "runner/summary": {
-    "killed": 753,
-    "mutants": 764,
-    "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default. [Re-recorded on the combination of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after combining.]",
-    "score": 0.9856
+    "killed": 911,
+    "mutants": 922,
+    "notes": "All 11 survivors are equivalent. Ten replace a .get() default ('' by None, 'XXXX' or no default) where every replacement takes the same branch: neither INVOKED nor NOT-INVOKED, not a counted provenance outcome, not starting AUTO or ADJUDICATE, no platform-rejected or platform-unsupported reason. One drops operator_declared=None, which is classify_mechanism's default. [Re-recorded on the combination of the D7.1, D7.3 and seal-guard fixes; survivor notes not re-audited after combining.] [Re-recorded with the report fixes combined with the others; the notes above are each side's.]",
+    "score": 0.9881
   },
   "scoring/accuracy": {
-    "killed": 149,
-    "mutants": 149,
-    "score": 1.0
+    "killed": 292,
+    "mutants": 292,
+    "score": 1.0,
+    "notes": " [Re-recorded with the report fixes combined with the others; the notes above are each side's.]"
   },
   "scoring/answer_outcome": {
     "killed": 36,
@@ -147,22 +148,22 @@
     "score": 1.0
   },
   "scoring/figure_id": {
-    "killed": 165,
-    "mutants": 179,
-    "notes": "All 14 survivors are in unreachable code: the defensive 'if len(matched) == 0 and len(tokens) == 0' block after the match loop (two mutants of the condition, twelve of the returned dict). An empty token list already returns AUTO-NO-FIGURE above, so tokens is never empty there; the legacy suites do not reach it either.",
-    "score": 0.9218
+    "killed": 188,
+    "mutants": 202,
+    "notes": "All 14 survivors are in unreachable code: the defensive 'if len(matched) == 0 and len(tokens) == 0' block after the match loop (two mutants of the condition, twelve of the returned dict). An empty token list already returns AUTO-NO-FIGURE above, so tokens is never empty there; the legacy suites do not reach it either. [Re-recorded with the report fixes combined with the others; the notes above are each side's.]",
+    "score": 0.9307
   },
   "scoring/invocation": {
-    "killed": 193,
-    "mutants": 194,
-    "notes": "The one survivor is equivalent: it changes the '#' in the key ('#', i) that _summarise_class gives a record without an item_id; any tuple key is distinct from every item_id string and from the other records' keys. (The T3-60 fix: the module no longer sets the global Decimal precision on import; format_rate, _exact_upper_bound and compute_dpr compute in numeric.DECIMAL_CONTEXT, and the mutants replacing it are killed.)",
-    "score": 0.9948
+    "killed": 262,
+    "mutants": 263,
+    "notes": "The one survivor is equivalent: it changes the '#' in the key ('#', i) that _summarise_class gives a record without an item_id; any tuple key is distinct from every item_id string and from the other records' keys. (The number-grammar fix, T3-60: the module no longer sets the global Decimal precision on import; format_rate, _exact_upper_bound and compute_dpr compute in numeric.DECIMAL_CONTEXT, and the mutants replacing it are killed.) [Re-recorded with the report fixes combined with the others; the notes above are each side's.]",
+    "score": 0.9962
   },
   "scoring/operation_correctness": {
-    "killed": 365,
-    "mutants": 386,
-    "notes": "All 21 non-killed mutants are equivalent or message-only. 11 change the text of a ValueError raised in _eval_decimal, which evaluate_expression always swallows (returns None). 4 are in evaluate_expression's 'if not isinstance(result, Decimal)' branch, which is unreachable (every evaluator path returns Decimal; converting a Decimal through str keeps value and exponent). In classify_operation: 'and' to 'or' in the expected-value conversion (None becomes Decimal('None'), which fails and gives None again), and two quantisation defaults ({} vs None, both falsy). In reclassify_session: 'er is not None or True' (Decimal('None') fails and gives None again), changed = None (falsy like False), and changed = True, an endless loop that mutmut reports as a timeout (the tests hang, so it is detected, but the score counts only kills).",
-    "score": 0.9456
+    "killed": 380,
+    "mutants": 399,
+    "notes": "All 21 non-killed mutants are equivalent or message-only. 11 change the text of a ValueError raised in _eval_decimal, which evaluate_expression always swallows (returns None). 4 are in evaluate_expression's 'if not isinstance(result, Decimal)' branch, which is unreachable (every evaluator path returns Decimal; converting a Decimal through str keeps value and exponent). In classify_operation: 'and' to 'or' in the expected-value conversion (None becomes Decimal('None'), which fails and gives None again), and two quantisation defaults ({} vs None, both falsy). In reclassify_session: 'er is not None or True' (Decimal('None') fails and gives None again), changed = None (falsy like False), and changed = True, an endless loop that mutmut reports as a timeout (the tests hang, so it is detected, but the score counts only kills). [Re-recorded with the report fixes combined with the others; the notes above are each side's.] Since the report fixes, the unreachable 'if not isinstance(result, Decimal)' branch is gone (its 4 survivors with it) and _floordiv adds 2 equivalent survivors ('a <= 0', 'b <= 0').",
+    "score": 0.9524
   },
   "scoring/provenance/audit": {
     "killed": 51,
@@ -187,10 +188,10 @@
     "score": 0.9735
   },
   "scoring/reproducibility": {
-    "killed": 182,
-    "mutants": 186,
-    "notes": "All 4 survivors are equivalent. Each is in _extract_surface_values and replaces the .get('content', '') default by None or drops it (also None), on the figures and the prose surface: the value is followed by \"or ''\", so it is the same.",
-    "score": 0.9785
+    "killed": 173,
+    "mutants": 175,
+    "notes": "All 4 survivors are equivalent. Each is in _extract_surface_values and replaces the .get('content', '') default by None or drops it (also None), on the figures and the prose surface: the value is followed by \"or ''\", so it is the same. [Re-recorded with the report fixes combined with the others; the notes above are each side's.]",
+    "score": 0.9886
   },
   "scoring/rescore": {
     "killed": 110,

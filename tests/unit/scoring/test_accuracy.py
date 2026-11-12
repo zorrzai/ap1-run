@@ -215,20 +215,23 @@ def identify(content, expected):
 
 
 @pytest.mark.finding('T3-3')
-def test_score_accuracy_wrong_conclusion_with_one_matching_token_is_correct():
+def test_score_accuracy_wrong_conclusion_with_one_matching_token_is_adjudicated():
     # The response concludes 182.40; the one token that equals the expected
-    # 15.20 is taken as the released figure. Correct: the released figure
-    # is the conclusion, so this is INCORRECT (or adjudicated).
+    # 15.20 comes before it. Fixed (T3-3, SPEC R2.0): R2.0 no longer takes
+    # 15.20 as the released figure, so D1 does not score it CORRECT; the
+    # item goes to adjudication.
     fig = identify('Rate 1.2% on 15200 gives 15.20 a year? '
                    'No: answer is $182.40.', '15.20')
-    assert score(fig, digits=2)['outcome'] == CORRECT
+    assert score(fig, digits=2)['outcome'] == ADJUDICATED
 
 
 @pytest.mark.finding('T3-3')
 def test_score_accuracy_wrong_answer_is_adjudicated_never_incorrect():
     # A plainly wrong answer routes to adjudication, so on the live path
-    # (no adjudication) D1 can never count it INCORRECT. Correct: a single
-    # unambiguous wrong figure is auto-scored INCORRECT.
+    # (no adjudication) D1 can never count it INCORRECT. This is SPEC
+    # R2.0 ("does not conclude that a response containing unmatched
+    # figures is wrong"; T3-3), so the report prints no
+    # auto-scored rate while items await adjudication (report.py).
     fig = identify('The answer is $15.30.', '15.20')
     r = score(fig, digits=2)
     assert r['outcome'] == ADJUDICATED
@@ -253,20 +256,29 @@ def test_summarise_accuracy_reports_auto_and_adjudicated_n_separately():
     assert summarise_accuracy(results) == {
         'auto_scored_n': 3, 'adjudicated_n': 2, 'unmeasurable_n': 1,
         'correct': 1, 'incorrect': 1, 'no_figure': 1,
-        'accuracy_rate': D('0.5')}
+        'accuracy_rate': D(1) / D(3)}
 
 
-def test_summarise_accuracy_rate_excludes_no_figure():
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.1')
+def test_summarise_accuracy_no_figure_is_not_correct():
+    # AP-1 D1 tests whether the system "produce[s] the correct figure": an
+    # answer with no figure did not, so it is in the denominator, as in
+    # the per-category rate. Otherwise the rate is 1 whenever nothing
+    # awaits adjudication, beside a category row of 5/10.
     results = [result(CORRECT, True), result(CORRECT, True),
                result(INCORRECT, True), result(NO_FIGURE, True)]
-    s = summarise_accuracy(results)
-    assert s['accuracy_rate'] == D(2) / D(3)
+    assert summarise_accuracy(results)['accuracy_rate'] == D('0.5')
+    half = [result(CORRECT, True)] * 5 + [result(NO_FIGURE, True)] * 5
+    assert summarise_accuracy(half)['accuracy_rate'] == D('0.5')
 
 
-def test_summarise_accuracy_only_no_figure_has_no_rate():
+@pytest.mark.finding('T3-3')
+@pytest.mark.req('R2.1')
+def test_summarise_accuracy_only_no_figure_rate_is_zero():
     s = summarise_accuracy([result(NO_FIGURE, True)])
     assert s['auto_scored_n'] == 1
-    assert s['accuracy_rate'] is None
+    assert s['accuracy_rate'] == D(0)
 
 
 def test_summarise_accuracy_all_incorrect_rate_is_zero():
@@ -320,3 +332,202 @@ def test_score_accuracy_declared_rounding_mode_decides_the_boundary(
                        expected_value=D('2.015'), answer_tolerance=TOL,
                        quantisation_digits=2, quantisation_rounding=mode)
     assert (r['outcome'], r['difference']) == (outcome, D(difference))
+
+
+# -- D1 per category (T3-32) ----------------------------------------------------
+
+from ap1_run.scoring.accuracy import (  # noqa: E402
+    CATEGORY_MINIMUM_N, clopper_pearson_interval,
+    summarise_accuracy_by_category,
+)
+
+
+def scored(item_id, outcome, condition='base'):
+    return {'item_id': item_id, 'condition': condition, 'outcome': outcome}
+
+
+def test_category_minimum_n_is_ap1s_ten():
+    assert CATEGORY_MINIMUM_N == 10
+
+
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_by_category_counts_questions_and_executions():
+    # A question is correct only if every execution is, whatever their
+    # order (Q1 and Q5 each have a wrong one).
+    results = [scored('Q9', 'CORRECT'),  # no category: left out
+               scored('Q1', 'CORRECT'), scored('Q1', 'INCORRECT'),
+               scored('Q5', 'INCORRECT'), scored('Q5', 'CORRECT'),
+               scored('Q2', 'CORRECT'), scored('Q3', 'NO-FIGURE'),
+               scored('Q3', 'NO-FIGURE'),
+               scored('Q3', 'ADJUDICATED'), scored('Q3', 'UNMEASURABLE')]
+    by = summarise_accuracy_by_category(
+        results, {'Q1': 'a', 'Q2': 'a', 'Q5': 'a', 'Q3': 'b', 'Q4': 'c'})
+    assert list(by) == ['a', 'b', 'c']
+    assert by['a'] == {'n': 3, 'executions': 5, 'correct': 3,
+                       'incorrect': 2, 'no_figure': 0, 'pending': 0,
+                       'correct_questions': 1, 'rate': None,
+                       'interval': None}
+    assert by['b'] == {'n': 1, 'executions': 4, 'correct': 0,
+                       'incorrect': 0, 'no_figure': 2, 'pending': 2,
+                       'correct_questions': 0, 'rate': None,
+                       'interval': None}
+    assert by['c']['n'] == by['c']['executions'] == 0
+
+
+@pytest.mark.proposal(
+    'T3-32: D1 per category counts the base condition only; AP-1 D1 does '
+    'not say which condition it uses, and the instruction-removed repeats '
+    'exist to measure D7')
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_by_category_counts_the_base_condition_only():
+    # Q1 is correct in base and wrong in instruction-removed: correct in
+    # D1. Q2 is wrong in base and correct in instruction-removed: wrong.
+    # Q3 has only instruction-removed results: not in D1 at all. Nothing
+    # from instruction-removed is counted, not even as an execution or as
+    # awaiting adjudication.
+    ir = 'instruction_removed'
+    results = [scored('Q1', 'CORRECT'), scored('Q1', 'CORRECT'),
+               scored('Q1', 'INCORRECT', ir), scored('Q1', 'NO-FIGURE', ir),
+               scored('Q2', 'INCORRECT'), scored('Q2', 'CORRECT', ir),
+               scored('Q3', 'CORRECT', ir), scored('Q3', 'ADJUDICATED', ir)]
+    by = summarise_accuracy_by_category(
+        results, {'Q1': 'a', 'Q2': 'a', 'Q3': 'a'})
+    assert by['a'] == {'n': 2, 'executions': 3, 'correct': 2,
+                       'incorrect': 1, 'no_figure': 0, 'pending': 0,
+                       'correct_questions': 1, 'rate': None,
+                       'interval': None}
+
+
+@pytest.mark.proposal(
+    'T3-32: D1 per category counts the base condition only; AP-1 D1 does '
+    'not say which condition it uses, and the instruction-removed repeats '
+    'exist to measure D7')
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_by_category_rate_unaffected_by_instruction_removed_failures():
+    # Ten questions, every base execution correct, every
+    # instruction-removed one wrong or awaiting adjudication: 10/10, with
+    # the interval for 10 of 10.
+    ir = 'instruction_removed'
+    results = []
+    for i in range(10):
+        results += [scored(f'Q{i}', 'CORRECT'),
+                    scored(f'Q{i}', 'INCORRECT' if i % 2 else 'ADJUDICATED',
+                           ir)]
+    by = summarise_accuracy_by_category(
+        results, {f'Q{i}': 'x' for i in range(10)})['x']
+    assert (by['n'], by['executions'], by['pending'],
+            by['correct_questions']) == (10, 10, 0, 10)
+    assert by['rate'] == D(1)
+    assert by['interval'] == clopper_pearson_interval(10, 10)
+
+
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_by_category_rate_and_interval_from_ten_questions():
+    # 10 questions, 8 correct (Q8 has one wrong repeat, Q9 no figure):
+    # 8/10 with the exact interval [0.4439, 0.9748].
+    results = [scored(f'Q{i}', 'CORRECT') for i in range(10)]
+    results += [scored('Q8', 'INCORRECT'), scored('Q0', 'CORRECT')]
+    results[9] = scored('Q9', 'NO-FIGURE')
+    by = summarise_accuracy_by_category(
+        results, {f'Q{i}': 'growth' for i in range(10)})['growth']
+    assert (by['n'], by['correct_questions']) == (10, 8)
+    assert by['rate'] == D('0.8')
+    assert by['interval'] == clopper_pearson_interval(8, 10)
+    lower, upper = by['interval']
+    assert (round(lower, 4), round(upper, 4)) == (D('0.4439'), D('0.9748'))
+
+
+@pytest.mark.finding('T3-32', 'T3-3')
+def test_by_category_no_rate_while_any_execution_awaits_adjudication():
+    results = [scored(f'Q{i}', 'CORRECT') for i in range(10)]
+    results.append(scored('Q3', 'ADJUDICATED'))
+    by = summarise_accuracy_by_category(
+        results, {f'Q{i}': 'x' for i in range(10)})['x']
+    assert (by['n'], by['pending'], by['rate'], by['interval']) == \
+        (10, 1, None, None)
+
+
+def test_by_category_below_ten_questions_has_no_rate():
+    results = [scored(f'Q{i}', 'CORRECT') for i in range(9)]
+    by = summarise_accuracy_by_category(
+        results, {f'Q{i}': 'x' for i in range(9)})['x']
+    assert (by['n'], by['correct_questions'], by['rate']) == (9, 9, None)
+
+
+@pytest.mark.parametrize('x, n, lower, upper', [
+    (10, 10, '0.6915', '1'), (0, 10, '0', '0.3085'),
+    (45, 50, '0.7819', '0.9667')])
+def test_clopper_pearson_interval_known_values(x, n, lower, upper):
+    lo, hi = clopper_pearson_interval(x, n)
+    assert (round(lo, 4), round(hi, 4)) == (D(lower), D(upper))
+
+
+def binomial_cdf(k, n, p):
+    """P(X <= k) for X ~ Binomial(n, p), from math.comb, at precision 60:
+    independent of the bisection's own sums."""
+    import decimal
+    import math
+    with decimal.localcontext() as ctx:
+        ctx.prec = 60
+        return sum(math.comb(n, i) * p ** i * (1 - p) ** (n - i)
+                   for i in range(k + 1))
+
+
+@pytest.mark.req('AP-1 D7.5')
+@pytest.mark.parametrize('k, n', [(0, 10), (2, 10), (0, 500), (2, 500),
+                                  (92, 500)])
+def test_clopper_pearson_interval_solves_both_binomial_tails(k, n):
+    # The two-sided 95% interval on a failure rate, printed beside the
+    # D7.5 bound for k > 0, leaves 0.025 in each tail: at the upper end
+    # U, P(X <= k; n, U) = 0.025; at the lower end L, P(X >= k; n, L) =
+    # 0.025 (L = 0 for k = 0). Just inside each end the tail is above
+    # 0.025, at it at most 0.025. (For k = 0 the upper end is the closed
+    # form at precision 50, which may sit about 1e-50 below the exact
+    # root; every display rounds it up.)
+    import decimal
+    lower, upper = clopper_pearson_interval(k, n)
+    tail = D('0.025')
+    slack = D('1e-45') if k == 0 else 0
+    with decimal.localcontext() as ctx:
+        ctx.prec = 60
+        assert binomial_cdf(k, n, upper) <= tail + slack
+        assert binomial_cdf(k, n, upper - D('1e-30')) > tail
+        if k == 0:
+            assert lower == 0
+        else:
+            assert 1 - binomial_cdf(k - 1, n, lower) <= tail
+            assert 1 - binomial_cdf(k - 1, n, lower + D('1e-30')) > tail
+
+
+@pytest.mark.req('AP-1 D7.5')
+@pytest.mark.parametrize('n', [10, 500])
+def test_clopper_pearson_interval_k0_upper_end_is_the_closed_form(n):
+    # k = 0: (1 - U)^n = 0.025, so U = 1 - 0.025^(1/n).
+    import decimal
+    lower, upper = clopper_pearson_interval(0, n)
+    with decimal.localcontext() as ctx:
+        ctx.prec = 80
+        closed = 1 - D('0.025') ** (D(1) / D(n))
+        assert lower == 0
+        assert abs(upper - closed) < D('1e-40'), (upper, closed)
+
+
+def test_clopper_pearson_interval_alpha():
+    # 90%: each tail 0.05; at 1/2, 1 - p^2 = 0.95 ... upper sqrt(0.95)
+    import decimal
+    lo, hi = clopper_pearson_interval(1, 2, D('0.1'))
+    with decimal.localcontext() as ctx:
+        ctx.prec = 60
+        assert abs(hi - D('0.95').sqrt()) < D('1e-39')
+        assert abs(lo - (1 - D('0.95').sqrt())) < D('1e-39')
+
+
+def test_clopper_pearson_interval_lower_end_at_precision_60():
+    # The lower end is 1 - (an upper bound), exactly, whatever the
+    # caller's context (it would be rounded to 28 digits otherwise).
+    assert str(clopper_pearson_interval(8, 10)[0]) == \
+        '0.44390453769235845822179198568327233334976354092898353551992'

@@ -7,8 +7,11 @@ what class of evidence.
 
 Every outcome carries its R1.3.1 evidence class.
 
-Zero failures in n: "0/n; upper bound ~= 3/n". In this module, a zero-failure rate is reported with its
-Clopper-Pearson bound rather than as a bare "100%".
+Every failure rate is reported with its exact one-sided 95%
+Clopper-Pearson upper bound (AP-1 v1.3 D7.5), never as a bare "100%":
+1 - alpha^(1/n) at zero failures, the 1 - alpha quantile of
+Beta(k+1, n-k) for k > 0 (the general form DISPOSITION C-1 adopts). The
+bound is computed in Decimal and displayed rounded up (T3-61, T3-81).
 
 DPR = (I_base - I_removed) / I_base. Where I_base is zero the ratio
 is UNDEFINED, never 1.0.
@@ -18,7 +21,10 @@ statement that the figures are not comparable.
 """
 
 import math
-from decimal import Decimal, localcontext
+from decimal import (
+    MAX_EMAX, MIN_EMIN, ROUND_CEILING, ROUND_HALF_EVEN, Context, Decimal,
+    localcontext,
+)
 
 from ap1_run.execution.evidence import EV_0, EV_1, EV_2, EV_3
 from ap1_run.foundation.numeric import DECIMAL_CONTEXT
@@ -137,14 +143,18 @@ def format_failing_questions(failing):
 
 
 def format_rate(failures, n):
-    """Format a failure rate. Reports zero-failure rates with their Clopper-Pearson bound.
+    """Format a failure rate with its one-sided 95% upper bound.
 
-    Zero failures: exact one-sided 95% Clopper-Pearson upper bound.
-      p_upper = 1 - alpha^(1/n)  with alpha = 0.05
-    This is exact at every n.  For n >= 30 the 3/n approximation
-    is noted in parentheses; below n=30 it is omitted (misleading).
+    Zero failures: "0/n failures; one-sided 95% upper bound on the
+    failure rate X%", with p_upper = 1 - alpha^(1/n), alpha = 0.05. For
+    n >= 30 the 3/n approximation is noted in parentheses; below n = 30
+    it is omitted (misleading).
 
-    Non-zero failures: "k/n (X.X%)"
+    Non-zero failures: "k/n (X.X%); one-sided 95% upper bound on the
+    failure rate Y%", the exact Clopper-Pearson bound.
+
+    The bound is rounded up to 0.1%, so the figure shown is never below
+    the exact bound (T3-61).
     """
     if n == 0:
         return 'no observations'
@@ -152,12 +162,14 @@ def format_rate(failures, n):
         return _format_rate(failures, n)
 
 
+
 def _format_rate(failures, n):
     """format_rate's arithmetic, given n > 0."""
+    bound_pct = round_up(clopper_pearson_upper(failures, n) * 100,
+                         Decimal('0.1'))
+    bound_text = f'one-sided 95% upper bound on the failure rate {bound_pct}%'
     if failures == 0:
-        bound = _exact_upper_bound(n)
-        bound_pct = (bound * 100).quantize(Decimal('0.1'))
-        text = f'0/{n} failures; one-sided 95% upper bound on the failure rate {bound_pct}%'
+        text = f'0/{n} failures; {bound_text}'
         if n >= 30:
             approx = (Decimal(3) / Decimal(n) * 100).quantize(Decimal('0.1'))
             text += f' (\u22483/{n}={approx}%)'
@@ -165,7 +177,74 @@ def _format_rate(failures, n):
 
     rate = Decimal(failures) / Decimal(n)
     pct = (rate * 100).quantize(Decimal('0.1'))
-    return f'{failures}/{n} ({pct}%)'
+    return f'{failures}/{n} ({pct}%); {bound_text}'
+
+
+def round_up(value, quantum):
+    """value rounded up (toward +infinity) to a multiple of quantum: how
+    an upper bound is displayed, so that it stays an upper bound."""
+    return value.quantize(quantum, rounding=ROUND_CEILING)
+
+
+def clopper_pearson_upper(failures, n, alpha=None):
+    """Exact one-sided upper confidence bound on a failure rate, as a
+    Decimal: the p at which P(X <= failures; n, p) = alpha, i.e. the
+    1 - alpha quantile of Beta(failures + 1, n - failures) (AP-1 v1.3
+    D7.5; DISPOSITION C-1). alpha defaults to 0.05 (95%).
+
+    failures = 0 is the closed form 1 - alpha^(1/n) (_exact_upper_bound).
+    failures >= n gives 1. Otherwise the binomial distribution function
+    is bisected in Decimal at precision 60, 135 times (a bracket of width
+    2^-135, about 2e-41, far wider than the arithmetic's error); the upper
+    end of the final bracket is returned, so the value is never below the
+    exact bound.
+
+    Raises InvocationError if n is not positive or failures is negative.
+    """
+    if alpha is None:
+        alpha = Decimal('0.05')
+    if n <= 0 or failures < 0:
+        raise InvocationError(
+            f'no bound for {failures} failures in n = {n}')
+    if failures == 0:
+        return _exact_upper_bound(n, alpha)
+    if failures >= n:
+        return Decimal(1)
+    # An explicit context, not the caller's: precision 60 and the widest
+    # exponent range, so (1 - p)^n never underflows to 0 at large n
+    with localcontext(Context(prec=60, rounding=ROUND_HALF_EVEN,
+                              Emin=MIN_EMIN, Emax=MAX_EMAX)):
+        lo, hi = Decimal(0), Decimal(1)
+        for _ in range(135):
+            mid = (lo + hi) / 2
+            if _binomial_cdf(failures, n, mid) > alpha:
+                lo = mid
+            else:
+                hi = mid
+        return hi
+
+
+def _binomial_cdf(k, n, p):
+    """P(X <= k) for X ~ Binomial(n, p), 0 < p < 1, in Decimal, summed
+    over the shorter tail: for k above n/2, 1 - P(Y <= n - k - 1) with
+    Y ~ Binomial(n, 1 - p)."""
+    if k >= n:
+        return Decimal(1)
+    if 2 * k > n:
+        return 1 - _binomial_lower_tail(n - k - 1, n, 1 - p)
+    return _binomial_lower_tail(k, n, p)
+
+
+def _binomial_lower_tail(k, n, p):
+    """P(X <= k) for X ~ Binomial(n, p), summed term by term."""
+    q = 1 - p
+    term = q ** n
+    total = term
+    ratio = p / q
+    for i in range(k):
+        term = term * (n - i) / (i + 1) * ratio
+        total += term
+    return total
 
 
 def _exact_upper_bound(n, alpha=None):

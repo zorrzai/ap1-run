@@ -5,6 +5,7 @@ Expected text is written as the list of lines the section joins with
 newlines, so a test reads like the markdown it pins.
 """
 
+import decimal
 import json
 import math
 import re
@@ -44,9 +45,14 @@ def test_all_dimensions_are_d1_to_d7_in_order():
 
 @pytest.mark.finding('T3-61')
 def test_clopper_pearson_k0_is_one_minus_alpha_to_one_over_n():
-    assert clopper_pearson_upper_k0(10, 0.05) == 1.0 - 0.05 ** (1.0 / 10)
-    assert clopper_pearson_upper_k0(10, 0.05) == pytest.approx(0.25887,
-                                                              abs=1e-5)
+    # T3-61: in Decimal (SPEC R0.4.1), the one implementation in
+    # invocation.py.
+    from ap1_run.foundation.numeric import DECIMAL_CONTEXT
+    with decimal.localcontext(DECIMAL_CONTEXT):
+        assert clopper_pearson_upper_k0(10, 0.05) == \
+            1 - Decimal('0.05') ** (Decimal(1) / 10)
+    assert abs(clopper_pearson_upper_k0(10, 0.05) - Decimal('0.25887')) < \
+        Decimal('1e-5')
 
 
 def test_clopper_pearson_k0_default_alpha_is_five_percent():
@@ -55,7 +61,9 @@ def test_clopper_pearson_k0_default_alpha_is_five_percent():
 
 @pytest.mark.finding('T3-61')
 def test_clopper_pearson_k0_n1_is_one_minus_alpha():
-    assert clopper_pearson_upper_k0(1, 0.1) == pytest.approx(0.9)
+    # A float alpha is read from its text, never used as a binary float.
+    assert clopper_pearson_upper_k0(1, 0.1) == Decimal('0.9')
+    assert clopper_pearson_upper_k0(1, Decimal('0.1')) == Decimal('0.9')
 
 
 @pytest.mark.parametrize('n', [0, -1])
@@ -74,6 +82,7 @@ def test_report_header_names_version_doi_and_model():
         r'AP-1 Version: 1\.3\n\n'
         r'Version DOI: 10\.5281/zenodo\.1\n\n'
         r'Model: test-model\n\n'
+        r'> \*\*Demonstration run, not a conformance result\.\*\* .*\n\n'
         r'---\n\n'
         r'## 1\. Pre-Registration Record\n', text)
 
@@ -86,15 +95,17 @@ def test_report_header_missing_fields_read_unknown():
 
 
 @pytest.mark.finding('T3-45')
-def test_report_header_carries_no_disclaimer():
-    # report.md opens with "AP-1 Evaluation Report" and no warning that a
-    # smoke run is not an AP-1 evaluation. Correct: the run's disclaimer
-    # at the top of report.md.
+def test_report_header_carries_the_readme_statement():
+    # Fixed (T3-45): the README's statement, before the first section.
     text = generate_report(summary={}, config=CONFIG, seal_record={})
     head = text[:text.index('## 1.')]
-    assert 'disclaimer' not in head.lower()
-    assert 'not an ap-1 evaluation' not in text.lower()
-    assert 'smoke' not in text.lower()
+    assert report.DEMONSTRATION_STATEMENT == (
+        '> **Demonstration run, not a conformance result.** ap1-run '
+        'implements the AP-1 v1.3 Draft for Comment; v1.2 remains the '
+        'version in force. A run of this instrument is a demonstration '
+        'run, not a conformance result under either version (README, '
+        '"Which version of AP-1").\n')
+    assert '\n' + report.DEMONSTRATION_STATEMENT + '\n---\n' in head
 
 
 def test_report_sections_in_order():
@@ -111,7 +122,7 @@ def test_report_sections_in_order():
         '7. D7.2(b) Operation Correctness',
         '7b. D7.2(a) Operand Provenance Step Counts',
         '8. Scoring Proportions',
-        '9. D2 Reproducibility Mechanism Classes',
+        '9. D2 Determinism Mechanism Classes',
         '9b. D2.2 Execution Conditions',
         '10. Non-Outcome Cells',
         '11. Quantisation and Near-Miss Findings',
@@ -129,7 +140,7 @@ def test_report_is_header_and_sections_joined_by_newlines():
                                 'error_state': 'VOID: x'}])
     body = text[text.index('---\n') + len('---\n') + 1:]
     assert body == md(
-        report._section_preregistration(seal, CONFIG),
+        report._section_preregistration(seal),
         report._section_configuration(CONFIG),
         report._section_dimension_results(summary, CONFIG),
         report._section_d7_figures(summary),
@@ -193,7 +204,7 @@ def test_report_without_transcript_records_lists_summary_cells_only():
 
 def test_preregistration_lists_seal_fields_sorted():
     assert report._section_preregistration(
-        {'seal_hash': 'abc', 'ap1_version': '1.3', 'keys': []}, {}) == md(
+        {'seal_hash': 'abc', 'ap1_version': '1.3', 'keys': []}) == md(
         '## 1. Pre-Registration Record\n',
         '| Field | Value |',
         '|---|---|',
@@ -206,11 +217,11 @@ def test_preregistration_lists_seal_fields_sorted():
 @pytest.mark.finding('T3-21')
 def test_preregistration_names_the_transcript_scored():
     text = report._section_preregistration(
-        {'seal_hash': 'h'}, CONFIG, {'sha256': 'ab' * 32, 'records': 7})
+        {'seal_hash': 'h'}, {'sha256': 'ab' * 32, 'records': 7})
     assert text.endswith(
         f'Transcript scored: SHA-256 `{"ab" * 32}`, 7 records.\n')
     assert 'Transcript scored' not in report._section_preregistration(
-        {'seal_hash': 'h'}, CONFIG)
+        {'seal_hash': 'h'})
 
 
 @pytest.mark.finding('T3-21')
@@ -223,8 +234,8 @@ def test_preregistration_of_a_re_score_says_so_and_names_both_runners():
         'scorer': {'runner_source_hash': 'b' * 64,
                    'runner_version_tag': 'v2', 'runner_version_commit': 'c2',
                    'runner_modified': True}}
-    text = report._section_preregistration({'seal_hash': 'h'}, CONFIG,
-                                           None, rescore)
+    text = report._section_preregistration({'seal_hash': 'h'}, None,
+                                           rescore)
     assert ('**Re-scored** on 2026-11-05T12:00:00+00:00: the figures in '
             'this report were computed by a re-score of the run\'s '
             'transcript, not by the run.') in text
@@ -233,16 +244,16 @@ def test_preregistration_of_a_re_score_says_so_and_names_both_runners():
     assert ('| the scorer | `v2` | `c2` | `True` | `' + 'b' * 64
             + '` |') in text
     assert 'Re-scored' not in report._section_preregistration(
-        {'seal_hash': 'h'}, CONFIG)
+        {'seal_hash': 'h'})
 
 
 def test_preregistration_without_seal_says_so():
-    assert report._section_preregistration({}, CONFIG) == md(
+    assert report._section_preregistration({}) == md(
         '## 1. Pre-Registration Record\n',
         '*No seal record available.*',
         '')
-    assert report._section_preregistration(None, CONFIG) == \
-        report._section_preregistration({}, CONFIG)
+    assert report._section_preregistration(None) == \
+        report._section_preregistration({})
 
 
 # -- 2. Configuration -----------------------------------------------------
@@ -293,14 +304,42 @@ def test_dimension_results_table_layout():
         '## 3. Per-Dimension Results\n',
         '| Dimension | Status | n | Result |',
         '|---|---|---|---|',
-        '| D1 | **NOT MEASURED** | \u2014 | \u2014 |',
-        '| D2 | **NOT MEASURED** | \u2014 | \u2014 |',
-        '| D3 | **NOT MEASURED** | \u2014 | \u2014 |',
-        '| D4 | **NOT MEASURED** | \u2014 | \u2014 |',
-        '| D5 | **NOT MEASURED** | \u2014 | \u2014 |',
-        '| D6 | **NOT MEASURED** | \u2014 | \u2014 |',
-        '| D7 | **NOT MEASURED** | \u2014 | \u2014 |',
+        '| D1 | not claimed | \u2014 | not claimed in this configuration '
+        '(the runner auto-scores it) (\u00a712) |',
+        '| D2 | not claimed | \u2014 | not claimed in this configuration '
+        '(the runner measures it from repeated runs) (\u00a712) |',
+        '| D3 | not claimed | \u2014 | requires human adjudication; the '
+        'runner does not measure it (\u00a712) |',
+        '| D4 | not claimed | \u2014 | requires human adjudication; the '
+        'runner does not measure it (\u00a712) |',
+        '| D5 | not claimed | \u2014 | requires human adjudication; the '
+        'runner does not measure it (\u00a712) |',
+        '| D6 | not claimed | \u2014 | requires human adjudication; the '
+        'runner does not measure it (\u00a712) |',
+        '| D7 | not claimed | \u2014 | not claimed in this configuration '
+        '(the runner measures D7.1-D7.3 from tool-call evidence) '
+        '(\u00a712) |',
         '')
+
+
+@pytest.mark.req('R3.3')
+def test_dimension_results_unclaimed_d1_reads_not_claimed():
+    # A dimension the configuration doesn't claim is a choice, not a
+    # gap: section 3 says "not claimed", in section 12's words, and
+    # keeps "NOT MEASURED" for a claimed dimension that wasn't measured
+    config = {'dimensions_claimed': ['D2', 'D7']}
+    text = report._section_dimension_results({}, config)
+    d1 = [row for row in dim_rows(text) if row.startswith('| D1 |')]
+    assert d1 == ['| D1 | not claimed | \u2014 | not claimed in this '
+                  'configuration (the runner auto-scores it) (\u00a712) |']
+    assert '**NOT MEASURED**' not in d1[0]
+    twelve = report._section_unmeasured_dimensions(config)
+    assert ('- **D1**: Accuracy \u2014 not claimed in this configuration '
+            '(the runner auto-scores it)') in twelve
+    # Claimed, with no results: not "not claimed"
+    claimed = report._section_dimension_results(
+        {}, {'dimensions_claimed': ['D1']})
+    assert '| D1 | Claimed but no results |' in claimed
 
 
 def test_dimension_results_without_claim_list_none_measured():
@@ -314,20 +353,28 @@ def test_dimension_results_claimed_without_data_says_so():
     assert rows[0] == '| D1 | Claimed but no results | \u2014 | \u2014 |'
 
 
-@pytest.mark.finding('T3-3', 'T3-32')
-def test_dimension_results_d1_prints_pooled_rate_without_interval():
-    # T3-3: the rate is correct/(correct+incorrect) over auto-scored items,
-    # which is 1 whenever defined, and it is printed as "Accuracy: 1".
-    # T3-32: one pooled rate, no category breakdown, no 95 % CI, even when
-    # the summary has the counts. Correct: no headline rate without
-    # adjudication; per category with a 95 % interval and n.
-    d1 = {'n': 10, 'auto_scored_n': 7, 'adjudicated_n': 3,
-          'accuracy_rate': Decimal('1'), 'correct': 7, 'incorrect': 0,
-          'by_category': {'interest': {'n': 5}}}
+@pytest.mark.finding('T3-3')
+def test_dimension_results_d1_pending_adjudication_states_counts_not_rate():
+    # T3-3 (fixed): with 3 items awaiting adjudication the row gives the
+    # counts, not the auto-scored rate (which would leave out every wrong
+    # figure, SPEC R2.0).
+    d1 = {'n': 10, 'auto_scored_n': 7, 'adjudicated_n': 2,
+          'unmeasurable_n': 1, 'accuracy_rate': Decimal('5') / 6,
+          'correct': 5, 'incorrect': 1, 'no_figure': 1}
     rows = dim_rows(report._section_dimension_results(
         {'d1_results': d1}, {'dimensions_claimed': ['D1']}))
-    assert rows[0] == ('| D1 | Measured | 10 | Accuracy: 1 '
-                       '(auto-scored 7; 3 adjudicated not in rate) |')
+    assert rows[0] == ('| D1 | Measured | 10 | No rate: 3 items await '
+                       'adjudication (base condition only; auto-scored 7: '
+                       '5 correct, 1 incorrect, 1 no figure) |')
+
+
+def test_dimension_results_d1_pending_counts_default_to_zero():
+    rows = dim_rows(report._section_dimension_results(
+        {'d1_results': {'n': 1, 'adjudicated_n': 1, 'accuracy_rate': 1}},
+        {'dimensions_claimed': ['D1']}))
+    assert rows[0] == ('| D1 | Measured | 1 | No rate: 1 items await '
+                       'adjudication (base condition only; auto-scored 0: '
+                       '0 correct, 0 incorrect, 0 no figure) |')
 
 
 def test_dimension_results_d1_n_falls_back_to_auto_scored_n():
@@ -335,7 +382,8 @@ def test_dimension_results_d1_n_falls_back_to_auto_scored_n():
         {'d1_results': {'auto_scored_n': 7, 'accuracy_rate': '0.9'}},
         {'dimensions_claimed': ['D1']}))
     assert rows[0] == ('| D1 | Measured | 7 | Accuracy: 0.9 '
-                       '(auto-scored 7; 0 adjudicated not in rate) |')
+                       '(base condition only; auto-scored 7; '
+                       '0 adjudicated not in rate) |')
 
 
 def test_dimension_results_d1_without_rate_says_so():
@@ -350,32 +398,313 @@ def test_dimension_results_d1_rate_zero_is_printed():
         {'d1_results': {'n': 4, 'accuracy_rate': 0}},
         {'dimensions_claimed': ['D1']}))
     assert rows[0] == ('| D1 | Measured | 4 | Accuracy: 0 '
-                       '(auto-scored 0; 0 adjudicated not in rate) |')
+                       '(base condition only; auto-scored 0; '
+                       '0 adjudicated not in rate) |')
 
 
-@pytest.mark.finding('T3-4')
-def test_dimension_results_d2_live_shape_is_measured_with_n_na():
-    # The live d2_results is keyed '<item>/<condition>' and has no 'n',
-    # so D2 is "Measured" with n N/A and a pointer to §9, which is empty
-    # (see the §9 test). Correct: D2 distinct answers and spread per
-    # question, with n, or D2 declared not measured.
-    d2 = {'Q01/base': {'figures': {'mechanism': 'OBSERVED-ONLY'}}}
-    rows = dim_rows(report._section_dimension_results(
-        {'d2_results': d2}, {'dimensions_claimed': ['D2']}))
-    assert rows[1] == ('| D2 | Measured | N/A | '
-                       'See \u00a79 D2 Mechanism Classes |')
+EV0 = 'EV-0 UNOBSERVABLE'
+EV1 = 'EV-1 SELF-REPORTED'
+EV2 = 'EV-2 PLATFORM-STRUCTURAL'
+
+
+def d7_summary(arms, prov=None, ops=None, transcription=(), by_class=None,
+               n=40, cells=(), seen=None, ev_counts=None):
+    """A summary with what D7.1-D7.3 computed. arms: {condition: [(class,
+    executions, questions in n, unobservable executions)]}; prov and ops:
+    the D7.2(a) and (b) outcome counts; transcription: D7.3 outcomes."""
+    figures, evidence = {}, {}
+    for cond, classes in arms.items():
+        evidence[cond] = {'classes': {
+            ec: {'executions': e, 'questions': max(q, 1),
+                 'observed_questions': q, 'unobservable_executions': u}
+            for ec, e, q, u in classes}, 'cross_class_warning': None}
+        observed = [(ec, q) for ec, _, q, _ in classes if q]
+        for ec, q in observed or [(None, 0)]:
+            key = f'd7_invocation_{cond}' + (
+                f' ({ec})' if len(observed) > 1 else '')
+            figures[key] = {'failures': 0, 'n': q, 'condition': cond,
+                            'evidence_class': ec}
+    return {'d7_results': {'n': n},
+            'invocation_figures': figures, 'invocation_evidence': evidence,
+            'provenance_outcomes': prov or {},
+            'operation_correctness_counts': ops or {},
+            'transcription_results': [
+                {'item_id': f'Q{i:02d}', 'condition': 'base', 'repeat': i,
+                 'outcome': o} for i, o in enumerate(transcription, 1)],
+            'd7_outcomes_by_class': by_class or {},
+            'non_outcome_cells': [
+                {'item_id': i, 'condition': c, 'repeat': r, 'status': st}
+                for i, c, r, st in cells],
+            'item_evidence': [
+                {'item_id': i, 'condition': c, 'evidence_class': ec,
+                 'invocation_outcome': o} for i, c, ec, o in seen or ()],
+            'evidence_class_counts': ev_counts or {}}
+
+
+def d7_rows(summary):
+    text = report._section_dimension_results(summary,
+                                             {'dimensions_claimed': ['D7']})
+    return [line for line in text.split('\n') if line.startswith('| D7')]
+
+
+# Every part of D7.1-D7.3 measured, on one evidence class
+MEASURED_D7 = d7_summary(
+    {'base': [(EV2, 20, 10, 0)], 'instruction_removed': [(EV2, 20, 10, 0)]},
+    prov={'OPERANDS-GROUNDED': 40}, ops={'OPERATION-CORRECT': 40},
+    transcription=['TRANSCRIBED-EXACT'] * 40,
+    by_class={'D7.2(a)': {EV2: {'OPERANDS-GROUNDED': 40}},
+              'D7.2(b)': {EV2: {'OPERATION-CORRECT': 40}},
+              'D7.3': {EV2: {'TRANSCRIBED-EXACT': 40}}})
 
 
 @pytest.mark.finding('T3-29')
-def test_dimension_results_d7_is_one_measured_row():
-    # One D7 row says "Measured", although D7.4 is never measured and
-    # part of D7.3 is unobservable. Correct: D7.1-D7.4 reported
-    # separately, D7.4 declared not measured.
-    rows = dim_rows(report._section_dimension_results(
-        {'d7_results': {'n': 40, 'auto_scored_n': 22, 'adjudicated_n': 18}},
-        {'dimensions_claimed': ['D7']}))
-    assert rows[6] == '| D7 | Measured | 40 | See \u00a74-7 D7 Figures |'
-    assert len(rows) == 7
+def test_dimension_results_d7_reported_per_sub_dimension():
+    # Fixed (T3-29; AP-1 v1.3 D7 "Report all four"): D7.1-D7.4 each have
+    # a row; D7.4 is not measured; each other part's status follows from
+    # what was computed for it.
+    text = report._section_dimension_results(
+        MEASURED_D7, {'dimensions_claimed': ['D7']})
+    assert text.split('\n')[-6:] == [
+        '| D7 | Partly measured | 40 | D7.1 measured, D7.2 measured, D7.3 '
+        'measured; D7.4 not measured (\u00a712) |',
+        '| D7.1 | Measured | see \u00a75 | Invocation rate per condition '
+        '(\u00a75): base measured (n = 10, EV-2 PLATFORM-STRUCTURAL); '
+        'instruction_removed measured (n = 10, EV-2 PLATFORM-STRUCTURAL) |',
+        '| D7.2 | Measured | see \u00a76-7b | (a) operand provenance '
+        'measured: 40 calls (\u00a76, \u00a77b); (b) operation correctness '
+        'measured: 40 operations (\u00a77) |',
+        '| D7.3 | Measured | 40 | Transcription fidelity (D7.3 section): '
+        'measured: 40 executions |',
+        '| D7.4 | **NOT MEASURED** | \u2014 | Invocation under pressure '
+        '(\u00a712) |',
+        '']
+    assert len(dim_rows(text)) == 7
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7', 'R3.3')
+def test_dimension_results_d7_parts_follow_each_arm_and_class():
+    # The unrecognised-shape run: base has 6 EV-0 executions beside 14
+    # EV-2, and instruction_removed has no observed outcome at all; the
+    # report said "D7.1 | Measured" beside "D7.1 is not measured" in §5.
+    rows = d7_rows(d7_summary(
+        {'base': [(EV0, 6, 0, 6), (EV2, 14, 7, 0)],
+         'instruction_removed': [(EV0, 20, 0, 20)]},
+        prov={'OPERANDS-GROUNDED': 20}, ops={'OPERATION-CORRECT': 20},
+        transcription=['TRANSCRIBED-EXACT'] * 14 + ['UNOBSERVABLE'] * 26,
+        by_class={'D7.2(a)': {EV0: {'OPERANDS-GROUNDED': 6},
+                              EV2: {'OPERANDS-GROUNDED': 14}},
+                  'D7.2(b)': {EV0: {'OPERATION-CORRECT': 6},
+                              EV2: {'OPERATION-CORRECT': 14}},
+                  'D7.3': {EV0: {'UNOBSERVABLE': 26},
+                           EV2: {'TRANSCRIBED-EXACT': 14}}}))
+    assert rows[:4] == [
+        '| D7 | Partly measured | 40 | D7.1 partly measured, D7.2 '
+        'measured, D7.3 partly measured; D7.4 not measured (\u00a712) |',
+        '| D7.1 | Partly measured | see \u00a75 | Invocation rate per '
+        'condition (\u00a75): base partly measured (n = 7, EV-2 '
+        'PLATFORM-STRUCTURAL; 6 of 20 executions UNOBSERVABLE); '
+        'instruction_removed not measured (no observed outcome; 20 of 20 '
+        'executions UNOBSERVABLE) |',
+        '| D7.2 | Measured | see \u00a76-7b | (a) operand provenance '
+        'measured: 20 calls (\u00a76, \u00a77b); (b) operation correctness '
+        'measured: 20 operations (\u00a77); on 2 evidence classes, not '
+        'comparable (per class: \u00a77, \u00a77b) |',
+        '| D7.3 | Partly measured | 40 | Transcription fidelity (D7.3 '
+        'section): partly measured: 26 of 40 executions UNOBSERVABLE; on 2 '
+        'evidence classes, not comparable (per class: D7.3 section) |']
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7', 'R3.3')
+def test_dimension_results_d72_partly_or_not_measured_by_its_counts():
+    # The malformed-calls run: 12 of 44 calls OPERANDS-UNOBSERVABLE and 16
+    # of 44 operations OPERATION-UNOBSERVABLE, labelled "Measured".
+    arms = {'base': [(EV2, 20, 10, 0)],
+            'instruction_removed': [(EV2, 20, 10, 0)]}
+    partly = d7_rows(d7_summary(
+        arms, prov={'OPERANDS-GROUNDED': 32, 'OPERANDS-UNOBSERVABLE': 12},
+        ops={'OPERATION-CORRECT': 28, 'OPERATION-UNOBSERVABLE': 16},
+        transcription=['TRANSCRIBED-EXACT'] * 40))[2]
+    assert partly == (
+        '| D7.2 | Partly measured | see \u00a76-7b | (a) operand provenance '
+        'partly measured: 12 of 44 calls OPERANDS-UNOBSERVABLE or '
+        'UNMEASURABLE (\u00a76, \u00a77b); (b) operation correctness '
+        'partly measured: 16 of 44 operations OPERATION-UNOBSERVABLE '
+        '(\u00a77) |')
+    # Every call unreadable: not measured, (a) and (b)
+    none_read = d7_rows(d7_summary(
+        arms, prov={'OPERANDS-UNOBSERVABLE': 3, 'UNMEASURABLE': 1},
+        ops={'OPERATION-UNOBSERVABLE': 4}))[2]
+    assert none_read == (
+        '| D7.2 | **NOT MEASURED** | see \u00a76-7b | (a) operand provenance '
+        'not measured: all 4 calls OPERANDS-UNOBSERVABLE or UNMEASURABLE '
+        '(\u00a76, \u00a77b); (b) operation correctness not measured: all 4 '
+        'operations OPERATION-UNOBSERVABLE (\u00a77) |')
+    # (a) read, (b) not: partly
+    assert d7_rows(d7_summary(
+        arms, prov={'OPERANDS-GROUNDED': 2},
+        ops={'OPERATION-UNOBSERVABLE': 2}))[2].startswith(
+            '| D7.2 | Partly measured |')
+
+
+def transport_errors_summary():
+    """The transport-errors run: base Q03, Q04, Q06 r1 and Q05, Q08 r1, r2
+    UNMEASURED, Q07 r1 EV-0; instruction_removed Q08 r1, r2 UNMEASURED
+    (HTTP 401)."""
+    cells = [('Q03', 'base', 1, 'UNMEASURED'), ('Q04', 'base', 1,
+                                                 'UNMEASURED'),
+             ('Q05', 'base', 1, 'UNMEASURED'), ('Q05', 'base', 2,
+                                                 'UNMEASURED'),
+             ('Q06', 'base', 1, 'UNMEASURED'),
+             ('Q08', 'base', 1, 'UNMEASURED'), ('Q08', 'base', 2,
+                                                 'UNMEASURED'),
+             ('Q08', 'instruction_removed', 1, 'UNMEASURED'),
+             ('Q08', 'instruction_removed', 2, 'UNMEASURED'),
+             ('Q00', 'base', 0, 'VOID')]
+    evidence = [(f'Q{i:02d}', 'instruction_removed', EV2, 'INVOKED')
+                for i in range(1, 11) if i != 8 for _ in (1, 2)]
+    evidence += [(f'Q{i:02d}', 'base', EV2, 'INVOKED')
+                 for i in (1, 2, 9, 10) for _ in (1, 2)]
+    evidence += [(f'Q{i:02d}', 'base', EV2, 'INVOKED') for i in (3, 4, 6, 7)]
+    evidence += [('Q07', 'base', EV0, None)]
+    return d7_summary(
+        {'base': [(EV0, 1, 0, 1), (EV2, 12, 8, 0)],
+         'instruction_removed': [(EV2, 18, 9, 0)]},
+        prov={'OPERANDS-GROUNDED': 31}, ops={'OPERATION-CORRECT': 31},
+        transcription=['TRANSCRIBED-EXACT'] * 30 + ['UNOBSERVABLE'],
+        cells=cells, seen=evidence,
+        ev_counts={EV0: 1, EV2: 30})
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7', 'R3.3')
+def test_dimension_results_d7_counts_executions_never_observed():
+    # A question lost to transport failures left "instruction_removed
+    # measured (n = 9)" beside §10's two UNMEASURED Q08 cells. An arm is
+    # measured only if every computable execution of it was observed.
+    rows = d7_rows(transport_errors_summary())
+    assert rows[1] == (
+        '| D7.1 | Partly measured | see \u00a75 | Invocation rate per '
+        'condition (\u00a75): base partly measured (n = 8, EV-2 '
+        'PLATFORM-STRUCTURAL; 1 of 13 executions UNOBSERVABLE; 7 '
+        'executions UNMEASURED or not run; 2 of 10 computable questions '
+        'not in n); instruction_removed partly measured (n = 9, EV-2 '
+        'PLATFORM-STRUCTURAL; 2 executions UNMEASURED or not run; 1 of 10 '
+        'computable questions not in n) |')
+    assert rows[2].startswith(
+        '| D7.2 | Partly measured | see \u00a76-7b | (a) operand provenance '
+        'measured: 31 calls (\u00a76, \u00a77b); (b) operation correctness '
+        'measured: 31 operations (\u00a77); call inventory incomplete for '
+        '10 executions (1 EV-0 UNOBSERVABLE, 9 UNMEASURED or not run)')
+    assert rows[3].startswith(
+        '| D7.3 | Partly measured | 31 | Transcription fidelity (D7.3 '
+        'section): partly measured: 1 of 31 executions UNOBSERVABLE; 9 '
+        'executions UNMEASURED or not run')
+    s12 = report._section_unmeasured_dimensions(CONFIG,
+                                                transport_errors_summary())
+    assert ('instruction_removed partly measured (n = 9, EV-2 '
+            'PLATFORM-STRUCTURAL; 2 executions UNMEASURED or not run; 1 of '
+            '10 computable questions not in n)') in s12
+    assert ('- **D7.2**: Computation correctness \u2014 partly measured: '
+            'call inventory incomplete for 10 executions (1 EV-0 '
+            'UNOBSERVABLE, 9 UNMEASURED or not run)') in s12
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7', 'AP-1 D7.7', 'R3.3')
+def test_dimension_results_d72_partly_measured_with_unreadable_inventory():
+    # One execution with a readable, grounded, correct call; another of
+    # an unrecognised shape (EV-0) whose calls were never seen. The
+    # counts hold only the first call; D7.2 is not fully measured.
+    summary = d7_summary(
+        {'base': [(EV2, 1, 1, 0), (EV0, 1, 0, 1)]},
+        prov={'OPERANDS-GROUNDED': 1}, ops={'OPERATION-CORRECT': 1},
+        ev_counts={EV2: 1, EV0: 1})
+    assert d7_rows(summary)[2].startswith(
+        '| D7.2 | Partly measured | see \u00a76-7b | (a) operand provenance '
+        'measured: 1 calls (\u00a76, \u00a77b); (b) operation correctness '
+        'measured: 1 operations (\u00a77); call inventory incomplete for 1 '
+        'execution (1 EV-0 UNOBSERVABLE)')
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7', 'R3.3')
+def test_dimension_results_d7_with_nothing_observed_is_not_measured():
+    # A run of transport failures only: no invocation outcome, no call,
+    # no executed response. It read "D7.1-D7.3 measured" and
+    # "D7.3 | Measured | 0".
+    rows = d7_rows({'d7_results': {'n': 0}})
+    assert rows == [
+        '| D7 | **NOT MEASURED** | 0 | D7.1 not measured, D7.2 not '
+        'measured, D7.3 not measured; D7.4 not measured (\u00a712) |',
+        '| D7.1 | **NOT MEASURED** | see \u00a75 | Invocation rate per '
+        'condition (\u00a75): base not measured (no executions); '
+        'instruction_removed not measured (no executions) |',
+        '| D7.2 | **NOT MEASURED** | see \u00a76-7b | (a) operand '
+        'provenance not measured: no call evaluated (\u00a76, \u00a77b); '
+        '(b) operation correctness not measured: no operation evaluated '
+        '(\u00a77) |',
+        '| D7.3 | **NOT MEASURED** | 0 | Transcription fidelity (D7.3 '
+        'section): not measured: no executions |',
+        '| D7.4 | **NOT MEASURED** | \u2014 | Invocation under pressure '
+        '(\u00a712) |']
+    assert d7_rows({'d7_results': {'auto_scored_n': 1}})[0].startswith(
+        '| D7 | **NOT MEASURED** | N/A |')
+    # Every execution UNOBSERVABLE for D7.3: not measured
+    assert d7_rows(d7_summary(
+        {}, transcription=['UNOBSERVABLE'] * 3))[3] == (
+            '| D7.3 | **NOT MEASURED** | 3 | Transcription fidelity (D7.3 '
+            'section): not measured: all 3 executions UNOBSERVABLE |')
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7.7')
+def test_dimension_results_d71_per_class_within_an_arm():
+    # An arm whose observations span classes has a figure per class; the
+    # row names each, and says they are not comparable.
+    row = d7_rows(d7_summary(
+        {'base': [(EV1, 10, 4, 0), (EV2, 10, 6, 0)],
+         'instruction_removed': [(EV2, 20, 10, 0)]}))[1]
+    assert row == (
+        '| D7.1 | Measured | see \u00a75 | Invocation rate per condition '
+        '(\u00a75): base measured (n = 4, EV-1 SELF-REPORTED; n = 6, EV-2 '
+        'PLATFORM-STRUCTURAL; not comparable); instruction_removed measured '
+        '(n = 10, EV-2 PLATFORM-STRUCTURAL) |')
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7.7')
+def test_evidence_line_prefers_the_figures_own_executions():
+    summary = {'evidence_class_counts': {'EV-0 UNOBSERVABLE': 1,
+                                         'EV-2 PLATFORM-STRUCTURAL': 5},
+               'd7_evidence': {'D7.2(b)': {'EV-2 PLATFORM-STRUCTURAL': 4},
+                               'D7.3': {}}}
+    assert report._evidence_line(summary, 'D7.2(b)') == (
+        'Evidence class (AP-1 D7.7), executions: '
+        '`EV-2 PLATFORM-STRUCTURAL` (4).\n')
+    # No executions recorded for the figure: the run's classes, and a
+    # statement that figures across classes are not comparable.
+    assert report._evidence_line(summary, 'D7.3') == (
+        'Evidence class (AP-1 D7.7), executions: `EV-0 UNOBSERVABLE` (1), '
+        '`EV-2 PLATFORM-STRUCTURAL` (5). Figures resting on different '
+        'classes are not comparable.\n')
+    assert report._evidence_line({}, 'D7.3') is None
+    assert report._evidence_line({'d7_evidence': {}}, 'D7.3') is None
+
+
+@pytest.mark.finding('T3-29')
+def test_d72b_and_d73_evidence_line_placement():
+    summary = {'d7_evidence': {'D7.2(b)': {'EV-2': 2}, 'D7.3': {'EV-1': 3}},
+               'operation_correctness_counts': {'OPERATION-CORRECT': 2}}
+    assert report._section_d72b_counts(summary).startswith(md(
+        '## 7. D7.2(b) Operation Correctness\n',
+        'Evidence class (AP-1 D7.7), executions: `EV-2` (2).\n',
+        'Total operations evaluated: 2\n'))
+    assert report._section_d73(summary).startswith(md(
+        '## D7.3 Transcription Fidelity\n',
+        'Evidence class (AP-1 D7.7), executions: `EV-1` (3).\n',
+        '### A. Transcription Check\n'))
 
 
 def test_dimension_results_other_claimed_dimension_prints_its_data():
@@ -388,14 +717,13 @@ def test_dimension_results_other_claimed_dimension_prints_its_data():
 
 @pytest.mark.finding('T3-33')
 def test_d7_figures_counts_sorted_by_class():
-    # The note cites "§6.4" for non-comparability; T3-33: the clause meant
-    # is D7.7. Correct: cite D7.7.
+    # T3-33 (fixed): the non-comparability clause is D7.7, not §6.4.
     text = report._section_d7_figures({'evidence_class_counts': {
         'EV-2 PLATFORM-STRUCTURAL': 30, 'EV-0 UNOBSERVABLE': 1}})
     assert text == md(
         '## 4. D7 Figures by Evidence Class\n',
         '> Figures resting on different evidence classes are not '
-        'comparable (AP-1 v1.3 \u00a76.4).\n',
+        'comparable (AP-1 v1.3 D7.7).\n',
         '| Evidence Class | Count |',
         '|---|---|',
         '| `EV-0 UNOBSERVABLE` | 1 |',
@@ -544,12 +872,29 @@ def test_d73_altered_transcriptions_listed():
         '15.200000000000001 for 15.20), 0. A strict v1.2 "match" count '
         'subtracts the roundings, or all 0 for the strictest reading.',
         '\n#### Altered Transcriptions\n',
+        'Difference: the gap between the released figure and the closest '
+        'return, without the tool\'s binary float tail (digits past 15 '
+        'significant digits of the return); the comparison is exact.\n',
         '| Item | Condition | Rep | Difference | Reason |',
         '|---|---|---|---|---|',
         '| Q03 | base | 3 | 0.01 | rounded |',
         '| ? | ? | ? | ? | ? |',
         '',
         '### B.') in text
+
+
+@pytest.mark.req('R2.5')
+def test_d73_altered_difference_printed_without_float_tail():
+    # The Difference column prints the gap the run recorded without the
+    # tool's float tail (12.000000000000001 as 12; 0.005 stays 0.005)
+    text = report._section_d73({'transcription_results': [
+        tr('TRANSCRIBED-ALTERED', 22, difference='12.000000000000001',
+           difference_shown='12', reason='altered by 12'),
+        tr('TRANSCRIBED-ALTERED', 23, difference='0.005',
+           difference_shown='0.005', reason='altered by 0.005')]})
+    assert '| Q22 | base | 22 | 12 | altered by 12 |' in text
+    assert '| Q23 | base | 23 | 0.005 | altered by 0.005 |' in text
+    assert '000000000000001' not in text
 
 
 def test_d73_altered_transcriptions_capped_at_twenty():
@@ -651,10 +996,8 @@ def test_clopper_pearson_section_without_figures_says_so():
 
 @pytest.mark.finding('T3-61')
 def test_clopper_pearson_section_zero_failures_shows_bound():
-    # The bound is computed in float and shown rounded to 6 places (and
-    # 4 as a percentage) by float formatting. T3-61: it duplicates
-    # invocation.py and does not round the upper bound up. Correct: one
-    # computation, rounded up.
+    # T3-61 (fixed): the bound is invocation.py's Decimal one, shown
+    # rounded up to 6 places (and 4 as a percentage).
     # T3-1, T3-11, V12-5 (fixed): n is questions, the rate is a
     # percentage beside k/n and the bound, with its evidence class, the
     # AP-1 §6.2 headline and the executions per class.
@@ -703,8 +1046,11 @@ def test_clopper_pearson_section_zero_failures_ignores_given_rate():
 
 
 @pytest.mark.finding('T3-81')
-def test_clopper_pearson_section_failures_show_rate_without_bound():
-    # k > 0: the given rate and no bound (a declared limitation).
+def test_clopper_pearson_section_failures_show_rate_and_bound():
+    # k > 0 (fixed, T3-81): the rate and the exact Clopper-Pearson bound,
+    # rounded up (1/5: 0.6574084...; 2/20: 0.2826185...), and beside it
+    # the exact two-sided 95% interval, its ends rounded outward to 0.01%
+    # (1/5: 0.50%-71.65%; 2/20: 1.23%-31.70%).
     text = report._section_clopper_pearson({'invocation_figures': {
         'b': {'failures': 2, 'n': 20, 'rate': '18/20'},
         'a': {'failures': 1, 'n': 5}}})
@@ -712,14 +1058,15 @@ def test_clopper_pearson_section_failures_show_rate_without_bound():
     # percentage, rounded down (4/5 is 80.0 %).
     assert md(
         '|---|---|---|---|---|---|',
-        '| a | 1 | 5 | 4/5 (80.0%) | *not computed (see \u00a7Declared '
-        'Limitations)* | \u2014 |',
-        '| b | 2 | 20 | 18/20 (90.0%) | *not computed (see \u00a7Declared '
-        'Limitations)* | \u2014 |',
+        '| a | 1 | 5 | 4/5 (80.0%) | 0.657409 (65.7409%); two-sided 95% '
+        'interval [0.50%, 71.65%] | \u2014 |',
+        '| b | 2 | 20 | 18/20 (90.0%) | 0.282619 (28.2619%); two-sided 95% '
+        'interval [1.23%, 31.70%] | \u2014 |',
         '') in text
     assert ('- Deterministic computation was invoked on 80.0% of computable '
-            'questions (4/5; 1 not invoked; upper bound on the failure rate '
-            'not computed, see \u00a7Declared Limitations), under a.') in text
+            'questions (4/5; 1 not invoked; one-sided 95% upper bound on the '
+            'failure rate 65.7409%; two-sided 95% interval [0.50%, 71.65%]), '
+            'under a.') in text
     assert '**Executions by evidence class:**' not in text
 
 
@@ -750,37 +1097,32 @@ def test_d72a_audit_without_entries_says_so():
 
 
 @pytest.mark.finding('T3-64')
-def test_d72a_audit_renders_operation_and_operand_fields():
+def test_d72a_audit_renders_the_live_entries():
+    # Fixed (T3-64): the columns are the fields build_summary writes; the
+    # operand is its literal, else its value.
     text = report._section_d72a_audit({'originated_operand_audit': [
-        {'item_id': 'Q03', 'condition': 'base', 'operation': 'mul',
-         'originated_operand': '81.0', 'expression': '2400 * 81.0',
+        {'item_id': 'Q03', 'condition': 'base', 'repeat': 2,
+         'value': '81.0', 'literal': '81.00', 'expression': '2400 * 81.00',
+         'resolution': 'originated'},
+        {'item_id': 'Q05', 'condition': 'instruction_removed', 'repeat': 1,
+         'value': '-25', 'expression': '2400 + -25',
          'resolution': 'originated'}]})
     assert text == md(
         '## 6. D7.2(a) Originated-Operand Audit\n',
-        '| Item | Condition | Operation | Originated Operand | '
+        '| Item | Condition | Repeat | Originated Operand | '
         'Expression | Resolution |',
         '|---|---|---|---|---|---|',
-        '| Q03 | base | mul | `81.0` | `2400 * 81.0` | originated |',
+        '| Q03 | base | 2 | `81.00` | `2400 * 81.00` | originated |',
+        '| Q05 | instruction_removed | 1 | `-25` | `2400 + -25` '
+        '| originated |',
         '')
 
 
 @pytest.mark.finding('T3-64')
-def test_d72a_audit_live_entries_render_question_marks():
-    # The live audit entries (runner/summary.build_summary) carry 'value'
-    # and 'literal', not 'operation' and 'originated_operand', so two
-    # columns read '?'. Correct: the operand shown, as §7b does.
-    text = report._section_d72a_audit({'originated_operand_audit': [
-        {'item_id': 'Q03', 'condition': 'base', 'value': '81.0',
-         'literal': '81.0', 'expression': '2400 * (81.0 / 100) / 12',
-         'resolution': 'originated', 'sign_inversion_finding': None}]})
-    assert ('| Q03 | base | ? | `?` | `2400 * (81.0 / 100) / 12` '
-            '| originated |') in text
-
-
-@pytest.mark.finding('T3-64')
-def test_d72a_audit_missing_fields_read_question_marks():
+def test_d72a_audit_missing_fields_read_dashes():
     text = report._section_d72a_audit({'originated_operand_audit': [{}]})
-    assert '| ? | ? | ? | `?` | `?` | ? |\n' in text
+    assert '| \u2014 | \u2014 | \u2014 | `\u2014` | `\u2014` | \u2014 |\n' \
+        in text
 
 
 # -- 7. D7.2(b) operation correctness -------------------------------------
@@ -1006,24 +1348,34 @@ def test_scoring_proportions_without_data_says_so():
         '*No scoring proportion data available.*\n')
 
 
-@pytest.mark.finding('T3-3')
-def test_scoring_proportions_d1_split_and_rate():
-    # The rate is printed with the note that adjudicated items are not in
-    # it; nothing says it cannot be below 1 (T3-3). Correct: no rate
-    # until the adjudicated items are scored.
+@pytest.mark.finding('T3-3', 'T3-66')
+def test_scoring_proportions_d1_split_and_no_rate_while_pending():
+    # T3-3 (fixed): no rate until the adjudicated items are scored;
+    # T3-66 (fixed): UNMEASURABLE shown and in the total.
     text = report._section_scoring_proportions({'d1_results': {
-        'auto_scored_n': 22, 'adjudicated_n': 18,
+        'auto_scored_n': 22, 'adjudicated_n': 17, 'unmeasurable_n': 1,
         'accuracy_rate': Decimal('1')}})
     assert text == md(
         '## 8. Scoring Proportions\n',
-        '### D1 Accuracy\n',
+        '### D1 Accuracy (base condition only)\n',
         '- Auto-scored: 22',
-        '- Adjudicated: 18',
+        '- Adjudicated: 17',
+        '- Unmeasurable: 1 (response unreadable, routed to adjudication)',
         '- Total: 40',
         '- Auto-scored proportion: 22/40 = 55.00%',
-        '- Accuracy rate: 1 (computed from 22 auto-scored items only; '
-        '18 adjudicated items are not represented in this rate)',
+        '- Accuracy rate: not computed: 18 items await adjudication, and '
+        'R2.0 routes every wrong figure there, so a rate over the 22 '
+        'auto-scored items alone would leave the wrong answers out (T3-3)',
         '')
+
+
+def test_scoring_proportions_d1_rate_when_nothing_pending():
+    text = report._section_scoring_proportions({'d1_results': {
+        'auto_scored_n': 5, 'accuracy_rate': Decimal('0.8')}})
+    assert text.endswith(md(
+        '- Auto-scored proportion: 5/5 = 100.00%',
+        '- Accuracy rate: 0.8 (computed from 5 auto-scored items only; '
+        '0 adjudicated items are not represented in this rate)', ''))
 
 
 def test_scoring_proportions_d1_proportion_two_decimals():
@@ -1037,38 +1389,23 @@ def test_scoring_proportions_d1_without_counts_or_rate():
     text = report._section_scoring_proportions({'d1_results': {'n': 5}})
     assert text == md(
         '## 8. Scoring Proportions\n',
-        '### D1 Accuracy\n',
+        '### D1 Accuracy (base condition only)\n',
         '- Auto-scored: 0',
         '- Adjudicated: 0',
+        '- Unmeasurable: 0 (response unreadable, routed to adjudication)',
         '- Total: 0',
         '')
 
 
-@pytest.mark.finding('T3-66')
-def test_scoring_proportions_d1_total_ignores_n_and_unmeasurable():
-    # §8's total is auto + adjudicated; §3 prints d1 'n'. With an
-    # UNMEASURABLE item the two disagree (§3 10, §8 9) and the
-    # UNMEASURABLE item appears in neither split. Correct: one n, with
-    # UNMEASURABLE counted and shown.
-    summary = {'d1_results': {'n': 10, 'auto_scored_n': 8,
-                              'adjudicated_n': 1, 'unmeasurable_n': 1,
-                              'accuracy_rate': Decimal('1')}}
-    text = report._section_scoring_proportions(summary)
-    assert '- Total: 9' in text
-    assert 'nmeasurable' not in text
-    assert '| D1 | Measured | 10 |' in report._section_dimension_results(
-        summary, {'dimensions_claimed': ['D1']})
-
-
 @pytest.mark.finding('T3-33')
-def test_scoring_proportions_d7_split_labelled_provenance():
-    # T3-33: D7 is "Computation invocation" in AP-1 v1.3, not
-    # "Provenance" (D3). Correct: the AP-1 name.
+def test_scoring_proportions_d7_split_labelled_computation_invocation():
+    # T3-33 (fixed): D7 is "Computation invocation" in AP-1 v1.3, not
+    # "Provenance" (D3).
     text = report._section_scoring_proportions({'d7_results': {
         'n': 41, 'auto_scored_n': 30, 'adjudicated_n': 10}})
     assert text == md(
         '## 8. Scoring Proportions\n',
-        '### D7 Provenance\n',
+        '### D7 Computation invocation\n',
         '- Auto-scored: 30',
         '- Adjudicated: 10',
         '- Total: 40',
@@ -1093,7 +1430,8 @@ def test_scoring_proportions_d1_then_d7():
     text = report._section_scoring_proportions({
         'd1_results': {'auto_scored_n': 1},
         'd7_results': {'auto_scored_n': 1}})
-    assert text.index('### D1 Accuracy') < text.index('### D7 Provenance')
+    assert text.index('### D1 Accuracy') < \
+        text.index('### D7 Computation invocation')
     assert 'No scoring proportion data' not in text
 
 
@@ -1101,12 +1439,35 @@ def test_scoring_proportions_d1_then_d7():
 
 D2_NOTE = ('> D2 is auto-measured. STRUCTURAL and CONFIGURED are '
            'operator-declared; OBSERVED-ONLY and UNMEASURED are '
-           'determined from evidence.\n')
+           'determined from evidence.\n\n'
+           '> Figures surface: each run\'s identified answer, its released '
+           'figure or else the one value it states. An answer not '
+           'identified (a decline, no figure, several figures) is '
+           'unresolved: counted, never a value, and never evidence that the '
+           'answers were stable. A question-condition with one is '
+           'UNMEASURED unless its identified answers already differ, '
+           'counted then as at least that many.\n')
+
+
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('AP-1 D2', 'R2.2')
+@pytest.mark.parametrize('data, cell', [
+    ({'distinct_values': 1, 'values': ['144.00']}, '1: 144.00'),
+    ({'distinct_values': None, 'values': ['144.00'], 'unresolved': 14},
+     '\u2014: 144.00; 14 unresolved'),
+    ({'distinct_values': None, 'values': [], 'unresolved': 3},
+     '\u2014: 3 unresolved'),
+    ({'distinct_values': 2, 'values': ['777.41', '782.77'],
+      'unresolved': 41}, 'at least 2: 777.41; 782.77; 41 unresolved'),
+    ({'distinct_values': None}, '\u2014'),
+])
+def test_d2_distinct_counts_unresolved_answers_apart(data, cell):
+    assert report._d2_distinct(data) == cell
 
 
 def test_d2_without_results_says_so():
     assert report._section_d2_mechanisms({}) == md(
-        '## 9. D2 Reproducibility Mechanism Classes\n',
+        '## 9. D2 Determinism Mechanism Classes\n',
         D2_NOTE,
         '*No D2 results available.*\n')
 
@@ -1115,7 +1476,7 @@ def test_d2_cap_reason_shown_before_note():
     text = report._section_d2_mechanisms({
         'd2_cap_reason': 'D2.2 cap: temperature was platform-rejected.'})
     assert text == md(
-        '## 9. D2 Reproducibility Mechanism Classes\n',
+        '## 9. D2 Determinism Mechanism Classes\n',
         '> **D2.2 cap: temperature was platform-rejected.**\n',
         '> *The platform-rejection detail above is the verbatim error '
         'recorded during config setup. The rejection is model-independent: '
@@ -1125,38 +1486,245 @@ def test_d2_cap_reason_shown_before_note():
 
 
 @pytest.mark.finding('T3-4')
-def test_d2_surfaces_table_sorted_with_basis():
-    text = report._section_d2_mechanisms({'d2_results': {'surfaces': {
-        'prose': {'mechanism': 'STRUCTURAL', 'operator_declared': True,
-                  'distinct_values': 1, 'successful_runs': 3,
-                  'parameter_echo_status': 'VERIFIED'},
-        'figures': {}}}})
-    assert text == md(
-        '## 9. D2 Reproducibility Mechanism Classes\n',
-        D2_NOTE,
-        '| Surface | Mechanism Class | Basis | Distinct Values | Runs | '
-        'Parameter Echo |',
-        '|---|---|---|---|---|---|',
-        '| figures | `unknown` | evidence | \u2014 | \u2014 | `UNVERIFIED` |',
-        '| prose | `STRUCTURAL` | operator-declared | 1 | 3 | `VERIFIED` |',
-        '')
-
-
-@pytest.mark.finding('T3-4', 'T3-75')
-def test_d2_live_shape_has_no_per_surface_data():
-    # build_summary passes d2_results keyed '<item>/<condition>'; this
-    # section reads d2['surfaces'], which the live shape never has, so
-    # §9 says there is no data while §3 says D2 was measured (T3-4).
-    # The note above uses UNMEASURED, a term SPEC also uses for other
-    # things (T3-75). Correct: D2 rendered from the live shape.
+def test_d2_live_shape_table_per_question_condition_and_surface():
+    # Fixed (T3-4): §9 reads the live shape, keyed '<item>/<condition>',
+    # with each row's evidence basis and, on figures, the distinct
+    # values.
     text = report._section_d2_mechanisms({'d2_results': {
-        'Q01/base': {'figures': {'mechanism': 'OBSERVED-ONLY'},
-                     'prose': {'mechanism': 'OBSERVED-ONLY'}}}})
+        'Q02/instruction_removed': {'figures': {
+            'mechanism': 'UNMEASURED', 'operator_declared': False,
+            'distinct_values': None, 'successful_runs': 1}},
+        'Q01/base': {
+            'prose': {'mechanism': 'STRUCTURAL', 'operator_declared': True,
+                      'distinct_values': 1, 'successful_runs': 3,
+                      'parameter_echo_status': 'VERIFIED'},
+            'figures': {'mechanism': 'OBSERVED-ONLY',
+                        'distinct_values': 2, 'values': ['15.20', '15.21'],
+                        'successful_runs': 3}},
+        'Q03': {'figures': {}}}}, {'repeat_count': 3})
     assert text == md(
-        '## 9. D2 Reproducibility Mechanism Classes\n',
+        '## 9. D2 Determinism Mechanism Classes\n',
         D2_NOTE,
-        '*No per-surface D2 data available.*\n',
+        'n = 3 questions \u00d7 3 runs, per condition.\n',
+        '> **Below AP-1 D2\'s 10 \u00d7 50: n = 3 \u00d7 3** (AP-1 D2: '
+        'minimum 10 questions \u00d7 minimum 50 runs). The runner accepts '
+        'any run count and classifies on what was run.\n',
+        'Operator\'s declaration (settings field `d2_declared`): none, so '
+        'no surface is STRUCTURAL or CONFIGURED.\n',
+        'Left out of the comparison: none.\n',
+        'Classes per surface, over question-conditions: figures: '
+        'OBSERVED-ONLY 1, UNMEASURED 1, unknown 1; prose: STRUCTURAL 1.\n',
+        '| Question | Condition | Surface | Mechanism Class | Basis '
+        '| Distinct Values | Runs | Parameter Echo |',
+        '|---|---|---|---|---|---|---|---|',
+        '| Q01 | base | figures | `OBSERVED-ONLY` | evidence: observed over '
+        '3 runs; not operator-declared | 2: 15.20; 15.21 | 3 '
+        '| `UNVERIFIED` |',
+        '| Q01 | base | prose | `STRUCTURAL` | operator-declared | 1 | 3 '
+        '| `VERIFIED` |',
+        '| Q02 | instruction_removed | figures | `UNMEASURED` | evidence: '
+        'observed over 1 run; not operator-declared | \u2014 | 1 '
+        '| `UNVERIFIED` |',
+        '| Q03 | \u2014 | figures | `unknown` | evidence: no runs recorded; '
+        'not operator-declared | \u2014 | \u2014 | `UNVERIFIED` |',
         '')
+
+
+@pytest.mark.finding('T3-4')
+def test_dimension_results_d2_row_counts_questions_and_classes():
+    d2 = {'Q01/base': {'figures': {'mechanism': 'OBSERVED-ONLY'},
+                       'prose': {'mechanism': 'OBSERVED-ONLY'}},
+          'Q01/instruction_removed': {'figures': {'mechanism': 'UNMEASURED'},
+                                      'prose': {'mechanism': 'UNMEASURED'}},
+          'Q02/base': {'figures': {'mechanism': 'OBSERVED-ONLY'},
+                       'prose': {'mechanism': 'OBSERVED-ONLY'}},
+          'Q03/base': {'figures': {'mechanism': 'OBSERVED-ONLY'}}}
+    rows = dim_rows(report._section_dimension_results(
+        {'d2_results': d2}, {'dimensions_claimed': ['D2']}))
+    # n is the number of questions (3), not of question-conditions (4)
+    # (with no repeat count in the config, n is questions only; 3 is
+    # below AP-1 D2's 10 questions, which the row says)
+    assert rows[1] == ('| D2 | Measured | 3 | figures: OBSERVED-ONLY 3, '
+                       'UNMEASURED 1; prose: OBSERVED-ONLY 2, UNMEASURED 1; '
+                       'below AP-1 D2\'s 10 \u00d7 50 (\u00a79) |')
+
+
+RUN_COUNT_REASON = (
+    'T3-4: any run count is accepted; report sections 3 and 9 give D2\'s n '
+    '(questions x runs) and say in one line when a run is below AP-1 D2\'s '
+    '10 questions x 50 runs; the minimum is reported, not enforced, as '
+    'requested in review; the line\'s words are the author\'s')
+
+
+def d2_run(questions, runs):
+    """The D2 results of a run of these many questions, each repeated
+    runs times with the same answer, classified as the scoring pass
+    classifies them (minimum runs: the repeat count)."""
+    from ap1_run.runner.summary import classify_reproducibility
+    reply = {'choices': [{'message': {'role': 'assistant',
+                                      'content': 'The interest is $15.20.'}}]}
+    keys = [(f'Q{i:02d}', 'base') for i in range(1, questions + 1)]
+    return classify_reproducibility(
+        {k: [reply] * runs for k in keys}, runs, None,
+        {k: [Decimal('15.20')] * runs for k in keys})
+
+
+def d2_report(questions, runs):
+    """Sections 3 and 9 of that run, with its repeat count configured."""
+    d2 = d2_run(questions, runs)
+    config = {'dimensions_claimed': ['D2'], 'repeat_count': runs}
+    return (dim_rows(report._section_dimension_results(
+                {'d2_results': d2}, config))[1],
+            report._section_d2_mechanisms({'d2_results': d2}, config), d2)
+
+
+@pytest.mark.proposal(RUN_COUNT_REASON)
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('AP-1 D2', 'R2.2')
+def test_d2_run_of_3_repeats_is_classified_and_says_below_10_by_50():
+    # AP-1 D2 Method: minimum 10 questions x minimum 50 runs. A run of 10
+    # questions x 3 repeats is accepted and classified; its n is given,
+    # and one line says it is below that minimum.
+    row, text, d2 = d2_report(10, 3)
+    assert {cell['mechanism'] for surfaces in d2.values()
+            for cell in surfaces.values()} == {'OBSERVED-ONLY'}
+    assert row == ('| D2 | Measured | 10 \u00d7 3 | figures: OBSERVED-ONLY '
+                   '10; prose: OBSERVED-ONLY 10; below AP-1 D2\'s 10 \u00d7 '
+                   '50 (\u00a79) |')
+    lines = text.splitlines()
+    assert 'n = 10 questions \u00d7 3 runs, per condition.' in lines
+    below = [line for line in lines if '10 \u00d7 50' in line]
+    assert below == [
+        '> **Below AP-1 D2\'s 10 \u00d7 50: n = 10 \u00d7 3** (AP-1 D2: '
+        'minimum 10 questions \u00d7 minimum 50 runs). The runner accepts '
+        'any run count and classifies on what was run.']
+
+
+@pytest.mark.proposal(RUN_COUNT_REASON)
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('AP-1 D2', 'R2.2')
+def test_d2_run_of_10_by_50_prints_no_below_minimum_line():
+    row, text, _ = d2_report(10, 50)
+    assert row == ('| D2 | Measured | 10 \u00d7 50 | figures: OBSERVED-ONLY '
+                   '10; prose: OBSERVED-ONLY 10 (\u00a79) |')
+    assert 'n = 10 questions \u00d7 50 runs, per condition.' in \
+        text.splitlines()
+    assert 'Below' not in text and 'below' not in row
+
+
+@pytest.mark.proposal(RUN_COUNT_REASON)
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('AP-1 D2', 'R2.2')
+def test_d2_run_of_5_questions_by_50_says_below_on_questions():
+    # Under on questions only: 50 repeats of 5 questions is still below.
+    row, text, _ = d2_report(5, 50)
+    assert row.endswith('; below AP-1 D2\'s 10 \u00d7 50 (\u00a79) |')
+    assert '| 5 \u00d7 50 |' in row
+    assert ('> **Below AP-1 D2\'s 10 \u00d7 50: n = 5 \u00d7 50** (AP-1 '
+            'D2: minimum 10 questions \u00d7 minimum 50 runs). The runner '
+            'accepts any run count and classifies on what was run.'
+            ) in text.splitlines()
+
+
+D1_CATEGORY_HEAD = (
+    '\n### D1 per Category\n',
+    '> AP-1 v1.3 D1: results per category, with 95% confidence intervals '
+    'and n stated; no category claim where n < 10. Base condition only; '
+    'the instruction-removed repeats measure D7. n counts questions; a '
+    'question is correct only if every base execution of it is. Interval: '
+    'exact two-sided 95% Clopper-Pearson.\n',
+    '| Category | n (questions) | Executions | Correct | Incorrect '
+    '| No Figure | Awaiting Adjudication | Accuracy (95% CI) |',
+    '|---|---|---|---|---|---|---|---|')
+
+
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_dimension_results_d1_per_category_with_interval():
+    def cat(n, correct_questions, pending=0, interval=None):
+        return {'n': n, 'executions': 2 * n, 'correct': 2 * n - 1,
+                'incorrect': 1, 'no_figure': 0, 'pending': pending,
+                'correct_questions': correct_questions,
+                'rate': None, 'interval': interval}
+    d1 = {'n': 4, 'auto_scored_n': 4, 'accuracy_rate': Decimal('1'),
+          'by_category': {
+              'interest': cat(2, 1),
+              'growth': cat(10, 8, interval=(Decimal('0.44390'),
+                                             Decimal('0.97479'))),
+              'fees': cat(12, 12, pending=3),
+              'balance': cat(10, 10, pending=1)}}
+    text = report._section_dimension_results(
+        {'d1_results': d1}, {'dimensions_claimed': ['D1']})
+    assert text.endswith(md(
+        *D1_CATEGORY_HEAD,
+        '| interest | 2 | 4 | 3 | 1 | 0 | 0 | no category claim: n < 10 |',
+        '| growth | 10 | 20 | 19 | 1 | 0 | 0 | 8/10 (80.0%; 95% CI '
+        '44.3%-97.5%) |',
+        '| fees | 12 | 24 | 23 | 1 | 0 | 3 | no rate: 3 executions await '
+        'adjudication |',
+        '| balance | 10 | 20 | 19 | 1 | 0 | 1 | no rate: 1 executions await '
+        'adjudication |',
+        ''))
+
+
+@pytest.mark.proposal(
+    'T3-32: a question with no category is listed under the D1 table as '
+    'not in any category, with the count, and the run goes ahead; AP-1 D1 '
+    'asks for results per category and says nothing of a question with '
+    'none')
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_dimension_results_d1_lists_the_question_not_in_any_category():
+    c = {'n': 10, 'executions': 10, 'correct': 10, 'incorrect': 0,
+         'no_figure': 0, 'pending': 0, 'correct_questions': 10,
+         'rate': Decimal(1), 'interval': (Decimal('0.69150'), Decimal(1))}
+    d1 = {'n': 11, 'by_category': {'interest': c}, 'uncategorised': ['Q11']}
+    text = report._section_dimension_results(
+        {'d1_results': d1}, {'dimensions_claimed': ['D1']})
+    assert text.endswith(md(
+        *D1_CATEGORY_HEAD,
+        '| interest | 10 | 10 | 10 | 0 | 0 | 0 | 10/10 (100.0%; 95% CI '
+        '69.1%-100.0%) |',
+        '\nNot in any category: 1 question (`Q11`). It is in no row above '
+        "and in no category's n.",
+        ''))
+
+
+@pytest.mark.proposal(
+    'T3-32: a question with no category is listed under the D1 table as '
+    'not in any category, with the count, and the run goes ahead; AP-1 D1 '
+    'asks for results per category and says nothing of a question with '
+    'none')
+@pytest.mark.finding('T3-32')
+@pytest.mark.req('AP-1 D1')
+def test_dimension_results_d1_lists_questions_not_in_any_category_alone():
+    # No question has a category: no row, but the questions are listed,
+    # not dropped with the table.
+    d1 = {'n': 2, 'by_category': {}, 'uncategorised': ['Q1', 'Q2']}
+    text = report._section_dimension_results(
+        {'d1_results': d1}, {'dimensions_claimed': ['D1']})
+    assert text.endswith(md(
+        *D1_CATEGORY_HEAD,
+        '\nNot in any category: 2 questions (`Q1`, `Q2`). They are in no '
+        "row above and in no category's n.",
+        ''))
+    assert 'Not in any category' not in report._section_dimension_results(
+        {'d1_results': d1}, {'dimensions_claimed': ['D7']})
+
+
+def test_dimension_results_d1_categories_only_when_d1_claimed():
+    summary = {'d1_results': {'n': 1, 'by_category': {'x': {}}}}
+    assert 'D1 per Category' not in report._section_dimension_results(
+        summary, {'dimensions_claimed': ['D7']})
+    assert 'D1 per Category' not in report._section_dimension_results(
+        {'d1_results': {'n': 1, 'by_category': {}}},
+        {'dimensions_claimed': ['D1']})
+
+
+def test_dimension_results_other_dimension_without_n_reads_na():
+    rows = dim_rows(report._section_dimension_results(
+        {'d3_results': {'x': 1}}, {'dimensions_claimed': ['D3']}))
+    assert rows[2] == "| D3 | Measured | N/A | {'x': 1} |"
 
 
 # -- 10. Non-outcome cells ------------------------------------------------
@@ -1173,41 +1741,105 @@ def test_cells_without_any_says_so():
         *CELLS_HEAD, '*No non-outcome cells.*\n', '')
 
 
+CELLS_TABLE = ('| Item | Condition | Status | Reason | Repeat | Measurement |',
+               '|---|---|---|---|---|---|')
+
+
 def test_cells_from_summary_listed():
     text = report._section_unmeasured_cells({'non_outcome_cells': [
-        {'item_id': 'Q01', 'condition': 'base', 'status': 'UNMEASURED',
-         'reason': 'rate limited'},
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 3,
+         'status': 'UNMEASURED', 'reason': 'rate limited'},
         {}]}, None)
     assert text == md(
         *CELLS_HEAD,
-        '| Item | Condition | Status | Reason |',
-        '|---|---|---|---|',
-        '| Q01 | base | UNMEASURED | rate limited |',
-        '| ? | ? | ? | ? |',
+        '2 cells: execution 2.\n',
+        *CELLS_TABLE,
+        '| Q01 | base | UNMEASURED | rate limited | 3 | execution |',
+        '| \u2014 | \u2014 | \u2014 | \u2014 | \u2014 | execution |',
         '')
 
 
 @pytest.mark.finding('T3-35')
-def test_cells_from_transcript_error_state_and_ev0():
+def test_cells_from_transcript_error_state_or_ev0_one_row_per_record():
+    # An execution-level cell per transcript record: its error state, else
+    # its EV-0 class (never both). Figure-identification records are not
+    # executions.
     text = report._section_unmeasured_cells({}, [
-        {'item_id': 'Q02', 'condition': 'base',
+        {'item_id': 'Q02', 'condition': 'base', 'repeat': 1,
          'error_state': 'TRANSPORT_FAILURE: HTTP 500: boom'},
         {'item_id': 'Q03', 'condition': 'base', 'error_state': 'VOID',
+         'evidence_class': 'EV-0 UNOBSERVABLE'},
+        {'item_id': 'Q04', 'condition': 'base', 'repeat': 2,
          'evidence_class': 'EV-0 UNOBSERVABLE'},
         {'evidence_class': 'EV-2 PLATFORM-STRUCTURAL'},
         {'error_state': None, 'evidence_class': None},
         {'error_state': 'X:y'},
+        {'record_type': 'figure_identification', 'item_id': 'Q09',
+         'error_state': 'E', 'figure_outcome': 'UNMEASURABLE'},
     ])
     assert text == md(
         *CELLS_HEAD,
-        '| Item | Condition | Status | Reason |',
-        '|---|---|---|---|',
+        '4 cells: execution 3; D7.1 invocation 1.\n',
+        *CELLS_TABLE,
         '| Q02 | base | TRANSPORT_FAILURE | TRANSPORT_FAILURE: HTTP 500: '
-        'boom |',
-        '| Q03 | base | VOID | VOID |',
-        '| Q03 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |',
-        '| ? | ? | X | X:y |',
+        'boom | 1 | execution |',
+        '| Q03 | base | VOID | VOID | \u2014 | execution |',
+        '| Q04 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE | 2 '
+        '| D7.1 invocation |',
+        '| \u2014 | \u2014 | X | X:y | \u2014 | execution |',
         '')
+
+
+EXHAUSTED = ('TOOL_LOOP_EXHAUSTED: the response after 10 tool turns still '
+             'asked for 1 tool call(s), which were not executed')
+
+
+@pytest.mark.finding('T3-67')
+@pytest.mark.req('R3.3')
+def test_cells_tool_loop_exhaustion_is_a_reason_not_a_status():
+    # An exhausted loop is an EXECUTED, scored execution with a flag
+    # (T3-67), not one of section 10's statuses (SPEC R3.3: UNMEASURED,
+    # UNOBSERVABLE, UNMEASURABLE, VOID). With no figure to read, its R2.0
+    # figure is the UNMEASURABLE cell, and the flag is its reason; with a
+    # scored figure it has no non-outcome cell.
+    record = {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+              'status': 'EXECUTED', 'evidence_class': 'EV-2 '
+              'PLATFORM-STRUCTURAL', 'error_state': EXHAUSTED}
+    text = report._section_unmeasured_cells({}, [
+        dict(record, figure_outcome='UNMEASURABLE')])
+    assert text == md(
+        *CELLS_HEAD,
+        '1 cells: R2.0 figure 1.\n',
+        *CELLS_TABLE,
+        '| Q01 | base | UNMEASURABLE | response could not be read; routed '
+        f'to adjudication; {EXHAUSTED} | 1 | R2.0 figure |',
+        '')
+    assert report._section_unmeasured_cells({}, [
+        dict(record, figure_outcome='AUTO-MATCH')]) == md(
+        *CELLS_HEAD, '*No non-outcome cells.*\n', '')
+
+
+@pytest.mark.finding('T3-67', 'T3-35')
+@pytest.mark.req('R3.3', 'AP-1 D7.7')
+def test_cells_tool_loop_exhaustion_keeps_the_ev0_invocation_cell():
+    # The loop flag is handled apart from invocation observability: an
+    # exhausted loop whose invocation is EV-0 still has its D7.1 cell, the
+    # flag beside its reason; with an unreadable figure, both cells.
+    record = {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+              'status': 'EXECUTED', 'evidence_class': 'EV-0 UNOBSERVABLE',
+              'error_state': EXHAUSTED}
+    invocation = ('| Q01 | base | UNOBSERVABLE | Evidence class: EV-0 '
+                  f'UNOBSERVABLE; {EXHAUSTED} | 1 | D7.1 invocation |')
+    assert report._section_unmeasured_cells({}, [
+        dict(record, figure_outcome='AUTO-MATCH')]) == md(
+        *CELLS_HEAD, '1 cells: D7.1 invocation 1.\n', *CELLS_TABLE,
+        invocation, '')
+    assert report._section_unmeasured_cells({}, [
+        dict(record, figure_outcome='UNMEASURABLE')]) == md(
+        *CELLS_HEAD, '2 cells: D7.1 invocation 1; R2.0 figure 1.\n',
+        *CELLS_TABLE, invocation,
+        '| Q01 | base | UNMEASURABLE | response could not be read; routed '
+        f'to adjudication; {EXHAUSTED} | 1 | R2.0 figure |', '')
 
 
 def test_cells_summary_cells_come_before_transcript_cells():
@@ -1219,64 +1851,117 @@ def test_cells_summary_cells_come_before_transcript_cells():
 
 
 @pytest.mark.finding('T3-35')
-def test_cells_deduplicated_on_item_condition_status():
-    # Cells are de-duplicated on (item, condition, status), so 49
-    # rate-limited repeats become one row and the later reasons are lost.
-    # Correct: one row per cell, repeat identified.
-    text = report._section_unmeasured_cells({'non_outcome_cells': [
-        {'item_id': 'Q01', 'condition': 'base', 'status': 'UNMEASURED',
-         'reason': f'rate limited r{i}'} for i in range(1, 50)]}, None)
-    assert text.count('| Q01 | base | UNMEASURED |') == 1
-    assert 'rate limited r1 |' in text
-    assert 'r2 |' not in text
-
-
-@pytest.mark.finding('T3-35')
-def test_cells_same_failure_listed_once_per_status():
-    # One transport failure appears as one row per distinct status: its
-    # error_state, its EV-0 class and the summary's UNMEASURED cell.
-    # Correct: one row per cell, with its reason.
+def test_cells_execution_level_deduplicated_on_the_repeat_only():
+    # The same execution (item, condition, repeat) from the summary and
+    # the transcript is one row, the summary's; other repeats, and
+    # records without a repeat, are rows of their own.
     text = report._section_unmeasured_cells(
-        {'non_outcome_cells': [{'item_id': 'Q01', 'condition': 'base',
-                                'status': 'UNMEASURED',
-                                'reason': 'transport'}]},
-        [{'item_id': 'Q01', 'condition': 'base',
-          'error_state': 'TRANSPORT_FAILURE: timeout',
-          'evidence_class': 'EV-0 UNOBSERVABLE'}])
-    assert len(re.findall(r'^\| Q01 \| base \|', text, flags=re.M)) == 3
+        {'non_outcome_cells': [
+            {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+             'status': 'UNMEASURED', 'reason': 'transport'}]},
+        [{'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+          'error_state': 'TRANSPORT_FAILURE: timeout'},
+         {'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+          'error_state': 'TRANSPORT_FAILURE: timeout'},
+         {'item_id': 'Q01', 'condition': 'instruction_removed', 'repeat': 1,
+          'evidence_class': 'EV-0 UNOBSERVABLE'},
+         {'item_id': 'Q01', 'condition': 'base', 'error_state': 'E'},
+         {'item_id': 'Q01', 'condition': 'base', 'error_state': 'E'}])
+    rows = [line for line in text.split('\n') if line.startswith('| Q01 ')]
+    assert rows == [
+        '| Q01 | base | UNMEASURED | transport | 1 | execution |',
+        '| Q01 | base | TRANSPORT_FAILURE | TRANSPORT_FAILURE: timeout | 2 '
+        '| execution |',
+        '| Q01 | instruction_removed | UNOBSERVABLE | Evidence class: EV-0 '
+        'UNOBSERVABLE | 1 | D7.1 invocation |',
+        '| Q01 | base | E | E | \u2014 | execution |',
+        '| Q01 | base | E | E | \u2014 | execution |']
 
 
 @pytest.mark.finding('T3-35')
-def test_cells_other_non_outcomes_in_summary_are_not_listed():
-    # Figure-level UNMEASURABLE, transcription UNOBSERVABLE,
-    # COVERAGE-UNOBSERVABLE and OPERATION-UNOBSERVABLE are in the summary
-    # but not in this section. Correct: every non-outcome cell listed.
+def test_cells_every_measurement_kind_listed_with_its_reason():
     summary = {
-        'transcription_results': [{'item_id': 'Q01', 'condition': 'base',
-                                   'outcome': 'UNOBSERVABLE'}],
-        'release_coverage_results': [{'item_id': 'Q01',
-                                      'condition': 'base',
-                                      'outcome': 'COVERAGE-UNOBSERVABLE'}],
-        'operation_correctness_counts': {'OPERATION-UNOBSERVABLE': 2},
-        'd1_results': {'unmeasurable_n': 1},
-    }
+        'provenance_unmeasurable': [{'item_id': 'Q10', 'condition': 'base',
+                                     'repeat': 1, 'reason': 'chained'}],
+        'operands_unobservable': [{'item_id': 'Q11', 'condition': 'base',
+                                   'repeat': 2, 'reason': 'no operand'}],
+        'operation_unobservable': [{'item_id': 'Q12', 'condition': 'base',
+                                    'repeat': 3, 'reason': "max(1, 2)"}],
+        'transcription_results': [
+            {'item_id': 'Q13', 'condition': 'base', 'repeat': 4,
+             'outcome': 'UNOBSERVABLE',
+             'reason': 'R2.0 outcome is ADJUDICATE-DECLINE, not AUTO-MATCH'},
+            {'item_id': 'Q14', 'condition': 'base', 'repeat': 5,
+             'outcome': 'UNOBSERVABLE',
+             'reason': 'tool return value not available'},
+            {'item_id': 'Q15', 'outcome': 'TRANSCRIBED-EXACT'}],
+        'release_coverage_results': [
+            {'item_id': 'Q16', 'condition': 'base', 'repeat': 6,
+             'outcome': 'COVERAGE-UNOBSERVABLE', 'finding': 'no tool call'},
+            {'item_id': 'Q17', 'outcome': 'GOVERNED-RELEASE'}]}
     text = report._section_unmeasured_cells(summary, [
-        {'item_id': 'Q07', 'condition': 'base',
-         'figure_outcome': 'UNMEASURABLE'}])
-    assert '*No non-outcome cells.*' in text
+        {'item_id': 'Q09', 'condition': 'base', 'repeat': 7,
+         'figure_outcome': 'UNMEASURABLE'},
+        {'item_id': 'Q08', 'figure_outcome': 'AUTO-MATCH'}])
+    assert text == md(
+        *CELLS_HEAD,
+        '7 cells: R2.0 figure 1; D7.2(a) provenance 2; D7.2(b) operation '
+        '1; D7.3 transcription 2; D7.3 release coverage 1.\n',
+        *CELLS_TABLE,
+        '| Q09 | base | UNMEASURABLE | response could not be read; routed '
+        'to adjudication | 7 | R2.0 figure |',
+        '| Q10 | base | UNMEASURABLE | chained | 1 | D7.2(a) provenance |',
+        '| Q11 | base | OPERANDS-UNOBSERVABLE | no operand | 2 '
+        '| D7.2(a) provenance |',
+        '| Q12 | base | OPERATION-UNOBSERVABLE | max(1, 2) | 3 '
+        '| D7.2(b) operation |',
+        '| Q13 | base | UNOBSERVABLE | no released figure to compare (not '
+        'auto-matched) | 4 | D7.3 transcription |',
+        '| Q14 | base | UNOBSERVABLE | tool return value not available | 5 '
+        '| D7.3 transcription |',
+        '| Q16 | base | COVERAGE-UNOBSERVABLE | no tool call | 6 '
+        '| D7.3 release coverage |',
+        '')
 
 
 @pytest.mark.finding('T3-35')
-def test_cells_from_transcript_are_appended_to_the_summary_list():
-    # The section appends transcript cells to summary['non_outcome_cells']
-    # in place, so the caller's summary changes. Correct: no side effect.
-    summary = {'non_outcome_cells': []}
-    report._section_unmeasured_cells(
-        summary, [{'item_id': 'Q01', 'condition': 'base',
-                   'error_state': 'VOID'}])
-    assert summary['non_outcome_cells'] == [
-        {'item_id': 'Q01', 'condition': 'base', 'status': 'VOID',
-         'reason': 'VOID'}]
+def test_cells_one_execution_one_row_per_measurement():
+    # An EV-0 execution that is also the summary's UNMEASURED cell is one
+    # execution row; its other measurements are rows of their own, even
+    # for the same execution. Cells of other items are never merged.
+    text = report._section_unmeasured_cells(
+        {'non_outcome_cells': [
+            {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+             'status': 'UNMEASURED', 'reason': 'r'},
+            {'item_id': 'Q02', 'condition': 'base', 'repeat': 1,
+             'status': 'UNMEASURED', 'reason': 'r'}],
+         'transcription_results': [
+             {'item_id': 'Q03', 'condition': 'base', 'repeat': 1,
+              'outcome': 'UNOBSERVABLE', 'reason': 'x'}]},
+        [{'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+          'evidence_class': 'EV-0 UNOBSERVABLE'},
+         {'item_id': 'Q03', 'condition': 'base', 'repeat': 1,
+          'evidence_class': 'EV-0 UNOBSERVABLE',
+          'figure_outcome': 'UNMEASURABLE'}])
+    rows = [line.split(' | ')[2] + ' / ' + line.split(' | ')[5]
+            for line in text.split('\n') if line.startswith('| Q0')]
+    assert rows == ['UNMEASURED / execution |', 'UNMEASURED / execution |',
+                    'UNOBSERVABLE / D7.1 invocation |',
+                    'UNMEASURABLE / R2.0 figure |',
+                    'UNOBSERVABLE / D7.3 transcription |']
+
+
+def test_cells_transcription_without_reason_reads_dash():
+    text = report._section_unmeasured_cells({'transcription_results': [
+        {'item_id': 'Q', 'outcome': 'UNOBSERVABLE'}]}, None)
+    assert '| Q | \u2014 | UNOBSERVABLE | \u2014 | \u2014 | D7.3 ' \
+        'transcription |' in text
+
+
+def test_cell_text_is_one_line_with_pipes_escaped():
+    assert report._cell('a |b\n  c') == 'a \\|b c'
+    assert report._cell(0) == '0'
+    assert report._cell('') == report._cell(None) == '\u2014'
 
 
 def test_cells_error_state_text_without_colon_is_status():
@@ -1308,27 +1993,38 @@ def test_quantisation_without_findings_says_so():
         '')
 
 
+@pytest.mark.finding('T3-34')
 def test_quantisation_findings_listed():
     text = report._section_quantisation({'quantisation_findings': [
-        {'item_id': 'Q04', 'operand': '0.0125', 'finding': 'rounded'}, {}]})
+        {'item_id': 'Q04', 'condition': 'base', 'repeat': 2,
+         'operand': '0.0125', 'finding': 'rounded'}, {}]})
     assert text == md(
         '## 11. Quantisation and Near-Miss Findings\n',
-        '| Item | Operand | Finding |',
-        '|---|---|---|',
-        '| Q04 | `0.0125` | rounded |',
-        '| ? | `?` | ? |',
+        '| Item | Condition | Repeat | Operand | Finding |',
+        '|---|---|---|---|---|',
+        '| Q04 | base | 2 | `0.0125` | rounded |',
+        '| \u2014 | \u2014 | \u2014 | `\u2014` | \u2014 |',
         '')
 
 
+@pytest.mark.finding('T3-34')
 def test_quantisation_near_miss_findings_listed():
     text = report._section_quantisation({'near_miss_findings': [
-        'Q07 near miss', 'Q08 near miss']})
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+         'operand': '2.17', 'prior_return': '2.1714', 'quantised_to': '2.17',
+         'grounded': True}, {}]})
     assert text == md(
         '## 11. Quantisation and Near-Miss Findings\n',
         '*No quantisation findings.*',
         '\n### Near-Miss Findings\n',
-        '- Q07 near miss',
-        '- Q08 near miss',
+        '> Operand equal to an earlier return only after quantisation: '
+        'ORIGINATED, with this finding.\n',
+        '| Item | Condition | Repeat | Operand | Prior Return | Quantised To '
+        '| Prior Call Grounded |',
+        '|---|---|---|---|---|---|---|',
+        '| Q01 | base | 1 | `2.17` | `2.1714` | `2.17` | True |',
+        '| \u2014 | \u2014 | \u2014 | `\u2014` | `\u2014` | `\u2014` | '
+        '\u2014 |',
         '')
 
 
@@ -1340,59 +2036,120 @@ DIMS_HEAD = (
 )
 
 
-@pytest.mark.finding('T3-33')
-def test_unmeasured_dimensions_names_d3_to_d6_wrongly():
-    # D3-D6 are given dimensions AP-1 does not define. AP-1 v1.3 §4:
-    # D3 Provenance, D4 Refusal integrity, D5 Adversarial resistance,
-    # D6 Conflicting input. Correct: the AP-1 names.
-    text = report._section_unmeasured_dimensions(CONFIG)
+ADJ = 'requires human adjudication; the runner does not measure it'
+NOT_CLAIMED = 'not claimed in this configuration'
+
+
+D7_HEAD = ('\nD7 is claimed, but not all of it was measured (AP-1 v1.3 '
+           'D7: "Report all four"):\n')
+D74 = ('- **D7.4**: Invocation under pressure \u2014 not measured: the '
+       'runner sends each item once, with no rephrasing, casual framing, '
+       'escalating pressure or adversarial input')
+
+
+@pytest.mark.finding('T3-33', 'T3-29')
+def test_unmeasured_dimensions_names_d3_to_d6_as_ap1():
+    # T3-33 (fixed): AP-1 v1.3 §4 names D3 Provenance, D4 Refusal
+    # integrity, D5 Adversarial resistance, D6 Conflicting input.
+    # T3-29 (fixed): with D7 claimed, D7.4 is declared not measured.
+    text = report._section_unmeasured_dimensions(CONFIG, MEASURED_D7)
     assert text == md(
         *DIMS_HEAD,
         'The following dimensions were **not measured** in this '
-        'evaluation and require human adjudication:\n',
-        '- **D3**: Completeness of explanation \u2014 requires human '
-        'adjudication',
-        '- **D4**: Appropriate caveats \u2014 requires human adjudication',
-        '- **D5**: Source attribution \u2014 requires human adjudication',
-        '- **D6**: Confidence calibration \u2014 requires human '
-        'adjudication',
+        'evaluation:\n',
+        f'- **D3**: Provenance \u2014 {ADJ}',
+        f'- **D4**: Refusal integrity \u2014 {ADJ}',
+        f'- **D5**: Adversarial resistance \u2014 {ADJ}',
+        f'- **D6**: Conflicting input \u2014 {ADJ}',
+        D7_HEAD, D74,
         '')
 
 
 @pytest.mark.finding('T3-29')
-def test_unmeasured_dimensions_does_not_declare_d7_parts():
-    # With D7 claimed, nothing declares D7.4 (never measured) or the
-    # unobservable part of D7.3. Correct: declare both.
-    text = report._section_unmeasured_dimensions(CONFIG)
-    assert 'D7' not in text
+def test_unmeasured_dimensions_declares_d73_unobservable_count():
+    text = report._section_unmeasured_dimensions(CONFIG, dict(
+        MEASURED_D7, transcription_results=[tr('UNOBSERVABLE', 1),
+                                            tr('TRANSCRIBED-EXACT', 2),
+                                            tr('UNOBSERVABLE', 3)]))
+    assert text.endswith(md(
+        D7_HEAD,
+        '- **D7.3**: Transcription fidelity \u2014 partly measured: 2 of 3 '
+        'executions are UNOBSERVABLE (no single released figure to '
+        'compare: routed to adjudication, or no return of the required '
+        'operation)',
+        D74, ''))
+    # Nothing unobservable: only D7.4.
+    assert 'D7.3' not in report._section_unmeasured_dimensions(
+        CONFIG, {'transcription_results': [tr('TRANSCRIBED-EXACT', 1)]})
+
+
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7', 'R3.3')
+def test_unmeasured_dimensions_declares_d71_and_d72_parts():
+    # Each part of D7 not fully measured is declared, with what was not:
+    # here instruction_removed has no observed outcome and 12 of 44 calls
+    # have unreadable operands.
+    summary = d7_summary(
+        {'base': [(EV0, 6, 0, 6), (EV2, 14, 7, 0)],
+         'instruction_removed': [(EV0, 20, 0, 20)]},
+        prov={'OPERANDS-GROUNDED': 32, 'OPERANDS-UNOBSERVABLE': 12},
+        ops={'OPERATION-CORRECT': 44},
+        transcription=['TRANSCRIBED-EXACT'] * 40)
+    text = report._section_unmeasured_dimensions(CONFIG, summary)
+    assert text.endswith(md(
+        D7_HEAD,
+        '- **D7.1**: Invocation rate \u2014 partly measured: base partly '
+        'measured (n = 7, EV-2 PLATFORM-STRUCTURAL; 6 of 20 executions '
+        'UNOBSERVABLE); instruction_removed not measured (no observed '
+        'outcome; 20 of 20 executions UNOBSERVABLE)',
+        '- **D7.2**: Computation correctness \u2014 partly measured: (a) '
+        'operand provenance partly measured: 12 of 44 calls '
+        'OPERANDS-UNOBSERVABLE or UNMEASURABLE',
+        D74, ''))
+    # Nothing computed: every part is declared not measured.
+    for nothing in ({}, None):
+        text = report._section_unmeasured_dimensions(CONFIG, nothing)
+        assert text.endswith(md(
+            D7_HEAD,
+            '- **D7.1**: Invocation rate \u2014 not measured: base not '
+            'measured (no executions); instruction_removed not measured (no '
+            'executions)',
+            '- **D7.2**: Computation correctness \u2014 not measured: (a) '
+            'operand provenance not measured: no call evaluated; (b) '
+            'operation correctness not measured: no operation evaluated',
+            '- **D7.3**: Transcription fidelity \u2014 not measured: no '
+            'executions',
+            D74, ''))
 
 
 @pytest.mark.finding('T3-33', 'S3-G6-2')
 def test_unmeasured_dimensions_all_unclaimed():
-    # Every unclaimed dimension is said to "require human adjudication",
-    # D1, D2 and D7 included, which the runner measures automatically
-    # (S3-G6-2). D7 is called "Provenance" (T3-33). Correct: the AP-1
-    # names, and the reason each one was not measured.
+    # Fixed: the AP-1 names (T3-33), and D1, D2 and D7, which the runner
+    # measures, are "not claimed", not "require human adjudication"
+    # (S3-G6-2).
     text = report._section_unmeasured_dimensions({})
     assert text.endswith(md(
-        '- **D1**: Accuracy \u2014 requires item-level scoring',
-        '- **D2**: Reproducibility \u2014 requires repeated runs',
-        '- **D3**: Completeness of explanation \u2014 requires human '
-        'adjudication',
-        '- **D4**: Appropriate caveats \u2014 requires human adjudication',
-        '- **D5**: Source attribution \u2014 requires human adjudication',
-        '- **D6**: Confidence calibration \u2014 requires human '
-        'adjudication',
-        '- **D7**: Provenance \u2014 requires tool-call observation',
+        f'- **D1**: Accuracy \u2014 {NOT_CLAIMED} (the runner auto-scores '
+        'it)',
+        f'- **D2**: Determinism \u2014 {NOT_CLAIMED} (the runner '
+        'measures it from repeated runs)',
+        f'- **D3**: Provenance \u2014 {ADJ}',
+        f'- **D4**: Refusal integrity \u2014 {ADJ}',
+        f'- **D5**: Adversarial resistance \u2014 {ADJ}',
+        f'- **D6**: Conflicting input \u2014 {ADJ}',
+        f'- **D7**: Computation invocation \u2014 {NOT_CLAIMED} (the '
+        'runner measures D7.1-D7.3 from tool-call evidence)',
         ''))
-    assert 'evaluation and require human adjudication:' in text
 
 
 @pytest.mark.finding('T3-29')
 def test_unmeasured_dimensions_all_claimed():
+    # T3-29: D7.4 is declared even when every dimension is claimed and
+    # the rest of D7 was measured.
     assert report._section_unmeasured_dimensions(
-        {'dimensions_claimed': ALL_DIMENSIONS}) == md(
-        *DIMS_HEAD, 'All seven dimensions were claimed for measurement.', '')
+        {'dimensions_claimed': ALL_DIMENSIONS}, MEASURED_D7) == md(
+        *DIMS_HEAD, 'All seven dimensions were claimed for measurement.',
+        D7_HEAD, D74, '')
 
 
 def test_unmeasured_reason_unknown_dimension():
@@ -1403,33 +2160,79 @@ def test_unmeasured_reason_unknown_dimension():
 
 @pytest.mark.finding('T3-81')
 def test_declared_limitations_text():
+    # T3-81 (fixed): the k > 0 bound is computed; the section declares
+    # which form it is and where that form comes from. And that an answer
+    # that is a percentage is never auto-scored (S3-G4-2's fix), and the
+    # order the adjudication sheets are in (T3-36).
     assert report._section_declared_limitations() == md(
         '## 13. Declared Limitations\n',
         '### Clopper-Pearson Bound (k > 0)\n',
-        'An exact confidence bound for non-zero failure counts is not '
-        'computed; AP-1 v1.3 D7.5 specifies the zero-failure form only. '
-        'This is an author-identified defect in the standard, noted for '
-        'resolution in the adopted version.\n',
-        'For non-zero failure counts, the point estimate is reported with '
-        'n. The full Beta quantile would require an external dependency '
-        'or a specification extension.\n')
+        'AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for '
+        'any invocation figure but states its formula for zero failures '
+        'only. For k > 0 failures the report gives the exact '
+        'Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the '
+        'general form DISPOSITION C-1 adopts for the next version. It is '
+        'computed in Decimal (bisection on the binomial distribution) and '
+        'every bound is shown rounded up. Beside it, for k > 0, the report '
+        'gives the exact two-sided 95% Clopper-Pearson interval, as the '
+        'published paper prints it, with its ends rounded outward.\n',
+        '### Percentage Answers\n',
+        'In a response\'s text, a figure written with % is never compared '
+        'with the expected value: SPEC R0.4.2 records the percent flag, '
+        'and 15.20% is not the money figure 15.20 (S3-G4-2). The expected '
+        'value has no unit (SPEC R3.1: final is a Decimal), so the runner '
+        'cannot tell an answer that is a rate from one that is an amount. '
+        'For an item whose answer is a rate (18.5): "18.5%" is not '
+        'compared, so it routes to adjudication as figures present, none '
+        'matching; the same rate written without % ("18.5", "18.5 '
+        'percent") is compared as a plain figure and can be auto-scored; '
+        'a configured structured answer is compared whatever its unit; and '
+        'a figure glued to letters ("18.5pct") is not read, so the response '
+        'is auto-scored as having no figure.\n',
+        '### Adjudication Sheet Order\n',
+        SHEET_ORDER_TEXT)
+
+
+# Decided for T3-36: the sheets stay in run order and report.md says so; a
+# shuffle, blinding and key file are a later post-process on the sheets.
+SHEET_ORDER_TEXT = (
+    'adjudication_sheets.md gives the sheets in run order (the order of '
+    'the transcript), two for each execution routed to adjudication. A '
+    'sheet does not name its condition, but the order can show it, so the '
+    'judging is not blind to the condition (AP-1 v1.3 \u00a713.8 asks for '
+    'scorers blind to arm identity where the response text permits). '
+    'Shuffling or blinding the sheets, with a key joining each sheet back '
+    'to its execution, is left to a later step that works on that file; '
+    'the runner does neither.\n')
+
+
+@pytest.mark.proposal('T3-36: the sheets stay in run order and the report '
+                      'says the judging is not blind to the condition; a '
+                      'shuffle, blinding and key file are left to a later '
+                      'post-process (the author\'s decision, not SPEC\'s)')
+@pytest.mark.finding('T3-36')
+@pytest.mark.req('AP-1 §13.8', 'R3.2')
+def test_report_states_adjudication_sheets_are_in_run_order():
+    # report.md, in its declared limitations, says the sheets are in run
+    # order and that the judging is therefore not blind to the condition.
+    text = generate_report(summary={}, config=CONFIG, seal_record={})
+    limitations = text[text.index('## 13. Declared Limitations\n'):]
+    assert '\n### Adjudication Sheet Order\n\n' + SHEET_ORDER_TEXT \
+        in limitations
+    # The two statements themselves, read from the generated subsection
+    # (not from the constant above), so a rewording that drops either fails.
+    section = limitations.split('\n### Adjudication Sheet Order\n', 1)[1]
+    section = section.split('\n#', 1)[0]
+    assert 'in run order' in section
+    assert 'not blind to the condition' in section
 
 
 # -- _format_dim_result ---------------------------------------------------
 
-@pytest.mark.finding('T3-29', 'T3-4')
-def test_format_dim_result_d2_and_d7_point_to_sections():
-    # The helper behind the D2 and D7 rows of the section-level tests
-    # marked T3-4 and T3-29: fixing either changes these strings.
-    assert report._format_dim_result('D2', {'x': 1}) == \
-        'See \u00a79 D2 Mechanism Classes'
-    assert report._format_dim_result('D7', {'x': 1}) == \
-        'See \u00a74-7 D7 Figures'
-
-
 def test_format_dim_result_d1_defaults_counts_to_zero():
-    assert report._format_dim_result('D1', {'accuracy_rate': '0.5'}) == \
-        'Accuracy: 0.5 (auto-scored 0; 0 adjudicated not in rate)'
+    assert report._format_dim_result('D1', {'accuracy_rate': '0.5'}) == (
+        'Accuracy: 0.5 (base condition only; auto-scored 0; 0 adjudicated '
+        'not in rate)')
 
 
 # -- Boundaries: one observation, twenty-one rows -------------------------
@@ -1497,14 +2300,62 @@ def test_cells_duplicate_does_not_stop_later_cells():
 
 
 @pytest.mark.finding('T3-35')
-def test_cells_ev0_record_without_ids_reads_question_marks():
+def test_cells_ev0_record_without_ids_reads_dashes():
     text = report._section_unmeasured_cells({}, [
         {'evidence_class': 'EV-0 UNOBSERVABLE'}])
-    assert '| ? | ? | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |' \
-        in text
+    assert '| \u2014 | \u2014 | UNOBSERVABLE | Evidence class: EV-0 ' \
+        'UNOBSERVABLE |' in text
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.req('AP-1 D7.5')
+def test_clopper_pearson_section_k_above_zero_shows_bound_and_interval():
+    # For k > 0, §5 prints the one-sided 95% upper bound (D7.5) and,
+    # beside it, the two-sided 95% interval the published paper prints
+    # (2/10: 50.6902 %, and [2.52 %, 55.61 %]); for k = 0 the bound alone
+    # (0/10: 25.8866 %). The same at n = 500.
+    text = report._section_clopper_pearson({'invocation_figures': {
+        'a_k2_n10': {'failures': 2, 'n': 10},
+        'b_k0_n10': {'failures': 0, 'n': 10},
+        'c_k2_n500': {'failures': 2, 'n': 500},
+        'd_k0_n500': {'failures': 0, 'n': 500}}})
+    assert md(
+        '| a_k2_n10 | 2 | 10 | 8/10 (80.0%) | 0.506902 (50.6902%); '
+        'two-sided 95% interval [2.52%, 55.61%] | \u2014 |',
+        '| b_k0_n10 | 0 | 10 | 10/10 (100.0%) | 0.258866 (25.8866%) '
+        '| \u2014 |',
+        '| c_k2_n500 | 2 | 500 | 498/500 (99.6%) | 0.012538 (1.2538%); '
+        'two-sided 95% interval [0.04%, 1.44%] | \u2014 |',
+        '| d_k0_n500 | 0 | 500 | 500/500 (100.0%) | 0.005974 (0.5974%) '
+        '| \u2014 |') in text
+    assert ('(8/10; 2 not invoked; one-sided 95% upper bound on the failure '
+            'rate 50.6902%; two-sided 95% interval [2.52%, 55.61%]), under '
+            'a_k2_n10.') in text
+    assert ('(10/10; 0 not invoked; one-sided 95% upper bound on the '
+            'failure rate 25.8866%), under b_k0_n10.') in text
+
+
+@pytest.mark.req('AP-1 D7.5')
+@pytest.mark.parametrize('k, n, one_sided, two_sided', [
+    (2, 10, '50.6902', '[2.52%, 55.61%]'),
+    (0, 10, '25.8866', '[0.00%, 30.85%]'),
+    (2, 500, '1.2538', '[0.04%, 1.44%]'),
+    (0, 500, '0.5974', '[0.00%, 0.74%]')])
+def test_one_sided_bound_and_two_sided_interval_as_printed(
+        k, n, one_sided, two_sided):
+    # Both numbers as §5 prints them: the one-sided 95% upper bound (D7.5)
+    # to 0.0001% rounded up, and the two-sided 95% interval the published
+    # paper prints (2/10: [2.52 %, 55.61 %]; 0/10: [0.00 %, 30.85 %]), its
+    # ends rounded outward to 0.01%. The exact ends, from the closed forms
+    # and the binomial tails: 2/10 0.0252107..., 0.5560954...; 0/10 0,
+    # 0.3084971...; 2/500 0.0004847..., 0.0143740...; 0/500 0, 0.0073506...
+    shown = report.round_up(report.clopper_pearson_upper(k, n) * 100,
+                            Decimal('0.0001'))
+    assert str(shown) == one_sided
+    assert report._interval_text(k, n) == \
+        f'two-sided 95% interval {two_sided}'
+
 
 def exact_cp_upper(k, n, alpha=Decimal('0.05')):
     """The exact one-sided 95 % Clopper-Pearson upper bound for k failures
@@ -1534,19 +2385,17 @@ def exact_cp_upper(k, n, alpha=Decimal('0.05')):
 
 def bound_cell_values(text, metric):
     """The numbers in the 95% Upper Bound cell of `metric`'s row in §5,
-    as fractions (a number followed by '%' divided by 100)."""
+    as fractions (a number followed by '%' divided by 100); not those of
+    the two-sided interval beside the bound."""
     row = next(line for line in text.splitlines()
                if line.startswith(f'| {metric} |'))
-    cell = row.split('|')[5]
+    cell = row.split('|')[5].split('; two-sided')[0]
     return cell, [Decimal(num) / (100 if pct else 1) for num, pct in
                   re.findall(r'(\d+(?:\.\d+)?)\s*(%?)', cell)]
 
 
 @pytest.mark.finding('T3-61')
 @pytest.mark.req('AP-1 D7.5', 'R0.4.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-61: report.py computes the D7.5 bound in '
-                          'float, apart from invocation.py')
 def test_clopper_pearson_upper_k0_is_the_decimal_bound_of_invocation():
     # SPEC R0.4.1: binary floating point is prohibited anywhere a value is
     # reported. Correct: one Decimal implementation of the D7.5 bound
@@ -1560,9 +2409,6 @@ def test_clopper_pearson_upper_k0_is_the_decimal_bound_of_invocation():
 
 @pytest.mark.finding('T3-61')
 @pytest.mark.req('AP-1 D7.5', 'R3.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-61: report §5 rounds the upper bound to '
-                          'nearest, not up')
 def test_clopper_pearson_section_bound_is_rounded_up():
     # Exact at n = 49: 0.05930601...; today shown "0.059306 (5.9306%)",
     # both below it. Correct: every displayed form is >= the exact bound.
@@ -1575,8 +2421,6 @@ def test_clopper_pearson_section_bound_is_rounded_up():
 
 @pytest.mark.finding('T3-81')
 @pytest.mark.req('AP-1 D7.5', 'R3.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-81: no D7.5 bound for k > 0 ("not computed")')
 def test_clopper_pearson_section_bounds_nonzero_failures():
     # AP-1 v1.3 D7.5: "Any invocation figure ... shall be reported with n
     # and with the exact one-sided 95% upper confidence bound on the
@@ -1607,9 +2451,6 @@ ACCURACY_ONE = re.compile(r'Accuracy(?: rate)?: 1(?:\.0+)?(?![\d./])')
 
 
 @pytest.mark.finding('T3-3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-3: "Accuracy: 1" headline from auto-scored '
-                          'items while 18 of 40 await adjudication')
 def test_dimension_results_d1_pending_adjudication_prints_no_rate_of_one():
     # Every wrong figure routes to adjudication (SPEC R2.0 step 4), so the
     # auto-scored rate is 1 whenever it is defined. Correct (T3-3;
@@ -1623,9 +2464,6 @@ def test_dimension_results_d1_pending_adjudication_prints_no_rate_of_one():
 
 
 @pytest.mark.finding('T3-3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-3: §8 prints "Accuracy rate: 1" while 18 '
-                          'items await adjudication')
 def test_scoring_proportions_d1_pending_adjudication_prints_no_rate_of_one():
     # Correct: as for §3, no rate of 1 from the auto-scored items alone
     # while adjudication is pending (T3-3).
@@ -1634,9 +2472,6 @@ def test_scoring_proportions_d1_pending_adjudication_prints_no_rate_of_one():
 
 
 @pytest.mark.finding('T3-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-4: §9 reads d2["surfaces"]; the live '
-                          '"<item>/<condition>" shape renders as no data')
 def test_d2_live_shape_renders_mechanism_per_surface():
     # build_summary passes D2 keyed '<item>/<condition>', one dict per
     # surface. Correct (SPEC R2.2, R3.3 "D2 mechanism classes per surface
@@ -1656,9 +2491,6 @@ def test_d2_live_shape_renders_mechanism_per_surface():
 
 
 @pytest.mark.finding('T3-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-4: §3 prints D2 "Measured" with n N/A for the '
-                          'live shape')
 def test_dimension_results_d2_live_shape_states_n():
     # Correct (AP-1 §6.1 "for each dimension, the result and the n"): the
     # D2 row gives its n (questions or runs), never N/A, when results exist.
@@ -1670,9 +2502,6 @@ def test_dimension_results_d2_live_shape_states_n():
 
 
 @pytest.mark.finding('T3-29')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-29: one "D7 Measured" row; D7.4 never declared '
-                          'not measured')
 def test_report_d7_claimed_declares_d74_not_measured():
     # AP-1 v1.3 D7: "Report all four" (D7.1-D7.4). The runner never
     # measures D7.4 (invocation under pressure). Correct: the report
@@ -1687,9 +2516,6 @@ def test_report_d7_claimed_declares_d74_not_measured():
 
 
 @pytest.mark.finding('T3-29')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-29: §12 does not declare the unobservable part '
-                          'of D7.3')
 def test_unmeasured_dimensions_declares_d73_unobservable_part():
     # Correct (T3-29; SPEC R3.3): with D7 claimed and D7.3 UNOBSERVABLE for
     # the adjudicated items, the declaration names D7.3 as only partly
@@ -1703,9 +2529,6 @@ def test_unmeasured_dimensions_declares_d73_unobservable_part():
 
 
 @pytest.mark.finding('T3-29')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-29: D7.2(b) and D7.3 tables carry no evidence '
-                          'class')
 def test_d72b_and_d73_figures_carry_their_evidence_class():
     # SPEC R3.3 "every D7 figure with its evidence class"; AP-1 D7.7
     # "Every D7 figure is reported with its evidence class". Correct: the
@@ -1720,27 +2543,79 @@ def test_d72b_and_d73_figures_carry_their_evidence_class():
     assert 'EV-2' in report._section_d73(summary)
 
 
-AP1_NAMES = {'D3': 'Provenance', 'D4': 'Refusal integrity', 'D5': 'Adversarial resistance',
+@pytest.mark.finding('T3-29')
+@pytest.mark.req('AP-1 D7.7', 'R3.3')
+def test_d7_outcome_counts_per_evidence_class_when_classes_differ():
+    # One EV-1 wrong operation beside one EV-2 correct one pools to the
+    # same counts as the reverse; per class, the sections differ.
+    def summary(wrong, right):
+        return {
+            'operation_correctness_counts': {'OPERATION-CORRECT': 1,
+                                             'WRONG-OPERATION': 1},
+            'provenance_outcomes': {'OPERANDS-GROUNDED': 1,
+                                    'OPERAND-ORIGINATED': 1},
+            'operand_step_counts': {1: 1, 5: 1},
+            'transcription_results': [tr('TRANSCRIBED-ALTERED', 1),
+                                      tr('TRANSCRIBED-EXACT', 2)],
+            'd7_outcomes_by_class': {
+                'D7.2(a)': {wrong: {'OPERAND-ORIGINATED': 1},
+                            right: {'OPERANDS-GROUNDED': 1}},
+                'D7.2(b)': {wrong: {'WRONG-OPERATION': 1},
+                            right: {'OPERATION-CORRECT': 1}},
+                'D7.3': {wrong: {'TRANSCRIBED-ALTERED': 1},
+                         right: {'TRANSCRIBED-EXACT': 1}}}}
+    one, other = summary(EV1, EV2), summary(EV2, EV1)
+    for section in (report._section_d72b_counts,
+                    report._section_operand_provenance,
+                    report._section_d73):
+        assert section(one) != section(other), section.__name__
+    head = ('Per evidence class (AP-1 D7.7: not comparable across '
+            'classes):\n',
+            '| Outcome | `EV-1 SELF-REPORTED` | `EV-2 PLATFORM-STRUCTURAL` |',
+            '|---|---|---|')
+    assert md(*head,
+              '| OPERATION-CORRECT | 0 | 1 |',
+              '| WRONG-OPERATION | 1 | 0 |',
+              '| OPERATION-UNOBSERVABLE | 0 | 0 |',
+              '| Total | 1 | 1 |\n') in report._section_d72b_counts(one)
+    assert md(*head,
+              '| OPERANDS-GROUNDED | 0 | 1 |',
+              '| OPERAND-ORIGINATED | 1 | 0 |',
+              '| OPERANDS-UNOBSERVABLE | 0 | 0 |',
+              '| UNMEASURABLE | 0 | 0 |',
+              '| Total | 1 | 1 |\n') in report._section_operand_provenance(one)
+    assert md(*head,
+              '| `TRANSCRIBED-EXACT` | 0 | 1 |',
+              '| `TRANSCRIBED-ALTERED` | 1 | 0 |',
+              '| `UNOBSERVABLE` | 0 | 0 |',
+              '| Total | 1 | 1 |\n') in report._section_d73(one)
+    # One class: the pooled table is the class's, and no per-class table
+    single = dict(one, d7_outcomes_by_class={
+        'D7.2(a)': {EV2: {'OPERANDS-GROUNDED': 2}},
+        'D7.2(b)': {EV2: {'OPERATION-CORRECT': 2}},
+        'D7.3': {EV2: {'TRANSCRIBED-EXACT': 2}}})
+    for section in (report._section_d72b_counts,
+                    report._section_operand_provenance,
+                    report._section_d73):
+        assert 'Per evidence class' not in section(single)
+
+
+AP1_NAMES = {'D2': 'Determinism', 'D3': 'Provenance',
+             'D4': 'Refusal integrity', 'D5': 'Adversarial resistance',
              'D6': 'Conflicting input', 'D7': 'Computation invocation'}
 
 
 @pytest.mark.finding('T3-33')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-33: §12 names D3-D6 and D7 with dimensions '
-                          'AP-1 does not define')
 def test_unmeasured_dimensions_use_ap1_names():
-    # AP-1 v1.3 §4: D3 Provenance, D4 Refusal integrity, D5 Adversarial
-    # resistance, D6 Conflicting input, D7 Computation invocation. Correct:
-    # §12 uses these names. (D2 is "Determinism" in AP-1 v1.3 but
-    # "Reproducibility" in SPEC and the code alike; not asserted here.)
+    # AP-1 v1.3 §4: D2 Determinism, D3 Provenance, D4 Refusal integrity,
+    # D5 Adversarial resistance, D6 Conflicting input, D7 Computation
+    # invocation. Correct: §12 uses these names.
     text = report._section_unmeasured_dimensions({})
     for dim, name in AP1_NAMES.items():
         assert re.search(rf'\*\*{dim}\*\*: {name}\b', text), (dim, text)
 
 
 @pytest.mark.finding('T3-33')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-33: §8 labels D7 "Provenance"')
 def test_scoring_proportions_d7_labelled_computation_invocation():
     # D7 is "Computation invocation" (AP-1 v1.3 §4); "Provenance" is D3.
     text = report._section_scoring_proportions({'d7_results': {
@@ -1750,9 +2625,6 @@ def test_scoring_proportions_d7_labelled_computation_invocation():
 
 
 @pytest.mark.finding('T3-33')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-33: §4 cites §6.4 for non-comparability; the '
-                          'clause is D7.7')
 def test_d7_figures_cite_d77_for_non_comparability():
     # AP-1 v1.3 D7.7: "Figures resting on different classes are not
     # comparable". §6.4 is about discretionary correctness.
@@ -1763,9 +2635,6 @@ def test_d7_figures_cite_d77_for_non_comparability():
 
 
 @pytest.mark.finding('S3-G6-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G6-2: §12 says unclaimed D1, D2 and D7 require '
-                          'human adjudication')
 def test_unmeasured_dimensions_auto_dimensions_not_said_to_need_adjudication():
     # The runner measures D1 (partly), D2 and D7 automatically (SPEC §1.1);
     # only D3-D6 need human adjudication (SPEC §1.2). Correct: §12 does
@@ -1778,9 +2647,6 @@ def test_unmeasured_dimensions_auto_dimensions_not_said_to_need_adjudication():
 
 
 @pytest.mark.finding('T3-35')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: §10 de-duplicates cells on (item, '
-                          'condition, status)')
 def test_cells_each_repeat_listed_with_its_reason():
     # SPEC R3.3 "every UNMEASURED, UNOBSERVABLE, UNMEASURABLE and VOID cell
     # with its reason". Correct: 49 rate-limited repeats are 49 rows.
@@ -1793,10 +2659,6 @@ def test_cells_each_repeat_listed_with_its_reason():
 
 
 @pytest.mark.finding('T3-35')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: figure UNMEASURABLE, transcription '
-                          'UNOBSERVABLE and COVERAGE-UNOBSERVABLE cells are '
-                          'not listed')
 def test_cells_other_non_outcome_kinds_listed():
     # Correct (SPEC R3.3): every non-outcome cell, whatever measurement it
     # belongs to, is listed.
@@ -1819,9 +2681,6 @@ def test_cells_other_non_outcome_kinds_listed():
 
 
 @pytest.mark.finding('T3-35')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: one transport failure is listed three '
-                          'times')
 def test_cells_one_failure_is_one_row():
     # The summary's UNMEASURED cell, the transcript's error_state and its
     # EV-0 class are the same execution. Correct: one row per cell.
@@ -1837,9 +2696,6 @@ def test_cells_one_failure_is_one_row():
 
 
 @pytest.mark.finding('T3-35')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: §10 appends transcript cells to the '
-                          "caller's summary in place")
 def test_cells_leave_the_summary_unchanged():
     # Correct: rendering a section has no side effect on its input.
     summary = {'non_outcome_cells': []}
@@ -1865,9 +2721,6 @@ def test_cells_non_string_error_state_with_colon_is_listed():
 
 
 @pytest.mark.finding('T3-45')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-45: report.md has no demonstration-run / '
-                          'non-conformance statement')
 def test_report_header_says_demonstration_run_not_conformance_result():
     # README: runs are described as demonstration runs, not
     # conformance results; the README says so (lines 21-22). Correct: the
@@ -1881,9 +2734,6 @@ def test_report_header_says_demonstration_run_not_conformance_result():
 
 
 @pytest.mark.finding('T3-64')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-64: §6 renders '?' for Operation and Operand "
-                          'with live audit entries')
 def test_d72a_audit_live_entries_show_the_operand():
     # The live entries (runner/summary.build_summary) carry 'value' and
     # 'literal'. Correct (SPEC R3.3 "the D7.2 originated-operand listing";
@@ -1899,9 +2749,6 @@ def test_d72a_audit_live_entries_show_the_operand():
 
 
 @pytest.mark.finding('T3-66')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-66: §8 total (auto + adjudicated) differs from '
-                          '§3 n; UNMEASURABLE not shown')
 def test_scoring_proportions_d1_total_is_n_with_unmeasurable_shown():
     # Correct (SPEC R2.1: auto-scored and adjudicated n stated, never
     # merged silently; T3-66): one n for D1 in §3 and §8, with the
@@ -2022,37 +2869,49 @@ def _shown(value):
 
 @pytest.mark.proposal(
     "T3-32: the summary carries D1 per category as d1_results['by_category']"
-    "[category] with n, correct and incorrect (the step-3 pin's shape), and "
-    'the 95 % interval is Clopper-Pearson or Wilson; both are the '
-    "author's proposal")
+    "[category] in the shape summarise_accuracy_by_category returns (n "
+    "questions, correct_questions, interval); the 95 % interval is "
+    "Clopper-Pearson or Wilson; both are the author's proposal")
 @pytest.mark.finding('T3-32')
 @pytest.mark.req('AP-1 D1', 'R3.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-32: D1 is one pooled rate, not per category '
-                          'with a 95 % interval')
 def test_dimension_results_d1_per_category_with_n_and_interval():
     # AP-1 v1.3 D1: "Results reported per category, with 95% confidence
     # intervals, and with n stated"; SPEC R0.1: at least 10 items per
-    # category. Two categories at or above the minimum, every item
-    # auto-scored (no adjudication, so T3-3 does not apply): interest 9 of
-    # 12 correct, fees 10 of 10. Each category's row in section 3 states
-    # its n and both bounds of its interval, computed here.
-    by_category = {'interest': {'n': 12, 'correct': 9, 'incorrect': 3},
-                   'fees': {'n': 10, 'correct': 10, 'incorrect': 0}}
+    # category. Two categories at or above the minimum, every execution
+    # auto-scored (no adjudication, so T3-3 does not apply), two
+    # executions per question: interest 9 of 12 questions correct, fees
+    # 10 of 10. The summary is built from those executions by the
+    # summariser; each category's row in section 3 states its n, its
+    # result and both bounds of its interval, each computed here.
+    from ap1_run.scoring.accuracy import (
+        CORRECT, INCORRECT, summarise_accuracy_by_category)
+    counts = {'interest': (12, 9), 'fees': (10, 10)}
+    categories, results = {}, []
+    for category, (n, k) in counts.items():
+        for i in range(n):
+            item_id = f'{category}-{i:02d}'
+            categories[item_id] = category
+            second = CORRECT if i < k else INCORRECT
+            results += [{'item_id': item_id, 'condition': 'base',
+                         'outcome': CORRECT},
+                        {'item_id': item_id, 'condition': 'base',
+                         'outcome': second}]
     d1 = {'n': 22, 'auto_scored_n': 22, 'adjudicated_n': 0,
-          'unmeasurable_n': 0, 'correct': 19, 'incorrect': 3,
+          'unmeasurable_n': 0, 'correct': 41, 'incorrect': 3,
           'no_figure': 0, 'accuracy_rate': Decimal(19) / Decimal(22),
-          'by_category': by_category}
+          'by_category': summarise_accuracy_by_category(results,
+                                                        categories)}
     text = report._section_dimension_results(
         {'d1_results': d1}, {'dimensions_claimed': ['D1']})
     bad = []
-    for category, c in by_category.items():
+    for category, (n, k) in counts.items():
         rows = [line for line in text.splitlines()
                 if re.search(rf'\b{category}\b', line)]
-        intervals = [_clopper_pearson(c['correct'], c['n']),
-                     _wilson(c['correct'], c['n'])]
+        intervals = [_clopper_pearson(k, n), _wilson(k, n)]
         ok = [line for line in rows
-              if re.search(rf'(\bn\s*=\s*|\|\s*){c["n"]}\b', line)
+              if re.search(rf'(\bn\s*=\s*|\|\s*){n}\b', line)
+              and f'{k}/{n}' in line
+              and any(f'{s}%' in line for s in _shown(k / n))
               and any(any(s in line for s in _shown(lo))
                       and any(s in line for s in _shown(hi))
                       for lo, hi in intervals)]
@@ -2104,9 +2963,69 @@ def test_clopper_pearson_section_lists_failing_questions_beside_k():
             'failures': 0, 'n': 10, 'condition': 'base',
             'evidence_class': EV2, 'failing_questions': []}}})
     assert (f'| d7_invocation_instruction_removed | 2 (Q02 48/50, Q06 21/50) '
-            f'| 10 | 8/10 (80.0%) | *not computed (see §Declared '
-            f'Limitations)* | `{EV2}` |') in text
+            f'| 10 | 8/10 (80.0%) | 0.506902 (50.6902%); two-sided 95% '
+            f'interval [2.52%, 55.61%] | `{EV2}` |') in text
     assert f'| d7_invocation_base | 0 | 10 | 10/10 (100.0%) |' in text
+
+
+# -- Served model and fingerprints (V12-8) -------------------------------
+
+@pytest.mark.finding('V12-8')
+@pytest.mark.req('AP-1 §5.2')
+def test_report_header_records_served_model_and_fingerprints():
+    text = generate_report(summary={'served': {
+        'models': {'m-2026-01-01': 4},
+        'fingerprints': {'fp_b': 1, 'fp_a': 3}}},
+        config=CONFIG, seal_record={})
+    head = text[:text.index('## 1.')]
+    assert ('Model: test-model\n\n'
+            'Served model (as the responses report it, with responses): '
+            'm-2026-01-01 (4)\n\n'
+            'Backend fingerprints (system_fingerprint): fp_a (3), '
+            'fp_b (1)\n\n'
+            '> Freezing (AP-1 §5.2): not shown: more than one served model '
+            'or backend fingerprint; the run does not show that the system '
+            'under test was frozen for its duration.\n\n'
+            '> **Demonstration run') in head
+
+
+FREEZE = '> Freezing (AP-1 \u00a75.2): '
+
+
+@pytest.mark.finding('V12-8')
+@pytest.mark.req('AP-1 §5.2')
+@pytest.mark.parametrize('served, status', [
+    ({'models': {'a': 1, 'b': 1}, 'fingerprints': {}, 'responses': 2},
+     'not shown: more than one served model or backend fingerprint; the '
+     'run does not show that the system under test was frozen for its '
+     'duration.'),
+    ({'models': {'a': 2}, 'fingerprints': {'f': 2}, 'responses': 2},
+     'not verified by the runner; consistent with a frozen system: all 2 '
+     'responses report one served model and one backend fingerprint.'),
+    # One model and no fingerprint: every mock run, and any endpoint
+    # that sends no system_fingerprint. Silence was the old output.
+    ({'models': {'a': 2}, 'fingerprints': {}, 'responses': 2},
+     'not verified: the responses report no backend fingerprint.'),
+    ({'models': {'a': 2}, 'fingerprints': {'f': 1}, 'responses': 3},
+     'not verified: 1 of 3 responses report no served model; 2 of 3 '
+     'responses report no backend fingerprint.'),
+    ({'models': {}, 'fingerprints': {}, 'responses': 0},
+     'not verified: no response was received.'),
+    # A summary without the response count (written before it existed)
+    ({'models': {'a': 2}, 'fingerprints': {'f': 2}},
+     'not verified: the number of responses is not recorded.'),
+])
+def test_served_lines_always_state_the_freeze_status(served, status):
+    text = report._served_lines(served)
+    assert text.endswith(f'\n{FREEZE}{status}\n'), text
+    if not served['fingerprints']:
+        assert 'Backend fingerprints (system_fingerprint): not reported\n' \
+            in text
+
+
+def test_report_header_without_served_data_has_no_served_lines():
+    text = generate_report(summary={}, config=CONFIG, seal_record={})
+    assert 'Served model' not in text
 
 
 # -- 9b. D2.2 execution conditions -----------------------------------------
@@ -2184,3 +3103,123 @@ def test_d2_conditions_names_a_seed_sent():
     assert ('- Deterministic or batch-invariant mode: none requested by the '
             'runner beyond the `seed` sent (`7`); whether the endpoint honours '
             'it, or enables such a mode, is not disclosed.\n') in text
+
+
+# -- section 8: AP-1 v1.3 section 6.8 answer outcomes ----------------------
+
+ANSWER_OUTCOMES = {
+    'outcomes': {'ORIGINATED': 1, 'COMPUTED': 5},
+    'no_outcome': {'correct figure, calculator not shown used': 2,
+                   'calculator used, operands not shown grounded': 3,
+                   'no figure found (AUTO-NO-FIGURE)': 4,
+                   'routed to adjudication': 7},
+    'other_reasons': {}}
+
+
+@pytest.mark.finding('T3-13')
+@pytest.mark.req('AP-1 §6.8', 'R3.3')
+def test_scoring_proportions_section_6_8_outcome_count_table():
+    # One row per outcome present, with its count, a row for the
+    # responses routed to adjudication and one for those with no
+    # automatic outcome; the counts sum to the executions scored
+    text = report._section_scoring_proportions(
+        {'d7_results': {'n': 22, 'auto_scored_n': 15, 'adjudicated_n': 7},
+         'answer_outcomes': ANSWER_OUTCOMES})
+    table = text[text.index('### AP-1 \u00a76.8 Answer Outcomes'):]
+    rows = [line for line in table.split('\n') if line.startswith('| ')]
+    assert rows[:6] == [
+        '| Outcome | Count |',
+        '| `COMPUTED` | 5 |',
+        '| `ORIGINATED` | 1 |',
+        '| Routed to adjudication (the scorers assign the outcome) | 7 |',
+        '| No automatic outcome (by kind below) | 9 |',
+        '| **Total (executions scored)** | **22** |']
+    # only the outcomes present
+    assert '`RETRIEVED`' not in table and '`WRONG-SCOPE`' not in table
+    # the Total row is the D7 n of executions scored, counted apart
+    assert _total_row(table) == 22
+
+
+def _total_row(text):
+    """The number in the section 6.8 table's Total row."""
+    [row] = [line for line in text.split('\n')
+             if line.startswith('| **Total (executions scored)** |')]
+    return int(row.split('|')[2].strip().strip('*'))
+
+
+@pytest.mark.proposal(
+    "the listing of responses with no automatic \u00a76.8 outcome, by kind "
+    "with a count, is the fix's format; AP-1 v1.3 gives every response one "
+    "outcome and names no such kinds")
+@pytest.mark.finding('T3-13')
+@pytest.mark.req('AP-1 §6.8', 'R3.3')
+def test_scoring_proportions_lists_responses_without_outcome_by_kind():
+    # The kinds AP-1's labels don't fit automatically stay unlabelled
+    # and are listed by kind, with a count: correct but the calculator
+    # not shown used (worked out "in its head"), operands unobservable,
+    # no figure found, and a matched figure D1 does not score correct.
+    # One response of each, scored by answer_outcome and counted by
+    # build_summary, as a run does; a VOID execution is not scored.
+    from ap1_run.runner.summary import build_summary
+    from ap1_run.scoring.answer_outcome import answer_outcome
+    grounded = [{'outcome': 'OPERANDS-GROUNDED'}]
+    responses = [('AUTO-MATCH', 'INVOKED', grounded, 'CORRECT'),
+                 ('AUTO-MATCH', 'NOT-INVOKED', [], 'CORRECT'),
+                 ('AUTO-MATCH', 'INVOKED',
+                  [{'outcome': 'OPERANDS-UNOBSERVABLE'}], 'CORRECT'),
+                 ('AUTO-NO-FIGURE', 'INVOKED', grounded, 'NO-FIGURE'),
+                 ('AUTO-MATCH', 'INVOKED', grounded, 'INCORRECT')]
+    results = []
+    for i, (figure, invocation, provenance, accuracy) in enumerate(responses):
+        outcome, reason = answer_outcome(figure, invocation, provenance,
+                                         accuracy_outcome=accuracy)
+        results.append({'item_id': f'Q{i}', 'condition': 'base',
+                        'repeat': 1, 'status': 'EXECUTED',
+                        'figure_outcome': figure,
+                        'invocation_outcome': invocation,
+                        'answer_outcome': outcome,
+                        'answer_outcome_reason': reason})
+    results.append({'item_id': 'Q9', 'condition': 'base', 'repeat': 1,
+                    'status': 'VOID'})
+    text = report._section_scoring_proportions(build_summary(results, []))
+    assert '| `COMPUTED` | 1 |' in text
+    assert '| No automatic outcome (by kind below) | 4 |' in text
+    # the Total row is the executions scored, counted from the results
+    assert _total_row(text) == sum(
+        1 for r in results if r['status'] == 'EXECUTED') == 5
+    listing = text[text.index('#### No Automatic Outcome, by Kind'):]
+    assert listing == md(
+        '#### No Automatic Outcome, by Kind\n',
+        '| Kind | Count |',
+        '|---|---|',
+        '| correct figure, calculator not shown used | 1 |',
+        '| calculator used, operands not shown grounded | 1 |',
+        '| no figure found (AUTO-NO-FIGURE) | 1 |',
+        '| figure matched, D1 does not score it correct | 1 |',
+        '')
+    # counts per kind, in the listing's order
+    counted = report._section_scoring_proportions(
+        {'answer_outcomes': ANSWER_OUTCOMES})
+    assert counted.endswith(md(
+        '| correct figure, calculator not shown used | 2 |',
+        '| calculator used, operands not shown grounded | 3 |',
+        '| no figure found (AUTO-NO-FIGURE) | 4 |', ''))
+    # a reason of no known kind is listed by its text
+    other = dict(ANSWER_OUTCOMES, no_outcome={'other': 2},
+                 other_reasons={'some reason': 2})
+    assert '| other: some reason | 2 |' in \
+        report._section_scoring_proportions({'answer_outcomes': other})
+
+
+@pytest.mark.finding('T3-13')
+def test_scoring_proportions_every_response_with_an_outcome():
+    text = report._section_scoring_proportions({'answer_outcomes': {
+        'outcomes': {'COMPUTED': 3}, 'no_outcome': {}, 'other_reasons': {}}})
+    assert '| **Total (executions scored)** | **3** |' in text
+    assert text.endswith(
+        '#### No Automatic Outcome, by Kind\n\nNone: every response not '
+        'routed to adjudication has an outcome.\n')
+
+
+def test_scoring_proportions_without_answer_outcomes_has_no_table():
+    assert '6.8' not in report._section_scoring_proportions({})

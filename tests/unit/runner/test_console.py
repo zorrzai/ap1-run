@@ -175,9 +175,9 @@ def test_run_report_with_results(capsys):
         # its observed repeats, beside k.
         '  base: invoked=1 not_invoked=2 (Q02 1/1, Q03 1/1) n=3\n'
         '    no evidence class executions: 2 UNOBSERVABLE, not in n\n'
-        '    failure rate: 2/3 (66.7%)\n'
+        '    failure rate: 2/3 (66.7%); one-sided 95% upper bound on the failure rate 98.4%\n'
         '  instruction_removed: invoked=1 not_invoked=1 (Q05 1/1) n=2\n'
-        '    failure rate: 1/2 (50.0%)\n'
+        '    failure rate: 1/2 (50.0%); one-sided 95% upper bound on the failure rate 97.5%\n'
         '\n3h2. D7.3 TRANSCRIPTION:\n'
         '  TRANSCRIBED-EXACT: 2\n'
         '  TRANSCRIBED-ALTERED: 0\n'
@@ -245,24 +245,28 @@ PROVENANCE = (
 
 
 @PROVISIONAL
-@pytest.mark.finding('T3-16')
+@pytest.mark.finding('T3-16', 'T3-3', 'T3-66')
 def test_scoring_report_full(capsys):
-    d1 = {'auto_scored_n': 50, 'adjudicated_n': 10, 'correct': 40,
-          'incorrect': 8, 'no_figure': 2, 'accuracy_rate': '40/50'}
+    # T3-3: no rate while items await adjudication (every wrong figure is
+    # among them, SPEC R2.0); T3-66: UNMEASURABLE shown.
+    d1 = {'auto_scored_n': 50, 'adjudicated_n': 10, 'unmeasurable_n': 1,
+          'correct': 40, 'incorrect': 8, 'no_figure': 2,
+          'accuracy_rate': '40/50'}
     d2 = {'Q01/base': {'figures': {'mechanism': 'OBSERVED-ONLY'},
                        'prose': {'mechanism': 'UNMEASURED'}},
           'Q02/base': {'figures': {'mechanism': 'OBSERVED-ONLY'},
                        'prose': {'mechanism': 'OBSERVED-ONLY'}}}
     print_scoring_report(d1, d2, 'D2.2 cap: why', SUMMARY)
     assert capsys.readouterr().out == (
-        '\n3j. D1 ACCURACY:\n'
+        '\n3j. D1 ACCURACY (base condition only):\n'
         '  Auto-scored: 50\n'
         '  Adjudicated: 10\n'
         '  Correct: 40\n'
         '  Incorrect: 8\n'
         '  No figure: 2\n'
-        '  Accuracy rate: 40/50\n'
-        '\n3k. D2 REPRODUCIBILITY:\n'
+        '  Unmeasurable: 1\n'
+        '  Accuracy rate: not computed (11 items await adjudication)\n'
+        '\n3k. D2 DETERMINISM:\n'
         '  CAP: D2.2 cap: why\n'
         '  OBSERVED-ONLY: 3\n'
         '  UNMEASURED: 1\n' + PROVENANCE)
@@ -273,13 +277,14 @@ def test_scoring_report_full(capsys):
 def test_scoring_report_defaults_when_values_are_missing(capsys):
     print_scoring_report({'n': 0}, {}, None, {})
     assert capsys.readouterr().out == (
-        '\n3j. D1 ACCURACY:\n'
+        '\n3j. D1 ACCURACY (base condition only):\n'
         '  Auto-scored: 0\n'
         '  Adjudicated: 0\n'
         '  Correct: 0\n'
         '  Incorrect: 0\n'
         '  No figure: 0\n'
-        '\n3k. D2 REPRODUCIBILITY:\n'
+        '  Unmeasurable: 0\n'
+        '\n3k. D2 DETERMINISM:\n'
         '\n3l. D7.2(a) OPERAND PROVENANCE:\n'
         '  step 1 (source match):       0\n'
         '  step 1 (declared constant):  0\n'
@@ -295,13 +300,36 @@ def test_scoring_report_defaults_when_values_are_missing(capsys):
         '  UNMEASURABLE: 0\n')
 
 
+@pytest.mark.finding('T3-3')
+@pytest.mark.parametrize('pending', [{}, {'adjudicated_n': 0,
+                                          'unmeasurable_n': 0}])
+def test_scoring_report_rate_printed_when_nothing_awaits_adjudication(
+        capsys, pending):
+    print_scoring_report(dict({'auto_scored_n': 5, 'correct': 4,
+                               'incorrect': 1, 'accuracy_rate': '0.8'},
+                              **pending), {}, None, {})
+    assert '  Unmeasurable: 0\n  Accuracy rate: 0.8\n\n3k.' in \
+        capsys.readouterr().out
+
+
+@pytest.mark.finding('T3-3')
+@pytest.mark.parametrize('adj, unm', [(1, 0), (0, 1)])
+def test_scoring_report_no_rate_while_any_item_awaits_adjudication(
+        capsys, adj, unm):
+    print_scoring_report({'auto_scored_n': 5, 'adjudicated_n': adj,
+                          'unmeasurable_n': unm, 'accuracy_rate': '1'},
+                         {}, None, {})
+    assert '  Accuracy rate: not computed (1 items await adjudication)\n' \
+        in capsys.readouterr().out
+
+
 @PROVISIONAL
 @pytest.mark.finding('T3-16')
 def test_scoring_report_without_d1_summary(capsys):
     print_scoring_report({}, {}, None, SUMMARY)
     assert capsys.readouterr().out == (
-        '\n3j. D1 ACCURACY:\n'
-        '\n3k. D2 REPRODUCIBILITY:\n' + PROVENANCE)
+        '\n3j. D1 ACCURACY (base condition only):\n'
+        '\n3k. D2 DETERMINISM:\n' + PROVENANCE)
 
 
 @PROVISIONAL
@@ -315,7 +343,8 @@ def test_run_report_single_execution(capsys):
     out = run_report(capsys, results)
     assert '  Auto-scored: 0/1 (0%)\n  Adjudicated: 1/1 (100%)\n' in out
     assert ('  base: invoked=0 not_invoked=1 (Q01 1/1) n=1\n'
-            '    failure rate: 1/1 (100.0%)\n') in out
+            '    failure rate: 1/1 (100.0%); one-sided 95% upper bound on the failure rate '
+            '100.0%\n') in out
     assert out.endswith(
         '  WRONG-OPERATION: 1\n'
         '  OPERATION-UNOBSERVABLE: 0\n'
@@ -456,7 +485,8 @@ def test_run_report_3h_two_observed_classes_rate_per_class(capsys):
         '    aggregate spans 2 evidence classes (EV-1 SELF-REPORTED, '
         'EV-2 PLATFORM-STRUCTURAL); figures are not comparable across '
         'classes\n'
-        '    failure rate (EV-1 SELF-REPORTED): 1/1 (100.0%)\n'
+        '    failure rate (EV-1 SELF-REPORTED): 1/1 (100.0%); one-sided 95% upper bound on the failure rate '
+        '100.0%\n'
         '    failure rate (EV-2 PLATFORM-STRUCTURAL): 0/1 failures; '
         'one-sided 95% upper bound on the failure rate 95.0%\n') in out
 

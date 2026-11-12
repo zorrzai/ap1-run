@@ -8,6 +8,14 @@ Version DOI: 10.5281/zenodo.21755443
 
 Model: mock-model
 
+Served model (as the responses report it, with responses): mock-model (120)
+
+Backend fingerprints (system_fingerprint): not reported
+
+> Freezing (AP-1 §5.2): not verified: the responses report no backend fingerprint.
+
+> **Demonstration run, not a conformance result.** ap1-run implements the AP-1 v1.3 Draft for Comment; v1.2 remains the version in force. A run of this instrument is a demonstration run, not a conformance result under either version (README, "Which version of AP-1").
+
 ---
 
 ## 1. Pre-Registration Record
@@ -23,6 +31,7 @@ Model: mock-model
 | `expected_values_hash` | `81d9b435264ddbb032c5744342df577d691e9766fd566dc75632b34bc6dd46ca` |
 | `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
 | `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
+| `lookup_collisions` | `none` |
 | `package_versions` | `<ENVIRONMENT>` |
 | `platform` | `<ENVIRONMENT>` |
 | `python_version` | `<ENVIRONMENT>` |
@@ -119,17 +128,21 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 180 records.
 
 | Dimension | Status | n | Result |
 |---|---|---|---|
-| D1 | **NOT MEASURED** | — | — |
-| D2 | Measured | N/A | See §9 D2 Mechanism Classes |
-| D3 | **NOT MEASURED** | — | — |
-| D4 | **NOT MEASURED** | — | — |
-| D5 | **NOT MEASURED** | — | — |
-| D6 | **NOT MEASURED** | — | — |
-| D7 | Measured | 60 | See §4-7 D7 Figures |
+| D1 | not claimed | — | not claimed in this configuration (the runner auto-scores it) (§12) |
+| D2 | Measured | 10 × 3 | figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20; below AP-1 D2's 10 × 50 (§9) |
+| D3 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
+| D4 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
+| D5 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
+| D6 | not claimed | — | requires human adjudication; the runner does not measure it (§12) |
+| D7 | Partly measured | 60 | D7.1 measured, D7.2 measured, D7.3 measured; D7.4 not measured (§12) |
+| D7.1 | Measured | see §5 | Invocation rate per condition (§5): base measured (n = 10, EV-2 PLATFORM-STRUCTURAL); instruction_removed measured (n = 10, EV-2 PLATFORM-STRUCTURAL) |
+| D7.2 | Measured | see §6-7b | (a) operand provenance measured: 60 calls (§6, §7b); (b) operation correctness measured: 60 operations (§7) |
+| D7.3 | Measured | 60 | Transcription fidelity (D7.3 section): measured: 60 executions |
+| D7.4 | **NOT MEASURED** | — | Invocation under pressure (§12) |
 
 ## 4. D7 Figures by Evidence Class
 
-> Figures resting on different evidence classes are not comparable (AP-1 v1.3 §6.4).
+> Figures resting on different evidence classes are not comparable (AP-1 v1.3 D7.7).
 
 | Evidence Class | Count |
 |---|---|
@@ -202,6 +215,8 @@ Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 180 records.
 
 ## D7.3 Transcription Fidelity
 
+Evidence class (AP-1 D7.7), executions: `EV-2 PLATFORM-STRUCTURAL` (60).
+
 ### A. Transcription Check
 
 > Compares EVERY return of the required operation to the single 
@@ -264,6 +279,8 @@ DPR (drop-in-performance ratio, (I_base - I_removed) / I_base): 0.0%
 
 ## 7. D7.2(b) Operation Correctness
 
+Evidence class (AP-1 D7.7), executions: `EV-2 PLATFORM-STRUCTURAL` (60).
+
 Total operations evaluated: 60
 
 | Outcome | Count |
@@ -302,22 +319,38 @@ Total operands resolved: 264
 
 ## 8. Scoring Proportions
 
-### D1 Accuracy
+### D1 Accuracy (base condition only)
+
+- Auto-scored: 30
+- Adjudicated: 0
+- Unmeasurable: 0 (response unreadable, routed to adjudication)
+- Total: 30
+- Auto-scored proportion: 30/30 = 100.00%
+- Accuracy rate: 1 (computed from 30 auto-scored items only; 0 adjudicated items are not represented in this rate)
+
+### D7 Computation invocation
 
 - Auto-scored: 60
 - Adjudicated: 0
 - Total: 60
 - Auto-scored proportion: 60/60 = 100.00%
-- Accuracy rate: 1 (computed from 60 auto-scored items only; 0 adjudicated items are not represented in this rate)
 
-### D7 Provenance
+### AP-1 §6.8 Answer Outcomes
 
-- Auto-scored: 60
-- Adjudicated: 0
-- Total: 60
-- Auto-scored proportion: 60/60 = 100.00%
+> AP-1 v1.3 §6.8: every response is scored as exactly one of COMPUTED, RETRIEVED, MODEL-DECLINED, CLASSIFIER-REFUSED, ORIGINATED and WRONG-SCOPE. The runner assigns an outcome where the record decides it; the scorers assign it to a response routed to adjudication; the rest have no automatic outcome and are listed below by kind.
 
-## 9. D2 Reproducibility Mechanism Classes
+| Outcome | Count |
+|---|---|
+| `COMPUTED` | 60 |
+| Routed to adjudication (the scorers assign the outcome) | 0 |
+| No automatic outcome (by kind below) | 0 |
+| **Total (executions scored)** | **60** |
+
+#### No Automatic Outcome, by Kind
+
+None: every response not routed to adjudication has an outcome.
+
+## 9. D2 Determinism Mechanism Classes
 
 > **D2.2 cap: temperature was platform-rejected. Detail: OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported.**
 
@@ -325,8 +358,60 @@ Total operands resolved: 264
 
 > D2 is auto-measured. STRUCTURAL and CONFIGURED are operator-declared; OBSERVED-ONLY and UNMEASURED are determined from evidence.
 
-*No per-surface D2 data available.*
+> Figures surface: each run's identified answer, its released figure or else the one value it states. An answer not identified (a decline, no figure, several figures) is unresolved: counted, never a value, and never evidence that the answers were stable. A question-condition with one is UNMEASURED unless its identified answers already differ, counted then as at least that many.
 
+n = 10 questions × 3 runs, per condition.
+
+> **Below AP-1 D2's 10 × 50: n = 10 × 3** (AP-1 D2: minimum 10 questions × minimum 50 runs). The runner accepts any run count and classifies on what was run.
+
+Operator's declaration (settings field `d2_declared`): none, so no surface is STRUCTURAL or CONFIGURED.
+
+Left out of the comparison: none.
+
+Classes per surface, over question-conditions: figures: OBSERVED-ONLY 20; prose: OBSERVED-ONLY 20.
+
+| Question | Condition | Surface | Mechanism Class | Basis | Distinct Values | Runs | Parameter Echo |
+|---|---|---|---|---|---|---|---|
+| Q01 | base | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 15.20 | 3 | `UNVERIFIED` |
+| Q01 | base | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q01 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 15.20 | 3 | `UNVERIFIED` |
+| Q01 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q02 | base | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 2600.00 | 3 | `UNVERIFIED` |
+| Q02 | base | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q02 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 2600.00 | 3 | `UNVERIFIED` |
+| Q02 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q03 | base | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 36.00 | 3 | `UNVERIFIED` |
+| Q03 | base | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q03 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 36.00 | 3 | `UNVERIFIED` |
+| Q03 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q04 | base | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 430.75 | 3 | `UNVERIFIED` |
+| Q04 | base | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q04 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 430.75 | 3 | `UNVERIFIED` |
+| Q04 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q05 | base | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 2411.00 | 3 | `UNVERIFIED` |
+| Q05 | base | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q05 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 2411.00 | 3 | `UNVERIFIED` |
+| Q05 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q06 | base | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 144.00 | 3 | `UNVERIFIED` |
+| Q06 | base | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q06 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 144.00 | 3 | `UNVERIFIED` |
+| Q06 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q07 | base | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 777.41 | 3 | `UNVERIFIED` |
+| Q07 | base | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q07 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 777.41 | 3 | `UNVERIFIED` |
+| Q07 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q08 | base | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 287069.25 | 3 | `UNVERIFIED` |
+| Q08 | base | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q08 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 287069.25 | 3 | `UNVERIFIED` |
+| Q08 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q09 | base | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 3.20 | 3 | `UNVERIFIED` |
+| Q09 | base | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q09 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 3.20 | 3 | `UNVERIFIED` |
+| Q09 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q10 | base | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 3109.65 | 3 | `UNVERIFIED` |
+| Q10 | base | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
+| Q10 | instruction_removed | figures | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1: 3109.65 | 3 | `UNVERIFIED` |
+| Q10 | instruction_removed | prose | `OBSERVED-ONLY` | evidence: observed over 3 runs; not operator-declared | 1 | 3 | `UNVERIFIED` |
 
 ## 9b. D2.2 Execution Conditions
 
@@ -355,18 +440,28 @@ Total operands resolved: 264
 
 > A dimension not measured is declared, never omitted.
 
-The following dimensions were **not measured** in this evaluation and require human adjudication:
+The following dimensions were **not measured** in this evaluation:
 
-- **D1**: Accuracy — requires item-level scoring
-- **D3**: Completeness of explanation — requires human adjudication
-- **D4**: Appropriate caveats — requires human adjudication
-- **D5**: Source attribution — requires human adjudication
-- **D6**: Confidence calibration — requires human adjudication
+- **D1**: Accuracy — not claimed in this configuration (the runner auto-scores it)
+- **D3**: Provenance — requires human adjudication; the runner does not measure it
+- **D4**: Refusal integrity — requires human adjudication; the runner does not measure it
+- **D5**: Adversarial resistance — requires human adjudication; the runner does not measure it
+- **D6**: Conflicting input — requires human adjudication; the runner does not measure it
+
+D7 is claimed, but not all of it was measured (AP-1 v1.3 D7: "Report all four"):
+
+- **D7.4**: Invocation under pressure — not measured: the runner sends each item once, with no rephrasing, casual framing, escalating pressure or adversarial input
 
 ## 13. Declared Limitations
 
 ### Clopper-Pearson Bound (k > 0)
 
-An exact confidence bound for non-zero failure counts is not computed; AP-1 v1.3 D7.5 specifies the zero-failure form only. This is an author-identified defect in the standard, noted for resolution in the adopted version.
+AP-1 v1.3 D7.5 requires the exact one-sided 95% upper bound for any invocation figure but states its formula for zero failures only. For k > 0 failures the report gives the exact Clopper-Pearson bound, the 0.95 quantile of Beta(k+1, n-k), the general form DISPOSITION C-1 adopts for the next version. It is computed in Decimal (bisection on the binomial distribution) and every bound is shown rounded up. Beside it, for k > 0, the report gives the exact two-sided 95% Clopper-Pearson interval, as the published paper prints it, with its ends rounded outward.
 
-For non-zero failure counts, the point estimate is reported with n. The full Beta quantile would require an external dependency or a specification extension.
+### Percentage Answers
+
+In a response's text, a figure written with % is never compared with the expected value: SPEC R0.4.2 records the percent flag, and 15.20% is not the money figure 15.20 (S3-G4-2). The expected value has no unit (SPEC R3.1: final is a Decimal), so the runner cannot tell an answer that is a rate from one that is an amount. For an item whose answer is a rate (18.5): "18.5%" is not compared, so it routes to adjudication as figures present, none matching; the same rate written without % ("18.5", "18.5 percent") is compared as a plain figure and can be auto-scored; a configured structured answer is compared whatever its unit; and a figure glued to letters ("18.5pct") is not read, so the response is auto-scored as having no figure.
+
+### Adjudication Sheet Order
+
+adjudication_sheets.md gives the sheets in run order (the order of the transcript), two for each execution routed to adjudication. A sheet does not name its condition, but the order can show it, so the judging is not blind to the condition (AP-1 v1.3 §13.8 asks for scorers blind to arm identity where the response text permits). Shuffling or blinding the sheets, with a key joining each sheet back to its execution, is left to a later step that works on that file; the runner does neither.

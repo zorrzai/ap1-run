@@ -135,16 +135,6 @@ def test_evaluate_expression_round_is_half_up(expression, value):
     assert evaluate_expression(expression) == D(value)
 
 
-@PROVISIONAL
-@pytest.mark.finding('S3-G4-3')
-def test_evaluate_expression_floor_division_and_mod_truncate_toward_zero():
-    # Decimal // and % truncate toward zero; the reference calculator
-    # (Python floats) floors, giving -4 and 2. D7.2(b) then judges a
-    # different value from the one the model was returned.
-    assert evaluate_expression('-7 // 2') == D('-3')
-    assert evaluate_expression('-7 % 3') == D('-1')
-
-
 @pytest.mark.finding('T3-60')
 def test_evaluate_expression_result_does_not_depend_on_context_precision():
     # T3-60 fixed: the walker runs in numeric.DECIMAL_CONTEXT (precision
@@ -202,23 +192,6 @@ def test_evaluate_expression_calculator_functions_are_refused(expression):
     # call scores OPERATION-UNOBSERVABLE. Correct: evaluate what the
     # calculator executes.
     assert evaluate_expression(expression) is None
-
-
-@PROVISIONAL
-@pytest.mark.finding('S3-G4-4')
-def test_evaluate_expression_decimal_overflow_raises():
-    # Correct (docstring): None for a non-numeric result. decimal.Overflow
-    # is not caught; the engine's own try turns it into
-    # OPERATION-UNOBSERVABLE with a 'reason' key and no 'detail'.
-    with pytest.raises(decimal.Overflow):
-        evaluate_expression('10 ** 10 ** 10')
-
-
-@PROVISIONAL
-@pytest.mark.finding('S3-G4-4')
-def test_evaluate_expression_deep_nesting_raises_recursion_error():
-    with pytest.raises(RecursionError):
-        evaluate_expression('-' * 5000 + '1')
 
 
 # -- classify_operation --------------------------------------------------------
@@ -811,9 +784,6 @@ def _evaluated(expression):
 
 
 @pytest.mark.finding('S3-G4-3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G4-3: // and % truncate toward zero (Decimal); '
-                          'the calculator floors')
 @pytest.mark.parametrize('expression, expected', [('-7 // 2', D('-4')),
                                                   ('-7 % 3', D('2'))])
 def test_evaluate_expression_floor_division_and_mod_floor_like_calculator(
@@ -826,9 +796,6 @@ def test_evaluate_expression_floor_division_and_mod_floor_like_calculator(
 
 
 @pytest.mark.finding('S3-G4-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G4-4: decimal.Overflow / RecursionError escape '
-                          'instead of None')
 @pytest.mark.parametrize('expression', ['10 ** 10 ** 10', '-' * 5000 + '1'],
                          ids=['overflow', 'deep-nesting'])
 def test_evaluate_expression_overflow_or_deep_nesting_is_none(expression):
@@ -906,3 +873,15 @@ def json_result(returned):
     import json
     value = json.loads(returned) if isinstance(returned, str) else returned
     return value['result'] if isinstance(value, dict) else value
+
+
+@pytest.mark.parametrize('a, b', [(7, 2), (-7, 2), (7, -2), (-7, -2),
+                                  (-6, 2), (6, -3), ('7.5', 2),
+                                  ('-7.5', 2), (0, -3), ('0.5', 2),
+                                  (7, '0.75')])
+def test_evaluate_expression_floor_division_and_mod_match_python(a, b):
+    # // and % give what the calculator (Python numbers) gives, including
+    # an exact division with mixed signs (no adjustment) and decimals.
+    fa, fb = float(a), float(b)
+    assert evaluate_expression(f'({a}) // ({b})') == D(str(fa // fb))
+    assert evaluate_expression(f'({a}) % ({b})') == D(str(fa % fb))

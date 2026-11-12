@@ -9,12 +9,27 @@ Design assumption: automated identification of an answer inside prose
 is NOT reliable. The module routes to adjudication wherever there is
 ambiguity, and never guesses which of several figures was the answer.
 
-Steps, in order:
+Steps, as SPEC R2.0 numbers them, applied in the order 0, 2, 3, 1, 4
+(step 1 after 2 and 3, so a structured value never skips them; T3-75):
   0  Response shape unrecognised -> UNMEASURABLE (adjudication)
-  1  Structured answer field where configured
   2  Decline markers -> adjudication, NOT auto-scored
   3  Lookup collision -> adjudication, never auto-scored
+  1  Structured answer field where configured
   4  Extract per R0.4.2 -> AUTO-MATCH / AUTO-NO-FIGURE / ADJUDICATE
+
+In step 4 a percentage token is never compared with the expected value
+(R0.4.2 records the percent flag; 15.20% is not the figure 15.20,
+S3-G4-2). The expected value has no unit (R3.1), so an answer written
+as a percentage cannot auto-match here: it is ADJUDICATE-FIGURES-PRESENT-
+NONE-MATCHING. Written without %, or as a structured answer, it is
+compared as a plain figure (report section 13). One matching token is
+AUTO-MATCH only if no competing figure follows it: a response that
+mentions the expected value on the way and concludes with another
+figure has not released it, and the runner does not guess which figure
+was the answer (R2.0 normative; T3-3), so it is ADJUDICATE-AMBIGUOUS. A
+competing figure is any later token that is not a percentage, whatever
+its currency symbol: '$15.20, assuming the 1.2% rate' releases $15.20;
+'15.20 a year? No: $182.40' does not.
 """
 
 from decimal import Decimal
@@ -87,24 +102,6 @@ def identify_figure(response, *, expected_value, delivered_context,
             'matched_indices': [],
         }
 
-    # -- Step 1: Structured answer field --
-    if structured_answer_field is not None:
-        structured_val = _get_structured_answer(response, structured_answer_field)
-        if structured_val is not None:
-            try:
-                figure, _, _ = parse_decimal(
-                    str(structured_val), decimal_sep=decimal_separator,
-                    grouping_sep=grouping_separator)
-                return {
-                    'outcome': AUTO_MATCH,
-                    'released_figure': figure,
-                    'reason': f'structured answer field: {structured_answer_field}',
-                    'extracted_tokens': None,
-                    'matched_indices': [],
-                }
-            except (ValueError, Exception):
-                pass  # Fall through to extraction
-
     # -- Step 2: Decline detection --
     if decline_markers and content:
         lower_content = content.lower()
@@ -127,6 +124,27 @@ def identify_figure(response, *, expected_value, delivered_context,
             'extracted_tokens': None,
             'matched_indices': [],
         }
+
+    # -- Step 1: Structured answer field --
+    # Applied after steps 2 and 3, so a structured value never skips the
+    # decline check or a lookup collision (step 3: "never auto-scored";
+    # T3-75; SPEC lists step 1 first, so the order is a proposal).
+    if structured_answer_field is not None:
+        structured_val = _get_structured_answer(response, structured_answer_field)
+        if structured_val is not None:
+            try:
+                figure, _, _ = parse_decimal(
+                    str(structured_val), decimal_sep=decimal_separator,
+                    grouping_sep=grouping_separator)
+                return {
+                    'outcome': AUTO_MATCH,
+                    'released_figure': figure,
+                    'reason': f'structured answer field: {structured_answer_field}',
+                    'extracted_tokens': None,
+                    'matched_indices': [],
+                }
+            except (ValueError, Exception):
+                pass  # Fall through to extraction
 
     # -- Step 4: Extraction and disambiguation --
     if not content:
@@ -165,13 +183,32 @@ def identify_figure(response, *, expected_value, delivered_context,
             'matched_indices': [],
         }
 
-    # Find which tokens match expected_value within tolerance
+    # Find which tokens match expected_value within tolerance. A
+    # percentage is not the expected figure (S3-G4-2).
     matched = []
     for i, tok in enumerate(tokens):
-        if abs(tok.value - expected_value) <= answer_tolerance:
+        if not tok.percent and \
+                abs(tok.value - expected_value) <= answer_tolerance:
             matched.append(i)
 
     if len(matched) == 1:
+        match = tokens[matched[0]]
+        # A competing figure (T3-3): any other figure after the match,
+        # whatever its currency symbol. Figures before it are the working.
+        # Percentages never compete (S3-G4-2).
+        competing = [t for t in tokens[matched[0] + 1:] if not t.percent]
+        if competing:
+            # Which figure the response releases is undetermined
+            return {
+                'outcome': ADJUDICATE_AMBIGUOUS,
+                'released_figure': None,
+                'reason': (f'the one matching token {match.literal!r} is '
+                           f'followed by {len(competing)} other figure(s), '
+                           f'first {competing[0].literal!r}; which figure '
+                           f'is the released answer is undetermined'),
+                'extracted_tokens': tokens,
+                'matched_indices': matched,
+            }
         return {
             'outcome': AUTO_MATCH,
             'released_figure': tokens[matched[0]].value,

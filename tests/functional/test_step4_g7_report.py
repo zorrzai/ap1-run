@@ -215,9 +215,6 @@ def section(report, number):
 # once T3-12 is fixed such a claim is refused.
 
 @pytest.mark.finding('T3-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-4: D2 "Measured" in §3 but §9 says no '
-                          'per-surface data')
 def test_run_report_shows_d2_classes_per_question_and_surface(run):
     # Correct (SPEC R2.2, R3.3; AP-1 D2 Method and D2.1): §9 gives each
     # question's mechanism class per surface (figures, prose) with the
@@ -256,9 +253,6 @@ def test_run_report_shows_d2_classes_per_question_and_surface(run):
 
 
 @pytest.mark.finding('T3-29')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-29: report.md says "D7 Measured"; D7.4 is not '
-                          'declared not measured')
 def test_run_report_declares_d74_not_measured(run):
     # AP-1 v1.3 D7: "Report all four"; the runner never measures D7.4.
     # Correct: report.md declares D7.4 not measured, and no single D7 row
@@ -270,9 +264,6 @@ def test_run_report_declares_d74_not_measured(run):
 
 
 @pytest.mark.finding('T3-35')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: §10 lists the four failed Q08 executions '
-                          'as one row per condition')
 def test_run_report_lists_every_unmeasured_execution(run):
     # Q08 fails (HTTP 401) on both repeats in both conditions: four
     # UNMEASURED cells. Correct (SPEC R3.3 "every UNMEASURED ... cell with
@@ -284,10 +275,6 @@ def test_run_report_lists_every_unmeasured_execution(run):
 
 
 @pytest.mark.finding('T3-35')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: figure UNMEASURABLE, OPERATION-'
-                          'UNOBSERVABLE, transcription and coverage '
-                          'UNOBSERVABLE cells are missing from §10')
 def test_run_report_lists_every_non_outcome_kind(run):
     # Correct (SPEC R3.3): §10 lists Q05's four UNMEASURABLE figures (null
     # content), Q06's four OPERATION-UNOBSERVABLE calls ('max(144, 0)'),
@@ -305,9 +292,6 @@ def test_run_report_lists_every_non_outcome_kind(run):
 
 
 @pytest.mark.finding('T3-45')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-45: report.md carries no demonstration-run / '
-                          'non-conformance statement')
 def test_run_report_says_demonstration_run_not_conformance_result(run):
     # README: runs are demonstration runs, not conformance
     # results (README lines 21-22). The run writes that only to
@@ -319,9 +303,6 @@ def test_run_report_says_demonstration_run_not_conformance_result(run):
 
 
 @pytest.mark.finding('T3-64')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason="T3-64: §6 shows '?' for Operation and Originated "
-                          'Operand')
 def test_run_report_originated_operand_audit_names_the_operand(run):
     # Q03's operand 81.0 is originated. Correct (SPEC R3.3, the D7.2
     # originated-operand listing): §6 names it, with no '?' column.
@@ -333,9 +314,6 @@ def test_run_report_originated_operand_audit_names_the_operand(run):
 
 
 @pytest.mark.finding('T3-75')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-75: structured_answer_field not used live; Q04 '
-                          'is ADJUDICATE-AMBIGUOUS')
 def test_run_structured_answer_field_releases_the_figure(run):
     # The config sets structured_answer_field 'answer'; Q04's final
     # response carries answer '430.75' and prose with two figures within
@@ -349,9 +327,6 @@ def test_run_structured_answer_field_releases_the_figure(run):
 
 
 @pytest.mark.finding('T3-75')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-75: the lookup collision is computed at run '
-                          'time; the seal does not record it')
 def test_run_seal_records_the_lookup_collision(run):
     # Q09's expected 3.20 appears in its delivered context (checking
     # account atm_fee). SPEC R3.1: "lookup_collision is computed by the
@@ -363,10 +338,93 @@ def test_run_seal_records_the_lookup_collision(run):
     assert 'Q09' in s1, s1
 
 
+# A statement that freezing is not shown, confirmed or verified
+NOT_SHOWN = (r"\b(not|cannot|can't|couldn't|isn't|doesn't|didn't)\s+"
+             r'(be\s+)?(shown?|confirm(ed)?|verif(y|ied)|establish(ed)?)\b')
+
+
+# The report's one freeze status line, and its three forms (V12-8)
+FREEZE_LINE = '> Freezing (AP-1 \u00a75.2): '
+NOT_SHOWN_STATUS = ('not shown: more than one served model or backend '
+                    'fingerprint; the run does not show that the system '
+                    'under test was frozen for its duration.')
+FREEZE_STATUSES = (
+    re.escape(NOT_SHOWN_STATUS),
+    r'not verified: [^.]*\.',
+    r'not verified by the runner; consistent with a frozen system: all '
+    r'\d+ responses report one served model and one backend '
+    r'fingerprint\.',
+)
+
+
+def freeze_claims(lines):
+    """Every line that speaks of freezing, or of the model or system not
+    changing, other than the one status line in one of its three forms
+    (a "not verified" reason never mentions freezing). Checked by
+    structure, not by phrasing: "remained frozen", "is frozen" and
+    "Freezing: confirmed" are claims like "was frozen"."""
+    claims = []
+    for line in lines:
+        speaks = re.search(r'froz|freez', line, re.I) or (
+            re.search(r"did(n't| not) change|no change|unchanged|"
+                      r'not changed', line, re.I)
+            and re.search(r'model|system|snapshot|fingerprint', line, re.I))
+        if not speaks:
+            continue
+        status = line[len(FREEZE_LINE):] if line.startswith(
+            FREEZE_LINE) else None
+        if status is not None and any(
+                re.fullmatch(form, status) for form in FREEZE_STATUSES) \
+                and not (status.startswith('not verified: ')
+                         and re.search(r'froz|freez', status, re.I)):
+            continue
+        claims.append(line)
+    return claims
+
+
 @pytest.mark.finding('V12-8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-8: report.md records neither the served model '
-                          'snapshot nor the backend fingerprints')
+@pytest.mark.parametrize('line, claim', [
+    ('The system under test was frozen; drift was not shown.', True),
+    ('The system under test was frozen (not verified by fingerprint).',
+     True),
+    ('System frozen: yes', True),
+    (FREEZE_LINE + 'confirmed: one served model.', True),
+    (FREEZE_LINE + 'verified.', True),
+    ('The system under test is frozen.', True),
+    ('The system remained frozen for the run.', True),
+    ('The model did not change during the run.', True),
+    ('It cannot be shown otherwise, so the system was frozen.', True),
+    ('Not shown to drift, the system was frozen for its duration.', True),
+    (FREEZE_LINE + 'not verified by fingerprint; the system remained '
+     'frozen throughout the run.', True),
+    (FREEZE_LINE + 'not verified: the system remained frozen.', True),
+    (FREEZE_LINE + NOT_SHOWN_STATUS, False),
+    (FREEZE_LINE + 'not verified: the responses report no backend '
+     'fingerprint.', False),
+    (FREEZE_LINE + 'not verified by the runner; consistent with a frozen '
+     'system: all 2 responses report one served model and one backend '
+     'fingerprint.', False),
+    ('D7.4 is unchanged from the last section.', False),
+])
+def test_freeze_claims_catches_any_claim_beside_the_status(line, claim):
+    # The check the next tests use: only the status line, in one of its
+    # three forms, may speak of freezing.
+    assert bool(freeze_claims([line])) is claim
+
+
+@pytest.mark.finding('V12-8')
+@pytest.mark.req('AP-1 §5.2')
+def test_run_report_states_the_freeze_status(run):
+    # Correct: report.md states once whether freezing was established.
+    # The mock serves two fingerprints, so the status is "not shown"
+    # (not merely some "not verified"), and nothing else claims it.
+    lines = run['report'].splitlines()
+    status = [line for line in lines if line.startswith(FREEZE_LINE)]
+    assert status == [FREEZE_LINE + NOT_SHOWN_STATUS], status
+    assert freeze_claims(lines) == []
+
+
+@pytest.mark.finding('V12-8')
 def test_run_report_records_served_model_and_fingerprints(run):
     # AP-1 §5.2: "Confirmation that the system under test was frozen for
     # the duration, with a version or commit identifier." The mock serves
@@ -382,16 +440,13 @@ def test_run_report_records_served_model_and_fingerprints(run):
 
 @pytest.mark.finding('V12-8')
 @pytest.mark.req('AP-1 §5.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-8: report.md says nothing of a model snapshot '
-                          'that changed during the run')
 def test_run_report_says_the_system_changed(run_changed):
     # AP-1 (v1.2 and v1.3) §5.2: "Confirmation that the system under test
     # was frozen for the duration". Here the served snapshot changed during
     # the run (mock-model-2026-01-01, then -02-01). Correct: report.md
     # says so, naming both snapshots on a line that says the system
-    # changed, or says explicitly that freezing could not be confirmed;
-    # no line says it was frozen or that nothing changed.
+    # changed, or says explicitly that freezing is not shown or cannot be
+    # confirmed; no line says it was frozen or that nothing changed.
     report = run_changed['report']
     lines = report.splitlines()
     names_change = [line for line in lines
@@ -399,17 +454,12 @@ def test_run_report_says_the_system_changed(run_changed):
                     and re.search(r'\bchanged\b', line, re.I)
                     and not re.search(r'unchanged|no change|not changed',
                                       line, re.I)]
-    cannot = [line for line in lines if re.search(
-        r'(froz|freez)\w*.*\b(not|cannot|could not) (be )?'
-        r'(shown|confirmed|verified)|(not|cannot|could not) (be )?'
-        r'(shown|confirmed|verified).*(froz|freez)', line, re.I)]
+    # an explicit statement that freezing is not shown or not confirmed
+    cannot = [line for line in lines
+              if re.search(r'froz|freez', line, re.I)
+              and re.search(NOT_SHOWN, line, re.I)]
     assert names_change or cannot, [
         line for line in lines
         if re.search(r'froz|freez|snapshot', line, re.I)]
-    claims = [line for line in lines
-              if re.search(r'froz|freez|snapshot|model', line, re.I)
-              and re.search(r'no change|unchanged|not changed|'
-                            r'(freeze|frozen):? *(yes|confirmed|true)|'
-                            r'freeze confirmed|\bwas frozen\b(?!.*\bnot\b)',
-                            line, re.I)]
+    claims = freeze_claims(lines)
     assert claims == [], claims

@@ -18,19 +18,23 @@ from decimal import Decimal
 import pytest
 
 from ap1_run.execution.perturbation_guard import HELD_CONSTANT
+from ap1_run.execution.seal import SealError
 from ap1_run.foundation import transcript
 from ap1_run.foundation.transcript import TranscriptError
 from ap1_run.runner import scoring_pass
 from ap1_run.runner.scoring_pass import (
     CONDITIONS, DISCLAIMER, index_records, score_run,
 )
+from ap1_run.scoring.accuracy import summarise_accuracy
 
 D = Decimal
 RULE = '=' * 60
 
-QUESTIONS = {'items': [{'id': 'Q1', 'source_accounts': ['a']},
+QUESTIONS = {'items': [{'id': 'Q1', 'source_accounts': ['a'],
+                        'category': 'interest'},
                        {'id': 'Q3', 'source_accounts': []},
-                       {'id': 'Q2', 'source_accounts': ['b']}]}
+                       {'id': 'Q2', 'source_accounts': ['b'],
+                        'category': 'fees'}]}
 FIXTURE = {'accounts': [{'id': 'a'}, {'id': 'b'}]}
 CONFIG = {'repeat_count': 2, 'sampling': {'temperature': '0'},
           'answer_tolerance': D('0.05'), 'decline_markers': ['cannot'],
@@ -74,15 +78,16 @@ class Pass:
         for name in ('build_delivered_context', 'check_lookup_collision',
                      'result_from_record', 'score_execution',
                      'verify_invocation_consistency', 'print_run_report',
-                     'summarise_accuracy', 'find_d2_cap',
+                     'summarise_accuracy', 'summarise_accuracy_by_category',
+                     'find_d2_cap',
                      'classify_reproducibility', 'build_summary',
                      'print_scoring_report', 'attach_scores',
                      'write_outputs'):
             monkeypatch.setattr(scoring_pass, name, getattr(self, name))
 
-    def run(self):
+    def run(self, seal_record=SEAL):
         return score_run(self.transcript, config=self.config,
-                         seal_record=dict(SEAL), fixture=FIXTURE,
+                         seal_record=dict(seal_record), fixture=FIXTURE,
                          questions=QUESTIONS,
                          ground_truth_compute=self.gt.compute,
                          output_dir='OUT')
@@ -109,7 +114,8 @@ class Pass:
     def score_execution(self, findings, result, **kwargs):
         self.calls.append(('score', result, kwargs))
         findings.all_results.append({'status': 'EXECUTED'})
-        findings.all_accuracy_results.append({'acc': result['n']})
+        findings.all_accuracy_results.append(
+            {'acc': result['n'], 'condition': kwargs['condition']})
         findings.d2_responses.setdefault('d2', []).append(result)
 
     def verify_invocation_consistency(self, results):
@@ -122,12 +128,18 @@ class Pass:
         self.calls.append(('summarise', list(results)))
         return {'d1': True}
 
+    def summarise_accuracy_by_category(self, results, categories):
+        self.calls.append(('by_category', list(results), categories))
+        return {'by': 'category'}
+
     def find_d2_cap(self, sampling):
         self.calls.append(('d2_cap', sampling))
         return 'CAP'
 
-    def classify_reproducibility(self, responses, repeat_count, cap):
+    def classify_reproducibility(self, responses, repeat_count, cap,
+                                 figures, **kwargs):
         self.calls.append(('d2', responses, repeat_count, cap))
+        self.d2_kwargs = kwargs
         return {'d2': 'results'}
 
     def build_summary(self, results, evidence, **kwargs):
@@ -194,8 +206,8 @@ def test_score_run_calls(p, capsys):
               for r in records}
     smoke = p.run()
 
-    # ground truth and context per item and condition; no collision check
-    # for the underivable Q3
+    # ground truth and context per item and condition; the collision
+    # check once per derivable item (R3.1), none for the underivable Q3
     assert [c[1] for c in p.named('context')] == [
         ['a'], [], ['b'], ['a'], [], ['b']]
     assert all(c[0] is FIXTURE for c in p.named('context'))
@@ -203,7 +215,7 @@ def test_score_run_calls(p, capsys):
                              ('Q3', {'accounts': []}),
                              ('Q2', {'accounts': ['b']})] * 2
     assert p.named('collision') == [(D('10.00'), {'accounts': ['a']}),
-                                    (D('10.00'), {'accounts': ['b']})] * 2
+                                    (D('10.00'), {'accounts': ['b']})]
 
     # each record found is read back with its item's ground truth
     reads = p.named('read')
@@ -223,7 +235,7 @@ def test_score_run_calls(p, capsys):
     assert scores[0][1] == {
         'item_id': 'Q1', 'condition': 'base', 'rep': 2,
         'expected': D('10.00'), 'ctx': {'accounts': ['a']},
-        'collision': 'COLLISION', 'config': p.config,
+        'collision': True, 'config': p.config,
         'answer_tolerance': D('0.05'), 'decline_markers': ['cannot'],
         'currency_symbols': ['$']}
 
@@ -263,20 +275,31 @@ def test_score_run_calls(p, capsys):
                   'transcription_results': [],
                   'release_coverage_results': []}
 
-    assert p.named('summarise') == [([{'acc': 2}, {'acc': 1}, {'acc': 2}],)]
+    # D1 counts the base condition only (T3-32)
+    base = [{'acc': 2, 'condition': 'base'}, {'acc': 1, 'condition': 'base'}]
+    assert p.named('summarise') == [(base,)]
     assert p.named('d2_cap') == [({'temperature': '0'},)]
     d2_responses = {'d2': [res for res, _ in scores]}
     assert p.named('d2') == [(d2_responses, 2, 'CAP')]
     (results, evidence, kw), = p.named('summary')
     assert results == expected_results and evidence == []
-    assert kw == {'d1_summary': {'d1': True, 'n': 3},
+    # T3-32: D1 per category, from questions.json's categories; Q3 has
+    # none, so it is listed as in no category
+    assert p.named('by_category') == [(
+        base + [{'acc': 2, 'condition': 'instruction_removed'}],
+        {'Q1': 'interest', 'Q2': 'fees'})]
+    d1 = {'d1': True, 'n': 2, 'by_category': {'by': 'category'},
+          'uncategorised': ['Q3']}
+    assert kw == {'d1_summary': d1,
                   'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
                   'transcription_results': [],
                   'release_coverage_results': [],
                   'parameter_echo': [],
-                  'held_constant': HELD_CONSTANT}
+                  'held_constant': HELD_CONSTANT,
+                  'served': {'models': {}, 'fingerprints': {},
+                             'responses': 0}}
     assert p.named('scoring_report') == [(
-        {'d1': True, 'n': 3}, {'d2': 'results'}, 'CAP', {'summary': True})]
+        d1, {'d2': 'results'}, 'CAP', {'summary': True})]
 
     assert p.named('attach') == [(records, expected_results)]
     import hashlib
@@ -301,6 +324,67 @@ def test_score_run_calls(p, capsys):
         'scoring_report', 'attach', 'outputs')]
     assert stages == ['consistency', 'run_report', 'summarise', 'd2_cap',
                       'd2', 'summary', 'scoring_report', 'attach', 'outputs']
+
+
+@pytest.mark.proposal(
+    'T3-32: D1 counts the base condition only; AP-1 v1.3 D1 does not say '
+    'which condition it uses, and the instruction-removed repeats exist '
+    'for D7')
+@pytest.mark.finding('T3-32')
+def test_score_run_d1_instruction_removed_incorrect_leaves_rate_and_n(
+        p, monkeypatch):
+    """The script scores Q1/base/r2, Q2/base/r1 and Q1/removed/r2. Every
+    base answer is correct and the instruction-removed one is wrong: D1
+    reads 2 of 2, and its n and auto-scored n are the two base
+    executions."""
+    def score(findings, result, *, item_id, condition, **kwargs):
+        findings.all_results.append({'status': 'EXECUTED'})
+        findings.all_accuracy_results.append({
+            'outcome': 'CORRECT' if condition == 'base' else 'INCORRECT',
+            'auto_scored': True, 'item_id': item_id,
+            'condition': condition})
+    monkeypatch.setattr(scoring_pass, 'score_execution', score)
+    monkeypatch.setattr(scoring_pass, 'summarise_accuracy',
+                        summarise_accuracy)
+    script(p)
+    p.run()
+    (_, _, kw), = p.named('summary')
+    d1 = kw['d1_summary']
+    assert (d1['accuracy_rate'], d1['auto_scored_n'], d1['n'],
+            d1['correct'], d1['incorrect']) == (1, 2, 2, 2, 0)
+
+
+@pytest.mark.proposal(
+    'T3-4: the operator declares STRUCTURAL or CONFIGURED per surface in '
+    'the settings field d2_declared, sealed with the config; the field '
+    'is the author\'s design, requested in review')
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('R2.2')
+def test_score_run_passes_d2_the_operators_declaration(p):
+    # The config's d2_declared reaches the classification, read in upper
+    # case.
+    script(p)
+    p.config['d2_declared'] = {'figures': 'configured', 'prose': 'STRUCTURAL'}
+    p.run()
+    assert p.d2_kwargs['d2_declared'] == {'figures': 'CONFIGURED',
+                                          'prose': 'STRUCTURAL'}
+
+
+@pytest.mark.proposal(
+    'T3-4: D2 compares only replies that carry an answer: errored and EV-0 '
+    'replies are left out of the comparison and counted; requested in '
+    'review')
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('R2.2')
+def test_score_run_passes_d2_the_evidence_and_the_errored_count(p):
+    # Each executed reply's evidence class, and the number of errored
+    # (UNMEASURED) executions per question and condition, reach the
+    # classification.
+    script(p)
+    p.run()
+    assert p.d2_kwargs['d2_errored'] == {('Q1', 'base'): 1,
+                                         ('Q2', 'base'): 1}
+    assert p.d2_kwargs['d2_evidence'] == {}   # the fake scorer adds none
 
 
 @pytest.mark.finding('T3-51')
@@ -423,15 +507,71 @@ def test_score_run_refuses_a_bad_transcript_before_scoring(p):
     assert p.calls == []
 
 
+@pytest.mark.finding('V12-8')
+def test_score_run_counts_what_served_every_recorded_round(p):
+    # Every round's response in every record the run reads (executed or
+    # not), from the transcript, so a re-score gives the same counts.
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED', rounds=[
+        {'round': 0, 'response': {'model': 'm-1', 'system_fingerprint': 'a'}},
+        {'round': 1, 'response': {'model': 'm-1', 'system_fingerprint': 'b'}}])
+    write(p.transcript, 'Q1', 'base', 2, 'UNMEASURED', rounds=[
+        {'round': 0, 'error': 'HTTP 500'}])
+    write(p.transcript, 'Q2', 'base', 1, 'EXECUTED', rounds=[
+        {'round': 0, 'response': {'model': 'm-2'}}])
+    write(p.transcript, 'Q2', 'base', 2, 'EXECUTED')
+    p.run()
+    (_, _, kw), = p.named('summary')
+    assert kw['served'] == {'models': {'m-1': 2, 'm-2': 1},
+                            'fingerprints': {'a': 1, 'b': 1},
+                            'responses': 3}
+
+
+@pytest.mark.finding('T3-75')
+@pytest.mark.req('R3.1')
+def test_score_run_uses_the_sealed_lookup_collisions(p, monkeypatch):
+    # The fake gives every derivable item a collision on 'field': both
+    # are sealed, so scoring goes on and step 3 sees Q1's.
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED')
+    seal_record = dict(SEAL, lookup_collisions='Q1 (field); Q2 (field)')
+    p.run(seal_record=seal_record)
+    (_, kwargs), = p.named('score')
+    assert kwargs['collision'] is True
+    # Checked once per derivable item, not once per condition
+    assert len(p.named('collision')) == 2
+
+
+@pytest.mark.finding('T3-75')
+@pytest.mark.req('R3.1')
+def test_score_run_refuses_collisions_other_than_the_sealed_ones(p):
+    # A sealed field that differs from what the sealed inputs give is
+    # refused before anything is scored.
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED')
+    with pytest.raises(SealError, match=(
+            r"^seal verification failed:\n  lookup_collisions: "
+            r"sealed='none', current='Q1 \(field\); Q2 \(field\)'$")):
+        p.run(seal_record=dict(SEAL, lookup_collisions='none'))
+    assert p.named('score') == [] and p.named('read') == []
+
+
+@pytest.mark.finding('T3-75')
+@pytest.mark.req('R3.1')
+def test_score_run_refuses_a_current_record_without_sealed_collisions(p):
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED')
+    with pytest.raises(SealError, match='lookup_collisions: not sealed'):
+        p.run(seal_record=dict(SEAL, seal_format=2))
+    assert p.named('score') == []
+
+
 # -- The transcript against the run's plan (SPEC R0.2, R0.3) ---------------
 
 def write_round(path, item_id, condition, repeat, number, seal_hash='SEAL',
-                error=None, **extra):
+                error=None, response=None, **extra):
     """A round record, as the engine writes one when the round arrives."""
     transcript.append(
         path, item_id=item_id, arm_id=condition, condition=condition,
         request_sent={'request': number},
-        response_received=None if error else {'response': number},
+        response_received=None if error else (response
+                                              or {'response': number}),
         tool_calls=[], evidence_class=None, error_state=error,
         seal_hash=seal_hash, repeat=repeat, kind='round', round=number,
         error=error, **extra)
@@ -472,6 +612,24 @@ def test_score_run_interrupted_execution_unmeasured_with_its_round(p, capsys):
     assert [(r['repeat'], r['status']) for r in records] == [(1, 'EXECUTED')]
     console = capsys.readouterr().out
     assert '  Q1/base/r2: UNMEASURED (interrupted)\n' in console
+
+
+@pytest.mark.finding('V12-8', 'V12-3')
+@pytest.mark.req('AP-1 §5.2')
+def test_score_run_counts_what_served_an_interrupted_execution(p):
+    # An interrupted execution has round records only. The responses they
+    # hold were served like any other, so they are counted; a round whose
+    # request failed holds no response and counts nothing.
+    write_round(p.transcript, 'Q1', 'base', 1, 0, response={'model': 'm-1'})
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED', rounds=[
+        entry(0, response={'model': 'm-1'})])
+    write_round(p.transcript, 'Q1', 'base', 2, 0,
+                response={'model': 'm-2', 'system_fingerprint': 'fp'})
+    write_round(p.transcript, 'Q1', 'base', 2, 1, error='HTTP 502')
+    p.run()
+    (_, _, kw), = p.named('summary')
+    assert kw['served'] == {'models': {'m-1': 1, 'm-2': 1},
+                            'fingerprints': {'fp': 1}, 'responses': 2}
 
 
 @pytest.mark.finding('V12-3')
