@@ -492,7 +492,7 @@ def test_verify_run_config_hash_is_canonical_json_sha256(vrs, tmp_path,
 def test_verify_run_changed_input_fails_its_hash(vrs, run, base, field,
                                                   relpath):
     run_dir, record, _ = run
-    (base / relpath).write_text('changed\n')
+    (base / relpath).write_bytes(b'changed\n')
     checks, failures = vrs.verify_run(str(run_dir))
     assert (field, 'sealed=%s, recomputed=%s' % (
         record[field], file_hash(str(base / relpath)))) in failures
@@ -642,7 +642,7 @@ def test_verify_run_unknown_version_without_ap1_text_fails(vrs, tmp_path,
     assert failures == [('ap1_text_hash', "no AP-1 text is known for "
                          "ap1_version 'v9'; give it with --ap1-text")]
     other = tmp_path / 'other.md'
-    other.write_text('# AP-1 text\n')
+    other.write_bytes(b'# AP-1 text\n')
     assert vrs.verify_run(str(run_dir), ap1_text=str(other))[1] == []
 
 

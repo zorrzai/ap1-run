@@ -100,11 +100,11 @@ class Run:
 
     def write_inputs(self, config=None):
         fx = self.fixture_dir
-        (fx / 'config.json').write_text(json.dumps(config or self.config))
-        (fx / 'fixture.json').write_text(json.dumps(FIXTURE))
-        (fx / 'questions.json').write_text(json.dumps(QUESTIONS))
-        (fx / 'ground_truth_example.py').write_text(GROUND_TRUTH)
-        (fx / 'calculator_tool.py').write_text(CALCULATOR)
+        (fx / 'config.json').write_bytes(json.dumps(config or self.config).encode())
+        (fx / 'fixture.json').write_bytes(json.dumps(FIXTURE).encode())
+        (fx / 'questions.json').write_bytes(json.dumps(QUESTIONS).encode())
+        (fx / 'ground_truth_example.py').write_bytes(GROUND_TRUTH.encode())
+        (fx / 'calculator_tool.py').write_bytes(CALCULATOR.encode())
 
     def argv(self, output_dir=True):
         return (['--config', str(self.fixture_dir / 'config.json'),
