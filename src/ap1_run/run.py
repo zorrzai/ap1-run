@@ -43,7 +43,11 @@ from ap1_run.execution.context import (
     build_delivered_context, check_lookup_collision,
 )
 from ap1_run.execution.engine import execute_item
-from ap1_run.execution.seal import seal as create_seal
+from ap1_run.execution.perturbation_guard import HELD_CONSTANT
+from ap1_run.execution.seal import (
+    perturbation_check, seal as create_seal, source_fields_check,
+)
+from ap1_run.execution.seal_constants import declared_constants_check
 from ap1_run.execution.version import (
     compute_runner_source_hash, resolve_runner_version,
 )
@@ -52,8 +56,8 @@ from ap1_run.foundation.config import load_config
 from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.credentials import get_api_key
 from ap1_run.runner.executions import (
-    Findings, record_not_scored, record_transport_failure, record_underivable,
-    score_execution,
+    Findings, apply_question_measurability, record_not_scored,
+    record_transport_failure, record_underivable, score_execution,
 )
 from ap1_run.runner.outputs import write_outputs
 from ap1_run.runner.settings import (
@@ -169,6 +173,18 @@ def main(argv=None):
     print(f'Runner source hash: {runner_source_hash[:16]}...')
     print()
 
+    # -- R3.1 seal-time ground-truth guards --
+    # The module must compute its expected values from its declared
+    # source fields: refused (SealError) before sealing and before any
+    # request if its output ignores a declared field, if it reads a field
+    # it does not declare, or if it uses an undeclared numeric constant.
+    perturbation_check(gt_module, fixture, questions)
+    source_fields_check(gt_module, fixture, questions)
+    declared_constants_check(gt_module, fixture, questions)
+    print('Ground-truth guards (R3.1): PASSED (perturbation, source fields, '
+          'declared constants)')
+    print()
+
     # -- SEAL: R1.1 pre-registration record --
     # The real seal, not a sentinel. A live run without a valid seal
     # is refused, exactly as R1.1 requires.
@@ -206,10 +222,11 @@ def main(argv=None):
             sampling=sampling, model=model, api_key=api_key,
             timeout=timeout)
 
-    # -- Perturbation guard (R1.2): refuse run if more than system prompt differs --
-    check_condition_guard(config, os.path.join(fixture_dir, 'fixture.json'),
-                          system_prompt_base, system_prompt_removed, tools,
-                          sampling)
+    # -- Perturbation guard (R1.2): refuse the run unless the system prompt,
+    # and only it, differs. Each condition then runs with what was checked.
+    arms = check_condition_guard(
+        config, os.path.join(fixture_dir, 'fixture.json'),
+        system_prompt_base, system_prompt_removed, tools, sampling)
 
     # -- Collector for all findings --
     findings = Findings()
@@ -219,7 +236,7 @@ def main(argv=None):
     print('=' * 60)
 
     for condition in conditions:
-        system_prompt = system_prompt_base if condition == 'base' else system_prompt_removed
+        arm = arms[condition]
 
         for item in items:
             item_id = item['id']
@@ -247,10 +264,11 @@ def main(argv=None):
                         fixture=fixture,
                         ground_truth_compute=gt_module.compute,
                         adapter_send=adapter_send,
-                        system_prompt=system_prompt,
-                        tools=tools,
+                        system_prompt=arm['system_prompt'],
+                        tools=arm['tools'],
                         transcript_path=transcript_path,
                         seal_hash=seal_hash,
+                        repeat=rep,
                     )
                 except adapter.RateLimitError:
                     print('RATE-LIMITED')
@@ -282,6 +300,9 @@ def main(argv=None):
                 # Brief delay to avoid rate limiting
                 time.sleep(0.5)
 
+    # -- D7.2 measurability per question, from all its executions --
+    apply_question_measurability(findings)
+
     # -- Consistency check (FATAL on mismatch) --
     verify_invocation_consistency(findings.all_results)
     print('  Invocation consistency check: PASSED (0 mismatches)')
@@ -311,7 +332,8 @@ def main(argv=None):
         d1_summary=d1_summary, d2_results=d2_results,
         d2_cap_reason=d2_cap_reason,
         transcription_results=findings.transcription_results,
-        release_coverage_results=findings.release_coverage_results)
+        release_coverage_results=findings.release_coverage_results,
+        held_constant=HELD_CONSTANT)
 
     # 3j-3l. D1, D2, operand provenance
     print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary)

@@ -1,0 +1,7 @@
+THIS IS AN INSTRUMENT SMOKE TEST, NOT AN AP-1 EVALUATION.
+
+It is not conformant: no adjudication, no second scorer, no blind set,
+the fixture is the shipped example (10 items, burned under AP-1 §5.8),
+and the D1 minimum of 40 items is not met.
+No figure from it may be reported, cited, quoted or described as an AP-1
+result, by us or by anyone, in any document.

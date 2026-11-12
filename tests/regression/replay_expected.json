@@ -1,0 +1,51 @@
+{
+  "_about": "Differences a replay of a published run is expected to show, because a fix changes how the published transcript is scored. Checked by hard_checks.check_replay: any difference not listed here fails the run, and so does a listed move that does not happen. new_execution_fields: fields new in the replay, each with an expectation computed per execution by hard_checks from the published fields (NEW_FIELD_EXPECTATIONS). numeric_paths / numeric_text_paths: the leaves (field[].key) whose numbers are compared as exact Decimals, for a fix that only respells a value. moves: execution (item/condition/repeat) -> field -> [published value, replayed value].",
+  "output/run_e_mini": {
+    "new_top_level_keys": [],
+    "new_execution_fields": ["answer_outcome", "answer_outcome_reason"],
+    "numeric_paths": [
+      "provenance_results[].operand_resolutions[].operand_literal",
+      "provenance_results[].operand_resolutions[].operand_value",
+      "provenance_results[].operand_resolutions[].sign_inversion_finding.operand_value",
+      "operation_correctness[].evaluated_result"
+    ],
+    "numeric_text_paths": ["operation_correctness[].detail"],
+    "moves": {
+      "Q05/instruction_removed/r12": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r13": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r16": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r22": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r29": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r41": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r42": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r47": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r49": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r50": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q06/instruction_removed/r6": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q06/instruction_removed/r32": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q06/instruction_removed/r41": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q06/instruction_removed/r46": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]}
+    }
+  },
+  "output/run_f_sol": {
+    "new_top_level_keys": [],
+    "new_execution_fields": ["answer_outcome", "answer_outcome_reason"],
+    "numeric_paths": [
+      "provenance_results[].operand_resolutions[].operand_literal",
+      "provenance_results[].operand_resolutions[].operand_value",
+      "provenance_results[].operand_resolutions[].sign_inversion_finding.operand_value",
+      "operation_correctness[].evaluated_result"
+    ],
+    "numeric_text_paths": ["operation_correctness[].detail"],
+    "moves": {
+      "Q05/instruction_removed/r4": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r41": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q05/instruction_removed/r47": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q07/base/r1": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q07/base/r17": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q07/base/r20": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q07/base/r32": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]},
+      "Q07/base/r46": {"transcription_outcome": ["TRANSCRIBED-ALTERED", "TRANSCRIBED-EXACT"]}
+    }
+  }
+}

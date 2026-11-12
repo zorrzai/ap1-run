@@ -20,8 +20,11 @@ lines 524-535). Six outcomes:
   COMPUTED, RETRIEVED, MODEL-DECLINED, CLASSIFIER-REFUSED, ORIGINATED, WRONG-SCOPE.
 """
 
+import hashlib
 import json
 from datetime import datetime, timezone
+
+from ap1_run.scoring.answer_outcome import refusal_outcome
 
 
 # -- Six-outcome rubric from AP-1 v1.3 section 6.8 --------------------
@@ -55,6 +58,17 @@ ADJUDICATION_REASONS = {
                             'figure is ambiguous.',
     'UNMEASURABLE': 'Response shape unrecognised. Cannot extract a figure '
                     'for comparison.',
+    'ADJUDICATE-REFUSAL': 'The provider refused the request or its content '
+                          'filter stopped the reply. Refusals are never '
+                          'auto-scored and are in neither the D7.1 nor the '
+                          'D1 counts (section 6.8: MODEL-DECLINED or '
+                          'CLASSIFIER-REFUSED).',
+}
+
+# What the provider sent, per refusal kind (execution/engine.py refusal_of)
+_REFUSAL_SIGNALS = {
+    'content_filter': '`finish_reason: content_filter`',
+    'refusal': 'the message\'s `refusal` field',
 }
 
 
@@ -76,10 +90,11 @@ def generate_sheets(transcript_records, questions, fixture, config,
     question_map = {q['id']: q for q in questions.get('items', [])}
     account_map = {a['id']: a for a in fixture.get('accounts', [])}
 
-    # Build release coverage lookup: (item_id, condition) -> list of results
+    # Build release coverage lookup: (item_id, condition, repeat) -> results.
+    # A sheet is for one execution and carries that execution's coverage.
     _rc_lookup = {}
     for rc in (release_coverage_results or []):
-        _rc_key = (rc.get('item_id'), rc.get('condition'))
+        _rc_key = (rc.get('item_id'), rc.get('condition'), rc.get('repeat'))
         _rc_lookup.setdefault(_rc_key, []).append(rc)
 
     sheets = []
@@ -111,8 +126,8 @@ def generate_sheets(transcript_records, questions, fixture, config,
 
         # Generate TWO sheets for this item (two scorers per section 13.8)
         for scorer_num in (1, 2):
-            _rc_key = (item_id, condition)
-            _rc_for_item = _rc_lookup.get(_rc_key, [])
+            _rc_key = (item_id, condition, record.get('repeat'))
+            _rc_for_item = _rc_lookup.get(_rc_key)
             sheet = _generate_one_sheet(
                 record=record,
                 question=question,
@@ -136,22 +151,34 @@ def generate_sheets(transcript_records, questions, fixture, config,
     return '\n'.join(sheets)
 
 
+def execution_id(record):
+    """A sheet's execution id: the first 12 hex digits of the SHA-256 of
+    the record's seal hash, item, condition (arm) and repeat. Unique per
+    execution, so a scorer's mark joins back to one execution, and opaque:
+    it does not print the arm (AP-1 v1.3 section 13.8). The operator joins
+    a mark to its arm by computing it for the transcript's records."""
+    key = json.dumps([record.get('seal_hash'), record.get('item_id'),
+                      record.get('condition'), record.get('repeat')])
+    return hashlib.sha256(key.encode('utf-8')).hexdigest()[:12]
+
+
 def _needs_adjudication(record):
     """Determine whether a transcript record needs adjudication.
 
     An item needs adjudication if its figure identification outcome
-    routes to human review (ADJUDICATE-* or UNMEASURABLE).
+    routes to human review (ADJUDICATE-* or UNMEASURABLE). A record of a
+    transport failure has no response: it is UNMEASURED (AP-1 v1.3 §6.8,
+    response statuses) and never gets a sheet, whatever outcome it holds.
     """
+    error_state = record.get('error_state')
+    if error_state and 'TRANSPORT_FAILURE' in str(error_state):
+        return False  # UNMEASURED, not adjudicated
+
     figure_outcome = record.get('figure_outcome', '')
     if figure_outcome.startswith('ADJUDICATE'):
         return True
     if figure_outcome == 'UNMEASURABLE':
         return True
-
-    # Also check error_state for transport failures
-    error_state = record.get('error_state')
-    if error_state and 'TRANSPORT_FAILURE' in str(error_state):
-        return False  # UNMEASURED, not adjudicated
 
     return False
 
@@ -161,11 +188,17 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
                         coverage_records=None):
     """Generate a single adjudication sheet for one scorer."""
     item_id = record.get('item_id', 'unknown')
-    condition = record.get('condition', 'unknown')
+    repeat = record.get('repeat')
+    # The sheet names its execution's repeat and not its arm (condition):
+    # AP-1 v1.3 section 13.8, scorers are blind to arm identity where the
+    # response text permits. Item and repeat are not unique across arms;
+    # the execution id is, so a mark joins back to its execution.
+    execution = item_id if repeat is None else f'{item_id}, repeat {repeat}'
 
     lines = []
-    lines.append(f'\n## Item {item_num}: {item_id} '
-                 f'(Condition: {condition}) \u2014 Scorer {scorer_num}\n')
+    lines.append(f'\n## Item {item_num}: {execution} '
+                 f'\u2014 Scorer {scorer_num}\n')
+    lines.append(f'Execution id: `{execution_id(record)}`\n')
 
     # 1. Question
     lines.append('### Question\n')
@@ -177,6 +210,18 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
     response = record.get('response_received')
     content = _extract_response_content(response)
     lines.append(f'```\n{content}\n```\n')
+
+    # A provider refusal: its text verbatim and the provisional outcome
+    refusal = record.get('refusal')
+    if refusal:
+        provisional, _ = refusal_outcome(refusal)
+        lines.append('### Refusal\n')
+        lines.append(f'**Provider signal:** '
+                     f'{_REFUSAL_SIGNALS[refusal["kind"]]}\n')
+        lines.append(f'```\n{refusal.get("text") or "[no refusal text]"}'
+                     f'\n```\n')
+        lines.append(f'**Provisional outcome:** `{provisional}` (confirm or '
+                     f'replace it below)\n')
 
     # 3. Relevant fixture excerpt
     lines.append('### Fixture Excerpt\n')
@@ -221,6 +266,20 @@ def _generate_one_sheet(*, record, question, account_map, fixture,
         for opr in op_results:
             lines.append(f'- `{opr.get("outcome", "unknown")}`: '
                          f'{opr.get("reason", "")}\n')
+
+    # D7.2(a) operand provenance: the section 6.8 composition rule needs it
+    # (an answer resting on an originated operand is ORIGINATED)
+    prov_results = record.get('provenance_results')
+    if prov_results:
+        lines.append('**Operand provenance (D7.2(a)):**\n')
+        for prov in prov_results:
+            originated = ', '.join(
+                f'`{op.get("literal", op.get("value"))}` in '
+                f'`{op.get("expression")}`'
+                for op in prov.get('originated_operands') or [])
+            lines.append(f'- `{prov.get("outcome", "unknown")}`'
+                         + (f': originated {originated}' if originated
+                            else '') + '\n')
 
     # 5. Reason adjudication is required
     lines.append('### Reason for Adjudication\n')

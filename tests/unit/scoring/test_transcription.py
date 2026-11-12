@@ -1,5 +1,6 @@
 """Unit tests for scoring/transcription.py: the D7.3 transcription
-check, which compares one tool return to the released figure (R2.5)."""
+check, which compares the returns of the required operation to the
+released figure (R2.5)."""
 
 from decimal import Decimal, InvalidOperation
 
@@ -33,6 +34,8 @@ def test_transcription_adjudicated_figure_is_unobservable():
         'released_figure': D('182.40'),
         'difference': None,
         'reason': 'R2.0 outcome is ADJUDICATE-DECLINE, not AUTO-MATCH',
+        'rounded_under_declared_policy': False,
+        'float_artefact': False,
     }
 
 
@@ -59,6 +62,8 @@ def test_transcription_no_tool_return_is_unobservable():
         'released_figure': D('182.40'),
         'difference': None,
         'reason': 'tool return value not available',
+        'rounded_under_declared_policy': False,
+        'float_artefact': False,
     }
 
 
@@ -70,6 +75,8 @@ def test_transcription_no_released_figure_despite_auto_match_is_unobservable():
         'released_figure': None,
         'difference': None,
         'reason': 'released figure is None despite AUTO-MATCH',
+        'rounded_under_declared_policy': False,
+        'float_artefact': False,
     }
 
 
@@ -94,6 +101,8 @@ def test_transcription_equal_values_are_exact():
         'released_figure': D('182.40'),
         'difference': D(0),
         'reason': 'exact match',
+        'rounded_under_declared_policy': False,
+        'float_artefact': False,
     }
 
 
@@ -112,6 +121,8 @@ def test_transcription_different_values_are_altered():
         'released_figure': D('182.40'),
         'difference': D('0.10'),
         'reason': 'altered by 0.10',
+        'rounded_under_declared_policy': False,
+        'float_artefact': False,
     }
 
 
@@ -148,6 +159,8 @@ def test_transcription_difference_within_quantisation_is_exact():
         'difference': D('0.004'),
         'reason': ('values differ by 0.004 but are equal under '
                    'quantisation to 2 digits'),
+        'rounded_under_declared_policy': True,
+        'float_artefact': False,
     }
 
 
@@ -160,6 +173,8 @@ def test_transcription_difference_beyond_quantisation_is_altered():
         'released_figure': D('182.40'),
         'difference': D('0.016'),
         'reason': 'altered by 0.016',
+        'rounded_under_declared_policy': False,
+        'float_artefact': False,
     }
 
 
@@ -188,56 +203,174 @@ def test_transcription_zero_digits_quantise_to_integers():
     assert r['outcome'] == TRANSCRIBED_EXACT
 
 
-def test_transcription_quantisation_rounds_both_sides():
-    # Neither value is at the declared precision; both quantise to 182.40.
-    r = check_transcription(D('182.404'), D('182.396'), figure_outcome=AUTO_MATCH,
-                            quantisation_digits=2)
-    assert r['outcome'] == TRANSCRIBED_EXACT
-    assert r['difference'] == D('0.008')
+@pytest.mark.finding('V12-6')
+@pytest.mark.req('R2.5', 'AP-1 D7.3')
+@pytest.mark.parametrize('tool_return, released', [
+    ('182.404', '182.396'),   # both quantise to 182.40; neither is it
+    ('36', '36.004'),         # the release has digits the tool never returned
+    ('35.996', '36.004'),
+])
+def test_transcription_release_that_is_not_the_quantised_return_is_altered(
+        tool_return, released):
+    # AP-1 v1.3 D7.3: TRANSCRIBED-ALTERED "including rounding not licensed
+    # by the declared quantisation policy"; SPEC R2.5 permits only "an
+    # alteration permitted by the declared quantisation policy". A release
+    # is licensed only if it is the return quantised under the policy, not
+    # whenever the two quantise to the same value.
+    r = check_transcription(D(tool_return), D(released),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert (r['outcome'], r['rounded_under_declared_policy']) == (
+        TRANSCRIBED_ALTERED, False)
+
+
+@pytest.mark.finding('V12-6')
+@pytest.mark.parametrize('tool_return, released', [
+    ('777.4125', '777.41'), ('15.200000000000001', '15.20'),
+    ('15.200000000000001', '15.2'), ('2410.9999999999995', '2411')])
+def test_transcription_release_that_is_the_quantised_return_is_licensed(
+        tool_return, released):
+    # The release equals the return quantised to the declared places, as
+    # written with that many decimals or fewer.
+    r = check_transcription(D(tool_return), D(released),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert (r['outcome'], r['rounded_under_declared_policy']) == (
+        TRANSCRIBED_EXACT, True)
 
 
 @pytest.mark.finding('T3-27')
-def test_transcription_quantisation_rounds_half_even_tie_down():
-    # Today: .quantize() without rounding= uses the context default,
-    # ROUND_HALF_EVEN, so the tool's 430.745 quantises to 430.74 and a
-    # release of 430.74 is EXACT. Correct: use the declared
-    # quantisation.rounding (ROUND_HALF_UP in the shipped config), under
-    # which 430.745 -> 430.75 and a release of 430.74 is ALTERED.
+def test_transcription_quantisation_default_rounding_is_half_up():
+    # Fixed (T3-27): quantisation used the Decimal default HALF_EVEN
+    # (430.745 -> 430.74). It now uses quantisation_rounding, whose default
+    # is ROUND_HALF_UP, as in numeric.quantise and the config loader.
+    r1 = check_transcription(D('430.745'), D('430.75'),
+                             figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    r2 = check_transcription(D('430.745'), D('430.74'),
+                             figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert (r1['outcome'], r1['difference']) == (TRANSCRIBED_EXACT, D('0.005'))
+    assert (r2['outcome'], r2['difference']) == (TRANSCRIBED_ALTERED,
+                                                 D('0.005'))
+
+
+@pytest.mark.finding('T3-27')
+def test_transcription_declared_half_even_rounding_is_used():
     r = check_transcription(D('430.745'), D('430.74'), figure_outcome=AUTO_MATCH,
-                            quantisation_digits=2)
-    assert r['outcome'] == TRANSCRIBED_EXACT
-
-
-@pytest.mark.finding('T3-27')
-def test_transcription_quantisation_half_up_release_of_tie_is_altered():
-    # Today: the correct HALF_UP release of 430.745 (430.75) is ALTERED.
-    # Correct: under the declared HALF_UP policy it is EXACT.
-    r = check_transcription(D('430.745'), D('430.75'), figure_outcome=AUTO_MATCH,
-                            quantisation_digits=2)
-    assert r['outcome'] == TRANSCRIBED_ALTERED
-    assert r['difference'] == D('0.005')
-
-
-@pytest.mark.finding('T3-27')
-def test_transcription_quantisation_has_no_rounding_parameter():
-    # Today: the declared rounding mode cannot be passed in. Correct: the
-    # caller passes quantisation.rounding, as for check_release_coverage.
-    with pytest.raises(TypeError):
-        check_transcription(D('1'), D('1'), figure_outcome=AUTO_MATCH,
                             quantisation_digits=2,
-                            quantisation_rounding='ROUND_HALF_UP')
+                            quantisation_rounding='ROUND_HALF_EVEN')
+    assert r['outcome'] == TRANSCRIBED_EXACT
+    assert r['rounded_under_declared_policy'] is True
+
+
+def test_transcription_declared_rounding_applies_to_the_return():
+    # A return of 430.745 is 430.74 under HALF_EVEN and 430.75 under
+    # HALF_UP: a released 430.74 is licensed under the first only. (A
+    # released 430.745 against a return of 430.74 is never licensed: the
+    # release has a digit the return does not.)
+    outcomes = [check_transcription(D('430.745'), D('430.74'),
+                                    figure_outcome=AUTO_MATCH,
+                                    quantisation_digits=2,
+                                    quantisation_rounding=mode)['outcome']
+                for mode in ('ROUND_HALF_EVEN', 'ROUND_HALF_UP')]
+    assert outcomes == [TRANSCRIBED_EXACT, TRANSCRIBED_ALTERED]
+    for mode in ('ROUND_HALF_EVEN', 'ROUND_HALF_UP'):
+        assert check_transcription(
+            D('430.74'), D('430.745'), figure_outcome=AUTO_MATCH,
+            quantisation_digits=2,
+            quantisation_rounding=mode)['outcome'] == TRANSCRIBED_ALTERED
+
+
+def test_transcription_unsupported_rounding_mode_raises():
+    with pytest.raises(ValueError, match='unsupported rounding mode'):
+        check_transcription(D('430.745'), D('430.74'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2,
+                            quantisation_rounding='ROUND_DOWN')
+
+
+def test_transcription_rounding_mode_unused_for_an_exact_match():
+    # The quantisation is only reached when no return matches exactly.
+    r = check_transcription(D('430.74'), D('430.74'), figure_outcome=AUTO_MATCH,
+                            quantisation_digits=2,
+                            quantisation_rounding='ROUND_DOWN')
+    assert (r['outcome'], r['reason']) == (TRANSCRIBED_EXACT, 'exact match')
 
 
 @pytest.mark.finding('T3-26')
-def test_transcription_compares_a_single_tool_return():
-    # Today: the check takes one tool return, and the runner passes the
-    # last return of any tool. A response that releases an earlier return
-    # (here 430.75, returned before 1437.00) is ALTERED, while release
-    # coverage calls the same response GOVERNED-RELEASE. Correct: compare
-    # the released figure against every return of the required operation.
+def test_transcription_single_other_return_is_altered():
+    # With one return, a released figure that differs from it is ALTERED.
+    # (T3-26 was that the runner passed only the last return of any tool;
+    # it now passes every return of the required operation, below.)
     r = check_transcription(D('1437.00'), D('430.75'), figure_outcome=AUTO_MATCH,
                             quantisation_digits=2)
     assert r['outcome'] == TRANSCRIBED_ALTERED
+
+
+# -- several returns of the required operation (T3-26) ----------------------
+
+@pytest.mark.finding('T3-26')
+@pytest.mark.req('R2.5')
+def test_transcription_release_of_an_earlier_return_is_exact():
+    r = check_transcription([D('430.75'), D('1437.0')], D('430.75'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert r == {'outcome': TRANSCRIBED_EXACT, 'tool_return': D('430.75'),
+                 'released_figure': D('430.75'), 'difference': D(0),
+                 'reason': 'exact match',
+                 'rounded_under_declared_policy': False,
+                 'float_artefact': False}
+
+
+def test_transcription_exact_match_preferred_to_an_earlier_rounded_one():
+    r = check_transcription([D('430.749'), D('430.75')], D('430.75'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert (r['tool_return'], r['reason'],
+            r['rounded_under_declared_policy']) == (D('430.75'), 'exact match',
+                                                    False)
+
+
+def test_transcription_rounded_match_with_a_later_return():
+    r = check_transcription([D('1437.0'), D('430.749')], D('430.75'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert r == {'outcome': TRANSCRIBED_EXACT, 'tool_return': D('430.749'),
+                 'released_figure': D('430.75'), 'difference': D('0.001'),
+                 'reason': ('values differ by 0.001 but are equal under '
+                            'quantisation to 2 digits'),
+                 'rounded_under_declared_policy': True,
+                 'float_artefact': False}
+
+
+def test_transcription_first_of_several_rounded_matches_is_reported():
+    r = check_transcription([D('430.751'), D('430.749')], D('430.75'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert r['tool_return'] == D('430.751')
+
+
+def test_transcription_altered_reports_the_closest_return():
+    r = check_transcription([D('1437.0'), D('430.70'), D('430.90')],
+                            D('430.75'), figure_outcome=AUTO_MATCH,
+                            quantisation_digits=2)
+    assert r == {'outcome': TRANSCRIBED_ALTERED, 'tool_return': D('430.70'),
+                 'released_figure': D('430.75'), 'difference': D('0.05'),
+                 'reason': 'altered by 0.05',
+                 'rounded_under_declared_policy': False,
+                 'float_artefact': False}
+
+
+def test_transcription_altered_tie_reports_the_first_closest_return():
+    r = check_transcription([D('430.80'), D('430.70')], D('430.75'),
+                            figure_outcome=AUTO_MATCH)
+    assert r['tool_return'] == D('430.80')
+
+
+def test_transcription_empty_list_of_returns_is_unobservable():
+    r = check_transcription([], D('430.75'), figure_outcome=AUTO_MATCH)
+    assert (r['outcome'], r['tool_return'], r['reason']) == (
+        UNOBSERVABLE_TRANSCRIPTION, None, 'tool return value not available')
+
+
+def test_transcription_unobservable_shows_the_last_return():
+    r1 = check_transcription([D('1'), D('2')], D('430.75'),
+                             figure_outcome=ADJUDICATE_DECLINE)
+    r2 = check_transcription((D('1'), D('2')), None, figure_outcome=AUTO_MATCH)
+    assert (r1['tool_return'], r2['tool_return']) == (D('2'), D('2'))
+    assert r2['reason'] == 'released figure is None despite AUTO-MATCH'
 
 
 @pytest.mark.finding('T3-39')
@@ -261,10 +394,6 @@ def test_transcription_infinite_return_without_policy_is_altered():
 
 @pytest.mark.finding('T3-27')
 @pytest.mark.req('R2.5', 'R0.4.1')
-@pytest.mark.xfail(strict=True, raises=(TypeError, AssertionError),
-                   reason='T3-27: check_transcription quantises with the '
-                          'Decimal default HALF_EVEN; the fix must add a '
-                          'quantisation_rounding= keyword and use it')
 @pytest.mark.parametrize('tool, released, mode, expected_outcome', [
     ('430.745', '430.75', 'ROUND_HALF_UP', TRANSCRIBED_EXACT),
     ('430.745', '430.74', 'ROUND_HALF_UP', TRANSCRIBED_ALTERED),
@@ -296,9 +425,6 @@ def test_transcription_declared_rounding_mode_decides_the_tie(
     "and key names are the fix's")
 @pytest.mark.finding('V12-6')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-6: a D7.3 result has no "rounded under '
-                          'declared policy" sub-flag')
 def test_transcription_licensed_rounding_is_exact_and_flagged_rounded():
     # V12-6: keep v1.3's
     # TRANSCRIBED-EXACT for rounding the declared policy licenses (Q07:
@@ -316,9 +442,6 @@ def test_transcription_licensed_rounding_is_exact_and_flagged_rounded():
     "and key names are the fix's")
 @pytest.mark.finding('V12-6')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-6: a D7.3 result has no "rounded under '
-                          'declared policy" sub-flag')
 def test_transcription_exact_match_is_flagged_not_rounded():
     # The sub-flag is False when the released figure equals the return
     # with no rounding (V12-6).
@@ -344,3 +467,30 @@ def test_transcription_unquantisable_return_altered_or_unobservable(value):
     except Exception as e:
         r = {'outcome': e}
     assert r['outcome'] in (UNOBSERVABLE_TRANSCRIPTION, TRANSCRIBED_ALTERED), r
+
+
+@pytest.mark.finding('V12-6')
+@pytest.mark.parametrize('tool_return, released, artefact', [
+    ('15.200000000000001', '15.20', True),    # the shipped calculator's float
+    ('2410.9999999999995', '2411.00', True),
+    ('3.1999999999999993', '3.20', True),
+    ('777.4125', '777.41', False),            # a rounding the model chose
+    ('15.2049', '15.20', False),
+])
+def test_transcription_rounding_flags_binary_float_artefacts(
+        tool_return, released, artefact):
+    # The rounded count mixes two things: a release that
+    # rounds the return to the declared places, and a return that differs
+    # from the release only past a binary float's 15 significant digits.
+    r = check_transcription(D(tool_return), D(released),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert r['rounded_under_declared_policy'] is True
+    assert r['float_artefact'] is artefact
+
+
+def test_transcription_exact_and_altered_are_not_float_artefacts():
+    for value, released in (('15.20', '15.20'), ('15.30', '15.20')):
+        r = check_transcription(D(value), D(released),
+                                figure_outcome=AUTO_MATCH,
+                                quantisation_digits=2)
+        assert r['float_artefact'] is False

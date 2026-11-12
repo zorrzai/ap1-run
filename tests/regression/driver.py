@@ -79,6 +79,23 @@ def input_paths(code_dir, args):
     return known
 
 
+def recorded_model(records):
+    """The model a published run's requests name, if they all name the
+    same one; None otherwise. A replay configures that model, so its
+    report names the model the run was configured with."""
+    models = set()
+    for rec in records:
+        if rec.get('record_type') == 'figure_identification':
+            continue
+        rr = (rec.get('request_sent') or {}).get('request_record') or {}
+        models.add(rr.get('model'))
+    if len(models) == 1:
+        model = models.pop()
+        if isinstance(model, str) and model:
+            return model
+    return None
+
+
 def main():
     code_dir, scenario_path, result_dir, repo_dir = sys.argv[1:5]
     with open(scenario_path, encoding='utf-8') as f:
@@ -114,7 +131,11 @@ def main():
             del os.environ[name]
     os.environ['AP1_SMOKE_API_KEY'] = API_KEY
     os.environ['AP1_SMOKE_ENDPOINT'] = mock.url
-    os.environ['AP1_SMOKE_MODEL'] = 'mock-model'
+    # A replay is configured with the model the published run was; any
+    # other scenario with the mock's.
+    os.environ['AP1_SMOKE_MODEL'] = (
+        replay_records is not None and recorded_model(replay_records)
+        or 'mock-model')
     os.environ.update(scenario.get('env', {}))
 
     # The runner sleeps 0.5 s per execution, and the adapter 1 s between

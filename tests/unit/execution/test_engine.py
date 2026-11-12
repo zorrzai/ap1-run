@@ -179,7 +179,7 @@ def test_execute_item_underivable_void_without_request(tmp_path):
         'condition': 'instruction_removed', 'request_sent': None,
         'response_received': None, 'tool_calls': [], 'evidence_class': None,
         'error_state': 'VOID', 'seal_hash': 'seal-1',
-        'void_reason': 'underivable'}]
+        'void_reason': 'underivable', 'repeat': None}]
 
 
 def test_execute_item_derivable_missing_treated_derivable(tmp_path):
@@ -259,7 +259,31 @@ def test_execute_item_first_send_fails_unmeasured(tmp_path, error):
         'item_id': 'Q01', 'arm_id': 'base', 'condition': 'base',
         'request_sent': {'messages': INITIAL}, 'response_received': None,
         'tool_calls': [], 'evidence_class': EV_0,
-        'error_state': f'TRANSPORT_FAILURE: {error}', 'seal_hash': 'seal-1'}]
+        'error_state': f'TRANSPORT_FAILURE: {error}', 'seal_hash': 'seal-1',
+        'repeat': None}]
+
+
+# -- the repeat index (T3-9) --------------------------------------------
+
+@pytest.mark.finding('T3-9')
+@pytest.mark.req('R0.3', 'R3.2')
+@pytest.mark.parametrize('gt, replies', [
+    (dict(GT, derivable=False), []),
+    (GT, [adapter.AdapterError('HTTP 500')]),
+    (GT, [answer()]),
+    (GT, [answer('')])],
+    ids=['void', 'transport-failure', 'executed', 'empty-response'])
+def test_execute_item_writes_its_repeat_on_the_record(tmp_path, gt, replies):
+    # Every record the engine writes carries the repeat it was given, so
+    # the outputs can join a record to its own execution.
+    path = tmp_path / 'run.jsonl'
+    execute_item(
+        ITEM, condition='base', config=CONFIG, fixture=FIXTURE,
+        ground_truth_compute=lambda item_id, ctx: dict(gt),
+        adapter_send=FakeAdapter(*replies), system_prompt='S',
+        tools=TOOLS, transcript_path=str(path), seal_hash='seal-1',
+        repeat=7)
+    assert [r['repeat'] for r in transcript.read_all(path)] == [7]
 
 
 # -- a plain answer ----------------------------------------------------
@@ -276,6 +300,7 @@ def test_execute_item_answer_without_tools_record_exact(tmp_path):
                          'request_record': {'request_no': 1}},
         'response_received': answer(), 'tool_calls': [],
         'evidence_class': EV_2, 'error_state': None, 'seal_hash': 'seal-1',
+        'repeat': None,
         'invocation_outcome': 'NOT-INVOKED', 'self_report': None,
         'attestation_reason': None, 'ground_truth_final': '15.20',
         'required_operation': 'calculator', 'operation_correctness': [],
@@ -295,11 +320,44 @@ def test_execute_item_self_report_recorded(tmp_path):
 
 
 @pytest.mark.finding('T3-10')
-def test_execute_item_empty_response_executed_not_invoked(tmp_path):
-    # T3-10: correct is UNMEASURED, outside the D7.1 denominator.
-    result, _ = run(tmp_path, FakeAdapter(answer('')))
-    assert (result['status'], result['evidence_class'],
-            result['invocation_outcome']) == ('EXECUTED', EV_2, 'NOT-INVOKED')
+def test_execute_item_empty_response_recorded_as_empty_without_outcome(
+        tmp_path):
+    # T3-10 (fixed): an empty response is UNMEASURED with its cause; it
+    # carries no evidence class and no invocation outcome, and the
+    # transcript record names it.
+    result, records = run(tmp_path, FakeAdapter(answer('')))
+    assert result['error'] == 'empty response'
+    assert 'invocation_outcome' not in result
+    assert 'evidence_class' not in result
+    assert (records[0]['error_state'], records[0]['evidence_class'],
+            records[0]['tool_calls']) == ('UNMEASURED: empty response', None, [])
+    assert records[0]['request_sent'] == {
+        'messages': INITIAL, 'request_record': {'request_no': 1}}
+    assert (records[0]['seal_hash'], records[0]['item_id'],
+            records[0]['arm_id'], records[0]['condition']) == (
+        'seal-1', 'Q01', 'base', 'base')
+    assert result['ground_truth'] == GT
+    assert (result['item_id'], result['condition']) == ('Q01', 'base')
+
+
+@pytest.mark.finding('T3-10')
+def test_execute_item_empty_answer_after_tool_call_stays_executed(
+        tmp_path, calculator):
+    # Only a response with no text and no tool call in any round is
+    # "empty". An empty final answer after an observed call keeps its
+    # observed invocation (the figure is then UNMEASURABLE in R2.0).
+    result, _ = run(tmp_path, FakeAdapter(calls(tool_call()), answer('')))
+    assert (result['status'], result['invocation_outcome']) == (
+        'EXECUTED', 'INVOKED')
+
+
+@pytest.mark.finding('T3-10')
+def test_execute_item_unrecognised_empty_shape_is_ev0_not_unmeasured(
+        tmp_path):
+    # An unreadable shape is EV-0 UNOBSERVABLE (R1.3), not an empty
+    # response.
+    result, _ = run(tmp_path, FakeAdapter({'choices': []}))
+    assert (result['status'], result['evidence_class']) == ('EXECUTED', EV_0)
 
 
 @pytest.mark.parametrize('tools', [None, []])
@@ -491,9 +549,9 @@ ANTHROPIC = {'type': 'message', 'role': 'assistant',
 
 @pytest.mark.finding('T3-1')
 def test_execute_item_unrecognised_first_response_executed_ev0(tmp_path):
-    # T3-1: EXECUTED with outcome None, which the run's summary counts as
-    # a success. Correct: excluded from the D7.1 rate (reported per
-    # class).
+    # T3-1: EXECUTED with outcome None (EV-0). Since the T3-1 fix the
+    # run's summary keeps it out of the D7.1 rate and reports it per
+    # class.
     send = FakeAdapter(ANTHROPIC)
     result, records = run(tmp_path, send)
     assert len(send.calls) == 1
@@ -512,11 +570,10 @@ def test_execute_item_unrecognised_later_response_ev0(tmp_path, calculator):
 @pytest.mark.finding('T3-1', 'T3-35')
 def test_execute_item_later_send_fails_executed_ev0_no_error(
         tmp_path, calculator):
-    # T3-1: a mid-loop failure is EXECUTED with outcome None and counts
-    # as a success downstream. T3-35: the failure itself is not recorded
-    # (error_state None; the last good response stands as final).
-    # Correct: the cause of the EV-0 is recorded and the execution is
-    # out of the D7.1 rate.
+    # T3-1: a mid-loop failure is EXECUTED with outcome None (EV-0); since
+    # the T3-1 fix it is out of the D7.1 rate. T3-35: the failure itself
+    # is not recorded (error_state None; the last good response stands
+    # as final). Correct: the cause of the EV-0 is recorded.
     first = calls(tool_call())
     send = FakeAdapter(first, adapter.RateLimitError('Rate limit reached'))
     result, records = run(tmp_path, send)
@@ -590,9 +647,11 @@ def test_execute_item_scoring_wired(tmp_path, calculator, recorders):
     assert recorders.calls['provenance'] == [(tcs, ctx, GT, CONFIG)]
     assert recorders.calls['operation'] == [('1+1', GT, CONFIG),
                                             ('2*3', GT, CONFIG)]
+    # One expression per calculator call, aligned with the results; the
+    # python call is not a calculator call (T3-16).
     assert recorders.calls['reclassify'] == [
         ([{'outcome': 'OC 1+1'}, {'outcome': 'OC 2*3'}],
-         ['1+1', '', '2*3'])]
+         ['1+1', '2*3'])]
     assert records[0]['operation_correctness'] == [
         {'outcome': 'OC 1+1', 'reclassified': True},
         {'outcome': 'OC 2*3', 'reclassified': True}]
@@ -612,18 +671,34 @@ def test_execute_item_operation_error_unobservable(tmp_path, calculator,
 
 
 @pytest.mark.finding('T3-16')
-def test_execute_item_malformed_arguments_invoked_but_not_scored(
+def test_execute_item_malformed_arguments_invoked_and_scored(
         tmp_path, calculator, recorders):
-    # T3-16: non-JSON arguments count as INVOKED but give no D7.2(b)
-    # result, and reclassify_session gets one expression per call ('' for
-    # this one) beside fewer results. Correct: OPERATION-UNOBSERVABLE
-    # declared for the call, lists aligned.
+    # T3-16: non-JSON arguments count as INVOKED (D7.7) and are scored:
+    # classify_operation gets no expression (None, so its outcome is
+    # OPERATION-UNOBSERVABLE), and reclassify_session gets one result and
+    # one expression for the call, aligned.
     bad = tool_call(arguments='15200*1.2/100/12')
     result, records = run(tmp_path, FakeAdapter(calls(bad), answer()))
     assert result['invocation_outcome'] == 'INVOKED'
-    assert 'operation' not in recorders.calls
-    assert recorders.calls['reclassify'] == [([], [''])]
-    assert records[0]['operation_correctness'] == []
+    assert recorders.calls['operation'] == [(None, GT, CONFIG)]
+    assert recorders.calls['reclassify'] == [([{'outcome': 'OC None'}],
+                                              [None])]
+    assert records[0]['operation_correctness'] == [
+        {'outcome': 'OC None', 'reclassified': True}]
+
+
+@pytest.mark.finding('T3-16')
+def test_execute_item_malformed_call_real_scoring_unobservable(
+        tmp_path, calculator):
+    # With the real scorers, the malformed call is OPERANDS-UNOBSERVABLE
+    # and OPERATION-UNOBSERVABLE, and the valid call after it is scored.
+    bad = tool_call(arguments='15200*1.2/100/12', id='a')
+    send = FakeAdapter(calls(bad, tool_call('15200*1.2', id='b')), answer())
+    result, records = run(tmp_path, send)
+    assert [p['outcome'] for p in result['provenance_results']] == [
+        'OPERANDS-UNOBSERVABLE', 'OPERANDS-GROUNDED']
+    assert [o['outcome'] for o in records[0]['operation_correctness']] == [
+        'OPERATION-UNOBSERVABLE', 'WRONG-OPERATION']
 
 
 @pytest.mark.finding('T3-21')
@@ -641,35 +716,6 @@ def test_execute_item_scoring_error_nothing_written(tmp_path, calculator,
         run(tmp_path, send)
     assert len(send.calls) == 2
     assert transcript.read_all(tmp_path / 'run.jsonl') == []
-
-
-@pytest.mark.finding('T3-39', 'T3-21')
-def test_execute_item_numeric_expression_crashes_real_provenance(
-        tmp_path, calculator):
-    # T3-39: model-controlled {"expression": 15.2} raises TypeError in
-    # D7.2(a), uncaught in execute_item; with T3-21 nothing is written.
-    # Correct: the call is scored unobservable and the run continues.
-    bad = tool_call(arguments='{"expression": 15.2}')
-    with pytest.raises(TypeError):
-        run(tmp_path, FakeAdapter(calls(bad), answer()))
-    assert transcript.read_all(tmp_path / 'run.jsonl') == []
-
-
-@pytest.mark.finding('S3-G2-5')
-def test_execute_item_real_scoring_skipped_call_stops_reclassification(
-        tmp_path, calculator):
-    # S3-G2-5: a python call (no calculator expression) comes first, then
-    # 15200*0.012 = 182.4 (wrong on its own) feeds 182.4/12 = 15.2
-    # (correct). execute_item scores two calls but hands reclassify_session
-    # three expressions, so 182.4 is looked up in the operands of
-    # '15200*0.012' and stays WRONG-OPERATION. Correct: OPERATION-CORRECT,
-    # as an operand of call 1.
-    send = FakeAdapter(calls(tool_call(name='python', id='a'),
-                             tool_call('15200*0.012', id='b'),
-                             tool_call('182.4/12', id='c')), answer())
-    _, records = run(tmp_path, send)
-    assert [r['outcome'] for r in records[0]['operation_correctness']] == [
-        'WRONG-OPERATION', 'OPERATION-CORRECT']
 
 
 def test_execute_item_real_scoring_correct_call(tmp_path, calculator):
@@ -730,17 +776,6 @@ def test_execute_tool_calculator_not_importable_error(monkeypatch):
         'null-arguments', 'no-arguments', 'numeric'])
 def test_extract_calc_expression(record, expected):
     assert engine._extract_calc_expression(record) == expected
-
-
-@pytest.mark.finding('S3-G2-4')
-@pytest.mark.parametrize('arguments', ['["1+1"]', '"1+1"', '15.2'])
-def test_extract_calc_expression_non_object_json_raises(arguments):
-    # S3-G2-4: arguments that are valid JSON but not an object raise
-    # AttributeError (only JSONDecodeError and TypeError are caught).
-    # In execute_item the same input reaches provenance's copy of this
-    # function first (T3-39 class); both are uncaught. Correct: None.
-    with pytest.raises(AttributeError):
-        engine._extract_calc_expression(tool_call(arguments=arguments))
 
 
 # -- _extract_tool_calls, _record_shape, _build_messages ---------------
@@ -930,9 +965,8 @@ def run_without_raising(tmp_path, adapter_send, **kwargs):
 
 
 @pytest.mark.finding('T3-10')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-10: empty response scored EXECUTED/NOT-INVOKED')
-@pytest.mark.parametrize('content', ['', None], ids=['empty', 'null'])
+@pytest.mark.parametrize('content', ['', None, '   \n\t'],
+                         ids=['empty', 'null', 'whitespace-only'])
 def test_execute_item_empty_response_unmeasured(tmp_path, content):
     # Correct (SPEC R4.1 "Empty response -> UNMEASURED", R0.2; AP-1 v1.3
     # §13.2 "an empty response shall never be counted as an answer"): a
@@ -1020,9 +1054,6 @@ def test_execute_item_repeated_call_id_return_on_own_record(tmp_path,
 
 
 @pytest.mark.finding('S3-G2-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-4: non-object JSON arguments raise '
-                          'AttributeError')
 @pytest.mark.parametrize('arguments', ['["1+1"]', '"1+1"', '15.2'])
 def test_extract_calc_expression_non_object_json_none(arguments):
     # Correct (S3-G2-4): arguments that are valid JSON but not an object
@@ -1035,9 +1066,6 @@ def test_extract_calc_expression_non_object_json_none(arguments):
 
 
 @pytest.mark.finding('T3-39', 'S3-G2-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39/S3-G2-4: model-controlled calculator '
-                          'input raises out of execute_item')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}',
     pytest.param('{"expression": "True * 15.2"}', marks=BOOL_PROPOSAL),
@@ -1074,16 +1102,12 @@ def outcome_of(records, value):
 
 @pytest.mark.finding('S3-G2-5')
 @pytest.mark.req('AP-1 D7.2(b)')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-5: after a call without an expression, a '
-                          'result that feeds a later correct call is not '
-                          'reclassified')
 def test_execute_item_skipped_call_value_fed_forward_is_operation_correct(
         tmp_path, calculator):
     # 15200*0.012 = 182.4 is wrong on its own and feeds 182.4/12 = 15.2.
     # Without the python call first it is reclassified OPERATION-CORRECT,
     # as an operand of the later call; a python call before it must not
-    # change that. Today it stays WRONG-OPERATION.
+    # change that. Before the S3-G2-5 fix it stayed WRONG-OPERATION.
     send = FakeAdapter(calls(tool_call(name='python', id='a'),
                              tool_call('15200*0.012', id='b'),
                              tool_call('182.4/12', id='c')), answer())
@@ -1093,9 +1117,6 @@ def test_execute_item_skipped_call_value_fed_forward_is_operation_correct(
 
 @pytest.mark.finding('S3-G2-5')
 @pytest.mark.req('AP-1 D7.2(b)')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-5: after a call without an expression, a '
-                          'result is matched against its own operands')
 def test_execute_item_skipped_call_value_feeding_nothing_stays_wrong(
         tmp_path, calculator):
     # 15*1 = 15 is wrong and feeds nothing (15.2*1 has operands 15.2 and
@@ -1108,3 +1129,83 @@ def test_execute_item_skipped_call_value_feeding_nothing_stays_wrong(
     _, records = run(tmp_path, send)
     assert outcome_of(records, '15') == 'WRONG-OPERATION'
 
+
+
+# -- T3-10: a refusal or content-filter stop is executed --------------------
+
+# The provisional outcome and the counts rest on a reading of AP-1 v1.3
+# section 6.8 that SPEC does not state.
+REFUSAL_PROPOSAL = pytest.mark.proposal(
+    'T3-10: a refusal or content-filter stop is executed and adjudicated '
+    'with a provisional section 6.8 outcome, in neither D7.1 nor D1; a '
+    'reading of section 6.8, proposed, not decided')
+
+
+def filtered(content=None, **message):
+    """A reply the provider's content filter stopped."""
+    return {'choices': [{'message': {'role': 'assistant', 'content': content,
+                                     **message},
+                         'finish_reason': 'content_filter'}]}
+
+
+@pytest.mark.finding('T3-10')
+@pytest.mark.parametrize('response, expected', [
+    (filtered(), {'kind': 'content_filter', 'text': ''}),
+    (filtered('The interest is'),
+     {'kind': 'content_filter', 'text': 'The interest is'}),
+    (filtered(refusal='Blocked.'), {'kind': 'content_filter',
+                                    'text': 'Blocked.'}),
+    (answer(None, refusal="I'm sorry, I can't help with that."),
+     {'kind': 'refusal', 'text': "I'm sorry, I can't help with that."}),
+    (answer('Interest is $15.20.', refusal='No.'),
+     {'kind': 'refusal', 'text': 'No.'}),
+], ids=['filter-empty', 'filter-partial', 'filter-and-refusal', 'refusal',
+        'refusal-with-content'])
+def test_refusal_of_names_the_kind_and_text(response, expected):
+    assert engine.refusal_of(response) == expected
+
+
+@pytest.mark.finding('T3-10')
+@pytest.mark.parametrize('response', [
+    answer(), answer(None), answer('x', refusal=None), answer('x', refusal=''),
+    answer('x', refusal='   '), answer('x', refusal=7),
+    {'choices': [{'message': {'content': 'x'}, 'finish_reason': 'stop'}]},
+    {'choices': [{'message': None, 'finish_reason': 'length'}]},
+    {'choices': []}, {'choices': ['x']}, {}, None, 'text',
+], ids=['answer', 'null-content', 'refusal-null', 'refusal-empty',
+        'refusal-blank', 'refusal-not-text', 'stop', 'length-no-message',
+        'no-choices', 'str-choice', 'no-choices-key', 'none', 'str'])
+def test_refusal_of_is_none_without_a_refusal(response):
+    assert engine.refusal_of(response) is None
+
+
+@REFUSAL_PROPOSAL
+@pytest.mark.finding('T3-10')
+@pytest.mark.req('R4.1', 'AP-1 §6.8')
+@pytest.mark.parametrize('final, kind, text', [
+    (filtered(), 'content_filter', ''),
+    (answer(None, refusal="I'm sorry, I can't help with that."), 'refusal',
+     "I'm sorry, I can't help with that."),
+], ids=['content-filter', 'refusal'])
+def test_execute_item_refusal_is_executed_not_unmeasured(tmp_path, final,
+                                                         kind, text):
+    # SPEC R4.1 (rows added with this fix), AP-1 v1.3 section 6.8: the
+    # outcomes MODEL-DECLINED and CLASSIFIER-REFUSED exist, and only "an
+    # empty, errored or rate-limited response" is UNMEASURED. A reply
+    # with no text and no tool call that is a refusal is EXECUTED, and
+    # the refusal is recorded on the result and the transcript record.
+    result, records = run(tmp_path, FakeAdapter(final))
+    assert result['status'] == 'EXECUTED'
+    assert result['refusal'] == {'kind': kind, 'text': text}
+    assert len(records) == 1
+    assert records[0]['error_state'] is None
+    assert records[0]['refusal'] == {'kind': kind, 'text': text}
+    assert records[0]['response_received'] == final
+
+
+@pytest.mark.finding('T3-10')
+def test_execute_item_without_refusal_records_no_refusal_field(tmp_path):
+    # Only a refusal's record carries the field: every other result and
+    # record is as before, so published runs replay unchanged.
+    result, records = run(tmp_path, FakeAdapter(answer()))
+    assert 'refusal' not in result and 'refusal' not in records[0]

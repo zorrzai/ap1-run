@@ -3,11 +3,11 @@
 Spec: AP-1 Runner Build Spec v0.3, section 5 R2.5 (extended).
 
 Check whether reported figures matching the expected value are governed
-by tool returns.  Unlike check_transcription (which compares the LAST
-tool return to the single identified figure on AUTO-MATCH items only),
-this check compares EVERY candidate figure in the response against
-EVERY tool return value, and runs on ALL items including adjudicated
-ones.
+by tool returns.  Unlike check_transcription (which compares the returns
+of the required operation to the single identified figure on AUTO-MATCH
+items only), this check compares EVERY candidate figure in the response
+against EVERY tool return value, and runs on ALL items including
+adjudicated ones.
 
 Outcomes:
   GOVERNED-RELEASE        every candidate figure appears in at least
@@ -100,12 +100,13 @@ def check_release_coverage(tool_calls, candidate_figures, expected_value,
     """
     tool_returns = _parse_tool_returns(tool_calls)
 
-    # No tool calls or no candidate figures -> UNOBSERVABLE
+    # No tool calls or no candidate figures -> UNOBSERVABLE.  Coverage
+    # could not be assessed, so no figure is named ungoverned.
     if not tool_calls or not tool_returns:
         return {
             'outcome': COVERAGE_UNOBSERVABLE,
             'tool_returns': tool_returns,
-            'ungoverned_figures': list(candidate_figures),
+            'ungoverned_figures': [],
             'ungoverned_token_count': 0,
             'finding': 'no tool returns available',
         }

@@ -16,9 +16,10 @@ import pytest
 from ap1_run.foundation import transcript
 from ap1_run.runner import executions
 from ap1_run.runner.executions import (
-    Findings, record_not_scored, record_transport_failure, record_underivable,
-    score_execution,
+    Findings, apply_question_measurability, record_not_scored,
+    record_transport_failure, record_underivable, score_execution,
 )
+from ap1_run.scoring.provenance.classify import UNMEASURABLE_REASON
 
 D = Decimal
 DECLINE_PHRASES = ["i can't", "i cannot", "i'm unable", "i don't have",
@@ -46,6 +47,7 @@ class Fakes:
         self.figure = {'outcome': 'AUTO-MATCH', 'reason': 'one figure',
                        'released_figure': D('638.40')}
         self.tokens = {}       # content -> list of values, or an exception
+        self.accuracy = 'CORRECT'   # the D1 outcome score_accuracy returns
         for name in ('identify_figure', 'check_transcription',
                      'check_release_coverage', 'score_accuracy',
                      'extract_numeric_tokens'):
@@ -61,7 +63,7 @@ class Fakes:
     def check_transcription(self, *args, **kwargs):
         self.record('check_transcription', *args, **kwargs)
         return {'outcome': 'TRANSCRIBED-EXACT', 'difference': D('0.00'),
-                'reason': 'equal'}
+                'reason': 'equal', 'rounded_under_declared_policy': True}
 
     def check_release_coverage(self, *args, **kwargs):
         self.record('check_release_coverage', *args, **kwargs)
@@ -70,7 +72,7 @@ class Fakes:
 
     def score_accuracy(self, *args, **kwargs):
         self.record('score_accuracy', *args, **kwargs)
-        return {'scored': 'accuracy'}
+        return {'scored': 'accuracy', 'outcome': self.accuracy}
 
     def extract_numeric_tokens(self, content, *, currency_symbols):
         self.record('extract_numeric_tokens', content,
@@ -143,17 +145,19 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
         'item_id': 'Q01', 'arm_id': 'base', 'condition': 'base',
         'request_sent': None, 'response_received': None, 'tool_calls': [],
         'evidence_class': 'EV-2', 'error_state': None, 'seal_hash': 'seal-1',
-        'record_type': 'figure_identification', 'figure_outcome': 'AUTO-MATCH',
-        'figure_reason': 'one figure', 'released_figure': '638.40',
+        'record_type': 'figure_identification', 'repeat': 2,
+        'figure_outcome': 'AUTO-MATCH', 'figure_reason': 'one figure', 'released_figure': '638.40',
         'expected': '638.40'}
 
     # D7.3 transcription
-    assert fakes.calls['check_transcription'] == [((D('638.4'), D('638.40')), {
-        'figure_outcome': 'AUTO-MATCH', 'quantisation_digits': 3})]
+    assert fakes.calls['check_transcription'] == [(([D('638.4')], D('638.40')), {
+        'figure_outcome': 'AUTO-MATCH', 'quantisation_digits': 3,
+        'quantisation_rounding': 'ROUND_HALF_EVEN'})]
     assert findings.transcription_results == [{
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
         'outcome': 'TRANSCRIBED-EXACT', 'difference': '0.00',
-        'reason': 'equal'}]
+        'reason': 'equal', 'rounded_under_declared_policy': True,
+        'float_artefact': False}]
 
     # D7.3 release coverage: candidates within the tolerance, inclusive
     assert fakes.calls['check_release_coverage'] == [((
@@ -168,8 +172,9 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
     # D1 and D2
     assert fakes.calls['score_accuracy'] == [((fakes.figure,), {
         'expected_value': D('638.40'), 'answer_tolerance': D('0.01'),
-        'quantisation_digits': 3})]
-    assert findings.all_accuracy_results == [{'scored': 'accuracy'}]
+        'quantisation_digits': 3, 'quantisation_rounding': 'ROUND_HALF_EVEN'})]
+    assert findings.all_accuracy_results == [
+        {'scored': 'accuracy', 'outcome': 'CORRECT'}]
     assert findings.d2_responses == {('Q01', 'base'): [response(content)]}
 
     # evidence, tool-call structures, grammar (both token extractions)
@@ -194,7 +199,28 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
         'operation_correctness': [{'outcome': 'OPERATION-CORRECT'}],
         'provenance_results': [{'outcome': 'OPERANDS-GROUNDED'}],
         'transcription_outcome': 'TRANSCRIBED-EXACT',
-        'release_coverage_outcome': 'PARTIALLY-GOVERNED'}]
+        'release_coverage_outcome': 'PARTIALLY-GOVERNED',
+        'answer_outcome': 'COMPUTED',
+        'answer_outcome_reason': 'correct figure; computation invoked; '
+                                 'operands grounded'}]
+
+
+@pytest.mark.finding('T3-13')
+@pytest.mark.parametrize('accuracy, outcome', [
+    ('CORRECT', 'COMPUTED'), ('INCORRECT', None)])
+def test_score_execution_answer_outcome_follows_d1(fakes, tpath, accuracy,
+                                                   outcome):
+    # §6.8 COMPUTED is "Correct": the runner gives answer_outcome the D1
+    # result it scored for the same execution.
+    fakes.accuracy = accuracy
+    findings = Findings()
+    score(findings, {
+        'response': response('The total is $638.40.'),
+        'tool_calls': [calc('15200 * 0.042', '{"result": 638.4}')],
+        'evidence_class': 'EV-2', 'invocation_outcome': 'INVOKED',
+        'provenance_results': [{'outcome': 'OPERANDS-GROUNDED'}],
+    }, tpath)
+    assert findings.all_results[0]['answer_outcome'] == outcome
 
 
 @pytest.mark.finding('T3-27')
@@ -205,11 +231,14 @@ def test_score_execution_defaults_for_a_bare_result(fakes, tpath, capsys):
     findings = Findings()
     score(findings, {}, tpath, config={})
     assert capsys.readouterr().out == 'AUTO-NO-FIGURE |  | \n'
-    assert fakes.calls['check_transcription'] == [((None, None), {
-        'figure_outcome': 'AUTO-NO-FIGURE', 'quantisation_digits': 2})]
+    assert fakes.calls['check_transcription'] == [(([], None), {
+        'figure_outcome': 'AUTO-NO-FIGURE', 'quantisation_digits': 2,
+        'quantisation_rounding': 'ROUND_HALF_UP'})]
     assert fakes.calls['check_release_coverage'] == [(([], [], D('638.40')), {
         'quantisation_places': 2, 'quantisation_rounding': 'ROUND_HALF_UP'})]
     assert fakes.calls['score_accuracy'][0][1]['quantisation_digits'] == 2
+    assert fakes.calls['score_accuracy'][0][1]['quantisation_rounding'] == \
+        'ROUND_HALF_UP'
     assert 'extract_numeric_tokens' not in fakes.calls  # no content
     assert findings.d2_responses == {('Q01', 'base'): [None]}
     assert findings.evidence_findings == [{
@@ -223,7 +252,9 @@ def test_score_execution_defaults_for_a_bare_result(fakes, tpath, capsys):
         'tool_calls_count': 0, 'released_figure': '', 'expected': '638.40',
         'shape_ok': False, 'operation_correctness': [],
         'provenance_results': [], 'transcription_outcome':
-        'TRANSCRIBED-EXACT', 'release_coverage_outcome': 'PARTIALLY-GOVERNED'}]
+        'TRANSCRIBED-EXACT', 'release_coverage_outcome': 'PARTIALLY-GOVERNED',
+        'answer_outcome': None, 'answer_outcome_reason':
+        'no figure released: the record does not decide the outcome'}]
     figure_record = transcript.read_all(tpath)[-1]
     assert (figure_record['evidence_class'], figure_record['figure_reason'],
             figure_record['released_figure']) == (None, '', '')
@@ -238,33 +269,66 @@ def test_score_execution_empty_results_from_scorers(fakes, tpath, monkeypatch):
     score(findings, {}, tpath)
     assert findings.transcription_results == [{
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
-        'outcome': 'UNOBSERVABLE', 'difference': '', 'reason': ''}]
+        'outcome': 'UNOBSERVABLE', 'difference': '', 'reason': '',
+        'rounded_under_declared_policy': False, 'float_artefact': False}]
     assert findings.release_coverage_results == [{
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
         'outcome': 'COVERAGE-UNOBSERVABLE', 'finding': '',
         'ungoverned_figures': []}]
 
 
-# -- the tool's return value for D7.3 -------------------------------------
+# -- the tool returns compared for D7.3 ------------------------------------
 
+def other(return_value):
+    """A call to a tool other than the required calculator."""
+    return {'id': 'o1', 'type': 'function',
+            'function': {'name': 'lookup', 'arguments': '{}'},
+            'return_value': return_value}
+
+
+@pytest.mark.finding('T3-26')
 @pytest.mark.parametrize('tool_calls, expected', [
-    # the last call with a return value decides
-    ([calc('1', '{"result": 1}'), calc('2', '{"result": "2.50"}')], D('2.50')),
-    ([calc('1', '{"result": 1}'), calc('2', '')], D('1')),
-    ([calc('1', '{"result": 1}'), {'function': {}}], D('1')),
+    # every return with a result, in call order
+    ([calc('1', '{"result": 1}'), calc('2', '{"result": "2.50"}')],
+     [D('1'), D('2.50')]),
+    # empty, missing, errored or unreadable returns are left out
+    ([calc('1', '{"result": 1}'), calc('2', '')], [D('1')]),
+    ([calc('2', ''), calc('1', '{"result": 1}')], [D('1')]),
+    ([calc('1', '{"result": 1}'), {'function': {'name': 'calculator'}}],
+     [D('1')]),
+    ([calc('1', '{"result": 1}'), calc('2', '{"error": "x"}')], [D('1')]),
+    ([calc('2', 'not json'), calc('1', '{"result": 1}')], [D('1')]),
+    ([calc('1', '{"result": 1}'), calc('2', '[1]')], [D('1')]),
+    ([calc('1', '{"result": 1}'), calc('2', '{"result": "abc"}')], [D('1')]),
     # a dict return value is used as it is
-    ([calc('1', {'result': 3})], D('3')),
-    # the last non-empty return value decides, even when it has no result
-    ([calc('1', '{"result": 1}'), calc('2', '{"error": "x"}')], None),
-    ([calc('1', '{"result": 1}'), calc('2', 'not json')], None),
-    ([calc('1', '{"result": 1}'), calc('2', '[1]')], None),
-    ([calc('1', '{"result": 1}'), calc('2', '{"result": "abc"}')], None),
-    ([], None),
+    ([calc('1', {'result': 3})], [D('3')]),
+    # only the required operation's calls count
+    ([calc('1', '{"result": 1}'), other('{"result": 9}')], [D('1')]),
+    ([other('{"result": 9}'), calc('1', '{"result": 1}')], [D('1')]),
+    ([other('{"result": 9}')], []),
+    ([{'return_value': '{"result": 9}'}], []),
+    ([], []),
 ])
-def test_score_execution_tool_return_value(fakes, tpath, tool_calls,
-                                           expected):
-    score(Findings(), {'tool_calls': tool_calls}, tpath)
+def test_score_execution_transcription_compares_required_operation_returns(
+        fakes, tpath, tool_calls, expected):
+    score(Findings(), {'tool_calls': tool_calls,
+                       'ground_truth': {'required_operation': 'calculator'}},
+          tpath)
     assert fakes.calls['check_transcription'][0][0][0] == expected
+
+
+@pytest.mark.parametrize('result', [
+    {}, {'ground_truth': None}, {'ground_truth': {}},
+    {'ground_truth': {'required_operation': ''}},
+])
+def test_score_execution_without_required_operation_every_tool_counts(
+        fakes, tpath, result):
+    # As for invocation (execution/evidence.py): no operation named, any
+    # tool's returns count.
+    result = dict(result, tool_calls=[calc('1', '{"result": 1}'),
+                                      other('{"result": 9}')])
+    score(Findings(), result, tpath)
+    assert fakes.calls['check_transcription'][0][0][0] == [D('1'), D('9')]
 
 
 # -- release coverage candidates ------------------------------------------
@@ -514,9 +578,6 @@ def real_score(tool_calls, content, expected, config=HALF_UP_2):
 
 @pytest.mark.finding('T3-26')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-26: D7.3 compares only the last tool return; '
-                          'a release of an earlier return is ALTERED')
 def test_score_execution_release_of_earlier_calculator_return_is_exact(
         capsys):
     # SPEC R2.5: compare "the value the required operation returned" to
@@ -532,9 +593,6 @@ def test_score_execution_release_of_earlier_calculator_return_is_exact(
 
 @pytest.mark.finding('T3-26')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-26: an errored last call hides an earlier '
-                          'matching return; D7.3 is UNOBSERVABLE')
 def test_score_execution_errored_last_call_keeps_earlier_return(capsys):
     # T3-26: "if the last call errored, the execution is UNOBSERVABLE even
     # when an earlier return matches". The calculator did return the
@@ -547,9 +605,6 @@ def test_score_execution_errored_last_call_keeps_earlier_return(capsys):
 
 @pytest.mark.finding('T3-26')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-26: the return of a tool other than the '
-                          'required operation decides D7.3')
 def test_score_execution_other_tools_return_does_not_govern_transcription(
         capsys):
     # SPEC R2.5 names the REQUIRED operation (ground truth
@@ -566,9 +621,6 @@ def test_score_execution_other_tools_return_does_not_govern_transcription(
 
 @pytest.mark.finding('T3-27')
 @pytest.mark.req('R2.5', 'R0.4.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-27: the declared ROUND_HALF_UP is not passed '
-                          'to the transcription check')
 def test_score_execution_transcription_uses_declared_rounding(capsys):
     # SPEC R0.4.1: the declared rounding mode. Under the declared
     # ROUND_HALF_UP the tool's 430.745 is 430.75, so releasing 430.75 is
@@ -582,9 +634,6 @@ def test_score_execution_transcription_uses_declared_rounding(capsys):
 
 @pytest.mark.finding('T3-27')
 @pytest.mark.req('R2.1', 'R0.4.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-27: the declared ROUND_HALF_UP is not passed '
-                          'to D1 accuracy')
 def test_score_execution_accuracy_uses_declared_rounding(capsys):
     # The T3 SCORE checker's boundary case: 2.005 vs 2.015, tolerance
     # 0.01. Under the declared ROUND_HALF_UP they quantise to 2.01 and
@@ -628,9 +677,6 @@ def test_score_execution_accuracy_declared_half_even_boundary_incorrect(
     "and key names are the fix's")
 @pytest.mark.finding('V12-6')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-6: the collected D7.3 result has no "rounded '
-                          'under declared policy" sub-flag')
 def test_score_execution_transcription_result_carries_rounded_flag(capsys):
     # V12-6: each D7.3 result carries the sub-flag, so the
     # report can count it. Q07: tool 777.4125, released 777.41.
@@ -759,3 +805,111 @@ def test_record_not_scored_unmeasured_listed_with_cause(error, word):
             for c in findings.unmeasured_cells] == [('Q03', 'base', 1)]
     assert word in findings.unmeasured_cells[0]['cause'].lower()
     assert [r['status'] for r in findings.all_results] == ['UNMEASURED']
+
+
+# -- T3-10: a refusal is routed with a provisional outcome ------------------
+
+@pytest.mark.proposal(
+    'T3-10: a refusal or content-filter stop is adjudicated with a '
+    'provisional section 6.8 outcome and is in no D1 count; a reading of '
+    'section 6.8, proposed, not decided')
+@pytest.mark.finding('T3-10')
+@pytest.mark.req('R4.1', 'AP-1 §6.8')
+@pytest.mark.parametrize('kind, provisional', [
+    ('content_filter', 'CLASSIFIER-REFUSED'), ('refusal', 'MODEL-DECLINED')],
+    ids=['content-filter', 'refusal'])
+def test_score_execution_refusal_routed_provisional_out_of_d1(
+        fakes, tpath, capsys, kind, provisional):
+    # No figure is identified and D1 does not score it: the execution is
+    # in neither D1's auto-scored nor its adjudicated n. Its figure
+    # outcome routes it to adjudication, where the scorers see the
+    # refusal and confirm or replace the provisional outcome.
+    final = response(None)
+    final['choices'][0]['message']['refusal'] = 'I cannot help with that.'
+    result = {'response': final, 'tool_calls': [],
+              'evidence_class': 'EV-2', 'invocation_outcome': 'NOT-INVOKED',
+              'provenance_results': [],
+              'refusal': {'kind': kind, 'text': 'I cannot help with that.'}}
+    findings = Findings()
+    score(findings, result, tpath)
+    assert capsys.readouterr().out == \
+        'ADJUDICATE-REFUSAL | EV-2 | NOT-INVOKED\n'
+    assert 'identify_figure' not in fakes.calls
+    assert 'score_accuracy' not in fakes.calls
+    assert findings.all_accuracy_results == []
+    assert findings.decline_findings == []
+    assert transcript.read_all(tpath)[-1]['figure_outcome'] == \
+        'ADJUDICATE-REFUSAL'
+    row = findings.all_results[-1]
+    assert (row['status'], row['figure_outcome'], row['refusal'],
+            row['provisional_outcome'], row['answer_outcome']) == (
+        'EXECUTED', 'ADJUDICATE-REFUSAL', kind, provisional, None)
+    assert row['answer_outcome_reason'].endswith(
+        f'routed to adjudication, provisional {provisional}')
+
+
+@pytest.mark.finding('T3-10')
+def test_score_execution_without_refusal_adds_no_refusal_fields(fakes, tpath):
+    findings = Findings()
+    score(findings, {'response': response('$638.40')}, tpath)
+    assert not {'refusal', 'provisional_outcome'} & set(
+        findings.all_results[-1])
+
+
+# -- T3-42 interim: D7.2 measurability per question -------------------------
+
+@pytest.mark.proposal(
+    'T3-42: until a question can declare that it is chained, it is chained '
+    'if any execution of it chains, and then every execution is '
+    'UNMEASURABLE; an interim rule, proposed, not decided')
+@pytest.mark.finding('T3-42')
+@pytest.mark.req('R2.4', 'AP-1 §6.8')
+def test_apply_question_measurability_reassigns_section_6_8_outcome():
+    # Q01 repeat 1 chained without intermediates; repeat 2 was COMPUTED on
+    # one grounded call. Correct: repeat 2 is UNMEASURABLE too, and so no
+    # longer COMPUTED (its operands are not shown grounded). A refusal
+    # keeps its provisional reason; Q02 and the UNMEASURED cell are left.
+    unmeasurable = {'outcome': 'UNMEASURABLE', 'reason': UNMEASURABLE_REASON}
+    grounded = {'outcome': 'OPERANDS-GROUNDED'}
+    findings = Findings()
+    findings.all_results = [
+        {'item_id': 'Q01', 'repeat': 1, 'status': 'EXECUTED',
+         'figure_outcome': 'AUTO-MATCH', 'invocation_outcome': 'INVOKED',
+         'provenance_results': [unmeasurable], 'answer_outcome': None,
+         'answer_outcome_reason': 'operands not shown grounded (D7.2(a))'},
+        {'item_id': 'Q01', 'repeat': 2, 'status': 'EXECUTED',
+         'figure_outcome': 'AUTO-MATCH', 'invocation_outcome': 'INVOKED',
+         'provenance_results': [grounded], 'answer_outcome': 'COMPUTED',
+         'answer_outcome_reason': 'computed'},
+        {'item_id': 'Q01', 'repeat': 3, 'status': 'EXECUTED',
+         'figure_outcome': 'ADJUDICATE-REFUSAL',
+         'invocation_outcome': 'INVOKED', 'provenance_results': [grounded],
+         'answer_outcome': None, 'answer_outcome_reason': 'provisional',
+         'refusal': 'refusal', 'provisional_outcome': 'MODEL-DECLINED'},
+        {'item_id': 'Q01', 'repeat': 4, 'status': 'UNMEASURED',
+         'provenance_results': [grounded]},
+        {'item_id': 'Q02', 'repeat': 1, 'status': 'EXECUTED',
+         'figure_outcome': 'AUTO-MATCH', 'invocation_outcome': 'INVOKED',
+         'provenance_results': [grounded], 'answer_outcome': 'COMPUTED',
+         'answer_outcome_reason': 'computed'},
+    ]
+    assert apply_question_measurability(findings) == 2
+    rows = findings.all_results
+    assert [r['provenance_results'][0]['outcome'] for r in rows] == [
+        'UNMEASURABLE', 'UNMEASURABLE', 'UNMEASURABLE', 'OPERANDS-GROUNDED',
+        'OPERANDS-GROUNDED']
+    assert [(r.get('answer_outcome'), r.get('answer_outcome_reason'))
+            for r in rows[1:3]] == [
+        (None, 'operands not shown grounded (D7.2(a))'),
+        (None, 'provisional')]
+    assert rows[4]['answer_outcome'] == 'COMPUTED'
+
+
+def test_apply_question_measurability_without_a_chain_changes_nothing():
+    findings = Findings()
+    findings.all_results = [{'item_id': 'Q01', 'status': 'EXECUTED',
+                             'provenance_results': [
+                                 {'outcome': 'OPERANDS-GROUNDED'}],
+                             'answer_outcome': 'COMPUTED'}]
+    assert apply_question_measurability(findings) == 0
+    assert findings.all_results[0]['answer_outcome'] == 'COMPUTED'

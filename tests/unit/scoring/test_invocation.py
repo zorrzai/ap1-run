@@ -56,10 +56,12 @@ def test_measure_invocation_empty_list_has_no_classes_and_no_warning():
 
 @pytest.mark.finding('T3-11')
 def test_measure_invocation_one_class_counts_invoked_and_not_invoked():
-    r = measure_invocation([item(True), item(True), item(False)])
+    r = measure_invocation([item(True), item(True, item_id='Q02'),
+                            item(False, item_id='Q03')])
     assert r['per_class'] == {EV_2: {
         'evidence_class': EV_2, 'n': 3, 'invoked': 2, 'not_invoked': 1,
-        'unobservable': 0, 'failure_rate': '1/3 (33.3%)'}}
+        'unobservable': 0, 'failure_rate': '1/3 (33.3%)',
+        'failing_questions': [('Q03', 1, 1)]}}
     assert r['total_n'] == 3
     assert r['unobservable_n'] == 0
     assert r['cross_class_warning'] is None
@@ -69,7 +71,8 @@ def test_measure_invocation_one_class_counts_invoked_and_not_invoked():
 @pytest.mark.req('R2.3')
 def test_measure_invocation_reports_each_evidence_class_separately():
     r = measure_invocation([item(True, EV_2), item(False, EV_1),
-                            item(True, EV_1), item(True, EV_3)])
+                            item(True, EV_1, item_id='Q02'),
+                            item(True, EV_3)])
     assert list(r['per_class']) == [EV_1, EV_2, EV_3]
     assert r['per_class'][EV_1]['n'] == 2
     assert r['per_class'][EV_1]['not_invoked'] == 1
@@ -107,37 +110,42 @@ def test_measure_invocation_missing_evidence_class_raises_key_error():
         measure_invocation([{'item_id': 'Q01', 'invoked': True}])
 
 
-@pytest.mark.finding('T3-1')
-def test_measure_invocation_unobservable_items_count_in_n_but_not_as_failures():
-    # Correct: an unobservable (EV-0, invoked None) execution is neither a
-    # success nor a failure; it should stay out of the rate's n, or the
-    # rate should be reported as unmeasured. Today it enters n, so two
-    # unobservable items print as "0/2 failures" with a bound.
-    r = measure_invocation([item(None, EV_0), item(None, EV_0)])
-    summary = r['per_class'][EV_0]
-    assert summary['n'] == 2
-    assert summary['invoked'] == 0
-    assert summary['unobservable'] == 2
-    assert summary['failure_rate'].startswith('0/2 failures;')
+@pytest.mark.finding('T3-11')
+@pytest.mark.req('AP-1 D7.1')
+@pytest.mark.parametrize('first', [True, False])
+def test_measure_invocation_question_with_any_failed_repeat_fails(first):
+    # T3-11 (the fix's choice; no maintainer decision covers it): where a
+    # question's repeats disagree, the question counts as a failure if any
+    # repeat is NOT-INVOKED, whatever the order of the repeats.
+    r = measure_invocation([item(first), item(not first),
+                            item(True, item_id='Q02')])
+    assert r['per_class'][EV_2] == {
+        'evidence_class': EV_2, 'n': 2, 'invoked': 1, 'not_invoked': 1,
+        'unobservable': 0, 'failure_rate': '1/2 (50.0%)',
+        'failing_questions': [('Q01', 1, 2)]}
 
 
-@pytest.mark.finding('T3-1')
-def test_measure_invocation_unobservable_mixed_into_class_dilutes_rate():
-    # Correct: one failure in one observed execution is 1/1; the
-    # unobservable execution in the same class makes it 1/2.
-    r = measure_invocation([item(False, EV_2), item(None, EV_2)])
-    assert r['per_class'][EV_2]['failure_rate'] == '1/2 (50.0%)'
+@pytest.mark.finding('T3-1', 'T3-11')
+def test_measure_invocation_unobservable_repeat_does_not_change_question():
+    # An unobservable repeat beside an observed one leaves the question's
+    # outcome to the observed repeat, and counts as unobservable.
+    r = measure_invocation([item(None), item(True)])
+    assert r['per_class'][EV_2]['n'] == 1
+    assert r['per_class'][EV_2]['unobservable'] == 1
+    assert r['per_class'][EV_2]['failure_rate'].startswith('0/1 failures')
+    assert r['unobservable_n'] == 1
 
 
 # -- _summarise_class --------------------------------------------------------
 
-@pytest.mark.finding('S3-G7-1')
-def test_summarise_class_truthy_non_bool_invoked_is_in_no_bucket():
-    # 'invoked' must be exactly True, False or None; 1 or 'yes' counts in n only.
+@pytest.mark.finding('S3-G7-1', 'T3-1')
+def test_summarise_class_truthy_non_bool_invoked_is_unobservable():
+    # 'invoked' must be exactly True or False to be an observation; 1 or
+    # 0 is no observed outcome, so it is unobservable and not in n.
     s = _summarise_class([{'invoked': 1}, {'invoked': 0}], EV_2)
     assert (s['n'], s['invoked'], s['not_invoked'], s['unobservable']) == \
-        (2, 0, 0, 0)
-    assert s['failure_rate'].startswith('0/2 failures;')
+        (0, 0, 0, 2)
+    assert s['failure_rate'] == 'no observations'
 
 
 @pytest.mark.finding('T3-81')
@@ -145,7 +153,8 @@ def test_summarise_class_all_not_invoked_reports_full_failure_rate():
     s = _summarise_class([{'invoked': False}] * 4, EV_1)
     assert s == {'evidence_class': EV_1, 'n': 4, 'invoked': 0,
                  'not_invoked': 4, 'unobservable': 0,
-                 'failure_rate': '4/4 (100.0%)'}
+                 'failure_rate': '4/4 (100.0%)',
+                 'failing_questions': [(None, 1, 1)] * 4}
 
 
 # -- format_rate -------------------------------------------------------------
@@ -215,10 +224,11 @@ def test_format_rate_bound_for_large_n_prints_zero_percent():
 
 @pytest.mark.finding('T3-11')
 def test_format_rate_treats_n_as_independent_trials():
-    # The live D7.1 figure pools 50 repeats of 10 questions as n = 500 and
-    # gets 0.6 %. Correct (AP-1 v1.3 D7.1, GH-5): the bound is per
-    # question (or per item over its repeats), e.g. n = 10 gives 25.9 %.
-    # format_rate has no notion of items; the pooling is the caller's.
+    # The published D7.1 figures pooled 50 repeats of 10 questions as
+    # n = 500 and got 0.6 %. Correct (AP-1 v1.3 D7.1, GH-5), and done
+    # since the T3-11 fix: n is questions, e.g. n = 10 gives 25.9 %.
+    # format_rate has no notion of items; the unit is the caller's
+    # (measure_invocation).
     assert format_rate(0, 500).endswith('failure rate 0.6% (≈3/500=0.6%)')
     assert format_rate(0, 10).endswith('failure rate 25.9%')
 
@@ -297,16 +307,15 @@ def test_compute_dpr_equal_rates_is_zero():
     assert compute_dpr(10, 10, 10, 10) == (D(0), '0.0%')
 
 
+@pytest.mark.finding('S3-G4-1')
+def test_compute_dpr_no_removed_observations_text():
+    # (A zero base rate is reported first: see the zero-base tests.)
+    assert compute_dpr(10, 5, 10, 0) == (
+        None, 'UNDEFINED (no instruction_removed observations)')
+
+
 def test_compute_dpr_removed_above_base_is_negative():
     assert compute_dpr(5, 10, 10, 10) == (D(-1), '-100.0%')
-
-
-@pytest.mark.finding('S3-G4-1')
-def test_compute_dpr_no_removed_observations_reports_full_drop():
-    # Correct: with no observations in the removed arm, DPR is
-    # UNDEFINED like the zero-base case. Today the removed rate is taken
-    # as 0 and DPR is reported as 100.0 %, a full drop measured on no data.
-    assert compute_dpr(10, 5, 10, 0) == (D(1), '100.0%')
 
 
 # --- Step 4: correct behaviour (failing until fixed) ---
@@ -328,9 +337,6 @@ def test_format_rate_displayed_bound_is_never_below_the_exact_bound(n):
 
 @pytest.mark.finding('S3-G4-1')
 @pytest.mark.req('R2.3', 'AP-1 D7.8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G4-1: no removed-arm observations taken as a '
-                          'removed rate of 0, DPR 100.0%')
 def test_compute_dpr_no_removed_observations_undefined():
     # Correct: DPR = (I_base - I_removed) / I_base needs both rates (SPEC
     # R2.3 l.546-547). With no observations in the removed arm, I_removed
@@ -399,9 +405,6 @@ def test_quantise_result_does_not_depend_on_importing_invocation():
 
 
 @pytest.mark.finding('S3-G7-1', 'T3-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G7-1: unobservable records stay in n as '
-                          'non-failures')
 @pytest.mark.req('AP-1 D7.1', 'AP-1 D7.5', 'R2.3')
 def test_measure_invocation_unobservable_records_leave_the_denominator():
     # AP-1 v1.3 D7.9 / SPEC R1.3.1: an unobservable invocation is neither
@@ -420,8 +423,6 @@ def test_measure_invocation_unobservable_records_leave_the_denominator():
 
 
 @pytest.mark.finding('T3-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-1: unobservable executions counted in n')
 def test_measure_invocation_unobservable_only_has_no_rate():
     # Correct (SPEC R2.3 outcomes INVOKED / NOT-INVOKED / UNOBSERVABLE;
     # R1.3.1: EV-0 is not admissible): unobservable executions are
@@ -436,8 +437,6 @@ def test_measure_invocation_unobservable_only_has_no_rate():
 
 
 @pytest.mark.finding('T3-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-1: unobservable executions dilute the rate')
 def test_measure_invocation_unobservable_left_out_of_class_rate():
     # Correct: one failure in one observed execution is 1/1; the
     # unobservable one beside it is not a success.
@@ -450,8 +449,6 @@ def test_measure_invocation_unobservable_left_out_of_class_rate():
     'T3-11: n counts questions, not executions; no decision covers what n '
     'counts')
 @pytest.mark.finding('T3-11')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-11: repeats of a question pooled as n')
 def test_measure_invocation_n_counts_questions_not_repeats():
     # Correct (AP-1 v1.3 D7.1 "proportion of computable questions", D7.5
     # example "49 items", DISPOSITION_RECORD GH-5 ACCEPTED): repeats of a
@@ -469,13 +466,49 @@ def test_measure_invocation_n_counts_questions_not_repeats():
     'if any of its repeats did not invoke; the unit and this rule are the '
     "author's proposal")
 @pytest.mark.finding('T3-11')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-11: repeats of a question pooled as n')
 def test_measure_invocation_question_with_a_repeat_not_invoked_is_a_failure():
     # Q01 invoked in 2 of its 3 repeats, Q02 in its one: n = 2 questions,
     # k = 1 failure (Q01), not 1 failure in 4 executions and not Q01
-    # counted as invoked because most of its repeats were.
-    r = measure_invocation([item(True), item(True), item(False),
+    # counted as invoked because most of its repeats were (nor because its
+    # last one was: the failed repeat is the middle one).
+    r = measure_invocation([item(True), item(False), item(True),
                             item(True, item_id='Q02')])
     assert r['per_class'][EV_2]['n'] == 2
-    assert r['per_class'][EV_2]['failure_rate'].startswith('1/2 failures')
+    # k/n first; the wording after it is the fix's ('1/2 (50.0%); ...').
+    assert r['per_class'][EV_2]['failure_rate'].startswith('1/2 ')
+
+
+# A question fails D7.1 if any of its repeats is NOT-INVOKED; how badly
+# it failed is shown beside k: its NOT-INVOKED repeats out of its
+# observed repeats ("Q02 48/50, Q06 21/50", published run F, instruction
+# removed).
+FAILING_COUNTS = pytest.mark.proposal(
+    'T3-11: a question fails if any repeat did not invoke (no decision '
+    'covers the rule); each failing question is listed with its '
+    'NOT-INVOKED repeats out of its observed repeats')
+
+
+@FAILING_COUNTS
+@pytest.mark.finding('T3-11')
+def test_measure_invocation_lists_each_failing_question_with_its_counts():
+    # Q06 skipped in 1 of its 3 observed repeats (one more is EV-0, in no
+    # count), Q02 in all 3, Q01 in none: k = 2, listed in item_id order.
+    records = ([item(False, item_id='Q06'), item(True, item_id='Q06'),
+                item(None, item_id='Q06'), item(True, item_id='Q06')]
+               + [item(False, item_id='Q02')] * 3
+               + [item(True, item_id='Q01')] * 3)
+    c = measure_invocation(records)['per_class'][EV_2]
+    assert (c['n'], c['not_invoked']) == (3, 2)
+    assert c['failing_questions'] == [('Q02', 3, 3), ('Q06', 1, 3)]
+    assert invocation.format_failing_questions(c['failing_questions']) == \
+        'Q02 3/3, Q06 1/3'
+
+
+@FAILING_COUNTS
+@pytest.mark.finding('T3-11')
+def test_format_failing_questions_two_question_failure_case():
+    assert invocation.format_failing_questions(
+        [('Q02', 48, 50), ('Q06', 21, 50)]) == 'Q02 48/50, Q06 21/50'
+    assert invocation.format_failing_questions([(None, 1, 1)]) == \
+        '(no item id) 1/1'
+    assert invocation.format_failing_questions([]) == ''

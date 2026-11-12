@@ -225,8 +225,8 @@ def test_declared_constants_check_item_without_source_accounts_empty_ctx(gt_modu
     assert mod.SEEN == [{}]
 
 
-# -- skips (fail open, T3-54) ---------------------------------------------
-# Each skip is followed by a failing item, so that a skip which stopped the
+# -- items that cannot be checked (T3-54: refused, not skipped) ---------------
+# Each is followed by a failing item, so that a failure which stopped the
 # loop (break for continue) would be noticed.
 
 FAILING_Q09 = '''
@@ -234,11 +234,13 @@ FAILING_Q09 = '''
         return result(D("9"))
 '''
 
+REFUSED = 'declared-constants check failed: undeclared numeric literals. '
 
-def assert_only_q09_fails(mod, *ids):
+
+def refusal(mod, *ids):
     with pytest.raises(SealError) as exc:
         declared_constants_check(mod, FIXTURE, questions(*ids, 'Q09'))
-    assert str(exc.value).endswith('literals. Q09: D("9")')
+    return str(exc.value)
 
 
 def test_declared_constants_check_not_derivable_item_skipped(gt_module):
@@ -246,40 +248,35 @@ def test_declared_constants_check_not_derivable_item_skipped(gt_module):
         def derive_q01(ctx):
             return result(D("4"), derivable=False)
     ''', FAILING_Q09)
-    assert_only_q09_fails(mod, 'Q01')
+    assert refusal(mod, 'Q01') == REFUSED + 'Q09: D("9")'
 
 
 @pytest.mark.finding('T3-54')
-def test_declared_constants_check_compute_raises_item_skipped(gt_module):
-    # Current behaviour: an item whose compute raises is skipped with no
-    # failure recorded. Correct: refuse (fail closed), naming the item.
+def test_declared_constants_check_compute_raises_named(gt_module):
     mod = gt_module('''
         def derive_q01(ctx):
             D("4")
             raise ValueError('boom')
     ''', FAILING_Q09)
-    assert_only_q09_fails(mod, 'Q01')
+    assert refusal(mod, 'Q01') == REFUSED + (
+        'Q01: cannot check (compute raised ValueError: boom); Q09: D("9")')
 
 
 @pytest.mark.finding('T3-54')
-def test_declared_constants_check_no_derive_function_item_skipped(gt_module):
-    # Current behaviour: compute() works but there is no derive_<id>, so the
-    # literals are never inspected. Correct: refuse, or inspect compute's
-    # call graph.
+def test_declared_constants_check_no_derive_function_named(gt_module):
     mod = gt_module('''
         def compute(item_id, ctx):
             if item_id == 'Q01':
                 return result(D("4"))
             return derive_q09(ctx)
     ''', FAILING_Q09)
-    assert_only_q09_fails(mod, 'Q01')
+    assert refusal(mod, 'Q01') == REFUSED + (
+        'Q01: cannot check (no function derive_q01); Q09: D("9")')
 
 
 @pytest.mark.finding('T3-54')
-def test_declared_constants_check_source_unavailable_item_skipped(gt_module):
-    # Current behaviour: a derive function whose source cannot be read
-    # (a builtin: TypeError; code made by exec: OSError) is skipped.
-    # Correct: refuse, since the literals cannot be checked.
+def test_declared_constants_check_source_unavailable_named(gt_module):
+    # A builtin (TypeError) and code made by exec (OSError).
     mod = gt_module('''
         exec("def derive_q02(ctx):\\n    return result(D('4'))\\n")
 
@@ -289,14 +286,13 @@ def test_declared_constants_check_source_unavailable_item_skipped(gt_module):
             return result(D("4"))
     ''', FAILING_Q09)
     mod.derive_q01 = len
-    assert_only_q09_fails(mod, 'Q01', 'Q02')
+    assert refusal(mod, 'Q01', 'Q02') == REFUSED + (
+        'Q01: cannot check (source of len unreadable); '
+        'Q02: cannot check (source of derive_q02 unreadable); Q09: D("9")')
 
 
 @pytest.mark.finding('T3-54')
-def test_declared_constants_check_indented_source_item_skipped(gt_module):
-    # Current behaviour: a derive function defined inside a class (or
-    # nested) has indented source, ast.parse raises IndentationError and
-    # the item is skipped. Correct: dedent before parsing, or refuse.
+def test_declared_constants_check_indented_source_dedented(gt_module):
     mod = gt_module('''
         class Holder:
             @staticmethod
@@ -305,32 +301,135 @@ def test_declared_constants_check_indented_source_item_skipped(gt_module):
 
         derive_q01 = Holder.derive_q01
     ''', FAILING_Q09)
-    assert_only_q09_fails(mod, 'Q01')
+    assert refusal(mod, 'Q01') == REFUSED + 'Q01: D("4"); Q09: D("9")'
 
 
 @pytest.mark.finding('S3-G3-1')
-def test_declared_constants_check_only_sees_string_d_calls(gt_module):
-    # Current behaviour: only D("<str>") is inspected, although the module
-    # docstring promises "every numeric literal". D(4), Decimal("4"), a bare
-    # 4 and a literal in a helper the derive function calls all pass
-    # undeclared. Correct: every numeric literal reachable from the derive
-    # function is checked.
+def test_declared_constants_check_every_spelling_named_in_source_order(
+        gt_module):
     mod = gt_module('''
+        import decimal
         from decimal import Decimal
 
         def helper(x):
-            return x * D("6")
+            return x * D("6") * int(2.5)
 
         def derive_q01(ctx):
             b = D(ctx['acct']['balance'])
-            return result(helper(b) / D(4) / Decimal("5") / 7)
+            return result(helper(b) / D(4) / Decimal("5") / 7
+                          / decimal.Decimal('8') - D("12") + 0 + D("0"),
+                          "12")
+    ''')
+    with pytest.raises(SealError) as exc:
+        declared_constants_check(mod, FIXTURE, questions('Q01'))
+    # source order: the helper is defined first
+    assert str(exc.value) == REFUSED + (
+        'Q01: D("6"); Q01: 2.5; Q01: 4; Q01: Decimal("5"); Q01: 7; '
+        'Q01: decimal.Decimal(\'8\')')
+
+
+@pytest.mark.finding('S3-G3-1')
+def test_declared_constants_check_helpers_followed_once_and_only_in_module(
+        gt_module):
+    # A helper called twice, and recursion, are checked once; functions
+    # from other modules (textwrap.dedent here) are not followed; bool
+    # literals are not numbers.
+    mod = gt_module('''
+        from textwrap import dedent
+
+        def helper(x, again=True):
+            if again:
+                return helper(x, False)
+            return x / D("4")
+
+        def derive_q01(ctx):
+            dedent('')
+            b = D(ctx['acct']['balance'])
+            return result(helper(b) + helper(b), "4")
     ''')
     assert declared_constants_check(mod, FIXTURE, questions('Q01')) == []
 
 
+@pytest.mark.finding('S3-G3-1')
+def test_declared_constants_check_declared_number_literal_passes(gt_module):
+    mod = gt_module('''
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) / 12 * D(str(1.5)),
+                          "12", "1.5")
+    ''')
+    assert declared_constants_check(mod, FIXTURE, questions('Q01')) == []
+
+
+@pytest.mark.finding('S3-G3-1')
+def test_declared_constants_check_d_with_non_string_constant_is_the_number(
+        gt_module):
+    # D(None) and D(x) are not literals; D(4) is the literal 4.
+    mod = gt_module('''
+        def derive_q01(ctx):
+            x = ctx['acct']['balance']
+            return result(D(x) if x else D(None), "4")
+    ''')
+    assert declared_constants_check(mod, FIXTURE, questions('Q01')) == []
+
+
+@pytest.mark.finding('S3-G3-1')
+def test_declared_constants_check_every_called_helper_checked(gt_module):
+    # helper_a twice (checked once), then an unreadable helper (made by
+    # exec), then helper_b: a stop at the second helper_a or at the
+    # unreadable one would miss helper_b's literal.
+    mod = gt_module('''
+        exec("def unreadable(x):\\n    return x\\n")
+
+        def helper_a(x):
+            return x
+
+        def helper_b(x):
+            return x / D("7")
+
+        def derive_q01(ctx):
+            b = D(ctx['acct']['balance'])
+            return result(helper_a(b) + helper_a(b) + unreadable(b)
+                          + helper_b(b))
+    ''')
+    with pytest.raises(SealError) as exc:
+        declared_constants_check(mod, FIXTURE, questions('Q01'))
+    assert str(exc.value) == REFUSED + (
+        'Q01: cannot check (source of unreadable unreadable); Q01: D("7")')
+
+
+@pytest.mark.finding('T3-54')
+def test_declared_constants_check_unnamed_unreadable_derive_named_by_repr(
+        gt_module):
+    mod = gt_module('''
+        import functools
+
+        derive_q01 = functools.partial(lambda f, ctx: result(f), D("4"))
+    ''')
+    with pytest.raises(SealError) as exc:
+        declared_constants_check(mod, FIXTURE, questions('Q01'))
+    assert str(exc.value) == REFUSED + (
+        f'Q01: cannot check (source of {mod.derive_q01!r} unreadable)')
+
+
+def test_declared_constants_check_class_as_derive_function_checked(gt_module):
+    # Not a function: its source is still read and its literals checked.
+    mod = gt_module('''
+        def compute(item_id, ctx):
+            return result(D("1"))
+
+        class derive_q01:
+            RATE = D("4")
+            helper = result
+    ''')
+    with pytest.raises(SealError) as exc:
+        declared_constants_check(mod, FIXTURE, questions('Q01'))
+    # compute's own D("1") ran and is undeclared too
+    assert str(exc.value) == REFUSED + 'Q01: D("1"); Q01: D("4")'
+
+
 # -- the shipped example module --------------------------------------------
-# Never called on a live run (T3-7); the only check that the example
-# module declares its constants (it declares 4 for Q07 without using it).
+# The example module declares its constants (it declares 4 for Q07
+# without using it). The live run calls this check too (T3-7).
 
 def test_declared_constants_check_passes_example_module():
     example = Path(__file__).resolve().parents[3] / 'example'
@@ -361,8 +460,6 @@ def refusal_of(mod, qs):
 
 @pytest.mark.finding('T3-54')
 @pytest.mark.req('R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-54: compute raising skips the item silently')
 def test_declared_constants_check_compute_raises_refused_naming_item(
         gt_module):
     # Correct (T3-54; SPEC R3.1, the E3 check fails closed): an item whose
@@ -380,9 +477,6 @@ def test_declared_constants_check_compute_raises_refused_naming_item(
 
 @pytest.mark.finding('T3-54')
 @pytest.mark.req('R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-54: no derive_<id> function skips the item '
-                          'silently')
 def test_declared_constants_check_no_derive_function_refused_naming_item(
         gt_module):
     # Correct: a derivable item with no derive_<id> to inspect is a
@@ -399,9 +493,6 @@ def test_declared_constants_check_no_derive_function_refused_naming_item(
 
 @pytest.mark.finding('T3-54')
 @pytest.mark.req('R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-54: unreadable derive source skips the item '
-                          'silently')
 def test_declared_constants_check_source_unavailable_refused_naming_items(
         gt_module):
     # Correct: a derive function whose source cannot be read (a builtin:
@@ -421,9 +512,6 @@ def test_declared_constants_check_source_unavailable_refused_naming_items(
 
 @pytest.mark.finding('T3-54')
 @pytest.mark.req('R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-54: indented derive source fails to parse and '
-                          'the item is skipped silently')
 def test_declared_constants_check_indented_source_checked(gt_module):
     # Correct: a derive function defined in a class or nested has indented
     # source; it is dedented and checked (or refused). Either way the
@@ -444,8 +532,6 @@ def test_declared_constants_check_indented_source_checked(gt_module):
 
 @pytest.mark.finding('S3-G3-1')
 @pytest.mark.req('R3.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G3-1: only D("<str>") calls are inspected')
 @pytest.mark.parametrize('body', [
     '''
     def derive_q01(ctx):
@@ -481,3 +567,153 @@ def test_declared_constants_check_any_undeclared_numeric_literal_refused(
     msg = refusal_of(mod, questions('Q01'))
     assert msg is not None, 'undeclared literal 4 passed'
     assert 'Q01' in msg and '4' in msg
+
+
+# -- what the derivation actually runs (S3-G3-1) ---------------------------
+#
+# The check reads every top-level statement of the module that the item's
+# computation executes (compute itself, the function it dispatches to,
+# helpers however they are called), and the module-level assignments
+# those statements read. Each case below passed all three R3.1 guards
+# before; each is now refused, naming the item and the literal.
+
+@pytest.mark.finding('S3-G3-1')
+@pytest.mark.parametrize('body, literal', [
+    # a module-level constant used in place of D("12")
+    ('''
+        MONTHS = 13
+
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) / MONTHS)
+    ''', '13'),
+    ('''
+        BONUS = D("1.05")
+
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) * BONUS)
+    ''', 'D("1.05")'),
+    # a module-level constant reached through another one
+    ('''
+        RATE = D("1.05")
+        FACTOR = RATE
+
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) * FACTOR)
+    ''', 'D("1.05")'),
+    # a helper called as an attribute (staticmethod)
+    ('''
+        class H:
+            @staticmethod
+            def k():
+                return D("1.05")
+
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) * H.k())
+    ''', 'D("1.05")'),
+    # a string built by concatenation inside D(...)
+    ('''
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) * D("1" + ".05"))
+    ''', 'D("1" + ".05")'),
+    # a number in a string given to int() or float()
+    ('''
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) * int("7"))
+    ''', 'int("7")'),
+], ids=['module-int', 'module-decimal', 'module-alias', 'attribute-helper',
+        'concatenated-string', 'int-of-string'])
+def test_declared_constants_check_refuses_literals_outside_the_derive_body(
+        gt_module, body, literal):
+    mod = gt_module(body)
+    with pytest.raises(SealError) as e:
+        declared_constants_check(mod, FIXTURE, questions('Q01'))
+    assert f'Q01: {literal}' in str(e.value)
+
+
+@pytest.mark.finding('S3-G3-1')
+def test_declared_constants_check_reads_compute_itself(gt_module):
+    # compute() post-processes the final: compute's own source is read.
+    mod = gt_module('''
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']))
+
+        _compute = compute
+
+        def compute(item_id, ctx):
+            out = _compute(item_id, ctx)
+            out['final'] *= D("1.05")
+            return out
+    ''')
+    with pytest.raises(SealError, match=r'Q01: D\("1\.05"\)'):
+        declared_constants_check(mod, FIXTURE, questions('Q01'))
+
+
+@pytest.mark.finding('S3-G3-1')
+def test_declared_constants_check_reads_the_function_compute_runs(gt_module):
+    # A decoy derive_q01; compute dispatches to another function.
+    mod = gt_module('''
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']))
+
+        def _q01_real(ctx):
+            return result(D(ctx['acct']['balance']) + D("7"))
+
+        def compute(item_id, ctx):
+            return _q01_real(ctx)
+    ''')
+    with pytest.raises(SealError, match=r'Q01: D\("7"\)'):
+        declared_constants_check(mod, FIXTURE, questions('Q01'))
+
+
+@pytest.mark.finding('S3-G3-1')
+def test_declared_constants_check_module_constant_declared_passes(gt_module):
+    # A module-level constant is fine when the item declares it; another
+    # item's derivation that does not run it is not charged with it.
+    mod = gt_module('''
+        MONTHS = D("12")
+
+        def derive_q01(ctx):
+            return result(D(ctx['acct']['balance']) / MONTHS, "12")
+
+        def derive_q02(ctx):
+            return result(D(ctx['acct']['balance']))
+    ''')
+    assert declared_constants_check(mod, FIXTURE,
+                                    questions('Q01', 'Q02')) == []
+
+
+def test_declared_constants_check_shipped_example_passes():
+    # The shipped example declares every constant its derivations run.
+    root = Path(__file__).resolve().parents[3] / 'example'
+    spec = importlib.util.spec_from_file_location(
+        '_example_gt_for_constants', root / 'ground_truth_example.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    fixture = json.loads((root / 'fixture.json').read_text('utf-8'))
+    qs = json.loads((root / 'questions.json').read_text('utf-8'))
+    assert declared_constants_check(module, fixture, qs) == []
+
+
+@pytest.mark.finding('S3-G3-1')
+def test_declared_constants_check_charges_only_the_branch_that_ran(gt_module):
+    # A shared helper with a branch per item: Q01's computation does not
+    # run Q02's branch, so its D("7") is charged to Q02 only.
+    mod = gt_module('''
+        def shared(item_id, b):
+            if item_id == 'Q02':
+                return result(b + D("7"))
+            return result(b)
+
+        def derive_q01(ctx):
+            return shared('Q01', D(ctx['acct']['balance']))
+
+        def derive_q02(ctx):
+            return shared('Q02', D(ctx['acct']['balance']))
+
+        def compute(item_id, ctx):
+            return shared(item_id, D(ctx['acct']['balance']))
+    ''')
+    assert declared_constants_check(mod, FIXTURE, questions('Q01')) == []
+    with pytest.raises(SealError, match=r'^declared-constants check failed: '
+                       r'undeclared numeric literals\. Q02: D\("7"\)$'):
+        declared_constants_check(mod, FIXTURE, questions('Q01', 'Q02'))

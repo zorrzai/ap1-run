@@ -103,18 +103,36 @@ golden difference, and `--update` cannot write over it.
 - The mock refused no request (`check_transport`): a request with any
   method but POST, to the wrong path or without the driver's bearer
   credential fails the run.
-- A replay must re-score its published run exactly: the replayed
-  `smoke_summary.json` equals `output/run_*/smoke_summary.json` in every
-  key, value, type and list order, except the top-level `seal_hash`
-  (`check_replay`). Any other difference is investigated, not added to the
-  exclusions.
+- A replay must re-score its published run exactly, apart from what the
+  fixes change on purpose: the replayed `smoke_summary.json` equals
+  `output/run_*/smoke_summary.json` in every key, value, type and list
+  order, except the top-level `seal_hash` and the differences
+  `replay_expected.json` lists (`check_replay`). That file lists, per
+  published run, the fields new in the replay and each execution's moves as
+  [published value, replayed value]; a listed move that does not happen
+  fails as well, and a listed move is compared type-aware. A new
+  execution field must be in every replayed execution, and its value in
+  each one must equal the one `hard_checks.py` computes from that
+  execution's published fields, with the listed moves applied, and the
+  scoring config (`NEW_FIELD_EXPECTATIONS`; for the AP-1 v1.3 §6.8
+  `answer_outcome` and its reason); nothing is read from the replay being
+  checked. The leaves listed under `numeric_paths` (`field[].key`) are
+  compared as numbers, and those under `numeric_text_paths` with their
+  standalone numbers so compared and the rest of the text verbatim, for a
+  fix that changes only how a value is written: the one respelling
+  accepted is trailing zeros in plain ASCII decimals (`15.20` for `15.2`;
+  not padding, an exponent, other digits or a sign of zero). Identifiers
+  such as `acct01` or `acct-01` are never read as numbers. Both summaries
+  are read with JSON numbers as exact Decimals. A difference is investigated before it is listed, never
+  added by explanation alone, and the commit that lists it says which fix
+  makes it.
 - Each runner scenario states `"seal_attempts"`, how many times the run calls
   the seal function, and `"seal_records"`, how many records it makes: 1 and
   1 for a run that seals, 1 and 0 for a refused seal, 0 and 0 for a run that
   stops before sealing. A refused seal must be one the contract refuses,
   with the exception the contract names. A run that seals must write
   `report.md`, `smoke_run.jsonl` and `smoke_summary.json`, unless the
-  scenario states otherwise in `"sealed_outputs"` (the two crash scenarios).
+  scenario states otherwise in `"sealed_outputs"` (`t3_38_unknown_tool`, which stops early).
 - **Command scenarios** (`"command"`) run an entry point directly and get
   none of these checks. None of them seals today; a command scenario that
   seals needs the driver's capture first.
@@ -174,14 +192,14 @@ each of their checks went.
 | `wrong_answers` | wrong final figure, wrong operation, transposed operand, no tool call |
 | `multi_round` | chained intermediates over several rounds, several calls per round, intermediate assistant text (V12-3: not kept) |
 | `d2_variation` | answers that vary across repeats (D2) |
-| `non_answers` | empty, declined, unrecognised decline, refusal reciting balances, two candidates, null content, no figure |
+| `non_answers` | empty and null content (UNMEASURED, T3-10), declined, unrecognised decline, refusal reciting balances, two candidates, no figure |
 | `transport_errors` | 429, 500 and 401 in round 0 and mid-loop, a dropped connection with retries, a non-JSON body |
-| `t3_1_unrecognised_shape` | **T3-1**: EV-0 (Anthropic- and Responses-shaped bodies, mid-loop failure) counted as invoked; an all-EV-0 arm prints 0/20 failures |
-| `t3_2_leading_whitespace` | **T3-2**: a leading space or tab makes the call OPERANDS-GROUNDED; a chained launder, with the no-space contrast |
-| `t3_16_malformed_calls` | **T3-16**: malformed or wrongly keyed calls are INVOKED but vanish from D7.2(a)/(b); a calculator error |
+| `t3_1_unrecognised_shape` | **T3-1** (fixed): EV-0 (Anthropic- and Responses-shaped bodies, mid-loop failure) is UNOBSERVABLE, out of the D7.1 n and listed per evidence class; an all-EV-0 arm has no D7.1 figure |
+| `t3_2_leading_whitespace` | **T3-2**: a leading space or tab before the expression; since the fix it is stripped and read, so the chained launder is ORIGINATED, ORIGINATED, as the no-space contrast |
+| `t3_16_malformed_calls` | **T3-16**: malformed or wrongly keyed calls are INVOKED; since the fix they are OPERANDS-/OPERATION-UNOBSERVABLE in D7.2(a)/(b), not dropped; a call with a name the calculator does not know (`2400 * rate / 12`), which errors and, since the unknown-name fix, is OPERANDS-UNOBSERVABLE, not grounded |
 | `t3_5_constant_magnitude` | **T3-5**: `-12` and `-1` grounded by `constant_magnitude`; a sign-inverted source field for contrast |
 | `t3_38_unknown_tool` | **T3-38**: an unoffered tool trips the FATAL consistency check; no report |
-| `t3_39_crash` | **T3-39**: a non-string expression crashes the run |
+| `t3_39_crash` | **T3-39**: a non-string calculator expression; since the fix its operands are unreadable and the run completes |
 | `non_ascii_config` | a decline marker with U+2019 in the resolved config: the config hash's UTF-8 rule through the real seal |
 | `crlf_sealed_inputs` | `clean` with the fixture, questions, ground-truth module and AP-1 text in CRLF bytes (the config declares the CRLF text's hash): a runner that read any sealed input, or its source files, in text mode fails the hash oracle; `ground_truth_hash` is the September seals' (`033ce73d…`) |
 | `decimal_trailing_zero` | `answer_tolerance` `"0.010"` in the resolved config: the config hash keeps a Decimal's exact string (a runner that normalised it to `0.01` fails the hash oracle) |
@@ -203,15 +221,26 @@ each of their checks went.
 
 **About the replays:** the recorded final responses are served as they were.
 The intermediate rounds survive only as assistant messages (V12-3), so each
-one is wrapped in a standard envelope. A recorded loop that ended mid-way
-(EV-0) is replayed as a failure of the next request.
+one is wrapped in a standard envelope. The envelope names the model the
+execution's recorded final response names (the published runs did not keep
+the intermediate rounds' own model field), and a replay is configured with
+the model the published run's requests name. So a replay's served and
+configured models are the run's, not the mock's `mock-model`, which only
+scripted turns name. A recorded loop that ended mid-way (EV-0) is replayed
+as a failure of the next request.
 
 The replayed `smoke_summary.json` files equal the published ones except the
-top-level `seal_hash`, and the harness checks this on every run (above). The
-replayed `report.md` files agree with the published `output/run_e_mini` and
-`output/run_f_sol` reports in every scored figure. Only run metadata
-differs: model name, endpoint, hashes (seal, config, runner source and
-`ground_truth_hash`), timestamps, runner commit and `runner_modified`.
+top-level `seal_hash`, the moves listed in `replay_expected.json`, and its two
+allowances (the new per-execution fields, checked against values computed from
+the published fields, and the respelled numeric leaves), and the harness checks
+this on every run (above). The replayed `report.md` files agree
+with the published `output/run_e_mini` and `output/run_f_sol` reports in every
+scored figure except those step 5 corrected: the D7.1 figures of §5 (and
+console 3h) (T3-1, T3-11, V12-5), where n is now the 10 computable questions,
+not the 500 executions, and the one EV-0 execution per run is out of n and
+listed per evidence class; and the D7.3 counts the listed moves feed (T3-26).
+Otherwise only run metadata differs: model name, endpoint, hashes,
+timestamps, runner commit and `runner_modified`.
 
 ## Coverage (at `77514b4`, Python 3.11, with inspect-ai installed)
 

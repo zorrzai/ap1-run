@@ -7,8 +7,10 @@ from decimal import Decimal
 import pytest
 
 from ap1_run.scoring.provenance.classify import (
-    _extract_expression, _parse_return_value, classify_invocation,
-    classify_invocations_sequential, classify_item,
+    UNMEASURABLE_QUESTION_REASON, UNMEASURABLE_REASON, _extract_expression,
+    _parse_return_value, classify_invocation, classify_invocations_sequential,
+    classify_item, is_calculator_call, mark_unmeasurable_item,
+    mark_unmeasurable_questions,
 )
 
 D = Decimal
@@ -38,6 +40,10 @@ def call(expression, return_value=None, name='calculator', call_id='c1'):
 
 def result_json(value):
     return json.dumps({'result': value})
+
+
+def outcomes(results):
+    return [r['outcome'] for r in results]
 
 
 # -- classify_invocation --------------------------------------------------
@@ -78,16 +84,6 @@ def test_classify_invocation_originated_entry_keeps_sign_inversion():
         'source_value': '15200.00', 'operand_value': '-15200'}
 
 
-@pytest.mark.finding('T3-58')
-def test_classify_invocation_quantised_intermediate_is_a_finding():
-    r = classify_invocation('53.20 + 1', CTX, GT, CONFIG)
-    assert r['outcome'] == 'OPERANDS-GROUNDED'
-    # The operand is read through a float, so '53.20' becomes '53.2'.
-    assert r['quantisation_findings'] == [{
-        'operand': '53.2', 'matched_intermediate': 'interest',
-        'expression': '53.20 + 1'}]
-
-
 def test_classify_invocation_uses_config_transformations_and_quantisation():
     r = classify_invocation('0.042', CTX, GT, {})
     assert r['outcome'] == 'OPERAND-ORIGINATED'
@@ -117,12 +113,16 @@ def test_classify_invocation_passes_prior_returns_to_step4():
 
 
 @pytest.mark.finding('T3-2', 'T3-16')
-def test_classify_invocation_no_operands_is_grounded():
-    # Current behaviour: an expression with no operands found (unparseable,
-    # or a leading space) is OPERANDS-GROUNDED, vacuously.
-    r = classify_invocation(' 99999 * 7', CTX, GT, CONFIG)
-    assert r == {'outcome': 'OPERANDS-GROUNDED', 'operand_resolutions': [],
-                 'originated_operands': [], 'quantisation_findings': []}
+def test_classify_invocation_no_operands_is_unobservable_with_reason():
+    r = classify_invocation('99999 *', CTX, GT, CONFIG)
+    assert r == {'outcome': 'OPERANDS-UNOBSERVABLE', 'operand_resolutions': [],
+                 'originated_operands': [], 'quantisation_findings': [],
+                 'reason': "no operand could be read from the expression "
+                           "'99999 *'"}
+
+
+def test_classify_invocation_with_operands_has_no_reason():
+    assert 'reason' not in classify_invocation('15200', CTX, GT, CONFIG)
 
 
 # -- classify_item --------------------------------------------------------
@@ -154,6 +154,77 @@ def test_classify_item_all_grounded():
                       {})
     assert r == {'outcome': 'OPERANDS-GROUNDED', 'invocation_count': 2,
                  'all_originated': [], 'all_quantisation_findings': []}
+
+
+@pytest.mark.finding('T3-16')
+def test_classify_item_unobservable_invocation_fails_closed():
+    # An unobservable invocation keeps the item from being grounded; an
+    # originated one still makes it originated.
+    assert classify_item([inv('OPERANDS-GROUNDED'),
+                          inv('OPERANDS-UNOBSERVABLE')], GT)['outcome'] == \
+        'OPERANDS-UNOBSERVABLE'
+    assert classify_item([inv('OPERANDS-UNOBSERVABLE'),
+                          inv('OPERAND-ORIGINATED')], GT)['outcome'] == \
+        'OPERAND-ORIGINATED'
+
+
+def chained(outcome, **resolution):
+    return dict(inv(outcome), operand_resolutions=[
+        {'resolution': 'source_match'}, resolution])
+
+
+@pytest.mark.finding('T3-42')
+@pytest.mark.parametrize('resolution', [
+    {'resolution': 'computed_in_session'},
+    {'resolution': 'computed_in_session_ungrounded'},
+    {'resolution': 'originated', 'near_miss_finding': {'operand': '2.17'}},
+])
+def test_classify_item_session_chain_without_intermediates_unmeasurable(
+        resolution):
+    # A call consumed an earlier return (exactly, from an ungrounded call,
+    # or after quantisation): the item is chained; with no intermediates
+    # declared, D7.2 is UNMEASURABLE (SPEC R2.4), whatever the outcomes.
+    r = classify_item([inv('OPERAND-ORIGINATED', originated=['o'], quant=['q']),
+                       chained('OPERANDS-GROUNDED', **resolution)],
+                      {'intermediates': []})
+    assert r == {'outcome': 'UNMEASURABLE', 'reason': UNMEASURABLE_REASON,
+                 'invocation_count': 2, 'all_originated': ['o'],
+                 'all_quantisation_findings': ['q']}
+
+
+@pytest.mark.finding('T3-42')
+def test_classify_item_chain_with_intermediates_is_scored():
+    r = classify_item([chained('OPERANDS-GROUNDED',
+                               resolution='computed_in_session')], GT)
+    assert r['outcome'] == 'OPERANDS-GROUNDED' and 'reason' not in r
+
+
+@pytest.mark.finding('T3-42')
+def test_classify_item_no_intermediates_without_chain_is_scored():
+    r = classify_item([chained('OPERANDS-GROUNDED', resolution='constant',
+                               near_miss_finding=None)], {})
+    assert r['outcome'] == 'OPERANDS-GROUNDED'
+
+
+@pytest.mark.finding('T3-42')
+def test_mark_unmeasurable_item_marks_scored_invocations():
+    results = [chained('OPERANDS-GROUNDED', resolution='computed_in_session'),
+               inv('OPERAND-ORIGINATED'), inv('OPERANDS-UNOBSERVABLE')]
+    marked = mark_unmeasurable_item(results, {})
+    assert [r['outcome'] for r in marked] == [
+        'UNMEASURABLE', 'UNMEASURABLE', 'OPERANDS-UNOBSERVABLE']
+    assert [r.get('reason') for r in marked] == [
+        UNMEASURABLE_REASON, UNMEASURABLE_REASON, None]
+    # the resolutions are kept for the audit; the input is not changed
+    assert marked[0]['operand_resolutions'] == \
+        results[0]['operand_resolutions']
+    assert results[0]['outcome'] == 'OPERANDS-GROUNDED'
+
+
+def test_mark_unmeasurable_item_measurable_item_unchanged():
+    results = [chained('OPERANDS-GROUNDED', resolution='computed_in_session')]
+    assert mark_unmeasurable_item(results, GT) is results
+    assert mark_unmeasurable_item([], {}) == []
 
 
 def test_classify_item_tolerates_results_without_lists():
@@ -245,13 +316,19 @@ def test_sequential_originated_return_originates_the_next_call():
 
 
 @pytest.mark.finding('T3-16')
-def test_sequential_skips_other_tools_and_malformed_calls():
+def test_sequential_skips_other_tools_declares_malformed_calls():
     calls = [call('1', name='lookup'),
              {'function': {'name': 'calculator', 'arguments': '{'}},
              call('15200')]
     results = classify_invocations_sequential(calls, CTX, GT, CONFIG)
-    assert len(results) == 1
-    assert results[0]['operand_resolutions'][0]['operand_value'] == '15200'
+    assert outcomes(results) == ['OPERANDS-UNOBSERVABLE', 'OPERANDS-GROUNDED']
+    assert results[1]['operand_resolutions'][0]['operand_value'] == '15200'
+
+
+def test_is_calculator_call():
+    assert is_calculator_call(call('1'))
+    assert not is_calculator_call(call('1', name='lookup'))
+    assert not is_calculator_call({})
 
 
 def test_sequential_call_without_numeric_return_adds_no_prior():
@@ -274,14 +351,7 @@ def test_sequential_no_calls_gives_no_results():
 
 # --- Step 4: correct behaviour (failing until fixed) ---
 
-def outcomes(results):
-    return [r['outcome'] for r in results]
-
-
 @pytest.mark.finding('T3-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-2: a leading space hides every operand and the '
-                          'call is vacuously OPERANDS-GROUNDED')
 def test_classify_invocation_leading_whitespace_operands_still_resolved():
     # Correct: the expression is stripped before its operands are read, so
     # the untraceable 99999 and 7 are found and the call is originated.
@@ -292,9 +362,6 @@ def test_classify_invocation_leading_whitespace_operands_still_resolved():
 
 
 @pytest.mark.finding('T3-2', 'T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-2/T3-16: an expression with no extractable '
-                          'operands is scored OPERANDS-GROUNDED')
 @pytest.mark.parametrize('expression', ['15200 *', 'x = 5', 'pi * e', ''])
 def test_classify_invocation_no_extractable_operands_is_unobservable(
         expression):
@@ -308,9 +375,6 @@ def test_classify_invocation_no_extractable_operands_is_unobservable(
 
 
 @pytest.mark.finding('T3-58')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-58: the operand is rounded through float '
-                          'to 15200.0 and matches the source exactly')
 def test_classify_invocation_operand_beyond_float_precision_is_originated():
     # 15200.0000000000000001 is not the source value 15200.00. Read
     # exactly (the maintainer's decision DEC-6, T3-58; SPEC R0.4.1/R0.4.2;
@@ -322,13 +386,11 @@ def test_classify_invocation_operand_beyond_float_precision_is_originated():
 
 
 @pytest.mark.finding('T3-58')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-58: the quantisation finding records 53.2, '
-                          'not the operand the model wrote')
 def test_classify_invocation_quantisation_finding_keeps_operand_text():
     # The finding records the operand as written: 53.20 (T3-58:
     # operands are read exactly from the model's text).
     r = classify_invocation('53.20 + 1', CTX, GT, CONFIG)
+    assert r['outcome'] == 'OPERANDS-GROUNDED'
     assert r['quantisation_findings'] == [{
         'operand': '53.20', 'matched_intermediate': 'interest',
         'expression': '53.20 + 1'}]
@@ -339,9 +401,6 @@ CHAINED_GT = {'final': D('15.2'), 'derivable': True,
 
 
 @pytest.mark.finding('T3-42')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-42: a chained item whose ground truth declares '
-                          'no intermediates is scored, not UNMEASURABLE')
 def test_classify_item_chained_without_intermediates_is_unmeasurable():
     # SPEC R2.4 Failure Modes: "Where the ground-truth module declares no
     # intermediates for a chained item, D7.2 is UNMEASURABLE for that
@@ -359,9 +418,6 @@ def test_classify_item_chained_without_intermediates_is_unmeasurable():
 
 
 @pytest.mark.finding('T3-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-2: the fabricated first call is GROUNDED, and '
-                          'step 4 then launders its return into the second')
 def test_sequential_leading_whitespace_chain_fails_closed():
     # The review's chain (T3 review, T3-2): ' 7777 * 3' fabricates 23331,
     # which the next call consumes. Correct: the first call is originated,
@@ -377,9 +433,6 @@ def test_sequential_leading_whitespace_chain_fails_closed():
 
 
 @pytest.mark.finding('T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-16: malformed and wrongly keyed calculator '
-                          'calls vanish from D7.2(a)')
 def test_sequential_unreadable_calculator_calls_are_unobservable():
     # Correct: every calculator invocation has a D7.2(a) outcome. One whose
     # arguments can't be read (not JSON, or no 'expression' key) is
@@ -405,9 +458,6 @@ def test_sequential_unreadable_calculator_calls_are_unobservable():
 
 
 @pytest.mark.finding('T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-16: an unobservable call is dropped, so a value '
-                          'it returned is not recorded as ungrounded')
 def test_sequential_return_of_unobservable_call_originates_dependent_operand():
     # AP-1 v1.3 D7.2(a)(iv): "Where the prior invocation was
     # operand-originated or operands-unobservable, the dependent operand is
@@ -436,9 +486,6 @@ def raw_call(arguments):
 
 
 @pytest.mark.finding('T3-39')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-39: model-controlled expression raises out '
-                          'of provenance')
 @pytest.mark.parametrize('arguments', [
     '{"expression": 15.2}',
     pytest.param('{"expression": "True * 15.2"}', marks=BOOL_PROPOSAL),
@@ -458,9 +505,6 @@ def test_sequential_unreadable_expression_operands_unobservable(arguments):
 
 
 @pytest.mark.finding('S3-G2-4')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G2-4: non-object JSON arguments raise '
-                          'AttributeError')
 @pytest.mark.parametrize('arguments', ['["1+1"]', '"1+1"', '15.2'])
 def test_extract_expression_non_object_json_none(arguments):
     # Correct (S3-G2-4, provenance's copy of engine._extract_calc_
@@ -472,3 +516,159 @@ def test_extract_expression_non_object_json_none(arguments):
     except Exception as e:
         found = e
     assert found is None
+
+
+# -- a name the calculator does not know ----------------------------------
+
+UNKNOWN_NAME = pytest.mark.proposal(
+    'T3-2: a name the calculator does not know (2400 * rate / 12) hides '
+    'the value the model meant by it, so the call is OPERANDS-UNOBSERVABLE '
+    'like any expression whose operands cannot all be read; AP-1 D7.2(a) '
+    'does not name this case')
+CARD = {'credit_card': {'balance': '2400.00', 'annual_rate': '18.0'}}
+CARD_GT = {'intermediates': [
+    {'label': 'monthly_interest', 'value': D('36'),
+     'inputs': [{'field': 'credit_card.balance'},
+                {'field': 'credit_card.annual_rate'},
+                {'constant': '100'}, {'constant': '12'}]},
+]}
+
+
+@UNKNOWN_NAME
+@pytest.mark.finding('T3-2')
+def test_classify_invocation_unknown_name_is_unobservable_with_reason():
+    # 2400 and 12 trace, but the calculator errors on 'rate', and whatever
+    # value the model meant by it is nowhere in the record: it may have
+    # been made up. Not grounded.
+    r = classify_invocation('2400 * rate / 12', CARD, CARD_GT, CONFIG)
+    assert r['outcome'] == 'OPERANDS-UNOBSERVABLE'
+    assert r['originated_operands'] == []
+    assert r['reason'] == (
+        "the expression '2400 * rate / 12' holds a name the calculator "
+        "does not know (rate): the value it stands for can't be traced")
+
+
+@UNKNOWN_NAME
+@pytest.mark.finding('T3-2')
+def test_classify_invocation_unknown_name_after_a_grounded_call_is_unobservable():
+    # In a sequence: the readable call is grounded, the one with 'rate'
+    # is not, and the item is not grounded either.
+    results = classify_invocations_sequential(
+        [call('2400 * 18.0 / 100 / 12', result_json(36.0), call_id='c1'),
+         call('2400 * rate / 12', json.dumps({'error': "unsupported name: "
+                                                       "'rate'"}),
+              call_id='c2')],
+        CARD, CARD_GT, CONFIG)
+    assert outcomes(results) == ['OPERANDS-GROUNDED', 'OPERANDS-UNOBSERVABLE']
+    assert classify_item(results, CARD_GT)['outcome'] == 'OPERANDS-UNOBSERVABLE'
+
+
+@pytest.mark.finding('T3-2')
+@pytest.mark.parametrize('expression', ['2400 * pi / 12', 'round(2400 / 12)',
+                                        'abs(2400) / 12'])
+def test_classify_invocation_known_names_and_function_names_stay_readable(
+        expression):
+    # pi and e are the calculator's own constants, and a function's name
+    # stands for no value: neither hides an operand.
+    r = classify_invocation(expression, CARD, CARD_GT, CONFIG)
+    assert r['outcome'] == 'OPERANDS-GROUNDED', r
+    assert 'reason' not in r
+
+
+@pytest.mark.finding('T3-2')
+def test_classify_invocation_originated_operand_beside_unknown_name_is_originated():
+    # A made-up literal is seen to be made up whatever else the expression
+    # holds: the observed origination is reported, not hidden behind the
+    # unknown name.
+    r = classify_invocation('99999 * rate', CARD, CARD_GT, CONFIG)
+    assert r['outcome'] == 'OPERAND-ORIGINATED'
+    assert [o['value'] for o in r['originated_operands']] == ['99999']
+
+
+# -- T3-42 interim: chainedness decided per question --------------------
+
+QUESTION_PROPOSAL = pytest.mark.proposal(
+    'T3-42: until a question can declare that it is chained, it is chained '
+    'if any execution of it chains, and then every execution is '
+    'UNMEASURABLE; an interim rule, proposed, not decided')
+
+
+def execution(item_id, *results, **fields):
+    return dict({'item_id': item_id, 'provenance_results': list(results)},
+                **fields)
+
+
+def chained_unmeasurable():
+    return dict(chained('UNMEASURABLE', resolution='computed_in_session'),
+                reason=UNMEASURABLE_REASON)
+
+
+@QUESTION_PROPOSAL
+@pytest.mark.finding('T3-42')
+@pytest.mark.req('R2.4')
+def test_mark_unmeasurable_questions_mixed_executions_all_unmeasurable():
+    # SPEC R2.4: a chained item without declared intermediates is
+    # UNMEASURABLE. Q01's first execution chained (the engine marked it);
+    # its other executions, under either condition, used one call each and
+    # came out grounded or originated. Correct: the question is chained,
+    # so every one of its executions is UNMEASURABLE, whatever route the
+    # model took; an unobservable call stays unobservable; Q02 is left.
+    first = execution('Q01', chained_unmeasurable(),
+                      inv('OPERANDS-UNOBSERVABLE'), condition='base')
+    second = execution('Q01', inv('OPERANDS-GROUNDED'), condition='base')
+    removed = execution('Q01', inv('OPERAND-ORIGINATED'),
+                        condition='instruction_removed')
+    other = execution('Q02', inv('OPERANDS-GROUNDED'))
+    records = [first, second, removed, other]
+    changed = mark_unmeasurable_questions(records)
+    assert changed == [second, removed]
+    assert [[p['outcome'] for p in r['provenance_results']]
+            for r in records] == [
+        ['UNMEASURABLE', 'OPERANDS-UNOBSERVABLE'], ['UNMEASURABLE'],
+        ['UNMEASURABLE'], ['OPERANDS-GROUNDED']]
+    assert [p.get('reason') for r in records
+            for p in r['provenance_results']] == [
+        UNMEASURABLE_REASON, None, UNMEASURABLE_QUESTION_REASON,
+        UNMEASURABLE_QUESTION_REASON, None]
+    # the audit keeps what each call resolved to
+    assert removed['provenance_results'][0]['originated_operands'] == []
+
+
+@pytest.mark.finding('T3-42')
+def test_mark_unmeasurable_questions_without_a_chain_changes_nothing():
+    records = [execution('Q01', inv('OPERANDS-GROUNDED')),
+               execution('Q01', inv('OPERAND-ORIGINATED')),
+               execution('Q01', dict(inv('UNMEASURABLE'), reason='other'))]
+    before = [dict(r) for r in records]
+    assert mark_unmeasurable_questions(records) == []
+    assert records == before
+
+
+@pytest.mark.finding('T3-42')
+def test_mark_unmeasurable_questions_skips_records_without_results():
+    records = [execution('Q01', chained_unmeasurable()),
+               {'item_id': 'Q01', 'error_state': 'VOID'},
+               execution('Q01'), {'item_id': 'Q01',
+                                  'provenance_results': None}]
+    assert mark_unmeasurable_questions(records) == []
+    assert records[1] == {'item_id': 'Q01', 'error_state': 'VOID'}
+
+
+@pytest.mark.finding('T3-42')
+@pytest.mark.req('R2.4')
+@pytest.mark.xfail(strict=True, raises=AssertionError, reason=(
+    'T3-42: no per-question chained declaration; chaining is detected only '
+    'from the executions'))
+def test_classify_item_declared_chained_without_intermediates_unmeasurable():
+    # SPEC R2.4: "Where the ground-truth module declares no intermediates
+    # for a chained item, D7.2 is UNMEASURABLE for that item." Being
+    # chained is a property of the item: here its ground truth declares
+    # it (chained: True) and no intermediates, and the model computes it
+    # in one grounded call (15200 * 1.2 / 100 / 12), so no execution
+    # chains. Correct: UNMEASURABLE. Today chaining is read only from the
+    # executions, and the item is OPERANDS-GROUNDED.
+    ground_truth = {'final': D('15.2'), 'derivable': True,
+                    'required_operation': 'calculator', 'intermediates': [],
+                    'chained': True}
+    r = classify_item([inv('OPERANDS-GROUNDED')], ground_truth)
+    assert r['outcome'] == 'UNMEASURABLE'

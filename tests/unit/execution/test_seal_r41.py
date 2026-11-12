@@ -19,13 +19,15 @@ class ConstantModule:
 @pytest.mark.finding('T3-7')
 @pytest.mark.req('R4.1', 'R1.1')
 def test_r41_b23_constant_ground_truth_is_refused_naming_the_field():
-    # perturbation_check refuses the module, but the live run never calls
-    # it (T3-7), so R4.1's "refused at seal" holds for the unit only.
+    # The live run calls perturbation_check before sealing (T3-7 fixed);
+    # the end-to-end refusal is tested in
+    # tests/functional/test_step4_g3_seal_guards.py.
     fixture = {'accounts': [{'id': 'savings', 'name': 'Savings',
                              'balance': '15200.00'}]}
     questions = {'items': [{'id': 'Q99', 'source_accounts': ['savings']}]}
     with pytest.raises(SealError) as exc:
         perturbation_check(ConstantModule, fixture, questions)
     assert str(exc.value) == (
-        'perturbation check failed: constant-returning module detected. '
-        'Fields that had no effect: savings.balance')
+        "perturbation check failed: the module's output does not follow its "
+        "declared source fields. Q99: output unchanged when savings.balance "
+        "multiplied by 1.1")

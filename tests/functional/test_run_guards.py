@@ -40,20 +40,6 @@ def test_condition_guard_passes_on_the_example_prompts(example, capsys):
         'Perturbation guard: PASSED (single-variable: system_prompt only)\n\n')
 
 
-@pytest.mark.finding('T3-46')
-@pytest.mark.req('R1.2')
-def test_condition_guard_passes_when_both_prompts_are_identical(example,
-                                                                capsys):
-    # The guard builds the removed condition from the base one, so it can
-    # never see a second difference, and identical prompts print PASSED.
-    # Correct: identical prompts refuse the run.
-    config = example['config']
-    prompt = config['system_prompt_base']
-    check_condition_guard(config, EXAMPLE / 'fixture.json', prompt, prompt,
-                          config['tools'], config['sampling'])
-    assert 'PASSED' in capsys.readouterr().out
-
-
 def _response(text):
     return {'choices': [{'message': {
         'role': 'assistant', 'content': text,

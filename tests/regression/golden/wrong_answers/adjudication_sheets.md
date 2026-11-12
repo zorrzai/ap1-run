@@ -9,7 +9,9 @@ Version DOI: 10.5281/zenodo.21755443
 ---
 
 
-## Item 1: Q01 (Condition: base) — Scorer 1
+## Item 1: Q01, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -49,6 +51,10 @@ The monthly interest earned on the savings account is $15.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -99,7 +105,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 1: Q01 (Condition: base) — Scorer 2
+## Item 1: Q01, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -139,6 +147,10 @@ The monthly interest earned on the savings account is $15.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -189,7 +201,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 2: Q01 (Condition: base) — Scorer 1
+## Item 2: Q01, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_2>`
 
 ### Question
 
@@ -229,6 +243,10 @@ The monthly interest earned on the savings account is $15.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -279,7 +297,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 2: Q01 (Condition: base) — Scorer 2
+## Item 2: Q01, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_2>`
 
 ### Question
 
@@ -319,6 +339,10 @@ The monthly interest earned on the savings account is $15.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -369,7 +393,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 3: Q02 (Condition: base) — Scorer 1
+## Item 3: Q02, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_3>`
 
 ### Question
 
@@ -415,6 +441,10 @@ The available credit remaining on the credit card is $7400.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -465,7 +495,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 3: Q02 (Condition: base) — Scorer 2
+## Item 3: Q02, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_3>`
 
 ### Question
 
@@ -511,6 +543,10 @@ The available credit remaining on the credit card is $7400.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -561,7 +597,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 4: Q02 (Condition: base) — Scorer 1
+## Item 4: Q02, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
@@ -607,6 +645,10 @@ The available credit remaining on the credit card is $7400.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -657,7 +699,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 4: Q02 (Condition: base) — Scorer 2
+## Item 4: Q02, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
@@ -703,6 +747,10 @@ The available credit remaining on the credit card is $7400.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -753,7 +801,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 5: Q03 (Condition: base) — Scorer 1
+## Item 5: Q03, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
@@ -799,6 +849,10 @@ The monthly interest charge on the credit card is $162.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
 
 ### Reason for Adjudication
 
@@ -849,7 +903,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 5: Q03 (Condition: base) — Scorer 2
+## Item 5: Q03, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
@@ -895,6 +951,10 @@ The monthly interest charge on the credit card is $162.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
 
 ### Reason for Adjudication
 
@@ -945,7 +1005,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 6: Q03 (Condition: base) — Scorer 1
+## Item 6: Q03, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
@@ -991,6 +1053,10 @@ The monthly interest charge on the credit card is $162.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
 
 ### Reason for Adjudication
 
@@ -1041,7 +1107,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 6: Q03 (Condition: base) — Scorer 2
+## Item 6: Q03, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
@@ -1087,6 +1155,10 @@ The monthly interest charge on the credit card is $162.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
 
 ### Reason for Adjudication
 
@@ -1137,7 +1209,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 7: Q04 (Condition: base) — Scorer 1
+## Item 7: Q04, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -1179,6 +1253,10 @@ The principal portion of the first mortgage payment is $1006.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1229,7 +1307,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 7: Q04 (Condition: base) — Scorer 2
+## Item 7: Q04, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -1271,6 +1351,10 @@ The principal portion of the first mortgage payment is $1006.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1321,7 +1405,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 8: Q04 (Condition: base) — Scorer 1
+## Item 8: Q04, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -1363,6 +1449,10 @@ The principal portion of the first mortgage payment is $1006.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1413,7 +1503,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 8: Q04 (Condition: base) — Scorer 2
+## Item 8: Q04, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -1455,6 +1547,10 @@ The principal portion of the first mortgage payment is $1006.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1505,7 +1601,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 9: Q01 (Condition: instruction_removed) — Scorer 1
+## Item 9: Q01, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
@@ -1545,6 +1643,10 @@ The monthly interest earned on the savings account is $15.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1595,7 +1697,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 9: Q01 (Condition: instruction_removed) — Scorer 2
+## Item 9: Q01, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
@@ -1635,6 +1739,10 @@ The monthly interest earned on the savings account is $15.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1685,7 +1793,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 10: Q01 (Condition: instruction_removed) — Scorer 1
+## Item 10: Q01, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
@@ -1725,6 +1835,10 @@ The monthly interest earned on the savings account is $15.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1775,7 +1889,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 10: Q01 (Condition: instruction_removed) — Scorer 2
+## Item 10: Q01, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
@@ -1815,6 +1931,10 @@ The monthly interest earned on the savings account is $15.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1865,7 +1985,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 11: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 11: Q02, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -1911,6 +2033,10 @@ The available credit remaining on the credit card is $7400.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -1961,7 +2087,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 11: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 11: Q02, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -2007,6 +2135,10 @@ The available credit remaining on the credit card is $7400.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2057,7 +2189,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 12: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 12: Q02, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
@@ -2103,6 +2237,10 @@ The available credit remaining on the credit card is $7400.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2153,7 +2291,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 12: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 12: Q02, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
@@ -2199,6 +2339,10 @@ The available credit remaining on the credit card is $7400.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2249,7 +2393,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 13: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 13: Q03, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_13>`
 
 ### Question
 
@@ -2295,6 +2441,10 @@ The monthly interest charge on the credit card is $162.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
 
 ### Reason for Adjudication
 
@@ -2345,7 +2495,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 13: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 13: Q03, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_13>`
 
 ### Question
 
@@ -2391,6 +2543,10 @@ The monthly interest charge on the credit card is $162.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
 
 ### Reason for Adjudication
 
@@ -2441,7 +2597,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 14: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 14: Q03, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_14>`
 
 ### Question
 
@@ -2487,6 +2645,10 @@ The monthly interest charge on the credit card is $162.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
 
 ### Reason for Adjudication
 
@@ -2537,7 +2699,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 14: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 14: Q03, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_14>`
 
 ### Question
 
@@ -2583,6 +2747,10 @@ The monthly interest charge on the credit card is $162.00.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
 
 ### Reason for Adjudication
 
@@ -2633,7 +2801,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 15: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 15: Q04, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
@@ -2675,6 +2845,10 @@ The principal portion of the first mortgage payment is $1006.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2725,7 +2899,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 15: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 15: Q04, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
@@ -2767,6 +2943,10 @@ The principal portion of the first mortgage payment is $1006.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2817,7 +2997,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 16: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 16: Q04, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
@@ -2859,6 +3041,10 @@ The principal portion of the first mortgage payment is $1006.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2909,7 +3095,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 16: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 16: Q04, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
@@ -2951,6 +3139,10 @@ The principal portion of the first mortgage payment is $1006.25.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3001,7 +3193,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 17: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 17: Q08, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_17>`
 
 ### Question
 
@@ -3088,7 +3282,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 17: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 17: Q08, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_17>`
 
 ### Question
 
@@ -3175,7 +3371,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 18: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 18: Q08, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_18>`
 
 ### Question
 
@@ -3262,7 +3460,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 18: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 18: Q08, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_18>`
 
 ### Question
 

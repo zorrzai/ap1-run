@@ -9,7 +9,9 @@ Version DOI: 10.5281/zenodo.21755443
 ---
 
 
-## Item 1: Q04 (Condition: base) — Scorer 1
+## Item 1: Q04, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -58,6 +60,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -103,54 +109,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 - Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 
 ### Reference Values
 
@@ -162,7 +120,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 1: Q04 (Condition: base) — Scorer 2
+## Item 1: Q04, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -211,6 +171,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -256,54 +220,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 - Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 
 ### Reference Values
 
@@ -315,7 +231,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 2: Q04 (Condition: base) — Scorer 1
+## Item 2: Q04, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_2>`
 
 ### Question
 
@@ -364,6 +282,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -407,55 +329,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -468,7 +342,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 2: Q04 (Condition: base) — Scorer 2
+## Item 2: Q04, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_2>`
 
 ### Question
 
@@ -517,6 +393,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -560,55 +440,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -621,7 +453,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 3: Q04 (Condition: base) — Scorer 1
+## Item 3: Q04, repeat 4 — Scorer 1
+
+Execution id: `<EXECUTION_ID_3>`
 
 ### Question
 
@@ -669,6 +503,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -712,55 +550,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -773,7 +563,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 3: Q04 (Condition: base) — Scorer 2
+## Item 3: Q04, repeat 4 — Scorer 2
+
+Execution id: `<EXECUTION_ID_3>`
 
 ### Question
 
@@ -821,6 +613,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -864,55 +660,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -925,7 +673,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 4: Q04 (Condition: base) — Scorer 1
+## Item 4: Q04, repeat 7 — Scorer 1
+
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
@@ -972,6 +722,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1015,55 +769,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -1076,7 +782,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 4: Q04 (Condition: base) — Scorer 2
+## Item 4: Q04, repeat 7 — Scorer 2
+
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
@@ -1123,6 +831,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1166,55 +878,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -1227,7 +891,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 5: Q04 (Condition: base) — Scorer 1
+## Item 5: Q04, repeat 9 — Scorer 1
+
+Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
@@ -1278,6 +944,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1321,55 +991,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -1382,7 +1004,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 5: Q04 (Condition: base) — Scorer 2
+## Item 5: Q04, repeat 9 — Scorer 2
+
+Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
@@ -1433,6 +1057,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1476,55 +1104,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -1537,7 +1117,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 6: Q04 (Condition: base) — Scorer 1
+## Item 6: Q04, repeat 12 — Scorer 1
+
+Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
@@ -1586,6 +1168,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1629,55 +1215,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -1690,7 +1228,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 6: Q04 (Condition: base) — Scorer 2
+## Item 6: Q04, repeat 12 — Scorer 2
+
+Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
@@ -1739,6 +1279,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1782,55 +1326,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -1843,7 +1339,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 7: Q04 (Condition: base) — Scorer 1
+## Item 7: Q04, repeat 14 — Scorer 1
+
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -1890,6 +1388,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1933,55 +1435,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -1994,7 +1448,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 7: Q04 (Condition: base) — Scorer 2
+## Item 7: Q04, repeat 14 — Scorer 2
+
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -2041,6 +1497,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2084,55 +1544,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -2145,7 +1557,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 8: Q04 (Condition: base) — Scorer 1
+## Item 8: Q04, repeat 15 — Scorer 1
+
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -2196,6 +1610,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2239,55 +1657,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -2300,7 +1670,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 8: Q04 (Condition: base) — Scorer 2
+## Item 8: Q04, repeat 15 — Scorer 2
+
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -2351,6 +1723,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2394,55 +1770,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -2455,7 +1783,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 9: Q04 (Condition: base) — Scorer 1
+## Item 9: Q04, repeat 18 — Scorer 1
+
+Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
@@ -2505,6 +1835,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2548,55 +1882,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -2609,7 +1895,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 9: Q04 (Condition: base) — Scorer 2
+## Item 9: Q04, repeat 18 — Scorer 2
+
+Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
@@ -2659,6 +1947,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2702,55 +1994,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -2763,7 +2007,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 10: Q04 (Condition: base) — Scorer 1
+## Item 10: Q04, repeat 21 — Scorer 1
+
+Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
@@ -2812,6 +2058,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2855,55 +2105,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -2916,7 +2118,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 10: Q04 (Condition: base) — Scorer 2
+## Item 10: Q04, repeat 21 — Scorer 2
+
+Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
@@ -2965,6 +2169,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3008,55 +2216,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -3069,7 +2229,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 11: Q04 (Condition: base) — Scorer 1
+## Item 11: Q04, repeat 23 — Scorer 1
+
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -3116,6 +2278,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3159,55 +2325,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -3220,7 +2338,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 11: Q04 (Condition: base) — Scorer 2
+## Item 11: Q04, repeat 23 — Scorer 2
+
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -3267,6 +2387,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3310,55 +2434,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -3371,7 +2447,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 12: Q04 (Condition: base) — Scorer 1
+## Item 12: Q04, repeat 24 — Scorer 1
+
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
@@ -3422,6 +2500,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3465,55 +2547,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -3526,7 +2560,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 12: Q04 (Condition: base) — Scorer 2
+## Item 12: Q04, repeat 24 — Scorer 2
+
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
@@ -3577,6 +2613,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3620,55 +2660,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -3681,7 +2673,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 13: Q04 (Condition: base) — Scorer 1
+## Item 13: Q04, repeat 31 — Scorer 1
+
+Execution id: `<EXECUTION_ID_13>`
 
 ### Question
 
@@ -3730,6 +2724,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3773,55 +2771,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -3834,7 +2784,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 13: Q04 (Condition: base) — Scorer 2
+## Item 13: Q04, repeat 31 — Scorer 2
+
+Execution id: `<EXECUTION_ID_13>`
 
 ### Question
 
@@ -3883,6 +2835,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3926,55 +2882,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -3987,7 +2895,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 14: Q04 (Condition: base) — Scorer 1
+## Item 14: Q04, repeat 32 — Scorer 1
+
+Execution id: `<EXECUTION_ID_14>`
 
 ### Question
 
@@ -4034,6 +2944,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4077,55 +2991,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -4138,7 +3004,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 14: Q04 (Condition: base) — Scorer 2
+## Item 14: Q04, repeat 32 — Scorer 2
+
+Execution id: `<EXECUTION_ID_14>`
 
 ### Question
 
@@ -4185,6 +3053,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4228,55 +3100,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -4289,7 +3113,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 15: Q04 (Condition: base) — Scorer 1
+## Item 15: Q04, repeat 36 — Scorer 1
+
+Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
@@ -4338,6 +3164,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4381,55 +3211,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -4442,7 +3224,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 15: Q04 (Condition: base) — Scorer 2
+## Item 15: Q04, repeat 36 — Scorer 2
+
+Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
@@ -4491,6 +3275,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4534,55 +3322,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -4595,7 +3335,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 16: Q04 (Condition: base) — Scorer 1
+## Item 16: Q04, repeat 37 — Scorer 1
+
+Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
@@ -4645,6 +3387,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4688,55 +3434,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -4749,7 +3447,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 16: Q04 (Condition: base) — Scorer 2
+## Item 16: Q04, repeat 37 — Scorer 2
+
+Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
@@ -4799,6 +3499,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4842,55 +3546,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -4903,7 +3559,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 17: Q04 (Condition: base) — Scorer 1
+## Item 17: Q04, repeat 38 — Scorer 1
+
+Execution id: `<EXECUTION_ID_17>`
 
 ### Question
 
@@ -4951,6 +3609,10 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4994,55 +3656,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -5055,7 +3669,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 17: Q04 (Condition: base) — Scorer 2
+## Item 17: Q04, repeat 38 — Scorer 2
+
+Execution id: `<EXECUTION_ID_17>`
 
 ### Question
 
@@ -5103,6 +3719,10 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5146,55 +3766,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -5207,7 +3779,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 18: Q04 (Condition: base) — Scorer 1
+## Item 18: Q04, repeat 39 — Scorer 1
+
+Execution id: `<EXECUTION_ID_18>`
 
 ### Question
 
@@ -5255,6 +3829,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5298,55 +3876,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -5359,7 +3889,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 18: Q04 (Condition: base) — Scorer 2
+## Item 18: Q04, repeat 39 — Scorer 2
+
+Execution id: `<EXECUTION_ID_18>`
 
 ### Question
 
@@ -5407,6 +3939,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5450,55 +3986,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -5511,7 +3999,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 19: Q04 (Condition: base) — Scorer 1
+## Item 19: Q04, repeat 41 — Scorer 1
+
+Execution id: `<EXECUTION_ID_19>`
 
 ### Question
 
@@ -5560,6 +4050,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5603,55 +4097,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -5664,7 +4110,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 19: Q04 (Condition: base) — Scorer 2
+## Item 19: Q04, repeat 41 — Scorer 2
+
+Execution id: `<EXECUTION_ID_19>`
 
 ### Question
 
@@ -5713,6 +4161,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5756,55 +4208,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -5817,7 +4221,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 20: Q04 (Condition: base) — Scorer 1
+## Item 20: Q04, repeat 42 — Scorer 1
+
+Execution id: `<EXECUTION_ID_20>`
 
 ### Question
 
@@ -5866,6 +4272,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5909,55 +4319,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -5970,7 +4332,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 20: Q04 (Condition: base) — Scorer 2
+## Item 20: Q04, repeat 42 — Scorer 2
+
+Execution id: `<EXECUTION_ID_20>`
 
 ### Question
 
@@ -6019,6 +4383,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6062,55 +4430,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -6123,7 +4443,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 21: Q04 (Condition: base) — Scorer 1
+## Item 21: Q04, repeat 43 — Scorer 1
+
+Execution id: `<EXECUTION_ID_21>`
 
 ### Question
 
@@ -6171,6 +4493,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6214,55 +4540,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -6275,7 +4553,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 21: Q04 (Condition: base) — Scorer 2
+## Item 21: Q04, repeat 43 — Scorer 2
+
+Execution id: `<EXECUTION_ID_21>`
 
 ### Question
 
@@ -6323,6 +4603,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6366,55 +4650,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -6427,7 +4663,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 22: Q04 (Condition: base) — Scorer 1
+## Item 22: Q04, repeat 44 — Scorer 1
+
+Execution id: `<EXECUTION_ID_22>`
 
 ### Question
 
@@ -6478,6 +4716,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6521,55 +4763,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -6582,7 +4776,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 22: Q04 (Condition: base) — Scorer 2
+## Item 22: Q04, repeat 44 — Scorer 2
+
+Execution id: `<EXECUTION_ID_22>`
 
 ### Question
 
@@ -6633,6 +4829,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6676,55 +4876,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -6737,7 +4889,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 23: Q04 (Condition: base) — Scorer 1
+## Item 23: Q04, repeat 45 — Scorer 1
+
+Execution id: `<EXECUTION_ID_23>`
 
 ### Question
 
@@ -6785,6 +4939,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6828,55 +4986,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -6889,7 +4999,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 23: Q04 (Condition: base) — Scorer 2
+## Item 23: Q04, repeat 45 — Scorer 2
+
+Execution id: `<EXECUTION_ID_23>`
 
 ### Question
 
@@ -6937,6 +5049,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6980,55 +5096,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -7041,7 +5109,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 24: Q04 (Condition: base) — Scorer 1
+## Item 24: Q04, repeat 46 — Scorer 1
+
+Execution id: `<EXECUTION_ID_24>`
 
 ### Question
 
@@ -7092,6 +5162,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7135,55 +5209,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -7196,7 +5222,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 24: Q04 (Condition: base) — Scorer 2
+## Item 24: Q04, repeat 46 — Scorer 2
+
+Execution id: `<EXECUTION_ID_24>`
 
 ### Question
 
@@ -7247,6 +5275,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7290,55 +5322,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -7351,7 +5335,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 25: Q04 (Condition: base) — Scorer 1
+## Item 25: Q04, repeat 48 — Scorer 1
+
+Execution id: `<EXECUTION_ID_25>`
 
 ### Question
 
@@ -7400,6 +5386,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7443,54 +5433,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
@@ -7504,7 +5446,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 25: Q04 (Condition: base) — Scorer 2
+## Item 25: Q04, repeat 48 — Scorer 2
+
+Execution id: `<EXECUTION_ID_25>`
 
 ### Question
 
@@ -7553,6 +5497,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7596,54 +5544,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 2: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 4: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 7: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 9: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 21: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 23: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 24: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 31: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 32: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 36: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 37: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 39: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 42: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 43: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 44: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 45: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 48: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
@@ -7657,7 +5557,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 26: Q05 (Condition: base) — Scorer 1
+## Item 26: Q05, repeat 15 — Scorer 1
+
+Execution id: `<EXECUTION_ID_26>`
 
 ### Question
 
@@ -7714,6 +5616,14 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -7763,7 +5673,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 26: Q05 (Condition: base) — Scorer 2
+## Item 26: Q05, repeat 15 — Scorer 2
+
+Execution id: `<EXECUTION_ID_26>`
 
 ### Question
 
@@ -7820,6 +5732,14 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -7869,7 +5789,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 27: Q05 (Condition: base) — Scorer 1
+## Item 27: Q05, repeat 22 — Scorer 1
+
+Execution id: `<EXECUTION_ID_27>`
 
 ### Question
 
@@ -7916,6 +5838,10 @@ The credit card balance after one month, if only the minimum payment of $25.00 i
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -7965,7 +5891,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 27: Q05 (Condition: base) — Scorer 2
+## Item 27: Q05, repeat 22 — Scorer 2
+
+Execution id: `<EXECUTION_ID_27>`
 
 ### Question
 
@@ -8012,6 +5940,10 @@ The credit card balance after one month, if only the minimum payment of $25.00 i
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8061,7 +5993,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 28: Q05 (Condition: base) — Scorer 1
+## Item 28: Q05, repeat 28 — Scorer 1
+
+Execution id: `<EXECUTION_ID_28>`
 
 ### Question
 
@@ -8118,6 +6052,14 @@ After one month, if only the minimum payment of 25.00 is made, the credit card b
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8167,7 +6109,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 28: Q05 (Condition: base) — Scorer 2
+## Item 28: Q05, repeat 28 — Scorer 2
+
+Execution id: `<EXECUTION_ID_28>`
 
 ### Question
 
@@ -8224,6 +6168,14 @@ After one month, if only the minimum payment of 25.00 is made, the credit card b
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8273,7 +6225,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 29: Q05 (Condition: base) — Scorer 1
+## Item 29: Q05, repeat 30 — Scorer 1
+
+Execution id: `<EXECUTION_ID_29>`
 
 ### Question
 
@@ -8330,6 +6284,14 @@ After one month, if only the minimum payment of $25 is made, the credit card bal
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8379,7 +6341,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 29: Q05 (Condition: base) — Scorer 2
+## Item 29: Q05, repeat 30 — Scorer 2
+
+Execution id: `<EXECUTION_ID_29>`
 
 ### Question
 
@@ -8436,6 +6400,14 @@ After one month, if only the minimum payment of $25 is made, the credit card bal
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8485,7 +6457,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 30: Q05 (Condition: base) — Scorer 1
+## Item 30: Q05, repeat 36 — Scorer 1
+
+Execution id: `<EXECUTION_ID_30>`
 
 ### Question
 
@@ -8542,6 +6516,14 @@ If only the minimum payment of $25.00 is made after one month, the credit card b
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8591,7 +6573,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 30: Q05 (Condition: base) — Scorer 2
+## Item 30: Q05, repeat 36 — Scorer 2
+
+Execution id: `<EXECUTION_ID_30>`
 
 ### Question
 
@@ -8648,6 +6632,14 @@ If only the minimum payment of $25.00 is made after one month, the credit card b
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8697,7 +6689,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 31: Q05 (Condition: base) — Scorer 1
+## Item 31: Q05, repeat 41 — Scorer 1
+
+Execution id: `<EXECUTION_ID_31>`
 
 ### Question
 
@@ -8744,6 +6738,10 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8793,7 +6791,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 31: Q05 (Condition: base) — Scorer 2
+## Item 31: Q05, repeat 41 — Scorer 2
+
+Execution id: `<EXECUTION_ID_31>`
 
 ### Question
 
@@ -8840,6 +6840,10 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8889,7 +6893,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 32: Q05 (Condition: base) — Scorer 1
+## Item 32: Q05, repeat 46 — Scorer 1
+
+Execution id: `<EXECUTION_ID_32>`
 
 ### Question
 
@@ -8936,6 +6942,10 @@ If only the minimum payment of $25.00 is made after one month, the new credit ca
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -8985,7 +6995,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 32: Q05 (Condition: base) — Scorer 2
+## Item 32: Q05, repeat 46 — Scorer 2
+
+Execution id: `<EXECUTION_ID_32>`
 
 ### Question
 
@@ -9032,6 +7044,10 @@ If only the minimum payment of $25.00 is made after one month, the new credit ca
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -9081,7 +7097,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 33: Q07 (Condition: base) — Scorer 1
+## Item 33: Q07, repeat 44 — Scorer 1
+
+Execution id: `<EXECUTION_ID_33>`
 
 ### Question
 
@@ -9137,6 +7155,16 @@ Category: growth
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Response shape unrecognised. Cannot extract a figure for comparison.
@@ -9186,7 +7214,9 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 33: Q07 (Condition: base) — Scorer 2
+## Item 33: Q07, repeat 44 — Scorer 2
+
+Execution id: `<EXECUTION_ID_33>`
 
 ### Question
 
@@ -9242,6 +7272,16 @@ Category: growth
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Response shape unrecognised. Cannot extract a figure for comparison.
@@ -9291,7 +7331,9 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 34: Q08 (Condition: base) — Scorer 1
+## Item 34: Q08, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_34>`
 
 ### Question
 
@@ -9333,6 +7375,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -9383,7 +7429,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 34: Q08 (Condition: base) — Scorer 2
+## Item 34: Q08, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_34>`
 
 ### Question
 
@@ -9425,6 +7473,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -9475,7 +7527,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 35: Q08 (Condition: base) — Scorer 1
+## Item 35: Q08, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_35>`
 
 ### Question
 
@@ -9518,6 +7572,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -9567,7 +7625,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 35: Q08 (Condition: base) — Scorer 2
+## Item 35: Q08, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_35>`
 
 ### Question
 
@@ -9610,6 +7670,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -9659,7 +7723,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 36: Q08 (Condition: base) — Scorer 1
+## Item 36: Q08, repeat 3 — Scorer 1
+
+Execution id: `<EXECUTION_ID_36>`
 
 ### Question
 
@@ -9702,6 +7768,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -9751,7 +7821,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 36: Q08 (Condition: base) — Scorer 2
+## Item 36: Q08, repeat 3 — Scorer 2
+
+Execution id: `<EXECUTION_ID_36>`
 
 ### Question
 
@@ -9794,6 +7866,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -9843,7 +7919,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 37: Q08 (Condition: base) — Scorer 1
+## Item 37: Q08, repeat 4 — Scorer 1
+
+Execution id: `<EXECUTION_ID_37>`
 
 ### Question
 
@@ -9886,6 +7964,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -9935,7 +8017,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 37: Q08 (Condition: base) — Scorer 2
+## Item 37: Q08, repeat 4 — Scorer 2
+
+Execution id: `<EXECUTION_ID_37>`
 
 ### Question
 
@@ -9978,6 +8062,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10027,7 +8115,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 38: Q08 (Condition: base) — Scorer 1
+## Item 38: Q08, repeat 5 — Scorer 1
+
+Execution id: `<EXECUTION_ID_38>`
 
 ### Question
 
@@ -10070,6 +8160,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10119,7 +8213,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 38: Q08 (Condition: base) — Scorer 2
+## Item 38: Q08, repeat 5 — Scorer 2
+
+Execution id: `<EXECUTION_ID_38>`
 
 ### Question
 
@@ -10162,6 +8258,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10211,7 +8311,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 39: Q08 (Condition: base) — Scorer 1
+## Item 39: Q08, repeat 6 — Scorer 1
+
+Execution id: `<EXECUTION_ID_39>`
 
 ### Question
 
@@ -10254,6 +8356,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10303,7 +8409,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 39: Q08 (Condition: base) — Scorer 2
+## Item 39: Q08, repeat 6 — Scorer 2
+
+Execution id: `<EXECUTION_ID_39>`
 
 ### Question
 
@@ -10346,6 +8454,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10395,7 +8507,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 40: Q08 (Condition: base) — Scorer 1
+## Item 40: Q08, repeat 7 — Scorer 1
+
+Execution id: `<EXECUTION_ID_40>`
 
 ### Question
 
@@ -10438,6 +8552,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10487,7 +8605,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 40: Q08 (Condition: base) — Scorer 2
+## Item 40: Q08, repeat 7 — Scorer 2
+
+Execution id: `<EXECUTION_ID_40>`
 
 ### Question
 
@@ -10530,6 +8650,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10579,7 +8703,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 41: Q08 (Condition: base) — Scorer 1
+## Item 41: Q08, repeat 8 — Scorer 1
+
+Execution id: `<EXECUTION_ID_41>`
 
 ### Question
 
@@ -10622,6 +8748,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10671,7 +8801,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 41: Q08 (Condition: base) — Scorer 2
+## Item 41: Q08, repeat 8 — Scorer 2
+
+Execution id: `<EXECUTION_ID_41>`
 
 ### Question
 
@@ -10714,6 +8846,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10763,7 +8899,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 42: Q08 (Condition: base) — Scorer 1
+## Item 42: Q08, repeat 9 — Scorer 1
+
+Execution id: `<EXECUTION_ID_42>`
 
 ### Question
 
@@ -10806,6 +8944,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10855,7 +8997,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 42: Q08 (Condition: base) — Scorer 2
+## Item 42: Q08, repeat 9 — Scorer 2
+
+Execution id: `<EXECUTION_ID_42>`
 
 ### Question
 
@@ -10898,6 +9042,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -10947,7 +9095,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 43: Q08 (Condition: base) — Scorer 1
+## Item 43: Q08, repeat 10 — Scorer 1
+
+Execution id: `<EXECUTION_ID_43>`
 
 ### Question
 
@@ -10990,6 +9140,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11039,7 +9193,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 43: Q08 (Condition: base) — Scorer 2
+## Item 43: Q08, repeat 10 — Scorer 2
+
+Execution id: `<EXECUTION_ID_43>`
 
 ### Question
 
@@ -11082,6 +9238,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11131,7 +9291,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 44: Q08 (Condition: base) — Scorer 1
+## Item 44: Q08, repeat 11 — Scorer 1
+
+Execution id: `<EXECUTION_ID_44>`
 
 ### Question
 
@@ -11174,6 +9336,10 @@ The remaining mortgage balance after the first monthly payment of 1437.00 will b
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11223,7 +9389,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 44: Q08 (Condition: base) — Scorer 2
+## Item 44: Q08, repeat 11 — Scorer 2
+
+Execution id: `<EXECUTION_ID_44>`
 
 ### Question
 
@@ -11266,6 +9434,10 @@ The remaining mortgage balance after the first monthly payment of 1437.00 will b
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11315,7 +9487,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 45: Q08 (Condition: base) — Scorer 1
+## Item 45: Q08, repeat 12 — Scorer 1
+
+Execution id: `<EXECUTION_ID_45>`
 
 ### Question
 
@@ -11358,6 +9532,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11407,7 +9585,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 45: Q08 (Condition: base) — Scorer 2
+## Item 45: Q08, repeat 12 — Scorer 2
+
+Execution id: `<EXECUTION_ID_45>`
 
 ### Question
 
@@ -11450,6 +9630,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11499,7 +9683,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 46: Q08 (Condition: base) — Scorer 1
+## Item 46: Q08, repeat 13 — Scorer 1
+
+Execution id: `<EXECUTION_ID_46>`
 
 ### Question
 
@@ -11542,6 +9728,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 woul
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11591,7 +9781,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 46: Q08 (Condition: base) — Scorer 2
+## Item 46: Q08, repeat 13 — Scorer 2
+
+Execution id: `<EXECUTION_ID_46>`
 
 ### Question
 
@@ -11634,6 +9826,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 woul
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11683,7 +9879,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 47: Q08 (Condition: base) — Scorer 1
+## Item 47: Q08, repeat 14 — Scorer 1
+
+Execution id: `<EXECUTION_ID_47>`
 
 ### Question
 
@@ -11726,6 +9924,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11775,7 +9977,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 47: Q08 (Condition: base) — Scorer 2
+## Item 47: Q08, repeat 14 — Scorer 2
+
+Execution id: `<EXECUTION_ID_47>`
 
 ### Question
 
@@ -11818,6 +10022,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11867,7 +10075,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 48: Q08 (Condition: base) — Scorer 1
+## Item 48: Q08, repeat 15 — Scorer 1
+
+Execution id: `<EXECUTION_ID_48>`
 
 ### Question
 
@@ -11910,6 +10120,10 @@ The remaining mortgage balance after the first monthly payment of 1437.00 will b
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11959,7 +10173,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 48: Q08 (Condition: base) — Scorer 2
+## Item 48: Q08, repeat 15 — Scorer 2
+
+Execution id: `<EXECUTION_ID_48>`
 
 ### Question
 
@@ -12002,6 +10218,10 @@ The remaining mortgage balance after the first monthly payment of 1437.00 will b
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12051,7 +10271,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 49: Q08 (Condition: base) — Scorer 1
+## Item 49: Q08, repeat 16 — Scorer 1
+
+Execution id: `<EXECUTION_ID_49>`
 
 ### Question
 
@@ -12094,6 +10316,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12143,7 +10369,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 49: Q08 (Condition: base) — Scorer 2
+## Item 49: Q08, repeat 16 — Scorer 2
+
+Execution id: `<EXECUTION_ID_49>`
 
 ### Question
 
@@ -12186,6 +10414,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12235,7 +10467,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 50: Q08 (Condition: base) — Scorer 1
+## Item 50: Q08, repeat 17 — Scorer 1
+
+Execution id: `<EXECUTION_ID_50>`
 
 ### Question
 
@@ -12278,6 +10512,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12327,7 +10565,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 50: Q08 (Condition: base) — Scorer 2
+## Item 50: Q08, repeat 17 — Scorer 2
+
+Execution id: `<EXECUTION_ID_50>`
 
 ### Question
 
@@ -12370,6 +10610,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12419,7 +10663,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 51: Q08 (Condition: base) — Scorer 1
+## Item 51: Q08, repeat 18 — Scorer 1
+
+Execution id: `<EXECUTION_ID_51>`
 
 ### Question
 
@@ -12462,6 +10708,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12511,7 +10761,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 51: Q08 (Condition: base) — Scorer 2
+## Item 51: Q08, repeat 18 — Scorer 2
+
+Execution id: `<EXECUTION_ID_51>`
 
 ### Question
 
@@ -12554,6 +10806,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12603,7 +10859,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 52: Q08 (Condition: base) — Scorer 1
+## Item 52: Q08, repeat 19 — Scorer 1
+
+Execution id: `<EXECUTION_ID_52>`
 
 ### Question
 
@@ -12646,6 +10904,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12695,7 +10957,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 52: Q08 (Condition: base) — Scorer 2
+## Item 52: Q08, repeat 19 — Scorer 2
+
+Execution id: `<EXECUTION_ID_52>`
 
 ### Question
 
@@ -12738,6 +11002,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12787,7 +11055,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 53: Q08 (Condition: base) — Scorer 1
+## Item 53: Q08, repeat 20 — Scorer 1
+
+Execution id: `<EXECUTION_ID_53>`
 
 ### Question
 
@@ -12830,6 +11100,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12879,7 +11153,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 53: Q08 (Condition: base) — Scorer 2
+## Item 53: Q08, repeat 20 — Scorer 2
+
+Execution id: `<EXECUTION_ID_53>`
 
 ### Question
 
@@ -12922,6 +11198,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12971,7 +11251,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 54: Q08 (Condition: base) — Scorer 1
+## Item 54: Q08, repeat 21 — Scorer 1
+
+Execution id: `<EXECUTION_ID_54>`
 
 ### Question
 
@@ -13014,6 +11296,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13063,7 +11349,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 54: Q08 (Condition: base) — Scorer 2
+## Item 54: Q08, repeat 21 — Scorer 2
+
+Execution id: `<EXECUTION_ID_54>`
 
 ### Question
 
@@ -13106,6 +11394,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13155,7 +11447,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 55: Q08 (Condition: base) — Scorer 1
+## Item 55: Q08, repeat 22 — Scorer 1
+
+Execution id: `<EXECUTION_ID_55>`
 
 ### Question
 
@@ -13198,6 +11492,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13247,7 +11545,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 55: Q08 (Condition: base) — Scorer 2
+## Item 55: Q08, repeat 22 — Scorer 2
+
+Execution id: `<EXECUTION_ID_55>`
 
 ### Question
 
@@ -13290,6 +11590,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13339,7 +11643,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 56: Q08 (Condition: base) — Scorer 1
+## Item 56: Q08, repeat 23 — Scorer 1
+
+Execution id: `<EXECUTION_ID_56>`
 
 ### Question
 
@@ -13382,6 +11688,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13431,7 +11741,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 56: Q08 (Condition: base) — Scorer 2
+## Item 56: Q08, repeat 23 — Scorer 2
+
+Execution id: `<EXECUTION_ID_56>`
 
 ### Question
 
@@ -13474,6 +11786,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13523,7 +11839,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 57: Q08 (Condition: base) — Scorer 1
+## Item 57: Q08, repeat 24 — Scorer 1
+
+Execution id: `<EXECUTION_ID_57>`
 
 ### Question
 
@@ -13566,6 +11884,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13615,7 +11937,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 57: Q08 (Condition: base) — Scorer 2
+## Item 57: Q08, repeat 24 — Scorer 2
+
+Execution id: `<EXECUTION_ID_57>`
 
 ### Question
 
@@ -13658,6 +11982,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13707,7 +12035,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 58: Q08 (Condition: base) — Scorer 1
+## Item 58: Q08, repeat 25 — Scorer 1
+
+Execution id: `<EXECUTION_ID_58>`
 
 ### Question
 
@@ -13750,6 +12080,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13799,7 +12133,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 58: Q08 (Condition: base) — Scorer 2
+## Item 58: Q08, repeat 25 — Scorer 2
+
+Execution id: `<EXECUTION_ID_58>`
 
 ### Question
 
@@ -13842,6 +12178,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13891,7 +12231,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 59: Q08 (Condition: base) — Scorer 1
+## Item 59: Q08, repeat 26 — Scorer 1
+
+Execution id: `<EXECUTION_ID_59>`
 
 ### Question
 
@@ -13934,6 +12276,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13983,7 +12329,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 59: Q08 (Condition: base) — Scorer 2
+## Item 59: Q08, repeat 26 — Scorer 2
+
+Execution id: `<EXECUTION_ID_59>`
 
 ### Question
 
@@ -14026,6 +12374,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14075,7 +12427,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 60: Q08 (Condition: base) — Scorer 1
+## Item 60: Q08, repeat 27 — Scorer 1
+
+Execution id: `<EXECUTION_ID_60>`
 
 ### Question
 
@@ -14118,6 +12472,10 @@ After the first monthly payment of $1437, the remaining mortgage balance would b
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14167,7 +12525,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 60: Q08 (Condition: base) — Scorer 2
+## Item 60: Q08, repeat 27 — Scorer 2
+
+Execution id: `<EXECUTION_ID_60>`
 
 ### Question
 
@@ -14210,6 +12570,10 @@ After the first monthly payment of $1437, the remaining mortgage balance would b
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14259,7 +12623,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 61: Q08 (Condition: base) — Scorer 1
+## Item 61: Q08, repeat 28 — Scorer 1
+
+Execution id: `<EXECUTION_ID_61>`
 
 ### Question
 
@@ -14302,6 +12668,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14351,7 +12721,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 61: Q08 (Condition: base) — Scorer 2
+## Item 61: Q08, repeat 28 — Scorer 2
+
+Execution id: `<EXECUTION_ID_61>`
 
 ### Question
 
@@ -14394,6 +12766,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14443,7 +12819,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 62: Q08 (Condition: base) — Scorer 1
+## Item 62: Q08, repeat 29 — Scorer 1
+
+Execution id: `<EXECUTION_ID_62>`
 
 ### Question
 
@@ -14486,6 +12864,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14535,7 +12917,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 62: Q08 (Condition: base) — Scorer 2
+## Item 62: Q08, repeat 29 — Scorer 2
+
+Execution id: `<EXECUTION_ID_62>`
 
 ### Question
 
@@ -14578,6 +12962,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14627,7 +13015,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 63: Q08 (Condition: base) — Scorer 1
+## Item 63: Q08, repeat 30 — Scorer 1
+
+Execution id: `<EXECUTION_ID_63>`
 
 ### Question
 
@@ -14670,6 +13060,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14719,7 +13113,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 63: Q08 (Condition: base) — Scorer 2
+## Item 63: Q08, repeat 30 — Scorer 2
+
+Execution id: `<EXECUTION_ID_63>`
 
 ### Question
 
@@ -14762,6 +13158,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14811,7 +13211,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 64: Q08 (Condition: base) — Scorer 1
+## Item 64: Q08, repeat 31 — Scorer 1
+
+Execution id: `<EXECUTION_ID_64>`
 
 ### Question
 
@@ -14854,6 +13256,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14903,7 +13309,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 64: Q08 (Condition: base) — Scorer 2
+## Item 64: Q08, repeat 31 — Scorer 2
+
+Execution id: `<EXECUTION_ID_64>`
 
 ### Question
 
@@ -14946,6 +13354,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -14995,7 +13407,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 65: Q08 (Condition: base) — Scorer 1
+## Item 65: Q08, repeat 32 — Scorer 1
+
+Execution id: `<EXECUTION_ID_65>`
 
 ### Question
 
@@ -15038,6 +13452,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 is $2
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15087,7 +13505,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 65: Q08 (Condition: base) — Scorer 2
+## Item 65: Q08, repeat 32 — Scorer 2
+
+Execution id: `<EXECUTION_ID_65>`
 
 ### Question
 
@@ -15130,6 +13550,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 is $2
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15179,7 +13603,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 66: Q08 (Condition: base) — Scorer 1
+## Item 66: Q08, repeat 33 — Scorer 1
+
+Execution id: `<EXECUTION_ID_66>`
 
 ### Question
 
@@ -15222,6 +13648,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15271,7 +13701,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 66: Q08 (Condition: base) — Scorer 2
+## Item 66: Q08, repeat 33 — Scorer 2
+
+Execution id: `<EXECUTION_ID_66>`
 
 ### Question
 
@@ -15314,6 +13746,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15363,7 +13799,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 67: Q08 (Condition: base) — Scorer 1
+## Item 67: Q08, repeat 34 — Scorer 1
+
+Execution id: `<EXECUTION_ID_67>`
 
 ### Question
 
@@ -15406,6 +13844,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15455,7 +13897,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 67: Q08 (Condition: base) — Scorer 2
+## Item 67: Q08, repeat 34 — Scorer 2
+
+Execution id: `<EXECUTION_ID_67>`
 
 ### Question
 
@@ -15498,6 +13942,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15547,7 +13995,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 68: Q08 (Condition: base) — Scorer 1
+## Item 68: Q08, repeat 35 — Scorer 1
+
+Execution id: `<EXECUTION_ID_68>`
 
 ### Question
 
@@ -15590,6 +14040,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15639,7 +14093,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 68: Q08 (Condition: base) — Scorer 2
+## Item 68: Q08, repeat 35 — Scorer 2
+
+Execution id: `<EXECUTION_ID_68>`
 
 ### Question
 
@@ -15682,6 +14138,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15731,7 +14191,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 69: Q08 (Condition: base) — Scorer 1
+## Item 69: Q08, repeat 36 — Scorer 1
+
+Execution id: `<EXECUTION_ID_69>`
 
 ### Question
 
@@ -15774,6 +14236,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15823,7 +14289,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 69: Q08 (Condition: base) — Scorer 2
+## Item 69: Q08, repeat 36 — Scorer 2
+
+Execution id: `<EXECUTION_ID_69>`
 
 ### Question
 
@@ -15866,6 +14334,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -15915,7 +14387,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 70: Q08 (Condition: base) — Scorer 1
+## Item 70: Q08, repeat 37 — Scorer 1
+
+Execution id: `<EXECUTION_ID_70>`
 
 ### Question
 
@@ -15958,6 +14432,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -16007,7 +14485,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 70: Q08 (Condition: base) — Scorer 2
+## Item 70: Q08, repeat 37 — Scorer 2
+
+Execution id: `<EXECUTION_ID_70>`
 
 ### Question
 
@@ -16050,6 +14530,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -16099,7 +14583,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 71: Q08 (Condition: base) — Scorer 1
+## Item 71: Q08, repeat 38 — Scorer 1
+
+Execution id: `<EXECUTION_ID_71>`
 
 ### Question
 
@@ -16142,6 +14628,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -16191,7 +14681,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 71: Q08 (Condition: base) — Scorer 2
+## Item 71: Q08, repeat 38 — Scorer 2
+
+Execution id: `<EXECUTION_ID_71>`
 
 ### Question
 
@@ -16234,6 +14726,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -16283,7 +14779,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 72: Q08 (Condition: base) — Scorer 1
+## Item 72: Q08, repeat 39 — Scorer 1
+
+Execution id: `<EXECUTION_ID_72>`
 
 ### Question
 
@@ -16326,6 +14824,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -16375,7 +14877,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 72: Q08 (Condition: base) — Scorer 2
+## Item 72: Q08, repeat 39 — Scorer 2
+
+Execution id: `<EXECUTION_ID_72>`
 
 ### Question
 
@@ -16418,6 +14922,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -16467,7 +14975,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 73: Q08 (Condition: base) — Scorer 1
+## Item 73: Q08, repeat 40 — Scorer 1
+
+Execution id: `<EXECUTION_ID_73>`
 
 ### Question
 
@@ -16510,6 +15020,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -16559,7 +15073,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 73: Q08 (Condition: base) — Scorer 2
+## Item 73: Q08, repeat 40 — Scorer 2
+
+Execution id: `<EXECUTION_ID_73>`
 
 ### Question
 
@@ -16602,6 +15118,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -16651,7 +15171,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 74: Q08 (Condition: base) — Scorer 1
+## Item 74: Q08, repeat 41 — Scorer 1
+
+Execution id: `<EXECUTION_ID_74>`
 
 ### Question
 
@@ -16694,6 +15216,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -16743,7 +15269,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 74: Q08 (Condition: base) — Scorer 2
+## Item 74: Q08, repeat 41 — Scorer 2
+
+Execution id: `<EXECUTION_ID_74>`
 
 ### Question
 
@@ -16786,6 +15314,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -16835,7 +15367,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 75: Q08 (Condition: base) — Scorer 1
+## Item 75: Q08, repeat 42 — Scorer 1
+
+Execution id: `<EXECUTION_ID_75>`
 
 ### Question
 
@@ -16878,6 +15412,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -16927,7 +15465,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 75: Q08 (Condition: base) — Scorer 2
+## Item 75: Q08, repeat 42 — Scorer 2
+
+Execution id: `<EXECUTION_ID_75>`
 
 ### Question
 
@@ -16970,6 +15510,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -17019,7 +15563,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 76: Q08 (Condition: base) — Scorer 1
+## Item 76: Q08, repeat 43 — Scorer 1
+
+Execution id: `<EXECUTION_ID_76>`
 
 ### Question
 
@@ -17062,6 +15608,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -17111,7 +15661,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 76: Q08 (Condition: base) — Scorer 2
+## Item 76: Q08, repeat 43 — Scorer 2
+
+Execution id: `<EXECUTION_ID_76>`
 
 ### Question
 
@@ -17154,6 +15706,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -17203,7 +15759,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 77: Q08 (Condition: base) — Scorer 1
+## Item 77: Q08, repeat 44 — Scorer 1
+
+Execution id: `<EXECUTION_ID_77>`
 
 ### Question
 
@@ -17246,6 +15804,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -17295,7 +15857,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 77: Q08 (Condition: base) — Scorer 2
+## Item 77: Q08, repeat 44 — Scorer 2
+
+Execution id: `<EXECUTION_ID_77>`
 
 ### Question
 
@@ -17338,6 +15902,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -17387,7 +15955,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 78: Q08 (Condition: base) — Scorer 1
+## Item 78: Q08, repeat 45 — Scorer 1
+
+Execution id: `<EXECUTION_ID_78>`
 
 ### Question
 
@@ -17430,6 +16000,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -17479,7 +16053,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 78: Q08 (Condition: base) — Scorer 2
+## Item 78: Q08, repeat 45 — Scorer 2
+
+Execution id: `<EXECUTION_ID_78>`
 
 ### Question
 
@@ -17522,6 +16098,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -17571,7 +16151,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 79: Q08 (Condition: base) — Scorer 1
+## Item 79: Q08, repeat 46 — Scorer 1
+
+Execution id: `<EXECUTION_ID_79>`
 
 ### Question
 
@@ -17614,6 +16196,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -17663,7 +16249,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 79: Q08 (Condition: base) — Scorer 2
+## Item 79: Q08, repeat 46 — Scorer 2
+
+Execution id: `<EXECUTION_ID_79>`
 
 ### Question
 
@@ -17706,6 +16294,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -17755,7 +16347,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 80: Q08 (Condition: base) — Scorer 1
+## Item 80: Q08, repeat 47 — Scorer 1
+
+Execution id: `<EXECUTION_ID_80>`
 
 ### Question
 
@@ -17798,6 +16392,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -17847,7 +16445,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 80: Q08 (Condition: base) — Scorer 2
+## Item 80: Q08, repeat 47 — Scorer 2
+
+Execution id: `<EXECUTION_ID_80>`
 
 ### Question
 
@@ -17890,6 +16490,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -17939,7 +16543,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 81: Q08 (Condition: base) — Scorer 1
+## Item 81: Q08, repeat 48 — Scorer 1
+
+Execution id: `<EXECUTION_ID_81>`
 
 ### Question
 
@@ -17982,6 +16588,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -18031,7 +16641,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 81: Q08 (Condition: base) — Scorer 2
+## Item 81: Q08, repeat 48 — Scorer 2
+
+Execution id: `<EXECUTION_ID_81>`
 
 ### Question
 
@@ -18074,6 +16686,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -18123,7 +16739,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 82: Q08 (Condition: base) — Scorer 1
+## Item 82: Q08, repeat 49 — Scorer 1
+
+Execution id: `<EXECUTION_ID_82>`
 
 ### Question
 
@@ -18166,6 +16784,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -18215,7 +16837,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 82: Q08 (Condition: base) — Scorer 2
+## Item 82: Q08, repeat 49 — Scorer 2
+
+Execution id: `<EXECUTION_ID_82>`
 
 ### Question
 
@@ -18258,6 +16882,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -18307,7 +16935,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 83: Q08 (Condition: base) — Scorer 1
+## Item 83: Q08, repeat 50 — Scorer 1
+
+Execution id: `<EXECUTION_ID_83>`
 
 ### Question
 
@@ -18350,6 +16980,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -18399,7 +17033,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 83: Q08 (Condition: base) — Scorer 2
+## Item 83: Q08, repeat 50 — Scorer 2
+
+Execution id: `<EXECUTION_ID_83>`
 
 ### Question
 
@@ -18442,6 +17078,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -18491,7 +17131,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 84: Q09 (Condition: base) — Scorer 1
+## Item 84: Q09, repeat 4 — Scorer 1
+
+Execution id: `<EXECUTION_ID_84>`
 
 ### Question
 
@@ -18556,6 +17198,12 @@ The net monthly income from the savings account after deducting checking account
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -18601,24 +17249,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 - Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 
 ### Reference Values
 
@@ -18630,7 +17260,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 84: Q09 (Condition: base) — Scorer 2
+## Item 84: Q09, repeat 4 — Scorer 2
+
+Execution id: `<EXECUTION_ID_84>`
 
 ### Question
 
@@ -18695,6 +17327,12 @@ The net monthly income from the savings account after deducting checking account
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -18740,24 +17378,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 - Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 
 ### Reference Values
 
@@ -18769,7 +17389,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 85: Q09 (Condition: base) — Scorer 1
+## Item 85: Q09, repeat 5 — Scorer 1
+
+Execution id: `<EXECUTION_ID_85>`
 
 ### Question
 
@@ -18832,6 +17454,12 @@ So, the net monthly income is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -18875,25 +17503,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -18906,7 +17516,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 85: Q09 (Condition: base) — Scorer 2
+## Item 85: Q09, repeat 5 — Scorer 2
+
+Execution id: `<EXECUTION_ID_85>`
 
 ### Question
 
@@ -18969,6 +17581,12 @@ So, the net monthly income is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19012,25 +17630,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -19043,7 +17643,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 86: Q09 (Condition: base) — Scorer 1
+## Item 86: Q09, repeat 23 — Scorer 1
+
+Execution id: `<EXECUTION_ID_86>`
 
 ### Question
 
@@ -19102,6 +17704,12 @@ The net monthly income from the savings account after deducting checking account
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19145,25 +17753,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -19176,7 +17766,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 86: Q09 (Condition: base) — Scorer 2
+## Item 86: Q09, repeat 23 — Scorer 2
+
+Execution id: `<EXECUTION_ID_86>`
 
 ### Question
 
@@ -19235,6 +17827,12 @@ The net monthly income from the savings account after deducting checking account
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19278,25 +17876,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -19309,7 +17889,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 87: Q09 (Condition: base) — Scorer 1
+## Item 87: Q09, repeat 24 — Scorer 1
+
+Execution id: `<EXECUTION_ID_87>`
 
 ### Question
 
@@ -19372,6 +17954,12 @@ So, the net monthly income is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19415,25 +18003,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
 - Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -19446,7 +18016,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 87: Q09 (Condition: base) — Scorer 2
+## Item 87: Q09, repeat 24 — Scorer 2
+
+Execution id: `<EXECUTION_ID_87>`
 
 ### Question
 
@@ -19509,6 +18081,12 @@ So, the net monthly income is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19552,25 +18130,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
 - Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -19583,7 +18143,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 88: Q09 (Condition: base) — Scorer 1
+## Item 88: Q09, repeat 29 — Scorer 1
+
+Execution id: `<EXECUTION_ID_88>`
 
 ### Question
 
@@ -19646,6 +18208,12 @@ So, the net monthly income is 3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19689,25 +18257,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -19720,7 +18270,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 88: Q09 (Condition: base) — Scorer 2
+## Item 88: Q09, repeat 29 — Scorer 2
+
+Execution id: `<EXECUTION_ID_88>`
 
 ### Question
 
@@ -19783,6 +18335,12 @@ So, the net monthly income is 3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19826,25 +18384,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -19857,7 +18397,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 89: Q09 (Condition: base) — Scorer 1
+## Item 89: Q09, repeat 31 — Scorer 1
+
+Execution id: `<EXECUTION_ID_89>`
 
 ### Question
 
@@ -19920,6 +18462,12 @@ So, the net monthly income is 3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19963,25 +18511,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
 - Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -19994,7 +18524,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 89: Q09 (Condition: base) — Scorer 2
+## Item 89: Q09, repeat 31 — Scorer 2
+
+Execution id: `<EXECUTION_ID_89>`
 
 ### Question
 
@@ -20057,6 +18589,12 @@ So, the net monthly income is 3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20100,25 +18638,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
 - Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -20131,7 +18651,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 90: Q09 (Condition: base) — Scorer 1
+## Item 90: Q09, repeat 32 — Scorer 1
+
+Execution id: `<EXECUTION_ID_90>`
 
 ### Question
 
@@ -20194,6 +18716,12 @@ The net monthly income from the savings account after deducting checking account
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20237,25 +18765,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -20268,7 +18778,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 90: Q09 (Condition: base) — Scorer 2
+## Item 90: Q09, repeat 32 — Scorer 2
+
+Execution id: `<EXECUTION_ID_90>`
 
 ### Question
 
@@ -20331,6 +18843,12 @@ The net monthly income from the savings account after deducting checking account
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20374,25 +18892,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -20405,7 +18905,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 91: Q09 (Condition: base) — Scorer 1
+## Item 91: Q09, repeat 39 — Scorer 1
+
+Execution id: `<EXECUTION_ID_91>`
 
 ### Question
 
@@ -20468,6 +18970,12 @@ So, the net monthly income is 3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20511,24 +19019,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
@@ -20542,7 +19032,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 91: Q09 (Condition: base) — Scorer 2
+## Item 91: Q09, repeat 39 — Scorer 2
+
+Execution id: `<EXECUTION_ID_91>`
 
 ### Question
 
@@ -20605,6 +19097,12 @@ So, the net monthly income is 3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20648,24 +19146,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 5: reported figure 3.20 was not returned by any tool call; observed returns: [15.2, 12]
-  Ungoverned figures: 3.20
-- Repeat 22: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12.0]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 29: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12.0]
-  Ungoverned figures: 3.20
-- Repeat 31: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 32: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 39: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
@@ -20679,7 +19159,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 92: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 92: Q04, repeat 4 — Scorer 1
+
+Execution id: `<EXECUTION_ID_92>`
 
 ### Question
 
@@ -20731,6 +19213,12 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20770,47 +19258,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-
 ### Reference Values
 
 - Expected value: `430.7500`
@@ -20821,7 +19268,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 92: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 92: Q04, repeat 4 — Scorer 2
+
+Execution id: `<EXECUTION_ID_92>`
 
 ### Question
 
@@ -20873,6 +19322,12 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20912,47 +19367,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-
 ### Reference Values
 
 - Expected value: `430.7500`
@@ -20963,7 +19377,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 93: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 93: Q04, repeat 10 — Scorer 1
+
+Execution id: `<EXECUTION_ID_93>`
 
 ### Question
 
@@ -21013,6 +19429,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21058,40 +19478,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 - Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 
 ### Reference Values
 
@@ -21103,7 +19489,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 93: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 93: Q04, repeat 10 — Scorer 2
+
+Execution id: `<EXECUTION_ID_93>`
 
 ### Question
 
@@ -21153,6 +19541,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21198,40 +19590,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 - Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 
 ### Reference Values
 
@@ -21243,7 +19601,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 94: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 94: Q04, repeat 11 — Scorer 1
+
+Execution id: `<EXECUTION_ID_94>`
 
 ### Question
 
@@ -21293,6 +19653,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21336,41 +19700,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -21383,7 +19713,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 94: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 94: Q04, repeat 11 — Scorer 2
+
+Execution id: `<EXECUTION_ID_94>`
 
 ### Question
 
@@ -21433,6 +19765,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21476,41 +19812,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -21523,7 +19825,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 95: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 95: Q04, repeat 12 — Scorer 1
+
+Execution id: `<EXECUTION_ID_95>`
 
 ### Question
 
@@ -21573,6 +19877,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21616,41 +19924,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -21663,7 +19937,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 95: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 95: Q04, repeat 12 — Scorer 2
+
+Execution id: `<EXECUTION_ID_95>`
 
 ### Question
 
@@ -21713,6 +19989,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21756,41 +20036,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -21803,7 +20049,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 96: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 96: Q04, repeat 13 — Scorer 1
+
+Execution id: `<EXECUTION_ID_96>`
 
 ### Question
 
@@ -21850,6 +20098,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21893,41 +20145,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -21940,7 +20158,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 96: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 96: Q04, repeat 13 — Scorer 2
+
+Execution id: `<EXECUTION_ID_96>`
 
 ### Question
 
@@ -21987,6 +20207,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22030,41 +20254,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -22077,7 +20267,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 97: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 97: Q04, repeat 14 — Scorer 1
+
+Execution id: `<EXECUTION_ID_97>`
 
 ### Question
 
@@ -22127,6 +20319,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22170,41 +20366,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -22217,7 +20379,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 97: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 97: Q04, repeat 14 — Scorer 2
+
+Execution id: `<EXECUTION_ID_97>`
 
 ### Question
 
@@ -22267,6 +20431,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22310,41 +20478,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -22357,7 +20491,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 98: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 98: Q04, repeat 15 — Scorer 1
+
+Execution id: `<EXECUTION_ID_98>`
 
 ### Question
 
@@ -22406,6 +20542,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22449,41 +20589,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -22496,7 +20602,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 98: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 98: Q04, repeat 15 — Scorer 2
+
+Execution id: `<EXECUTION_ID_98>`
 
 ### Question
 
@@ -22545,6 +20653,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22588,41 +20700,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -22635,7 +20713,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 99: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 99: Q04, repeat 16 — Scorer 1
+
+Execution id: `<EXECUTION_ID_99>`
 
 ### Question
 
@@ -22689,6 +20769,12 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22732,41 +20818,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -22779,7 +20831,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 99: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 99: Q04, repeat 16 — Scorer 2
+
+Execution id: `<EXECUTION_ID_99>`
 
 ### Question
 
@@ -22833,6 +20887,12 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22876,41 +20936,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -22923,7 +20949,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 100: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 100: Q04, repeat 17 — Scorer 1
+
+Execution id: `<EXECUTION_ID_100>`
 
 ### Question
 
@@ -22973,6 +21001,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23016,41 +21048,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
 - Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -23063,7 +21061,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 100: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 100: Q04, repeat 17 — Scorer 2
+
+Execution id: `<EXECUTION_ID_100>`
 
 ### Question
 
@@ -23113,6 +21113,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23156,41 +21160,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
 - Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -23203,7 +21173,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 101: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 101: Q04, repeat 18 — Scorer 1
+
+Execution id: `<EXECUTION_ID_101>`
 
 ### Question
 
@@ -23250,6 +21222,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23293,41 +21269,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -23340,7 +21282,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 101: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 101: Q04, repeat 18 — Scorer 2
+
+Execution id: `<EXECUTION_ID_101>`
 
 ### Question
 
@@ -23387,6 +21331,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23430,41 +21378,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -23477,7 +21391,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 102: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 102: Q04, repeat 19 — Scorer 1
+
+Execution id: `<EXECUTION_ID_102>`
 
 ### Question
 
@@ -23527,6 +21443,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23570,41 +21490,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -23617,7 +21503,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 102: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 102: Q04, repeat 19 — Scorer 2
+
+Execution id: `<EXECUTION_ID_102>`
 
 ### Question
 
@@ -23667,6 +21555,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23710,41 +21602,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -23757,7 +21615,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 103: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 103: Q04, repeat 20 — Scorer 1
+
+Execution id: `<EXECUTION_ID_103>`
 
 ### Question
 
@@ -23804,6 +21664,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23847,41 +21711,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -23894,7 +21724,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 103: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 103: Q04, repeat 20 — Scorer 2
+
+Execution id: `<EXECUTION_ID_103>`
 
 ### Question
 
@@ -23941,6 +21773,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23984,41 +21820,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -24031,7 +21833,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 104: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 104: Q04, repeat 25 — Scorer 1
+
+Execution id: `<EXECUTION_ID_104>`
 
 ### Question
 
@@ -24080,6 +21884,10 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24123,41 +21931,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -24170,7 +21944,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 104: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 104: Q04, repeat 25 — Scorer 2
+
+Execution id: `<EXECUTION_ID_104>`
 
 ### Question
 
@@ -24219,6 +21995,10 @@ Therefore, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24262,41 +22042,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -24309,7 +22055,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 105: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 105: Q04, repeat 26 — Scorer 1
+
+Execution id: `<EXECUTION_ID_105>`
 
 ### Question
 
@@ -24356,6 +22104,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24399,41 +22151,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -24446,7 +22164,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 105: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 105: Q04, repeat 26 — Scorer 2
+
+Execution id: `<EXECUTION_ID_105>`
 
 ### Question
 
@@ -24493,6 +22213,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24536,41 +22260,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -24583,7 +22273,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 106: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 106: Q04, repeat 28 — Scorer 1
+
+Execution id: `<EXECUTION_ID_106>`
 
 ### Question
 
@@ -24630,6 +22322,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24673,41 +22369,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -24720,7 +22382,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 106: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 106: Q04, repeat 28 — Scorer 2
+
+Execution id: `<EXECUTION_ID_106>`
 
 ### Question
 
@@ -24767,6 +22431,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24810,41 +22478,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -24857,7 +22491,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 107: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 107: Q04, repeat 33 — Scorer 1
+
+Execution id: `<EXECUTION_ID_107>`
 
 ### Question
 
@@ -24906,6 +22542,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24949,41 +22589,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -24996,7 +22602,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 107: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 107: Q04, repeat 33 — Scorer 2
+
+Execution id: `<EXECUTION_ID_107>`
 
 ### Question
 
@@ -25045,6 +22653,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25088,41 +22700,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -25135,7 +22713,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 108: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 108: Q04, repeat 38 — Scorer 1
+
+Execution id: `<EXECUTION_ID_108>`
 
 ### Question
 
@@ -25182,6 +22762,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25225,41 +22809,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -25272,7 +22822,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 108: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 108: Q04, repeat 38 — Scorer 2
+
+Execution id: `<EXECUTION_ID_108>`
 
 ### Question
 
@@ -25319,6 +22871,10 @@ So, the principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25362,41 +22918,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -25409,7 +22931,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 109: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 109: Q04, repeat 41 — Scorer 1
+
+Execution id: `<EXECUTION_ID_109>`
 
 ### Question
 
@@ -25459,6 +22983,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25502,41 +23030,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -25549,7 +23043,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 109: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 109: Q04, repeat 41 — Scorer 2
+
+Execution id: `<EXECUTION_ID_109>`
 
 ### Question
 
@@ -25599,6 +23095,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25642,41 +23142,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
 ### Reference Values
@@ -25689,7 +23155,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 110: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 110: Q04, repeat 46 — Scorer 1
+
+Execution id: `<EXECUTION_ID_110>`
 
 ### Question
 
@@ -25739,6 +23207,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25782,40 +23254,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
@@ -25829,7 +23267,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 110: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 110: Q04, repeat 46 — Scorer 2
+
+Execution id: `<EXECUTION_ID_110>`
 
 ### Question
 
@@ -25879,6 +23319,10 @@ The principal portion of the first mortgage payment is $430.75.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25922,40 +23366,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 10: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 11: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 12: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 13: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 14: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 15: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 16: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25, 1437.0]
-  Ungoverned figures: 430.75
-- Repeat 17: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 18: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 19: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 20: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 25: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 26: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 28: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 33: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 38: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
-- Repeat 41: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
-  Ungoverned figures: 430.75
 - Repeat 46: reported figure 430.75 was not returned by any tool call; observed returns: [1006.25]
   Ungoverned figures: 430.75
 
@@ -25969,7 +23379,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 111: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 111: Q05, repeat 3 — Scorer 1
+
+Execution id: `<EXECUTION_ID_111>`
 
 ### Question
 
@@ -26031,6 +23443,12 @@ So the correct credit card balance after one month is $2411.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `1.18` in `2400 * 1.18 / 12 - 25`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26076,10 +23494,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 - Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
   Ungoverned figures: 2411.00
-- Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
 
 ### Reference Values
 
@@ -26091,7 +23505,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 111: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 111: Q05, repeat 3 — Scorer 2
+
+Execution id: `<EXECUTION_ID_111>`
 
 ### Question
 
@@ -26153,6 +23569,12 @@ So the correct credit card balance after one month is $2411.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `1.18` in `2400 * 1.18 / 12 - 25`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26198,10 +23620,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 - Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
   Ungoverned figures: 2411.00
-- Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
 
 ### Reference Values
 
@@ -26213,7 +23631,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 112: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 112: Q05, repeat 5 — Scorer 1
+
+Execution id: `<EXECUTION_ID_112>`
 
 ### Question
 
@@ -26270,6 +23690,14 @@ If only the minimum payment of $25 is made after one month, the credit card bala
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26309,17 +23737,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
-  Ungoverned figures: 2411.00
-- Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
-
 ### Reference Values
 
 - Expected value: `2411.000`
@@ -26330,7 +23747,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 112: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 112: Q05, repeat 5 — Scorer 2
+
+Execution id: `<EXECUTION_ID_112>`
 
 ### Question
 
@@ -26387,6 +23806,14 @@ If only the minimum payment of $25 is made after one month, the credit card bala
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26426,17 +23853,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
-  Ungoverned figures: 2411.00
-- Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
-
 ### Reference Values
 
 - Expected value: `2411.000`
@@ -26447,7 +23863,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 113: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 113: Q05, repeat 17 — Scorer 1
+
+Execution id: `<EXECUTION_ID_113>`
 
 ### Question
 
@@ -26503,6 +23921,12 @@ The key figure for your question is the balance after interest and payment, whic
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERAND-ORIGINATED`: originated `1.0015` in `2400 * 1.0015`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26542,17 +23966,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
-  Ungoverned figures: 2411.00
-- Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
-
 ### Reference Values
 
 - Expected value: `2411.000`
@@ -26563,7 +23976,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 113: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 113: Q05, repeat 17 — Scorer 2
+
+Execution id: `<EXECUTION_ID_113>`
 
 ### Question
 
@@ -26619,6 +24034,12 @@ The key figure for your question is the balance after interest and payment, whic
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERAND-ORIGINATED`: originated `1.0015` in `2400 * 1.0015`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26658,17 +24079,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
-  Ungoverned figures: 2411.00
-- Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
-
 ### Reference Values
 
 - Expected value: `2411.000`
@@ -26679,7 +24089,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 114: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 114: Q05, repeat 28 — Scorer 1
+
+Execution id: `<EXECUTION_ID_114>`
 
 ### Question
 
@@ -26736,6 +24148,12 @@ The credit card balance after one month would be $2411.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26779,12 +24197,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
-  Ungoverned figures: 2411.00
 - Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
   Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
 
 ### Reference Values
 
@@ -26796,7 +24210,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 114: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 114: Q05, repeat 28 — Scorer 2
+
+Execution id: `<EXECUTION_ID_114>`
 
 ### Question
 
@@ -26853,6 +24269,12 @@ The credit card balance after one month would be $2411.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26896,12 +24318,8 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
-  Ungoverned figures: 2411.00
 - Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
   Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
 
 ### Reference Values
 
@@ -26913,7 +24331,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 115: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 115: Q05, repeat 31 — Scorer 1
+
+Execution id: `<EXECUTION_ID_115>`
 
 ### Question
 
@@ -26975,6 +24395,12 @@ Thus, the new balance is approximately $2,436 after interest accrual, but since 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -27014,17 +24440,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
-  Ungoverned figures: 2411.00
-- Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
-
 ### Reference Values
 
 - Expected value: `2411.000`
@@ -27035,7 +24450,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 115: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 115: Q05, repeat 31 — Scorer 2
+
+Execution id: `<EXECUTION_ID_115>`
 
 ### Question
 
@@ -27097,6 +24514,12 @@ Thus, the new balance is approximately $2,436 after interest accrual, but since 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -27136,17 +24559,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
-  Ungoverned figures: 2411.00
-- Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
-
 ### Reference Values
 
 - Expected value: `2411.000`
@@ -27157,7 +24569,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 116: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 116: Q05, repeat 44 — Scorer 1
+
+Execution id: `<EXECUTION_ID_116>`
 
 ### Question
 
@@ -27213,6 +24627,12 @@ The correct balance after one month with the minimum payment considering the ann
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERAND-ORIGINATED`: originated `1.015` in `2400 * 1.015`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27252,17 +24672,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
-  Ungoverned figures: 2411.00
-- Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
-
 ### Reference Values
 
 - Expected value: `2411.000`
@@ -27273,7 +24682,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 116: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 116: Q05, repeat 44 — Scorer 2
+
+Execution id: `<EXECUTION_ID_116>`
 
 ### Question
 
@@ -27329,6 +24740,12 @@ The correct balance after one month with the minimum payment considering the ann
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERAND-ORIGINATED`: originated `1.015` in `2400 * 1.015`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27368,17 +24785,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
-  Ungoverned figures: 2411.00
-- Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
-
 ### Reference Values
 
 - Expected value: `2411.000`
@@ -27389,7 +24795,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 117: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 117: Q05, repeat 45 — Scorer 1
+
+Execution id: `<EXECUTION_ID_117>`
 
 ### Question
 
@@ -27446,6 +24854,14 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -27485,17 +24901,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
-  Ungoverned figures: 2411.00
-- Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
-
 ### Reference Values
 
 - Expected value: `2411.000`
@@ -27506,7 +24911,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 117: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 117: Q05, repeat 45 — Scorer 2
+
+Execution id: `<EXECUTION_ID_117>`
 
 ### Question
 
@@ -27563,6 +24970,14 @@ If only the minimum payment of $25.00 is made, the credit card balance after one
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -27601,17 +25016,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 
 ```
-
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 3: reported figure 2411.00 was not returned by any tool call; observed returns: [211.0, 2375]
-  Ungoverned figures: 2411.00
-- Repeat 28: reported figure 2411 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411
-- Repeat 30: reported figure 2411.00 was not returned by any tool call; observed returns: [2375, 36.0]
-  Ungoverned figures: 2411.00
 
 ### Reference Values
 
@@ -27623,7 +25027,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 118: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 118: Q06, repeat 3 — Scorer 1
+
+Execution id: `<EXECUTION_ID_118>`
 
 ### Question
 
@@ -27670,6 +25076,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -27720,7 +25132,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 118: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 118: Q06, repeat 3 — Scorer 2
+
+Execution id: `<EXECUTION_ID_118>`
 
 ### Question
 
@@ -27767,6 +25181,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 - `OPERATION-CORRECT`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -27817,7 +25237,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 119: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 119: Q06, repeat 7 — Scorer 1
+
+Execution id: `<EXECUTION_ID_119>`
 
 ### Question
 
@@ -27868,6 +25290,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27917,7 +25345,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 119: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 119: Q06, repeat 7 — Scorer 2
+
+Execution id: `<EXECUTION_ID_119>`
 
 ### Question
 
@@ -27968,6 +25398,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28017,7 +25453,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 120: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 120: Q06, repeat 12 — Scorer 1
+
+Execution id: `<EXECUTION_ID_120>`
 
 ### Question
 
@@ -28065,6 +25503,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28114,7 +25558,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 120: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 120: Q06, repeat 12 — Scorer 2
+
+Execution id: `<EXECUTION_ID_120>`
 
 ### Question
 
@@ -28162,6 +25608,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28211,7 +25663,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 121: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 121: Q06, repeat 14 — Scorer 1
+
+Execution id: `<EXECUTION_ID_121>`
 
 ### Question
 
@@ -28262,6 +25716,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28311,7 +25771,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 121: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 121: Q06, repeat 14 — Scorer 2
+
+Execution id: `<EXECUTION_ID_121>`
 
 ### Question
 
@@ -28362,6 +25824,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28411,7 +25879,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 122: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 122: Q06, repeat 23 — Scorer 1
+
+Execution id: `<EXECUTION_ID_122>`
 
 ### Question
 
@@ -28462,6 +25932,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28511,7 +25987,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 122: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 122: Q06, repeat 23 — Scorer 2
+
+Execution id: `<EXECUTION_ID_122>`
 
 ### Question
 
@@ -28562,6 +26040,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28611,7 +26095,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 123: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 123: Q06, repeat 36 — Scorer 1
+
+Execution id: `<EXECUTION_ID_123>`
 
 ### Question
 
@@ -28662,6 +26148,12 @@ So, the total annual cost of maintaining the checking account is $144.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28711,7 +26203,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 123: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 123: Q06, repeat 36 — Scorer 2
+
+Execution id: `<EXECUTION_ID_123>`
 
 ### Question
 
@@ -28762,6 +26256,12 @@ So, the total annual cost of maintaining the checking account is $144.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28811,7 +26311,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 124: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 124: Q06, repeat 38 — Scorer 1
+
+Execution id: `<EXECUTION_ID_124>`
 
 ### Question
 
@@ -28857,6 +26359,12 @@ The total annual cost of maintaining the checking account is $144. This amount c
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28906,7 +26414,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 124: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 124: Q06, repeat 38 — Scorer 2
+
+Execution id: `<EXECUTION_ID_124>`
 
 ### Question
 
@@ -28952,6 +26462,12 @@ The total annual cost of maintaining the checking account is $144. This amount c
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29001,7 +26517,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 125: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 125: Q06, repeat 39 — Scorer 1
+
+Execution id: `<EXECUTION_ID_125>`
 
 ### Question
 
@@ -29052,6 +26570,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29101,7 +26625,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 125: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 125: Q06, repeat 39 — Scorer 2
+
+Execution id: `<EXECUTION_ID_125>`
 
 ### Question
 
@@ -29152,6 +26678,12 @@ Therefore, the total annual cost of maintaining the checking account is $144.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29201,7 +26733,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 126: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 126: Q08, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_126>`
 
 ### Question
 
@@ -29244,6 +26778,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -29283,17 +26821,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -29304,7 +26831,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 126: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 126: Q08, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_126>`
 
 ### Question
 
@@ -29347,6 +26876,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -29386,17 +26919,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -29407,7 +26929,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 127: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 127: Q08, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_127>`
 
 ### Question
 
@@ -29450,6 +26974,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -29489,17 +27017,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -29510,7 +27027,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 127: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 127: Q08, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_127>`
 
 ### Question
 
@@ -29553,6 +27072,10 @@ The remaining mortgage balance after the first monthly payment would be $286,063
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -29592,17 +27115,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -29613,7 +27125,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 128: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 128: Q08, repeat 3 — Scorer 1
+
+Execution id: `<EXECUTION_ID_128>`
 
 ### Question
 
@@ -29656,6 +27170,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -29695,17 +27213,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -29716,7 +27223,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 128: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 128: Q08, repeat 3 — Scorer 2
+
+Execution id: `<EXECUTION_ID_128>`
 
 ### Question
 
@@ -29759,6 +27268,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -29798,17 +27311,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -29819,7 +27321,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 129: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 129: Q08, repeat 4 — Scorer 1
+
+Execution id: `<EXECUTION_ID_129>`
 
 ### Question
 
@@ -29877,6 +27381,12 @@ So, the remaining mortgage balance after the first monthly payment is $287,069.2
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29922,10 +27432,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 - Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
   Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
 
 ### Reference Values
 
@@ -29937,7 +27443,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 129: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 129: Q08, repeat 4 — Scorer 2
+
+Execution id: `<EXECUTION_ID_129>`
 
 ### Question
 
@@ -29995,6 +27503,12 @@ So, the remaining mortgage balance after the first monthly payment is $287,069.2
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30040,10 +27554,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 - Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
   Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
 
 ### Reference Values
 
@@ -30055,7 +27565,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 130: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 130: Q08, repeat 5 — Scorer 1
+
+Execution id: `<EXECUTION_ID_130>`
 
 ### Question
 
@@ -30098,6 +27610,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30137,17 +27653,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -30158,7 +27663,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 130: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 130: Q08, repeat 5 — Scorer 2
+
+Execution id: `<EXECUTION_ID_130>`
 
 ### Question
 
@@ -30201,6 +27708,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30240,17 +27751,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -30261,7 +27761,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 131: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 131: Q08, repeat 6 — Scorer 1
+
+Execution id: `<EXECUTION_ID_131>`
 
 ### Question
 
@@ -30304,6 +27806,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30343,17 +27849,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -30364,7 +27859,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 131: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 131: Q08, repeat 6 — Scorer 2
+
+Execution id: `<EXECUTION_ID_131>`
 
 ### Question
 
@@ -30407,6 +27904,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30446,17 +27947,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -30467,7 +27957,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 132: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 132: Q08, repeat 7 — Scorer 1
+
+Execution id: `<EXECUTION_ID_132>`
 
 ### Question
 
@@ -30510,6 +28002,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30549,17 +28045,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -30570,7 +28055,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 132: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 132: Q08, repeat 7 — Scorer 2
+
+Execution id: `<EXECUTION_ID_132>`
 
 ### Question
 
@@ -30613,6 +28100,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30652,17 +28143,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -30673,7 +28153,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 133: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 133: Q08, repeat 8 — Scorer 1
+
+Execution id: `<EXECUTION_ID_133>`
 
 ### Question
 
@@ -30716,6 +28198,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30755,17 +28241,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -30776,7 +28251,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 133: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 133: Q08, repeat 8 — Scorer 2
+
+Execution id: `<EXECUTION_ID_133>`
 
 ### Question
 
@@ -30819,6 +28296,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30858,17 +28339,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -30879,7 +28349,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 134: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 134: Q08, repeat 9 — Scorer 1
+
+Execution id: `<EXECUTION_ID_134>`
 
 ### Question
 
@@ -30922,6 +28394,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -30961,17 +28437,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -30982,7 +28447,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 134: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 134: Q08, repeat 9 — Scorer 2
+
+Execution id: `<EXECUTION_ID_134>`
 
 ### Question
 
@@ -31025,6 +28492,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31064,17 +28535,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -31085,7 +28545,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 135: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 135: Q08, repeat 10 — Scorer 1
+
+Execution id: `<EXECUTION_ID_135>`
 
 ### Question
 
@@ -31128,6 +28590,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31167,17 +28633,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -31188,7 +28643,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 135: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 135: Q08, repeat 10 — Scorer 2
+
+Execution id: `<EXECUTION_ID_135>`
 
 ### Question
 
@@ -31231,6 +28688,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31270,17 +28731,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -31291,7 +28741,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 136: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 136: Q08, repeat 11 — Scorer 1
+
+Execution id: `<EXECUTION_ID_136>`
 
 ### Question
 
@@ -31334,6 +28786,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31373,17 +28829,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -31394,7 +28839,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 136: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 136: Q08, repeat 11 — Scorer 2
+
+Execution id: `<EXECUTION_ID_136>`
 
 ### Question
 
@@ -31437,6 +28884,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31476,17 +28927,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -31497,7 +28937,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 137: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 137: Q08, repeat 12 — Scorer 1
+
+Execution id: `<EXECUTION_ID_137>`
 
 ### Question
 
@@ -31540,6 +28982,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31579,17 +29025,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -31600,7 +29035,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 137: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 137: Q08, repeat 12 — Scorer 2
+
+Execution id: `<EXECUTION_ID_137>`
 
 ### Question
 
@@ -31643,6 +29080,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31682,17 +29123,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -31703,7 +29133,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 138: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 138: Q08, repeat 13 — Scorer 1
+
+Execution id: `<EXECUTION_ID_138>`
 
 ### Question
 
@@ -31746,6 +29178,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31785,17 +29221,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -31806,7 +29231,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 138: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 138: Q08, repeat 13 — Scorer 2
+
+Execution id: `<EXECUTION_ID_138>`
 
 ### Question
 
@@ -31849,6 +29276,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31888,17 +29319,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -31909,7 +29329,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 139: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 139: Q08, repeat 15 — Scorer 1
+
+Execution id: `<EXECUTION_ID_139>`
 
 ### Question
 
@@ -31952,6 +29374,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -31991,17 +29417,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -32012,7 +29427,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 139: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 139: Q08, repeat 15 — Scorer 2
+
+Execution id: `<EXECUTION_ID_139>`
 
 ### Question
 
@@ -32055,6 +29472,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -32094,17 +29515,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -32115,7 +29525,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 140: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 140: Q08, repeat 17 — Scorer 1
+
+Execution id: `<EXECUTION_ID_140>`
 
 ### Question
 
@@ -32171,6 +29583,12 @@ The remaining mortgage balance after the first monthly payment is $287,069.25.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -32214,11 +29632,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
 - Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
   Ungoverned figures: 287069.25
 
 ### Reference Values
@@ -32231,7 +29645,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 140: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 140: Q08, repeat 17 — Scorer 2
+
+Execution id: `<EXECUTION_ID_140>`
 
 ### Question
 
@@ -32287,6 +29703,12 @@ The remaining mortgage balance after the first monthly payment is $287,069.25.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -32330,11 +29752,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
 - Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
   Ungoverned figures: 287069.25
 
 ### Reference Values
@@ -32347,7 +29765,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 141: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 141: Q08, repeat 18 — Scorer 1
+
+Execution id: `<EXECUTION_ID_141>`
 
 ### Question
 
@@ -32390,6 +29810,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -32429,17 +29853,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -32450,7 +29863,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 141: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 141: Q08, repeat 18 — Scorer 2
+
+Execution id: `<EXECUTION_ID_141>`
 
 ### Question
 
@@ -32493,6 +29908,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -32532,17 +29951,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -32553,7 +29961,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 142: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 142: Q08, repeat 19 — Scorer 1
+
+Execution id: `<EXECUTION_ID_142>`
 
 ### Question
 
@@ -32609,6 +30019,12 @@ Therefore, the remaining mortgage balance after the first monthly payment is app
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -32648,17 +30064,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -32669,7 +30074,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 142: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 142: Q08, repeat 19 — Scorer 2
+
+Execution id: `<EXECUTION_ID_142>`
 
 ### Question
 
@@ -32725,6 +30132,12 @@ Therefore, the remaining mortgage balance after the first monthly payment is app
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -32764,17 +30177,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -32785,7 +30187,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 143: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 143: Q08, repeat 20 — Scorer 1
+
+Execution id: `<EXECUTION_ID_143>`
 
 ### Question
 
@@ -32828,6 +30232,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -32867,17 +30275,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -32888,7 +30285,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 143: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 143: Q08, repeat 20 — Scorer 2
+
+Execution id: `<EXECUTION_ID_143>`
 
 ### Question
 
@@ -32931,6 +30330,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -32970,17 +30373,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -32991,7 +30383,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 144: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 144: Q08, repeat 21 — Scorer 1
+
+Execution id: `<EXECUTION_ID_144>`
 
 ### Question
 
@@ -33047,6 +30441,12 @@ So, the remaining mortgage balance after the first monthly payment is $286,069.2
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -33086,17 +30486,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -33107,7 +30496,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 144: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 144: Q08, repeat 21 — Scorer 2
+
+Execution id: `<EXECUTION_ID_144>`
 
 ### Question
 
@@ -33163,6 +30554,12 @@ So, the remaining mortgage balance after the first monthly payment is $286,069.2
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -33202,17 +30599,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -33223,7 +30609,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 145: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 145: Q08, repeat 22 — Scorer 1
+
+Execution id: `<EXECUTION_ID_145>`
 
 ### Question
 
@@ -33266,6 +30654,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 is $
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -33305,17 +30697,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -33326,7 +30707,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 145: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 145: Q08, repeat 22 — Scorer 2
+
+Execution id: `<EXECUTION_ID_145>`
 
 ### Question
 
@@ -33369,6 +30752,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 is $
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -33408,17 +30795,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -33429,7 +30805,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 146: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 146: Q08, repeat 23 — Scorer 1
+
+Execution id: `<EXECUTION_ID_146>`
 
 ### Question
 
@@ -33472,6 +30850,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -33511,17 +30893,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -33532,7 +30903,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 146: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 146: Q08, repeat 23 — Scorer 2
+
+Execution id: `<EXECUTION_ID_146>`
 
 ### Question
 
@@ -33575,6 +30948,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -33614,17 +30991,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -33635,7 +31001,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 147: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 147: Q08, repeat 24 — Scorer 1
+
+Execution id: `<EXECUTION_ID_147>`
 
 ### Question
 
@@ -33685,6 +31053,12 @@ The remaining mortgage balance after the first monthly payment is $287,500.00 - 
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -33724,17 +31098,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -33745,7 +31108,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 147: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 147: Q08, repeat 24 — Scorer 2
+
+Execution id: `<EXECUTION_ID_147>`
 
 ### Question
 
@@ -33795,6 +31160,12 @@ The remaining mortgage balance after the first monthly payment is $287,500.00 - 
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -33834,17 +31205,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -33855,7 +31215,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 148: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 148: Q08, repeat 25 — Scorer 1
+
+Execution id: `<EXECUTION_ID_148>`
 
 ### Question
 
@@ -33898,6 +31260,10 @@ The remaining mortgage balance after the first monthly payment will be $285,056.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -33937,17 +31303,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -33958,7 +31313,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 148: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 148: Q08, repeat 25 — Scorer 2
+
+Execution id: `<EXECUTION_ID_148>`
 
 ### Question
 
@@ -34001,6 +31358,10 @@ The remaining mortgage balance after the first monthly payment will be $285,056.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34040,17 +31401,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -34061,7 +31411,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 149: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 149: Q08, repeat 27 — Scorer 1
+
+Execution id: `<EXECUTION_ID_149>`
 
 ### Question
 
@@ -34104,6 +31456,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34143,17 +31499,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -34164,7 +31509,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 149: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 149: Q08, repeat 27 — Scorer 2
+
+Execution id: `<EXECUTION_ID_149>`
 
 ### Question
 
@@ -34207,6 +31554,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34246,17 +31597,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -34267,7 +31607,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 150: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 150: Q08, repeat 28 — Scorer 1
+
+Execution id: `<EXECUTION_ID_150>`
 
 ### Question
 
@@ -34310,6 +31652,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34349,17 +31695,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -34370,7 +31705,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 150: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 150: Q08, repeat 28 — Scorer 2
+
+Execution id: `<EXECUTION_ID_150>`
 
 ### Question
 
@@ -34413,6 +31750,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34452,17 +31793,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -34473,7 +31803,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 151: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 151: Q08, repeat 29 — Scorer 1
+
+Execution id: `<EXECUTION_ID_151>`
 
 ### Question
 
@@ -34523,6 +31855,12 @@ Note: This calculation assumes the payment goes directly toward reducing the pri
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34562,17 +31900,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -34583,7 +31910,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 151: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 151: Q08, repeat 29 — Scorer 2
+
+Execution id: `<EXECUTION_ID_151>`
 
 ### Question
 
@@ -34633,6 +31962,12 @@ Note: This calculation assumes the payment goes directly toward reducing the pri
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34672,17 +32007,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -34693,7 +32017,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 152: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 152: Q08, repeat 30 — Scorer 1
+
+Execution id: `<EXECUTION_ID_152>`
 
 ### Question
 
@@ -34736,6 +32062,10 @@ The remaining mortgage balance after the first monthly payment is approximately 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34775,17 +32105,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -34796,7 +32115,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 152: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 152: Q08, repeat 30 — Scorer 2
+
+Execution id: `<EXECUTION_ID_152>`
 
 ### Question
 
@@ -34839,6 +32160,10 @@ The remaining mortgage balance after the first monthly payment is approximately 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34878,17 +32203,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -34899,7 +32213,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 153: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 153: Q08, repeat 32 — Scorer 1
+
+Execution id: `<EXECUTION_ID_153>`
 
 ### Question
 
@@ -34942,6 +32258,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 is $2
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34981,17 +32301,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -35002,7 +32311,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 153: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 153: Q08, repeat 32 — Scorer 2
+
+Execution id: `<EXECUTION_ID_153>`
 
 ### Question
 
@@ -35045,6 +32356,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 is $2
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35084,17 +32399,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -35105,7 +32409,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 154: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 154: Q08, repeat 34 — Scorer 1
+
+Execution id: `<EXECUTION_ID_154>`
 
 ### Question
 
@@ -35148,6 +32454,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 is $2
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35187,17 +32497,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -35208,7 +32507,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 154: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 154: Q08, repeat 34 — Scorer 2
+
+Execution id: `<EXECUTION_ID_154>`
 
 ### Question
 
@@ -35251,6 +32552,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 is $2
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35290,17 +32595,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -35311,7 +32605,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 155: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 155: Q08, repeat 35 — Scorer 1
+
+Execution id: `<EXECUTION_ID_155>`
 
 ### Question
 
@@ -35354,6 +32650,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35393,17 +32693,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -35414,7 +32703,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 155: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 155: Q08, repeat 35 — Scorer 2
+
+Execution id: `<EXECUTION_ID_155>`
 
 ### Question
 
@@ -35457,6 +32748,10 @@ The remaining mortgage balance after the first monthly payment will be $286,063.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35496,17 +32791,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -35517,7 +32801,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 156: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 156: Q08, repeat 36 — Scorer 1
+
+Execution id: `<EXECUTION_ID_156>`
 
 ### Question
 
@@ -35560,6 +32846,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35599,17 +32889,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -35620,7 +32899,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 156: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 156: Q08, repeat 36 — Scorer 2
+
+Execution id: `<EXECUTION_ID_156>`
 
 ### Question
 
@@ -35663,6 +32944,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35702,17 +32987,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -35723,7 +32997,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 157: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 157: Q08, repeat 37 — Scorer 1
+
+Execution id: `<EXECUTION_ID_157>`
 
 ### Question
 
@@ -35766,6 +33042,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35805,17 +33085,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -35826,7 +33095,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 157: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 157: Q08, repeat 37 — Scorer 2
+
+Execution id: `<EXECUTION_ID_157>`
 
 ### Question
 
@@ -35869,6 +33140,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35908,17 +33183,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -35929,7 +33193,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 158: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 158: Q08, repeat 38 — Scorer 1
+
+Execution id: `<EXECUTION_ID_158>`
 
 ### Question
 
@@ -35972,6 +33238,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36011,17 +33281,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -36032,7 +33291,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 158: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 158: Q08, repeat 38 — Scorer 2
+
+Execution id: `<EXECUTION_ID_158>`
 
 ### Question
 
@@ -36075,6 +33336,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36114,17 +33379,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -36135,7 +33389,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 159: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 159: Q08, repeat 40 — Scorer 1
+
+Execution id: `<EXECUTION_ID_159>`
 
 ### Question
 
@@ -36178,6 +33434,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36217,17 +33477,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -36238,7 +33487,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 159: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 159: Q08, repeat 40 — Scorer 2
+
+Execution id: `<EXECUTION_ID_159>`
 
 ### Question
 
@@ -36281,6 +33532,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36320,17 +33575,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -36341,7 +33585,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 160: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 160: Q08, repeat 41 — Scorer 1
+
+Execution id: `<EXECUTION_ID_160>`
 
 ### Question
 
@@ -36384,6 +33630,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36423,17 +33673,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -36444,7 +33683,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 160: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 160: Q08, repeat 41 — Scorer 2
+
+Execution id: `<EXECUTION_ID_160>`
 
 ### Question
 
@@ -36487,6 +33728,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36526,17 +33771,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -36547,7 +33781,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 161: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 161: Q08, repeat 42 — Scorer 1
+
+Execution id: `<EXECUTION_ID_161>`
 
 ### Question
 
@@ -36590,6 +33826,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36629,17 +33869,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -36650,7 +33879,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 161: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 161: Q08, repeat 42 — Scorer 2
+
+Execution id: `<EXECUTION_ID_161>`
 
 ### Question
 
@@ -36693,6 +33924,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36732,17 +33967,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -36753,7 +33977,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 162: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 162: Q08, repeat 43 — Scorer 1
+
+Execution id: `<EXECUTION_ID_162>`
 
 ### Question
 
@@ -36796,6 +34022,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36835,17 +34065,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -36856,7 +34075,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 162: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 162: Q08, repeat 43 — Scorer 2
+
+Execution id: `<EXECUTION_ID_162>`
 
 ### Question
 
@@ -36899,6 +34120,10 @@ The remaining mortgage balance after the first monthly payment of $1437.00 will 
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36938,17 +34163,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -36959,7 +34173,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 163: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 163: Q08, repeat 44 — Scorer 1
+
+Execution id: `<EXECUTION_ID_163>`
 
 ### Question
 
@@ -37002,6 +34218,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37041,17 +34261,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -37062,7 +34271,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 163: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 163: Q08, repeat 44 — Scorer 2
+
+Execution id: `<EXECUTION_ID_163>`
 
 ### Question
 
@@ -37105,6 +34316,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37144,17 +34359,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -37165,7 +34369,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 164: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 164: Q08, repeat 45 — Scorer 1
+
+Execution id: `<EXECUTION_ID_164>`
 
 ### Question
 
@@ -37208,6 +34414,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37247,17 +34457,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -37268,7 +34467,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 164: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 164: Q08, repeat 45 — Scorer 2
+
+Execution id: `<EXECUTION_ID_164>`
 
 ### Question
 
@@ -37311,6 +34512,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37350,17 +34555,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -37371,7 +34565,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 165: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 165: Q08, repeat 46 — Scorer 1
+
+Execution id: `<EXECUTION_ID_165>`
 
 ### Question
 
@@ -37414,6 +34610,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37453,17 +34653,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -37474,7 +34663,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 165: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 165: Q08, repeat 46 — Scorer 2
+
+Execution id: `<EXECUTION_ID_165>`
 
 ### Question
 
@@ -37517,6 +34708,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37556,17 +34751,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -37577,7 +34761,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 166: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 166: Q08, repeat 48 — Scorer 1
+
+Execution id: `<EXECUTION_ID_166>`
 
 ### Question
 
@@ -37620,6 +34806,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37659,17 +34849,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -37680,7 +34859,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 166: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 166: Q08, repeat 48 — Scorer 2
+
+Execution id: `<EXECUTION_ID_166>`
 
 ### Question
 
@@ -37723,6 +34904,10 @@ The remaining mortgage balance after the first monthly payment is $286,063.00.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37762,17 +34947,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -37783,7 +34957,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 167: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 167: Q08, repeat 49 — Scorer 1
+
+Execution id: `<EXECUTION_ID_167>`
 
 ### Question
 
@@ -37826,6 +35002,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 is $
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37865,17 +35045,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -37886,7 +35055,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 167: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 167: Q08, repeat 49 — Scorer 2
+
+Execution id: `<EXECUTION_ID_167>`
 
 ### Question
 
@@ -37929,6 +35100,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 is $
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37968,17 +35143,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -37989,7 +35153,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 168: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 168: Q08, repeat 50 — Scorer 1
+
+Execution id: `<EXECUTION_ID_168>`
 
 ### Question
 
@@ -38032,6 +35198,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38071,17 +35241,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -38092,7 +35251,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 168: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 168: Q08, repeat 50 — Scorer 2
+
+Execution id: `<EXECUTION_ID_168>`
 
 ### Question
 
@@ -38135,6 +35296,10 @@ The remaining mortgage balance after the first monthly payment of $1,437.00 will
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38174,17 +35339,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ```
 
-### Release Coverage Finding
-
-**Status: PARTIALLY-GOVERNED**
-
-- Repeat 4: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 17: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-- Repeat 33: reported figure 287069.25 was not returned by any tool call; observed returns: [286063, 1006.25]
-  Ungoverned figures: 287069.25
-
 ### Reference Values
 
 - Expected value: `287069.2500`
@@ -38195,7 +35349,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 169: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 169: Q09, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_169>`
 
 ### Question
 
@@ -38258,6 +35414,12 @@ So, the net monthly income is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -38303,40 +35465,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 - Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
   Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 
 ### Reference Values
 
@@ -38348,7 +35476,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 169: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 169: Q09, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_169>`
 
 ### Question
 
@@ -38411,6 +35541,12 @@ So, the net monthly income is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -38456,40 +35592,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 - Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
   Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 
 ### Reference Values
 
@@ -38501,7 +35603,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 170: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 170: Q09, repeat 7 — Scorer 1
+
+Execution id: `<EXECUTION_ID_170>`
 
 ### Question
 
@@ -38560,6 +35664,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -38603,41 +35713,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -38650,7 +35726,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 170: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 170: Q09, repeat 7 — Scorer 2
+
+Execution id: `<EXECUTION_ID_170>`
 
 ### Question
 
@@ -38709,6 +35787,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -38752,41 +35836,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -38799,7 +35849,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 171: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 171: Q09, repeat 10 — Scorer 1
+
+Execution id: `<EXECUTION_ID_171>`
 
 ### Question
 
@@ -38860,6 +35912,12 @@ So, the net monthly income after fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -38903,41 +35961,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -38950,7 +35974,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 171: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 171: Q09, repeat 10 — Scorer 2
+
+Execution id: `<EXECUTION_ID_171>`
 
 ### Question
 
@@ -39011,6 +36037,12 @@ So, the net monthly income after fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -39054,41 +36086,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -39101,7 +36099,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 172: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 172: Q09, repeat 13 — Scorer 1
+
+Execution id: `<EXECUTION_ID_172>`
 
 ### Question
 
@@ -39162,6 +36162,12 @@ So, the net monthly income after deducting the checking account fees is 3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -39205,41 +36211,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -39252,7 +36224,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 172: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 172: Q09, repeat 13 — Scorer 2
+
+Execution id: `<EXECUTION_ID_172>`
 
 ### Question
 
@@ -39313,6 +36287,12 @@ So, the net monthly income after deducting the checking account fees is 3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -39356,41 +36336,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -39403,7 +36349,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 173: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 173: Q09, repeat 15 — Scorer 1
+
+Execution id: `<EXECUTION_ID_173>`
 
 ### Question
 
@@ -39464,6 +36412,12 @@ So, the net monthly income after deducting the checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -39507,41 +36461,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -39554,7 +36474,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 173: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 173: Q09, repeat 15 — Scorer 2
+
+Execution id: `<EXECUTION_ID_173>`
 
 ### Question
 
@@ -39615,6 +36537,12 @@ So, the net monthly income after deducting the checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -39658,41 +36586,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -39705,7 +36599,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 174: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 174: Q09, repeat 23 — Scorer 1
+
+Execution id: `<EXECUTION_ID_174>`
 
 ### Question
 
@@ -39767,6 +36663,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -39810,41 +36712,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -39857,7 +36725,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 174: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 174: Q09, repeat 23 — Scorer 2
+
+Execution id: `<EXECUTION_ID_174>`
 
 ### Question
 
@@ -39919,6 +36789,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -39962,41 +36838,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -40009,7 +36851,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 175: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 175: Q09, repeat 24 — Scorer 1
+
+Execution id: `<EXECUTION_ID_175>`
 
 ### Question
 
@@ -40070,6 +36914,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -40113,41 +36963,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -40160,7 +36976,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 175: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 175: Q09, repeat 24 — Scorer 2
+
+Execution id: `<EXECUTION_ID_175>`
 
 ### Question
 
@@ -40221,6 +37039,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -40264,41 +37088,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -40311,7 +37101,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 176: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 176: Q09, repeat 28 — Scorer 1
+
+Execution id: `<EXECUTION_ID_176>`
 
 ### Question
 
@@ -40372,6 +37164,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -40415,41 +37213,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -40462,7 +37226,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 176: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 176: Q09, repeat 28 — Scorer 2
+
+Execution id: `<EXECUTION_ID_176>`
 
 ### Question
 
@@ -40523,6 +37289,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -40566,41 +37338,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -40613,7 +37351,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 177: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 177: Q09, repeat 33 — Scorer 1
+
+Execution id: `<EXECUTION_ID_177>`
 
 ### Question
 
@@ -40676,6 +37416,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -40719,41 +37465,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -40766,7 +37478,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 177: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 177: Q09, repeat 33 — Scorer 2
+
+Execution id: `<EXECUTION_ID_177>`
 
 ### Question
 
@@ -40829,6 +37543,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -40872,41 +37592,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -40919,7 +37605,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 178: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 178: Q09, repeat 34 — Scorer 1
+
+Execution id: `<EXECUTION_ID_178>`
 
 ### Question
 
@@ -40980,6 +37668,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -41023,41 +37717,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -41070,7 +37730,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 178: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 178: Q09, repeat 34 — Scorer 2
+
+Execution id: `<EXECUTION_ID_178>`
 
 ### Question
 
@@ -41131,6 +37793,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -41174,41 +37842,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -41221,7 +37855,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 179: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 179: Q09, repeat 41 — Scorer 1
+
+Execution id: `<EXECUTION_ID_179>`
 
 ### Question
 
@@ -41285,6 +37921,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -41328,41 +37970,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
 - Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -41375,7 +37983,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 179: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 179: Q09, repeat 41 — Scorer 2
+
+Execution id: `<EXECUTION_ID_179>`
 
 ### Question
 
@@ -41439,6 +38049,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -41482,41 +38098,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
 - Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -41529,7 +38111,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 180: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 180: Q09, repeat 43 — Scorer 1
+
+Execution id: `<EXECUTION_ID_180>`
 
 ### Question
 
@@ -41590,6 +38174,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -41633,41 +38223,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -41680,7 +38236,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 180: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 180: Q09, repeat 43 — Scorer 2
+
+Execution id: `<EXECUTION_ID_180>`
 
 ### Question
 
@@ -41741,6 +38299,12 @@ So, the net monthly income after deducting checking account fees is $3.20.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -41784,41 +38348,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
 - Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -41831,7 +38361,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 181: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 181: Q09, repeat 47 — Scorer 1
+
+Execution id: `<EXECUTION_ID_181>`
 
 ### Question
 
@@ -41894,6 +38426,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -41937,41 +38475,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -41984,7 +38488,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 181: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 181: Q09, repeat 47 — Scorer 2
+
+Execution id: `<EXECUTION_ID_181>`
 
 ### Question
 
@@ -42047,6 +38553,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -42090,41 +38602,7 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
 ### Reference Values
@@ -42137,7 +38615,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 182: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 182: Q09, repeat 48 — Scorer 1
+
+Execution id: `<EXECUTION_ID_182>`
 
 ### Question
 
@@ -42198,6 +38678,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -42241,40 +38727,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 
@@ -42288,7 +38740,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 182: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 182: Q09, repeat 48 — Scorer 2
+
+Execution id: `<EXECUTION_ID_182>`
 
 ### Question
 
@@ -42349,6 +38803,12 @@ So, the net monthly income from the savings account after deducting checking acc
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -42392,40 +38852,6 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 
 **Status: PARTIALLY-GOVERNED**
 
-- Repeat 1: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 7: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838]
-  Ungoverned figures: 3.20
-- Repeat 8: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 10: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 13: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 15: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 17: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 23: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 24: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 28: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 33: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 34: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 35: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 4838.0]
-  Ungoverned figures: 3.20
-- Repeat 41: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 42: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
-  Ungoverned figures: 3.20
-- Repeat 43: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
-- Repeat 47: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, -12]
-  Ungoverned figures: 3.20
 - Repeat 48: reported figure 3.20 was not returned by any tool call; observed returns: [15.200000000000001, 12]
   Ungoverned figures: 3.20
 

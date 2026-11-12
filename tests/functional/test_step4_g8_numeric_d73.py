@@ -4,8 +4,8 @@ for D7.3 transcription and numeric parsing.
 Each test runs the real runner (ap1_run.run.main) in-process against the
 regression mock endpoint (tests/fixtures/mock_endpoint.py), on the shipped
 example with repeat_count 1, and reads the files it writes into tmp_path.
-Every test is marked xfail(strict=True): it fails on today's code and the
-fix turns it green.
+Each test is marked xfail(strict=True) until its fix lands; the D7.3 tests
+(T3-26, T3-27, V12-6) pass since their fix.
 """
 
 import json
@@ -102,9 +102,6 @@ Q04_SAY = {'say': 'The principal portion of the first mortgage payment is '
 
 @pytest.mark.finding('T3-26')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-26: D7.3 compares only the last tool return; '
-                          'a released earlier return is TRANSCRIBED-ALTERED')
 def test_run_release_of_earlier_calculator_return_is_transcribed_exact(
         tmp_path, monkeypatch, capsys):
     # SPEC R2.5: compare "the value the required operation returned" to
@@ -126,9 +123,6 @@ def test_run_release_of_earlier_calculator_return_is_transcribed_exact(
 
 @pytest.mark.finding('T3-26')
 @pytest.mark.req('R2.5')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-26: an errored last calculator call makes D7.3 '
-                          'UNOBSERVABLE despite an earlier matching return')
 def test_run_errored_last_call_keeps_earlier_return_transcribed_exact(
         tmp_path, monkeypatch, capsys):
     # T3-26: "If the last call errored, the execution is UNOBSERVABLE even
@@ -145,9 +139,6 @@ def test_run_errored_last_call_keeps_earlier_return_transcribed_exact(
 
 @pytest.mark.finding('T3-27')
 @pytest.mark.req('R2.5', 'R0.4.1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-27: transcription quantises with HALF_EVEN, not '
-                          'the declared ROUND_HALF_UP')
 def test_run_transcription_uses_declared_half_up_rounding(
         tmp_path, monkeypatch, capsys):
     # The shipped config declares quantisation ROUND_HALF_UP at 2 places
@@ -184,45 +175,43 @@ def test_run_transcription_declared_half_even_tie_is_altered(
     "and key names are the fix's")
 @pytest.mark.finding('V12-6')
 @pytest.mark.req('R2.5', 'R3.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-6: report.md does not count the EXACT '
-                          'transcriptions rounded under the declared policy')
 def test_run_report_counts_transcriptions_rounded_under_declared_policy(
         tmp_path, monkeypatch, capsys):
     # V12-6: Q07's calculator returns 777.4125 and the model releases
     # 777.41: TRANSCRIBED-EXACT under v1.3 (licensed rounding), with a
     # sub-flag whose count the report states, so a v1.2 reader can take
-    # them out. Two repeats of Q07 in both conditions: 4 rounded under the
-    # policy. Q01's call returns exactly 15.2 ('1520 / 100'; the shipped
-    # expression returns 15.200000000000001, itself a licensed rounding)
-    # and the model releases $15.20: EXACT with no rounding, 4 more EXACT
-    # results that must not be counted. The count
-    # (4) differs from the declared places (2), from all EXACT (8) and
-    # from every non-zero difference (8, with Q04's ALTERED control), and
-    # is read as a value (": 4" or a table cell), not anywhere on a line.
+    # them out. Three repeats of Q07 in both conditions: 6 rounded under
+    # the policy. Q01's call returns exactly 15.2 ('1520 / 100'; the
+    # shipped expression returns 15.200000000000001, itself a licensed
+    # rounding) and the model releases $15.20: EXACT with no rounding, 6
+    # more EXACT results that must not be counted. The count (6) differs
+    # from the declared places (2), from all EXACT (12) and from the ALTERED
+    # count (3, Q04's control, in the base condition only), and is read as
+    # a value (": 6" or a table cell), not anywhere on a line.
     out = run_example(tmp_path, monkeypatch, {
         'Q07/*/*': [{'call': '42175 * (0.078 / 4) - (15 * 3)'},
                     {'say': 'The quarterly net growth after fees is '
                             '${result}.'}],
         'Q01/*/*': [{'call': '1520 / 100'},
                     {'say': 'The monthly interest is $15.20.'}],
-        'Q04/*/*': [{'call': '1437.00 - 1006.25'},
+        'Q04/base/*': [{'call': '1437.00 - 1006.25'},
                     {'say': 'The principal portion of the first mortgage '
                             'payment is $430.76.'}]},
-        repeat_count='2')
+        repeat_count='3')
     summary = json.loads((out / 'smoke_summary.json').read_text('utf-8'))
     exact = [(r['item_id'], r['condition'], r['repeat'])
              for r in summary['all_results']
              if r.get('transcription_outcome') == 'TRANSCRIBED-EXACT']
-    assert len(exact) == 8, exact
+    assert len(exact) == 12, exact
     # Control: Q04 releases 430.76 for the calculator's 430.75, within the
     # answer tolerance (so AUTO-MATCH) but an alteration the policy does
-    # not license: 4 ALTERED results with a non-zero difference, which
-    # the count must leave out too.
+    # not license: 3 ALTERED results with a non-zero difference, which
+    # the count must leave out too (3: base only, so that printing the
+    # ALTERED count as the rounded one fails).
     altered = [(r['item_id'], r['condition'], r['repeat'])
                for r in summary['all_results']
                if r.get('transcription_outcome') == 'TRANSCRIBED-ALTERED']
-    assert len(altered) == 4 and {i for i, _, _ in altered} == {'Q04'}, \
+    assert len(altered) == 3 and {i for i, _, _ in altered} == {'Q04'}, \
         altered
     report = (out / 'report.md').read_text('utf-8')
     d73 = report[report.index('## D7.3'):]
@@ -230,7 +219,10 @@ def test_run_report_counts_transcriptions_rounded_under_declared_policy(
     lines = [ln for ln in d73.splitlines()
              if re.search(r'rounded under (the )?declared '
                           r'(quantisation )?policy', ln, re.I)]
-    assert any(re.search(r'(:\s*|\|\s*\**)4\**\s*(\||$|\b)', ln)
+    # The count as a value: ': 6', a table cell, or the sentence's
+    # subject ('Of the 12 ..., 6 were rounded under ...', the step-5 form).
+    assert any(re.search(r'(:\s*|\|\s*\**)6\**\s*(\||$|\b)', ln)
+               or re.search(r'(^|[,;]\s*)6 were rounded under', ln)
                for ln in lines), lines
 
 

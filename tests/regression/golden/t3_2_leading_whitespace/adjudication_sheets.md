@@ -9,7 +9,9 @@ Version DOI: 10.5281/zenodo.21755443
 ---
 
 
-## Item 1: Q01 (Condition: base) — Scorer 1
+## Item 1: Q01, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -54,6 +56,12 @@ The monthly interest earned on the savings account is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -104,7 +112,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 1: Q01 (Condition: base) — Scorer 2
+## Item 1: Q01, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -149,6 +159,12 @@ The monthly interest earned on the savings account is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -199,7 +215,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 2: Q01 (Condition: base) — Scorer 1
+## Item 2: Q01, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_2>`
 
 ### Question
 
@@ -244,6 +262,12 @@ The monthly interest earned on the savings account is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -294,7 +318,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 2: Q01 (Condition: base) — Scorer 2
+## Item 2: Q01, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_2>`
 
 ### Question
 
@@ -339,6 +365,12 @@ The monthly interest earned on the savings account is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -389,7 +421,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 3: Q09 (Condition: base) — Scorer 1
+## Item 3: Q09, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_3>`
 
 ### Question
 
@@ -445,6 +479,12 @@ The net monthly income is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -495,7 +535,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 3: Q09 (Condition: base) — Scorer 2
+## Item 3: Q09, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_3>`
 
 ### Question
 
@@ -552,6 +594,12 @@ The net monthly income is $2333.10.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -601,7 +649,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 4: Q09 (Condition: base) — Scorer 1
+## Item 4: Q09, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
@@ -658,6 +708,12 @@ The net monthly income is $2333.10.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -707,7 +763,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 4: Q09 (Condition: base) — Scorer 2
+## Item 4: Q09, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
@@ -764,6 +822,12 @@ The net monthly income is $2333.10.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -813,7 +877,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 5: Q01 (Condition: instruction_removed) — Scorer 1
+## Item 5: Q01, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
@@ -858,6 +924,12 @@ The monthly interest earned on the savings account is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -908,7 +980,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 5: Q01 (Condition: instruction_removed) — Scorer 2
+## Item 5: Q01, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
@@ -953,6 +1027,12 @@ The monthly interest earned on the savings account is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -1003,7 +1083,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 6: Q01 (Condition: instruction_removed) — Scorer 1
+## Item 6: Q01, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
@@ -1048,6 +1130,12 @@ The monthly interest earned on the savings account is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -1098,7 +1186,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 6: Q01 (Condition: instruction_removed) — Scorer 2
+## Item 6: Q01, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
@@ -1143,6 +1233,12 @@ The monthly interest earned on the savings account is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in ` 7777 * 3`, `3` in ` 7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -1193,7 +1289,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 7: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 7: Q09, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -1249,6 +1347,12 @@ The net monthly income is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -1299,7 +1403,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 7: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 7: Q09, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -1355,6 +1461,12 @@ The net monthly income is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -1405,7 +1517,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 8: Q09 (Condition: instruction_removed) — Scorer 1
+## Item 8: Q09, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -1461,6 +1575,12 @@ The net monthly income is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 
@@ -1511,7 +1631,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 8: Q09 (Condition: instruction_removed) — Scorer 2
+## Item 8: Q09, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -1567,6 +1689,12 @@ The net monthly income is $2333.10.
 - `WRONG-OPERATION`: 
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `7777` in `7777 * 3`, `3` in `7777 * 3`
+
+- `OPERAND-ORIGINATED`: originated `23331` in `23331 * 1.2 / 12`
 
 ### Reason for Adjudication
 

@@ -53,7 +53,10 @@ def full_run(tmp_path, monkeypatch):
         if ground_truth is not None:
             fixture_dir = tmp_path / 'inputs'
             fixture_dir.mkdir()
-            for name in ('fixture.json', 'questions.json'):
+            # The runner imports calculator_tool from the fixture
+            # directory too, so the copy needs it as well.
+            for name in ('fixture.json', 'questions.json',
+                         'calculator_tool.py'):
                 (fixture_dir / name).write_bytes((EXAMPLE / name).read_bytes())
             (fixture_dir / 'ground_truth_example.py').write_text(
                 ground_truth, 'utf-8')
@@ -79,10 +82,14 @@ def full_run(tmp_path, monkeypatch):
         # The runner sleeps between executions and retries; skip it.
         monkeypatch.setattr(time, 'sleep', lambda seconds: None)
         # The runner puts the fixture directory on sys.path and imports
-        # ground_truth_example from it: undo both, write no bytecode.
+        # ground_truth_example and calculator_tool from it: undo all of
+        # it, and write no bytecode. Neither module may come from an
+        # earlier test's sys.modules, or a run would use another fixture
+        # directory's copy and the result would depend on test order.
         monkeypatch.setattr(sys, 'path', list(sys.path))
         monkeypatch.setattr(sys, 'dont_write_bytecode', True)
-        saved = sys.modules.pop('ground_truth_example', None)
+        modules = ('ground_truth_example', 'calculator_tool')
+        saved = {name: sys.modules.pop(name, None) for name in modules}
         output_dir = tmp_path / 'output'
         try:
             code = runner.main(['--config', str(config_path),
@@ -90,9 +97,10 @@ def full_run(tmp_path, monkeypatch):
                                 '--output-dir', str(output_dir)])
         finally:
             mock.stop()
-            sys.modules.pop('ground_truth_example', None)
-            if saved is not None:
-                sys.modules['ground_truth_example'] = saved
+            for name in modules:
+                sys.modules.pop(name, None)
+                if saved[name] is not None:
+                    sys.modules[name] = saved[name]
         summary = json.loads(
             (output_dir / 'smoke_summary.json').read_text('utf-8'))
         report = (output_dir / 'report.md').read_text('utf-8')
@@ -126,9 +134,6 @@ def table_count(text, label):
 # -- T3-2: leading whitespace, vacuous grounding and step-4 laundering ----
 
 @pytest.mark.finding('T3-2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-2: a leading space makes the fabricated first '
-                          'call GROUNDED and step 4 launders its return')
 def test_run_leading_whitespace_chain_is_originated(full_run):
     # The T3 review's chain on Q01: ' 7777 * 3' fabricates 23331 and the
     # next call consumes it. Correct: the expression is stripped, 7777 and
@@ -167,9 +172,6 @@ UNREADABLE = {
 
 
 @pytest.mark.finding('T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-16: unreadable calculator calls vanish from '
-                          'D7.2(a)')
 def test_run_unreadable_calls_are_operands_unobservable(full_run):
     # Correct: every calculator invocation gets a D7.2(a) outcome; one whose
     # arguments can't be read is OPERANDS-UNOBSERVABLE, and a valid call
@@ -216,9 +218,6 @@ def scripted_calculator_calls(responses, *, repeat_count=1):
     'T3-16: the proportion is OPERANDS-UNOBSERVABLE over all calculator '
     'invocations; AP-1 says only "its proportion reported"')
 @pytest.mark.finding('T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-16: the report has no OPERANDS-UNOBSERVABLE '
-                          'count, so the proportion is not reported')
 def test_run_report_states_operands_unobservable_count(full_run):
     # AP-1 v1.3 D7.2(a): the unobservable case is declared and "its
     # proportion reported". Three unreadable calls per condition, one
@@ -240,9 +239,6 @@ def test_run_report_states_operands_unobservable_count(full_run):
 
 
 @pytest.mark.finding('T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-16: unreadable calculator calls vanish from '
-                          'D7.2(b) and its report table')
 def test_run_unreadable_calls_are_operation_unobservable(full_run):
     # AP-1 v1.3 D7.2(b): outcomes OPERATION-CORRECT, WRONG-OPERATION,
     # OPERATION-UNOBSERVABLE; a call whose computation can't be recovered
@@ -259,9 +255,6 @@ def test_run_unreadable_calls_are_operation_unobservable(full_run):
 
 
 @pytest.mark.finding('T3-16')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-16: with an unreadable call first, the engine '
-                          'pairs D7.2(b) results with the wrong expressions')
 def test_run_unreadable_call_does_not_shift_d72b_reclassification(full_run):
     # Q07 by an unanticipated route: annual return / 4 (822.4125, not a
     # reference intermediate, so WRONG-OPERATION on its own), then
@@ -306,10 +299,8 @@ def compute(item_id, delivered_context):
 
 
 @pytest.mark.finding('T3-42')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-42: a chained item whose ground truth declares '
-                          'no intermediates is scored GROUNDED by default')
-def test_run_chained_item_without_intermediates_is_unmeasurable(full_run):
+def test_run_chained_item_without_intermediates_is_unmeasurable(
+        full_run, monkeypatch):
     # SPEC R2.4 Failure Modes: "Where the ground-truth module declares no
     # intermediates for a chained item, D7.2 is UNMEASURABLE for that
     # item. Never grounded by default." Q01 (15200 x 1.2 / 100 / 12) is a
@@ -319,6 +310,14 @@ def test_run_chained_item_without_intermediates_is_unmeasurable(full_run):
     # are not counted OPERANDS-GROUNDED, and the report says D7.2 was
     # UNMEASURABLE for the item. The other 9 items answer as in `clean`,
     # one grounded call each per condition: 18.
+    #
+    # Constants are declared only through intermediates' inputs, so this
+    # module cannot declare Q01's 100 and 12, and the R3.1 declared-
+    # constants check, live since the T3-7 fix, refuses it
+    # at seal. That check is switched off here so the test reaches R2.4.
+    import ap1_run.run as runner
+    monkeypatch.setattr(runner, 'declared_constants_check',
+                        lambda *args: [])
     code, _, report = full_run(
         {'Q01/*/*': [{'call': '15200.00 * 1.2'}, {'call': '18240.0 * 1'},
                      {'say': 'The monthly interest earned on the savings '
@@ -328,3 +327,93 @@ def test_run_chained_item_without_intermediates_is_unmeasurable(full_run):
     provenance = section(report, '7b. D7.2(a)')
     assert table_count(provenance, 'OPERANDS-GROUNDED') == 18
     assert 'UNMEASURABLE' in provenance
+
+
+# -- a name the calculator does not know ----------------------------------
+
+@pytest.mark.proposal(
+    'T3-2: a name the calculator does not know (2400 * rate / 12) hides '
+    'the value the model meant by it, so the call is OPERANDS-UNOBSERVABLE '
+    'like any expression whose operands cannot all be read; AP-1 D7.2(a) '
+    'does not name this case')
+@pytest.mark.finding('T3-2')
+def test_run_unknown_name_in_expression_is_operands_unobservable(full_run):
+    # Q03 calls '2400 * rate / 12'; the calculator errors on 'rate', and
+    # the reply states the right figure anyway. 2400 and 12 trace, but the
+    # value meant by 'rate' is invisible: the call is OPERANDS-UNOBSERVABLE
+    # and the answer is not COMPUTED from grounded operands.
+    code, summary, _ = full_run({'Q03/*/*': [
+        {'call': '2400 * rate / 12'},
+        {'say': 'The calculator returned an error, but the monthly '
+                'interest charge is $36.00.'}]})
+    assert code == 0
+    runs = executions(summary, 'Q03')
+    assert len(runs) == 2
+    assert [[p['outcome'] for p in r['provenance_results']] for r in runs] \
+        == [['OPERANDS-UNOBSERVABLE']] * 2
+    assert [r['answer_outcome'] for r in runs] == [None, None]
+
+
+@pytest.mark.proposal(
+    'T3-42: until a question can declare that it is chained, it is chained '
+    'if any execution of it chains, and then every execution is '
+    'UNMEASURABLE; an interim rule, proposed, not decided')
+@pytest.mark.finding('T3-42')
+@pytest.mark.req('R2.4')
+def test_run_question_with_mixed_executions_is_unmeasurable_in_every_one(
+        full_run, monkeypatch):
+    # As above, Q01's module declares no intermediates, and 2 repeats run.
+    # Only base repeat 1 splits the work into two chained calls; Q01's
+    # other three executions use one call whose operands all resolve
+    # (source fields and the structural constant 1), so each on its own
+    # is grounded. Correct (SPEC R2.4; the interim rule until a question
+    # can declare that it is chained): the question is chained, so all
+    # four executions are UNMEASURABLE for D7.2(a), and the outcome does
+    # not depend on how the model split the work. The other 9 items
+    # answer as in `clean`: 9 x 2 conditions x 2 repeats = 36 grounded.
+    import ap1_run.run as runner
+    monkeypatch.setattr(runner, 'declared_constants_check',
+                        lambda *args: [])
+    say = {'say': 'The monthly interest earned on the savings account is '
+                  '${result}.'}
+    code, summary, report = full_run(
+        {'Q01/base/r1': [{'call': '15200.00 * 1.2'}, {'call': '18240.0 * 1'},
+                         say],
+         'Q01/*/*': [{'call': '15200.00 * 1.2 * 1'}, say]},
+        repeat_count=2, ground_truth=GT_Q01_WITHOUT_INTERMEDIATES)
+    assert code == 0
+    q01 = executions(summary, 'Q01')
+    assert [(r['condition'], r['repeat']) for r in q01] == [
+        ('base', 1), ('base', 2), ('instruction_removed', 1),
+        ('instruction_removed', 2)]
+    assert [[p['outcome'] for p in r['provenance_results']]
+            for r in q01] == [['UNMEASURABLE'] * 2] + [['UNMEASURABLE']] * 3
+    provenance = section(report, '7b. D7.2(a)')
+    assert table_count(provenance, 'OPERANDS-GROUNDED') == 36
+    assert table_count(provenance, 'UNMEASURABLE') == 5
+
+
+# -- T3-13: ORIGINATED from the calls the released figure rests on ---------
+
+@pytest.mark.finding('T3-13')
+@pytest.mark.req('AP-1 §6.8')
+@pytest.mark.xfail(strict=True, raises=AssertionError, reason=(
+    'T3-13: ORIGINATED from any originated call; the rule from the calls '
+    'the released figure rests on is not built'))
+def test_run_figure_resting_on_grounded_call_is_computed(full_run):
+    # Q01's model first makes a call with made-up operands (99999 * 7),
+    # then the grounded 15200.00 * 1.2 / 100 / 12, and its reply's only
+    # figure is that call's 15.20. AP-1 v1.3 §6.8: ORIGINATED is a figure
+    # that "rests on" an originated operand; this one rests on the
+    # grounded call alone, so the outcome is COMPUTED. Today any
+    # originated call of the execution makes it ORIGINATED (the proposal
+    # tests/unit/scoring/test_answer_outcome.py::
+    # test_match_with_any_originated_call_is_originated).
+    code, summary, _ = full_run({'Q01/*/*': [
+        {'call': '99999 * 7'}, {'call': '15200.00 * 1.2 / 100 / 12'},
+        {'say': 'The monthly interest earned on the savings account is '
+                '${result}.'}]})
+    assert code == 0
+    runs = executions(summary, 'Q01')
+    assert len(runs) == 2
+    assert [r['answer_outcome'] for r in runs] == ['COMPUTED', 'COMPUTED']

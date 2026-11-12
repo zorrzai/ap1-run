@@ -9,7 +9,9 @@ Version DOI: 10.5281/zenodo.21755443
 ---
 
 
-## Item 1: Q03 (Condition: base) — Scorer 1
+## Item 1: Q03, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -58,6 +60,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -107,7 +113,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 1: Q03 (Condition: base) — Scorer 2
+## Item 1: Q03, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_1>`
 
 ### Question
 
@@ -156,105 +164,9 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
-### Reason for Adjudication
+**Operand provenance (D7.2(a)):**
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 2: Q03 (Condition: base) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, assuming interest is calculated as:
-
-\[
-\$2{,}400 \times \frac{18\%}{12} = \$36.00
-\]
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -305,7 +217,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 2: Q03 (Condition: base) — Scorer 2
+## Item 2: Q03, repeat 3 — Scorer 1
+
+Execution id: `<EXECUTION_ID_2>`
 
 ### Question
 
@@ -356,6 +270,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -405,7 +323,115 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 3: Q03 (Condition: base) — Scorer 1
+## Item 2: Q03, repeat 3 — Scorer 2
+
+Execution id: `<EXECUTION_ID_2>`
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, assuming interest is calculated as:
+
+\[
+\$2{,}400 \times \frac{18\%}{12} = \$36.00
+\]
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (18 / 100) / 12"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 3: Q03, repeat 4 — Scorer 1
+
+Execution id: `<EXECUTION_ID_3>`
 
 ### Question
 
@@ -454,6 +480,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -503,7 +533,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 3: Q03 (Condition: base) — Scorer 2
+## Item 3: Q03, repeat 4 — Scorer 2
+
+Execution id: `<EXECUTION_ID_3>`
 
 ### Question
 
@@ -552,6 +584,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -601,7 +637,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 4: Q03 (Condition: base) — Scorer 1
+## Item 4: Q03, repeat 5 — Scorer 1
+
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
@@ -650,6 +688,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -699,7 +741,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 4: Q03 (Condition: base) — Scorer 2
+## Item 4: Q03, repeat 5 — Scorer 2
+
+Execution id: `<EXECUTION_ID_4>`
 
 ### Question
 
@@ -748,6 +792,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -797,7 +845,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 5: Q03 (Condition: base) — Scorer 1
+## Item 5: Q03, repeat 7 — Scorer 1
+
+Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
@@ -846,6 +896,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -895,7 +949,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 5: Q03 (Condition: base) — Scorer 2
+## Item 5: Q03, repeat 7 — Scorer 2
+
+Execution id: `<EXECUTION_ID_5>`
 
 ### Question
 
@@ -944,6 +1000,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -993,7 +1053,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 6: Q03 (Condition: base) — Scorer 1
+## Item 6: Q03, repeat 8 — Scorer 1
+
+Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
@@ -1042,6 +1104,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1091,7 +1157,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 6: Q03 (Condition: base) — Scorer 2
+## Item 6: Q03, repeat 8 — Scorer 2
+
+Execution id: `<EXECUTION_ID_6>`
 
 ### Question
 
@@ -1140,6 +1208,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1189,7 +1261,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 7: Q03 (Condition: base) — Scorer 1
+## Item 7: Q03, repeat 10 — Scorer 1
+
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -1238,6 +1312,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1287,7 +1365,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 7: Q03 (Condition: base) — Scorer 2
+## Item 7: Q03, repeat 10 — Scorer 2
+
+Execution id: `<EXECUTION_ID_7>`
 
 ### Question
 
@@ -1336,6 +1416,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1385,7 +1469,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 8: Q03 (Condition: base) — Scorer 1
+## Item 8: Q03, repeat 12 — Scorer 1
+
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -1434,6 +1520,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1483,7 +1573,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 8: Q03 (Condition: base) — Scorer 2
+## Item 8: Q03, repeat 12 — Scorer 2
+
+Execution id: `<EXECUTION_ID_8>`
 
 ### Question
 
@@ -1532,6 +1624,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1581,7 +1677,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 9: Q03 (Condition: base) — Scorer 1
+## Item 9: Q03, repeat 15 — Scorer 1
+
+Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
@@ -1630,6 +1728,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1679,7 +1781,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 9: Q03 (Condition: base) — Scorer 2
+## Item 9: Q03, repeat 15 — Scorer 2
+
+Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
@@ -1728,6 +1832,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1777,7 +1885,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 10: Q03 (Condition: base) — Scorer 1
+## Item 10: Q03, repeat 16 — Scorer 1
+
+Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
@@ -1826,6 +1936,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1875,7 +1989,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 10: Q03 (Condition: base) — Scorer 2
+## Item 10: Q03, repeat 16 — Scorer 2
+
+Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
@@ -1924,6 +2040,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -1973,7 +2093,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 11: Q03 (Condition: base) — Scorer 1
+## Item 11: Q03, repeat 19 — Scorer 1
+
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -2022,6 +2144,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2071,7 +2197,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 11: Q03 (Condition: base) — Scorer 2
+## Item 11: Q03, repeat 19 — Scorer 2
+
+Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
@@ -2120,6 +2248,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2169,7 +2301,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 12: Q03 (Condition: base) — Scorer 1
+## Item 12: Q03, repeat 23 — Scorer 1
+
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
@@ -2218,6 +2352,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2267,7 +2405,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 12: Q03 (Condition: base) — Scorer 2
+## Item 12: Q03, repeat 23 — Scorer 2
+
+Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
@@ -2316,6 +2456,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2365,7 +2509,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 13: Q03 (Condition: base) — Scorer 1
+## Item 13: Q03, repeat 30 — Scorer 1
+
+Execution id: `<EXECUTION_ID_13>`
 
 ### Question
 
@@ -2414,6 +2560,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2463,7 +2613,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 13: Q03 (Condition: base) — Scorer 2
+## Item 13: Q03, repeat 30 — Scorer 2
+
+Execution id: `<EXECUTION_ID_13>`
 
 ### Question
 
@@ -2512,6 +2664,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2561,7 +2717,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 14: Q03 (Condition: base) — Scorer 1
+## Item 14: Q03, repeat 31 — Scorer 1
+
+Execution id: `<EXECUTION_ID_14>`
 
 ### Question
 
@@ -2610,6 +2768,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2659,7 +2821,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 14: Q03 (Condition: base) — Scorer 2
+## Item 14: Q03, repeat 31 — Scorer 2
+
+Execution id: `<EXECUTION_ID_14>`
 
 ### Question
 
@@ -2708,6 +2872,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2757,7 +2925,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 15: Q03 (Condition: base) — Scorer 1
+## Item 15: Q03, repeat 32 — Scorer 1
+
+Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
@@ -2806,6 +2976,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2855,7 +3029,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 15: Q03 (Condition: base) — Scorer 2
+## Item 15: Q03, repeat 32 — Scorer 2
+
+Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
@@ -2904,6 +3080,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -2953,7 +3133,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 16: Q03 (Condition: base) — Scorer 1
+## Item 16: Q03, repeat 35 — Scorer 1
+
+Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
@@ -3002,6 +3184,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3051,7 +3237,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 16: Q03 (Condition: base) — Scorer 2
+## Item 16: Q03, repeat 35 — Scorer 2
+
+Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
@@ -3100,6 +3288,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3149,7 +3341,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 17: Q03 (Condition: base) — Scorer 1
+## Item 17: Q03, repeat 37 — Scorer 1
+
+Execution id: `<EXECUTION_ID_17>`
 
 ### Question
 
@@ -3198,6 +3392,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3247,7 +3445,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 17: Q03 (Condition: base) — Scorer 2
+## Item 17: Q03, repeat 37 — Scorer 2
+
+Execution id: `<EXECUTION_ID_17>`
 
 ### Question
 
@@ -3296,6 +3496,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3345,7 +3549,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 18: Q03 (Condition: base) — Scorer 1
+## Item 18: Q03, repeat 38 — Scorer 1
+
+Execution id: `<EXECUTION_ID_18>`
 
 ### Question
 
@@ -3394,6 +3600,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3443,7 +3653,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 18: Q03 (Condition: base) — Scorer 2
+## Item 18: Q03, repeat 38 — Scorer 2
+
+Execution id: `<EXECUTION_ID_18>`
 
 ### Question
 
@@ -3492,6 +3704,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3541,7 +3757,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 19: Q03 (Condition: base) — Scorer 1
+## Item 19: Q03, repeat 39 — Scorer 1
+
+Execution id: `<EXECUTION_ID_19>`
 
 ### Question
 
@@ -3590,6 +3808,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3639,7 +3861,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 19: Q03 (Condition: base) — Scorer 2
+## Item 19: Q03, repeat 39 — Scorer 2
+
+Execution id: `<EXECUTION_ID_19>`
 
 ### Question
 
@@ -3688,6 +3912,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3737,7 +3965,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 20: Q03 (Condition: base) — Scorer 1
+## Item 20: Q03, repeat 40 — Scorer 1
+
+Execution id: `<EXECUTION_ID_20>`
 
 ### Question
 
@@ -3786,6 +4016,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3835,7 +4069,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 20: Q03 (Condition: base) — Scorer 2
+## Item 20: Q03, repeat 40 — Scorer 2
+
+Execution id: `<EXECUTION_ID_20>`
 
 ### Question
 
@@ -3884,6 +4120,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -3933,7 +4173,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 21: Q03 (Condition: base) — Scorer 1
+## Item 21: Q03, repeat 41 — Scorer 1
+
+Execution id: `<EXECUTION_ID_21>`
 
 ### Question
 
@@ -3982,6 +4224,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4031,7 +4277,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 21: Q03 (Condition: base) — Scorer 2
+## Item 21: Q03, repeat 41 — Scorer 2
+
+Execution id: `<EXECUTION_ID_21>`
 
 ### Question
 
@@ -4080,6 +4328,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4129,7 +4381,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 22: Q03 (Condition: base) — Scorer 1
+## Item 22: Q03, repeat 43 — Scorer 1
+
+Execution id: `<EXECUTION_ID_22>`
 
 ### Question
 
@@ -4178,6 +4432,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4227,7 +4485,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 22: Q03 (Condition: base) — Scorer 2
+## Item 22: Q03, repeat 43 — Scorer 2
+
+Execution id: `<EXECUTION_ID_22>`
 
 ### Question
 
@@ -4276,6 +4536,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4325,7 +4589,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 23: Q03 (Condition: base) — Scorer 1
+## Item 23: Q03, repeat 44 — Scorer 1
+
+Execution id: `<EXECUTION_ID_23>`
 
 ### Question
 
@@ -4374,6 +4640,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4423,7 +4693,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 23: Q03 (Condition: base) — Scorer 2
+## Item 23: Q03, repeat 44 — Scorer 2
+
+Execution id: `<EXECUTION_ID_23>`
 
 ### Question
 
@@ -4472,6 +4744,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4521,7 +4797,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 24: Q03 (Condition: base) — Scorer 1
+## Item 24: Q03, repeat 47 — Scorer 1
+
+Execution id: `<EXECUTION_ID_24>`
 
 ### Question
 
@@ -4570,6 +4848,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4619,7 +4901,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 24: Q03 (Condition: base) — Scorer 2
+## Item 24: Q03, repeat 47 — Scorer 2
+
+Execution id: `<EXECUTION_ID_24>`
 
 ### Question
 
@@ -4668,6 +4952,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4717,7 +5005,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 25: Q03 (Condition: base) — Scorer 1
+## Item 25: Q03, repeat 50 — Scorer 1
+
+Execution id: `<EXECUTION_ID_25>`
 
 ### Question
 
@@ -4766,6 +5056,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4815,7 +5109,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 25: Q03 (Condition: base) — Scorer 2
+## Item 25: Q03, repeat 50 — Scorer 2
+
+Execution id: `<EXECUTION_ID_25>`
 
 ### Question
 
@@ -4864,6 +5160,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -4913,7 +5213,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 26: Q04 (Condition: base) — Scorer 1
+## Item 26: Q04, repeat 4 — Scorer 1
+
+Execution id: `<EXECUTION_ID_26>`
 
 ### Question
 
@@ -4969,6 +5271,12 @@ Therefore, the principal portion of the $1,437 payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5018,7 +5326,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 26: Q04 (Condition: base) — Scorer 2
+## Item 26: Q04, repeat 4 — Scorer 2
+
+Execution id: `<EXECUTION_ID_26>`
 
 ### Question
 
@@ -5074,6 +5384,12 @@ Therefore, the principal portion of the $1,437 payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5123,7 +5439,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 27: Q04 (Condition: base) — Scorer 1
+## Item 27: Q04, repeat 7 — Scorer 1
+
+Execution id: `<EXECUTION_ID_27>`
 
 ### Question
 
@@ -5175,6 +5493,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5224,7 +5548,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 27: Q04 (Condition: base) — Scorer 2
+## Item 27: Q04, repeat 7 — Scorer 2
+
+Execution id: `<EXECUTION_ID_27>`
 
 ### Question
 
@@ -5276,6 +5602,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5325,7 +5657,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 28: Q04 (Condition: base) — Scorer 1
+## Item 28: Q04, repeat 9 — Scorer 1
+
+Execution id: `<EXECUTION_ID_28>`
 
 ### Question
 
@@ -5381,6 +5715,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5430,7 +5770,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 28: Q04 (Condition: base) — Scorer 2
+## Item 28: Q04, repeat 9 — Scorer 2
+
+Execution id: `<EXECUTION_ID_28>`
 
 ### Question
 
@@ -5486,6 +5828,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5535,7 +5883,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 29: Q04 (Condition: base) — Scorer 1
+## Item 29: Q04, repeat 10 — Scorer 1
+
+Execution id: `<EXECUTION_ID_29>`
 
 ### Question
 
@@ -5591,6 +5941,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5640,7 +5996,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 29: Q04 (Condition: base) — Scorer 2
+## Item 29: Q04, repeat 10 — Scorer 2
+
+Execution id: `<EXECUTION_ID_29>`
 
 ### Question
 
@@ -5696,6 +6054,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5745,7 +6109,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 30: Q04 (Condition: base) — Scorer 1
+## Item 30: Q04, repeat 14 — Scorer 1
+
+Execution id: `<EXECUTION_ID_30>`
 
 ### Question
 
@@ -5792,6 +6158,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5841,7 +6211,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 30: Q04 (Condition: base) — Scorer 2
+## Item 30: Q04, repeat 14 — Scorer 2
+
+Execution id: `<EXECUTION_ID_30>`
 
 ### Question
 
@@ -5888,6 +6260,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -5937,7 +6313,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 31: Q04 (Condition: base) — Scorer 1
+## Item 31: Q04, repeat 17 — Scorer 1
+
+Execution id: `<EXECUTION_ID_31>`
 
 ### Question
 
@@ -5988,6 +6366,10 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6037,7 +6419,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 31: Q04 (Condition: base) — Scorer 2
+## Item 31: Q04, repeat 17 — Scorer 2
+
+Execution id: `<EXECUTION_ID_31>`
 
 ### Question
 
@@ -6088,6 +6472,10 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6137,7 +6525,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 32: Q04 (Condition: base) — Scorer 1
+## Item 32: Q04, repeat 20 — Scorer 1
+
+Execution id: `<EXECUTION_ID_32>`
 
 ### Question
 
@@ -6184,6 +6574,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6233,7 +6627,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 32: Q04 (Condition: base) — Scorer 2
+## Item 32: Q04, repeat 20 — Scorer 2
+
+Execution id: `<EXECUTION_ID_32>`
 
 ### Question
 
@@ -6280,6 +6676,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6329,7 +6729,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 33: Q04 (Condition: base) — Scorer 1
+## Item 33: Q04, repeat 22 — Scorer 1
+
+Execution id: `<EXECUTION_ID_33>`
 
 ### Question
 
@@ -6381,6 +6783,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6430,7 +6838,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 33: Q04 (Condition: base) — Scorer 2
+## Item 33: Q04, repeat 22 — Scorer 2
+
+Execution id: `<EXECUTION_ID_33>`
 
 ### Question
 
@@ -6482,6 +6892,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6531,7 +6947,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 34: Q04 (Condition: base) — Scorer 1
+## Item 34: Q04, repeat 23 — Scorer 1
+
+Execution id: `<EXECUTION_ID_34>`
 
 ### Question
 
@@ -6579,6 +6997,10 @@ The first month’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6628,7 +7050,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 34: Q04 (Condition: base) — Scorer 2
+## Item 34: Q04, repeat 23 — Scorer 2
+
+Execution id: `<EXECUTION_ID_34>`
 
 ### Question
 
@@ -6676,6 +7100,10 @@ The first month’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6725,7 +7153,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 35: Q04 (Condition: base) — Scorer 1
+## Item 35: Q04, repeat 24 — Scorer 1
+
+Execution id: `<EXECUTION_ID_35>`
 
 ### Question
 
@@ -6772,6 +7202,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6821,7 +7255,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 35: Q04 (Condition: base) — Scorer 2
+## Item 35: Q04, repeat 24 — Scorer 2
+
+Execution id: `<EXECUTION_ID_35>`
 
 ### Question
 
@@ -6868,6 +7304,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -6917,7 +7357,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 36: Q04 (Condition: base) — Scorer 1
+## Item 36: Q04, repeat 25 — Scorer 1
+
+Execution id: `<EXECUTION_ID_36>`
 
 ### Question
 
@@ -6969,6 +7411,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7018,7 +7466,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 36: Q04 (Condition: base) — Scorer 2
+## Item 36: Q04, repeat 25 — Scorer 2
+
+Execution id: `<EXECUTION_ID_36>`
 
 ### Question
 
@@ -7070,6 +7520,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7119,7 +7575,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 37: Q04 (Condition: base) — Scorer 1
+## Item 37: Q04, repeat 30 — Scorer 1
+
+Execution id: `<EXECUTION_ID_37>`
 
 ### Question
 
@@ -7175,6 +7633,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7224,7 +7688,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 37: Q04 (Condition: base) — Scorer 2
+## Item 37: Q04, repeat 30 — Scorer 2
+
+Execution id: `<EXECUTION_ID_37>`
 
 ### Question
 
@@ -7280,6 +7746,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7329,7 +7801,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 38: Q04 (Condition: base) — Scorer 1
+## Item 38: Q04, repeat 32 — Scorer 1
+
+Execution id: `<EXECUTION_ID_38>`
 
 ### Question
 
@@ -7381,6 +7855,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7430,7 +7910,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 38: Q04 (Condition: base) — Scorer 2
+## Item 38: Q04, repeat 32 — Scorer 2
+
+Execution id: `<EXECUTION_ID_38>`
 
 ### Question
 
@@ -7482,6 +7964,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7531,7 +8019,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 39: Q04 (Condition: base) — Scorer 1
+## Item 39: Q04, repeat 36 — Scorer 1
+
+Execution id: `<EXECUTION_ID_39>`
 
 ### Question
 
@@ -7583,6 +8073,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7632,7 +8128,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 39: Q04 (Condition: base) — Scorer 2
+## Item 39: Q04, repeat 36 — Scorer 2
+
+Execution id: `<EXECUTION_ID_39>`
 
 ### Question
 
@@ -7684,6 +8182,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7733,7 +8237,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 40: Q04 (Condition: base) — Scorer 1
+## Item 40: Q04, repeat 39 — Scorer 1
+
+Execution id: `<EXECUTION_ID_40>`
 
 ### Question
 
@@ -7785,6 +8291,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7834,7 +8346,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 40: Q04 (Condition: base) — Scorer 2
+## Item 40: Q04, repeat 39 — Scorer 2
+
+Execution id: `<EXECUTION_ID_40>`
 
 ### Question
 
@@ -7886,6 +8400,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -7935,7 +8455,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 41: Q04 (Condition: base) — Scorer 1
+## Item 41: Q04, repeat 44 — Scorer 1
+
+Execution id: `<EXECUTION_ID_41>`
 
 ### Question
 
@@ -7982,6 +8504,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8031,7 +8557,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 41: Q04 (Condition: base) — Scorer 2
+## Item 41: Q04, repeat 44 — Scorer 2
+
+Execution id: `<EXECUTION_ID_41>`
 
 ### Question
 
@@ -8078,6 +8606,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8127,7 +8659,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 42: Q04 (Condition: base) — Scorer 1
+## Item 42: Q04, repeat 45 — Scorer 1
+
+Execution id: `<EXECUTION_ID_42>`
 
 ### Question
 
@@ -8174,6 +8708,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8223,7 +8761,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 42: Q04 (Condition: base) — Scorer 2
+## Item 42: Q04, repeat 45 — Scorer 2
+
+Execution id: `<EXECUTION_ID_42>`
 
 ### Question
 
@@ -8270,6 +8810,10 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8319,7 +8863,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 43: Q04 (Condition: base) — Scorer 1
+## Item 43: Q04, repeat 47 — Scorer 1
+
+Execution id: `<EXECUTION_ID_43>`
 
 ### Question
 
@@ -8366,6 +8912,10 @@ The first month’s interest is **$1,006.25**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8415,7 +8965,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 43: Q04 (Condition: base) — Scorer 2
+## Item 43: Q04, repeat 47 — Scorer 2
+
+Execution id: `<EXECUTION_ID_43>`
 
 ### Question
 
@@ -8462,6 +9014,10 @@ The first month’s interest is **$1,006.25**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8511,7 +9067,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 44: Q04 (Condition: base) — Scorer 1
+## Item 44: Q04, repeat 48 — Scorer 1
+
+Execution id: `<EXECUTION_ID_44>`
 
 ### Question
 
@@ -8567,6 +9125,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8616,7 +9180,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 44: Q04 (Condition: base) — Scorer 2
+## Item 44: Q04, repeat 48 — Scorer 2
+
+Execution id: `<EXECUTION_ID_44>`
 
 ### Question
 
@@ -8672,6 +9238,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8721,7 +9293,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 45: Q05 (Condition: base) — Scorer 1
+## Item 45: Q05, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_45>`
 
 ### Question
 
@@ -8774,6 +9348,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8823,7 +9401,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 45: Q05 (Condition: base) — Scorer 2
+## Item 45: Q05, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_45>`
 
 ### Question
 
@@ -8876,6 +9456,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -8925,7 +9509,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 46: Q05 (Condition: base) — Scorer 1
+## Item 46: Q05, repeat 3 — Scorer 1
+
+Execution id: `<EXECUTION_ID_46>`
 
 ### Question
 
@@ -8982,6 +9568,12 @@ Assuming interest is charged before the payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9031,7 +9623,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 46: Q05 (Condition: base) — Scorer 2
+## Item 46: Q05, repeat 3 — Scorer 2
+
+Execution id: `<EXECUTION_ID_46>`
 
 ### Question
 
@@ -9088,6 +9682,12 @@ Assuming interest is charged before the payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9137,7 +9737,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 47: Q05 (Condition: base) — Scorer 1
+## Item 47: Q05, repeat 10 — Scorer 1
+
+Execution id: `<EXECUTION_ID_47>`
 
 ### Question
 
@@ -9194,6 +9796,12 @@ Assuming interest is charged before the payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9243,7 +9851,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 47: Q05 (Condition: base) — Scorer 2
+## Item 47: Q05, repeat 10 — Scorer 2
+
+Execution id: `<EXECUTION_ID_47>`
 
 ### Question
 
@@ -9300,6 +9910,12 @@ Assuming interest is charged before the payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9349,7 +9965,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 48: Q05 (Condition: base) — Scorer 1
+## Item 48: Q05, repeat 14 — Scorer 1
+
+Execution id: `<EXECUTION_ID_48>`
 
 ### Question
 
@@ -9413,6 +10031,12 @@ The balance after one month is **$2,411.00**, assuming interest is added before 
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9462,7 +10086,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 48: Q05 (Condition: base) — Scorer 2
+## Item 48: Q05, repeat 14 — Scorer 2
+
+Execution id: `<EXECUTION_ID_48>`
 
 ### Question
 
@@ -9526,6 +10152,12 @@ The balance after one month is **$2,411.00**, assuming interest is added before 
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9575,7 +10207,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 49: Q05 (Condition: base) — Scorer 1
+## Item 49: Q05, repeat 22 — Scorer 1
+
+Execution id: `<EXECUTION_ID_49>`
 
 ### Question
 
@@ -9639,6 +10273,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9688,7 +10328,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 49: Q05 (Condition: base) — Scorer 2
+## Item 49: Q05, repeat 22 — Scorer 2
+
+Execution id: `<EXECUTION_ID_49>`
 
 ### Question
 
@@ -9752,6 +10394,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9801,7 +10449,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 50: Q05 (Condition: base) — Scorer 1
+## Item 50: Q05, repeat 23 — Scorer 1
+
+Execution id: `<EXECUTION_ID_50>`
 
 ### Question
 
@@ -9858,6 +10508,12 @@ Assuming interest is charged before the minimum payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -9907,7 +10563,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 50: Q05 (Condition: base) — Scorer 2
+## Item 50: Q05, repeat 23 — Scorer 2
+
+Execution id: `<EXECUTION_ID_50>`
 
 ### Question
 
@@ -9964,6 +10622,12 @@ Assuming interest is charged before the minimum payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10013,7 +10677,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 51: Q05 (Condition: base) — Scorer 1
+## Item 51: Q05, repeat 31 — Scorer 1
+
+Execution id: `<EXECUTION_ID_51>`
 
 ### Question
 
@@ -10077,6 +10743,12 @@ The credit card balance after one month is **$2,411.00**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10126,7 +10798,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 51: Q05 (Condition: base) — Scorer 2
+## Item 51: Q05, repeat 31 — Scorer 2
+
+Execution id: `<EXECUTION_ID_51>`
 
 ### Question
 
@@ -10190,6 +10864,12 @@ The credit card balance after one month is **$2,411.00**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10239,7 +10919,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 52: Q05 (Condition: base) — Scorer 1
+## Item 52: Q05, repeat 34 — Scorer 1
+
+Execution id: `<EXECUTION_ID_52>`
 
 ### Question
 
@@ -10299,6 +10981,12 @@ After adding interest and making the $25 minimum payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10348,7 +11036,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 52: Q05 (Condition: base) — Scorer 2
+## Item 52: Q05, repeat 34 — Scorer 2
+
+Execution id: `<EXECUTION_ID_52>`
 
 ### Question
 
@@ -10408,6 +11098,12 @@ After adding interest and making the $25 minimum payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10457,7 +11153,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 53: Q05 (Condition: base) — Scorer 1
+## Item 53: Q05, repeat 35 — Scorer 1
+
+Execution id: `<EXECUTION_ID_53>`
 
 ### Question
 
@@ -10514,6 +11212,12 @@ Assuming interest is applied before the payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10563,7 +11267,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 53: Q05 (Condition: base) — Scorer 2
+## Item 53: Q05, repeat 35 — Scorer 2
+
+Execution id: `<EXECUTION_ID_53>`
 
 ### Question
 
@@ -10620,6 +11326,12 @@ Assuming interest is applied before the payment:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10669,7 +11381,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 54: Q05 (Condition: base) — Scorer 1
+## Item 54: Q05, repeat 37 — Scorer 1
+
+Execution id: `<EXECUTION_ID_54>`
 
 ### Question
 
@@ -10733,6 +11447,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10782,7 +11502,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 54: Q05 (Condition: base) — Scorer 2
+## Item 54: Q05, repeat 37 — Scorer 2
+
+Execution id: `<EXECUTION_ID_54>`
 
 ### Question
 
@@ -10846,6 +11568,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10895,7 +11623,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 55: Q05 (Condition: base) — Scorer 1
+## Item 55: Q05, repeat 39 — Scorer 1
+
+Execution id: `<EXECUTION_ID_55>`
 
 ### Question
 
@@ -10948,6 +11678,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -10997,7 +11731,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 55: Q05 (Condition: base) — Scorer 2
+## Item 55: Q05, repeat 39 — Scorer 2
+
+Execution id: `<EXECUTION_ID_55>`
 
 ### Question
 
@@ -11050,6 +11786,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -11099,7 +11839,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 56: Q05 (Condition: base) — Scorer 1
+## Item 56: Q05, repeat 40 — Scorer 1
+
+Execution id: `<EXECUTION_ID_56>`
 
 ### Question
 
@@ -11163,6 +11905,12 @@ The credit card balance after one month is **$2,411.00**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -11212,7 +11960,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 56: Q05 (Condition: base) — Scorer 2
+## Item 56: Q05, repeat 40 — Scorer 2
+
+Execution id: `<EXECUTION_ID_56>`
 
 ### Question
 
@@ -11276,6 +12026,12 @@ The credit card balance after one month is **$2,411.00**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -11325,7 +12081,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 57: Q07 (Condition: base) — Scorer 1
+## Item 57: Q07, repeat 7 — Scorer 1
+
+Execution id: `<EXECUTION_ID_57>`
 
 ### Question
 
@@ -11380,6 +12138,14 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11429,7 +12195,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 57: Q07 (Condition: base) — Scorer 2
+## Item 57: Q07, repeat 7 — Scorer 2
+
+Execution id: `<EXECUTION_ID_57>`
 
 ### Question
 
@@ -11484,6 +12252,14 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11533,7 +12309,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 58: Q07 (Condition: base) — Scorer 1
+## Item 58: Q07, repeat 22 — Scorer 1
+
+Execution id: `<EXECUTION_ID_58>`
 
 ### Question
 
@@ -11588,6 +12366,14 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11637,7 +12423,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 58: Q07 (Condition: base) — Scorer 2
+## Item 58: Q07, repeat 22 — Scorer 2
+
+Execution id: `<EXECUTION_ID_58>`
 
 ### Question
 
@@ -11692,6 +12480,14 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11741,7 +12537,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 59: Q07 (Condition: base) — Scorer 1
+## Item 59: Q07, repeat 28 — Scorer 1
+
+Execution id: `<EXECUTION_ID_59>`
 
 ### Question
 
@@ -11782,6 +12580,10 @@ The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11831,7 +12633,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 59: Q07 (Condition: base) — Scorer 2
+## Item 59: Q07, repeat 28 — Scorer 2
+
+Execution id: `<EXECUTION_ID_59>`
 
 ### Question
 
@@ -11872,6 +12676,10 @@ The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -11921,7 +12729,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 60: Q07 (Condition: base) — Scorer 1
+## Item 60: Q07, repeat 30 — Scorer 1
+
+Execution id: `<EXECUTION_ID_60>`
 
 ### Question
 
@@ -11973,6 +12783,12 @@ Ending balance after the quarter: **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12022,7 +12838,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 60: Q07 (Condition: base) — Scorer 2
+## Item 60: Q07, repeat 30 — Scorer 2
+
+Execution id: `<EXECUTION_ID_60>`
 
 ### Question
 
@@ -12074,6 +12892,12 @@ Ending balance after the quarter: **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12123,7 +12947,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 61: Q07 (Condition: base) — Scorer 1
+## Item 61: Q07, repeat 33 — Scorer 1
+
+Execution id: `<EXECUTION_ID_61>`
 
 ### Question
 
@@ -12174,6 +13000,12 @@ Assuming monthly compounding:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12223,7 +13055,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 61: Q07 (Condition: base) — Scorer 2
+## Item 61: Q07, repeat 33 — Scorer 2
+
+Execution id: `<EXECUTION_ID_61>`
 
 ### Question
 
@@ -12274,6 +13108,12 @@ Assuming monthly compounding:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12323,7 +13163,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 62: Q07 (Condition: base) — Scorer 1
+## Item 62: Q07, repeat 34 — Scorer 1
+
+Execution id: `<EXECUTION_ID_62>`
 
 ### Question
 
@@ -12375,6 +13217,12 @@ The ending balance after the quarter would be **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12424,7 +13272,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 62: Q07 (Condition: base) — Scorer 2
+## Item 62: Q07, repeat 34 — Scorer 2
+
+Execution id: `<EXECUTION_ID_62>`
 
 ### Question
 
@@ -12476,6 +13326,12 @@ The ending balance after the quarter would be **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12525,7 +13381,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 63: Q07 (Condition: base) — Scorer 1
+## Item 63: Q07, repeat 36 — Scorer 1
+
+Execution id: `<EXECUTION_ID_63>`
 
 ### Question
 
@@ -12576,6 +13434,12 @@ Assuming monthly compounding:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12625,7 +13489,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 63: Q07 (Condition: base) — Scorer 2
+## Item 63: Q07, repeat 36 — Scorer 2
+
+Execution id: `<EXECUTION_ID_63>`
 
 ### Question
 
@@ -12676,6 +13542,12 @@ Assuming monthly compounding:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12725,7 +13597,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 64: Q07 (Condition: base) — Scorer 1
+## Item 64: Q07, repeat 42 — Scorer 1
+
+Execution id: `<EXECUTION_ID_64>`
 
 ### Question
 
@@ -12780,6 +13654,14 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12829,7 +13711,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 64: Q07 (Condition: base) — Scorer 2
+## Item 64: Q07, repeat 42 — Scorer 2
+
+Execution id: `<EXECUTION_ID_64>`
 
 ### Question
 
@@ -12884,6 +13768,14 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -12933,7 +13825,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 65: Q07 (Condition: base) — Scorer 1
+## Item 65: Q07, repeat 48 — Scorer 1
+
+Execution id: `<EXECUTION_ID_65>`
 
 ### Question
 
@@ -12985,6 +13879,12 @@ The projected balance after three months would be **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13034,7 +13934,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 65: Q07 (Condition: base) — Scorer 2
+## Item 65: Q07, repeat 48 — Scorer 2
+
+Execution id: `<EXECUTION_ID_65>`
 
 ### Question
 
@@ -13086,6 +13988,12 @@ The projected balance after three months would be **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13135,7 +14043,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 66: Q07 (Condition: base) — Scorer 1
+## Item 66: Q07, repeat 49 — Scorer 1
+
+Execution id: `<EXECUTION_ID_66>`
 
 ### Question
 
@@ -13190,6 +14100,14 @@ Assuming the 7.8% annual rate compounds monthly:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13239,7 +14157,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 66: Q07 (Condition: base) — Scorer 2
+## Item 66: Q07, repeat 49 — Scorer 2
+
+Execution id: `<EXECUTION_ID_66>`
 
 ### Question
 
@@ -13294,6 +14214,14 @@ Assuming the 7.8% annual rate compounds monthly:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -13343,7 +14271,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 67: Q08 (Condition: base) — Scorer 1
+## Item 67: Q08, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_67>`
 
 ### Question
 
@@ -13385,6 +14315,10 @@ Category: amortisation
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -13435,7 +14369,9 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 67: Q08 (Condition: base) — Scorer 2
+## Item 67: Q08, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_67>`
 
 ### Question
 
@@ -13477,6 +14413,10 @@ Category: amortisation
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -13527,7 +14467,9 @@ Response shape unrecognised. Cannot extract a figure for comparison.
 ---
 
 
-## Item 68: Q10 (Condition: base) — Scorer 1
+## Item 68: Q10, repeat 38 — Scorer 1
+
+Execution id: `<EXECUTION_ID_68>`
 
 ### Question
 
@@ -13571,6 +14513,10 @@ The annual net growth after fees is **$3,109.65**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -13621,7 +14567,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 68: Q10 (Condition: base) — Scorer 2
+## Item 68: Q10, repeat 38 — Scorer 2
+
+Execution id: `<EXECUTION_ID_68>`
 
 ### Question
 
@@ -13665,6 +14613,10 @@ The annual net growth after fees is **$3,109.65**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -13715,7 +14667,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 69: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 69: Q02, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_69>`
 
 ### Question
 
@@ -13809,7 +14763,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 69: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 69: Q02, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_69>`
 
 ### Question
 
@@ -13903,7 +14859,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 70: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 70: Q02, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_70>`
 
 ### Question
 
@@ -13997,7 +14955,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 70: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 70: Q02, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_70>`
 
 ### Question
 
@@ -14091,7 +15051,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 71: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 71: Q02, repeat 5 — Scorer 1
+
+Execution id: `<EXECUTION_ID_71>`
 
 ### Question
 
@@ -14185,7 +15147,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 71: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 71: Q02, repeat 5 — Scorer 2
+
+Execution id: `<EXECUTION_ID_71>`
 
 ### Question
 
@@ -14279,7 +15243,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 72: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 72: Q02, repeat 7 — Scorer 1
+
+Execution id: `<EXECUTION_ID_72>`
 
 ### Question
 
@@ -14372,7 +15338,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 72: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 72: Q02, repeat 7 — Scorer 2
+
+Execution id: `<EXECUTION_ID_72>`
 
 ### Question
 
@@ -14465,7 +15433,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 73: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 73: Q02, repeat 9 — Scorer 1
+
+Execution id: `<EXECUTION_ID_73>`
 
 ### Question
 
@@ -14559,7 +15529,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 73: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 73: Q02, repeat 9 — Scorer 2
+
+Execution id: `<EXECUTION_ID_73>`
 
 ### Question
 
@@ -14653,7 +15625,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 74: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 74: Q02, repeat 10 — Scorer 1
+
+Execution id: `<EXECUTION_ID_74>`
 
 ### Question
 
@@ -14747,7 +15721,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 74: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 74: Q02, repeat 10 — Scorer 2
+
+Execution id: `<EXECUTION_ID_74>`
 
 ### Question
 
@@ -14841,7 +15817,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 75: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 75: Q02, repeat 11 — Scorer 1
+
+Execution id: `<EXECUTION_ID_75>`
 
 ### Question
 
@@ -14935,7 +15913,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 75: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 75: Q02, repeat 11 — Scorer 2
+
+Execution id: `<EXECUTION_ID_75>`
 
 ### Question
 
@@ -15029,7 +16009,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 76: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 76: Q02, repeat 12 — Scorer 1
+
+Execution id: `<EXECUTION_ID_76>`
 
 ### Question
 
@@ -15124,7 +16106,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 76: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 76: Q02, repeat 12 — Scorer 2
+
+Execution id: `<EXECUTION_ID_76>`
 
 ### Question
 
@@ -15219,7 +16203,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 77: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 77: Q02, repeat 13 — Scorer 1
+
+Execution id: `<EXECUTION_ID_77>`
 
 ### Question
 
@@ -15313,7 +16299,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 77: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 77: Q02, repeat 13 — Scorer 2
+
+Execution id: `<EXECUTION_ID_77>`
 
 ### Question
 
@@ -15407,7 +16395,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 78: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 78: Q02, repeat 15 — Scorer 1
+
+Execution id: `<EXECUTION_ID_78>`
 
 ### Question
 
@@ -15500,7 +16490,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 78: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 78: Q02, repeat 15 — Scorer 2
+
+Execution id: `<EXECUTION_ID_78>`
 
 ### Question
 
@@ -15593,7 +16585,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 79: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 79: Q02, repeat 17 — Scorer 1
+
+Execution id: `<EXECUTION_ID_79>`
 
 ### Question
 
@@ -15687,7 +16681,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 79: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 79: Q02, repeat 17 — Scorer 2
+
+Execution id: `<EXECUTION_ID_79>`
 
 ### Question
 
@@ -15781,7 +16777,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 80: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 80: Q02, repeat 18 — Scorer 1
+
+Execution id: `<EXECUTION_ID_80>`
 
 ### Question
 
@@ -15876,7 +16874,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 80: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 80: Q02, repeat 18 — Scorer 2
+
+Execution id: `<EXECUTION_ID_80>`
 
 ### Question
 
@@ -15971,7 +16971,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 81: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 81: Q02, repeat 20 — Scorer 1
+
+Execution id: `<EXECUTION_ID_81>`
 
 ### Question
 
@@ -16065,7 +17067,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 81: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 81: Q02, repeat 20 — Scorer 2
+
+Execution id: `<EXECUTION_ID_81>`
 
 ### Question
 
@@ -16159,7 +17163,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 82: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 82: Q02, repeat 21 — Scorer 1
+
+Execution id: `<EXECUTION_ID_82>`
 
 ### Question
 
@@ -16254,7 +17260,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 82: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 82: Q02, repeat 21 — Scorer 2
+
+Execution id: `<EXECUTION_ID_82>`
 
 ### Question
 
@@ -16349,7 +17357,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 83: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 83: Q02, repeat 26 — Scorer 1
+
+Execution id: `<EXECUTION_ID_83>`
 
 ### Question
 
@@ -16444,7 +17454,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 83: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 83: Q02, repeat 26 — Scorer 2
+
+Execution id: `<EXECUTION_ID_83>`
 
 ### Question
 
@@ -16539,7 +17551,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 84: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 84: Q02, repeat 27 — Scorer 1
+
+Execution id: `<EXECUTION_ID_84>`
 
 ### Question
 
@@ -16633,7 +17647,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 84: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 84: Q02, repeat 27 — Scorer 2
+
+Execution id: `<EXECUTION_ID_84>`
 
 ### Question
 
@@ -16727,101 +17743,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 85: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 85: Q02, repeat 31 — Scorer 1
 
-### Question
-
-> What is the available credit remaining on the credit card?
-
-Category: balance
-
-### Response (verbatim)
-
-```
-Available credit = Credit limit − Balance  
-**$5,000 − $2,400 = $2,600.00**
-
-**Available credit remaining: $2,600.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `2600.00`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 85: Q02 (Condition: instruction_removed) — Scorer 2
+Execution id: `<EXECUTION_ID_85>`
 
 ### Question
 
@@ -16915,7 +17839,105 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 86: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 85: Q02, repeat 31 — Scorer 2
+
+Execution id: `<EXECUTION_ID_85>`
+
+### Question
+
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+Available credit = Credit limit − Balance  
+**$5,000 − $2,400 = $2,600.00**
+
+**Available credit remaining: $2,600.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 86: Q02, repeat 32 — Scorer 1
+
+Execution id: `<EXECUTION_ID_86>`
 
 ### Question
 
@@ -17008,7 +18030,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 86: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 86: Q02, repeat 32 — Scorer 2
+
+Execution id: `<EXECUTION_ID_86>`
 
 ### Question
 
@@ -17101,7 +18125,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 87: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 87: Q02, repeat 33 — Scorer 1
+
+Execution id: `<EXECUTION_ID_87>`
 
 ### Question
 
@@ -17195,7 +18221,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 87: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 87: Q02, repeat 33 — Scorer 2
+
+Execution id: `<EXECUTION_ID_87>`
 
 ### Question
 
@@ -17289,7 +18317,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 88: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 88: Q02, repeat 35 — Scorer 1
+
+Execution id: `<EXECUTION_ID_88>`
 
 ### Question
 
@@ -17383,7 +18413,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 88: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 88: Q02, repeat 35 — Scorer 2
+
+Execution id: `<EXECUTION_ID_88>`
 
 ### Question
 
@@ -17477,7 +18509,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 89: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 89: Q02, repeat 36 — Scorer 1
+
+Execution id: `<EXECUTION_ID_89>`
 
 ### Question
 
@@ -17570,7 +18604,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 89: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 89: Q02, repeat 36 — Scorer 2
+
+Execution id: `<EXECUTION_ID_89>`
 
 ### Question
 
@@ -17663,7 +18699,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 90: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 90: Q02, repeat 38 — Scorer 1
+
+Execution id: `<EXECUTION_ID_90>`
 
 ### Question
 
@@ -17756,7 +18794,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 90: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 90: Q02, repeat 38 — Scorer 2
+
+Execution id: `<EXECUTION_ID_90>`
 
 ### Question
 
@@ -17849,7 +18889,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 91: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 91: Q02, repeat 39 — Scorer 1
+
+Execution id: `<EXECUTION_ID_91>`
 
 ### Question
 
@@ -17942,7 +18984,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 91: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 91: Q02, repeat 39 — Scorer 2
+
+Execution id: `<EXECUTION_ID_91>`
 
 ### Question
 
@@ -18035,7 +19079,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 92: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 92: Q02, repeat 40 — Scorer 1
+
+Execution id: `<EXECUTION_ID_92>`
 
 ### Question
 
@@ -18129,7 +19175,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 92: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 92: Q02, repeat 40 — Scorer 2
+
+Execution id: `<EXECUTION_ID_92>`
 
 ### Question
 
@@ -18223,7 +19271,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 93: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 93: Q02, repeat 42 — Scorer 1
+
+Execution id: `<EXECUTION_ID_93>`
 
 ### Question
 
@@ -18317,7 +19367,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 93: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 93: Q02, repeat 42 — Scorer 2
+
+Execution id: `<EXECUTION_ID_93>`
 
 ### Question
 
@@ -18411,7 +19463,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 94: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 94: Q02, repeat 44 — Scorer 1
+
+Execution id: `<EXECUTION_ID_94>`
 
 ### Question
 
@@ -18505,7 +19559,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 94: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 94: Q02, repeat 44 — Scorer 2
+
+Execution id: `<EXECUTION_ID_94>`
 
 ### Question
 
@@ -18599,7 +19655,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 95: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 95: Q02, repeat 45 — Scorer 1
+
+Execution id: `<EXECUTION_ID_95>`
 
 ### Question
 
@@ -18693,7 +19751,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 95: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 95: Q02, repeat 45 — Scorer 2
+
+Execution id: `<EXECUTION_ID_95>`
 
 ### Question
 
@@ -18787,7 +19847,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 96: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 96: Q02, repeat 46 — Scorer 1
+
+Execution id: `<EXECUTION_ID_96>`
 
 ### Question
 
@@ -18880,7 +19942,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 96: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 96: Q02, repeat 46 — Scorer 2
+
+Execution id: `<EXECUTION_ID_96>`
 
 ### Question
 
@@ -18973,7 +20037,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 97: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 97: Q02, repeat 49 — Scorer 1
+
+Execution id: `<EXECUTION_ID_97>`
 
 ### Question
 
@@ -19068,7 +20134,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 97: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 97: Q02, repeat 49 — Scorer 2
+
+Execution id: `<EXECUTION_ID_97>`
 
 ### Question
 
@@ -19163,7 +20231,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 98: Q02 (Condition: instruction_removed) — Scorer 1
+## Item 98: Q02, repeat 50 — Scorer 1
+
+Execution id: `<EXECUTION_ID_98>`
 
 ### Question
 
@@ -19257,7 +20327,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 98: Q02 (Condition: instruction_removed) — Scorer 2
+## Item 98: Q02, repeat 50 — Scorer 2
+
+Execution id: `<EXECUTION_ID_98>`
 
 ### Question
 
@@ -19351,7 +20423,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 99: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 99: Q03, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_99>`
 
 ### Question
 
@@ -19402,6 +20476,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19451,7 +20529,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 99: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 99: Q03, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_99>`
 
 ### Question
 
@@ -19502,6 +20582,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19551,7 +20635,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 100: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 100: Q03, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_100>`
 
 ### Question
 
@@ -19600,6 +20686,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19649,7 +20739,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 100: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 100: Q03, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_100>`
 
 ### Question
 
@@ -19698,6 +20790,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19747,7 +20843,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 101: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 101: Q03, repeat 3 — Scorer 1
+
+Execution id: `<EXECUTION_ID_101>`
 
 ### Question
 
@@ -19798,6 +20896,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19847,7 +20949,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 101: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 101: Q03, repeat 3 — Scorer 2
+
+Execution id: `<EXECUTION_ID_101>`
 
 ### Question
 
@@ -19898,6 +21002,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -19947,7 +21055,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 102: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 102: Q03, repeat 4 — Scorer 1
+
+Execution id: `<EXECUTION_ID_102>`
 
 ### Question
 
@@ -19998,6 +21108,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20047,7 +21161,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 102: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 102: Q03, repeat 4 — Scorer 2
+
+Execution id: `<EXECUTION_ID_102>`
 
 ### Question
 
@@ -20098,6 +21214,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20147,7 +21267,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 103: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 103: Q03, repeat 5 — Scorer 1
+
+Execution id: `<EXECUTION_ID_103>`
 
 ### Question
 
@@ -20196,6 +21318,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20245,7 +21371,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 103: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 103: Q03, repeat 5 — Scorer 2
+
+Execution id: `<EXECUTION_ID_103>`
 
 ### Question
 
@@ -20294,6 +21422,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20343,7 +21475,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 104: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 104: Q03, repeat 6 — Scorer 1
+
+Execution id: `<EXECUTION_ID_104>`
 
 ### Question
 
@@ -20392,6 +21526,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20441,7 +21579,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 104: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 104: Q03, repeat 6 — Scorer 2
+
+Execution id: `<EXECUTION_ID_104>`
 
 ### Question
 
@@ -20490,6 +21630,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20539,7 +21683,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 105: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 105: Q03, repeat 7 — Scorer 1
+
+Execution id: `<EXECUTION_ID_105>`
 
 ### Question
 
@@ -20590,6 +21736,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20639,7 +21789,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 105: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 105: Q03, repeat 7 — Scorer 2
+
+Execution id: `<EXECUTION_ID_105>`
 
 ### Question
 
@@ -20690,6 +21842,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20739,7 +21895,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 106: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 106: Q03, repeat 8 — Scorer 1
+
+Execution id: `<EXECUTION_ID_106>`
 
 ### Question
 
@@ -20790,6 +21948,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20839,7 +22001,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 106: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 106: Q03, repeat 8 — Scorer 2
+
+Execution id: `<EXECUTION_ID_106>`
 
 ### Question
 
@@ -20890,6 +22054,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -20939,7 +22107,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 107: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 107: Q03, repeat 9 — Scorer 1
+
+Execution id: `<EXECUTION_ID_107>`
 
 ### Question
 
@@ -20990,6 +22160,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21039,7 +22213,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 107: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 107: Q03, repeat 9 — Scorer 2
+
+Execution id: `<EXECUTION_ID_107>`
 
 ### Question
 
@@ -21090,6 +22266,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21139,7 +22319,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 108: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 108: Q03, repeat 10 — Scorer 1
+
+Execution id: `<EXECUTION_ID_108>`
 
 ### Question
 
@@ -21188,6 +22370,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21237,7 +22423,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 108: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 108: Q03, repeat 10 — Scorer 2
+
+Execution id: `<EXECUTION_ID_108>`
 
 ### Question
 
@@ -21286,6 +22474,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21335,7 +22527,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 109: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 109: Q03, repeat 11 — Scorer 1
+
+Execution id: `<EXECUTION_ID_109>`
 
 ### Question
 
@@ -21386,6 +22580,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21435,7 +22633,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 109: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 109: Q03, repeat 11 — Scorer 2
+
+Execution id: `<EXECUTION_ID_109>`
 
 ### Question
 
@@ -21486,6 +22686,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21535,7 +22739,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 110: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 110: Q03, repeat 13 — Scorer 1
+
+Execution id: `<EXECUTION_ID_110>`
 
 ### Question
 
@@ -21584,6 +22790,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21633,7 +22843,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 110: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 110: Q03, repeat 13 — Scorer 2
+
+Execution id: `<EXECUTION_ID_110>`
 
 ### Question
 
@@ -21682,6 +22894,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21731,7 +22947,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 111: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 111: Q03, repeat 14 — Scorer 1
+
+Execution id: `<EXECUTION_ID_111>`
 
 ### Question
 
@@ -21782,6 +23000,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21831,7 +23053,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 111: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 111: Q03, repeat 14 — Scorer 2
+
+Execution id: `<EXECUTION_ID_111>`
 
 ### Question
 
@@ -21882,6 +23106,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -21931,7 +23159,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 112: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 112: Q03, repeat 15 — Scorer 1
+
+Execution id: `<EXECUTION_ID_112>`
 
 ### Question
 
@@ -21980,6 +23210,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22029,7 +23263,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 112: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 112: Q03, repeat 15 — Scorer 2
+
+Execution id: `<EXECUTION_ID_112>`
 
 ### Question
 
@@ -22078,6 +23314,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22127,7 +23367,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 113: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 113: Q03, repeat 16 — Scorer 1
+
+Execution id: `<EXECUTION_ID_113>`
 
 ### Question
 
@@ -22178,6 +23420,10 @@ The monthly interest charge is **$36.00**, assuming an 18% APR applied to the fu
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22227,7 +23473,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 113: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 113: Q03, repeat 16 — Scorer 2
+
+Execution id: `<EXECUTION_ID_113>`
 
 ### Question
 
@@ -22278,6 +23526,10 @@ The monthly interest charge is **$36.00**, assuming an 18% APR applied to the fu
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22327,7 +23579,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 114: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 114: Q03, repeat 17 — Scorer 1
+
+Execution id: `<EXECUTION_ID_114>`
 
 ### Question
 
@@ -22378,6 +23632,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22427,7 +23685,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 114: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 114: Q03, repeat 17 — Scorer 2
+
+Execution id: `<EXECUTION_ID_114>`
 
 ### Question
 
@@ -22478,6 +23738,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22527,7 +23791,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 115: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 115: Q03, repeat 18 — Scorer 1
+
+Execution id: `<EXECUTION_ID_115>`
 
 ### Question
 
@@ -22578,6 +23844,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22627,7 +23897,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 115: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 115: Q03, repeat 18 — Scorer 2
+
+Execution id: `<EXECUTION_ID_115>`
 
 ### Question
 
@@ -22678,103 +23950,9 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
-### Reason for Adjudication
+**Operand provenance (D7.2(a)):**
 
-Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 116: Q03 (Condition: instruction_removed) — Scorer 1
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge is **$36.00**, calculated as:
-
-**$2,400 × (18% ÷ 12) = $36.00**
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
-  → `{"result": "36.0"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -22825,7 +24003,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 116: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 116: Q03, repeat 19 — Scorer 1
+
+Execution id: `<EXECUTION_ID_116>`
 
 ### Question
 
@@ -22874,6 +24054,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -22923,7 +24107,113 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 117: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 116: Q03, repeat 19 — Scorer 2
+
+Execution id: `<EXECUTION_ID_116>`
+
+### Question
+
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge is **$36.00**, calculated as:
+
+**$2,400 × (18% ÷ 12) = $36.00**
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression":"2400 * (0.18 / 12)"}`)
+  → `{"result": "36.0"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 117: Q03, repeat 20 — Scorer 1
+
+Execution id: `<EXECUTION_ID_117>`
 
 ### Question
 
@@ -22974,6 +24264,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23023,7 +24317,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 117: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 117: Q03, repeat 20 — Scorer 2
+
+Execution id: `<EXECUTION_ID_117>`
 
 ### Question
 
@@ -23074,6 +24370,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23123,7 +24423,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 118: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 118: Q03, repeat 21 — Scorer 1
+
+Execution id: `<EXECUTION_ID_118>`
 
 ### Question
 
@@ -23174,6 +24476,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23223,7 +24529,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 118: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 118: Q03, repeat 21 — Scorer 2
+
+Execution id: `<EXECUTION_ID_118>`
 
 ### Question
 
@@ -23274,6 +24582,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23323,7 +24635,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 119: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 119: Q03, repeat 22 — Scorer 1
+
+Execution id: `<EXECUTION_ID_119>`
 
 ### Question
 
@@ -23372,6 +24686,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23421,7 +24739,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 119: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 119: Q03, repeat 22 — Scorer 2
+
+Execution id: `<EXECUTION_ID_119>`
 
 ### Question
 
@@ -23470,6 +24790,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23519,7 +24843,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 120: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 120: Q03, repeat 23 — Scorer 1
+
+Execution id: `<EXECUTION_ID_120>`
 
 ### Question
 
@@ -23570,6 +24896,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23619,7 +24949,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 120: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 120: Q03, repeat 23 — Scorer 2
+
+Execution id: `<EXECUTION_ID_120>`
 
 ### Question
 
@@ -23670,6 +25002,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23719,7 +25055,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 121: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 121: Q03, repeat 24 — Scorer 1
+
+Execution id: `<EXECUTION_ID_121>`
 
 ### Question
 
@@ -23770,6 +25108,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23819,7 +25161,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 121: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 121: Q03, repeat 24 — Scorer 2
+
+Execution id: `<EXECUTION_ID_121>`
 
 ### Question
 
@@ -23870,6 +25214,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -23919,7 +25267,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 122: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 122: Q03, repeat 25 — Scorer 1
+
+Execution id: `<EXECUTION_ID_122>`
 
 ### Question
 
@@ -23968,6 +25318,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24017,7 +25371,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 122: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 122: Q03, repeat 25 — Scorer 2
+
+Execution id: `<EXECUTION_ID_122>`
 
 ### Question
 
@@ -24066,6 +25422,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24115,7 +25475,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 123: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 123: Q03, repeat 26 — Scorer 1
+
+Execution id: `<EXECUTION_ID_123>`
 
 ### Question
 
@@ -24164,6 +25526,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24213,7 +25579,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 123: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 123: Q03, repeat 26 — Scorer 2
+
+Execution id: `<EXECUTION_ID_123>`
 
 ### Question
 
@@ -24262,6 +25630,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24311,7 +25683,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 124: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 124: Q03, repeat 27 — Scorer 1
+
+Execution id: `<EXECUTION_ID_124>`
 
 ### Question
 
@@ -24362,6 +25736,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24411,7 +25789,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 124: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 124: Q03, repeat 27 — Scorer 2
+
+Execution id: `<EXECUTION_ID_124>`
 
 ### Question
 
@@ -24462,6 +25842,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24511,7 +25895,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 125: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 125: Q03, repeat 28 — Scorer 1
+
+Execution id: `<EXECUTION_ID_125>`
 
 ### Question
 
@@ -24562,6 +25948,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24611,7 +26001,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 125: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 125: Q03, repeat 28 — Scorer 2
+
+Execution id: `<EXECUTION_ID_125>`
 
 ### Question
 
@@ -24662,6 +26054,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24711,7 +26107,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 126: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 126: Q03, repeat 29 — Scorer 1
+
+Execution id: `<EXECUTION_ID_126>`
 
 ### Question
 
@@ -24760,6 +26158,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24809,7 +26211,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 126: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 126: Q03, repeat 29 — Scorer 2
+
+Execution id: `<EXECUTION_ID_126>`
 
 ### Question
 
@@ -24858,6 +26262,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -24907,7 +26315,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 127: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 127: Q03, repeat 30 — Scorer 1
+
+Execution id: `<EXECUTION_ID_127>`
 
 ### Question
 
@@ -24958,6 +26368,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25007,7 +26421,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 127: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 127: Q03, repeat 30 — Scorer 2
+
+Execution id: `<EXECUTION_ID_127>`
 
 ### Question
 
@@ -25058,6 +26474,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25107,7 +26527,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 128: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 128: Q03, repeat 31 — Scorer 1
+
+Execution id: `<EXECUTION_ID_128>`
 
 ### Question
 
@@ -25158,6 +26580,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25207,7 +26633,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 128: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 128: Q03, repeat 31 — Scorer 2
+
+Execution id: `<EXECUTION_ID_128>`
 
 ### Question
 
@@ -25258,6 +26686,10 @@ The monthly interest charge is **$36.00**, assuming interest is calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25307,7 +26739,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 129: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 129: Q03, repeat 33 — Scorer 1
+
+Execution id: `<EXECUTION_ID_129>`
 
 ### Question
 
@@ -25358,6 +26792,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25407,7 +26845,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 129: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 129: Q03, repeat 33 — Scorer 2
+
+Execution id: `<EXECUTION_ID_129>`
 
 ### Question
 
@@ -25458,6 +26898,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25507,7 +26951,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 130: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 130: Q03, repeat 34 — Scorer 1
+
+Execution id: `<EXECUTION_ID_130>`
 
 ### Question
 
@@ -25556,6 +27002,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25605,7 +27055,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 130: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 130: Q03, repeat 34 — Scorer 2
+
+Execution id: `<EXECUTION_ID_130>`
 
 ### Question
 
@@ -25654,6 +27106,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25703,7 +27159,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 131: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 131: Q03, repeat 35 — Scorer 1
+
+Execution id: `<EXECUTION_ID_131>`
 
 ### Question
 
@@ -25754,6 +27212,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25803,7 +27265,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 131: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 131: Q03, repeat 35 — Scorer 2
+
+Execution id: `<EXECUTION_ID_131>`
 
 ### Question
 
@@ -25854,6 +27318,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -25903,7 +27371,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 132: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 132: Q03, repeat 36 — Scorer 1
+
+Execution id: `<EXECUTION_ID_132>`
 
 ### Question
 
@@ -25954,6 +27424,10 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26003,7 +27477,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 132: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 132: Q03, repeat 36 — Scorer 2
+
+Execution id: `<EXECUTION_ID_132>`
 
 ### Question
 
@@ -26054,6 +27530,10 @@ The monthly interest charge is **$36.00**, assuming a constant $2,400 balance an
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26103,7 +27583,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 133: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 133: Q03, repeat 37 — Scorer 1
+
+Execution id: `<EXECUTION_ID_133>`
 
 ### Question
 
@@ -26152,6 +27634,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26201,7 +27687,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 133: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 133: Q03, repeat 37 — Scorer 2
+
+Execution id: `<EXECUTION_ID_133>`
 
 ### Question
 
@@ -26250,6 +27738,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26299,7 +27791,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 134: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 134: Q03, repeat 38 — Scorer 1
+
+Execution id: `<EXECUTION_ID_134>`
 
 ### Question
 
@@ -26350,6 +27844,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26399,7 +27897,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 134: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 134: Q03, repeat 38 — Scorer 2
+
+Execution id: `<EXECUTION_ID_134>`
 
 ### Question
 
@@ -26450,6 +27950,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26499,7 +28003,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 135: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 135: Q03, repeat 39 — Scorer 1
+
+Execution id: `<EXECUTION_ID_135>`
 
 ### Question
 
@@ -26550,6 +28056,10 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ac
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26599,7 +28109,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 135: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 135: Q03, repeat 39 — Scorer 2
+
+Execution id: `<EXECUTION_ID_135>`
 
 ### Question
 
@@ -26650,6 +28162,10 @@ The monthly interest charge is **$36.00**, assuming an 18% APR divided evenly ac
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26699,7 +28215,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 136: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 136: Q03, repeat 40 — Scorer 1
+
+Execution id: `<EXECUTION_ID_136>`
 
 ### Question
 
@@ -26750,6 +28268,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26799,7 +28321,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 136: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 136: Q03, repeat 40 — Scorer 2
+
+Execution id: `<EXECUTION_ID_136>`
 
 ### Question
 
@@ -26850,6 +28374,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26899,7 +28427,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 137: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 137: Q03, repeat 42 — Scorer 1
+
+Execution id: `<EXECUTION_ID_137>`
 
 ### Question
 
@@ -26950,6 +28480,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -26999,7 +28533,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 137: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 137: Q03, repeat 42 — Scorer 2
+
+Execution id: `<EXECUTION_ID_137>`
 
 ### Question
 
@@ -27050,6 +28586,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27099,7 +28639,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 138: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 138: Q03, repeat 45 — Scorer 1
+
+Execution id: `<EXECUTION_ID_138>`
 
 ### Question
 
@@ -27150,6 +28692,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27199,7 +28745,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 138: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 138: Q03, repeat 45 — Scorer 2
+
+Execution id: `<EXECUTION_ID_138>`
 
 ### Question
 
@@ -27250,6 +28798,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27299,7 +28851,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 139: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 139: Q03, repeat 46 — Scorer 1
+
+Execution id: `<EXECUTION_ID_139>`
 
 ### Question
 
@@ -27348,6 +28902,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27397,7 +28955,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 139: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 139: Q03, repeat 46 — Scorer 2
+
+Execution id: `<EXECUTION_ID_139>`
 
 ### Question
 
@@ -27446,6 +29006,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27495,7 +29059,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 140: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 140: Q03, repeat 47 — Scorer 1
+
+Execution id: `<EXECUTION_ID_140>`
 
 ### Question
 
@@ -27546,6 +29112,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27595,7 +29165,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 140: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 140: Q03, repeat 47 — Scorer 2
+
+Execution id: `<EXECUTION_ID_140>`
 
 ### Question
 
@@ -27646,6 +29218,10 @@ The monthly interest charge is **$36.00**, assuming the 18% APR is divided evenl
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27695,7 +29271,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 141: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 141: Q03, repeat 48 — Scorer 1
+
+Execution id: `<EXECUTION_ID_141>`
 
 ### Question
 
@@ -27746,6 +29324,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27795,7 +29377,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 141: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 141: Q03, repeat 48 — Scorer 2
+
+Execution id: `<EXECUTION_ID_141>`
 
 ### Question
 
@@ -27846,6 +29430,10 @@ The monthly interest charge is **$36.00**, assuming the 18% annual rate is divid
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27895,7 +29483,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 142: Q03 (Condition: instruction_removed) — Scorer 1
+## Item 142: Q03, repeat 50 — Scorer 1
+
+Execution id: `<EXECUTION_ID_142>`
 
 ### Question
 
@@ -27944,6 +29534,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -27993,7 +29587,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 142: Q03 (Condition: instruction_removed) — Scorer 2
+## Item 142: Q03, repeat 50 — Scorer 2
+
+Execution id: `<EXECUTION_ID_142>`
 
 ### Question
 
@@ -28042,6 +29638,10 @@ The monthly interest charge is **$36.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28091,7 +29691,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 143: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 143: Q04, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_143>`
 
 ### Question
 
@@ -28138,6 +29740,10 @@ The first payment’s interest is:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -28188,7 +29794,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 143: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 143: Q04, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_143>`
 
 ### Question
 
@@ -28235,6 +29843,10 @@ The first payment’s interest is:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -28285,7 +29897,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 144: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 144: Q04, repeat 4 — Scorer 1
+
+Execution id: `<EXECUTION_ID_144>`
 
 ### Question
 
@@ -28338,6 +29952,12 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28387,7 +30007,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 144: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 144: Q04, repeat 4 — Scorer 2
+
+Execution id: `<EXECUTION_ID_144>`
 
 ### Question
 
@@ -28440,6 +30062,12 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28489,7 +30117,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 145: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 145: Q04, repeat 6 — Scorer 1
+
+Execution id: `<EXECUTION_ID_145>`
 
 ### Question
 
@@ -28542,6 +30172,12 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28591,7 +30227,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 145: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 145: Q04, repeat 6 — Scorer 2
+
+Execution id: `<EXECUTION_ID_145>`
 
 ### Question
 
@@ -28644,6 +30282,12 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28693,7 +30337,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 146: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 146: Q04, repeat 9 — Scorer 1
+
+Execution id: `<EXECUTION_ID_146>`
 
 ### Question
 
@@ -28745,6 +30391,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28794,7 +30446,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 146: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 146: Q04, repeat 9 — Scorer 2
+
+Execution id: `<EXECUTION_ID_146>`
 
 ### Question
 
@@ -28846,6 +30500,12 @@ So, the principal portion of the first mortgage payment is **$430.75**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28895,7 +30555,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 147: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 147: Q04, repeat 30 — Scorer 1
+
+Execution id: `<EXECUTION_ID_147>`
 
 ### Question
 
@@ -28943,6 +30605,10 @@ The first month’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -28992,7 +30658,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 147: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 147: Q04, repeat 30 — Scorer 2
+
+Execution id: `<EXECUTION_ID_147>`
 
 ### Question
 
@@ -29040,6 +30708,10 @@ The first month’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29089,7 +30761,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 148: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 148: Q04, repeat 32 — Scorer 1
+
+Execution id: `<EXECUTION_ID_148>`
 
 ### Question
 
@@ -29137,6 +30811,10 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29186,7 +30864,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 148: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 148: Q04, repeat 32 — Scorer 2
+
+Execution id: `<EXECUTION_ID_148>`
 
 ### Question
 
@@ -29234,6 +30914,10 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29283,7 +30967,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 149: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 149: Q04, repeat 34 — Scorer 1
+
+Execution id: `<EXECUTION_ID_149>`
 
 ### Question
 
@@ -29339,6 +31025,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29388,7 +31080,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 149: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 149: Q04, repeat 34 — Scorer 2
+
+Execution id: `<EXECUTION_ID_149>`
 
 ### Question
 
@@ -29444,6 +31138,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29493,7 +31193,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 150: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 150: Q04, repeat 42 — Scorer 1
+
+Execution id: `<EXECUTION_ID_150>`
 
 ### Question
 
@@ -29549,6 +31251,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29598,7 +31306,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 150: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 150: Q04, repeat 42 — Scorer 2
+
+Execution id: `<EXECUTION_ID_150>`
 
 ### Question
 
@@ -29654,6 +31364,12 @@ Therefore, the principal portion of the **$1,437.00** payment is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29703,7 +31419,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 151: Q04 (Condition: instruction_removed) — Scorer 1
+## Item 151: Q04, repeat 46 — Scorer 1
+
+Execution id: `<EXECUTION_ID_151>`
 
 ### Question
 
@@ -29751,6 +31469,10 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29800,7 +31522,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 151: Q04 (Condition: instruction_removed) — Scorer 2
+## Item 151: Q04, repeat 46 — Scorer 2
+
+Execution id: `<EXECUTION_ID_151>`
 
 ### Question
 
@@ -29848,6 +31572,10 @@ The first payment’s interest is:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -29897,7 +31625,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 152: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 152: Q05, repeat 5 — Scorer 1
+
+Execution id: `<EXECUTION_ID_152>`
 
 ### Question
 
@@ -29961,6 +31691,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30010,7 +31746,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 152: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 152: Q05, repeat 5 — Scorer 2
+
+Execution id: `<EXECUTION_ID_152>`
 
 ### Question
 
@@ -30074,6 +31812,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30123,7 +31867,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 153: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 153: Q05, repeat 9 — Scorer 1
+
+Execution id: `<EXECUTION_ID_153>`
 
 ### Question
 
@@ -30176,6 +31922,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30225,7 +31975,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 153: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 153: Q05, repeat 9 — Scorer 2
+
+Execution id: `<EXECUTION_ID_153>`
 
 ### Question
 
@@ -30278,6 +32030,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30327,7 +32083,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 154: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 154: Q05, repeat 18 — Scorer 1
+
+Execution id: `<EXECUTION_ID_154>`
 
 ### Question
 
@@ -30380,6 +32138,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30429,7 +32191,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 154: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 154: Q05, repeat 18 — Scorer 2
+
+Execution id: `<EXECUTION_ID_154>`
 
 ### Question
 
@@ -30482,6 +32246,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30531,7 +32299,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 155: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 155: Q05, repeat 22 — Scorer 1
+
+Execution id: `<EXECUTION_ID_155>`
 
 ### Question
 
@@ -30584,6 +32354,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30633,7 +32407,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 155: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 155: Q05, repeat 22 — Scorer 2
+
+Execution id: `<EXECUTION_ID_155>`
 
 ### Question
 
@@ -30686,6 +32462,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30735,7 +32515,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 156: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 156: Q05, repeat 28 — Scorer 1
+
+Execution id: `<EXECUTION_ID_156>`
 
 ### Question
 
@@ -30788,6 +32570,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30837,7 +32623,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 156: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 156: Q05, repeat 28 — Scorer 2
+
+Execution id: `<EXECUTION_ID_156>`
 
 ### Question
 
@@ -30890,6 +32678,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -30939,7 +32731,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 157: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 157: Q05, repeat 29 — Scorer 1
+
+Execution id: `<EXECUTION_ID_157>`
 
 ### Question
 
@@ -30992,6 +32786,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31041,7 +32839,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 157: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 157: Q05, repeat 29 — Scorer 2
+
+Execution id: `<EXECUTION_ID_157>`
 
 ### Question
 
@@ -31094,6 +32894,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31143,7 +32947,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 158: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 158: Q05, repeat 30 — Scorer 1
+
+Execution id: `<EXECUTION_ID_158>`
 
 ### Question
 
@@ -31207,6 +33013,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31256,7 +33068,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 158: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 158: Q05, repeat 30 — Scorer 2
+
+Execution id: `<EXECUTION_ID_158>`
 
 ### Question
 
@@ -31320,6 +33134,12 @@ After adding interest and making the **$25 minimum payment**:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31369,7 +33189,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 159: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 159: Q05, repeat 36 — Scorer 1
+
+Execution id: `<EXECUTION_ID_159>`
 
 ### Question
 
@@ -31422,6 +33244,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31471,7 +33297,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 159: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 159: Q05, repeat 36 — Scorer 2
+
+Execution id: `<EXECUTION_ID_159>`
 
 ### Question
 
@@ -31524,6 +33352,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31573,7 +33405,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 160: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 160: Q05, repeat 40 — Scorer 1
+
+Execution id: `<EXECUTION_ID_160>`
 
 ### Question
 
@@ -31626,6 +33460,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31675,7 +33513,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 160: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 160: Q05, repeat 40 — Scorer 2
+
+Execution id: `<EXECUTION_ID_160>`
 
 ### Question
 
@@ -31728,6 +33568,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31777,7 +33621,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 161: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 161: Q05, repeat 44 — Scorer 1
+
+Execution id: `<EXECUTION_ID_161>`
 
 ### Question
 
@@ -31830,6 +33676,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31879,7 +33729,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 161: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 161: Q05, repeat 44 — Scorer 2
+
+Execution id: `<EXECUTION_ID_161>`
 
 ### Question
 
@@ -31932,6 +33784,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -31981,7 +33837,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 162: Q05 (Condition: instruction_removed) — Scorer 1
+## Item 162: Q05, repeat 50 — Scorer 1
+
+Execution id: `<EXECUTION_ID_162>`
 
 ### Question
 
@@ -32034,6 +33892,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -32083,7 +33945,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 162: Q05 (Condition: instruction_removed) — Scorer 2
+## Item 162: Q05, repeat 50 — Scorer 2
+
+Execution id: `<EXECUTION_ID_162>`
 
 ### Question
 
@@ -32136,6 +34000,10 @@ After one month:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -32185,7 +34053,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 163: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 163: Q06, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_163>`
 
 ### Question
 
@@ -32274,7 +34144,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 163: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 163: Q06, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_163>`
 
 ### Question
 
@@ -32363,7 +34235,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 164: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 164: Q06, repeat 3 — Scorer 1
+
+Execution id: `<EXECUTION_ID_164>`
 
 ### Question
 
@@ -32405,6 +34279,10 @@ The total annual cost is **$144.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -32455,7 +34333,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 164: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 164: Q06, repeat 3 — Scorer 2
+
+Execution id: `<EXECUTION_ID_164>`
 
 ### Question
 
@@ -32497,6 +34377,10 @@ The total annual cost is **$144.00**, calculated as:
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -32547,7 +34431,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 165: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 165: Q06, repeat 13 — Scorer 1
+
+Execution id: `<EXECUTION_ID_165>`
 
 ### Question
 
@@ -32634,7 +34520,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 165: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 165: Q06, repeat 13 — Scorer 2
+
+Execution id: `<EXECUTION_ID_165>`
 
 ### Question
 
@@ -32721,7 +34609,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 166: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 166: Q06, repeat 19 — Scorer 1
+
+Execution id: `<EXECUTION_ID_166>`
 
 ### Question
 
@@ -32764,6 +34654,10 @@ Calculation: **$12 monthly fee × 12 months = $144**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -32813,7 +34707,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 166: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 166: Q06, repeat 19 — Scorer 2
+
+Execution id: `<EXECUTION_ID_166>`
 
 ### Question
 
@@ -32856,6 +34752,10 @@ Calculation: **$12 monthly fee × 12 months = $144**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -32905,7 +34805,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 167: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 167: Q06, repeat 23 — Scorer 1
+
+Execution id: `<EXECUTION_ID_167>`
 
 ### Question
 
@@ -32948,6 +34850,10 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -32997,7 +34903,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 167: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 167: Q06, repeat 23 — Scorer 2
+
+Execution id: `<EXECUTION_ID_167>`
 
 ### Question
 
@@ -33040,6 +34948,10 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -33089,7 +35001,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 168: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 168: Q06, repeat 26 — Scorer 1
+
+Execution id: `<EXECUTION_ID_168>`
 
 ### Question
 
@@ -33132,6 +35046,10 @@ The total annual cost is **$144.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -33181,7 +35099,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 168: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 168: Q06, repeat 26 — Scorer 2
+
+Execution id: `<EXECUTION_ID_168>`
 
 ### Question
 
@@ -33224,6 +35144,10 @@ The total annual cost is **$144.00**, calculated as:
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -33273,7 +35197,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 169: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 169: Q06, repeat 27 — Scorer 1
+
+Execution id: `<EXECUTION_ID_169>`
 
 ### Question
 
@@ -33316,6 +35242,10 @@ The checking account costs **$144 per year** to maintain.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -33365,7 +35295,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 169: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 169: Q06, repeat 27 — Scorer 2
+
+Execution id: `<EXECUTION_ID_169>`
 
 ### Question
 
@@ -33408,6 +35340,10 @@ The checking account costs **$144 per year** to maintain.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Multiple numeric tokens in the response match the expected value. Which one is the released figure is ambiguous.
@@ -33457,7 +35393,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 170: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 170: Q06, repeat 33 — Scorer 1
+
+Execution id: `<EXECUTION_ID_170>`
 
 ### Question
 
@@ -33546,7 +35484,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 170: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 170: Q06, repeat 33 — Scorer 2
+
+Execution id: `<EXECUTION_ID_170>`
 
 ### Question
 
@@ -33635,7 +35575,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 171: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 171: Q06, repeat 40 — Scorer 1
+
+Execution id: `<EXECUTION_ID_171>`
 
 ### Question
 
@@ -33722,7 +35664,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 171: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 171: Q06, repeat 40 — Scorer 2
+
+Execution id: `<EXECUTION_ID_171>`
 
 ### Question
 
@@ -33809,7 +35753,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 172: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 172: Q06, repeat 43 — Scorer 1
+
+Execution id: `<EXECUTION_ID_172>`
 
 ### Question
 
@@ -33851,6 +35797,10 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -33901,7 +35851,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 172: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 172: Q06, repeat 43 — Scorer 2
+
+Execution id: `<EXECUTION_ID_172>`
 
 ### Question
 
@@ -33943,6 +35895,10 @@ Calculation: **$12 monthly fee × 12 months = $144 per year**.
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -33993,7 +35949,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 173: Q06 (Condition: instruction_removed) — Scorer 1
+## Item 173: Q06, repeat 46 — Scorer 1
+
+Execution id: `<EXECUTION_ID_173>`
 
 ### Question
 
@@ -34082,7 +36040,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 173: Q06 (Condition: instruction_removed) — Scorer 2
+## Item 173: Q06, repeat 46 — Scorer 2
+
+Execution id: `<EXECUTION_ID_173>`
 
 ### Question
 
@@ -34171,7 +36131,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 174: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 174: Q07, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_174>`
 
 ### Question
 
@@ -34217,6 +36179,10 @@ Ending balance after three months: **$42,957.48**.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)`
 
 ### Reason for Adjudication
 
@@ -34267,7 +36233,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 174: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 174: Q07, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_174>`
 
 ### Question
 
@@ -34313,6 +36281,10 @@ Ending balance after three months: **$42,957.48**.
 **Operation correctness:**
 
 - `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)`
 
 ### Reason for Adjudication
 
@@ -34363,7 +36335,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 175: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 175: Q07, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_175>`
 
 ### Question
 
@@ -34411,6 +36385,10 @@ Calculation:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34460,7 +36438,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 175: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 175: Q07, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_175>`
 
 ### Question
 
@@ -34508,6 +36488,10 @@ Calculation:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34557,7 +36541,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 176: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 176: Q07, repeat 3 — Scorer 1
+
+Execution id: `<EXECUTION_ID_176>`
 
 ### Question
 
@@ -34602,6 +36588,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34651,7 +36641,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 176: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 176: Q07, repeat 3 — Scorer 2
+
+Execution id: `<EXECUTION_ID_176>`
 
 ### Question
 
@@ -34696,6 +36688,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34745,7 +36741,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 177: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 177: Q07, repeat 4 — Scorer 1
+
+Execution id: `<EXECUTION_ID_177>`
 
 ### Question
 
@@ -34788,6 +36786,10 @@ Ending balance after three months: **$42,957.77**.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34837,7 +36839,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 177: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 177: Q07, repeat 4 — Scorer 2
+
+Execution id: `<EXECUTION_ID_177>`
 
 ### Question
 
@@ -34880,6 +36884,10 @@ Ending balance after three months: **$42,957.77**.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -34929,7 +36937,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 178: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 178: Q07, repeat 5 — Scorer 1
+
+Execution id: `<EXECUTION_ID_178>`
 
 ### Question
 
@@ -34974,6 +36984,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35023,7 +37037,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 178: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 178: Q07, repeat 5 — Scorer 2
+
+Execution id: `<EXECUTION_ID_178>`
 
 ### Question
 
@@ -35068,6 +37084,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35117,7 +37137,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 179: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 179: Q07, repeat 7 — Scorer 1
+
+Execution id: `<EXECUTION_ID_179>`
 
 ### Question
 
@@ -35162,6 +37184,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35211,7 +37237,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 179: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 179: Q07, repeat 7 — Scorer 2
+
+Execution id: `<EXECUTION_ID_179>`
 
 ### Question
 
@@ -35256,6 +37284,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35305,7 +37337,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 180: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 180: Q07, repeat 8 — Scorer 1
+
+Execution id: `<EXECUTION_ID_180>`
 
 ### Question
 
@@ -35350,6 +37384,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35399,7 +37437,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 180: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 180: Q07, repeat 8 — Scorer 2
+
+Execution id: `<EXECUTION_ID_180>`
 
 ### Question
 
@@ -35444,6 +37484,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35493,7 +37537,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 181: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 181: Q07, repeat 9 — Scorer 1
+
+Execution id: `<EXECUTION_ID_181>`
 
 ### Question
 
@@ -35538,6 +37584,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35587,7 +37637,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 181: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 181: Q07, repeat 9 — Scorer 2
+
+Execution id: `<EXECUTION_ID_181>`
 
 ### Question
 
@@ -35632,6 +37684,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35681,7 +37737,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 182: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 182: Q07, repeat 10 — Scorer 1
+
+Execution id: `<EXECUTION_ID_182>`
 
 ### Question
 
@@ -35722,6 +37780,10 @@ The investment account’s **quarterly net growth after fees is approximately $7
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35771,7 +37833,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 182: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 182: Q07, repeat 10 — Scorer 2
+
+Execution id: `<EXECUTION_ID_182>`
 
 ### Question
 
@@ -35812,6 +37876,10 @@ The investment account’s **quarterly net growth after fees is approximately $7
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35861,7 +37929,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 183: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 183: Q07, repeat 11 — Scorer 1
+
+Execution id: `<EXECUTION_ID_183>`
 
 ### Question
 
@@ -35906,6 +37976,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -35955,7 +38029,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 183: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 183: Q07, repeat 11 — Scorer 2
+
+Execution id: `<EXECUTION_ID_183>`
 
 ### Question
 
@@ -36000,6 +38076,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36049,7 +38129,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 184: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 184: Q07, repeat 12 — Scorer 1
+
+Execution id: `<EXECUTION_ID_184>`
 
 ### Question
 
@@ -36094,6 +38176,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36143,7 +38229,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 184: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 184: Q07, repeat 12 — Scorer 2
+
+Execution id: `<EXECUTION_ID_184>`
 
 ### Question
 
@@ -36188,6 +38276,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36237,7 +38329,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 185: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 185: Q07, repeat 13 — Scorer 1
+
+Execution id: `<EXECUTION_ID_185>`
 
 ### Question
 
@@ -36282,6 +38376,10 @@ Assuming monthly compounding and a $15 monthly fee deducted over three months:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36331,7 +38429,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 185: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 185: Q07, repeat 13 — Scorer 2
+
+Execution id: `<EXECUTION_ID_185>`
 
 ### Question
 
@@ -36376,6 +38476,10 @@ Assuming monthly compounding and a $15 monthly fee deducted over three months:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36425,7 +38529,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 186: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 186: Q07, repeat 14 — Scorer 1
+
+Execution id: `<EXECUTION_ID_186>`
 
 ### Question
 
@@ -36470,6 +38576,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36519,7 +38629,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 186: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 186: Q07, repeat 14 — Scorer 2
+
+Execution id: `<EXECUTION_ID_186>`
 
 ### Question
 
@@ -36564,6 +38676,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36613,7 +38729,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 187: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 187: Q07, repeat 15 — Scorer 1
+
+Execution id: `<EXECUTION_ID_187>`
 
 ### Question
 
@@ -36658,6 +38776,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36707,7 +38829,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 187: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 187: Q07, repeat 15 — Scorer 2
+
+Execution id: `<EXECUTION_ID_187>`
 
 ### Question
 
@@ -36752,6 +38876,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36801,7 +38929,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 188: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 188: Q07, repeat 16 — Scorer 1
+
+Execution id: `<EXECUTION_ID_188>`
 
 ### Question
 
@@ -36846,6 +38976,10 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36895,7 +39029,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 188: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 188: Q07, repeat 16 — Scorer 2
+
+Execution id: `<EXECUTION_ID_188>`
 
 ### Question
 
@@ -36940,6 +39076,10 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -36989,7 +39129,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 189: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 189: Q07, repeat 17 — Scorer 1
+
+Execution id: `<EXECUTION_ID_189>`
 
 ### Question
 
@@ -37034,6 +39176,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37083,7 +39229,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 189: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 189: Q07, repeat 17 — Scorer 2
+
+Execution id: `<EXECUTION_ID_189>`
 
 ### Question
 
@@ -37128,6 +39276,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37177,7 +39329,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 190: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 190: Q07, repeat 18 — Scorer 1
+
+Execution id: `<EXECUTION_ID_190>`
 
 ### Question
 
@@ -37222,6 +39376,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37271,7 +39429,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 190: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 190: Q07, repeat 18 — Scorer 2
+
+Execution id: `<EXECUTION_ID_190>`
 
 ### Question
 
@@ -37316,6 +39476,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37365,7 +39529,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 191: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 191: Q07, repeat 19 — Scorer 1
+
+Execution id: `<EXECUTION_ID_191>`
 
 ### Question
 
@@ -37410,6 +39576,10 @@ Assuming monthly compounding and a $15 fee charged monthly:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175 * ((1 + 0.078/12)^3 - 1) - 15 * (1 + (1 + 0.078/12) + (1 + 0.078/12)^2)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37459,7 +39629,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 191: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 191: Q07, repeat 19 — Scorer 2
+
+Execution id: `<EXECUTION_ID_191>`
 
 ### Question
 
@@ -37504,6 +39676,10 @@ Assuming monthly compounding and a $15 fee charged monthly:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175 * ((1 + 0.078/12)^3 - 1) - 15 * (1 + (1 + 0.078/12) + (1 + 0.078/12)^2)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37553,7 +39729,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 192: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 192: Q07, repeat 21 — Scorer 1
+
+Execution id: `<EXECUTION_ID_192>`
 
 ### Question
 
@@ -37598,6 +39776,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37647,7 +39829,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 192: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 192: Q07, repeat 21 — Scorer 2
+
+Execution id: `<EXECUTION_ID_192>`
 
 ### Question
 
@@ -37692,6 +39876,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37741,7 +39929,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 193: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 193: Q07, repeat 22 — Scorer 1
+
+Execution id: `<EXECUTION_ID_193>`
 
 ### Question
 
@@ -37786,6 +39976,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37835,7 +40029,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 193: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 193: Q07, repeat 22 — Scorer 2
+
+Execution id: `<EXECUTION_ID_193>`
 
 ### Question
 
@@ -37880,6 +40076,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -37929,7 +40129,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 194: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 194: Q07, repeat 23 — Scorer 1
+
+Execution id: `<EXECUTION_ID_194>`
 
 ### Question
 
@@ -37972,6 +40174,10 @@ Assuming monthly compounding and the $15 fee is deducted monthly, the **quarterl
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38021,7 +40227,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 194: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 194: Q07, repeat 23 — Scorer 2
+
+Execution id: `<EXECUTION_ID_194>`
 
 ### Question
 
@@ -38064,6 +40272,10 @@ Assuming monthly compounding and the $15 fee is deducted monthly, the **quarterl
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38113,7 +40325,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 195: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 195: Q07, repeat 24 — Scorer 1
+
+Execution id: `<EXECUTION_ID_195>`
 
 ### Question
 
@@ -38158,6 +40372,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38207,7 +40425,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 195: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 195: Q07, repeat 24 — Scorer 2
+
+Execution id: `<EXECUTION_ID_195>`
 
 ### Question
 
@@ -38252,6 +40472,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38301,7 +40525,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 196: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 196: Q07, repeat 25 — Scorer 1
+
+Execution id: `<EXECUTION_ID_196>`
 
 ### Question
 
@@ -38346,6 +40572,10 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38395,7 +40625,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 196: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 196: Q07, repeat 25 — Scorer 2
+
+Execution id: `<EXECUTION_ID_196>`
 
 ### Question
 
@@ -38440,6 +40672,10 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38489,7 +40725,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 197: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 197: Q07, repeat 26 — Scorer 1
+
+Execution id: `<EXECUTION_ID_197>`
 
 ### Question
 
@@ -38534,6 +40772,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38583,7 +40825,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 197: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 197: Q07, repeat 26 — Scorer 2
+
+Execution id: `<EXECUTION_ID_197>`
 
 ### Question
 
@@ -38628,6 +40872,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38677,7 +40925,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 198: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 198: Q07, repeat 27 — Scorer 1
+
+Execution id: `<EXECUTION_ID_198>`
 
 ### Question
 
@@ -38722,6 +40972,10 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38771,7 +41025,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 198: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 198: Q07, repeat 27 — Scorer 2
+
+Execution id: `<EXECUTION_ID_198>`
 
 ### Question
 
@@ -38816,6 +41072,10 @@ Assuming monthly compounding:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38865,7 +41125,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 199: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 199: Q07, repeat 28 — Scorer 1
+
+Execution id: `<EXECUTION_ID_199>`
 
 ### Question
 
@@ -38910,6 +41172,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -38959,7 +41225,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 199: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 199: Q07, repeat 28 — Scorer 2
+
+Execution id: `<EXECUTION_ID_199>`
 
 ### Question
 
@@ -39004,6 +41272,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39053,7 +41325,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 200: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 200: Q07, repeat 29 — Scorer 1
+
+Execution id: `<EXECUTION_ID_200>`
 
 ### Question
 
@@ -39098,6 +41372,10 @@ Assuming monthly compounding and the $15 fee is charged monthly:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39147,7 +41425,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 200: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 200: Q07, repeat 29 — Scorer 2
+
+Execution id: `<EXECUTION_ID_200>`
 
 ### Question
 
@@ -39192,6 +41472,10 @@ Assuming monthly compounding and the $15 fee is charged monthly:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175 * ((1 + 0.078/12)^3 - 1) - 15 * ((1 + 0.078/12)^2 + (1 + 0.078/12) + 1)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39241,7 +41525,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 201: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 201: Q07, repeat 30 — Scorer 1
+
+Execution id: `<EXECUTION_ID_201>`
 
 ### Question
 
@@ -39286,6 +41572,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39335,7 +41625,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 201: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 201: Q07, repeat 30 — Scorer 2
+
+Execution id: `<EXECUTION_ID_201>`
 
 ### Question
 
@@ -39380,6 +41672,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39429,7 +41725,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 202: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 202: Q07, repeat 32 — Scorer 1
+
+Execution id: `<EXECUTION_ID_202>`
 
 ### Question
 
@@ -39474,6 +41772,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39523,7 +41825,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 202: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 202: Q07, repeat 32 — Scorer 2
+
+Execution id: `<EXECUTION_ID_202>`
 
 ### Question
 
@@ -39568,6 +41872,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39617,7 +41925,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 203: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 203: Q07, repeat 33 — Scorer 1
+
+Execution id: `<EXECUTION_ID_203>`
 
 ### Question
 
@@ -39662,6 +41972,10 @@ Assuming monthly compounding and a $15 monthly fee deducted separately:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39711,7 +42025,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 203: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 203: Q07, repeat 33 — Scorer 2
+
+Execution id: `<EXECUTION_ID_203>`
 
 ### Question
 
@@ -39756,6 +42072,10 @@ Assuming monthly compounding and a $15 monthly fee deducted separately:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39805,7 +42125,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 204: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 204: Q07, repeat 35 — Scorer 1
+
+Execution id: `<EXECUTION_ID_204>`
 
 ### Question
 
@@ -39850,6 +42172,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39899,7 +42225,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 204: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 204: Q07, repeat 35 — Scorer 2
+
+Execution id: `<EXECUTION_ID_204>`
 
 ### Question
 
@@ -39944,6 +42272,10 @@ Assuming monthly compounding and a $15 fee each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -39993,7 +42325,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 205: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 205: Q07, repeat 36 — Scorer 1
+
+Execution id: `<EXECUTION_ID_205>`
 
 ### Question
 
@@ -40034,6 +42368,10 @@ The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40083,7 +42421,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 205: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 205: Q07, repeat 36 — Scorer 2
+
+Execution id: `<EXECUTION_ID_205>`
 
 ### Question
 
@@ -40124,6 +42464,10 @@ The quarterly net growth, assuming monthly compounding and a $15 monthly fee, is
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40173,7 +42517,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 206: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 206: Q07, repeat 37 — Scorer 1
+
+Execution id: `<EXECUTION_ID_206>`
 
 ### Question
 
@@ -40225,6 +42571,12 @@ The projected balance after three months is **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40274,7 +42626,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 206: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 206: Q07, repeat 37 — Scorer 2
+
+Execution id: `<EXECUTION_ID_206>`
 
 ### Question
 
@@ -40326,6 +42680,12 @@ The projected balance after three months is **$42,957.77**.
 
 - `OPERATION-CORRECT`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40375,7 +42735,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 207: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 207: Q07, repeat 38 — Scorer 1
+
+Execution id: `<EXECUTION_ID_207>`
 
 ### Question
 
@@ -40420,6 +42782,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40469,7 +42835,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 207: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 207: Q07, repeat 38 — Scorer 2
+
+Execution id: `<EXECUTION_ID_207>`
 
 ### Question
 
@@ -40514,6 +42882,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40563,7 +42935,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 208: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 208: Q07, repeat 40 — Scorer 1
+
+Execution id: `<EXECUTION_ID_208>`
 
 ### Question
 
@@ -40608,6 +42982,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40657,7 +43035,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 208: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 208: Q07, repeat 40 — Scorer 2
+
+Execution id: `<EXECUTION_ID_208>`
 
 ### Question
 
@@ -40702,6 +43082,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40751,7 +43135,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 209: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 209: Q07, repeat 41 — Scorer 1
+
+Execution id: `<EXECUTION_ID_209>`
 
 ### Question
 
@@ -40796,6 +43182,10 @@ Assuming **monthly compounding** and a **$15 monthly fee**:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40845,7 +43235,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 209: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 209: Q07, repeat 41 — Scorer 2
+
+Execution id: `<EXECUTION_ID_209>`
 
 ### Question
 
@@ -40890,6 +43282,10 @@ Assuming **monthly compounding** and a **$15 monthly fee**:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -40939,7 +43335,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 210: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 210: Q07, repeat 42 — Scorer 1
+
+Execution id: `<EXECUTION_ID_210>`
 
 ### Question
 
@@ -40984,6 +43382,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41033,7 +43435,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 210: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 210: Q07, repeat 42 — Scorer 2
+
+Execution id: `<EXECUTION_ID_210>`
 
 ### Question
 
@@ -41078,6 +43482,10 @@ Assuming monthly compounding and a $15 fee charged each month:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41127,7 +43535,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 211: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 211: Q07, repeat 46 — Scorer 1
+
+Execution id: `<EXECUTION_ID_211>`
 
 ### Question
 
@@ -41172,6 +43582,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41221,7 +43635,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 211: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 211: Q07, repeat 46 — Scorer 2
+
+Execution id: `<EXECUTION_ID_211>`
 
 ### Question
 
@@ -41266,6 +43682,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41315,7 +43735,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 212: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 212: Q07, repeat 48 — Scorer 1
+
+Execution id: `<EXECUTION_ID_212>`
 
 ### Question
 
@@ -41362,6 +43784,10 @@ Calculation:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41411,7 +43837,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 212: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 212: Q07, repeat 48 — Scorer 2
+
+Execution id: `<EXECUTION_ID_212>`
 
 ### Question
 
@@ -41458,6 +43886,10 @@ Calculation:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41507,7 +43939,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 213: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 213: Q07, repeat 49 — Scorer 1
+
+Execution id: `<EXECUTION_ID_213>`
 
 ### Question
 
@@ -41554,6 +43988,10 @@ Ending balance after three months: **$42,957.48**.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41603,7 +44041,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 213: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 213: Q07, repeat 49 — Scorer 2
+
+Execution id: `<EXECUTION_ID_213>`
 
 ### Question
 
@@ -41650,6 +44090,10 @@ Ending balance after three months: **$42,957.48**.
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `2` in `42175*(1+0.078/12)^3 - 42175 - 15*((1+0.078/12)^2 + (1+0.078/12) + 1)`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41699,7 +44143,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 214: Q07 (Condition: instruction_removed) — Scorer 1
+## Item 214: Q07, repeat 50 — Scorer 1
+
+Execution id: `<EXECUTION_ID_214>`
 
 ### Question
 
@@ -41744,6 +44190,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41793,7 +44243,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 214: Q07 (Condition: instruction_removed) — Scorer 2
+## Item 214: Q07, repeat 50 — Scorer 2
+
+Execution id: `<EXECUTION_ID_214>`
 
 ### Question
 
@@ -41838,6 +44290,10 @@ Assuming monthly compounding and a $15 monthly fee:
 
 - `WRONG-OPERATION`: 
 
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
 ### Reason for Adjudication
 
 Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
@@ -41887,7 +44343,9 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 215: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 215: Q08, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_215>`
 
 ### Question
 
@@ -41933,6 +44391,10 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -41983,7 +44445,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 215: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 215: Q08, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_215>`
 
 ### Question
 
@@ -42029,6 +44493,10 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -42079,7 +44547,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 216: Q08 (Condition: instruction_removed) — Scorer 1
+## Item 216: Q08, repeat 16 — Scorer 1
+
+Execution id: `<EXECUTION_ID_216>`
 
 ### Question
 
@@ -42125,6 +44595,10 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -42175,7 +44649,9 @@ Multiple numeric tokens in the response match the expected value. Which one is t
 ---
 
 
-## Item 216: Q08 (Condition: instruction_removed) — Scorer 2
+## Item 216: Q08, repeat 16 — Scorer 2
+
+Execution id: `<EXECUTION_ID_216>`
 
 ### Question
 
@@ -42221,6 +44697,10 @@ After the first monthly payment, the remaining mortgage balance is **$287,069.25
 **Operation correctness:**
 
 - `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 

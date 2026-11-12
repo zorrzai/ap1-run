@@ -121,7 +121,7 @@ def parse_decimal(text, *, decimal_sep='.', grouping_sep=',',
             f'cannot parse as Decimal: {s!r} from {text!r}')
 
     if is_neg:
-        value = -value
+        value = value.copy_negate()   # exact: no rounding to the context
 
     return value, is_pct, cur
 

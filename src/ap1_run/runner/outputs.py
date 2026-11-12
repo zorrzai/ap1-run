@@ -11,14 +11,19 @@ import os
 
 from ap1_run.foundation import transcript
 from ap1_run.reporting import adjudication, report
+from ap1_run.scoring.provenance.classify import mark_unmeasurable_questions
 
 
 def attach_figure_outcomes(tr_records):
     """The engine records of a transcript, each given the figure_outcome
     of the matching figure_identification record.
 
-    Records are matched by (item_id, condition), in order: the n-th engine
-    record of a pair takes the n-th figure outcome of that pair.
+    Records are matched by (item_id, condition, repeat): an execution
+    takes the figure outcome recorded for its own repeat, so a repeat
+    with no figure record (a transport failure) gets none and never
+    shifts the others. Within one key (a transcript written before
+    records carried a repeat index has repeat None throughout), the n-th
+    engine record takes the n-th figure outcome.
     """
     # Engine records don't have figure_outcome; figure_identification records do
     engine_records = [r for r in tr_records
@@ -26,16 +31,18 @@ def attach_figure_outcomes(tr_records):
     figure_records = [r for r in tr_records
                       if r.get('record_type') == 'figure_identification']
 
-    # Build lookup: (item_id, condition) -> list of figure_outcomes
+    def key(record):
+        return (record.get('item_id'), record.get('condition'),
+                record.get('repeat'))
+
     fig_lookup = {}
     for fr in figure_records:
-        key = (fr.get('item_id'), fr.get('condition'))
-        fig_lookup.setdefault(key, []).append(fr.get('figure_outcome', ''))
+        fig_lookup.setdefault(key(fr), []).append(
+            fr.get('figure_outcome', ''))
 
     # Attach figure_outcome to engine records for adjudication routing
     for er in engine_records:
-        key = (er.get('item_id'), er.get('condition'))
-        figs = fig_lookup.get(key, [])
+        figs = fig_lookup.get(key(er))
         if figs:
             er['figure_outcome'] = figs.pop(0)
     return engine_records
@@ -58,6 +65,8 @@ def write_outputs(output_dir, transcript_path, *, summary, config,
     tr_records = transcript.read_all(transcript_path)
 
     engine_records = attach_figure_outcomes(tr_records)
+    # The sheets show D7.2(a) as the summary has it: per question (T3-42)
+    mark_unmeasurable_questions(engine_records)
 
     report_text = report.generate_report(
         summary=summary,
