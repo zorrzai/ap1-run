@@ -1,17 +1,18 @@
 """Check the list of files the runner's source hash covers.
 
-runner_source_hash covers every .py file under the runner's base directory
-except output*, review_output* and __pycache__. source_hash_files.txt lists
-the tracked files that rule covers, tests included, so a change to the set
-(a move, a new module, a deletion) shows as a reviewed diff of that list.
-The hash oracle checks the hash itself on every scenario; this checks the
-list.
+runner_source_hash covers the .py files of src/ap1_run/ (outside
+__pycache__) and VERSION (hash_oracle.source_hash_covers has the rule).
+source_hash_files.txt lists the tracked files that rule covers, so a
+change to the set (a move, a new module, a deletion) shows as a reviewed
+diff of that list. The hash oracle checks the hash itself on every
+scenario; this checks the list.
 
 The list comes from hash_oracle.source_hash_files(), the oracle's own rule
 over the checkout, not from a second copy of the rule here, so a change to
 the rule shows in this list too. `git ls-files` only drops what the rule
-finds but git does not track (a local venv, scratch files); those are named
-on stderr, as they change this checkout's source hash, but do not fail it.
+finds but git does not track (a stray file under src/ap1_run/); those are
+named on stderr, as they change this checkout's source hash, but do not
+fail it.
 
     python tests/regression/check_source_files.py           # compare
     python tests/regression/check_source_files.py --update  # rewrite the list
@@ -41,7 +42,7 @@ def git_env():
 
 
 def tracked_files():
-    """The tracked .py files, as '/'-separated paths."""
+    """The tracked .py files and VERSION, as '/'-separated paths."""
     try:
         out = subprocess.run(['git', 'ls-files', '-z'], cwd=REPO, check=True,
                              capture_output=True, env=git_env()).stdout
@@ -49,8 +50,9 @@ def tracked_files():
         print(f'check_source_files: git ls-files failed: {e}', file=sys.stderr)
         raise SystemExit(2)
     # Filter on bytes first: a tracked file whose name is not UTF-8 is
-    # not this check's business unless it is a .py file.
-    py = [p for p in out.split(b'\0') if p.endswith(b'.py')]
+    # not this check's business unless the rule could cover it.
+    py = [p for p in out.split(b'\0')
+          if p.endswith(b'.py') or p == hash_oracle.SOURCE_VERSION_FILE.encode()]
     try:
         return {p.decode('utf-8') for p in py}
     except UnicodeDecodeError as e:

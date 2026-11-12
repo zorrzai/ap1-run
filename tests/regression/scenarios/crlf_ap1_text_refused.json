@@ -1,0 +1,14 @@
+{
+  "description": "The clean run with the AP-1 text in CRLF bytes and the config declaring the published text's hash, 48e7826f…. The AP-1 text is hashed as it is on disk, not with its line endings made LF as the other text inputs are (T3-50), because it must be the publisher's deposit byte for byte: the CRLF copy hashes to 6ecd964a…, so the seal is refused before any request, naming both hashes. A runner that made the AP-1 text's line endings LF before hashing would seal it. A CRLF copy declared with its own hash is refused by the AP-1 version check after the seal, which this harness cannot express; tests/functional/test_step4_g5_seal_verifier.py::test_run_crlf_copy_of_the_v13_text_with_its_own_hash_refused covers it.",
+  "seal_attempts": 1,
+  "seal_records": 0,
+  "exercises": ["R1.1 seal refusal", "SealError", "the AP-1 text hashed as raw bytes (T3-50)"],
+  "scratch_copy": "Runs in a scratch copy: the CRLF AP-1 text is made there, at the sealed default path, which in the real tree is a tracked LF file.",
+  "extends": "clean",
+  "config": {
+    "repeat_count": "1"
+  },
+  "crlf_paths": [
+    "reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md"
+  ]
+}

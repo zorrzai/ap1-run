@@ -86,6 +86,15 @@ updated, and the standard governs.
 - **§1.2**'s first non-goal says scoring compares exact Decimals within the
   declared tolerance (R0.4.1), not floats.
 
+### Revision, 5 November 2026
+
+- **R1.1** verification contract: the seal timestamp is inside `seal_hash`,
+  so the same inputs give the same `seal_hash` only at the same timestamp;
+  the hash of each sealed input does not depend on the time.
+  Was: "Sealing the same inputs twice yields identical hashes." R1.1 now
+  also says what the timestamp proves and what it does not (when the seal
+  was made, or a rewrite of the record and every transcript line together).
+
 ---
 
 ## 1. Purpose, and the one property that matters
@@ -361,9 +370,18 @@ supplied after the fact proves nothing (R1.3).
 
 **Verification Contract.**
 - Modifying any sealed input causes the scorer to refuse, naming the mismatch.
-- Sealing the same inputs twice yields identical hashes.
+- Sealing the same inputs at the same timestamp yields the same `seal_hash`;
+  the hash of each sealed input does not depend on the time of sealing.
 - A run claiming conformance to an AP-1 text whose hash is absent from the
   record is refused.
+
+**What the timestamp proves.** The seal timestamp is inside `seal_hash`, and
+`seal_hash` appears on every transcript line, so a timestamp edited after the
+run is evident unless `seal_hash` is recomputed and every transcript line
+rewritten to match. Such a consistent rewrite is not caught: `seal_hash` is a
+hash anyone can recompute, not a signature. Nor does the timestamp prove
+*when* the seal was made. Both need an anchor outside the run, such as
+publishing `seal_hash` before the run starts.
 
 ### R1.2 — Execution Engine
 
@@ -1126,6 +1144,8 @@ and the example modules (`example/ground_truth_example.py`,
 | `src/ap1_run/reporting/adjudication.py` | Instrument module |
 | `src/ap1_run/execution/seal.py` | Instrument module |
 | `src/ap1_run/execution/seal_constants.py` | Instrument module |
+| `src/ap1_run/execution/sealed_inputs.py` | Instrument module |
+| `src/ap1_run/execution/ap1_texts.py` | Instrument module |
 | `src/ap1_run/foundation/config.py` | Instrument module |
 | `src/ap1_run/scoring/reproducibility.py` | Instrument module |
 | `src/ap1_run/scoring/figure_id.py` | Instrument module |

@@ -405,6 +405,8 @@ Grouped by severity, in ID order.
   `tests/legacy/verify.py:365-373` (`test_r11_seal`)
 - Breaks: SPEC R1.1 verification contract ("Modifying any sealed input causes the scorer to refuse,
   naming the mismatch"); SPEC §9 threat "Fixture altered after sealing"
+- Addressed by: fixed; commits c7c4b421, ae23762e, c3413a0b; test
+  `tests/unit/execution/test_seal.py::test_verify_seal_input_deleted_after_the_seal_is_named[calculator]`
 
 ### Medium
 
@@ -433,6 +435,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/execution/seal.py:70-74` (`seal`); `tests/legacy/verify.py:341-343`
   (`test_r11_seal`)
 - Breaks: SPEC R1.1; AP-1 v1.3 §5.3
+- Addressed by: fixed; commits bf72d31a, a6b79312, 27294d83; test
+  `tests/unit/tools/test_verify_run_seal.py::test_verify_run_record_without_format_not_a_published_run_fails`
 
 **T3-18 · medium (high arguable) · `verify_run_seal.py` reports PASS when the transcript is missing, compares only line 1, and counts non-checks as passes**
 - What's wrong: with no transcript it prints `transcript … not found (skipped)` and then
@@ -444,6 +448,8 @@ Grouped by severity, in ID order.
 - After the reorg: `tools/verify_run_seal.py:221-238`, `:224-225` (`verify_run`), `:273` (`main`)
 - Breaks: SPEC R1.1 ("The record's hash appears on every transcript line"); README seal-verification
   section
+- Addressed by: fixed; commits bf72d31a, a6b79312; test
+  `tests/unit/tools/test_verify_run_seal.py::test_verify_run_missing_transcript_fails`
 
 **T3-19 · medium · `runner_source_hash` is never verified, and the verifier is silent about `runner_modified: true`**
 - What's wrong: the only instrument-provenance field is computed and sealed but no tool recomputes
@@ -458,6 +464,8 @@ Grouped by severity, in ID order.
   `src/ap1_run/execution/seal.py:47` (`seal`)
 - Breaks: `version.py`'s own claim ("so that a modified instrument is detectable"), which holds only
   out of band; AP-1 v1.3 §13.11 requires disclosure only
+- Addressed by: fixed; commits c7c4b421, bf72d31a, a6b79312, 27294d83; test
+  `tests/unit/tools/test_verify_run_seal.py::test_verify_run_record_without_format_not_a_published_run_fails`
 
 **T3-20 · medium · The cross-platform hash CI compares nothing, nothing pins the canonical-JSON format, and the "no float" static check does not exist**
 - What's wrong: each OS job runs `verify_hashes.py`, which overwrites the tracked
@@ -597,9 +605,8 @@ Grouped by severity, in ID order.
   library or platform (AP-1 §1.5.1).
 - Where: SPEC §1.1, R2.1, R2.2, R3.3, SPEC §10
 - Breaks: AP-1 v1.3 D7.4, §6.2, §6.4, §2.5, §3.2.1, D1 Method, D2 Method, D2.2, §1.5.1
-- Addressed by: partly fixed; commits d8d2be3c, 5f086be7; strict xfail
-  `tests/functional/test_step4_g5_seal_verifier.py::test_run_seal_record_carries_environment_fields`
-  and 1 more marked T3-30
+- Addressed by: partly fixed; commits d8d2be3c, 5f086be7, c7c4b421; strict xfail
+  `tests/functional/test_step4_g9_spec_claims.py::test_report_states_which_defeat_condition_links_were_cleared`
 
 **T3-31 · medium · The executable conformance device checks constants and two table rows, not the IMPLEMENTED claims**
 - What's wrong: `verify_conformance.py` asserts `MINIMUM_N` constants, its AP-1 §6.8 test is
@@ -803,6 +810,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/execution/seal.py:70-74` (`seal`);
   `tools/verify_run_seal.py:199-202` (`verify_run`)
 - Breaks: AP-1 v1.3 §5.3 ("hashed and timestamped before execution"), AP-1 v1.3 §11.7; SPEC R1.1
+- Addressed by: fixed; commits c7c4b421, a6b79312, 9721897a, 9847d7ab, b4505b4d; test
+  `tests/unit/tools/test_verify_run_seal.py::test_verify_run_edited_timestamp_fails[one-second-later]`
 
 **T3-48 · medium · The seal has no expected-values component; expected values are computed after sealing**
 - What's wrong: a nondeterministic ground-truth module would produce values that no sealed artifact
@@ -811,6 +820,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/execution/seal.py:37-48` (`seal`); `src/ap1_run/run.py:227` (`main`)
 - Breaks: SPEC R1.1 ("… expected values …"), R3.1 ("Intermediates reproducible across two
   executions"); AP-1 v1.3 §13.4
+- Addressed by: fixed; commits c7c4b421, 9721897a, 0c4f61b7, 711799ce, 6a323758; test
+  `tests/unit/execution/test_seal.py::test_seal_expected_values_digest_binds_what_scoring_reads[change0]`
 
 **T3-49 · medium · `verify_run_seal.py` labels any `ground_truth_hash` mismatch "expected" and blames FINDINGS_ERRATA.md E3 and FINDINGS.md F10**
 - What's wrong: the NOTE is appended whatever the cause, so a tampered ground-truth module is
@@ -820,6 +831,8 @@ Grouped by severity, in ID order.
 - Where: `verify_run_seal.py:179-190`, `:42-49`
 - After the reorg: `tools/verify_run_seal.py:182-193` (`verify_run`), `:45-52`
   (`GROUND_TRUTH_ERRATA`)
+- Addressed by: fixed; commits bf72d31a, a6b79312, 27294d83; test
+  `tests/unit/tools/test_verify_run_seal.py::test_verify_run_erratum_note_only_for_the_module_it_describes`
 
 **T3-50 · medium · The README said sealed hashes are LF and reproduce on any platform, but all four published seals bind the ground-truth module with CRLF line endings**
 - What's wrong: `6dbf9da` ("fix false line-ending claims") replaced a correct README paragraph with
@@ -831,6 +844,8 @@ Grouped by severity, in ID order.
   there; `c8df9ca` rewrote that paragraph, so this entry cites the reviewed commit)
 - After the reorg: `src/ap1_run/foundation/numeric.py:294-300` (`file_hash`)
 - Breaks: SPEC R0.4.3 ("on two platforms, yields identical digests")
+- Addressed by: fixed; commits 974d2211, 9721897a; test
+  `tests/functional/test_step4_g5_seal_verifier.py::test_run_crlf_copy_of_the_v13_text_with_its_own_hash_refused`
 
 **T3-51 · medium · SPEC R0.1 "no defaults for anything affecting a result" is violated for quantisation**
 - What's wrong: `"quantisation": {}` loads as `places 2, ROUND_HALF_UP`, and the rounding string is
@@ -1007,6 +1022,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/execution/seal.py:50-64` (`seal`);
   `src/ap1_run/foundation/config.py:23-29` (`REQUIRED_FIELDS`)
 - Breaks: SPEC R1.1 verification item 3
+- Addressed by: fixed; commits c7c4b421; test
+  `tests/unit/execution/test_seal.py::test_seal_config_without_optional_fields_gives_blank_fields`
 
 **T3-69 · low · The seal verifier rebuilds composite types lossily**
 - What's wrong: only `'False'`, `'True'` and `'[]'` are mapped back, so a genuine seal with non-empty
@@ -1014,6 +1031,8 @@ Grouped by severity, in ID order.
 - Where: `verify_run_seal.py:196-208`; `report.py:134`
 - After the reorg: `tools/verify_run_seal.py:199-211` (`verify_run`);
   `src/ap1_run/reporting/report.py:134` (`_section_preregistration`)
+- Addressed by: fixed; commits bf72d31a, a6b79312; test
+  `tests/unit/tools/test_verify_run_seal.py::test_verify_run_seal_with_verification_keys_verifies[keys0]`
 
 **T3-70 · low · The scope of `compute_runner_source_hash` is fragile**
 - What's wrong: it hashes every `.py` file under the clone's root. So an in-tree venv, untracked
@@ -1032,6 +1051,8 @@ Grouped by severity, in ID order.
   excludes `build/` and venvs.
 - Where: `version.py:84-109`
 - After the reorg: `src/ap1_run/execution/version.py:84-109` (`compute_runner_source_hash`)
+- Addressed by: fixed; commits 944b983a, c7c4b421, e45ee895, 9ff8ae80, d6de2c43; test
+  `tests/unit/execution/test_version.py::test_runner_source_hash_of_a_tree_without_the_package_refused`
 
 **T3-71 · low · Canonical JSON loses type information and does not check dict keys for floats**
 - What's wrong: `Decimal('0.01')` and `'0.01'` hash identically, as do a tuple and a list;
@@ -1053,6 +1074,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/run.py:122-130`, `:175-183` (`main`);
   `src/ap1_run/runner/settings.py:151-152` (`check_condition_guard`)
 - Breaks: SPEC R1.1 (seal what is executed)
+- Addressed by: fixed; commits c7c4b421, e45ee895; test
+  `tests/functional/test_step4_g5_seal_verifier.py::test_run_executes_the_calculator_it_read_not_a_shadowing_package`
 
 **T3-73 · low · SPEC lags the code**
 - The D7.2(b), release-coverage and sign-inversion items are settled for now by DEC-5 (see
@@ -1329,6 +1352,8 @@ does not arise under v1.3. V12-9 to V12-12 were candidates that passed and are n
   `src/ap1_run/reporting/adjudication.py:88` (`generate_sheets`)
 - Breaks: AP-1 v1.2 §0.4 ("A claim of compliance must cite the specific version evaluated
   against")
+- Addressed by: fixed; commits c7c4b421, 5586d8c8, 974d2211, 7508ba8c; test
+  `tests/functional/test_step4_g5_seal_verifier.py::test_run_other_label_over_the_v13_text_refused[V1.2]`
 
 **V12-5 · low · The report never states the AP-1 §6.2 headline "invoked on [X]% of computable questions"**
 - What's wrong: report §5 prints a `k/n` fraction at any k and, at k=0, `n/n` plus the bound, but
@@ -1639,6 +1664,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - What's wrong: a one-character commit (`v1 a`) accepts any HEAD beginning with `a`.
 - Where: `version.py:59`
 - After the reorg: `src/ap1_run/execution/version.py:59` (`resolve_runner_version`)
+- Addressed by: fixed; commits 944b983a; test
+  `tests/unit/execution/test_version.py::test_resolve_version_head_matching_prefix_not_modified`
 
 **S3-G3-3 · low · The R3.1 guards build failure reasons and then drop them**
 - What's wrong: the guards collect failure dicts with reasons, then raise a `SealError` without
@@ -1647,8 +1674,8 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - Where: `seal.py:124-225`, `:228-282`
 - After the reorg: `src/ap1_run/execution/seal.py:124-225` (`perturbation_check`), `:228-282`
   (`source_fields_check`)
-- Addressed by: fixed; commits c60ac736; test
-  `tests/unit/execution/test_seal.py::test_perturbation_check_baseline_failure_does_not_stop_later_items`
+- Addressed by: fixed; commits c60ac736, a30de234; test
+  `tests/functional/test_step4_g5_seal_verifier.py::test_run_ground_truth_that_raises_is_a_named_refusal`
 
 **S3-G3-4 · info · `check_single_variable_perturbation` computes per-diff summaries and discards them**
 - What's wrong: the `base`/`removed` summaries are neither in the message nor returned: a violation
@@ -1810,17 +1837,23 @@ also hold there; the G7 Inspect and G8 tool files do not.
   so the "resolved config" can come from elsewhere in the report.
 - Where: `verify_run_seal.py:74-93`
 - After the reorg: `tools/verify_run_seal.py:77-96` (`parse_resolved_config`)
+- Addressed by: fixed; commits bf72d31a, a6b79312, f6baedcf; test
+  `tests/unit/tools/test_verify_run_seal.py::test_verify_run_resolved_config_not_an_object_is_a_named_failure[list]`
 
 **S3-G8-2 · low (low-medium) · A blank first transcript line, or an empty transcript, makes the transcript check disappear**
 - What's wrong: neither PASS nor FAIL is reported, so a damaged transcript goes unreported. Extends
   T3-18.
 - Where: `verify_run_seal.py:221-232`
 - After the reorg: `tools/verify_run_seal.py:224-235` (`verify_run`)
+- Addressed by: fixed; commits bf72d31a, a6b79312; test
+  `tests/unit/tools/test_verify_run_seal.py::test_verify_run_empty_or_blank_transcript_fails[blank-then-other]`
 
 **S3-G8-3 · low · An unparseable first transcript line, or a JSON number with a fraction in report §2, crashes the verifier**
 - What's wrong: a traceback (`canonical_hash` refuses floats) where a FAIL with a reason is due.
 - Where: `verify_run_seal.py:224`, `:130`
 - After the reorg: `tools/verify_run_seal.py:227`, `:133` (`verify_run`)
+- Addressed by: fixed; commits bf72d31a, a6b79312; test
+  `tests/unit/tools/test_verify_run_seal.py::test_verify_run_fractional_number_in_resolved_config_fails_without_crash`
 
 **S3-G8-4 · low (low-medium) · The verifier always hashes the repository's `example/` and `reference/` files**
 - What's wrong: there is no option to name a run's inputs, so a run made with other inputs
@@ -1830,28 +1863,38 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - After the reorg: `tools/verify_run_seal.py:142-171` (`verify_run`)
 - Deferred to #3 by DEC-7 (see "Maintainer decisions" at the end), which sets a deadline: fixed
   before anyone outside the project runs with `--fixture-dir`.
+- Addressed by: fixed; commits bf72d31a, a6b79312; test
+  `tests/unit/tools/test_verify_run_seal.py::test_main_fixture_dir_and_ap1_text_options_name_the_inputs`
 
 **S3-G8-5 · low · A relative run path is joined to the repository root, not the working directory**
 - What's wrong: from another directory, an existing path is reported as "report.md not found".
 - Where: `verify_run_seal.py:256-258`
 - After the reorg: `tools/verify_run_seal.py:259-261` (`main`)
+- Addressed by: fixed; commits bf72d31a, a6b79312; test
+  `tests/unit/tools/test_verify_run_seal.py::test_main_relative_path_resolved_against_working_directory`
 
 **S3-G8-6 · low · `generate_findings.pct` rounds half-to-even**
 - What's wrong: it uses the context default; `ROUND_HALF_UP` is imported and never used, so 6.25 %
   prints as 6.2. No published figure is a tie, so FINDINGS.md is unaffected.
 - Where: `generate_findings.py:19`, `:35-40`
 - After the reorg: `tools/generate_findings.py:19` (imports), `:41-46` (`pct`)
+- Addressed by: fixed; commits d62aab65; test
+  `tests/unit/tools/test_generate_findings.py::test_pct_rounds_half_up[1-16-6.3]`
 
 **S3-G8-7 · low · The base non-invocation Clopper–Pearson bound uses a fixed n = 500**
 - What's wrong: true for the published runs (10 × 50), wrong for any other run.
 - Where: `generate_findings.py:360-370`
 - After the reorg: `tools/generate_findings.py:366-376` (`compute_figures`)
+- Addressed by: fixed; commits d62aab65, f0127812; test
+  `tests/unit/tools/test_generate_findings.py::test_compute_base_noninvocation_bound_counts_observed_executions`
 
 **S3-G8-8 · low · An empty run B raises `ZeroDivisionError`**
 - What's wrong: `b_ops_per_exec` divides unguarded, while run A's equivalent is guarded; it should
   be a clear error.
 - Where: `generate_findings.py:322`
 - After the reorg: `tools/generate_findings.py:328` (`compute_figures`)
+- Addressed by: fixed; commits d62aab65; test
+  `tests/unit/tools/test_generate_findings.py::test_compute_empty_run_b_no_zero_division`
 
 ---
 

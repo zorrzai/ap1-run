@@ -43,13 +43,13 @@ real adapter and HTTP transport:
   copied into the copy's `output/`) and `crlf_paths` need a scratch copy.
 - **Scratch copy.** A scenario that sets `"scratch_copy"` (its value says
   why) runs in a scratch copy of the repository, without `.git` and
-  `output/`, instead of the real tree. Four do: `cli_paths` (it checks that
+  `output/`, instead of the real tree. Five do: `cli_paths` (it checks that
   the default `output/` stays empty, which needs a disposable one),
   `tool_generate_findings` (the tool writes `findings/FINDINGS.md` at a
-  fixed path) and `clean_no_options` (with no options the runner reads
+  fixed path), `clean_no_options` (with no options the runner reads
   `example/config.json` and writes to the default `output/`, so the config
-  edit and the outputs need a disposable tree) and `crlf_sealed_inputs` (it
-  turns tracked files to CRLF).
+  edit and the outputs need a disposable tree), `crlf_sealed_inputs` and
+  `crlf_ap1_text_refused` (they turn tracked files to CRLF).
 - **No git.** Every run gets `GIT_DIR` pointing nowhere. The runner
   cross-checks `VERSION` against git `HEAD` and records `runner_modified`;
   the golden output pins a run without git (as in a copy without `.git`),
@@ -76,10 +76,13 @@ run it at both commits and diff the two directories.
 - ISO and epoch timestamps;
 - this run's `seal_hash`, `config_hash` and `runner_source_hash`, read from
   the seal the run actually made. The config hash covers the mock's port. The
-  source hash covers the code, so it changes whenever files move.
+  source hash covers the code, so it changes whenever files move. The seal
+  hash covers the timestamp, so it changes on every run;
+- the seal's environment fields in `report.md` §1 (`python_version`,
+  `platform`, `package_versions`), which depend on the machine.
 
-The fixture, questions, ground-truth and AP-1 text hashes are kept, and so
-they are pinned.
+The fixture, questions, ground-truth, expected-values and AP-1 text hashes
+are kept, and so they are pinned.
 
 **Hard checks** run on each runner scenario before normalisation
 (`hard_checks.py`). A failure stops the harness with a message; it is never a
@@ -141,17 +144,20 @@ golden difference, and `--update` cannot write over it.
 
 `python tests/regression/selftest.py` tests these checks directly, with known
 answers. One of them recomputes the published September `runner_source_hash`
-(`da0739eb…`, docs/REPRODUCING.md) with the oracle's rule from the tag
-`e7-quantise-fix`, so the clone needs its tags (`git fetch --tags`; CI checks
-out full history). That tree is nearly flat (no `tests/` or `src/`), so this
-pins how the files are read, framed and sorted; `check_source_files.py` pins
-which files are in scope.
+(`da0739eb…`, docs/REPRODUCING.md) from the tag `e7-quantise-fix`, with the
+rule from before T3-70 that the oracle keeps for this check only
+(`hash_oracle.source_hash_files_september()`), so the clone needs its tags
+(`git fetch --tags`; CI checks out full history). That tree is nearly flat
+(no `tests/` or `src/`), so this pins how the files are read and framed (as
+the current rule does) and how the old rule sorted them;
+`check_source_files.py` pins which files the current rule takes in.
 
 **The files the source hash covers** are listed in `source_hash_files.txt`:
 the files the hash oracle's rule (`hash_oracle.source_hash_files()`) finds in
-the checkout, tests included, less any that git does not track (named on
-stderr, not listed). `check_source_files.py` compares the list with the tree
-and runs as its own CI step, so a move, a new module or a
+the checkout, the `.py` files of `src/ap1_run/` and `VERSION` (T3-70), less
+any that git does not track (named on stderr, not listed).
+`check_source_files.py` compares the list with the tree and runs as its own
+CI step, so a move, a new module or a
 deletion shows as a reviewed diff of the list. It is checked at each PR head;
 a commit that changes the set updates the list (`--update`).
 
@@ -203,7 +209,8 @@ each of their checks went.
 | `t3_38_unknown_tool` | **T3-38**: an unoffered tool trips the FATAL consistency check; no report |
 | `t3_39_crash` | **T3-39**: a non-string calculator expression; since the fix its operands are unreadable and the run completes |
 | `non_ascii_config` | a decline marker with U+2019 in the resolved config: the config hash's UTF-8 rule through the real seal |
-| `crlf_sealed_inputs` | `clean` with the fixture, questions, ground-truth module and AP-1 text in CRLF bytes (the config declares the CRLF text's hash): a runner that read any sealed input, or its source files, in text mode fails the hash oracle; `ground_truth_hash` is the September seals' (`033ce73d…`) |
+| `crlf_sealed_inputs` | `clean` with the fixture, questions, ground-truth module and calculator in CRLF bytes: they seal as their LF form (T3-50), so `fixture_hash`, `questions_hash`, `ground_truth_hash` and `calculator_hash` equal `clean`'s; a runner that hashed them as they are on disk fails the hash oracle |
+| `crlf_ap1_text_refused` | `clean` with the AP-1 text in CRLF bytes: the AP-1 text is hashed as it is on disk, so the seal is refused before any request (SealError naming the declared and the file's hash) |
 | `decimal_trailing_zero` | `answer_tolerance` `"0.010"` in the resolved config: the config hash keeps a Decimal's exact string (a runner that normalised it to `0.01` fails the hash oracle) |
 | `decimal_two_trailing_zeros` | the same with `"0.0100"` (exponent -4), so a normaliser limited to some exponents fails one of the two |
 | `decimal_integral` | `answer_tolerance` `"10"`: the same for an integral Decimal (a runner that wrote it as `1E+1` or through float as `10.0` fails the hash oracle) |

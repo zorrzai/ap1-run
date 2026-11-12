@@ -14,17 +14,23 @@ Model: mock-model
 
 | Field | Value |
 |---|---|
-| `ap1_text_hash` | `6ecd964a48939adcc0e555f91a57c7fd8135307071bfe25a77951d22b9e93f98` |
+| `ap1_text_hash` | `48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56` |
 | `ap1_version` | `v1.3-draft-for-comment-20260730` |
 | `ap1_version_doi` | `10.5281/zenodo.21755443` |
+| `calculator_hash` | `ae8eae4c313079e401b4a12f7c2fc571cea695b5fe8f9eda5ca808d449303c7d` |
 | `config_hash` | `<CONFIG_HASH>` |
 | `ev3_implemented` | `False` |
-| `fixture_hash` | `04f21cbc87fe6c36642522ade051642b632ffa9dd837098c9c06178477b1a552` |
-| `ground_truth_hash` | `033ce73d933d6e52a7d4f63b3888bdccfa492ce49cf49228ed2f3dda0d27a643` |
-| `questions_hash` | `e7563063b688d05e3340582e494886ce4ea3d99bb599c2e1dd85a71431d51fa9` |
+| `expected_values_hash` | `81d9b435264ddbb032c5744342df577d691e9766fd566dc75632b34bc6dd46ca` |
+| `fixture_hash` | `5d3b8615ae069823f66c9e924cb1bd45c49955bc3fec97a7522ae39e6fa4b8a8` |
+| `ground_truth_hash` | `aaf01071a8f84e7f2c0f11b45ae7679810e93bde3ba720e2fb95a7c90e46f778` |
+| `package_versions` | `<ENVIRONMENT>` |
+| `platform` | `<ENVIRONMENT>` |
+| `python_version` | `<ENVIRONMENT>` |
+| `questions_hash` | `5f6aa97714e2b0f7e3039ae6018f6566e811354c4a904d210964beac54172af9` |
 | `runner_source_hash` | `<RUNNER_SOURCE_HASH>` |
 | `runner_version_commit` | `e0d9ec9` |
 | `runner_version_tag` | `v1.3.1` |
+| `seal_format` | `2` |
 | `seal_hash` | `<SEAL_HASH>` |
 | `timestamp` | `<TIMESTAMP>` |
 | `verification_keys` | `[]` |
@@ -34,7 +40,7 @@ Model: mock-model
 ```json
 {
   "answer_tolerance": "0.01",
-  "ap1_text_hash": "6ecd964a48939adcc0e555f91a57c7fd8135307071bfe25a77951d22b9e93f98",
+  "ap1_text_hash": "48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56",
   "ap1_version": "v1.3-draft-for-comment-20260730",
   "ap1_version_doi": "10.5281/zenodo.21755443",
   "currency_symbols": [

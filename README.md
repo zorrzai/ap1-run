@@ -126,10 +126,10 @@ python -m pytest              # offline: unit, conformance and functional tests
 ```
 
 **Only the editable install, `pip install -e .`, is supported.** A plain
-`pip install .` leaves a `build/` directory in the clone. Git ignores it, but
-`runner_source_hash` covers every `.py` file under the clone, so its copies
-change the hash (T3-70 in `docs/REVIEW_FINDINGS.md`). For the same reason,
-keep virtual environments outside the clone.
+`pip install .` leaves a `build/` directory in the clone. `runner_source_hash`
+covers only the `.py` files of `src/ap1_run/` and the `VERSION` file (T3-70
+in `docs/REVIEW_FINDINGS.md`), so neither that directory nor a virtual
+environment inside the clone changes it.
 
 `pip install -e .` alone installs the package and its one dependency,
 `requests`; the `[dev]` extra adds pytest, mutmut and coverage. Quote it,
@@ -194,16 +194,18 @@ a run's `smoke_run.jsonl`, `report.md` or `smoke_summary.json` is refused
 (exit status 2) before anything is read or written, so a published run cannot
 be overwritten by mistake. This holds for `--output-dir output` too: giving the
 option, even with the default path, turns the check on; leaving it out keeps
-the default behaviour. The AP-1 text must be the one the seal expects. The
-runner still takes its version and source hash from the clone, so run it from
+the default behaviour. Without `--ap1-text`, the runner seals the AP-1
+text of the config's `ap1_version` from `reference/`: the v1.3 draft for
+`v1.3` (or `v1.3-<qualifier>`), the v1.2 text for `v1.2`. The config's
+`ap1_text_hash` must be that text's hash, and a run that labels one version's
+text with another version is refused. Another version needs `--ap1-text`.
+The runner still takes its version and source hash from the clone, so run it from
 a clone (an editable install), not from a wheel.
 
-Two limits for now: `tools/verify_run_seal.py` checks a run only against
-`example/` and `reference/`, so a run made with other inputs fails
-verification even when its seal is sound (S3-G8-4); and keep fixture copies
-outside the clone, because the source hash covers every `.py` file in it, so
-a copied `ground_truth_example.py` changes `runner_source_hash` and the run
-is reported as modified (T3-70).
+`tools/verify_run_seal.py` takes `--fixture-dir` and `--ap1-text` as the
+runner does, so a run made with other inputs is verified against those
+(S3-G8-4). A fixture copy inside the clone does not change
+`runner_source_hash`, which covers only `src/ap1_run/` and `VERSION` (T3-70).
 
 ---
 
@@ -440,7 +442,9 @@ additionally requires those.
 
 **The standard text is sealed.** `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` is
 hashed into the pre-registration record, and a run declaring a mismatched hash
-is refused.
+is refused. `reference/` also holds the v1.2 text
+(`AP-1_Admissibility_Protocol_v1.2.md`, as published in the standard
+repository), which a run declaring `ap1_version` `v1.2` seals.
 
 AP-1 v1.3: [10.5281/zenodo.21755443](https://doi.org/10.5281/zenodo.21755443) ·
 concept DOI [10.5281/zenodo.21324954](https://doi.org/10.5281/zenodo.21324954) ·
@@ -476,8 +480,10 @@ src/ap1_run/
     numeric.py               Decimal arithmetic, token grammar, canonical hashing
   execution/                 SPEC Layer 1
     seal.py                  pre-registration: hash and timestamp before any request
+    sealed_inputs.py         reads each sealed input once; the expected values
+    ap1_texts.py             the AP-1 text of each version
     seal_constants.py        declared-constant checks on the ground-truth module
-    version.py               runner version and source hash
+    version.py               runner version, source hash and environment
     engine.py                execution loop
     context.py               delivered-context construction
     perturbation_guard.py    refuses a condition that varies more than one quantity
@@ -518,7 +524,7 @@ docs/                        build specification (SPEC.md), KNOWN_ISSUES.md,
                              RELATED_WORK_REVIEW.md, REPRODUCING.md, the publisher's comments
 findings/                    FINDINGS.md (generated from FINDINGS.template.md), FINDINGS_ERRATA.md
 example/                     a worked fixture, questions, ground truth and config
-reference/                   the sealed AP-1 text
+reference/                   the sealed AP-1 texts (v1.3 draft, v1.2)
 ```
 
 Full architecture, verification contracts per module, threat model and
@@ -568,9 +574,26 @@ python tools/verify_run_seal.py output/run_b_sol
 ```
 
 This reads the seal record from `report.md` §1 and the resolved
-configuration from `report.md` §2, then recomputes and compares all five
-component hashes and the composite `seal_hash`. It reports each check
-individually and exits non-zero if any check fails.
+configuration from `report.md` §2, then recomputes and compares the
+component hashes and the composite `seal_hash`, checks that every line of the
+transcript (`smoke_run.jsonl`, which must be there) carries that `seal_hash`,
+and that the seal is dated no later than the first transcript record. For a
+record with `seal_format` it also checks that the record holds every sealed
+field, recomputes the expected values by running the ground-truth module, and
+compares `runner_source_hash` with this checkout's code (so verify a run from a
+checkout of its `runner_version_commit`). It reports each comparison
+individually, PASS or FAIL; what it cannot check, or should tell you (a record
+made before October 2026, `runner_modified: true`), is a WARN, never a PASS.
+It exits non-zero if any check fails.
+
+The inputs are read from `example/` and the AP-1 text from `reference/` (the
+text of the run's `ap1_version`). For a run made with other inputs, give the
+verifier the runner's own options: `--fixture-dir` and `--ap1-text`. Paths
+are taken from the working directory.
+
+**Verifying a run executes the operator's ground-truth module**
+(`ground_truth_example.py` in the fixture directory), as the run did, to
+recompute the expected values; verify only runs whose inputs you would run.
 
 The verifier never consults a config file on disk. For the published runs,
 hashing `example/config.json` or `example/config_mini.json` directly will
@@ -583,18 +606,29 @@ E3 in [FINDINGS_ERRATA.md](findings/FINDINGS_ERRATA.md), as corrected by C10,
 records why the D7.2(a) figures are withdrawn. The note of 3 October 2026
 in the same file gives the commands that restore the sealed module and
 verify both original seals. The verifier reports this mismatch with the E3
-reference and exits non-zero.
+reference and exits non-zero. For the September seals the cause is line
+endings only (FINDINGS_ERRATA N2), and the verifier says so. Any other
+ground-truth mismatch is reported without a note.
 
-**Line endings.** `file_hash()` hashes raw bytes. `.gitattributes` checks
-out `*.py`, `*.md`, `*.json` and `*.yml` with LF line endings and leaves
-`reference/**` unconverted. The sealed `ground_truth_hash` values are
-hashes of the module with CRLF line endings, so on a clean clone the
-September seals fail on that field although the module has not changed
-since those runs; with CRLF restored, both pass in full (note N2 of
-9 October 2026 in [FINDINGS_ERRATA.md](findings/FINDINGS_ERRATA.md)). The August
-seals likewise pass once the sealed module is restored with CRLF line
-endings (note of 3 October 2026). The other sealed hashes reproduce on a
-clean clone.
+**Line endings.** Since October 2026 the fixture, the questions, the
+ground-truth module and the calculator are hashed with LF line endings and without a UTF-8
+byte-order mark, so the same text gives the same hash on every platform and
+in every editor (an LF file without a BOM hashes as its raw bytes). The AP-1
+text is hashed as raw bytes: it must equal the publisher's deposit byte for
+byte. Seals made before then
+(the published runs) hashed raw bytes, and their ground-truth module was
+hashed with CRLF line endings (FINDINGS_ERRATA N2); the verifier checks such
+a record under those rules.
+
+**What a seal binds.** Since October 2026 a record (`seal_format` 2) also
+binds the run's timestamp, the calculator tool the run executes (it produces
+every tool result the model sees), the expected values (what the ground-truth
+module returned for each item, computed before the seal and scored against),
+and the environment: `python_version`, `platform` and `package_versions`, which
+are outside `runner_source_hash`. A run refuses to seal without the AP-1 text
+and a declared hash for it. Before the first request, and again before it
+reports, the run verifies its seal against its inputs and refuses, naming the
+input, if any has changed.
 
 | Hash | Source | Proves |
 |------|--------|--------|
@@ -602,6 +636,8 @@ clean clone.
 | `fixture_hash` | `example/fixture.json` | Financial data unchanged |
 | `questions_hash` | `example/questions.json` | Question set unchanged |
 | `ground_truth_hash` | `example/ground_truth_example.py` | Ground-truth module unchanged (see E3) |
+| `calculator_hash` | `example/calculator_tool.py` | Calculator tool unchanged (records with `seal_format` only) |
+| `expected_values_hash` | the ground-truth module's results | Expected values as scored (records with `seal_format` only) |
 | `ap1_text_hash` | `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` | AP-1 standard text unchanged |
 | `seal_hash` | All of the above | Composite integrity |
 

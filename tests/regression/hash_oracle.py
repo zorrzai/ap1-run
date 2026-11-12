@@ -16,29 +16,49 @@ writing):
   canonical JSON   json.dumps(sort_keys=True, separators=(',', ':'),
                    ensure_ascii=False), Decimal as its exact string,
                    no float anywhere, string keys only; UTF-8; SHA-256 hex
-  file hashes      SHA-256 of the raw bytes
+  text inputs      fixture, questions, ground-truth module and calculator:
+                   SHA-256 of the bytes with a leading UTF-8 byte-order
+                   mark dropped and CRLF and CR made LF (T3-50); the bytes
+                   the run passes to the seal as `loaded` must be the
+                   files' bytes
+  AP-1 text        SHA-256 of the raw bytes, required, and equal to the
+                   config's declared ap1_text_hash (T3-68)
   config_hash      canonical hash of the resolved config, as passed to the
                    seal function (captured by driver.py before the call)
-  seal_hash        canonical hash of the record without 'timestamp' (and
-                   without 'seal_hash' itself)
+  expected_values_hash
+                   canonical hash of {item: {final, derivable,
+                   required_operation}} of the expected values passed to
+                   the seal ('' if none; derivable true and the others
+                   None when not given); the values themselves are pinned
+                   by the goldens, which print this hash (T3-48)
+  environment      python_version, platform and package_versions of this
+                   interpreter (the driver runs on the same one), outside
+                   runner_source_hash (T3-30, T3-70)
+  seal_hash        canonical hash of every field but 'seal_hash' itself,
+                   the timestamp included (seal_format 2; T3-47)
   runner_source_hash
-                   SHA-256 over every .py file under the runner's base
-                   directory whose relative path does not start with
-                   'output', 'review_output' or '__pycache__'; sorted by
-                   relative path in the platform's own form; for each,
-                   the path with '/' separators, NUL, the bytes, NUL
+                   SHA-256 over the runner's code: every .py file under
+                   src/ap1_run/ outside a __pycache__ directory, and the
+                   VERSION file if it is a file (T3-70); sorted by
+                   relative path with '/' separators; for each, that
+                   path, NUL, the bytes, NUL
 
-The source-hash rule pins current behaviour, defects included: it is the
-scope T3-70 describes (tests, an in-tree venv and scratch files hashed; a
-prefix match on the excluded names, so a top-level output_*.py is left
-out; directory symlinks not followed; the platform's own sort order;
-VERSION not hashed). A fix to T3-70 changes this rule and the runner's in
-the same commit; check_source_files.py then shows the change in the file
-list, and selftest.py's recomputation of the published September hash
-from the tag e7-quantise-fix shows whether the old seals can still be
-reproduced. That tree is nearly flat (no tests/ or src/), so the tag
-check pins how files are read, framed and sorted; the file list pins
-which files are in scope.
+There are two source-hash rules. source_hash_files() is the rule above,
+the runner's since T3-70; check_source_files.py lists the tracked files it
+finds, so a change to the set shows as a reviewed diff of that list, and
+every scenario checks the hash under it. source_hash_files_september() is
+the rule before T3-70: every .py file of the clone (tests, an in-tree venv
+and scratch files included) less a prefix match on 'output',
+'review_output' and '__pycache__', sorted in the platform's own form;
+VERSION not hashed. No run is sealed under it any more. It is kept only
+so that selftest.py can recompute the September runs' published hash
+(da0739eb..., docs/REPRODUCING.md) from the tag e7-quantise-fix, which
+shows those seals can still be reproduced. That tree is nearly flat (no
+tests/ or src/), so the tag check pins how files are read, framed and
+sorted under the old rule; the file list pins which files the current
+rule takes in. tools/verify_run_seal.py has its own legacy rules for
+those records (no seal_format; LEGACY_SEALS): it does not recompute their
+runner_source_hash, and warns that it did not.
 
 Version fields: the tag and commit are read from the tree's VERSION file
 here, independently (first line that is not blank or a comment; 'unknown'
@@ -57,8 +77,10 @@ run_regression.collect() before normalisation.
 """
 
 import hashlib
+import importlib.metadata
 import json
 import os
+import platform
 import re
 import sys
 from datetime import datetime, timedelta
@@ -71,7 +93,14 @@ REPO = os.path.dirname(os.path.dirname(HERE))
 _FORBIDDEN_MODULES = ('ap1_run', 'numeric', 'seal', 'version', 'smoke_test',
                       'verify_run_seal', 'generate_findings', 'tools')
 
-SOURCE_HASH_EXCLUDED = ('output', 'review_output', '__pycache__')
+# What runner_source_hash covers (T3-70): the ap1_run package's .py files
+# and VERSION. Tests, tools/, examples and anything else in the clone (an
+# in-tree venv, scratch files) are outside it.
+SOURCE_PACKAGE = 'src/ap1_run/'
+SOURCE_VERSION_FILE = 'VERSION'
+
+# The rule before T3-70, for source_hash_files_september() only.
+SEPTEMBER_SOURCE_HASH_EXCLUDED = ('output', 'review_output', '__pycache__')
 
 _HEX64 = re.compile(r'\A[0-9a-f]{64}\Z')
 _TIMESTAMP = re.compile(
@@ -86,6 +115,7 @@ SEAL_PATHS = {
     'fixture_path': 'example/fixture.json',
     'questions_path': 'example/questions.json',
     'ground_truth_path': 'example/ground_truth_example.py',
+    'calculator_path': 'example/calculator_tool.py',
     'ap1_text_path': 'reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md',
 }
 
@@ -93,12 +123,35 @@ SEAL_PATHS = {
 # A scenario whose run stops early states its own in "sealed_outputs".
 SEALED_OUTPUTS = ('report.md', 'smoke_run.jsonl', 'smoke_summary.json')
 
-# The keys of a seal record, and nothing else.
+# The keys of a seal record, and nothing else (seal_format 2).
+SEAL_FORMAT = '2'
 SEAL_KEYS = frozenset({
-    'timestamp', 'fixture_hash', 'questions_hash', 'ground_truth_hash',
-    'config_hash', 'ap1_version', 'ap1_version_doi', 'runner_version_tag',
-    'runner_version_commit', 'runner_source_hash', 'ap1_text_hash',
-    'verification_keys', 'ev3_implemented', 'seal_hash'})
+    'seal_format', 'timestamp', 'fixture_hash', 'questions_hash',
+    'ground_truth_hash', 'calculator_hash', 'expected_values_hash',
+    'config_hash', 'ap1_version', 'ap1_version_doi', 'ap1_text_hash',
+    'runner_version_tag',
+    'runner_version_commit', 'runner_source_hash', 'python_version',
+    'platform', 'package_versions', 'verification_keys', 'ev3_implemented',
+    'seal_hash'})
+
+# The packages whose versions a record names, in this order.
+RECORDED_PACKAGES = ('ap1-run', 'requests')
+
+# The text inputs a run may pass to the seal as bytes, by name.
+TEXT_INPUTS = {'fixture': 'fixture_path', 'questions': 'questions_path',
+               'ground_truth': 'ground_truth_path',
+               'calculator': 'calculator_path'}
+
+
+def _scored_part(result):
+    """What scoring reads of one ground-truth result: its final, whether
+    it is derivable (true when not given), its required operation."""
+    if not isinstance(result, dict):
+        return {'final': result, 'derivable': True,
+                'required_operation': None}
+    return {'final': result.get('final'),
+            'derivable': result.get('derivable', True),
+            'required_operation': result.get('required_operation')}
 
 
 class HashCheckError(Exception):
@@ -177,29 +230,95 @@ def file_hash(path):
         return hashlib.sha256(f.read()).hexdigest()
 
 
+def text_hash(data):
+    if data[:3] == b'\xef\xbb\xbf':
+        data = data[3:]
+    return hashlib.sha256(
+        data.replace(b'\r\n', b'\n').replace(b'\r', b'\n')).hexdigest()
+
+
+def environment():
+    """The environment fields of a record made by this interpreter."""
+    packages = []
+    for name in RECORDED_PACKAGES:
+        try:
+            packages.append(f'{name} {importlib.metadata.version(name)}')
+        except importlib.metadata.PackageNotFoundError:
+            packages.append(f'{name} not installed')
+    return {
+        'python_version': (f'{platform.python_implementation()} '
+                           f'{platform.python_version()}'),
+        'platform': platform.platform(),
+        'package_versions': ', '.join(packages),
+    }
+
+
+def source_hash_covers(rel):
+    """Whether runner_source_hash covers the file at rel, a path relative
+    to the base directory with '/' separators."""
+    if rel == SOURCE_VERSION_FILE:
+        return True
+    return (rel.startswith(SOURCE_PACKAGE) and rel.endswith('.py')
+            and '__pycache__' not in rel.split('/'))
+
+
 def source_hash_files(base_dir):
-    """Relative paths (platform form, sorted) the source hash covers."""
+    """Relative paths ('/' separators, sorted) the source hash covers:
+    every file under base_dir the rule takes in."""
+    found = []
+    for root, _dirs, files in os.walk(base_dir):
+        for f in files:
+            rel = os.path.relpath(os.path.join(root, f), base_dir)
+            rel = rel.replace(os.sep, '/')
+            if source_hash_covers(rel):
+                found.append(rel)
+    return sorted(found)
+
+
+def source_hash_files_september(base_dir):
+    """The pre-T3-70 rule, kept only to show that the September runs'
+    published runner_source_hash (da0739eb..., docs/REPRODUCING.md) can
+    still be recomputed from the tag e7-quantise-fix (selftest.py,
+    PublishedSourceHash). Nothing else uses it.
+
+    Relative paths ('/' separators) of every .py file under base_dir whose
+    relative path does not start with 'output', 'review_output' or
+    '__pycache__', in the order the September runner hashed them: sorted
+    in the platform's own path form."""
     found = []
     for root, _dirs, files in os.walk(base_dir):
         for f in files:
             if not f.endswith('.py'):
                 continue
             rel = os.path.relpath(os.path.join(root, f), base_dir)
-            if rel.startswith(SOURCE_HASH_EXCLUDED):
+            if rel.startswith(SEPTEMBER_SOURCE_HASH_EXCLUDED):
                 continue
             found.append(rel)
-    return sorted(found)
+    return [rel.replace(os.sep, '/') for rel in sorted(found)]
 
 
-def runner_source_hash(base_dir):
+def source_hash_over(base_dir, rels):
+    """SHA-256 over the files rels ('/' separators) under base_dir, in the
+    order given: for each, the path, NUL, the bytes, NUL."""
     h = hashlib.sha256()
-    for rel in source_hash_files(base_dir):
-        h.update(rel.replace(os.sep, '/').encode('utf-8'))
+    for rel in rels:
+        h.update(rel.encode('utf-8'))
         h.update(b'\x00')
         with open(os.path.join(base_dir, rel), 'rb') as f:
             h.update(f.read())
         h.update(b'\x00')
     return h.hexdigest()
+
+
+def runner_source_hash(base_dir):
+    """runner_source_hash under the current rule (source_hash_files())."""
+    return source_hash_over(base_dir, source_hash_files(base_dir))
+
+
+def runner_source_hash_september(base_dir):
+    """runner_source_hash under the pre-T3-70 rule
+    (source_hash_files_september()), for the published-hash check only."""
+    return source_hash_over(base_dir, source_hash_files_september(base_dir))
 
 
 def version_file_fields(base_dir):
@@ -229,6 +348,8 @@ def from_snapshot(node):
         return node[1]
     if kind == 'decimal':
         return Decimal(node[1])
+    if kind == 'bytes':
+        return bytes.fromhex(node[1])
     if kind == 'float':
         return float(node[1])
     if kind == 'list':
@@ -290,9 +411,9 @@ _REFUSAL_ERRORS = {'float': 'TypeError', 'ap1': 'SealError'}
 def expected_outcome(inputs, tree):
     """What the contract says one seal call gives.
 
-    Returns (record_without_timestamp, None, None) for a call that seals,
-    or (None, reason, expected exception name or None) for a call that
-    must be refused."""
+    Returns (record without timestamp and seal_hash, None, None) for a call
+    that seals, or (None, reason, expected exception name or None) for a
+    call that must be refused."""
     kw = _kwargs(inputs)
     cwd = inputs['cwd']
     config = kw['config']
@@ -301,36 +422,67 @@ def expected_outcome(inputs, tree):
         kind = 'float' if refused.startswith('float') else None
         return None, f'resolved config: {refused}', _REFUSAL_ERRORS.get(kind)
 
+    declared = config.get('ap1_text_hash')
+    if not declared or declared == 'placeholder':
+        return (None, f'AP-1 text hash declared as {declared!r}',
+                _REFUSAL_ERRORS['ap1'])
     ap1_text_path = kw.get('ap1_text_path')
-    declared = config.get('ap1_text_hash', '')
-    if ap1_text_path:
-        p = _path(cwd, ap1_text_path)
-        if not os.path.exists(p):
-            return (None, f'AP-1 text file not found: {ap1_text_path}',
-                    _REFUSAL_ERRORS['ap1'])
-        ap1_text_hash = file_hash(p)
-        if declared and declared != 'placeholder' and declared != ap1_text_hash:
-            return None, 'AP-1 text hash mismatch', _REFUSAL_ERRORS['ap1']
-    else:
-        ap1_text_hash = declared
+    if not ap1_text_path:
+        return None, 'no AP-1 text given', _REFUSAL_ERRORS['ap1']
+    p = _path(cwd, ap1_text_path)
+    if not os.path.exists(p):
+        return (None, f'AP-1 text file not found: {ap1_text_path}',
+                _REFUSAL_ERRORS['ap1'])
+    ap1_text_hash = file_hash(p)
+    if declared != ap1_text_hash:
+        return None, 'AP-1 text hash mismatch', _REFUSAL_ERRORS['ap1']
 
+    hashes = {}
+    for name, key in TEXT_INPUTS.items():
+        with open(_path(cwd, kw[key]), 'rb') as f:
+            hashes[name] = text_hash(f.read())
+    expected_values = kw.get('expected_values')
     tag, commit = version_file_fields(tree)
     record = {
-        'fixture_hash': file_hash(_path(cwd, kw['fixture_path'])),
-        'questions_hash': file_hash(_path(cwd, kw['questions_path'])),
-        'ground_truth_hash': file_hash(_path(cwd, kw['ground_truth_path'])),
+        'seal_format': SEAL_FORMAT,
+        'fixture_hash': hashes['fixture'],
+        'questions_hash': hashes['questions'],
+        'ground_truth_hash': hashes['ground_truth'],
+        'calculator_hash': hashes['calculator'],
+        'expected_values_hash': ('' if expected_values is None
+                                 else canonical_hash({
+                                     k: _scored_part(v)
+                                     for k, v in expected_values.items()})),
         'config_hash': canonical_hash(config),
         'ap1_version': config.get('ap1_version', ''),
         'ap1_version_doi': config.get('ap1_version_doi', ''),
+        'ap1_text_hash': ap1_text_hash,
         'runner_version_tag': tag,
         'runner_version_commit': commit,
         'runner_source_hash': kw.get('runner_source_hash') or '',
-        'ap1_text_hash': ap1_text_hash,
+        **environment(),
         'verification_keys': kw.get('verification_keys') or [],
         'ev3_implemented': False,
     }
-    record['seal_hash'] = canonical_hash(record)
     return record, None, None
+
+
+def check_loaded(inputs):
+    """The bytes the run passed to the seal as `loaded` (what it executes,
+    T3-72) are the bytes of the files at the sealed paths."""
+    kw = _kwargs(inputs)
+    problems = []
+    for name, data in sorted((kw.get('loaded') or {}).items()):
+        key = TEXT_INPUTS.get(name)
+        if key is None:
+            problems.append(f'loaded: unexpected input {name!r}')
+            continue
+        with open(_path(inputs['cwd'], kw[key]), 'rb') as f:
+            on_disk = f.read()
+        if data != on_disk:
+            problems.append(f'loaded {name}: the bytes passed to the seal '
+                            f'differ from {kw[key]}')
+    return problems
 
 
 def _check_timestamp(value, window):
@@ -367,20 +519,31 @@ def _check_record(got, want, config, window):
         if key in got and not _strict_equal(got[key], want[key]):
             problems.append(f'{key}: sealed {got[key]!r}, '
                             f'recomputed {want[key]!r}')
-    # The composite, also from the record as returned: a field added to
-    # or dropped from both the record and the hash input shows here too.
-    rest = {k: v for k, v in got.items() if k not in ('timestamp', 'seal_hash')}
+    # seal_hash from the recomputed fields and the record's timestamp
+    # (checked against the run's window below), and from the record as
+    # returned: a field added to or dropped from both the record and the
+    # hash input shows in the second.
+    try:
+        recomputed = canonical_hash(dict(want, timestamp=got.get('timestamp')))
+    except HashCheckError as e:
+        recomputed = f'<{e}>'
+    rest = {k: v for k, v in got.items() if k != 'seal_hash'}
     try:
         own = canonical_hash(rest)
     except HashCheckError as e:
         own = f'<{e}>'
+    if got.get('seal_hash') != recomputed:
+        problems.append(f'seal_hash: sealed {got.get("seal_hash")!r}, '
+                        f'recomputed {recomputed!r}')
     if got.get('seal_hash') != own:
         problems.append(f'seal_hash: sealed {got.get("seal_hash")!r}, '
                         f'recomputed from the record as returned {own!r}')
     problems += _check_timestamp(got.get('timestamp'), window)
     for key in ('fixture_hash', 'questions_hash', 'ground_truth_hash',
-                'config_hash', 'runner_source_hash', 'ap1_text_hash',
-                'seal_hash'):
+                'calculator_hash', 'config_hash', 'runner_source_hash',
+                'ap1_text_hash',
+                'seal_hash') + (('expected_values_hash',)
+                                if want.get('expected_values_hash') else ()):
         if not _HEX64.match(str(got.get(key, ''))):
             problems.append(f'{key}: not a SHA-256 hex digest: '
                             f'{got.get(key)!r}')
@@ -538,7 +701,8 @@ def check_seals(scenario, tree, result_dir, raw, frozen):
     window = (frozen['started'], frozen['finished'])
     for n, attempt in enumerate(attempts, 1):
         problems += [f'seal call {n}: {p}' for p in
-                     check_inputs(attempt, tree, scenario, source_hash)]
+                     check_inputs(attempt, tree, scenario, source_hash)
+                     + check_loaded(attempt)]
         want, refusal, error = expected_outcome(attempt, tree)
         if attempt['returned']:
             record = next(records)
