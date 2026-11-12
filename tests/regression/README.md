@@ -57,11 +57,15 @@ real adapter and HTTP transport:
 
 What is compared for each scenario:
 - the console output, stderr and exit code (or the exception);
-- `report.md`, `adjudication_sheets.md`, `smoke_summary.json`, `smoke_run.jsonl`
-  and `DISCLAIMER.txt`, plus the list of files written;
+- `report.md`, `adjudication_sheets.md`, `smoke_summary.json`, `smoke_run.jsonl`,
+  `DISCLAIMER.txt` and `pre_registration.json`, plus the list of files written;
 - every request the mock received;
 - `outcomes.jsonl`, a per-execution table of what the runner decided about each
-  execution.
+  execution: the execution from the transcript record, its scores (figure,
+  provenance, operation) from `smoke_summary.json`, joined on item, condition
+  and repeat. (Before the two passes were separated, T3-21, the scores were read
+  from the transcript and joined on position, which shifted them after a
+  transport failure.) A run that stops before its summary has no scores.
 
 For the two replays, the large files are kept as a digest only, and
 `outcomes.jsonl` carries the detail. Storing them in full would add about
@@ -137,7 +141,8 @@ golden difference, and `--update` cannot write over it.
   stops before sealing. A refused seal must be one the contract refuses,
   with the exception the contract names. A run that seals must write
   `report.md`, `smoke_run.jsonl` and `smoke_summary.json`, unless the
-  scenario states otherwise in `"sealed_outputs"` (`t3_38_unknown_tool`, which stops early).
+  scenario states otherwise in `"sealed_outputs"` (none does since the
+  T3-38 and T3-39 fixes: both scenarios now run to the end).
 - **Command scenarios** (`"command"`) run an entry point directly and get
   none of these checks. None of them seals today; a command scenario that
   seals needs the driver's capture first.
@@ -198,7 +203,7 @@ each of their checks went.
 |---|---|
 | `clean` | all ten questions correct with grounded calls, both conditions: the main path, every scorer, the report |
 | `wrong_answers` | wrong final figure, wrong operation, transposed operand, no tool call |
-| `multi_round` | chained intermediates over several rounds, several calls per round, intermediate assistant text (V12-3: not kept) |
+| `multi_round` | chained intermediates over several rounds, several calls per round, intermediate assistant text (kept in each record's `rounds` since the V12-3 fix) |
 | `d2_variation` | answers that vary across repeats (D2) |
 | `non_answers` | empty and null content (UNMEASURED, T3-10), declined, unrecognised decline, refusal reciting balances, two candidates, no figure |
 | `transport_errors` | 429, 500 and 401 in round 0 and mid-loop, a dropped connection with retries, a non-JSON body |
@@ -206,7 +211,7 @@ each of their checks went.
 | `t3_2_leading_whitespace` | **T3-2**: a leading space or tab before the expression; since the fix it is stripped and read, so the chained launder is ORIGINATED, ORIGINATED, as the no-space contrast |
 | `t3_16_malformed_calls` | **T3-16**: malformed or wrongly keyed calls are INVOKED; since the fix they are OPERANDS-/OPERATION-UNOBSERVABLE in D7.2(a)/(b), not dropped; a call with a name the calculator does not know (`2400 * rate / 12`), which errors and, since the unknown-name fix, is OPERANDS-UNOBSERVABLE, not grounded |
 | `t3_5_constant_magnitude` | **T3-5**: `-12` and `-1` grounded by `constant_magnitude`; a sign-inverted source field for contrast |
-| `t3_38_unknown_tool` | **T3-38**: an unoffered tool trips the FATAL consistency check; no report |
+| `t3_38_unknown_tool` | **T3-38**: a call to a tool that was not offered; since the fix it is recorded, the execution is NOT-INVOKED and the run completes |
 | `t3_39_crash` | **T3-39**: a non-string calculator expression; since the fix its operands are unreadable and the run completes |
 | `non_ascii_config` | a decline marker with U+2019 in the resolved config: the config hash's UTF-8 rule through the real seal |
 | `crlf_sealed_inputs` | `clean` with the fixture, questions, ground-truth module and calculator in CRLF bytes: they seal as their LF form (T3-50), so `fixture_hash`, `questions_hash`, `ground_truth_hash` and `calculator_hash` equal `clean`'s; a runner that hashed them as they are on disk fails the hash oracle |
@@ -229,19 +234,21 @@ each of their checks went.
 | `cli_help` | `ap1-run --help`: the options and their defaults |
 
 **About the replays:** the recorded final responses are served as they were.
-The intermediate rounds survive only as assistant messages (V12-3), so each
-one is wrapped in a standard envelope. The envelope names the model the
-execution's recorded final response names (the published runs did not keep the
-intermediate rounds' own model field), and a replay is configured with the
-model the published run's requests name. So a replay's served and configured
-models are the run's, not the mock's `mock-model`, which only scripted turns
-name. A recorded loop that ended mid-way (EV-0) is replayed as a failure of
-the next request. Every tool call is answered with the return the published
-run recorded for it (`tool_calls[].return_value`), not by running today's
-calculator: the system's later calls copy the returns it received, and a
-replay re-scores that session without re-running it (SPEC §2). The driver
-installs the mock's `recorded_tool_return` as the engine's tool executor; a
-call the record does not hold, or holds without a return, stops the run.
+The published transcripts were written before the V12-3 fix: their
+intermediate rounds survive only as assistant messages (in the round-0 request
+record, which the tool loop kept extending, S4-G4-1), so each one is wrapped
+in a standard envelope. The envelope names the model the execution's recorded
+final response names (the published runs did not keep the intermediate rounds'
+own model field), and a replay is configured with the model the published
+run's requests name. So a replay's served and configured models are the run's,
+not the mock's `mock-model`, which only scripted turns name. A recorded loop
+that ended mid-way (EV-0) is replayed as a failure of the next request. Every
+tool call is answered with the return the published run recorded for it
+(`tool_calls[].return_value`), not by running today's calculator: the system's
+later calls copy the returns it received, and a replay re-scores that session
+without re-running it (SPEC §2). The driver installs the mock's
+`recorded_tool_return` as the engine's tool executor; a call the record does
+not hold, or holds without a return, stops the run.
 
 The replayed `smoke_summary.json` files equal the published ones except the
 top-level `seal_hash`, the moves listed in `replay_expected.json`, and its two
@@ -252,7 +259,9 @@ with the published `output/run_e_mini` and `output/run_f_sol` reports in every
 scored figure except those step 5 corrected: the D7.1 figures of §5 (and
 console 3h) (T3-1, T3-11, V12-5), where n is now the 10 computable questions,
 not the 500 executions, and the one EV-0 execution per run is out of n and
-listed per evidence class; and the D7.3 counts the listed moves feed (T3-26).
+listed per evidence class; the D7.3 counts the listed moves feed (T3-26);
+and in §10 that EV-0 execution's row gives its cause and round (T3-35: the
+mock's replayed mid-loop failure), not just its evidence class.
 Otherwise only run metadata differs: model name, endpoint, hashes,
 timestamps, runner commit and `runner_modified`.
 

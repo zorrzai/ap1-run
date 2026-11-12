@@ -251,7 +251,7 @@ transport failure, bounded, every attempt logged.
 **Verification Contract.**
 - A rate-limited item appears as UNMEASURED and is excluded from every
   denominator.
-- No code path modifies a response before it is written to the transcript.
+- No code path modifies a response before it is written to the transcript. "Unmodified" means byte for byte: each answered round whose body is a JSON object or array (every chat completion) keeps the body exactly as received in its record, as text in `response_raw` (its UTF-8 bytes are the body's), beside the parsed `response_received` that every reader uses.
 - The adapter makes no network call to any host other than the configured
   endpoint, demonstrated under a deny-all egress policy.
 
@@ -1157,6 +1157,7 @@ and the example modules (`example/ground_truth_example.py`,
 | `src/ap1_run/scoring/transcription.py` | Instrument module |
 | `src/ap1_run/scoring/release_coverage.py` | Instrument module |
 | `src/ap1_run/scoring/answer_outcome.py` | Instrument module |
+| `src/ap1_run/scoring/rescore.py` | Instrument module |
 | `src/ap1_run/foundation/transcript.py` | Instrument module |
 | `src/ap1_run/run.py` | Demonstration tooling |
 | `src/ap1_run/runner/console.py` | Demonstration tooling |
@@ -1164,6 +1165,7 @@ and the example modules (`example/ground_truth_example.py`,
 | `src/ap1_run/runner/executions.py` | Demonstration tooling |
 | `src/ap1_run/runner/outputs.py` | Demonstration tooling |
 | `src/ap1_run/runner/settings.py` | Demonstration tooling |
+| `src/ap1_run/runner/scoring_pass.py` | Demonstration tooling |
 | `src/ap1_run/runner/summary.py` | Demonstration tooling |
 | `example/ground_truth_example.py` | Example / demonstration |
 | `example/calculator_tool.py` | Example / demonstration |

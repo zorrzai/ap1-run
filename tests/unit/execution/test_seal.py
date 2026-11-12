@@ -361,6 +361,24 @@ def verify(record, files, config=CONFIG, **kwargs):
     return verify_seal(record, config=config, **files.kwargs, **kwargs)
 
 
+@pytest.mark.finding('T3-72')
+@pytest.mark.req('R1.1')
+@pytest.mark.parametrize('name', ['fixture', 'questions', 'ground_truth',
+                                  'calculator'])
+def test_verify_seal_checks_the_bytes_read_not_the_file_again(files, frozen,
+                                                             name):
+    # verify_seal(loaded=) checks the bytes the caller read and will use
+    # (T3-72: verify what is used). Bytes that differ from the sealed
+    # ones are refused although the file on disk matches the seal; bytes
+    # that match pass although the file has changed since.
+    record = make_seal(files)
+    sealed = files.paths[name].read_bytes()
+    with pytest.raises(SealError, match=f'\n  {name}: sealed='):
+        verify(record, files, loaded={name: sealed + b'\n# other'})
+    files.paths[name].write_bytes(sealed + b'\n# changed on disk')
+    assert verify(record, files, loaded={name: sealed}) is True
+
+
 def test_verify_seal_unchanged_inputs_returns_true(files, frozen):
     record = make_seal(files, ap1_text_path=files.paths['ap1_text'])
     assert verify(record, files, ap1_text_path=files.paths['ap1_text']) is True

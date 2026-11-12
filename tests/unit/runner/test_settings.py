@@ -174,6 +174,7 @@ def test_parse_args_defaults_are_the_fixed_paths():
         # V12-4: no fixed text; the run takes the text of the config's
         # ap1_version (execution/ap1_texts.py).
         'ap1_text': None,
+        'rescore': None,
     }
 
 
@@ -185,14 +186,21 @@ def test_parse_args_absolute_paths_kept():
                           'fixture_dir': native('/b'),
                           'output_dir': native('/c/out'),
                           'output_dir_explicit': True,
-                          'ap1_text': native('/d/ap1.md')}
+                          'ap1_text': native('/d/ap1.md'),
+                          'rescore': None}
+
+
+def test_parse_args_rescore_absolute_path_kept():
+    args = parse_args(['--rescore', '/r/smoke_run.jsonl'], BASE)
+    assert args.rescore == native('/r/smoke_run.jsonl')
 
 
 def test_parse_args_relative_paths_resolve_against_the_working_directory(
         tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     args = parse_args(['--config', 'c.json', '--fixture-dir', 'in',
-                       '--output-dir', 'out/x', '--ap1-text', '../t.md'],
+                       '--output-dir', 'out/x', '--ap1-text', '../t.md',
+                       '--rescore', 'run/t.jsonl'],
                       BASE)
     root = str(tmp_path.resolve())
     parent = str(tmp_path.resolve().parent)
@@ -200,7 +208,8 @@ def test_parse_args_relative_paths_resolve_against_the_working_directory(
                           'fixture_dir': os.path.join(root, 'in'),
                           'output_dir': os.path.join(root, 'out', 'x'),
                           'output_dir_explicit': True,
-                          'ap1_text': os.path.join(parent, 't.md')}
+                          'ap1_text': os.path.join(parent, 't.md'),
+                          'rescore': os.path.join(root, 'run', 't.jsonl')}
 
 
 def test_parse_args_rejects_unknown_options(capsys):
@@ -218,7 +227,8 @@ def test_parse_args_help_text(capsys, monkeypatch):
     pad = ' ' * 24
     assert capsys.readouterr().out == (
         'usage: ap1-run [-h] [--config CONFIG] [--fixture-dir FIXTURE_DIR] '
-        '[--output-dir OUTPUT_DIR] [--ap1-text AP1_TEXT]\n'
+        '[--output-dir OUTPUT_DIR] [--ap1-text AP1_TEXT] '
+        '[--rescore TRANSCRIPT]\n'
         '\n'
         'Run the AP-1 instrument smoke test against a live endpoint. The '
         'endpoint, the model and every other setting come from the config; '
@@ -237,7 +247,10 @@ def test_parse_args_help_text(capsys, monkeypatch):
         'directory given here that already holds a run is refused\n'
         '  --ap1-text AP1_TEXT   the AP-1 text to seal; its hash must match '
         "the config's ap1_text_hash (default: the text of the config's "
-        'ap1_version under reference/)\n')
+        'ap1_version under reference/)\n'
+        "  --rescore TRANSCRIPT  instead of running, score a run's transcript "
+        "again (no endpoint, no key), with the run's --config and "
+        '--fixture-dir, into another --output-dir\n')
 
 
 def test_parse_args_output_dir_given_as_the_default_path_is_explicit():

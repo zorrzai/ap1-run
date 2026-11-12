@@ -120,7 +120,8 @@ SEAL_PATHS = {
 }
 
 # Outputs that carry the seal, written by a run that seals and finishes.
-# A scenario whose run stops early states its own in "sealed_outputs".
+# A scenario whose run stops early states its own in "sealed_outputs" (none
+# does today).
 SEALED_OUTPUTS = ('report.md', 'smoke_run.jsonl', 'smoke_summary.json')
 
 # The keys of a seal record, and nothing else (seal_format 2).

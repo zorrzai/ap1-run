@@ -1,10 +1,11 @@
-"""Unit tests for the runner's per-execution scoring.
+"""Unit tests for the per-execution scoring of the scoring pass.
 
-score_execution wires the scoring modules together; those have their own
-tests. Here they are replaced by recording fakes, so that what is passed
-to each and what is collected from each is checked exactly. The
-transcript is real, in a temporary directory. One test at the end runs
-the real scoring modules on a realistic response.
+score_execution and score_d72 wire the scoring modules together; those
+have their own tests. Here they are replaced by recording fakes, so that
+what is passed to each and what is collected from each is checked
+exactly; some tests run the real scoring modules on a realistic response.
+result_from_record reads an execution back from its transcript record.
+Nothing here writes to a transcript (T3-21).
 """
 
 import json
@@ -16,8 +17,9 @@ import pytest
 from ap1_run.foundation import transcript
 from ap1_run.runner import executions
 from ap1_run.runner.executions import (
-    Findings, apply_question_measurability, record_not_scored,
-    record_transport_failure, record_underivable, score_execution,
+    NOT_RUN, Findings, apply_question_measurability, as_recorded,
+    record_not_run, record_not_scored, record_underivable, result_from_record,
+    score_d72, score_execution,
 )
 from ap1_run.scoring.provenance.classify import UNMEASURABLE_REASON
 
@@ -90,21 +92,15 @@ def fakes(monkeypatch):
     return Fakes(monkeypatch)
 
 
-@pytest.fixture
-def tpath(tmp_path):
-    return str(tmp_path / 'run.jsonl')
-
-
 CONFIG = {'quantisation': {'places': 3, 'rounding': 'ROUND_HALF_EVEN'}}
 
 
-def score(findings, result, tpath, **overrides):
+def score(findings, result, **overrides):
     kwargs = dict(item_id='Q01', condition='base', rep=2,
                   expected=D('638.40'), ctx={'savings': {'balance': '1'}},
                   collision=False, config=CONFIG,
                   answer_tolerance=D('0.01'), decline_markers=['cannot'],
-                  currency_symbols=['$'], transcript_path=tpath,
-                  seal_hash='seal-1')
+                  currency_symbols=['$'])
     kwargs.update(overrides)
     score_execution(findings, result, **kwargs)
 
@@ -112,15 +108,7 @@ def score(findings, result, tpath, **overrides):
 # -- the collected records ------------------------------------------------
 
 @pytest.mark.finding('T3-21', 'T3-27')
-def test_score_execution_collects_every_record(fakes, tpath, capsys):
-    # T3-21: scoring appends a figure_identification record to the
-    # transcript; T3-27: check_transcription gets no rounding mode. Both
-    # fixes change this test.
-    transcript.append(tpath, item_id='Q01', arm_id='base', condition='base',
-                      request_sent={}, response_received={}, tool_calls=[],
-                      evidence_class='EV-2', error_state=None,
-                      seal_hash='seal-1',
-                      operation_correctness=[{'outcome': 'OPERATION-CORRECT'}])
+def test_score_execution_collects_every_record(fakes, capsys):
     content = 'The total is $638.40, about 640.'
     fakes.tokens[content] = ['638.40', '640', '638.41', '638.39', '638.3899']
     result = {
@@ -128,29 +116,20 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
         'tool_calls': [calc('15200 * 0.042', '{"result": 638.4}')],
         'evidence_class': 'EV-2', 'invocation_outcome': 'INVOKED',
         'provenance_results': [{'outcome': 'OPERANDS-GROUNDED'}],
+        'operation_correctness': [{'outcome': 'OPERATION-CORRECT'}],
     }
     findings = Findings()
-    score(findings, result, tpath)
+    score(findings, result)
 
     assert capsys.readouterr().out == 'AUTO-MATCH | EV-2 | INVOKED\n'
 
-    # figure identification, recorded in the transcript
+    # figure identification (T3-21: in the results, not the transcript)
     assert fakes.calls['identify_figure'] == [((response(content),), {
         'expected_value': D('638.40'),
         'delivered_context': {'savings': {'balance': '1'}},
         'lookup_collision': False, 'answer_tolerance': D('0.01'),
         'decline_markers': ['cannot'], 'currency_symbols': ['$'],
         'decimal_separator': '.', 'grouping_separator': ','})]
-    records = transcript.read_all(tpath)
-    figure_record = records[-1]
-    del figure_record['timestamp']
-    assert figure_record == {
-        'item_id': 'Q01', 'arm_id': 'base', 'condition': 'base',
-        'request_sent': None, 'response_received': None, 'tool_calls': [],
-        'evidence_class': 'EV-2', 'error_state': None, 'seal_hash': 'seal-1',
-        'record_type': 'figure_identification', 'repeat': 2,
-        'figure_outcome': 'AUTO-MATCH', 'figure_reason': 'one figure', 'released_figure': '638.40',
-        'expected': '638.40'}
 
     # D7.3 transcription
     assert fakes.calls['check_transcription'] == [(([D('638.4')], D('638.40')), {
@@ -214,8 +193,7 @@ def test_score_execution_collects_every_record(fakes, tpath, capsys):
 @pytest.mark.finding('T3-13')
 @pytest.mark.parametrize('accuracy, outcome', [
     ('CORRECT', 'COMPUTED'), ('INCORRECT', None)])
-def test_score_execution_answer_outcome_follows_d1(fakes, tpath, accuracy,
-                                                   outcome):
+def test_score_execution_answer_outcome_follows_d1(fakes, accuracy, outcome):
     # §6.8 COMPUTED is "Correct": the runner gives answer_outcome the D1
     # result it scored for the same execution.
     fakes.accuracy = accuracy
@@ -225,17 +203,15 @@ def test_score_execution_answer_outcome_follows_d1(fakes, tpath, accuracy,
         'tool_calls': [calc('15200 * 0.042', '{"result": 638.4}')],
         'evidence_class': 'EV-2', 'invocation_outcome': 'INVOKED',
         'provenance_results': [{'outcome': 'OPERANDS-GROUNDED'}],
-    }, tpath)
+    })
     assert findings.all_results[0]['answer_outcome'] == outcome
 
 
 @pytest.mark.finding('T3-27')
-def test_score_execution_defaults_for_a_bare_result(fakes, tpath, capsys):
-    # T3-27: check_transcription and score_accuracy get no rounding mode
-    # (release coverage does).
+def test_score_execution_defaults_for_a_bare_result(fakes, capsys):
     fakes.figure = {'outcome': 'AUTO-NO-FIGURE'}
     findings = Findings()
-    score(findings, {}, tpath, config={})
+    score(findings, {}, config={})
     assert capsys.readouterr().out == 'AUTO-NO-FIGURE |  | \n'
     assert fakes.calls['check_transcription'] == [(([], None), {
         'figure_outcome': 'AUTO-NO-FIGURE', 'quantisation_digits': 2,
@@ -261,18 +237,15 @@ def test_score_execution_defaults_for_a_bare_result(fakes, tpath, capsys):
         'TRANSCRIBED-EXACT', 'release_coverage_outcome': 'PARTIALLY-GOVERNED',
         'answer_outcome': None, 'answer_outcome_reason':
         'no figure released: the record does not decide the outcome'}]
-    figure_record = transcript.read_all(tpath)[-1]
-    assert (figure_record['evidence_class'], figure_record['figure_reason'],
-            figure_record['released_figure']) == (None, '', None)
 
 
-def test_score_execution_empty_results_from_scorers(fakes, tpath, monkeypatch):
+def test_score_execution_empty_results_from_scorers(fakes, monkeypatch):
     monkeypatch.setattr(executions, 'check_transcription',
                         lambda *a, **k: {'outcome': 'UNOBSERVABLE'})
     monkeypatch.setattr(executions, 'check_release_coverage',
                         lambda *a, **k: {'outcome': 'COVERAGE-UNOBSERVABLE'})
     findings = Findings()
-    score(findings, {}, tpath)
+    score(findings, {})
     assert findings.transcription_results == [{
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
         'outcome': 'UNOBSERVABLE', 'difference': '', 'reason': '',
@@ -316,10 +289,9 @@ def other(return_value):
     ([], []),
 ])
 def test_score_execution_transcription_compares_required_operation_returns(
-        fakes, tpath, tool_calls, expected):
+        fakes, tool_calls, expected):
     score(Findings(), {'tool_calls': tool_calls,
-                       'ground_truth': {'required_operation': 'calculator'}},
-          tpath)
+                       'ground_truth': {'required_operation': 'calculator'}})
     assert fakes.calls['check_transcription'][0][0][0] == expected
 
 
@@ -328,21 +300,20 @@ def test_score_execution_transcription_compares_required_operation_returns(
     {'ground_truth': {'required_operation': ''}},
 ])
 def test_score_execution_without_required_operation_every_tool_counts(
-        fakes, tpath, result):
+        fakes, result):
     # As for invocation (execution/evidence.py): no operation named, any
     # tool's returns count.
     result = dict(result, tool_calls=[calc('1', '{"result": 1}'),
                                       other('{"result": 9}')])
-    score(Findings(), result, tpath)
+    score(Findings(), result)
     assert fakes.calls['check_transcription'][0][0][0] == [D('1'), D('9')]
 
 
 @pytest.mark.finding('T3-41')
-def test_score_execution_passes_configured_separators_everywhere(fakes,
-                                                                 tpath):
+def test_score_execution_passes_configured_separators_everywhere(fakes):
     content = 'Die Zinsen betragen 1.006,25 $.'
     config = dict(CONFIG, decimal_separator=',', grouping_separator='.')
-    score(Findings(), {'response': response(content)}, tpath, config=config)
+    score(Findings(), {'response': response(content)}, config=config)
     kwargs = fakes.calls['identify_figure'][0][1]
     assert (kwargs['decimal_separator'], kwargs['grouping_separator']) == \
         (',', '.')
@@ -354,11 +325,11 @@ def test_score_execution_passes_configured_separators_everywhere(fakes,
 # -- release coverage candidates ------------------------------------------
 
 def test_score_execution_coverage_without_tokens_when_extraction_fails(
-        fakes, tpath):
+        fakes):
     content = 'bad 1,2,3.4.5'
     fakes.tokens[content] = ValueError('ambiguous grouping')
     findings = Findings()
-    score(findings, {'response': response(content)}, tpath)
+    score(findings, {'response': response(content)})
     assert fakes.calls['check_release_coverage'][0][0][1] == []
     # the same failure is a numeric-grammar finding
     assert findings.grammar_issues == [{
@@ -366,97 +337,108 @@ def test_score_execution_coverage_without_tokens_when_extraction_fails(
         'error': 'ambiguous grouping', 'content': content}]
 
 
-def test_score_execution_grammar_issue_keeps_500_characters(fakes, tpath):
+def test_score_execution_grammar_issue_keeps_500_characters(fakes):
     content = 'x' * 600
     fakes.tokens[content] = ValueError('e')
     findings = Findings()
-    score(findings, {'response': response(content)}, tpath)
+    score(findings, {'response': response(content)})
     assert findings.grammar_issues[0]['content'] == 'x' * 500
 
 
 # -- unrecognised declines ------------------------------------------------
 
 @pytest.mark.parametrize('phrase', DECLINE_PHRASES)
-def test_score_execution_decline_phrase_is_a_finding(fakes, tpath, phrase):
+def test_score_execution_decline_phrase_is_a_finding(fakes, phrase):
     content = f'Sorry, {phrase.upper()} help.'
     findings = Findings()
-    score(findings, {'response': response(content)}, tpath)
+    score(findings, {'response': response(content)})
     assert findings.decline_findings == [{
         'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
         'content_excerpt': content, 'configured_markers': ['cannot']}]
 
 
-def test_score_execution_decline_excerpt_keeps_300_characters(fakes, tpath):
+def test_score_execution_decline_excerpt_keeps_300_characters(fakes):
     content = 'I apologize. ' + 'y' * 400
     findings = Findings()
-    score(findings, {'response': response(content)}, tpath)
+    score(findings, {'response': response(content)})
     assert findings.decline_findings[0]['content_excerpt'] == content[:300]
 
 
-def test_score_execution_recognised_decline_is_not_a_finding(fakes, tpath):
+def test_score_execution_recognised_decline_is_not_a_finding(fakes):
     fakes.figure = {'outcome': 'ADJUDICATE-DECLINE'}
     findings = Findings()
-    score(findings, {'response': response("I can't do that.")}, tpath)
+    score(findings, {'response': response("I can't do that.")})
     assert findings.decline_findings == []
 
 
-def test_score_execution_other_text_is_not_a_decline(fakes, tpath):
+def test_score_execution_other_text_is_not_a_decline(fakes):
     findings = Findings()
-    score(findings, {'response': response('The answer is 5.')}, tpath)
+    score(findings, {'response': response('The answer is 5.')})
     assert findings.decline_findings == []
 
 
 # -- tool-call structures -------------------------------------------------
 
-def test_score_execution_records_each_calls_raw_arguments(fakes, tpath):
+def test_score_execution_records_each_calls_raw_arguments(fakes):
     calls = [calc('1 + 1', ''), {'id': 'x'},
              {'function': {'name': 'calculator'}}]
     findings = Findings()
-    score(findings, {'tool_calls': calls}, tpath)
+    score(findings, {'tool_calls': calls})
     assert [s['raw_arguments'] for s in findings.tool_call_structures] == [
         '{"expression": "1 + 1"}', '', '']
     assert findings.all_results[0]['tool_calls_count'] == 3
 
 
-# -- operation correctness, read back from the transcript ----------------
-
-def test_score_execution_takes_the_latest_engine_record_of_the_item(
-        fakes, tpath):
-    def engine_record(item_id, condition, outcome, **extra):
-        transcript.append(tpath, item_id=item_id, arm_id=condition,
-                          condition=condition, request_sent=None,
-                          response_received=None, tool_calls=[],
-                          evidence_class=None, error_state=None,
-                          seal_hash='s',
-                          operation_correctness=[{'outcome': outcome}],
-                          **extra)
-    engine_record('Q01', 'base', 'OLD')
-    engine_record('Q01', 'base', 'LATEST')
-    engine_record('Q02', 'base', 'OTHER ITEM')
-    engine_record('Q01', 'removed', 'OTHER CONDITION')
+@pytest.mark.finding('T3-38')
+@pytest.mark.parametrize('gt, other', [
+    ({'required_operation': 'calculator'}, 2),
+    ({'required_operation': 'python'}, 3),
+    ({'required_operation': 'other'}, 4),
+], ids=['calculator', 'python', 'none-matching'])
+def test_score_execution_counts_calls_to_other_tools(fakes, gt, other):
+    # T3-38: the row counts the calls to tools other than the required
+    # operation, which do not affect D7.1, so the consistency check can
+    # leave them out.
+    calls = [calc('1 + 1', ''), calc('2 + 2', ''),
+             {'function': {'name': 'python'}}, {'id': 'x'}]
     findings = Findings()
-    score(findings, {}, tpath)
+    score(findings, {'tool_calls': calls, 'ground_truth': gt})
+    row = findings.all_results[0]
+    assert (row['tool_calls_count'], row['other_tool_calls_count']) == (
+        4, other)
+
+
+@pytest.mark.finding('T3-38')
+@pytest.mark.parametrize('gt, calls', [
+    ({'required_operation': 'calculator'}, [calc('1 + 1', '')]),
+    ({'required_operation': None}, [calc('1 + 1', ''), {'id': 'x'}]),
+    (None, [{'function': {'name': 'python'}}]),
+], ids=['all-required', 'no-operation', 'no-gt'])
+def test_score_execution_no_other_tool_calls_no_key(fakes, gt, calls):
+    # With no operation named every call counts (execution/evidence.py);
+    # the key is only written when there are other calls.
+    findings = Findings()
+    score(findings, {'tool_calls': calls, 'ground_truth': gt})
+    assert 'other_tool_calls_count' not in findings.all_results[0]
+
+
+# -- operation correctness, from the result ------------------------------
+
+def test_score_execution_operation_correctness_taken_from_the_result(fakes):
+    # Scored by score_d72 when the result was read from its record
+    # (result_from_record), not read back from the transcript (T3-21).
+    findings = Findings()
+    score(findings, {'operation_correctness': [{'outcome': 'MINE'}]})
     assert findings.all_results[0]['operation_correctness'] == [
-        {'outcome': 'LATEST'}]
-
-
-def test_score_execution_engine_record_without_operation_correctness(
-        fakes, tpath):
-    transcript.append(tpath, item_id='Q01', arm_id='base', condition='base',
-                      request_sent=None, response_received=None,
-                      tool_calls=[], evidence_class=None, error_state=None,
-                      seal_hash='s')
-    findings = Findings()
-    score(findings, {}, tpath)
-    assert findings.all_results[0]['operation_correctness'] == []
+        {'outcome': 'MINE'}]
 
 
 def test_score_execution_d2_responses_accumulate_per_item_and_condition(
-        fakes, tpath):
+        fakes):
     findings = Findings()
-    score(findings, {'response': 'r1'}, tpath)
-    score(findings, {'response': 'r2'}, tpath)
-    score(findings, {'response': 'r3'}, tpath, condition='removed')
+    score(findings, {'response': 'r1'})
+    score(findings, {'response': 'r2'})
+    score(findings, {'response': 'r3'}, condition='removed')
     assert findings.d2_responses == {('Q01', 'base'): ['r1', 'r2'],
                                      ('Q01', 'removed'): ['r3']}
 
@@ -471,15 +453,41 @@ def test_record_underivable():
     assert findings.unmeasured_cells == []
 
 
-def test_record_transport_failure():
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.3')
+def test_record_not_run():
+    # SPEC R0.3: an interrupted run's unreached executions are reported
+    # not-run, never as failures, and are no unmeasured cell.
     findings = Findings()
-    record_transport_failure(findings, 'Q05', 'base', 3, 'rate_limited')
+    record_not_run(findings, 'Q05', 'base', 3)
+    assert NOT_RUN == 'NOT-RUN'
+    assert findings.all_results == [{
+        'item_id': 'Q05', 'condition': 'base', 'repeat': 3,
+        'status': 'NOT-RUN',
+        'cause': 'not reached: the transcript has no record of it'}]
+    assert findings.unmeasured_cells == []
+
+
+@pytest.mark.finding('T3-65')
+@pytest.mark.parametrize('result, cause', [
+    ({'error': 'rate limited (HTTP 429): x', 'cause': 'rate_limited'},
+     'rate_limited: rate limited (HTTP 429): x'),
+    ({'error': 'HTTP 500: boom', 'cause': 'transport_error'},
+     'transport_error: HTTP 500: boom'),
+    ({'error': 'empty response'}, 'empty response'),
+], ids=['rate-limited', 'transport', 'empty'])
+def test_record_not_scored_unmeasured_cell_cause(result, cause):
+    # T3-65 (the author's proposal): every UNMEASURED cell is
+    # listed with its cause, the engine's kind first where it gives one.
+    findings = Findings()
+    record_not_scored(findings, 'Q05', 'base', 3, 'UNMEASURED',
+                      dict(result, status='UNMEASURED'))
     assert findings.unmeasured_cells == [{'item_id': 'Q05',
                                           'condition': 'base', 'repeat': 3,
-                                          'cause': 'rate_limited'}]
+                                          'cause': cause}]
     assert findings.all_results == [{'item_id': 'Q05', 'condition': 'base',
                                      'repeat': 3, 'status': 'UNMEASURED',
-                                     'cause': 'rate_limited'}]
+                                     'cause': cause}]
 
 
 @pytest.mark.parametrize('result, cause', [
@@ -493,6 +501,7 @@ def test_record_not_scored(result, cause):
     assert findings.all_results == [{'item_id': 'Q06', 'condition': 'removed',
                                      'repeat': 1, 'status': 'VOID',
                                      'cause': cause}]
+    assert findings.unmeasured_cells == []
 
 
 def test_findings_start_empty_and_separate():
@@ -510,13 +519,13 @@ def test_findings_start_empty_and_separate():
 
 # -- the real scoring modules, on a realistic response --------------------
 
-def test_score_execution_with_real_scorers(tpath, capsys):
+def test_score_execution_with_real_scorers(capsys):
     content = 'The interest is $638.40.'
     result = {'response': response(content),
               'tool_calls': [calc('15200 * 0.042', '{"result": 638.4}')],
               'evidence_class': 'EV-2', 'invocation_outcome': 'INVOKED'}
     findings = Findings()
-    score(findings, result, tpath,
+    score(findings, result,
           config={'quantisation': {'places': 2, 'rounding': 'ROUND_HALF_UP'}})
     assert capsys.readouterr().out == 'AUTO-MATCH | EV-2 | INVOKED\n'
     row = findings.all_results[0]
@@ -526,6 +535,315 @@ def test_score_execution_with_real_scorers(tpath, capsys):
         'AUTO-MATCH', '638.40', 'TRANSCRIBED-EXACT', 'GOVERNED-RELEASE')
 
 
+# -- D7.2 of one execution: score_d72 (moved from the engine, T3-21) -------
+
+GT_D72 = {'final': D('15.20'), 'derivable': True,
+          'required_operation': 'calculator', 'intermediates': [],
+          'source_fields_consumed': ['savings.balance',
+                                     'savings.annual_rate']}
+CTX_D72 = {'savings': {'balance': '15200.00', 'annual_rate': '1.2'}}
+CONFIG_D72 = {'permitted_transformations': ['percent_to_fraction'],
+              'quantisation': {'places': '2', 'rounding': 'ROUND_HALF_UP'}}
+
+
+def tool_call(expression='15200*1.2/100/12', id='call_1', name='calculator',
+              arguments=None, return_value='{"result": "15.2"}'):
+    if arguments is None:
+        arguments = json.dumps({'expression': expression})
+    return {'turn': 1, 'id': id, 'type': 'function',
+            'function': {'name': name, 'arguments': arguments},
+            'return_value': return_value}
+
+
+class Recorders:
+    """Recording stand-ins for the scoring functions score_d72 calls."""
+
+    def __init__(self, monkeypatch):
+        self.calls = {}
+        self.operation = {}      # expression -> result dict or exception
+        monkeypatch.setattr(executions, 'classify_invocations_sequential',
+                            self.classify_invocations_sequential)
+        monkeypatch.setattr(executions, 'classify_operation',
+                            self.classify_operation)
+        monkeypatch.setattr(executions, 'reclassify_session',
+                            self.reclassify_session)
+
+    def classify_invocations_sequential(self, *args):
+        self.calls.setdefault('provenance', []).append(args)
+        return [{'provenance': 'P'}]
+
+    def classify_operation(self, *args):
+        self.calls.setdefault('operation', []).append(args)
+        found = self.operation.get(args[0], {'outcome': f'OC {args[0]}'})
+        if isinstance(found, Exception):
+            raise found
+        return found
+
+    def reclassify_session(self, results, exprs):
+        self.calls.setdefault('reclassify', []).append(
+            (list(results), list(exprs)))
+        return [dict(r, reclassified=True) for r in results]
+
+
+@pytest.fixture
+def recorders(monkeypatch):
+    return Recorders(monkeypatch)
+
+
+def test_score_d72_wired(recorders):
+    tcs = [tool_call('1+1', id='a'), tool_call(name='python', id='b'),
+           tool_call('2*3', id='c')]
+    provenance, operation = score_d72(tcs, CTX_D72, GT_D72, CONFIG_D72)
+    assert recorders.calls['provenance'] == [(tcs, CTX_D72, GT_D72,
+                                              CONFIG_D72)]
+    assert recorders.calls['operation'] == [('1+1', GT_D72, CONFIG_D72),
+                                            ('2*3', GT_D72, CONFIG_D72)]
+    # One expression per calculator call, aligned with the results; the
+    # python call is not a calculator call (T3-16).
+    assert recorders.calls['reclassify'] == [
+        ([{'outcome': 'OC 1+1'}, {'outcome': 'OC 2*3'}], ['1+1', '2*3'])]
+    assert operation == [{'outcome': 'OC 1+1', 'reclassified': True},
+                         {'outcome': 'OC 2*3', 'reclassified': True}]
+    assert provenance == [{'provenance': 'P'}]
+
+
+def test_score_d72_operation_error_unobservable(recorders):
+    recorders.operation['1+1'] = ZeroDivisionError('division by zero')
+    _, operation = score_d72([tool_call('1+1')], CTX_D72, GT_D72, CONFIG_D72)
+    assert operation == [{
+        'outcome': 'OPERATION-UNOBSERVABLE',
+        'reason': 'evaluation failed: ZeroDivisionError: division by zero',
+        'reclassified': True}]
+
+
+@pytest.mark.finding('T3-16')
+def test_score_d72_malformed_arguments_scored(recorders):
+    # T3-16: classify_operation gets no expression (None, so its outcome
+    # is OPERATION-UNOBSERVABLE), and reclassify_session gets one result
+    # and one expression for the call, aligned.
+    _, operation = score_d72([tool_call(arguments='15200*1.2/100/12')],
+                             CTX_D72, GT_D72, CONFIG_D72)
+    assert recorders.calls['operation'] == [(None, GT_D72, CONFIG_D72)]
+    assert recorders.calls['reclassify'] == [([{'outcome': 'OC None'}],
+                                              [None])]
+    assert operation == [{'outcome': 'OC None', 'reclassified': True}]
+
+
+@pytest.mark.finding('T3-16')
+def test_score_d72_real_scorers_malformed_call_unobservable():
+    # With the real scorers, the malformed call is OPERANDS-UNOBSERVABLE
+    # and OPERATION-UNOBSERVABLE, and the valid call after it is scored.
+    tcs = [tool_call(arguments='15200*1.2/100/12', id='a'),
+           tool_call('15200*1.2', id='b')]
+    provenance, operation = score_d72(tcs, CTX_D72, GT_D72, CONFIG_D72)
+    assert [p['outcome'] for p in provenance] == [
+        'OPERANDS-UNOBSERVABLE', 'OPERANDS-GROUNDED']
+    assert [o['outcome'] for o in operation] == [
+        'OPERATION-UNOBSERVABLE', 'WRONG-OPERATION']
+
+
+def test_score_d72_real_scorers_correct_call():
+    provenance, operation = score_d72([tool_call('15200*1.2')], CTX_D72,
+                                      GT_D72, CONFIG_D72)
+    assert [p['outcome'] for p in provenance] == ['OPERANDS-GROUNDED']
+    assert len(operation) == 1
+
+
+# S3-G2-5: a call without a calculator expression (here a python call)
+# must not put the results and expressions of the session-level
+# reclassification out of step. The reference is what the same calls give
+# with no such call first.
+
+def outcome_of(operation, value):
+    """The D7.2(b) outcome of the call that evaluated to `value`."""
+    [r] = [r for r in operation if r.get('evaluated_result') is not None
+           and D(r['evaluated_result']) == D(value)]
+    return r['outcome']
+
+
+def returning(expression, result, id):
+    return tool_call(expression, id=id,
+                     return_value=json.dumps({'result': result}))
+
+
+@pytest.mark.finding('S3-G2-5')
+@pytest.mark.req('AP-1 D7.2(b)')
+def test_score_d72_skipped_call_value_fed_forward_is_operation_correct():
+    # 15200*0.012 = 182.4 is wrong on its own and feeds 182.4/12 = 15.2,
+    # so it is reclassified OPERATION-CORRECT, as an operand of the later
+    # call; a python call before it does not change that.
+    calls = [returning('15200*0.012', '182.4', 'b'),
+             returning('182.4/12', '15.2', 'c')]
+    python = tool_call(name='python', id='a', return_value='{}')
+    for tcs in (calls, [python] + calls):
+        _, operation = score_d72(tcs, CTX_D72, GT_D72, CONFIG_D72)
+        assert outcome_of(operation, '182.4') == 'OPERATION-CORRECT', tcs
+
+
+@pytest.mark.finding('S3-G2-5')
+@pytest.mark.req('AP-1 D7.2(b)')
+def test_score_d72_skipped_call_value_feeding_nothing_stays_wrong():
+    # 15*1 = 15 is wrong and feeds nothing (15.2*1 has operands 15.2 and
+    # 1), so it stays WRONG-OPERATION, with or without a python call first
+    # (with the lists out of step, 15 was looked up in the operands of
+    # '15*1' itself and became OPERATION-CORRECT).
+    calls = [returning('15*1', '15', 'b'), returning('15.2*1', '15.2', 'c')]
+    python = tool_call(name='python', id='a', return_value='{}')
+    for tcs in (calls, [python] + calls):
+        _, operation = score_d72(tcs, CTX_D72, GT_D72, CONFIG_D72)
+        assert outcome_of(operation, '15') == 'WRONG-OPERATION', tcs
+
+
+def test_score_d72_no_calls_nothing_scored():
+    assert score_d72([], CTX_D72, GT_D72, CONFIG_D72) == ([], [])
+
+
+# -- an execution read back from its record: result_from_record ----------
+
+def engine_record(**fields):
+    record = {'timestamp': 'T', 'item_id': 'Q01', 'arm_id': 'base',
+              'condition': 'base', 'request_sent': {}, 'repeat': 1,
+              'response_received': None, 'tool_calls': [],
+              'evidence_class': None, 'error_state': None, 'seal_hash': 's'}
+    record.update(fields)
+    return record
+
+
+@pytest.mark.finding('T3-21')
+def test_result_from_record_executed_as_the_engine_returned_it(recorders):
+    tcs = [tool_call('1+1')]
+    record = engine_record(status='EXECUTED', tool_calls=tcs,
+                           response_received=response('It is 2.'),
+                           evidence_class='EV-2', invocation_outcome='INVOKED',
+                           self_report='I used it')
+    kept = json.loads(json.dumps(record))
+    result = result_from_record(record, gt=GT_D72, ctx=CTX_D72,
+                                config=CONFIG_D72)
+    assert result == {
+        'item_id': 'Q01', 'condition': 'base', 'status': 'EXECUTED',
+        'ground_truth': GT_D72, 'evidence_class': 'EV-2',
+        'invocation_outcome': 'INVOKED', 'self_report': 'I used it',
+        'tool_calls': tcs, 'response': response('It is 2.'),
+        'provenance_results': [{'provenance': 'P'}],
+        'operation_correctness': [{'outcome': 'OC 1+1',
+                                   'reclassified': True}],
+        'round_responses': []}
+    assert recorders.calls['provenance'] == [(tcs, CTX_D72, GT_D72,
+                                              CONFIG_D72)]
+    assert record == kept
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+@pytest.mark.req('AP-1 D2.2')
+def test_result_from_record_carries_every_round_s_response():
+    # The responses of the tool loop's rounds, in order, for the D2.2
+    # echo check; a round whose request failed has none.
+    first, last = {'temperature': 0.7}, response('It is 2.')
+    record = engine_record(status='EXECUTED', response_received=last,
+                           rounds=[{'round': 0, 'request': {},
+                                    'response': first},
+                                   {'round': 1, 'request': {},
+                                    'error': 'HTTP 502'},
+                                   {'round': 2, 'request': {},
+                                    'response': last}])
+    result = result_from_record(record, gt=GT_D72, ctx=CTX_D72,
+                                config=CONFIG_D72)
+    assert result['round_responses'] == [
+        {'round': 0, 'response': first}, {'round': 2, 'response': last}]
+
+
+def test_result_from_record_executed_without_calls(recorders):
+    result = result_from_record(
+        engine_record(status='EXECUTED', tool_calls=None), gt=GT_D72,
+        ctx=CTX_D72, config=CONFIG_D72)
+    assert result['tool_calls'] == []
+    assert recorders.calls['provenance'][0][0] == []
+    assert (result['evidence_class'], result['invocation_outcome'],
+            result['self_report'], result['response']) == (
+        None, None, None, None)
+
+
+def test_result_from_record_operation_correctness_as_recorded(monkeypatch):
+    # The operation-correctness results take the form they had in the
+    # transcript before T3-21 (JSON, sorted keys, Decimal as str), so
+    # smoke_summary.json keeps its exact shape.
+    monkeypatch.setattr(executions, 'score_d72', lambda *a: (
+        [{'value': D('1.50')}], [{'z': D('2.0'), 'a': 1}]))
+    result = result_from_record(engine_record(status='EXECUTED'), gt=GT_D72,
+                                ctx=CTX_D72, config=CONFIG_D72)
+    assert result['provenance_results'] == [{'value': D('1.50')}]
+    assert result['operation_correctness'] == [{'a': 1, 'z': '2.0'}]
+    assert list(result['operation_correctness'][0]) == ['a', 'z']
+
+
+@pytest.mark.parametrize('error_state, cause', [
+    ('TRANSPORT_FAILURE: HTTP 500: boom: again', 'HTTP 500: boom: again'),
+    ('UNMEASURED: empty response', 'empty response'),
+    ('UNMEASURED', 'UNMEASURED'),
+    ('TWO WORDS: the cause', 'the cause'),
+    (None, ''),
+])
+def test_result_from_record_unmeasured_with_its_cause(recorders, error_state,
+                                                      cause):
+    result = result_from_record(
+        engine_record(status='UNMEASURED', error_state=error_state),
+        gt=GT_D72, ctx=CTX_D72, config=CONFIG_D72)
+    assert result == {'item_id': 'Q01', 'condition': 'base',
+                      'status': 'UNMEASURED', 'ground_truth': GT_D72,
+                      'error': cause}
+    assert recorders.calls == {}
+
+
+@pytest.mark.finding('T3-65')
+@pytest.mark.parametrize('cause', ['rate_limited', 'transport_error'])
+def test_result_from_record_unmeasured_carries_the_recorded_cause(
+        recorders, cause):
+    # The engine records the kind of a round-0 failure; the scoring pass
+    # passes it on, so record_not_scored lists the cell with it.
+    result = result_from_record(
+        engine_record(status='UNMEASURED', cause=cause,
+                      error_state='TRANSPORT_FAILURE: HTTP 500: x'),
+        gt=GT_D72, ctx=CTX_D72, config=CONFIG_D72)
+    assert (result['cause'], result['error']) == (cause, 'HTTP 500: x')
+
+
+@pytest.mark.finding('T3-67')
+def test_result_from_record_loop_exhaustion_carried(recorders):
+    # A loop the turn limit stopped is flagged on the result, as the
+    # engine returned it; an EV-0 cause is not (it is in the transcript
+    # and the report).
+    state = 'TOOL_LOOP_EXHAUSTED: the response after 10 tool turns ...'
+    result = result_from_record(
+        engine_record(status='EXECUTED', error_state=state), gt=GT_D72,
+        ctx=CTX_D72, config=CONFIG_D72)
+    assert result['error_state'] == state
+    for other in ({'cause': 'request failed: x', 'round': 1}, None):
+        result = result_from_record(
+            engine_record(status='EXECUTED', error_state=other), gt=GT_D72,
+            ctx=CTX_D72, config=CONFIG_D72)
+        assert 'error_state' not in result
+
+
+@pytest.mark.parametrize('record, reason', [
+    (engine_record(status='VOID', void_reason='underivable'), 'underivable'),
+    (engine_record(status='VOID'), ''),
+])
+def test_result_from_record_void_with_its_reason(recorders, record, reason):
+    result = result_from_record(record, gt=GT_D72, ctx=CTX_D72,
+                                config=CONFIG_D72)
+    assert result == {'item_id': 'Q01', 'condition': 'base',
+                      'status': 'VOID', 'ground_truth': GT_D72,
+                      'reason': reason}
+    assert recorders.calls == {}
+
+
+def test_as_recorded_json_round_trip_sorted_with_str():
+    value = [{'b': D('1.10'), 'a': [D('2'), None, True, 'x', 'é']}]
+    assert as_recorded(value) == [{'a': ['2', None, True, 'x', 'é'],
+                                   'b': '1.10'}]
+    assert list(as_recorded(value)[0]) == ['a', 'b']
+
+
 # --- Step 4: correct behaviour (failing until fixed) ---
 # xfail(strict=True) until the fix.
 
@@ -533,13 +851,13 @@ def test_score_execution_with_real_scorers(tpath, capsys):
 @pytest.mark.xfail(strict=True, raises=AssertionError,
                    reason='T3-75: structured_answer_field is not passed to '
                           'identify_figure, so R2.0 step 1 never runs live')
-def test_score_execution_passes_structured_answer_field(fakes, tpath):
+def test_score_execution_passes_structured_answer_field(fakes):
     # SPEC R2.0 step 1: "If structured_answer_field is configured and
     # present, that value is the released figure. Preferred path." The
     # config loader parses the field (R0.1). Correct: score_execution
     # passes the configured field to identify_figure.
     config = dict(CONFIG, structured_answer_field='answer')
-    score(Findings(), {'response': response('It is $638.40.')}, tpath,
+    score(Findings(), {'response': response('It is $638.40.')},
           config=config)
     (_, kwargs), = fakes.calls['identify_figure']
     assert kwargs.get('structured_answer_field') == 'answer', kwargs
@@ -547,26 +865,32 @@ def test_score_execution_passes_structured_answer_field(fakes, tpath):
 
 @pytest.mark.finding('T3-21', 'T3-52')
 @pytest.mark.req('R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-21: score_execution appends a '
-                          'figure_identification record to the transcript')
-def test_score_execution_transcript_left_byte_identical(fakes, tpath, capsys):
+def test_score_execution_transcript_left_byte_identical(fakes, capsys,
+                                                        tmp_path):
     # Correct (SPEC §2 "R2 SCORE: reads only; never writes back"; R0.3
     # "The scorer opens the transcript read-only"; the maintainer's
-    # decision DEC-6, T3-21): scoring an execution leaves the
-    # transcript as the engine wrote it.
+    # decision DEC-6, T3-21): reading an execution from its record and
+    # scoring it leaves the transcript as the engine wrote it, and the
+    # record read unchanged.
+    tpath = str(tmp_path / 'run.jsonl')
     transcript.append(tpath, item_id='Q01', arm_id='base', condition='base',
-                      request_sent={}, response_received={}, tool_calls=[],
+                      request_sent={}, response_received=response(
+                          'The total is $638.40.'),
+                      tool_calls=[calc('15200 * 0.042', '{"result": 638.4}')],
                       evidence_class='EV-2', error_state=None,
-                      seal_hash='seal-1')
+                      seal_hash='seal-1', status='EXECUTED', repeat=2,
+                      invocation_outcome='INVOKED')
     with open(tpath, 'rb') as f:
         before = f.read()
-    score(Findings(), {'response': response('The total is $638.40.'),
-                       'evidence_class': 'EV-2',
-                       'invocation_outcome': 'NOT-INVOKED'}, tpath)
+    (record,) = transcript.read_all(tpath)
+    kept = json.loads(json.dumps(record))
+    result = result_from_record(record, gt=GT_D72, ctx=CTX_D72,
+                                config=CONFIG_D72)
+    score(Findings(), result)
     with open(tpath, 'rb') as f:
         after = f.read()
     assert (len(after.splitlines()), after) == (1, before)
+    assert record == kept
 
 
 HALF_UP_2 = {'quantisation': {'places': 2, 'rounding': 'ROUND_HALF_UP'}}
@@ -582,17 +906,13 @@ def tool(name, return_value):
 
 def real_score(tool_calls, content, expected, config=HALF_UP_2):
     """Score one execution with the real scorers; the findings."""
-    import tempfile
-    import os
     findings = Findings()
-    with tempfile.TemporaryDirectory() as d:
-        score(findings, {'response': response(content),
-                         'tool_calls': tool_calls,
-                         'ground_truth': GT_CALCULATOR,
-                         'evidence_class': 'EV-2',
-                         'invocation_outcome': 'INVOKED'},
-              os.path.join(d, 'run.jsonl'), expected=D(expected),
-              config=config)
+    score(findings, {'response': response(content),
+                     'tool_calls': tool_calls,
+                     'ground_truth': GT_CALCULATOR,
+                     'evidence_class': 'EV-2',
+                     'invocation_outcome': 'INVOKED'},
+          expected=D(expected), config=config)
     return findings
 
 
@@ -762,25 +1082,18 @@ NO_FIGURE = {'outcome': 'ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING',
 
 
 @pytest.mark.finding('S4-G9-1')
-def test_score_execution_no_released_figure_recorded_as_null(fakes, tpath):
-    # R0.3: the transcript records what happened; a figure that was not
-    # released is null, not the text "None".
+def test_score_execution_no_released_figure_recorded_as_null(fakes):
+    # R0.3: the record of what happened says a figure that was not
+    # released is null, not the text "None" (since T3-21 that record is
+    # the scoring pass's result, smoke_summary.json).
     fakes.figure = dict(NO_FIGURE)
     findings = Findings()
     score(findings, {'response': response('It is $15.25.'),
-                     'tool_calls': []}, tpath)
-    # Checked in the scoring output; a figure record in the transcript
-    # (there is none once scoring is a separate pass, T3-21) must not say
-    # "None" either.
+                     'tool_calls': []})
     assert findings.all_results[0]['released_figure'] is None
-    assert all(r['released_figure'] is None
-               for r in transcript.read_all(tpath) if 'released_figure' in r)
 
 
 @pytest.mark.finding('T3-65')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-65: engine UNMEASURED results never reach '
-                          'unmeasured_cells')
 @pytest.mark.parametrize('error, word', [
     ('rate limited (HTTP 429): {"error": "Rate limit"}', 'rate'),
     ('transport failure after 3 attempts: reset', 'transport'),
@@ -811,7 +1124,7 @@ def test_record_not_scored_unmeasured_listed_with_cause(error, word):
     ('content_filter', 'CLASSIFIER-REFUSED'), ('refusal', 'MODEL-DECLINED')],
     ids=['content-filter', 'refusal'])
 def test_score_execution_refusal_routed_provisional_out_of_d1(
-        fakes, tpath, capsys, kind, provisional):
+        fakes, capsys, kind, provisional):
     # No figure is identified and D1 does not score it: the execution is
     # in neither D1's auto-scored nor its adjudicated n. Its figure
     # outcome routes it to adjudication, where the scorers see the
@@ -823,15 +1136,13 @@ def test_score_execution_refusal_routed_provisional_out_of_d1(
               'provenance_results': [],
               'refusal': {'kind': kind, 'text': 'I cannot help with that.'}}
     findings = Findings()
-    score(findings, result, tpath)
+    score(findings, result)
     assert capsys.readouterr().out == \
         'ADJUDICATE-REFUSAL | EV-2 | NOT-INVOKED\n'
     assert 'identify_figure' not in fakes.calls
     assert 'score_accuracy' not in fakes.calls
     assert findings.all_accuracy_results == []
     assert findings.decline_findings == []
-    assert transcript.read_all(tpath)[-1]['figure_outcome'] == \
-        'ADJUDICATE-REFUSAL'
     row = findings.all_results[-1]
     assert (row['status'], row['figure_outcome'], row['refusal'],
             row['provisional_outcome'], row['answer_outcome']) == (
@@ -841,9 +1152,9 @@ def test_score_execution_refusal_routed_provisional_out_of_d1(
 
 
 @pytest.mark.finding('T3-10')
-def test_score_execution_without_refusal_adds_no_refusal_fields(fakes, tpath):
+def test_score_execution_without_refusal_adds_no_refusal_fields(fakes):
     findings = Findings()
-    score(findings, {'response': response('$638.40')}, tpath)
+    score(findings, {'response': response('$638.40')})
     assert not {'refusal', 'provisional_outcome'} & set(
         findings.all_results[-1])
 
@@ -907,6 +1218,27 @@ def test_apply_question_measurability_without_a_chain_changes_nothing():
     assert findings.all_results[0]['answer_outcome'] == 'COMPUTED'
 
 
+# An execution the engine flagged is flagged in
+# the runner too (T3-67).
+
+@pytest.mark.finding('T3-67')
+def test_score_execution_engine_error_state_printed_and_kept(fakes, capsys):
+    flag = 'TOOL_LOOP_EXHAUSTED: the response after 10 tool turns ...'
+    findings = Findings()
+    score(findings, {'response': response(None), 'tool_calls': [],
+                     'evidence_class': 'EV-2', 'invocation_outcome': 'INVOKED',
+                     'error_state': flag})
+    assert capsys.readouterr().out == f'AUTO-MATCH | EV-2 | INVOKED | {flag}\n'
+    assert findings.all_results[0]['error_state'] == flag
+
+
+@pytest.mark.finding('T3-67')
+def test_score_execution_no_error_state_no_key(fakes, capsys):
+    findings = Findings()
+    score(findings, {'response': response('x'), 'tool_calls': []})
+    assert 'error_state' not in findings.all_results[0]
+
+
 # -- echo_check (D2.2 parameter echo) --------------------------------------
 
 @pytest.mark.finding('T3-22', 'T3-90')
@@ -934,14 +1266,36 @@ def test_echo_check_applied_values_verified():
 
 
 @pytest.mark.finding('T3-22', 'T3-90')
-def test_score_execution_records_the_echo_check(fakes, tpath):
+def test_score_execution_records_the_echo_check(fakes):
     findings = Findings()
     score(findings, {'response': dict(response('It is $15.20.'),
                                       temperature=0.5),
-                     'tool_calls': []}, tpath,
+                     'tool_calls': []},
           config=dict(CONFIG, sampling={'temperature': '0'}))
+    # A result without its rounds (none recorded): the final response
     assert findings.parameter_echo == [{
-        'item_id': 'Q01', 'condition': 'base', 'repeat': 2,
+        'item_id': 'Q01', 'condition': 'base', 'repeat': 2, 'round': None,
         'verified': False, 'status': 'MISMATCH',
         'findings': ["parameter 'temperature': requested='0', applied=0.5 "
                      '— silently ignored'], 'not_echoed': []}]
+
+
+@pytest.mark.finding('T3-22', 'T3-90')
+@pytest.mark.req('AP-1 D2.2')
+def test_score_execution_checks_the_echo_of_every_round(fakes):
+    # AP-1 D2.2: a parameter requested and silently ignored is a platform
+    # finding, in whichever response shows it. Here the tool-call round
+    # shows temperature 0.7 applied and the final response echoes the 0
+    # sent; checking the final response alone found nothing.
+    final = dict(response('It is $15.20.'), temperature=0)
+    findings = Findings()
+    score(findings, {'response': final, 'tool_calls': [],
+                     'round_responses': [
+                         {'round': 0, 'response': {'temperature': 0.7}},
+                         {'round': 1, 'response': final}]},
+          config=dict(CONFIG, sampling={'temperature': '0'}))
+    assert [(e['round'], e['status']) for e in findings.parameter_echo] == [
+        (0, 'MISMATCH'), (1, 'VERIFIED')]
+    assert findings.parameter_echo[0]['findings'] == [
+        "parameter 'temperature': requested='0', applied=0.7 "
+        '— silently ignored']

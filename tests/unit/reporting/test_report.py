@@ -203,6 +203,39 @@ def test_preregistration_lists_seal_fields_sorted():
         '')
 
 
+@pytest.mark.finding('T3-21')
+def test_preregistration_names_the_transcript_scored():
+    text = report._section_preregistration(
+        {'seal_hash': 'h'}, CONFIG, {'sha256': 'ab' * 32, 'records': 7})
+    assert text.endswith(
+        f'Transcript scored: SHA-256 `{"ab" * 32}`, 7 records.\n')
+    assert 'Transcript scored' not in report._section_preregistration(
+        {'seal_hash': 'h'}, CONFIG)
+
+
+@pytest.mark.finding('T3-21')
+def test_preregistration_of_a_re_score_says_so_and_names_both_runners():
+    rescore = {
+        'rescored_at': '2026-11-05T12:00:00+00:00',
+        'run': {'seal_hash': 'h', 'runner_source_hash': 'a' * 64,
+                'runner_version_tag': 'v1', 'runner_version_commit': 'c1',
+                'runner_modified': False},
+        'scorer': {'runner_source_hash': 'b' * 64,
+                   'runner_version_tag': 'v2', 'runner_version_commit': 'c2',
+                   'runner_modified': True}}
+    text = report._section_preregistration({'seal_hash': 'h'}, CONFIG,
+                                           None, rescore)
+    assert ('**Re-scored** on 2026-11-05T12:00:00+00:00: the figures in '
+            'this report were computed by a re-score of the run\'s '
+            'transcript, not by the run.') in text
+    assert ('| the run (sealed) | `v1` | `c1` | `False` | `' + 'a' * 64
+            + '` |') in text
+    assert ('| the scorer | `v2` | `c2` | `True` | `' + 'b' * 64
+            + '` |') in text
+    assert 'Re-scored' not in report._section_preregistration(
+        {'seal_hash': 'h'}, CONFIG)
+
+
 def test_preregistration_without_seal_says_so():
     assert report._section_preregistration({}, CONFIG) == md(
         '## 1. Pre-Registration Record\n',
@@ -1258,20 +1291,6 @@ def test_cells_non_string_error_state_without_colon_is_stringified():
     assert '| Q | c | 504 | 504 |' in text
 
 
-@pytest.mark.finding('S3-G6-1')
-def test_cells_non_string_error_state_with_colon_raises():
-    # The colon test goes through str() but the split does not, so a
-    # non-string error_state whose text contains ':' raises and no
-    # report is written. Engine error states are strings today, so this
-    # is latent. Correct: split str(error).
-    class Err:
-        def __str__(self):
-            return 'TRANSPORT_FAILURE: x'
-    with pytest.raises(AttributeError):
-        report._section_unmeasured_cells({}, [
-            {'item_id': 'Q', 'condition': 'c', 'error_state': Err()}])
-
-
 def test_cells_ev_unobservable_matches_anywhere_in_class():
     text = report._section_unmeasured_cells({}, [
         {'item_id': 'Q', 'condition': 'c', 'evidence_class': 'X-UNOBSERVABLE'},
@@ -1831,9 +1850,6 @@ def test_cells_leave_the_summary_unchanged():
 
 
 @pytest.mark.finding('S3-G6-1')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G6-1: a non-string error_state containing ":" '
-                          'raises AttributeError')
 def test_cells_non_string_error_state_with_colon_is_listed():
     # Correct: any error_state is rendered (str() then split), and the
     # report is written.

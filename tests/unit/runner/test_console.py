@@ -35,6 +35,22 @@ def run_report(capsys, all_results, conditions=('base',), **lists):
 HEADER = f'\n{RULE}\nSMOKE TEST REPORT\n{RULE}\n\nDISCLAIMER TEXT\n\n'
 
 
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.3')
+def test_run_report_completion_counts_not_run(capsys):
+    # A partial transcript's unreached executions are reported not run
+    # (SPEC R0.3), and are not counted as unmeasured.
+    out = run_report(capsys, [
+        {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+         'status': 'NOT-RUN'},
+        {'item_id': 'Q02', 'condition': 'base', 'repeat': 1,
+         'status': 'NOT-RUN'},
+        {'item_id': 'Q03', 'condition': 'base', 'repeat': 1,
+         'status': 'UNMEASURED'}], conditions=['base'])
+    assert '\n3a. COMPLETION: 0 executed, 1 unmeasured, 0 void, 2 not run ' \
+        '(the transcript ends before them)\n' in out
+
+
 @PROVISIONAL
 @pytest.mark.finding('T3-80')
 def test_run_report_with_no_results(capsys):
@@ -108,7 +124,11 @@ def test_run_report_with_results(capsys):
         evidence_findings=[{'evidence_class': 'EV-2'},
                            {'evidence_class': 'EV-0'},
                            {'evidence_class': 'EV-2'}],
-        unmeasured_cells=[1, 2],
+        unmeasured_cells=[
+            {'item_id': 'Q04', 'condition': 'base', 'repeat': 1,
+             'cause': 'rate_limited: rate limited (HTTP 429)'},
+            {'item_id': 'Q06', 'condition': 'instruction_removed',
+             'repeat': 2, 'cause': 'empty response'}],
         transcription_results=[{'outcome': 'TRANSCRIBED-EXACT'},
                                {'outcome': 'TRANSCRIBED-EXACT'},
                                {'outcome': 'UNOBSERVABLE'},
@@ -145,6 +165,8 @@ def test_run_report_with_results(capsys):
         '  EV-0: 1\n'
         '  EV-2: 2\n'
         '\n3g. UNMEASURED CELLS: 2\n'
+        '  Q04/base/r1: rate_limited: rate limited (HTTP 429)\n'
+        '  Q06/instruction_removed/r2: empty response\n'
         '\n3h. D7.1 INVOCATION (n = questions; a question fails if any '
         'repeat is NOT-INVOKED; UNOBSERVABLE not in n):\n'
         # T3-1, T3-11: n counts questions (Q01 twice is one); Q06 and Q09
@@ -384,8 +406,6 @@ def test_run_report_3h_rate_counts_questions_not_repeats(capsys):
 
 
 @pytest.mark.finding('T3-65')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-65: console 3g prints only a count')
 def test_run_report_3g_lists_each_unmeasured_cell_with_cause(capsys):
     # Correct (T3-65; SPEC R0.2): section 3g
     # names each unmeasured cell with its cause.
@@ -458,3 +478,17 @@ def test_run_report_3h_lists_failing_questions_with_counts(capsys):
     text = section(out, '3h')
     assert ('  base: invoked=1 not_invoked=2 (Q02 2/3, Q06 1/3) n=3\n'
             '    failure rate: 2/3 (66.7%)') in text, text
+
+
+# Executions the engine flagged are named under 3a
+# (T3-67).
+
+@pytest.mark.finding('T3-67')
+def test_run_report_3a_names_flagged_executions(capsys):
+    out = run_report(capsys, [
+        executed('Q01', 'base', 1, 'AUTO-MATCH'),
+        executed('Q02', 'base', 3, 'AUTO-NO-FIGURE',
+                 error_state='TOOL_LOOP_EXHAUSTED: x')])
+    assert ('\n3a. COMPLETION: 2 executed, 0 unmeasured, 0 void\n'
+            '  Q02/base/r3: TOOL_LOOP_EXHAUSTED: x\n'
+            '\n3b. ') in out

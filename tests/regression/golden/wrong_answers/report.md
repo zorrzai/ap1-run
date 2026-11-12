@@ -35,6 +35,8 @@ Model: mock-model
 | `timestamp` | `<TIMESTAMP>` |
 | `verification_keys` | `[]` |
 
+Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 114 records.
+
 ## 2. Resolved Configuration
 
 ```json
@@ -339,7 +341,7 @@ Total operands resolved: 152
   - `reasoning_effort`: `none`
   - `temperature`: not sent (platform-rejected)
   - `top_p`: not sent (operator-declared)
-- Parameter echo: `UNVERIFIED` (40 responses checked)
+- Parameter echo: `UNVERIFIED` (74 responses checked)
 
 ## 10. Non-Outcome Cells
 

@@ -207,6 +207,61 @@ runner does, so a run made with other inputs is verified against those
 (S3-G8-4). A fixture copy inside the clone does not change
 `runner_source_hash`, which covers only `src/ap1_run/` and `VERSION` (T3-70).
 
+### Two passes: running, then scoring
+
+A run has two passes, as the build specification requires (docs/SPEC.md §2).
+The **execution pass** sends every request and writes the transcript,
+`smoke_run.jsonl`. Each round of an execution is written as a record of its own
+(`"kind": "round"`) the moment its response arrives, before anything is done
+with it: the request as sent and the raw response. Then comes one record per
+execution, with every round again, the tool calls and their returns, the
+evidence class and the execution's status. Nothing in it is a score. Before the
+first request it also writes `pre_registration.json`: the seal record and the
+resolved configuration it sealed. The **scoring pass** then reads the
+transcript, never writing to it, and writes `report.md`, `adjudication_sheets.md`, `smoke_summary.json` and
+`DISCLAIMER.txt`. `ap1-run` runs both.
+
+### Scoring a transcript again
+
+The scoring pass can run alone on a run's transcript, with no endpoint and no
+API key:
+
+```bash
+ap1-run --rescore runs/today/smoke_run.jsonl \
+        --config my/config.json \
+        --fixture-dir my/fixture/ \
+        --output-dir runs/today-rescored/
+```
+
+Give the run's own config and fixture directory; `pre_registration.json` must
+be beside the transcript. The re-scorer reads each input once, and before
+scoring verifies those bytes against the run's seal: the config, the fixture,
+questions, ground-truth and calculator files, and the expected values, computed
+again. It refuses any mismatch, naming it, as well as a transcript of another
+run. It scores from the same bytes, against the sealed expected values, as the
+run does. It writes the four scoring outputs, and `rescore.json`, to
+`--output-dir`, which must not be the transcript's directory, by any name (a
+symlink, another case), and must hold no run or scoring output: a correction is
+made by addition, so nothing already written is replaced. A run and a re-score
+both name the transcript they scored by the SHA-256 of its bytes and its record
+count (`smoke_summary.json`, and below section 1 of `report.md`). A re-scored
+report says so below its section 1: when it was re-scored, and which runner
+computed its figures (version and source hash) beside the runner the run
+sealed; the console prints both, and `rescore.json` records them. A corrected
+scorer may re-score a run, so its figures must be traceable to it. Re-scoring a
+finished run gives back its `smoke_summary.json` and adjudication sheets, and
+its `report.md` with that note added. Re-scoring the partial transcript of an
+interrupted run reports the executions it never reached as NOT-RUN, never as
+failures, and an execution it stopped inside (rounds recorded, no record of its
+end) as UNMEASURED with cause `interrupted` and its last round. From Python:
+`ap1_run.scoring.rescore.rescore_transcript(transcript_path, config_path=...,
+fixture_dir=..., output_dir=...)` returns the summary.
+
+The published runs in `output/` were written before the two passes were
+separated: their transcripts hold scoring records and lack the intermediate
+rounds, and they have no `pre_registration.json`, so they cannot be re-scored
+this way.
+
 ---
 
 ## What it deliberately does not do
@@ -225,7 +280,10 @@ runner does, so a run made with other inputs is verified against those
   Using one would place a model in the scoring loop for dimensions that
   require human judgement. Human adjudication is the design, not a gap
   awaiting better tooling.
-- **No network egress** beyond the endpoint under test.
+- **No network egress** beyond the endpoint under test. Redirects are not
+  followed, and proxies from the environment (`HTTP_PROXY`, `HTTPS_PROXY`,
+  `ALL_PROXY`, the system settings) are ignored: the runner connects to the
+  endpoint directly or not at all.
 - **No telemetry, no analytics, no hosted service.** If the author ran it for
   you, it would be the author's result again.
 
@@ -465,10 +523,11 @@ pyproject.toml               package metadata; `pip install -e .`; the `ap1-run`
 smoke_test.py                shim: `python smoke_test.py` runs ap1_run.run
 
 src/ap1_run/
-  run.py                     drives a live endpoint (was smoke_test.py)
+  run.py                     drives a live endpoint (was smoke_test.py): the execution pass, then the scoring pass
   runner/                    the parts run.py drives
     console.py               the console report, sections 3a to 3l
     credentials.py           the API key: environment, or Windows Credential Manager
+    scoring_pass.py          the scoring pass: scores a run from its transcript, read-only
     executions.py            scores each execution and collects the findings
     outputs.py               writes report.md, the adjudication sheets and the summary
     settings.py              endpoint, model, the sampling printout; the R1.2 guard
@@ -484,7 +543,7 @@ src/ap1_run/
     ap1_texts.py             the AP-1 text of each version
     seal_constants.py        declared-constant checks on the ground-truth module
     version.py               runner version, source hash and environment
-    engine.py                execution loop
+    engine.py                execution loop; writes every round to the transcript, scores nothing
     context.py               delivered-context construction
     perturbation_guard.py    refuses a condition that varies more than one quantity
     evidence.py              invocation evidence classification
@@ -497,6 +556,7 @@ src/ap1_run/
     transcription.py         D7.3
     release_coverage.py      D7.3 release coverage
     answer_outcome.py        §6.8 outcome of an auto-scored response
+    rescore.py               the scoring pass alone on a run's transcript (`ap1-run --rescore`)
     provenance/              D7.2(a)
       trace.py               the five-step resolution ladder
       classify.py            invocation, item and sequential classification

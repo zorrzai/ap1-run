@@ -31,6 +31,12 @@ runner's context, precision 50, never through float; `0.1 + 0.2` returns
 "numeric overflow": `9**9**9**9` is refused at once rather than running
 until memory or time runs out.
 
+In the live runner no calculator exception escapes: the execution engine
+catches every exception from the calculator and records it as that call's
+error return. Since step 5 of the 2026-10 reorganization the scoring code
+also takes the calculator's infinite, huge or NaN results (`inf` for
+`1e308*10`, `nan` for `1e308*10 - 1e308*10`) without aborting the run.
+
 ---
 
 ## 2. Perturbation check: fail-open exception handling
@@ -164,6 +170,20 @@ re-score").
 `src/ap1_run/execution/engine.py` (`_drive_tool_loop`, L175-235 — intermediate responses
 overwritten on each loop iteration).
 
+**Fixed for new runs** (step 5 of the 2026-10 reorganization, V12-3). Each
+round of the tool loop is written to the transcript as a round record the
+moment it arrives, before its tool calls run (SPEC R0.2: "before any other
+processing"), with the request as the adapter sent it and the raw response
+(or, for a request that failed, the messages it sent and the error). Each
+execution record then has a `rounds` list with the same rounds, in order. A run
+interrupted inside an execution keeps the rounds it received, and the scoring
+pass reports that execution UNMEASURED, cause `interrupted`. A run can be
+replayed from its transcript. Scoring is a separate pass that only reads the
+transcript (T3-21), and `ap1-run --rescore` runs it alone on a run's
+transcript (README, "Scoring a transcript again"). The published runs in
+`output/` were written before the fix and still lack the intermediate
+responses; they are sealed and are not edited.
+
 ---
 
 ## 8. Transcript request_sent records messages only; adapter's full request is discarded
@@ -201,6 +221,13 @@ external reviewer access.
 
 No existing test asserts the shape of `request_sent` in stored transcripts;
 the fix will not break any test.
+
+**Fixed for new runs** (step 5 of the 2026-10 reorganization). `request_sent`
+carries the adapter's `request_record` (endpoint, model, tools, sampling as
+sent, attempts), and each round's record is in `rounds` (issue 7). The adapter
+copies the messages into the record, so the round-0 record is the request as
+sent, not the message list as the tool loop later extended it (S4-G4-1). The
+published runs are unchanged.
 
 **Files:** `src/ap1_run/execution/engine.py` L76-86 and L140-144 (discards `request_record`);
 `src/ap1_run/foundation/adapter.py` L68-127 (builds and returns it);

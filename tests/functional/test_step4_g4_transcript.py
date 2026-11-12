@@ -1,7 +1,7 @@
 """Step 4: the transcript and the two-pass design,
 end to end (raw-response preservation).
 
-Correct behaviour, failing on today's code (each test is a strict xfail
+Correct behaviour, written failing in step 4 (each test was a strict xfail
 with its finding):
 
 - T3-21: SPEC §2 ("Two passes ... The separation is a conformance
@@ -23,16 +23,18 @@ mock endpoint (tests/fixtures/mock_endpoint.py) on 127.0.0.1, with a copy
 of the shipped example in tmp_path; nothing is written into the
 repository.
 
-The re-scorer does not exist yet. The tests that need it import it in one
-place, _rescore() below, which names the API the fix must provide:
+The tests that need the re-scorer import it in one place, _rescore()
+below:
 
     ap1_run.scoring.rescore.rescore_transcript(
         transcript_path, *, config_path, fixture_dir, output_dir) -> dict
 
 It scores a finished (or partial) transcript, opening it read-only, and
 returns the run summary: the same content as the run's smoke_summary.json
-(without its '_disclaimer' line). The fix may choose another name or
-shape; it then updates _rescore() and nothing else.
+(without its '_disclaimer' line).
+
+All of these were strict xfails written in step 4; the two-pass fix
+(T3-21, V12-3) turned them green.
 """
 
 import importlib.util
@@ -63,10 +65,6 @@ AP1_TEXT = ROOT / 'reference' / 'AP-1_v1.3_DRAFT_FOR_COMMENT.md'
 SCORING_FIELDS = ('operation_correctness', 'provenance_results',
                   'figure_outcome', 'figure_reason', 'released_figure')
 
-RESCORE_RAISES = (AttributeError, ImportError, TypeError, AssertionError)
-RESCORE_API = ('the fix must provide ap1_run.scoring.rescore.'
-               'rescore_transcript(transcript_path, *, config_path, '
-               'fixture_dir, output_dir) -> summary dict')
 
 
 def _mock_endpoint_class():
@@ -86,11 +84,16 @@ def _mock_endpoint_class():
 
 class MockEndpoint(_mock_endpoint_class()):
     """The regression mock, also keeping each reply's body: log entries
-    get 'body', the JSON sent back (the log's own 'reply' is the status).
+    get 'body', the JSON sent back (the log's own 'reply' is the status),
+    and 'sent', its bytes as the mock's handler writes them (a text body
+    as given, any other as json.dumps of it, in UTF-8).
     close_once: (item_id, condition, round) whose first request is
-    answered by closing the connection, so the adapter retries it."""
+    answered by closing the connection, so the adapter retries it.
+    respell: if set, a function that turns each dict reply into the text
+    the mock sends instead (its own spelling of the same JSON)."""
 
     close_once = frozenset()
+    respell = None
 
     def handle(self, body):
         item_id, condition, rnd = self._identify(body)
@@ -105,9 +108,14 @@ class MockEndpoint(_mock_endpoint_class()):
             return ('close',)
         action = super().handle(body)
         if action[0] == 'reply':
+            if self.respell is not None and isinstance(action[2], dict):
+                action = (action[0], action[1], self.respell(action[2]))
             payload = action[2]
             self.log[-1]['body'] = (json.loads(payload)
                                     if isinstance(payload, str) else payload)
+            self.log[-1]['sent'] = (
+                payload if isinstance(payload, str)
+                else json.dumps(payload)).encode('utf-8')
         return action
 
 
@@ -140,7 +148,7 @@ def _read_jsonl(path):
 
 def _rescore(transcript_path, *, config_path, fixture_dir, output_dir):
     """The scoring pass over a transcript (T3-21). See the module
-    docstring: this API does not exist yet."""
+    docstring."""
     from ap1_run.scoring.rescore import rescore_transcript
     return rescore_transcript(transcript_path, config_path=config_path,
                               fixture_dir=fixture_dir, output_dir=output_dir)
@@ -239,10 +247,6 @@ MULTI_ROUND = {
 
 @pytest.mark.finding('T3-21')
 @pytest.mark.req('R1.2', 'R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-21: the run writes scoring into the transcript '
-                          '(operation_correctness, provenance_results, '
-                          'figure_identification records)')
 def test_run_transcript_contains_no_scoring(cli):
     # Correct (SPEC §2 diagram "R1 EXECUTE: no scoring occurs here", R1.2
     # "Perform no scoring", R0.3's record fields): the transcript holds
@@ -259,9 +263,6 @@ def test_run_transcript_contains_no_scoring(cli):
 
 @pytest.mark.finding('T3-21')
 @pytest.mark.req('R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-21: the scoring in the run appends '
-                          'figure_identification records to the transcript')
 def test_run_transcript_is_only_what_the_execution_wrote(cli):
     # Correct (SPEC §2 "R2 SCORE: reads only; never writes back"): every
     # byte of the transcript is written by the execution pass
@@ -288,9 +289,6 @@ def test_run_transcript_is_only_what_the_execution_wrote(cli):
 
 @pytest.mark.finding('T3-21')
 @pytest.mark.req('R0.3', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=RESCORE_RAISES,
-                   reason='T3-21: no scoring pass over a transcript; '
-                          + RESCORE_API)
 def test_rescore_of_finished_run_reproduces_its_summary(cli, tmp_path):
     # Correct (the maintainer's decision DEC-6, T3-21; SPEC §2 "A
     # single-pass design makes re-scoring impossible"): re-scoring a
@@ -306,15 +304,19 @@ def test_rescore_of_finished_run_reproduces_its_summary(cli, tmp_path):
     published.pop('_disclaimer')
     assert json.loads(json.dumps(summary, default=str)) == published
     assert r.transcript.read_bytes() == before
+    # both name the transcript they scored, by the digest of its bytes
+    import hashlib
+    digest = hashlib.sha256(before).hexdigest()
+    assert summary['scored_transcript']['sha256'] == digest
+    for out in (r.out, tmp_path / 'rescored'):
+        assert f'Transcript scored: SHA-256 `{digest}`' in (
+            out / 'report.md').read_text('utf-8')
 
 
 # -- V12-3 / T3-52: every round in the transcript ---------------------------
 
 @pytest.mark.finding('V12-3', 'T3-52')
 @pytest.mark.req('R0.2', 'R0.3', 'AP-1 §5.6')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-3: the raw responses of the intermediate '
-                          'tool-loop rounds are not in the transcript')
 def test_run_multi_round_every_raw_response_in_transcript(cli):
     # Correct (SPEC R0.2 "Every request and response is written to the
     # transcript before any other processing"; AP-1 §5.6): every response
@@ -332,9 +334,6 @@ def test_run_multi_round_every_raw_response_in_transcript(cli):
 
 @pytest.mark.finding('V12-3', 'T3-52')
 @pytest.mark.req('R0.2', 'R0.3', 'AP-1 §5.6')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='V12-3: the requests of the intermediate '
-                          'tool-loop rounds are not in the transcript')
 def test_run_multi_round_every_request_in_transcript(cli, monkeypatch):
     # Correct (SPEC R0.2 "Every request and response is written to the
     # transcript ... The request as sent", with its sampling parameters
@@ -430,9 +429,6 @@ class _Server:
 
 @pytest.mark.finding('T3-52')
 @pytest.mark.req('R0.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-52: the adapter follows an HTTP redirect to '
-                          'another host')
 def test_adapter_redirect_to_other_host_not_followed():
     # Correct (SPEC R0.2 verification contract: "The adapter makes no
     # network call to any host other than the configured endpoint"; §9
@@ -442,7 +438,7 @@ def test_adapter_redirect_to_other_host_not_followed():
     # the item is UNMEASURED. Here the other host is "localhost" while the
     # endpoint is "127.0.0.1" (both loopback, so nothing leaves the
     # machine). Needs real HTTP, so it is here and not in the adapter's
-    # unit file (which replaces requests.post).
+    # unit file (which replaces the adapter's post).
     ok = json.dumps({'choices': [{'message': {
         'role': 'assistant', 'content': 'exfiltrated'}}]}).encode()
     other = _Server(lambda h: (200, {'Content-Type': 'application/json'},
@@ -466,9 +462,6 @@ def test_adapter_redirect_to_other_host_not_followed():
 
 @pytest.mark.finding('T3-52')
 @pytest.mark.req('R0.3')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-52: the scoring opens the transcript for '
-                          'writing (it fails on a read-only transcript)')
 def test_run_scoring_with_read_only_transcript_completes(cli):
     # Correct (SPEC R0.3 verification contract: "The scorer opens the
     # transcript read-only"): once an execution's record is written, the
@@ -492,10 +485,6 @@ def test_run_scoring_with_read_only_transcript_completes(cli):
 
 @pytest.mark.finding('T3-52')
 @pytest.mark.req('R0.3')
-@pytest.mark.xfail(strict=True, raises=RESCORE_RAISES,
-                   reason='T3-52: an interrupted run has no report and '
-                          'nothing reports its unreached items not-run; '
-                          + RESCORE_API)
 def test_interrupted_run_partial_transcript_scored_unreached_not_run(
         cli, tmp_path):
     # Correct (SPEC R0.3 verification contract: "An interrupted run leaves
@@ -527,6 +516,51 @@ def test_interrupted_run_partial_transcript_scored_unreached_not_run(
                     ('Q01', 'instruction_removed', 1): 'NOT-RUN',
                     ('Q02', 'instruction_removed', 1): 'NOT-RUN'}
     assert summary['unmeasured_cells'] == []
+
+
+@pytest.mark.finding('V12-3', 'T3-52')
+@pytest.mark.req('R0.2', 'R0.3')
+def test_run_interrupted_inside_a_tool_loop_keeps_its_rounds(
+        cli, tmp_path, monkeypatch):
+    # SPEC R0.2 ("Every request and response is written to the transcript
+    # before any other processing"), R0.3. The run is interrupted while
+    # running Q05/base's second tool turn (round 1's call): rounds 0 and 1
+    # were received, and both are in the transcript as received. Scored
+    # again, that execution is UNMEASURED (interrupted, round 1), not
+    # NOT-RUN; the one after it was never reached.
+    from ap1_run.execution import engine
+    real_tool = engine._execute_tool
+    seen = []
+
+    def tool(name, arguments):
+        seen.append(arguments)
+        if len(seen) == 3:   # round 0 asks for two calls, round 1 for one
+            raise KeyboardInterrupt
+        return real_tool(name, arguments)
+    monkeypatch.setattr(engine, '_execute_tool', tool)
+    r = cli(MULTI_ROUND, items=('Q05',), repeat=1)
+    assert isinstance(r.error, KeyboardInterrupt)
+    records = _read_jsonl(r.transcript)
+    assert [(rec.get('kind'), rec.get('round')) for rec in records] == [
+        ('round', 0), ('round', 1)]
+    received = [e['body'] for e in r.mock.log]
+    assert len(received) == 2
+    assert [rec['response_received'] for rec in records] == received
+    summary = _rescore(r.transcript, config_path=r.config_path,
+                       fixture_dir=r.fixture_dir,
+                       output_dir=tmp_path / 'rescored')
+    cause = ('interrupted: round 1: the run stopped during this execution, '
+             'after the rounds the transcript holds')
+    rows = {(row['item_id'], row['condition'], row['repeat']):
+            (row['status'], row.get('cause')) for row in summary['all_results']}
+    assert rows == {
+        ('Q05', 'base', 1): ('UNMEASURED', cause),
+        ('Q05', 'instruction_removed', 1): (
+            'NOT-RUN', 'not reached: the transcript has no record of it')}
+    assert summary['unmeasured_cells'] == [{
+        'item_id': 'Q05', 'condition': 'base', 'repeat': 1, 'cause': cause}]
+    report = (tmp_path / 'rescored' / 'report.md').read_text('utf-8')
+    assert 'interrupted' in report
 
 
 # -- T3-35 (engine part): the cause and round of an EV-0 --------------------
@@ -562,7 +596,8 @@ def _ev0_error_state(cli, second_round):
             items=('Q01',), repeat=1)
     records = [rec for rec in _read_jsonl(r.transcript)
                if rec['condition'] == 'base'
-               and rec.get('record_type') != 'figure_identification']
+               and rec.get('record_type') != 'figure_identification'
+               and rec.get('kind') != 'round']
     assert [rec['evidence_class'] for rec in records] == [EV_0]
     return records[0]['error_state']
 
@@ -570,10 +605,6 @@ def _ev0_error_state(cli, second_round):
 @pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: an EV-0 record has error_state None; the '
-                          'cause and failing round go only into the '
-                          'unwritten round_shapes')
 @pytest.mark.parametrize('second_round, cause', [
     ({'http': 503, 'body': '{"error": "upstream down"}'}, 'http'),
     ({'close': True}, 'transport'),
@@ -605,8 +636,6 @@ def test_run_ev0_record_names_cause_and_round(cli, second_round, cause):
 @pytest.mark.proposal(EV0_STATE)
 @pytest.mark.finding('T3-35')
 @pytest.mark.req('R1.3', 'AP-1 D7.9')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-35: an EV-0 record has error_state None')
 def test_run_ev0_causes_are_distinct(cli):
     # An HTTP error, a dropped connection and an unrecognised shape are
     # three causes; the record tells them apart.
@@ -624,7 +653,8 @@ def _round0_request_messages(cli):
     assert (r.code, r.error) == (0, None)
     base = [rec for rec in _read_jsonl(r.transcript)
             if rec['condition'] == 'base'
-            and rec.get('record_type') != 'figure_identification']
+            and rec.get('record_type') != 'figure_identification'
+            and rec.get('kind') != 'round']
     sent = [e['request']['messages'] for e in r.mock.log
             if e['condition'] == 'base']
     return base[0]['request_sent']['request_record']['messages'], sent
@@ -632,28 +662,129 @@ def _round0_request_messages(cli):
 
 @pytest.mark.finding('S4-G4-1')
 @pytest.mark.req('R0.2')
-def test_run_round0_request_record_holds_the_messages_of_later_rounds(cli):
-    # S4-G4-1, today's behaviour: adapter.send puts the messages list it
-    # was given into request_record by reference, and the engine's tool
-    # loop keeps appending to that list. So the transcript's round-0
-    # "request as sent" shows the messages of the last request (7: the
-    # assistant and tool messages of rounds 0 and 1 too), while the
-    # request actually sent in round 0 had 2. (The regression mock's
-    # replay relies on this to rebuild the intermediate rounds of the
-    # published runs.)
-    recorded, sent = _round0_request_messages(cli)
-    assert [len(m) for m in sent] == [2, 5, 7]
-    assert recorded == sent[2]
-
-
-@pytest.mark.finding('S4-G4-1')
-@pytest.mark.req('R0.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S4-G4-1: the round-0 request record is mutated by '
-                          'the tool loop after it was sent')
 def test_run_round0_request_record_is_the_request_as_sent(cli):
     # Correct (SPEC R0.2 "The request as sent -- not as constructed -- is
     # recorded"): the recorded round-0 request has exactly the messages
     # sent in round 0.
     recorded, sent = _round0_request_messages(cli)
     assert recorded == sent[0]
+
+
+# -- T3-52: each response kept byte for byte (SPEC R0.2 "unmodified") -------
+
+RAW_BYTES = ("R0.2 'unmodified' read as byte for byte: each answered round "
+             "keeps the response body as received, as text (response_raw), "
+             "beside the parsed response every reader uses; the reading and "
+             "the field are this test's proposal, for review")
+
+# Two bodies a parse and re-serialisation would respell: keys not in
+# sorted order, 15.200 with its trailing zeros, a JSON escape (\u2212)
+# beside the character itself, spacing of their own.
+RAW_CALL = (
+    '{"model": "mock-model", "x": 15.200, "choices": [{"index": 0, '
+    '"message": {"role": "assistant", "content": null, "tool_calls": '
+    '[{"id": "call_r0_1", "type": "function", "function": {"name": '
+    '"calculator", "arguments": "{\\"expression\\": '
+    '\\"15200.00 * 1.2 / 100 / 12\\"}"}}]}, "finish_reason": '
+    '"tool_calls"}], "id": "raw-0", "object": "chat.completion"}')
+RAW_ANSWER = (
+    '{"x":15.200,"id":"raw-1","choices":[{"finish_reason":"stop",'
+    '"message":{"content":"The monthly interest is $15.20 (\\u2212 '
+    '0.00 − fee).","role":"assistant"},"index":0}],'
+    '"model":"mock-model","object":"chat.completion"}')
+
+
+def _reversed_keys(tree):
+    if isinstance(tree, dict):
+        return {k: _reversed_keys(tree[k]) for k in reversed(list(tree))}
+    if isinstance(tree, list):
+        return [_reversed_keys(v) for v in tree]
+    return tree
+
+
+def _respelled(payload):
+    """The same JSON as payload, spelt as neither json.dumps of it nor of
+    its parse would spell it: keys in reverse order, no spaces, and a
+    trailing newline."""
+    return json.dumps(_reversed_keys(payload), separators=(',', ':')) + '\n'
+
+
+def _round_records(transcript):
+    return {(rec['item_id'], rec['condition'], rec['repeat'], rec['round']):
+            rec for rec in _read_jsonl(transcript) if rec.get('kind') == 'round'}
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2', 'R0.3')
+def test_run_round_records_keep_each_response_byte_for_byte(cli):
+    # Correct (SPEC R0.2 "return the raw response unmodified", read as
+    # byte for byte): each round record's response_raw is the body the
+    # endpoint sent, byte for byte; the parsed response beside it is what
+    # the runner reads (15.200 parses as 15.2).
+    r = cli({'Q01/*/*': [{'raw': RAW_CALL}, {'raw': RAW_ANSWER}]},
+            items=('Q01',))
+    assert (r.code, r.error) == (0, None)
+    assert b'15.200' in RAW_CALL.encode('utf-8')
+    rounds = _round_records(r.transcript)
+    sent = {(e['item_id'], e['condition'], e['repeat'], e['round']):
+            e['sent'] for e in r.mock.log}
+    assert sorted(rounds) == sorted(sent) and len(sent) == 4
+    assert {k: rec['response_raw'].encode('utf-8')
+            for k, rec in rounds.items()} == sent
+    assert {k: v for k, v in sent.items() if k[3] == 0} == {
+        ('Q01', c, 1, 0): RAW_CALL.encode('utf-8')
+        for c in ('base', 'instruction_removed')}
+    assert all(rec['response_received']['x'] == 15.2
+               for rec in rounds.values())
+    executions = [rec for rec in _read_jsonl(r.transcript)
+                  if rec.get('kind') != 'round'
+                  and rec.get('record_type') != 'figure_identification']
+    assert [[e['response_raw'] for e in rec['rounds']]
+            for rec in executions] == [[RAW_CALL, RAW_ANSWER]] * 2
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2', 'R0.3')
+def test_run_every_mock_reply_recorded_as_the_bytes_it_sent(
+        cli, monkeypatch):
+    # Every reply of the mock's scripted turns, round by round, is in its
+    # round record as the bytes the mock sent. The mock spells each reply
+    # its own way (keys in reverse order, no spaces, a trailing newline),
+    # so a record that re-serialised the parse (json.dumps, sorted or
+    # not) would differ from the bytes sent.
+    monkeypatch.setattr(MockEndpoint, 'respell',
+                        staticmethod(_respelled))
+    r = cli(MULTI_ROUND, items=('Q02', 'Q05'), repeat=2)
+    assert (r.code, r.error) == (0, None)
+    rounds = _round_records(r.transcript)
+    sent = {(e['item_id'], e['condition'], e['repeat'], e['round']):
+            e['sent'] for e in r.mock.log}
+    assert len(sent) == 20
+    for k, rec in rounds.items():
+        parsed = rec['response_received']
+        assert sent[k] not in (json.dumps(parsed).encode('utf-8'),
+                               json.dumps(parsed, sort_keys=True)
+                               .encode('utf-8'))
+    assert {k: rec['response_raw'].encode('utf-8')
+            for k, rec in rounds.items()} == sent
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2', 'R1.1')
+def test_run_with_raw_responses_passes_the_run_seal_verifier(cli):
+    # End to end: a run whose transcript keeps the raw bodies passes
+    # tools/verify_run_seal.py, and its scoring pass reads it (exit 0).
+    r = cli({'Q01/*/*': [{'raw': RAW_CALL}, {'raw': RAW_ANSWER}]},
+            items=('Q01',))
+    assert (r.code, r.error) == (0, None)
+    spec = importlib.util.spec_from_file_location(
+        '_g4_verify_run_seal', ROOT / 'tools' / 'verify_run_seal.py')
+    vrs = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(vrs)
+    checks, failures = vrs.verify_run(str(r.out), fixture_dir=str(r.fixture_dir),
+                                      ap1_text=str(AP1_TEXT))
+    assert failures == [] and checks, failures
+    assert any(name == 'transcript seal_hash' for name, _ in checks)

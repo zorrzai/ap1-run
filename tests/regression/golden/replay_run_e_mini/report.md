@@ -35,6 +35,8 @@ Model: gpt-4.1-mini
 | `timestamp` | `<TIMESTAMP>` |
 | `verification_keys` | `[]` |
 
+Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 3416 records.
+
 ## 2. Resolved Configuration
 
 ```json
@@ -1344,7 +1346,7 @@ Total operands resolved: 4860
   - `reasoning_effort`: not sent (platform-unsupported)
   - `temperature`: `1`
   - `top_p`: not sent (operator-declared)
-- Parameter echo: `UNVERIFIED` (1000 responses checked)
+- Parameter echo: `UNVERIFIED` (2415 responses checked)
 
 ## 10. Non-Outcome Cells
 
@@ -1352,7 +1354,7 @@ Total operands resolved: 4860
 
 | Item | Condition | Status | Reason |
 |---|---|---|---|
-| Q07 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
+| Q07 | base | UNOBSERVABLE | UNOBSERVABLE: round 2: request failed: HTTP 502: replayed mid-loop failure: the recorded loop ended here without a response |
 
 ## 11. Quantisation and Near-Miss Findings
 

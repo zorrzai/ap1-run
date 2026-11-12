@@ -125,10 +125,16 @@ def check_release_coverage(tool_calls, candidate_figures, expected_value,
     # This absorbs IEEE 754 float noise from the reference calculator
     # (e.g. 15.200000000000001 vs 15.20) while preserving real
     # substitutions at the declared precision (e.g. 430.76 vs 430.75).
+    # A value that cannot be quantised (an infinite or huge tool return,
+    # T3-39) is None: as a return it governs nothing, as a candidate it is
+    # governed by nothing.
     def _q(v):
-        return quantise(v, quantisation_places, quantisation_rounding)
+        try:
+            return quantise(v, quantisation_places, quantisation_rounding)
+        except InvalidOperation:
+            return None
 
-    quantised_returns = set(_q(r) for r in tool_returns)
+    quantised_returns = set(_q(r) for r in tool_returns) - {None}
     ungoverned_raw = [fig for fig in candidate_figures
                       if _q(fig) not in quantised_returns]
 

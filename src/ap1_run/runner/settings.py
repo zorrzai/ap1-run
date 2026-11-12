@@ -56,11 +56,17 @@ def parse_args(argv, base_dir):
         help='the AP-1 text to seal; its hash must match the config\'s '
              'ap1_text_hash (default: the text of the config\'s '
              'ap1_version under reference/)')
+    parser.add_argument(
+        '--rescore', metavar='TRANSCRIPT',
+        help='instead of running, score a run\'s transcript again (no '
+             'endpoint, no key), with the run\'s --config and --fixture-dir, '
+             'into another --output-dir')
     args = parser.parse_args(argv)
     args.output_dir_explicit = args.output_dir is not None
     if not args.output_dir_explicit:
         args.output_dir = os.path.join(base_dir, 'output')
-    for name in ('config', 'fixture_dir', 'output_dir', 'ap1_text'):
+    for name in ('config', 'fixture_dir', 'output_dir', 'ap1_text',
+                 'rescore'):
         if getattr(args, name) is not None:
             setattr(args, name, os.path.abspath(getattr(args, name)))
     return args

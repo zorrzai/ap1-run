@@ -191,6 +191,56 @@ _SELF_REPORT_MARKERS = [
 ]
 
 
+def _read_message(response):
+    """The message of an OpenAI-compatible chat-completion response.
+
+    Returns (message, reason): the message dict and None when the shape is
+    recognised, else None and the reason it is not. The shape is the
+    platform's (S3-G2-1): anything this cannot read is unrecognised, so
+    the round is EV-0 UNOBSERVABLE, never an exception.
+    """
+    if not isinstance(response, dict):
+        return None, 'response is not a dict'
+
+    # v1.0 expects the OpenAI chat-completion shape:
+    #   {"choices": [{"message": {"role": ..., ...}}]}
+    choices = response.get('choices')
+    if choices is None:
+        # Not the OpenAI shape -- could be Anthropic, Gemini, etc.
+        return None, _diagnose_shape(response)
+
+    if not isinstance(choices, list) or not choices:
+        return None, 'choices is empty or not a list'
+
+    first_choice = choices[0]
+    if not isinstance(first_choice, dict):
+        return None, 'choices[0] is not a dict'
+
+    message = first_choice.get('message')
+    if message is None or not isinstance(message, dict):
+        return None, 'choices[0].message is missing or not a dict'
+
+    content = message.get('content')
+    if content is not None and not isinstance(content, str):
+        return None, 'choices[0].message.content is not a string'
+
+    # Where an attestation would be (R1.3.1): unreadable, so is the round
+    metadata = message.get('metadata')
+    if metadata is not None and not isinstance(metadata, dict):
+        return None, 'choices[0].message.metadata is not an object'
+
+    tool_calls = message.get('tool_calls')
+    if tool_calls is not None and not (
+            isinstance(tool_calls, list)
+            and all(isinstance(tc, dict)
+                    and isinstance(tc.get('function', {}), dict)
+                    for tc in tool_calls)):
+        return None, ('choices[0].message.tool_calls is not a list of '
+                      'objects with an object "function"')
+
+    return message, None
+
+
 def _extract_model_tool_calls(response):
     """Extract tool_calls from an OpenAI-compatible response.
 
@@ -200,26 +250,9 @@ def _extract_model_tool_calls(response):
         shape_recognised: True if response matches expected shape
         reason: str explaining why shape was not recognised (or None)
     """
-    if not isinstance(response, dict):
-        return [], False, 'response is not a dict'
-
-    # v1.0 expects the OpenAI chat-completion shape:
-    #   {"choices": [{"message": {"role": ..., ...}}]}
-    choices = response.get('choices')
-    if choices is None:
-        # Not the OpenAI shape -- could be Anthropic, Gemini, etc.
-        return [], False, _diagnose_shape(response)
-
-    if not isinstance(choices, list) or not choices:
-        return [], False, 'choices is empty or not a list'
-
-    first_choice = choices[0]
-    if not isinstance(first_choice, dict):
-        return [], False, 'choices[0] is not a dict'
-
-    message = first_choice.get('message')
-    if message is None or not isinstance(message, dict):
-        return [], False, 'choices[0].message is missing or not a dict'
+    message, reason = _read_message(response)
+    if message is None:
+        return [], False, reason
 
     # Shape recognised -- the platform is speaking OpenAI
     tool_calls = message.get('tool_calls') or []
@@ -252,24 +285,9 @@ def _extract_content(response):
         shape_recognised: True if response matches expected shape
         reason: str explaining why shape was not recognised (or None)
     """
-    if not isinstance(response, dict):
-        return '', False, 'response is not a dict'
-
-    # v1.0 expects the OpenAI chat-completion shape
-    choices = response.get('choices')
-    if choices is None:
-        return '', False, _diagnose_shape(response)
-
-    if not isinstance(choices, list) or not choices:
-        return '', False, 'choices is empty or not a list'
-
-    first_choice = choices[0]
-    if not isinstance(first_choice, dict):
-        return '', False, 'choices[0] is not a dict'
-
-    message = first_choice.get('message')
-    if message is None or not isinstance(message, dict):
-        return '', False, 'choices[0].message is missing or not a dict'
+    message, reason = _read_message(response)
+    if message is None:
+        return '', False, reason
 
     # Shape recognised
     text = message.get('content', '') or ''
@@ -283,14 +301,15 @@ def _contains_self_report(text):
 
 
 def extract_attestation(response):
-    """Extract an attestation from the response, if present."""
-    if not isinstance(response, dict):
+    """Extract an attestation from the response, if present.
+
+    None when there is none, and for any shape that cannot be read
+    (S3-G2-1).
+    """
+    message, _ = _read_message(response)
+    if message is None:
         return None
-    choices = response.get('choices', [])
-    if not choices:
-        return None
-    message = choices[0].get('message', {})
-    metadata = message.get('metadata', {})
-    if metadata and 'attestation' in metadata:
+    metadata = message.get('metadata')
+    if isinstance(metadata, dict) and 'attestation' in metadata:
         return metadata['attestation']
     return None

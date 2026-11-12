@@ -38,9 +38,18 @@ Normalisation (in the comparison, never in the runner):
   - this run's seal_hash, config_hash and runner_source_hash, read from
     the seal the run actually made (the config hash covers the mock's
     port; the source hash covers the code, and changes when files move)
+  - the digest of the transcript scored, in report.md and
+    smoke_summary.json (the transcript holds timestamps; the digest is
+    tested in tests/unit/runner/test_scoring_pass.py)
   - each adjudication sheet's execution id (derived from the seal hash),
     as <EXECUTION_ID_k> numbered in order of first appearance, so the
     golden still shows which sheets share an id
+  - the seal's environment fields (python_version, platform,
+    package_versions) as <ENVIRONMENT>, in report.md section 1, and in
+    pre_registration.json where each equals this interpreter's own value
+    (hash_oracle.environment()): they name the machine that ran, so a
+    golden that kept them would fail on any other machine. A value that
+    is not this machine's is left as it is, and fails the comparison.
 
 Before normalisation, hard_checks.check() recomputes every value in that
 seal independently (hash_oracle.py), against expectations frozen before
@@ -60,6 +69,7 @@ import sys
 import tempfile
 
 import hard_checks
+import hash_oracle
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
@@ -73,7 +83,7 @@ _SKIP_TOP = {'.git', '.venv', 'output', 'graphify-out', 'review_output',
 
 # Files the runner writes to output/.
 _OUTPUTS = ['report.md', 'adjudication_sheets.md', 'smoke_summary.json',
-            'smoke_run.jsonl', 'DISCLAIMER.txt']
+            'smoke_run.jsonl', 'DISCLAIMER.txt', 'pre_registration.json']
 
 
 # -- inputs ----------------------------------------------------------
@@ -350,7 +360,8 @@ def collect(scenario, tree, proc, result_dir, output_dir, roots,
         raw['default_output.txt'] = ''.join(
             f'{n}\n' for n in sorted(os.listdir(default_output)))
     if 'smoke_run.jsonl' in raw:
-        raw['outcomes.jsonl'] = outcome_table(raw['smoke_run.jsonl'])
+        raw['outcomes.jsonl'] = outcome_table(raw['smoke_run.jsonl'],
+                                              raw.get('smoke_summary.json'))
 
     hard_checks.check(scenario, tree, result_dir, raw)
     seals = json.loads(_read(os.path.join(result_dir, 'seal.json')))
@@ -369,25 +380,33 @@ def digest_large(scenario, produced):
     return out
 
 
-def outcome_table(transcript_text):
-    """One line per execution: what the runner decided about it."""
-    engine, figures = [], {}
+def outcome_table(transcript_text, summary_text=None):
+    """One line per execution: what the runner decided about it.
+
+    The execution (evidence class, error state, tool calls) comes from the
+    transcript; the scores (provenance, operation, figure) from the
+    scoring pass's results in smoke_summary.json, matched on item,
+    condition and repeat. A run that stopped before writing its summary
+    has no scores. Round records (each round as it arrived) are left out:
+    the execution's own record carries its rounds too.
+    """
+    scored = {}
+    if summary_text:
+        for r in json.loads(summary_text).get('all_results', []):
+            if r.get('status') == 'EXECUTED':
+                scored[(r.get('item_id'), r.get('condition'),
+                        r.get('repeat'))] = r
+    rows, seen = [], {}
     for line in transcript_text.splitlines():
         if not line.strip():
             continue
         rec = json.loads(line)
-        key = (rec.get('item_id'), rec.get('condition'))
-        if rec.get('record_type') == 'figure_identification':
-            figures.setdefault(key, []).append(rec)
-        else:
-            engine.append(rec)
-    rows, seen = [], {}
-    for rec in engine:
+        if rec.get('kind') == 'round':
+            continue
         key = (rec.get('item_id'), rec.get('condition'))
         n = seen.get(key, 0)
         seen[key] = n + 1
-        fig = (figures.get(key) or [None] * (n + 1))
-        fig = fig[n] if n < len(fig) else None
+        score = scored.get(key + (rec.get('repeat'),), {})
         rows.append({
             'item': key[0], 'condition': key[1], 'n': n + 1,
             'error_state': rec.get('error_state'),
@@ -395,11 +414,11 @@ def outcome_table(transcript_text):
             'invocation': rec.get('invocation_outcome'),
             'tool_calls': len(rec.get('tool_calls') or []),
             'provenance': [p.get('outcome') for p in
-                           rec.get('provenance_results') or []],
+                           score.get('provenance_results') or []],
             'operation': [o.get('outcome') for o in
-                          rec.get('operation_correctness') or []],
-            'figure': fig.get('figure_outcome') if fig else None,
-            'released': fig.get('released_figure') if fig else None,
+                          score.get('operation_correctness') or []],
+            'figure': score.get('figure_outcome'),
+            'released': score.get('released_figure'),
         })
     return ''.join(json.dumps(r, sort_keys=True) + '\n' for r in rows)
 
@@ -416,7 +435,21 @@ _ENVIRONMENT_ROW = re.compile(
     r'(\| `(?:python_version|platform|package_versions)` \| `)[^`]*(` \|)')
 
 
+def _environment_keys(text):
+    """Each environment field written as a JSON key with this
+    interpreter's own value (pre_registration.json repeats the seal) as
+    <ENVIRONMENT>. Only that exact value: any other one stays."""
+    for key, value in hash_oracle.environment().items():
+        text = text.replace(
+            f'"{key}": {json.dumps(value, ensure_ascii=False)}',
+            f'"{key}": "<ENVIRONMENT>"')
+    return text
+
+
 _EXECUTION_ID = re.compile(r'(Execution id: `)([0-9a-f]{12})(`)')
+# The digest of the transcript scored (report.md, smoke_summary.json)
+_TRANSCRIPT_DIGEST = re.compile(
+    r'(Transcript scored: SHA-256 `|"sha256": ")[0-9a-f]{64}')
 
 
 def normalise(text, roots, seals):
@@ -435,6 +468,8 @@ def normalise(text, roots, seals):
             m.group(2), f'<EXECUTION_ID_{len(ids) + 1}>') + m.group(3),
         text)
     text = _ENVIRONMENT_ROW.sub(r'\1<ENVIRONMENT>\2', text)
+    text = _environment_keys(text)
+    text = _TRANSCRIPT_DIGEST.sub(r'\1<TRANSCRIPT_SHA256>', text)
     for seal in seals:
         for field, label in (('seal_hash', '<SEAL_HASH>'),
                              ('config_hash', '<CONFIG_HASH>'),

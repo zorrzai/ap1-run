@@ -182,7 +182,7 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
 
 def verify_seal(record, *, config, fixture_path, questions_path,
                 ground_truth_path, calculator_path, ap1_text_path=None,
-                runner_source_hash=None, expected_values=None):
+                runner_source_hash=None, expected_values=None, loaded=None):
     """Verify a pre-registration record against current files.
 
     The scorer calls this before processing. Raises SealError naming
@@ -193,6 +193,11 @@ def verify_seal(record, *, config, fixture_path, questions_path,
     with the config's declared hash, and with the file if its path is
     given), the DOI, and the runner source hash and expected values when
     given.
+
+    loaded: {name: bytes} for any of 'fixture', 'questions',
+    'ground_truth' and 'calculator': the bytes the caller read and will
+    use. These are checked instead of the file, which is not read again
+    (T3-72: verify what is used).
     """
     mismatches = []
     missing = [f for f in SEALED_FIELDS if f not in record]
@@ -212,8 +217,10 @@ def verify_seal(record, *, config, fixture_path, questions_path,
             mismatches.append(f'{name}: cannot read: {e}')
             return None
 
+    loaded = loaded or {}
     checks = [(name, record.get(f'{name}_hash'),
-               current(text_file_hash, path, name))
+               text_hash(loaded[name]) if name in loaded
+               else current(text_file_hash, path, name))
               for name, path in (('fixture', fixture_path),
                                  ('questions', questions_path),
                                  ('ground_truth', ground_truth_path),

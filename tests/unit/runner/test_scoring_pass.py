@@ -1,0 +1,613 @@
+"""Unit tests for the scoring pass (runner/scoring_pass.py, T3-21).
+
+score_run reads a transcript and scores every execution the run planned.
+Its collaborators (reading a record back, scoring an execution, the
+consistency check, the reports, D1, D2, the summary, the output files)
+have their own tests. Here they are replaced by recording fakes, so that
+the order, what score_run passes to each and what it prints are checked
+exactly. The transcript is real, in a temporary directory. The run's
+end-to-end use is in tests/unit/test_run.py and
+tests/functional/test_step4_g4_transcript.py.
+"""
+
+import os
+import re
+import stat
+from decimal import Decimal
+
+import pytest
+
+from ap1_run.execution.perturbation_guard import HELD_CONSTANT
+from ap1_run.foundation import transcript
+from ap1_run.foundation.transcript import TranscriptError
+from ap1_run.runner import scoring_pass
+from ap1_run.runner.scoring_pass import (
+    CONDITIONS, DISCLAIMER, index_records, score_run,
+)
+
+D = Decimal
+RULE = '=' * 60
+
+QUESTIONS = {'items': [{'id': 'Q1', 'source_accounts': ['a']},
+                       {'id': 'Q3', 'source_accounts': []},
+                       {'id': 'Q2', 'source_accounts': ['b']}]}
+FIXTURE = {'accounts': [{'id': 'a'}, {'id': 'b'}]}
+CONFIG = {'repeat_count': 2, 'sampling': {'temperature': '0'},
+          'answer_tolerance': D('0.05'), 'decline_markers': ['cannot'],
+          'currency_symbols': ['$']}
+SEAL = {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}
+
+
+class GroundTruth:
+    """Q3 is underivable; the others are 10.00."""
+
+    def __init__(self, calls):
+        self.calls = calls
+
+    def compute(self, item_id, ctx):
+        self.calls.append(('gt', item_id, ctx))
+        if item_id == 'Q3':
+            return {'derivable': False}
+        return {'final': D('10.00'), 'item': item_id}
+
+
+def write(path, item_id, condition, repeat, status, seal_hash='SEAL',
+          **extra):
+    transcript.append(path, item_id=item_id, arm_id=condition,
+                      condition=condition, request_sent=None,
+                      response_received=None, tool_calls=[],
+                      evidence_class=None, error_state=None,
+                      seal_hash=seal_hash, repeat=repeat, status=status,
+                      **extra)
+
+
+class Pass:
+    """Recording fakes for score_run's collaborators, and its inputs."""
+
+    def __init__(self, tmp_path, monkeypatch):
+        self.calls = []
+        self.tmp = tmp_path
+        self.transcript = str(tmp_path / 'run' / 'smoke_run.jsonl')
+        os.makedirs(os.path.dirname(self.transcript))
+        self.config = dict(CONFIG)
+        self.gt = GroundTruth(self.calls)
+        for name in ('build_delivered_context', 'check_lookup_collision',
+                     'result_from_record', 'score_execution',
+                     'verify_invocation_consistency', 'print_run_report',
+                     'summarise_accuracy', 'find_d2_cap',
+                     'classify_reproducibility', 'build_summary',
+                     'print_scoring_report', 'attach_scores',
+                     'write_outputs'):
+            monkeypatch.setattr(scoring_pass, name, getattr(self, name))
+
+    def run(self):
+        return score_run(self.transcript, config=self.config,
+                         seal_record=dict(SEAL), fixture=FIXTURE,
+                         questions=QUESTIONS,
+                         ground_truth_compute=self.gt.compute,
+                         output_dir='OUT')
+
+    def named(self, name):
+        return [c[1:] for c in self.calls if c[0] == name]
+
+    # -- fakes ---------------------------------------------------------
+    def build_delivered_context(self, fixture, accounts):
+        self.calls.append(('context', fixture, accounts))
+        return {'accounts': list(accounts)}
+
+    def check_lookup_collision(self, expected, ctx):
+        self.calls.append(('collision', expected, ctx))
+        return 'COLLISION', 'field'
+
+    def result_from_record(self, record, **kwargs):
+        self.calls.append(('read', record, kwargs))
+        result = {'status': record['status'], 'n': record['repeat']}
+        if record['status'] != 'EXECUTED':
+            result['error'] = 'cause of ' + record['status']
+        return result
+
+    def score_execution(self, findings, result, **kwargs):
+        self.calls.append(('score', result, kwargs))
+        findings.all_results.append({'status': 'EXECUTED'})
+        findings.all_accuracy_results.append({'acc': result['n']})
+        findings.d2_responses.setdefault('d2', []).append(result)
+
+    def verify_invocation_consistency(self, results):
+        self.calls.append(('consistency', list(results)))
+
+    def print_run_report(self, results, conditions, **kwargs):
+        self.calls.append(('run_report', list(results), conditions, kwargs))
+
+    def summarise_accuracy(self, results):
+        self.calls.append(('summarise', list(results)))
+        return {'d1': True}
+
+    def find_d2_cap(self, sampling):
+        self.calls.append(('d2_cap', sampling))
+        return 'CAP'
+
+    def classify_reproducibility(self, responses, repeat_count, cap):
+        self.calls.append(('d2', responses, repeat_count, cap))
+        return {'d2': 'results'}
+
+    def build_summary(self, results, evidence, **kwargs):
+        self.calls.append(('summary', list(results), evidence, kwargs))
+        return {'summary': True}
+
+    def print_scoring_report(self, *args):
+        self.calls.append(('scoring_report',) + args)
+
+    def attach_scores(self, records, results):
+        self.calls.append(('attach', list(records), list(results)))
+        return ['SCORED RECORDS']
+
+    def write_outputs(self, output_dir, **kwargs):
+        self.calls.append(('outputs', output_dir, kwargs))
+
+
+@pytest.fixture
+def p(tmp_path, monkeypatch):
+    return Pass(tmp_path, monkeypatch)
+
+
+def script(p):
+    """The transcript of a run interrupted after Q1/removed/r2: Q1/base:
+    UNMEASURED then EXECUTED; Q2/base: EXECUTED then UNMEASURED;
+    Q1/removed: VOID then EXECUTED; Q2/removed: none (NOT-RUN twice).
+    Written out of order: the run's order is the plan's."""
+    write(p.transcript, 'Q1', 'instruction_removed', 2, 'EXECUTED')
+    write(p.transcript, 'Q1', 'base', 1, 'UNMEASURED')
+    write(p.transcript, 'Q1', 'base', 2, 'EXECUTED')
+    write(p.transcript, 'Q2', 'base', 1, 'EXECUTED')
+    write(p.transcript, 'Q2', 'base', 2, 'UNMEASURED')
+    write(p.transcript, 'Q1', 'instruction_removed', 1, 'VOID')
+
+
+def test_conditions_and_disclaimer():
+    assert CONDITIONS == ['base', 'instruction_removed']
+    assert DISCLAIMER.startswith(
+        'THIS IS AN INSTRUMENT SMOKE TEST, NOT AN AP-1 EVALUATION.\n')
+
+
+@pytest.mark.finding('T3-21', 'T3-52')
+def test_score_run_console(p, capsys):
+    script(p)
+    p.run()
+    assert capsys.readouterr().out == (
+        '  Q1/base/r1: UNMEASURED\n'
+        '  Q1/base/r2:   Q3/base: VOID (underivable)\n'
+        '  Q2/base/r1:   Q2/base/r2: UNMEASURED\n'
+        '  Q1/instruction_removed/r1: VOID\n'
+        '  Q1/instruction_removed/r2:   '
+        'Q3/instruction_removed: VOID (underivable)\n'
+        '  Q2/instruction_removed/r1: NOT-RUN\n'
+        '  Q2/instruction_removed/r2: NOT-RUN\n'
+        '  Invocation consistency check: PASSED (0 mismatches)\n')
+
+
+@pytest.mark.finding('T3-21', 'T3-52')
+@pytest.mark.req('R0.3')
+def test_score_run_calls(p, capsys):
+    script(p)
+    records = transcript.read_all(p.transcript)
+    by_key = {(r['item_id'], r['condition'], r['repeat']): r
+              for r in records}
+    smoke = p.run()
+
+    # ground truth and context per item and condition; no collision check
+    # for the underivable Q3
+    assert [c[1] for c in p.named('context')] == [
+        ['a'], [], ['b'], ['a'], [], ['b']]
+    assert all(c[0] is FIXTURE for c in p.named('context'))
+    assert p.named('gt') == [('Q1', {'accounts': ['a']}),
+                             ('Q3', {'accounts': []}),
+                             ('Q2', {'accounts': ['b']})] * 2
+    assert p.named('collision') == [(D('10.00'), {'accounts': ['a']}),
+                                    (D('10.00'), {'accounts': ['b']})] * 2
+
+    # each record found is read back with its item's ground truth
+    reads = p.named('read')
+    assert [r for r, _ in reads] == [
+        by_key[('Q1', 'base', 1)], by_key[('Q1', 'base', 2)],
+        by_key[('Q2', 'base', 1)], by_key[('Q2', 'base', 2)],
+        by_key[('Q1', 'instruction_removed', 1)],
+        by_key[('Q1', 'instruction_removed', 2)]]
+    assert reads[0][1] == {'gt': {'final': D('10.00'), 'item': 'Q1'},
+                           'ctx': {'accounts': ['a']}, 'config': p.config}
+
+    # only executed results are scored
+    scores = p.named('score')
+    assert [(k['item_id'], k['condition'], k['rep']) for _, k in scores] == [
+        ('Q1', 'base', 2), ('Q2', 'base', 1),
+        ('Q1', 'instruction_removed', 2)]
+    assert scores[0][1] == {
+        'item_id': 'Q1', 'condition': 'base', 'rep': 2,
+        'expected': D('10.00'), 'ctx': {'accounts': ['a']},
+        'collision': 'COLLISION', 'config': p.config,
+        'answer_tolerance': D('0.05'), 'decline_markers': ['cannot'],
+        'currency_symbols': ['$']}
+
+    expected_results = [
+        {'item_id': 'Q1', 'condition': 'base', 'repeat': 1,
+         'status': 'UNMEASURED', 'cause': 'cause of UNMEASURED'},
+        {'status': 'EXECUTED'},
+        {'item_id': 'Q3', 'condition': 'base', 'repeat': 0,
+         'status': 'VOID'},
+        {'status': 'EXECUTED'},
+        {'item_id': 'Q2', 'condition': 'base', 'repeat': 2,
+         'status': 'UNMEASURED', 'cause': 'cause of UNMEASURED'},
+        {'item_id': 'Q1', 'condition': 'instruction_removed', 'repeat': 1,
+         'status': 'VOID', 'cause': 'cause of VOID'},
+        {'status': 'EXECUTED'},
+        {'item_id': 'Q3', 'condition': 'instruction_removed', 'repeat': 0,
+         'status': 'VOID'},
+        {'item_id': 'Q2', 'condition': 'instruction_removed', 'repeat': 1,
+         'status': 'NOT-RUN',
+         'cause': 'not reached: the transcript has no record of it'},
+        {'item_id': 'Q2', 'condition': 'instruction_removed', 'repeat': 2,
+         'status': 'NOT-RUN',
+         'cause': 'not reached: the transcript has no record of it'},
+    ]
+    assert p.named('consistency') == [(expected_results,)]
+
+    (results, conditions, kw), = p.named('run_report')
+    assert results == expected_results
+    assert conditions == ['base', 'instruction_removed']
+    unmeasured = [{'item_id': 'Q1', 'condition': 'base', 'repeat': 1,
+                   'cause': 'cause of UNMEASURED'},
+                  {'item_id': 'Q2', 'condition': 'base', 'repeat': 2,
+                   'cause': 'cause of UNMEASURED'}]
+    assert kw == {'disclaimer': DISCLAIMER, 'grammar_issues': [],
+                  'decline_findings': [], 'tool_call_structures': [],
+                  'evidence_findings': [], 'unmeasured_cells': unmeasured,
+                  'transcription_results': [],
+                  'release_coverage_results': []}
+
+    assert p.named('summarise') == [([{'acc': 2}, {'acc': 1}, {'acc': 2}],)]
+    assert p.named('d2_cap') == [({'temperature': '0'},)]
+    d2_responses = {'d2': [res for res, _ in scores]}
+    assert p.named('d2') == [(d2_responses, 2, 'CAP')]
+    (results, evidence, kw), = p.named('summary')
+    assert results == expected_results and evidence == []
+    assert kw == {'d1_summary': {'d1': True, 'n': 3},
+                  'd2_results': {'d2': 'results'}, 'd2_cap_reason': 'CAP',
+                  'transcription_results': [],
+                  'release_coverage_results': [],
+                  'parameter_echo': [],
+                  'held_constant': HELD_CONSTANT}
+    assert p.named('scoring_report') == [(
+        {'d1': True, 'n': 3}, {'d2': 'results'}, 'CAP', {'summary': True})]
+
+    assert p.named('attach') == [(records, expected_results)]
+    import hashlib
+    scored = {'sha256': hashlib.sha256(
+        open(p.transcript, 'rb').read()).hexdigest(), 'records': 6}
+    smoke_summary = {
+        'seal_hash': 'SEAL', 'scored_transcript': scored,
+        'all_results': expected_results,
+        'grammar_issues': [], 'decline_findings': [],
+        'tool_call_structures': [], 'evidence_findings': [],
+        'unmeasured_cells': unmeasured}
+    assert p.named('outputs') == [('OUT', {
+        'records': ['SCORED RECORDS'], 'summary': {'summary': True},
+        'config': p.config, 'seal_record': SEAL, 'questions': QUESTIONS,
+        'fixture': FIXTURE, 'release_coverage_results': [],
+        'disclaimer': DISCLAIMER, 'smoke_summary': smoke_summary,
+        'scored_transcript': scored, 'rescore': None})]
+    assert smoke == smoke_summary
+
+    stages = [c[0] for c in p.calls if c[0] in (
+        'consistency', 'run_report', 'summarise', 'd2_cap', 'd2', 'summary',
+        'scoring_report', 'attach', 'outputs')]
+    assert stages == ['consistency', 'run_report', 'summarise', 'd2_cap',
+                      'd2', 'summary', 'scoring_report', 'attach', 'outputs']
+
+
+@pytest.mark.finding('T3-51')
+@pytest.mark.parametrize('key', ['answer_tolerance', 'decline_markers',
+                                 'currency_symbols', 'sampling',
+                                 'repeat_count'])
+def test_score_run_result_affecting_field_has_no_default(p, key):
+    # R0.1: no defaults for anything affecting a result; load_config
+    # refuses a config without these, and the scoring pass never invents
+    # one.
+    del p.config[key]
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED')
+    with pytest.raises(KeyError, match=key):
+        p.run()
+    assert p.named('outputs') == []
+
+
+def test_score_run_numeric_tolerance_is_kept_as_given(p):
+    p.config['answer_tolerance'] = 0.5   # not a string: not converted
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED')
+    p.run()
+    tolerance = p.named('score')[0][1]['answer_tolerance']
+    assert tolerance == 0.5 and isinstance(tolerance, float)
+
+
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.3')
+def test_score_run_empty_transcript_everything_not_run(p):
+    open(p.transcript, 'w').close()
+    smoke = p.run()
+    assert [r['status'] for r in smoke['all_results']] == [
+        'NOT-RUN', 'NOT-RUN', 'VOID', 'NOT-RUN', 'NOT-RUN'] * 2
+    assert smoke['unmeasured_cells'] == []
+    assert p.named('score') == []
+
+
+@pytest.mark.finding('T3-21', 'T3-52')
+@pytest.mark.req('R0.3')
+def test_score_run_reads_a_read_only_transcript_and_leaves_it(p):
+    # SPEC R0.3 "The scorer opens the transcript read-only"; §2 "reads
+    # only; never writes back".
+    script(p)
+    before = open(p.transcript, 'rb').read()
+    os.chmod(p.transcript, stat.S_IRUSR)
+    try:
+        p.run()
+    finally:
+        os.chmod(p.transcript, stat.S_IRUSR | stat.S_IWUSR)
+    assert open(p.transcript, 'rb').read() == before
+
+
+def test_score_run_flushes_each_progress_prefix(p, monkeypatch):
+    # "  Q1/base/r1: " is flushed before the execution is scored.
+    seen = []
+
+    class Stdout:
+        def write(self, text):
+            seen.append(('write', text))
+
+        def flush(self):
+            seen.append(('flush',))
+    script(p)
+    monkeypatch.setattr('sys.stdout', Stdout())
+    p.run()
+    prefixes = [i for i, e in enumerate(seen)
+                if e[0] == 'write' and e[1].endswith(('/r1: ', '/r2: '))]
+    after = [[e for e in seen[i + 1:] if e != ('write', '')][0]
+             for i in prefixes]
+    assert after == [('flush',)] * 8
+
+
+# -- index_records ---------------------------------------------------------
+
+def record(item_id='Q1', condition='base', repeat=1, status='EXECUTED',
+           seal_hash='SEAL'):
+    return {'item_id': item_id, 'condition': condition, 'repeat': repeat,
+            'status': status, 'seal_hash': seal_hash}
+
+
+def test_index_records_by_item_condition_repeat():
+    records = [record(), record(repeat=2), record(condition='other'),
+               record(item_id='Q2')]
+    assert index_records(records, 'SEAL') == {
+        ('Q1', 'base', 1): records[0], ('Q1', 'base', 2): records[1],
+        ('Q1', 'other', 1): records[2], ('Q2', 'base', 1): records[3]}
+    assert index_records([], 'SEAL') == {}
+
+
+def test_index_records_refuses_another_runs_record():
+    with pytest.raises(TranscriptError, match=(
+            "^record 2 has seal hash 'OTHER', not this run's 'SEAL'$")):
+        index_records([record(), record(repeat=2, seal_hash='OTHER')],
+                      'SEAL')
+
+
+@pytest.mark.parametrize('field', ['status', 'repeat'])
+def test_index_records_refuses_a_transcript_from_before_the_split(field):
+    # A transcript of the published runs has figure_identification
+    # records and engine records without a status: not scoreable here.
+    old = record()
+    del old[field]
+    with pytest.raises(TranscriptError, match=(
+            '^record 1 has no status or repeat: the transcript was written '
+            'by a runner before the scoring pass was separated, and cannot '
+            'be scored by this one$')):
+        index_records([old], 'SEAL')
+
+
+def test_index_records_refuses_two_records_of_one_execution():
+    with pytest.raises(TranscriptError,
+                       match='^record 3 repeats execution Q1/base/r2$'):
+        index_records([record(repeat=2), record(), record(repeat=2)],
+                      'SEAL')
+
+
+def test_score_run_refuses_a_bad_transcript_before_scoring(p):
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED', seal_hash='OTHER')
+    with pytest.raises(TranscriptError, match='not this run'):
+        p.run()
+    assert p.calls == []
+
+
+# -- The transcript against the run's plan (SPEC R0.2, R0.3) ---------------
+
+def write_round(path, item_id, condition, repeat, number, seal_hash='SEAL',
+                error=None, **extra):
+    """A round record, as the engine writes one when the round arrives."""
+    transcript.append(
+        path, item_id=item_id, arm_id=condition, condition=condition,
+        request_sent={'request': number},
+        response_received=None if error else {'response': number},
+        tool_calls=[], evidence_class=None, error_state=error,
+        seal_hash=seal_hash, repeat=repeat, kind='round', round=number,
+        error=error, **extra)
+
+
+def entry(number, **fields):
+    return {'round': number, 'request': {'request': number},
+            'response': {'response': number}, **fields}
+
+
+INTERRUPTED = ('interrupted: round 1: the run stopped during this '
+               'execution, after the rounds the transcript holds')
+
+
+@pytest.mark.finding('V12-3', 'T3-52')
+@pytest.mark.req('R0.2', 'R0.3')
+def test_score_run_interrupted_execution_unmeasured_with_its_round(p, capsys):
+    # The run stopped inside Q1/base/r2's tool loop: its rounds 0 and 1
+    # are in the transcript, its execution record never was. It was sent,
+    # so it is not NOT-RUN: UNMEASURED, cause interrupted, with its round.
+    write_round(p.transcript, 'Q1', 'base', 1, 0)
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED', rounds=[entry(0)])
+    write_round(p.transcript, 'Q1', 'base', 2, 0)
+    write_round(p.transcript, 'Q1', 'base', 2, 1)
+    smoke = p.run()
+    assert smoke['all_results'][1] == {
+        'item_id': 'Q1', 'condition': 'base', 'repeat': 2,
+        'status': 'UNMEASURED', 'cause': INTERRUPTED}
+    assert smoke['unmeasured_cells'] == [{
+        'item_id': 'Q1', 'condition': 'base', 'repeat': 2,
+        'cause': INTERRUPTED}]
+    assert [r['status'] for r in smoke['all_results'][2:]] == [
+        'VOID', 'NOT-RUN', 'NOT-RUN', 'NOT-RUN', 'NOT-RUN', 'VOID',
+        'NOT-RUN', 'NOT-RUN']
+    assert [r['repeat'] for r, _ in p.named('read')] == [1]
+    # only execution records reach the outputs
+    (records, _), = p.named('attach')
+    assert [(r['repeat'], r['status']) for r in records] == [(1, 'EXECUTED')]
+    console = capsys.readouterr().out
+    assert '  Q1/base/r2: UNMEASURED (interrupted)\n' in console
+
+
+@pytest.mark.finding('V12-3')
+@pytest.mark.req('R0.3')
+def test_score_run_rounds_matching_their_execution_record_accepted(p):
+    write_round(p.transcript, 'Q1', 'base', 1, 0)
+    write_round(p.transcript, 'Q1', 'base', 1, 1, error='HTTP 502')
+    write(p.transcript, 'Q1', 'base', 1, 'UNMEASURED', rounds=[
+        entry(0), {'round': 1, 'request': {'request': 1},
+                   'error': 'HTTP 502'}])
+    assert p.run()['all_results'][0]['status'] == 'UNMEASURED'
+
+
+@pytest.mark.finding('V12-3')
+@pytest.mark.req('R0.3')
+@pytest.mark.parametrize('rounds', [
+    [entry(0, response={'response': 'other'})],
+    [entry(0), entry(1)],
+    [],
+], ids=['other-response', 'more-rounds', 'no-rounds'])
+def test_score_run_rounds_differing_from_their_execution_record_refused(
+        p, rounds):
+    write_round(p.transcript, 'Q1', 'base', 1, 0)
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED', rounds=rounds)
+    with pytest.raises(TranscriptError, match=(
+            '^execution Q1/base/r1: its round records do not match the '
+            'rounds on its record$')):
+        p.run()
+    assert p.named('read') == []
+
+
+@pytest.mark.finding('V12-3')
+@pytest.mark.req('R0.3')
+@pytest.mark.parametrize('numbers', [[0, 2], [1], [0, 0]])
+def test_score_run_round_records_out_of_sequence_refused(p, numbers):
+    for number in numbers:
+        write_round(p.transcript, 'Q1', 'base', 1, number)
+    with pytest.raises(TranscriptError, match=(
+            r'^execution Q1/base/r1: its round records are rounds '
+            + re.escape(str(numbers)) + r', not 0 to \d+ in order$')):
+        p.run()
+
+
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.3')
+@pytest.mark.parametrize('write_first', [
+    lambda path: None,
+    lambda path: write_round(path, 'Q1', 'base', 1, 0),
+], ids=['no-record', 'rounds-only'])
+def test_score_run_missing_interior_execution_refused(p, write_first):
+    # The runner executes in the plan's order, so a run that stopped
+    # leaves a prefix of it. An execution with no record (or with rounds
+    # but no end) followed by a later execution's record is a damaged
+    # transcript, not a run that stopped: refused, naming both.
+    write_first(p.transcript)
+    write(p.transcript, 'Q1', 'base', 2, 'EXECUTED')
+    with pytest.raises(TranscriptError, match=(
+            r'^execution Q1/base/r1 has no record of its end, but the later '
+            r'execution Q1/base/r2 has records: the transcript is damaged, '
+            r'not cut short$')):
+        p.run()
+    assert p.named('read') == []
+
+
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.3')
+@pytest.mark.parametrize('kind', ['execution', 'round'])
+@pytest.mark.parametrize('item_id, condition, repeat, status, problem', [
+    ('Q9', 'base', 1, 'EXECUTED', "execution Q9/base/r1, which the run's "
+                                  "plan does not hold"),
+    ('Q1', 'other', 1, 'EXECUTED', "execution Q1/other/r1, which the "
+                                   "run's plan does not hold"),
+    ('Q1', 'base', 3, 'EXECUTED', "execution Q1/base/r3, which the run's "
+                                  "plan does not hold"),
+    ('Q1', 'base', 0, 'EXECUTED', "execution Q1/base/r0, which the run's "
+                                  "plan does not hold"),
+    ('Q1', 'base', '1', 'EXECUTED', "repeat '1', not a whole number"),
+    ('Q1', 'base', True, 'EXECUTED', 'repeat True, not a whole number'),
+    ('Q3', 'base', 1, 'EXECUTED', "execution Q3/base/r1, which the run's "
+                                  "plan does not hold"),
+], ids=['item', 'condition', 'repeat-high', 'repeat-zero', 'repeat-text',
+        'repeat-bool', 'underivable-item'])
+def test_score_run_record_outside_the_plan_refused(
+        p, kind, item_id, condition, repeat, status, problem):
+    write(p.transcript, 'Q1', 'base', 1, 'EXECUTED')
+    if kind == 'round':
+        write_round(p.transcript, item_id, condition, repeat, 0)
+    else:
+        write(p.transcript, item_id, condition, repeat, status)
+    with pytest.raises(TranscriptError, match=(
+            '^record 2 is of ' if 'repeat ' not in problem
+            else '^record 2 has ') + re.escape(problem) + '$'):
+        p.run()
+    assert p.named('read') == []
+
+
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.3')
+@pytest.mark.parametrize('status', ['DONE', 'NOT-RUN', ''])
+def test_score_run_record_with_an_unknown_status_refused(p, status):
+    write(p.transcript, 'Q1', 'base', 1, status)
+    with pytest.raises(TranscriptError, match=(
+            '^record 1 has status ' + re.escape(repr(status))
+            + ', not one of EXECUTED, UNMEASURED, VOID$')):
+        p.run()
+
+
+# -- The transcript scored, by its digest (T3-21) --------------------------
+
+@pytest.mark.finding('T3-21')
+@pytest.mark.req('R0.3')
+def test_score_run_records_the_digest_of_the_transcript_it_scored(p):
+    # The scoring pass reads the transcript once and records the SHA-256
+    # of the bytes it scored and their record count, in the summary and
+    # in what goes to the report, so two reports can be traced to the
+    # transcript each scored.
+    import hashlib
+    script(p)
+    data = open(p.transcript, 'rb').read()
+    smoke = p.run()
+    scored = {'sha256': hashlib.sha256(data).hexdigest(), 'records': 6}
+    assert smoke['scored_transcript'] == scored
+    (_, kwargs), = p.named('outputs')
+    assert kwargs['scored_transcript'] == scored
+
+
+@pytest.mark.finding('T3-21')
+def test_score_run_reads_the_transcript_once(p, monkeypatch):
+    script(p)
+    opened = []
+    real_open = open
+
+    def counting_open(file, *args, **kwargs):
+        if str(file) == p.transcript:
+            opened.append(args[0] if args else kwargs.get('mode', 'r'))
+        return real_open(file, *args, **kwargs)
+    monkeypatch.setattr('builtins.open', counting_open)
+    p.run()
+    assert opened == ['rb']
