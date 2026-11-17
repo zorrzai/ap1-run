@@ -285,3 +285,21 @@ def test_run_wrong_sign_after_a_label_number_is_not_auto_matched(
             for c, r in rows(out, 'Q04').items()} == dict.fromkeys(
         BOTH, ('ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', None))
 
+
+# -- S3-G1-7: a figure in other scripts' digits goes to a person ------------
+
+@pytest.mark.finding('S3-G1-7')
+@pytest.mark.req('R0.4.2', 'R2.0')
+def test_run_reply_in_arabic_indic_digits_routes_to_adjudication(
+        tmp_path, monkeypatch, capsys):
+    # The review of #13: R0.4.2 reads ASCII digits only, so a reply
+    # whose figure is '\u0664\u0663\u0660.\u0667\u0665' (430.75 in
+    # Arabic-Indic digits) holds no numeric token; it must go to
+    # adjudication, not AUTO-NO-FIGURE (scored wrong with no human look).
+    out = run_example(tmp_path, monkeypatch, {
+        'Q04/*/*': [{'call': '1437.00 - 1006.25'},
+                    {'say': 'The principal portion is '
+                            '\u0664\u0663\u0660.\u0667\u0665 dollars.'}]})
+    assert {c: (r['figure_outcome'], r['released_figure'])
+            for c, r in rows(out, 'Q04').items()} == dict.fromkeys(
+        BOTH, ('ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', None))

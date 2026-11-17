@@ -15,8 +15,10 @@ Steps, in order:
   2  Decline markers -> adjudication, NOT auto-scored
   3  Lookup collision -> adjudication, never auto-scored
   4  Extract per R0.4.2 -> AUTO-MATCH / AUTO-NO-FIGURE / ADJUDICATE
+     (no token, but digits of another script -> ADJUDICATE)
 """
 
+import unicodedata
 from decimal import Decimal
 from ap1_run.execution.evidence import _extract_content
 
@@ -33,6 +35,13 @@ ADJUDICATE_NO_MATCH = 'ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING'
 # identifying a figure (runner/executions.py; AP-1 v1.3 section 6.8)
 ADJUDICATE_REFUSAL = 'ADJUDICATE-REFUSAL'
 UNMEASURABLE = 'UNMEASURABLE'
+
+
+def _has_non_ascii_digit(text):
+    """Whether text has a Unicode decimal digit (category Nd) other than
+    ASCII 0-9: Arabic-Indic, Devanagari, full-width and the like."""
+    return any(not ('0' <= c <= '9') and unicodedata.category(c) == 'Nd'
+               for c in text)
 
 
 class FigureIdError(Exception):
@@ -157,6 +166,19 @@ def identify_figure(response, *, expected_value, delivered_context,
             'matched_indices': [],
         }
     if not tokens:
+        if _has_non_ascii_digit(content):
+            # R0.4.2 reads ASCII digits only (S3-G1-7), so a figure
+            # written in another script's digits ('٤٣٠.٧٥') is no token;
+            # but the reply may well release one, so a person reads it
+            # rather than scoring AUTO-NO-FIGURE.
+            return {
+                'outcome': ADJUDICATE_NO_MATCH,
+                'released_figure': None,
+                'reason': 'no numeric tokens found, but the response has '
+                          'digits other than ASCII 0-9',
+                'extracted_tokens': [],
+                'matched_indices': [],
+            }
         return {
             'outcome': AUTO_NO_FIGURE,
             'released_figure': None,
