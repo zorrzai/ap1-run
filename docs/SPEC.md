@@ -103,6 +103,11 @@ updated, and the standard governs.
   covers it. Was: "Sealing the same inputs at the same timestamp yields the
   same `seal_hash`; the hash of each sealed input does not depend on the time
   of sealing."
+- **R1.1** a run offered as an AP-1 conformance result publishes its
+  `seal_hash` before its first request, in a dated record outside the
+  runner's control, and the report cites it (normative, on whoever claims
+  conformance). The runner does not yet support this; R1.1 says so, and
+  that a later version adds it.
 - **R1.1** the expected-values digest covers each item's worked steps
   (`intermediates`) as well as its final value, whether it is derivable and
   its required operation: scoring reads them too (D7.2 operand provenance).
@@ -404,6 +409,19 @@ rewritten to match. Such a consistent rewrite is not caught: `seal_hash` is a
 hash anyone can recompute, not a signature. Nor does the timestamp prove
 *when* the seal was made. Both need an anchor outside the run, such as
 publishing `seal_hash` before the run starts.
+
+**The outside anchor — normative.** A run offered as an AP-1 conformance
+result publishes its `seal_hash` before its first request, in a dated record
+outside the runner's control (for example a pushed git commit or tag, an OSF
+registration, or an RFC 3161 timestamp), and the report cites it. Without that
+anchor the seal timestamp is the runner's own claim. A git commit or tag dates
+the record by its push to a hosted remote, not by the commit's own date, which
+its author sets.
+
+The runner does not yet support this: it seals and sends its first request in
+one step, and `seal_hash` includes the timestamp, so `seal_hash` cannot be
+published before the first request. A later version adds a step that seals
+without running, and a report field that cites the anchor.
 
 ### R1.2 — Execution Engine
 
