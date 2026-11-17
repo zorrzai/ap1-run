@@ -35,6 +35,14 @@ multiplicative perturbation (`0 × 1.1 = 0`).
 
 **File:** `src/ap1_run/execution/seal.py`, `perturbation_check` function.
 
+**Fixed.** Both parts were fixed in `2c1b362` (September 2026): an exception
+is recorded as a failure, and a zero field is perturbed by setting it to 1.
+Since step 5 of the 2026-10 reorganization the check also fails closed on a
+derivable item that declares nothing it can perturb (no fields, a field not
+in the delivered context, no numeric field) or whose final value is None,
+names each failure with its item and perturbation, and the live run calls it,
+with the source-fields and declared-constants checks, before sealing.
+
 ---
 
 ## 3. Step-4 ordering: first-match behaviour

@@ -143,8 +143,16 @@ restoring the original ground-truth module".
 - **Behaviour is unchanged by the move.** The regression baseline
   (`tests/regression/`) pins the runner's behaviour end to end and gave
   identical output before and after it. It includes both September runs
-  replayed through the runner from their recorded responses, and those replays
-  reproduce the published `report.md` figures exactly:
+  replayed through the runner from their recorded responses, and at the move
+  those replays reproduced the published `report.md` figures exactly. The
+  fixes since then (the findings in `docs/REVIEW_FINDINGS.md`) move some of
+  them on purpose: `tests/regression/replay_expected.json` lists every
+  execution whose scored outcome moves, and the harness fails a replay that
+  differs in anything else. Two allowances are listed there too: the new
+  per-execution fields, each checked in every execution against the value the
+  harness computes from the published fields; and the numeric leaves
+  (operands, evaluated results, the operation detail text) where a fix only
+  respells a number with trailing zeros (`15200.0` read as `15200.00`):
 
   ```bash
   pip install -e .

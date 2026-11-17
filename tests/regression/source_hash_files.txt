@@ -35,6 +35,7 @@ src/ap1_run/runner/settings.py
 src/ap1_run/runner/summary.py
 src/ap1_run/scoring/__init__.py
 src/ap1_run/scoring/accuracy.py
+src/ap1_run/scoring/answer_outcome.py
 src/ap1_run/scoring/figure_id.py
 src/ap1_run/scoring/invocation.py
 src/ap1_run/scoring/operation_correctness.py
@@ -96,6 +97,7 @@ tests/unit/execution/test_evidence_r41.py
 tests/unit/execution/test_perturbation_guard.py
 tests/unit/execution/test_seal.py
 tests/unit/execution/test_seal_constants.py
+tests/unit/execution/test_seal_constants_known_gaps.py
 tests/unit/execution/test_seal_r41.py
 tests/unit/execution/test_version.py
 tests/unit/foundation/test_adapter.py
@@ -117,6 +119,7 @@ tests/unit/scoring/provenance/test_classify.py
 tests/unit/scoring/provenance/test_trace.py
 tests/unit/scoring/provenance/test_trace_r41.py
 tests/unit/scoring/test_accuracy.py
+tests/unit/scoring/test_answer_outcome.py
 tests/unit/scoring/test_figure_id.py
 tests/unit/scoring/test_figure_id_r41.py
 tests/unit/scoring/test_invocation.py

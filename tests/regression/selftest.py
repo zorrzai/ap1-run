@@ -396,6 +396,230 @@ class ReplayComparison(unittest.TestCase):
                       hard_checks.first_difference([1, 2], [1]))
 
 
+class ReplayExpectedDifferences(unittest.TestCase):
+
+    def rows(self, **fields):
+        row = {'item_id': 'Q01', 'condition': 'base', 'repeat': 1,
+               'transcription_outcome': 'TRANSCRIBED-EXACT'}
+        row.update(fields)
+        return {'seal_hash': 'x', 'all_results': [row]}
+
+    def expected(self, moves=None, new_fields=(), new_keys=()):
+        return {'moves': moves or {}, 'new_execution_fields': list(new_fields),
+                'new_top_level_keys': list(new_keys),
+                'numeric_paths': [], 'numeric_text_paths': [],
+                'scoring': {'answer_tolerance': '0.01', 'places': 2,
+                            'rounding': 'ROUND_HALF_UP'}}
+
+    def diff(self, published, replayed, expected):
+        return hard_checks.replay_differences(published, replayed, expected)
+
+    def test_identical_passes(self):
+        self.assertEqual(self.diff(self.rows(), self.rows(), self.expected()), [])
+
+    def test_unlisted_move_fails(self):
+        found = self.diff(self.rows(), self.rows(
+            transcription_outcome='TRANSCRIBED-ALTERED'), self.expected())
+        self.assertEqual(len(found), 1)
+        self.assertIn('(Q01/base/r1).transcription_outcome', found[0])
+
+    def test_listed_move_passes(self):
+        moves = {'Q01/base/r1': {'transcription_outcome': [
+            'TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED']}}
+        self.assertEqual(self.diff(self.rows(), self.rows(
+            transcription_outcome='TRANSCRIBED-ALTERED'),
+            self.expected(moves)), [])
+
+    def test_listed_move_to_another_value_fails(self):
+        moves = {'Q01/base/r1': {'transcription_outcome': [
+            'TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED']}}
+        found = self.diff(self.rows(), self.rows(
+            transcription_outcome='UNOBSERVABLE'), self.expected(moves))
+        self.assertEqual(len(found), 1)
+        self.assertIn('listed move', found[0])
+
+    def test_listed_move_that_does_not_happen_fails(self):
+        moves = {'Q01/base/r1': {'transcription_outcome': [
+            'TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED']}}
+        found = self.diff(self.rows(), self.rows(), self.expected(moves))
+        self.assertEqual(len(found), 1)
+        moves = {'Q02/base/r1': {'transcription_outcome': ['a', 'b']}}
+        found = self.diff(self.rows(), self.rows(), self.expected(moves))
+        self.assertIn('matches no execution', found[0])
+
+    def test_new_field_must_be_listed_and_have_an_expectation(self):
+        self.assertEqual(len(self.diff(self.rows(), self.rows(new=1),
+                                       self.expected())), 1)
+        found = self.diff(self.rows(), self.rows(new=1),
+                          self.expected(new_fields=['new']))
+        self.assertTrue(any('no expectation' in f for f in found), found)
+
+    # The answer outcome's expected value is computed by the check itself,
+    # per execution, from the published run's fields (moves applied) and
+    # the scoring config, never read from the replay being checked.
+    OUTCOME = ['answer_outcome', 'answer_outcome_reason']
+    COMPUTED = ('COMPUTED',
+                'correct figure; computation invoked; operands grounded')
+    ROUTED = (None, 'routed to adjudication: the scorers assign the outcome')
+
+    def scored(self, item, figure='AUTO-MATCH', outcome=None):
+        row = {'item_id': item, 'condition': 'base', 'repeat': 1,
+               'figure_outcome': figure, 'invocation_outcome': 'INVOKED',
+               'released_figure': '15.20', 'expected': '15.200',
+               'provenance_results': [{'outcome': 'OPERANDS-GROUNDED'}]}
+        if outcome is not None:
+            row['answer_outcome'], row['answer_outcome_reason'] = outcome
+        return row
+
+    def summaries(self, *outcomes):
+        figures = ['AUTO-MATCH', 'ADJUDICATE-AMBIGUOUS']
+        pub = {'all_results': [self.scored(f'Q0{i + 1}', figures[i])
+                               for i in range(2)]}
+        rep = {'all_results': [self.scored(f'Q0{i + 1}', figures[i], o)
+                               for i, o in enumerate(outcomes)]}
+        return pub, rep
+
+    def test_answer_outcome_as_the_rule_gives_passes(self):
+        pub, rep = self.summaries(self.COMPUTED, self.ROUTED)
+        self.assertEqual(self.diff(pub, rep, self.expected(
+            new_fields=self.OUTCOME)), [])
+
+    def test_answer_outcomes_swapped_between_executions_fail(self):
+        pub, rep = self.summaries(self.ROUTED, self.COMPUTED)
+        found = self.diff(pub, rep, self.expected(new_fields=self.OUTCOME))
+        self.assertTrue(any('Q01/base/r1' in f for f in found), found)
+        self.assertTrue(any('Q02/base/r1' in f for f in found), found)
+
+    def test_answer_outcome_with_another_executions_reason_fails(self):
+        pub, rep = self.summaries((self.COMPUTED[0], self.ROUTED[1]),
+                                  self.ROUTED)
+        found = self.diff(pub, rep, self.expected(new_fields=self.OUTCOME))
+        self.assertEqual(len(found), 1, found)
+        self.assertIn('answer_outcome_reason', found[0])
+
+    def test_answer_outcome_follows_a_listed_move_and_d1(self):
+        # a listed figure move routes the execution; a release outside the
+        # tolerance after quantisation is not COMPUTED
+        moves = {'Q01/base/r1': {'figure_outcome': [
+            'AUTO-MATCH', 'ADJUDICATE-AMBIGUOUS']}}
+        pub, rep = self.summaries(self.ROUTED, self.ROUTED)
+        rep['all_results'][0]['figure_outcome'] = 'ADJUDICATE-AMBIGUOUS'
+        self.assertEqual(self.diff(pub, rep, self.expected(
+            moves, new_fields=self.OUTCOME)), [])
+        pub, rep = self.summaries(self.COMPUTED, self.ROUTED)
+        for row in pub['all_results'] + rep['all_results']:
+            row['released_figure'] = '15.22'
+        found = self.diff(pub, rep, self.expected(new_fields=self.OUTCOME))
+        self.assertTrue(any('Q01/base/r1' in f for f in found), found)
+
+    def test_answer_outcome_missing_from_a_replayed_row_fails(self):
+        pub, rep = self.summaries(self.COMPUTED, self.ROUTED)
+        del rep['all_results'][1]['answer_outcome']
+        found = self.diff(pub, rep, self.expected(new_fields=self.OUTCOME))
+        self.assertTrue(any('missing from the replay' in f for f in found),
+                        found)
+
+    def test_new_top_level_key_must_be_listed(self):
+        rep = self.rows()
+        rep['extra'] = []
+        self.assertEqual(len(self.diff(self.rows(), rep, self.expected())), 1)
+        rep = self.rows()
+        rep['extra'] = []
+        self.assertEqual(self.diff(self.rows(), rep,
+                                   self.expected(new_keys=['extra'])), [])
+
+    def test_seal_hash_and_order(self):
+        self.assertEqual(self.diff(self.rows(), dict(self.rows(), seal_hash='y'),
+                                   self.expected()), [])
+        found = self.diff(self.rows(), self.rows(repeat=2), self.expected())
+        self.assertIn('Q01/base/r1 in the published run', found[0])
+
+    def numeric(self):
+        listed = self.expected()
+        listed['numeric_paths'] = ['oc[].value']
+        listed['numeric_text_paths'] = ['oc[].detail']
+        return listed
+
+    def test_numeric_paths_compare_numbers_as_decimals(self):
+        pub = self.rows(oc=[{'detail': 'result 15.20 matches 15.200',
+                             'value': '15200.0', 'ref': 'acct01.balance'}])
+        same = self.rows(oc=[{'detail': 'result 15.2 matches 15.200',
+                              'value': '15200.00', 'ref': 'acct01.balance'}])
+        moved = self.rows(oc=[{'detail': 'result 15.21 matches 15.200',
+                               'value': '15200.00', 'ref': 'acct01.balance'}])
+        self.assertEqual(self.diff(pub, same, self.numeric()), [])
+        self.assertEqual(len(self.diff(pub, moved, self.numeric())), 1)
+        self.assertEqual(len(self.diff(pub, same, self.expected())), 1)
+
+    def test_numeric_comparison_is_exact_beyond_any_precision(self):
+        # normalize() would round at the context precision: '1' and
+        # '1.000...0001' (60 zeros) must not compare equal.
+        long_one = '1.' + '0' * 60 + '1'
+        for field in ('value', 'detail'):
+            pub = self.rows(oc=[{field: '1'}])
+            rep = self.rows(oc=[{field: long_one}])
+            self.assertEqual(len(self.diff(pub, rep, self.numeric())), 1,
+                             field)
+
+    def test_numbers_inside_identifiers_and_unlisted_paths_compare_as_text(self):
+        # a reference acct01 -> acct1 is not a respelling of a number
+        pub = self.rows(oc=[{'ref': 'acct01.balance', 'detail': 'from acct01'}])
+        rep = self.rows(oc=[{'ref': 'acct1.balance', 'detail': 'from acct1'}])
+        found = self.diff(pub, rep, self.numeric())
+        self.assertEqual(len(found), 1)     # first difference in the field
+        self.assertIn('oc', found[0])
+        pub = self.rows(oc=[{'detail': 'from acct01'}])
+        rep = self.rows(oc=[{'detail': 'from acct1'}])
+        self.assertEqual(len(self.diff(pub, rep, self.numeric())), 1)
+
+    def test_numeric_paths_accept_only_trailing_zero_respelling(self):
+        # '15.2' as '15.20' or '15.200' is the allowance; padding,
+        # underscores, other digits, an exponent or a sign of zero is not
+        for spelled in (' 15.2 ', '15.2\n', '1_5.2', '\u0661\u0665.2',
+                        '1.52E+1', '+15.2'):
+            pub = self.rows(oc=[{'value': '15.2'}])
+            rep = self.rows(oc=[{'value': spelled}])
+            self.assertEqual(len(self.diff(pub, rep, self.numeric())), 1,
+                             spelled)
+        pub = self.rows(oc=[{'value': '0.00'}])
+        rep = self.rows(oc=[{'value': '-0.00'}])
+        self.assertEqual(len(self.diff(pub, rep, self.numeric())), 1)
+        rep = self.rows(oc=[{'value': '0.0'}])
+        self.assertEqual(self.diff(pub, rep, self.numeric()), [])
+
+    def test_hyphenated_identifier_in_text_compares_as_text(self):
+        pub = self.rows(oc=[{'detail': 'from acct-01'}])
+        rep = self.rows(oc=[{'detail': 'from acct-1'}])
+        self.assertEqual(len(self.diff(pub, rep, self.numeric())), 1)
+        # a negative number after a space is still a number
+        pub = self.rows(oc=[{'detail': 'operand -12.0 in'}])
+        rep = self.rows(oc=[{'detail': 'operand -12.00 in'}])
+        self.assertEqual(self.diff(pub, rep, self.numeric()), [])
+
+    def test_listed_move_is_compared_type_aware(self):
+        moves = {'Q01/base/r1': {'flag': [True, 1]}}
+        found = self.diff(self.rows(flag=1), self.rows(flag=1.0),
+                          self.expected(moves))
+        self.assertEqual(len(found), 1, found)
+        self.assertIn('listed move', found[0])
+
+    def test_json_numbers_are_read_exactly(self):
+        # two summaries that differ only past a float's precision
+        pub = hard_checks.load_summary('{"all_results": [], "figure": 1.0}')
+        rep = hard_checks.load_summary(
+            '{"all_results": [], "figure": 1.00000000000000001}')
+        self.assertEqual(len(self.diff(pub, rep, self.expected())), 1)
+
+    def test_the_committed_list_parses(self):
+        for run in ('output/run_e_mini', 'output/run_f_sol'):
+            listed = hard_checks.load_replay_expected(run)
+            for key, fields in listed['moves'].items():
+                self.assertRegex(key, r'^Q\d\d/[a-z_]+/r\d+$')
+                for move in fields.values():
+                    self.assertEqual(len(move), 2)
+                    self.assertNotEqual(move[0], move[1])
+
+
 class MockTransportContract(unittest.TestCase):
 
     KEY = 'sk-selftest'
@@ -506,6 +730,136 @@ class MockTransportContract(unittest.TestCase):
             hard_checks.check_transport(result_dir)
         finally:
             shutil.rmtree(result_dir)
+
+
+class ReplayServesTheRecordedModel(unittest.TestCase):
+    """In a replay, every round names the model the recorded response
+    names, and the run is configured with the model its requests named,
+    so a served-model warning in a replay comes from the run, not from
+    the mock."""
+
+    QUESTIONS = {'items': [{'id': 'Q01', 'text': 'What?'}]}
+    PROMPTS = {'S': 'base'}
+
+    @staticmethod
+    def record(model, n_intermediate, configured='gpt-test'):
+        calls = [{'id': f'c{n}', 'type': 'function',
+                  'function': {'name': 'calculator',
+                               'arguments': '{"expression": "1 + 1"}'}}
+                 for n in range(n_intermediate)]
+        assistant = [{'role': 'assistant', 'content': None,
+                      'tool_calls': [c]} for c in calls]
+        return {
+            'item_id': 'Q01', 'condition': 'base',
+            'request_sent': {'request_record': {
+                'model': configured,
+                'messages': [{'role': 'system', 'content': 'S'},
+                             {'role': 'user', 'content': 'Question: What?'}]
+                + assistant}},
+            'response_received': {
+                'id': 'chatcmpl-recorded', 'object': 'chat.completion',
+                'model': model,
+                'choices': [{'index': 0, 'finish_reason': 'stop',
+                             'message': {'role': 'assistant',
+                                         'content': 'It is $2.00.'}}]},
+        }
+
+    def served_models(self, records):
+        """The model each replayed round names, record by record."""
+        mock = MockEndpoint(questions=self.QUESTIONS,
+                            system_prompts=self.PROMPTS, api_key='k',
+                            replay_records=records)
+        served = []
+        for rec in records:
+            messages = [m for m in rec['request_sent']['request_record']
+                        ['messages'] if m['role'] != 'assistant']
+            rounds = []
+            for m in [None] + [m for m in rec['request_sent']
+                               ['request_record']['messages']
+                               if m['role'] == 'assistant']:
+                if m is not None:
+                    messages = messages + [m]
+                action = mock.handle({'messages': messages})
+                self.assertEqual(action[1], 200, action)
+                rounds.append(action[2].get('model'))
+            served.append(rounds)
+        return served
+
+    def test_every_round_names_the_recorded_model(self):
+        records = [self.record('gpt-test-2025-01-01', 2),
+                   self.record('gpt-test-2025-02-01', 0)]
+        self.assertEqual(self.served_models(records), [
+            ['gpt-test-2025-01-01'] * 3, ['gpt-test-2025-02-01']])
+
+    def test_a_record_that_names_no_model_gets_the_mocks(self):
+        # The final round is the recorded response as it was; only the
+        # rounds the mock wraps fall back to its own name.
+        rec = self.record('x', 1)
+        del rec['response_received']['model']
+        self.assertEqual(self.served_models([rec]), [['mock-model', None]])
+
+    def test_scripted_turns_still_name_the_mock(self):
+        mock = MockEndpoint(questions=self.QUESTIONS,
+                            system_prompts=self.PROMPTS, api_key='k',
+                            responses={'Q01/*/*': [{'say': 'It is $1.00.'}]})
+        action = mock.handle({'messages': [
+            {'role': 'system', 'content': 'S'},
+            {'role': 'user', 'content': 'Question: What?'}]})
+        self.assertEqual(action[2]['model'], 'mock-model')
+
+    def test_the_published_runs_replay_with_their_recorded_models(self):
+        repo = os.path.dirname(os.path.dirname(HERE))
+        with open(os.path.join(repo, 'example', 'config.json'),
+                  encoding='utf-8') as f:
+            config = json.load(f)
+        with open(os.path.join(repo, 'example', 'questions.json'),
+                  encoding='utf-8') as f:
+            questions = json.load(f)
+        prompts = {config['system_prompt_base']: 'base',
+                   config['system_prompt_instruction_removed']:
+                   'instruction_removed'}
+        for run, configured in (('run_e_mini', 'gpt-4.1-mini'),
+                                ('run_f_sol', 'gpt-5.6-sol')):
+            with self.subTest(run=run):
+                with open(os.path.join(repo, 'output', run,
+                                       'smoke_run.jsonl'),
+                          encoding='utf-8') as f:
+                    records = [json.loads(line) for line in f
+                               if line.strip()]
+                self.assertEqual(driver.recorded_model(records), configured)
+                engine = [r for r in records
+                          if r.get('record_type') != 'figure_identification']
+                mock = MockEndpoint(questions=questions,
+                                    system_prompts=prompts, api_key='k',
+                                    replay_records=records)
+                rounds = 0
+                for rec in engine:
+                    rr = rec['request_sent']['request_record']
+                    recorded = rec['response_received']['model']
+                    first = [m for m in rr['messages']
+                             if m['role'] in ('system', 'user')][:2]
+                    assistant = [m for m in rr['messages']
+                                 if m['role'] == 'assistant']
+                    for n in range(len(assistant) + 1):
+                        body = {'messages': first + assistant[:n]}
+                        action = mock.handle(body)
+                        if action[1] != 200:   # a recorded mid-loop end
+                            break
+                        self.assertEqual(action[2]['model'], recorded,
+                                         (run, rec['item_id'],
+                                          rec['condition'], n))
+                        rounds += 1
+                self.assertGreater(rounds, len(engine))
+
+    def test_recorded_model_needs_one_name(self):
+        def rec(model):
+            return {'request_sent': {'request_record': {'model': model}}}
+        self.assertEqual(driver.recorded_model([rec('a'), rec('a')]), 'a')
+        self.assertIsNone(driver.recorded_model([rec('a'), rec('b')]))
+        self.assertIsNone(driver.recorded_model([rec(None)]))
+        self.assertIsNone(driver.recorded_model([]))
+        self.assertEqual(driver.recorded_model(
+            [rec('a'), {'record_type': 'figure_identification'}]), 'a')
 
 
 class Independence(unittest.TestCase):

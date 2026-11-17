@@ -1,4 +1,3 @@
 {
-  "exit_code": null,
-  "exception": "TypeError: compile() arg 1 must be a string, bytes or AST object"
+  "exit_code": 0
 }

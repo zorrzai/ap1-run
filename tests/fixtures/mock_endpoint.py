@@ -36,7 +36,9 @@ Two kinds of script:
   engine record: its assistant messages for the intermediate rounds,
   then its recorded final response. The intermediate rounds were kept
   only as messages, not as full responses (V12-3), so they are wrapped
-  in a standard envelope.
+  in a standard envelope. That envelope names the model the recorded
+  final response names, so every round of a replay is served by the
+  model the run recorded, not by the mock.
 
 Every request is logged (self.log) for the golden output.
 
@@ -57,6 +59,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
 PATH = '/v1/chat/completions'
+MOCK_MODEL = 'mock-model'   # the model a scripted (not replayed) turn names
 
 
 class MockEndpoint:
@@ -253,13 +256,15 @@ class MockEndpoint:
         final = rec.get('response_received')
         if final is None:
             return ('reply', 503, str(rec.get('error_state'))), source
+        model = self._model_of(final)
         # A recorded final response that still asks for tools means the
         # loop ended because the next request failed (a mid-loop failure,
         # EV-0). That response is also the last assistant message.
         unfinished = bool(self._tool_calls_of(final))
         n_before_final = len(assistant) - 1 if unfinished else len(assistant)
         if rnd < n_before_final:
-            return ('reply', 200, self._envelope(assistant[rnd])), source
+            return ('reply', 200,
+                    self._envelope(assistant[rnd], model)), source
         if rnd == n_before_final:
             return ('reply', 200, final), source
         if unfinished:
@@ -267,6 +272,14 @@ class MockEndpoint:
                     'replayed mid-loop failure: the recorded loop ended '
                     'here without a response'), source
         return ('reply', 500, 'mock script exhausted'), source
+
+    @staticmethod
+    def _model_of(response):
+        """The model a recorded response names; the mock's own name if
+        it names none."""
+        model = (response.get('model') if isinstance(response, dict)
+                 else None)
+        return model if isinstance(model, str) and model else MOCK_MODEL
 
     @staticmethod
     def _tool_calls_of(response):
@@ -305,13 +318,13 @@ class MockEndpoint:
                 '{result}', self._last_result(body))
         return ('reply', 200, self._envelope(message))
 
-    def _envelope(self, message):
+    def _envelope(self, message, model=None):
         finish = 'tool_calls' if message.get('tool_calls') else 'stop'
         return {
             'id': f'chatcmpl-mock-{self._seq}',
             'object': 'chat.completion',
             'created': 0,
-            'model': 'mock-model',
+            'model': model or MOCK_MODEL,
             'choices': [{'index': 0, 'message': message,
                          'finish_reason': finish}],
             'usage': {'prompt_tokens': 0, 'completion_tokens': 0,

@@ -38,6 +38,9 @@ Normalisation (in the comparison, never in the runner):
   - this run's seal_hash, config_hash and runner_source_hash, read from
     the seal the run actually made (the config hash covers the mock's
     port; the source hash covers the code, and changes when files move)
+  - each adjudication sheet's execution id (derived from the seal hash),
+    as <EXECUTION_ID_k> numbered in order of first appearance, so the
+    golden still shows which sheets share an id
 
 Before normalisation, hard_checks.check() recomputes every value in that
 seal independently (hash_oracle.py), against expectations frozen before
@@ -409,6 +412,9 @@ _MOCK = re.compile(r'http://127\.0\.0\.1:\d+')
 _SOURCE_HASH_LINE = re.compile(r'(Runner source hash: )[0-9a-f]+')
 
 
+_EXECUTION_ID = re.compile(r'(Execution id: `)([0-9a-f]{12})(`)')
+
+
 def normalise(text, roots, seals):
     text = text.replace('\r\n', '\n')
     paths = set(roots) | {os.path.realpath(r) for r in roots}
@@ -419,6 +425,11 @@ def normalise(text, roots, seals):
     text = _ISO.sub('<TIMESTAMP>', text)
     text = _EPOCH.sub(r'\1"<EPOCH>"', text)
     text = _SOURCE_HASH_LINE.sub(r'\1<RUNNER_SOURCE_HASH>', text)
+    ids = {}
+    text = _EXECUTION_ID.sub(
+        lambda m: m.group(1) + ids.setdefault(
+            m.group(2), f'<EXECUTION_ID_{len(ids) + 1}>') + m.group(3),
+        text)
     for seal in seals:
         for field, label in (('seal_hash', '<SEAL_HASH>'),
                              ('config_hash', '<CONFIG_HASH>'),

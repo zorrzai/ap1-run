@@ -73,9 +73,9 @@ def test_r41_b12_figures_present_none_matching_is_adjudicated_not_wrong():
 @pytest.mark.finding('T3-10')
 @pytest.mark.req('R4.1', 'R2.0')
 def test_r41_b15_empty_response_is_unmeasurable_at_figure_identification():
-    # R4.1 requires UNMEASURED. Figure identification says UNMEASURABLE,
-    # but the live path still records the execution as EXECUTED /
-    # NOT-INVOKED (T3-10; regression scenario non_answers).
+    # R4.1 requires UNMEASURED. Figure identification says UNMEASURABLE;
+    # since the T3-10 fix the engine records the execution as UNMEASURED
+    # before figure identification (regression scenario non_answers).
     result = identify(response(''), '15.20')
     assert (result['outcome'], result['reason']) == (
         UNMEASURABLE, 'response has no text content')

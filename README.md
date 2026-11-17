@@ -292,7 +292,33 @@ intermediate, or a declared constant.
 
 > The runner refuses a module that returns literals it did not compute. At seal
 > time it perturbs each declared source field and re-executes; if the output
-> does not move, the module is returning constants and the run is refused.
+> does not move, the module is returning constants and the run is refused. The
+> run is also refused if the module reads a field it does not declare, or uses
+> a numeric literal it does not declare as a constant. That check reads the
+> lines of the module that run for the item (`compute()` included) and the plain
+> top-level assignments those lines name. A literal counts when it is a number
+> in the source or a string written inline as the first argument of `D`,
+> `Decimal`, `int` or `float`.
+>
+> The check is partial, and catches common mistakes only. Known gaps, each a
+> strict-xfail test in `tests/unit/execution/test_seal_constants_known_gaps.py`:
+> - a statement on the same line as another (`def f(): return D("1.05")`,
+>   `if x: y = D("1.05")`, `a; b`);
+> - a constant bound in a module-level `if`, `try`, `for` or walrus, in a class
+>   body, by a module function, or through `global`, or read as `globals()[...]`;
+> - a numeric string held in a name, passed by keyword or through `str()`, or
+>   given to an aliased constructor (`Decimal as Money`);
+> - a helper whose cache was filled by the earlier guards (`lru_cache`, a memo
+>   dict), so that the verdict can depend on the order of the items;
+> - code run in another thread, or compiled under a file-like name;
+> - a number made without a literal (`len("abcdefghijkl")`), a string built by an
+>   f-string or `join`, code in another file, and a field read through
+>   `dict.get(account, ...)`.
+>
+> It also refuses some legitimate modules: a local name that shadows a module
+> constant, a literal in a decorator argument or in `compute`'s own dispatch, a
+> dataclass default, and a constant written other than as declared (`-1` read as
+> `1`, `0.00`, `12.0` for `12`).
 
 **A config** — endpoint, model, sampling parameters (each with a value or an
 explicit declared omission and its reason), tolerance, quantisation policy,
@@ -327,6 +353,15 @@ bound at zero failures. Forty-nine items with no failures reads *"0/49; upper
 bound 5.9%"*, not *"100%"*. The familiar 3/n rule is its large-n approximation
 and is shown only for n ≥ 30; below that it overstates, and at n < 3 it returns
 a value above 1, which is not a rate.
+
+**For D7.1, n counts computable questions, not executions.** Repeats of a
+question are not independent trials, so ten questions run fifty times each are
+n = 10. A question counts as a failure if any of its repeats is NOT-INVOKED.
+Beside k, the report and the console list each failing question with its
+NOT-INVOKED repeats out of its observed repeats (*"2 (Q02 48/50, Q06 21/50)"*),
+so a question that skipped once reads apart from one that nearly always did.
+An execution whose invocation is unobservable (EV-0) is neither a success nor
+a failure: it is in no n, and the report lists it under its evidence class.
 
 **There is no pass mark.** AP-1 has no threshold, no certificate, no seal and no
 registry, and the runner cannot output one. A supervisor reads the profile and
@@ -428,6 +463,7 @@ src/ap1_run/
     operation_correctness.py D7.2(b)
     transcription.py         D7.3
     release_coverage.py      D7.3 release coverage
+    answer_outcome.py        §6.8 outcome of an auto-scored response
     provenance/              D7.2(a)
       trace.py               the five-step resolution ladder
       classify.py            invocation, item and sequential classification

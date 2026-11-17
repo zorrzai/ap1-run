@@ -6,6 +6,7 @@ import pytest
 
 from ap1_run.runner import outputs
 from ap1_run.runner.outputs import attach_figure_outcomes, write_outputs
+from ap1_run.scoring.provenance.classify import UNMEASURABLE_REASON
 
 
 def engine(item_id, condition, **fields):
@@ -39,6 +40,14 @@ def test_attach_matches_repeats_in_order_per_item_and_condition():
     result = attach_figure_outcomes(records)
     assert [(r['n'], r['figure_outcome']) for r in result] == [
         (1, 'B1'), (2, 'R1'), (3, 'B2')]
+
+
+def test_attach_matches_on_the_item_whatever_the_order():
+    records = [engine('Q01', 'base', n=1), engine('Q02', 'base', n=2),
+               figure('Q02', 'base', 'B'), figure('Q01', 'base', 'A')]
+    result = attach_figure_outcomes(records)
+    assert [(r['n'], r['figure_outcome']) for r in result] == [
+        (1, 'A'), (2, 'B')]
 
 
 def test_attach_leaves_engine_records_without_a_figure_alone():
@@ -147,9 +156,6 @@ def test_write_outputs_writes_four_files_and_says_where(
 
 @pytest.mark.finding('T3-9')
 @pytest.mark.req('R3.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-9: figure outcomes are joined to engine '
-                          'records by position, not by repeat')
 def test_attach_joins_figure_outcomes_on_the_repeat_index():
     # Repeat 1 failed in transport: an engine record, no figure record.
     # Correct (T3-9): every record carries its repeat and
@@ -164,3 +170,36 @@ def test_attach_joins_figure_outcomes_on_the_repeat_index():
     result = attach_figure_outcomes(records)
     assert [(r['repeat'], r.get('figure_outcome')) for r in result] == [
         (1, None), (2, 'AUTO-MATCH'), (3, 'ADJUDICATE-DECLINE')]
+
+
+@pytest.mark.proposal(
+    'T3-42: until a question can declare that it is chained, it is chained '
+    'if any execution of it chains, and then every execution is '
+    'UNMEASURABLE; an interim rule, proposed, not decided')
+@pytest.mark.finding('T3-42')
+@pytest.mark.req('R2.4', 'R3.2')
+def test_write_outputs_sheets_show_measurability_per_question(
+        tmp_path, stubs, monkeypatch):
+    # The sheets show D7.2(a) as the summary counts it: Q01's first
+    # execution chained without intermediates, so its second, grounded on
+    # its own, is UNMEASURABLE on its sheet too. The transcript is read,
+    # never rewritten.
+    unmeasurable = {'outcome': 'UNMEASURABLE', 'reason': UNMEASURABLE_REASON}
+    records = [engine('Q01', 'base', repeat=1,
+                      provenance_results=[unmeasurable]),
+               engine('Q01', 'base', repeat=2, provenance_results=[
+                   {'outcome': 'OPERANDS-GROUNDED'}]),
+               engine('Q02', 'base', repeat=1, provenance_results=[
+                   {'outcome': 'OPERANDS-GROUNDED'}])]
+    monkeypatch.setattr(outputs.transcript, 'read_all',
+                        lambda path: [dict(r) for r in records])
+    write_outputs(
+        str(tmp_path), str(tmp_path / 'smoke_run.jsonl'), summary={},
+        config={}, seal_record={}, questions={}, fixture={},
+        release_coverage_results=[], disclaimer='', smoke_summary={})
+    sheets_records = stubs['sheets'][0]
+    assert [r['provenance_results'][0]['outcome']
+            for r in sheets_records] == [
+        'UNMEASURABLE', 'UNMEASURABLE', 'OPERANDS-GROUNDED']
+    assert records[1]['provenance_results'] == [
+        {'outcome': 'OPERANDS-GROUNDED'}]
