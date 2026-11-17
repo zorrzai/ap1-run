@@ -8,7 +8,8 @@ Usage:
 
 Reads the seal record from report.md section 1 (Pre-Registration Record) and
 the resolved configuration from report.md section 2 (Resolved Configuration).
-Recomputes all component hashes and the seal_hash, and checks that every
+Recomputes all component hashes, the inputs_hash and the seal_hash, and
+checks that every
 line of the run's transcript carries the seal_hash and that the seal is
 dated no later than the first transcript record. Reports each comparison
 individually, pass or fail; what it cannot check, or what a reader should
@@ -20,9 +21,10 @@ them, as for the runner. Relative paths are taken from the working
 directory.
 
 A record with a seal_format field (runs since October 2026) is checked
-under the current rules: the record holds every sealed field, seal_hash
-covers the timestamp, the text inputs are hashed with LF line endings and
-no BOM, and the expected values and the runner source hash are recomputed.
+under the current rules: the record holds every sealed field, inputs_hash
+covers every field but the timestamp, seal_hash covers the timestamp and
+inputs_hash too, the text inputs are hashed with LF line endings and no
+BOM, and the expected values and the runner source hash are recomputed.
 A record without one (the published runs) is checked under the rules it
 was made with: raw bytes, and a seal_hash without the timestamp.
 
@@ -63,7 +65,9 @@ from ap1_run.execution.sealed_inputs import (  # noqa: E402
     INPUT_FILES, compute_expected_values, load_ground_truth, parse_json_input,
 )
 from ap1_run.execution.version import compute_runner_source_hash  # noqa: E402
-from ap1_run.foundation.numeric import canonical_hash, file_hash  # noqa: E402
+from ap1_run.foundation.numeric import (  # noqa: E402
+    canonical_hash, file_hash, in_decimal_context,
+)
 
 
 # -- Known errata for contextual reporting ---------------------------------
@@ -244,7 +248,9 @@ def _ap1_text_path(resolved_config, ap1_text):
 
 def _check_expected_values(seal_record, paths, checks, failures):
     """Recompute the expected values from the inputs (T3-48): load the
-    ground-truth module from its file and run it on every item."""
+    ground-truth module from its file and run it on every item, in the
+    shared Decimal context the run computes them in (T3-60), whatever
+    this process's own context."""
     sealed = seal_record.get('expected_values_hash', '')
     if not sealed:
         failures.append(('expected_values_hash',
@@ -259,6 +265,10 @@ def _check_expected_values(seal_record, paths, checks, failures):
                 data[name] = f.read()
         module = load_ground_truth(paths['ground_truth'],
                                    data['ground_truth'])
+        # As the run does; a module without compute fails as before, at
+        # its first item
+        if hasattr(module, 'compute'):
+            module.compute = in_decimal_context(module.compute)
         values = compute_expected_values(
             module, parse_json_input(data['fixture']),
             parse_json_input(data['questions']))
@@ -486,7 +496,8 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
                          'HEAD, or the code had uncommitted changes); '
                          'runner_version_tag does not identify the code'))
 
-    # 5. Reconstruct and verify seal_hash
+    # 5. Reconstruct and verify inputs_hash (current format only) and
+    # seal_hash
     sealed_seal_hash = seal_record.get('seal_hash', '')
     # Rebuild the hashable record exactly as seal.py does: all fields
     # except 'seal_hash' (and, in an older record, 'timestamp')
@@ -497,6 +508,20 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
     except ValueError as e:
         failures.append(('seal_hash', 'cannot read the record: %s' % e))
     else:
+        if current_format:
+            # inputs_hash: all fields except the timestamp and the two
+            # hashes over the record
+            sealed_inputs_hash = seal_record.get('inputs_hash', '')
+            computed_inputs_hash = canonical_hash(
+                {k: v for k, v in rebuilt.items()
+                 if k not in ('timestamp', 'inputs_hash', 'seal_hash')})
+            if sealed_inputs_hash == computed_inputs_hash:
+                checks.append(('inputs_hash', 'MATCH'))
+            else:
+                failures.append(('inputs_hash',
+                                 'sealed=%s, recomputed=%s' % (
+                                     sealed_inputs_hash,
+                                     computed_inputs_hash)))
         hashable = {k: v for k, v in rebuilt.items() if k not in unhashed}
         computed_seal_hash = canonical_hash(hashable)
         if sealed_seal_hash == computed_seal_hash:

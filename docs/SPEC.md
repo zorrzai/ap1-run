@@ -1,6 +1,6 @@
 # AP-1 Runner — System Build Specification
 
-**Version 0.3 (draft) · 28 July 2026 · for internal and external technical review**
+**Version 0.3 (draft) · 28 July 2026, revised November 2026 · for internal and external technical review**
 
 Document class: Engineering build specification — for the development team and
 for external technical review.
@@ -57,7 +57,8 @@ updated, and the standard governs.
   The measurement note for the counts goes too. §12.9 keeps the definition
   of an instrument module, and now names what is not one by location:
   demonstration tooling, the tools in `tools/` and the example modules (the
-  test suites are no longer named there).
+  test suites are no longer named there). The maintainer decided this on
+  16 November 2026 (DEC-8 in `docs/REVIEW_FINDINGS.md`).
   (`trace.py`'s exception recorded why `STRUCTURAL_CONSTANTS` exists: in the
   first 1000-execution live run, 288 of 818 originated operands were the
   literal value 1; R2.4 states the rule.)
@@ -94,6 +95,23 @@ updated, and the standard governs.
   Was: "Sealing the same inputs twice yields identical hashes." R1.1 now
   also says what the timestamp proves and what it does not (when the seal
   was made, or a rewrite of the record and every transcript line together).
+
+### Revision, 16 November 2026
+
+- **R1.1** the record carries an `inputs_hash`: the hash of every sealed
+  field but the timestamp, so the same inputs give the same `inputs_hash` at
+  any time and it still identifies the configuration sealed; `seal_hash`
+  covers it. Was: "Sealing the same inputs at the same timestamp yields the
+  same `seal_hash`; the hash of each sealed input does not depend on the time
+  of sealing."
+- **R1.1** a run offered as an AP-1 conformance result publishes its
+  `seal_hash` before its first request, in a dated record outside the
+  runner's control, and the report cites it (normative, on whoever claims
+  conformance). The runner does not yet support this; R1.1 says so, and
+  that a later version adds it.
+- **R1.1** the expected-values digest covers each item's worked steps
+  (`intermediates`) as well as its final value, whether it is derivable and
+  its required operation: scoring reads them too (D7.2 operand provenance).
 
 ---
 
@@ -307,7 +325,8 @@ A numeric token is recognised as, in order:
 3. one or more digits, optionally grouped by the configured
    `grouping_separator`. A digit is one of the ASCII digits `0`–`9`; the
    digits of other scripts (Arabic-Indic `٣`, full-width `３`) are not digits
-   here, so text written in them holds no numeric token;
+   here, so text written in them holds no numeric token (a response with
+   such digits and no numeric token routes to adjudication, R2.0 step 4);
 4. an optional `decimal_separator` followed by fractional digits;
 5. an optional trailing `%`.
 
@@ -368,10 +387,20 @@ distinguishable from the artifact alone.
 **Why keys are sealed before the run.** An attestation verified against a key
 supplied after the fact proves nothing (R1.3).
 
+**What the expected values are.** The record seals a digest of what the
+ground-truth module returns for each item and scoring reads: its final value,
+whether it is derivable, its required operation and its worked steps
+(`intermediates`, which D7.2 operand provenance matches calculator operands
+against). A float anywhere in them, a worked step's value included, is
+refused at seal time: the seal hashes Decimals, never floats (R0.4.1,
+R0.4.3).
+
 **Verification Contract.**
 - Modifying any sealed input causes the scorer to refuse, naming the mismatch.
-- Sealing the same inputs at the same timestamp yields the same `seal_hash`;
-  the hash of each sealed input does not depend on the time of sealing.
+- Sealing the same inputs yields the same `inputs_hash` at any time, and the
+  same `seal_hash` only at the same timestamp. `inputs_hash` covers every
+  sealed field but the timestamp; `seal_hash` covers every field, the
+  timestamp and `inputs_hash` included.
 - A run claiming conformance to an AP-1 text whose hash is absent from the
   record is refused.
 
@@ -382,6 +411,19 @@ rewritten to match. Such a consistent rewrite is not caught: `seal_hash` is a
 hash anyone can recompute, not a signature. Nor does the timestamp prove
 *when* the seal was made. Both need an anchor outside the run, such as
 publishing `seal_hash` before the run starts.
+
+**The outside anchor — normative.** A run offered as an AP-1 conformance
+result publishes its `seal_hash` before its first request, in a dated record
+outside the runner's control (for example a pushed git commit or tag, an OSF
+registration, or an RFC 3161 timestamp), and the report cites it. Without that
+anchor the seal timestamp is the runner's own claim. A git commit or tag dates
+the record by its push to a hosted remote, not by the commit's own date, which
+its author sets.
+
+The runner does not yet support this: it seals and sends its first request in
+one step, and `seal_hash` includes the timestamp, so `seal_hash` cannot be
+published before the first request. A later version adds a step that seals
+without running, and a report field that cites the anchor.
 
 ### R1.2 — Execution Engine
 
@@ -538,7 +580,8 @@ token per R0.4.2 with its literal text, span and context. Then:
 | Condition | Outcome |
 |---|---|
 | Exactly one extracted value matches the expected value within `answer_tolerance` | `AUTO-MATCH` |
-| No extracted value matches, and no numeric tokens present | `AUTO-NO-FIGURE` |
+| No extracted value matches, no numeric tokens present, and no digits of another script | `AUTO-NO-FIGURE` |
+| No numeric tokens present, but digits of another script (R0.4.2) | `ADJUDICATE — figures present, none matching` |
 | Two or more extracted values match | `ADJUDICATE — ambiguous` |
 | No match, but numeric tokens present | `ADJUDICATE — figures present, none matching` |
 
