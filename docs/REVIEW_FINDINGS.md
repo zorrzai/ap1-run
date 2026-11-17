@@ -810,7 +810,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/execution/seal.py:70-74` (`seal`);
   `tools/verify_run_seal.py:199-202` (`verify_run`)
 - Breaks: AP-1 v1.3 §5.3 ("hashed and timestamped before execution"), AP-1 v1.3 §11.7; SPEC R1.1
-- Addressed by: fixed; commits c7c4b421, a6b79312, 9721897a, 9847d7ab, b4505b4d; test
+- Addressed by: fixed; commits c7c4b421, a6b79312, 9721897a, 9847d7ab, b4505b4d, f0034871,
+  fe2f312f; test
   `tests/unit/tools/test_verify_run_seal.py::test_verify_run_edited_timestamp_fails[one-second-later]`
 
 **T3-48 · medium · The seal has no expected-values component; expected values are computed after sealing**
@@ -820,7 +821,8 @@ Grouped by severity, in ID order.
 - After the reorg: `src/ap1_run/execution/seal.py:37-48` (`seal`); `src/ap1_run/run.py:227` (`main`)
 - Breaks: SPEC R1.1 ("… expected values …"), R3.1 ("Intermediates reproducible across two
   executions"); AP-1 v1.3 §13.4
-- Addressed by: fixed; commits c7c4b421, 9721897a, 0c4f61b7, 711799ce, 6a323758; test
+- Addressed by: fixed; commits c7c4b421, 9721897a, 0c4f61b7, 711799ce, 6a323758, 225e2a89;
+  test
   `tests/unit/execution/test_seal.py::test_seal_expected_values_digest_binds_what_scoring_reads[change0]`
 
 **T3-49 · medium · `verify_run_seal.py` labels any `ground_truth_hash` mismatch "expected" and blames FINDINGS_ERRATA.md E3 and FINDINGS.md F10**
