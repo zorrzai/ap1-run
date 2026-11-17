@@ -1,6 +1,6 @@
 # AP-1 Runner — System Build Specification
 
-**Version 0.3 (draft) · 28 July 2026 · for internal and external technical review**
+**Version 0.3 (draft) · 28 July 2026, revised November 2026 · for internal and external technical review**
 
 Document class: Engineering build specification — for the development team and
 for external technical review.
@@ -57,7 +57,8 @@ updated, and the standard governs.
   The measurement note for the counts goes too. §12.9 keeps the definition
   of an instrument module, and now names what is not one by location:
   demonstration tooling, the tools in `tools/` and the example modules (the
-  test suites are no longer named there).
+  test suites are no longer named there). The maintainer decided this on
+  16 November 2026 (DEC-8 in `docs/REVIEW_FINDINGS.md`).
   (`trace.py`'s exception recorded why `STRUCTURAL_CONSTANTS` exists: in the
   first 1000-execution live run, 288 of 818 originated operands were the
   literal value 1; R2.4 states the rule.)
