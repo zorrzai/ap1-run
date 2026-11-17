@@ -1440,8 +1440,11 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - Where: `numeric.py:179` (sign-led pattern)
 - After the reorg: `src/ap1_run/foundation/numeric.py:179` (`_build_extraction_re`)
 - Breaks: SPEC R2.0 (the expected value twice routes to adjudication), on the operator reading
-- Addressed by: fixed; commits 836c1b0f, b50d61cf; test
-  `tests/unit/foundation/test_numeric.py::test_extract_sign_after_number_is_an_operator_positions`
+- Addressed by: fixed; commits 836c1b0f, b50d61cf, dc7b365f; test
+  `tests/unit/foundation/test_numeric.py::test_extract_sign_after_number_is_an_operator_positions`;
+  note: the sign is an operator only in an expression's shape (`5-3`, `1437.00 - 1006.25`); with a
+  space before it and none after (`month 12 -575.50`) it stays the figure's sign (dc7b365f, after
+  the review of #13)
 
 **S3-G1-6 · low · Digits inside identifiers produce numeric tokens**
 - What's wrong: `Q04` → 4, `v2.0.1` → 2.0 and 1, `1e5` → 1 and 5; there is no word boundary.
@@ -1455,10 +1458,11 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - Where: `numeric.py`
 - After the reorg: `src/ap1_run/foundation/numeric.py`
 - Breaks: SPEC R0.4.2 (undeclared)
-- Addressed by: fixed; commits 856a8fb7, 547f3007, 67a15172; test
+- Addressed by: fixed; commits 856a8fb7, 547f3007, 67a15172, 45f32639; test
   `tests/unit/foundation/test_numeric.py::test_arabic_indic_and_full_width_three_neither_parse_nor_extract`;
   note: SPEC R0.4.2 decides it: its digits are ASCII 0-9 only, so neither Arabic-Indic nor
-  full-width digits parse or extract
+  full-width digits parse or extract; a reply with such digits and no numeric token routes to
+  adjudication, not AUTO-NO-FIGURE (45f32639, after the review of #13)
 
 **S3-G1-8 · low · `(12.5%)` extracts as +12.5 %**
 - What's wrong: the parenthesised-negative pattern has no `%`.
