@@ -295,16 +295,19 @@ def test_identify_figure_non_digit_number_characters_stay_no_figure(content):
     ('month 12 -575.50', '575.50', ADJUDICATE_NO_MATCH),
     ('month 12 -575.50', '-575.50', AUTO_MATCH),
     ('In 2024 -12.5% was the change', '12.5', ADJUDICATE_NO_MATCH),
-    ('In 2024 -12.5% was the change', '-12.5', AUTO_MATCH),
+    ('In 2024 -12.5% was the change', '-12.5', ADJUDICATE_NO_MATCH),
 ], ids=['wrong-sign-not-matched', 'negative-matched',
-        'year-wrong-sign-not-matched', 'year-negative-matched'])
+        'year-wrong-sign-not-matched', 'year-negative-percent-adjudicated'])
 def test_identify_figure_sign_after_label_number_is_kept(
         content, expected, outcome):
     # The review of #13: at 3803f542 the first and third
     # AUTO-MATCH (a wrong-sign answer scored correct) and the second and
-    # fourth go to adjudication.
+    # fourth go to adjudication. The figure keeps its minus in every case;
+    # the fourth still goes to adjudication, as a percentage token is
+    # never compared with the expected value (S3-G4-2).
     r = identify(response(content), expected=expected)
     assert r['outcome'] == outcome, r
+    assert -abs(Decimal(expected)) in [t.value for t in r['extracted_tokens']]
 
 
 @pytest.mark.req('R2.0')
