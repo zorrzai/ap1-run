@@ -1864,3 +1864,17 @@ The verifier's options for a run's inputs outside `example/` and `reference/` co
 verifier work in #3. Until then README.md says that the verifier reads only those two
 directories. The fix lands before anyone outside the project runs the instrument with
 `--fixture-dir`.
+
+### DEC-8: SPEC sets no module size limit and records no line counts
+The retirement PR (#11) removed SPEC §12.9's 300-line limit on instrument modules and §12.10's
+line counts, and #3 had listed that change as one for the maintainer to decide. The maintainer
+approved it on 16 November 2026, in the review of #11:
+> "S1, dropping §12.9's 300-line limit and §12.10's line counts: **yes**. Please record it as a
+> maintainer decision in `docs/REVIEW_FINDINGS.md`, with the SPEC version line updated in the same
+> commit. My reasoning, for the record: a line count is not behaviour, git already records file
+> sizes, and at #16's head `numeric.py`, `engine.py` and `operation_correctness.py` are 460, 524
+> and 344 lines, so keeping the limit would block every fix in #12–#16. Module size is left to
+> review."
+
+SPEC's "Revision, November 2026" entry for §12.9 and §12.10 and its version line cite this
+decision. `tests/conformance/test_spec_file_list.py` checks §12.10's file list without counts.
